@@ -1,0 +1,116 @@
+{% set base_path = "." %}
+{% extends 'base.html' %}
+
+{% block title %}Chart.js | Open source HTML5 Charts for your website{% endblock title %}
+
+{% block head %}
+	{% include 'typekit.html' %}
+	{% include 'modernizr.html' %}
+	<meta name="description" content="Simple, clean and engaging HTML5 based JavaScript charts. Chart.js is an easy way to include animated, interactive graphs on your website for free."/>
+{% endblock head %}
+
+{% block content %}
+	<body class="homepage">
+		<div class="background-chart fade-in">
+			<canvas id="background-bar"></canvas>
+		</div>
+		<div class="content-overlay fade-in-up animation-delay__1">
+			<div class="hero-container">
+				<img class="chart-logo fade-in animation-delay__3" src="./img/chartjs-logo.svg"/>
+				<div class="fade-in fade-in animation-delay__5">
+					<h1 class="hero-title">Chart.js</h1>
+					<h2 class="hero-subtitle">Simple yet flexible JavaScript charting for designers &amp; developers</h2>
+				</div>
+				<div class="hero-button-wrapper fade-in animation-delay__6">
+					<a class="button button__red" href="./docs">Get Started</a>
+					<a class="button button__blue" href="./samples">Samples</a>
+					<a class="button button__black" href="https://github.com/chartjs/Chart.js" target="_blank">GitHub</a>
+				</div>
+			</div>
+			<hr/>
+			<div class="feature-container fade-in animation-delay__7">
+				<div class="feature">
+					<div class="feature-text">
+						<h3 class="subtitle">
+							<span class="pill pill__new">New in 2.0</span>
+							Mixed chart types
+						</h3>
+						<p class="description">Mix and match bar and line charts to provide a clear visual distinction between datasets.</p>
+					</div>
+					<div class="feature-chart feature-chart__right">
+						<canvas id="mixed-chart" height="200" width="300"></canvas>
+					</div>
+				</div>
+				<div class="feature">
+					<div class="feature-text feature-text__pull-right">
+						<h3 class="subtitle">
+							<span class="pill pill__new">New in 2.0</span>
+							New chart axis types
+						</h3>
+						<p class="description">Plot complex, sparse datasets on date time, logarithmic or even entirely custom scales with ease.</p>
+					</div>
+					<div class="feature-chart feature-chart__left feature-chart__pull-right">
+						<canvas id="axis-chart" height="200" width="300"></canvas>
+					</div>
+				</div>
+				<div class="feature">
+					<div class="feature-text">
+						<h3 class="subtitle">
+							<span class="pill pill__new">New in 2.0</span>
+							Animate everything!
+						</h3>
+						<p class="description">Out of the box stunning transitions when changing data, updating colours and adding datasets.</p>
+					</div>
+					<div class="feature-chart feature-chart__right">
+						<canvas id="animate-chart" height="200" width="300"></canvas>
+					</div>
+				</div>
+			</div>
+			<hr/>
+			<div class="feature-small-container fade-in animation-delay__7">
+				<div class="feature-small">
+					<div class="feature-icon">
+						<img src="./img/open-source.svg"/>
+					</div>
+					<h4 class="subtitle subtitle__small">Open source</h4>
+					<p class="description description__small">Chart.js is a community maintained project, contributions welcome!</p>
+				</div>
+				<div class="feature-small">
+					<div class="feature-icon">
+						<img src="./img/chart-types.svg"/>
+					</div>
+					<h4 class="subtitle subtitle__small">8 Chart types</h4>
+					<p class="description description__small">Visualize your data in 8 different ways; each of them animated and customisable.</p>
+				</div>
+				<div class="feature-small">
+					<div class="feature-icon">
+						<img src="./img/canvas-icon.svg"/>
+					</div>
+					<h4 class="subtitle subtitle__small">HTML5 Canvas</h4>
+					<p class="description description__small">Great rendering performance across all modern browsers (IE11+).</p>
+				</div>
+				<div class="feature-small">
+					<div class="feature-icon">
+						<img src="./img/responsive.svg"/>
+					</div>
+					<h4 class="subtitle subtitle__small">Responsive</h4>
+					<p class="description description__small">Redraws charts on window resize for perfect scale granularity.</p>
+				</div>
+			</div>
+
+			<hr/>
+
+			<div class="link-container fade-in animation-delay__7">
+				<h2 class="subtitle">
+					<a href="https://github.com/chartjs/Chart.js" target="_blank">Find Chart.js on GitHub</a> or <a href="./docs"> Read detailed documentation</a>
+				</h2>
+			</div>
+		</div>
+
+		<footer class="fade-in animation-delay__8">
+			{% include 'footer.html' %}
+		</footer>
+
+		<script async src="./build.js"></script>
+	</body>
+{% endblock content %}

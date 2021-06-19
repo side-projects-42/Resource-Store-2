@@ -1,0 +1,24 @@
+sudo: false
+language: node_js
+node_js:
+  - lts/*
+
+script:
+- gulp build
+- npm test
+
+deploy:
+- provider: releases
+  api_key: $GITHUB_AUTH_TOKEN
+  file:
+  - "./dist/chartjs-color.js"
+  - "./dist/chartjs-color.min.js"
+  skip_cleanup: true
+  on:
+    tags: true
+- provider: npm
+  email: $NPM_AUTH_EMAIL
+  api_key: $NPM_AUTH_TOKEN
+  skip_cleanup: true
+  on:
+    tags: true

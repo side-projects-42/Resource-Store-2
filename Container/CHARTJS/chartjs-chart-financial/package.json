@@ -1,0 +1,42 @@
+{
+  "name": "chartjs-chart-financial",
+  "description": "Chart.js module for charting financial securities",
+  "main": "src/index.js",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chartjs/chartjs-chart-financial.git"
+  },
+  "scripts": {
+    "build": "rollup -c && cp dist/chartjs-chart-financial.js docs/",
+    "lint": "eslint docs/**/*.html src/**/*.js test/**/*.js",
+    "test": "npm run lint && cross-env NODE_ENV=test karma start --auto-watch --single-run --coverage --grep"
+  },
+  "peerDependencies": {
+    "chart.js": "^3.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "chart.js": "^3.2.0",
+    "chartjs-adapter-luxon": "^1.0.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.24.0",
+    "eslint-config-chartjs": "^0.3.0",
+    "eslint-plugin-es": "^4.1.0",
+    "eslint-plugin-html": "^6.1.1",
+    "jasmine": "^3.6.3",
+    "karma": "^5.2.3",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.0.3",
+    "karma-firefox-launcher": "^2.1.0",
+    "karma-jasmine": "^4.0.1",
+    "karma-jasmine-html-reporter": "^1.5.4",
+    "karma-rollup-preprocessor": "^7.0.5",
+    "luxon": "^1.25.0",
+    "rollup": "^2.35.1",
+    "rollup-plugin-istanbul": "^3.0.0",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "www.chartjs.org",
+  "version": "2.1.2",
+  "description": "Chart.js Website",
+  "main": "index.js",
+  "author": "Nick Downie <hello@nickdownie.com> (http://www.nickdownie.com/)",
+  "license": "MIT",
+  "private": true,
+  "browserslist": [
+    "defaults"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-less": "^4.0.1",
+    "gulp-nunjucks": "^5.0.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-util": "^3.0.8",
+    "highlight.js": "^9.18.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "chart.js": "^2.8.0",
+    "merge-stream": "^2.0.0",
+    "normalize.css": "^8.0.1"
+  }
+}
