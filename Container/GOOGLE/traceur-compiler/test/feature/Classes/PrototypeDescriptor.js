@@ -1,6 +1,6 @@
 class C {}
 
-var descr = Object.getOwnPropertyDescriptor(C, 'prototype');
+var descr = Object.getOwnPropertyDescriptor(C, "prototype");
 assert.isFalse(descr.enumerable);
 assert.isFalse(descr.configurable);
 assert.isFalse(descr.writable);

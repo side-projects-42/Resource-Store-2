@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {RewriteTailCallsTransformer} from './RewriteTailCallsTransformer.js';
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { RewriteTailCallsTransformer } from "./RewriteTailCallsTransformer.js";
 import {
   createFunctionBody,
   createFunctionExpression,
-  createIdentifierExpression as id
-} from './ParseTreeFactory.js';
+  createIdentifierExpression as id,
+} from "./ParseTreeFactory.js";
 import {
   parseExpression,
   parseStatement,
-  parseStatements
-} from './PlaceholderParser.js';
+  parseStatements,
+} from "./PlaceholderParser.js";
 import {
   AnonBlock,
   FunctionDeclaration,
   FunctionExpression,
-} from '../syntax/trees/ParseTrees.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
+} from "../syntax/trees/ParseTrees.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
 
 //
 // Example:
@@ -50,8 +50,9 @@ import ImportRuntimeTrait from './ImportRuntimeTrait.js';
 //   }, this, arguments);
 // })
 
-export class ProperTailCallTransformer extends
-    ImportRuntimeTrait(TempVarTransformer) {
+export class ProperTailCallTransformer extends ImportRuntimeTrait(
+  TempVarTransformer
+) {
   // TODO(mnieper): This transformer currently expects that classes and template
   // literals have already been desugared. Otherwise they are not guaranteed
   // to have proper tail calls.
@@ -70,11 +71,11 @@ export class ProperTailCallTransformer extends
 
     let nameIdExpression = id(tree.name.identifierToken);
 
-    const initTailRecursiveFunction =
-        this.getRuntimeExpression('initTailRecursiveFunction');
+    const initTailRecursiveFunction = this.getRuntimeExpression(
+      "initTailRecursiveFunction"
+    );
 
-    let setupFlagExpression = parseExpression
-        `${initTailRecursiveFunction}(${nameIdExpression})`;
+    let setupFlagExpression = parseExpression`${initTailRecursiveFunction}(${nameIdExpression})`;
 
     let funcDecl = this.transformFunction_(tree, FunctionDeclaration);
     if (funcDecl === tree) {
@@ -84,8 +85,11 @@ export class ProperTailCallTransformer extends
     // Function declarations in blocks do not hoist. In that case we add the
     // variable declaration after the function declaration.
 
-    let tmpVar = id(this.inBlock_ ?
-        this.getTempIdentifier() : this.addTempVar(setupFlagExpression));
+    let tmpVar = id(
+      this.inBlock_
+        ? this.getTempIdentifier()
+        : this.addTempVar(setupFlagExpression)
+    );
 
     if (!this.inBlock_) {
       return funcDecl;
@@ -93,7 +97,7 @@ export class ProperTailCallTransformer extends
 
     return new AnonBlock(null, [
       funcDecl,
-      parseStatement `var ${tmpVar} = ${setupFlagExpression};`
+      parseStatement`var ${tmpVar} = ${setupFlagExpression};`,
     ]);
   }
 
@@ -104,17 +108,16 @@ export class ProperTailCallTransformer extends
       return tree;
     }
 
-    let functionExpression =
-        this.transformFunction_(tree, FunctionExpression);
+    let functionExpression = this.transformFunction_(tree, FunctionExpression);
 
     if (functionExpression === tree) {
       return tree;
     }
 
-    const initTailRecursiveFunction =
-        this.getRuntimeExpression('initTailRecursiveFunction');
-    return parseExpression `${
-        initTailRecursiveFunction}(${functionExpression})`;
+    const initTailRecursiveFunction = this.getRuntimeExpression(
+      "initTailRecursiveFunction"
+    );
+    return parseExpression`${initTailRecursiveFunction}(${functionExpression})`;
   }
 
   transformFunction_(tree, constructor) {
@@ -124,11 +127,18 @@ export class ProperTailCallTransformer extends
     }
     let func = id(this.getTempIdentifier());
     let innerFunction = createFunctionExpression(tree.parameterList, body);
-    const call = this.getRuntimeExpression('call');
-    let outerBody = createFunctionBody(parseStatements `
+    const call = this.getRuntimeExpression("call");
+    let outerBody = createFunctionBody(parseStatements`
         return ${call}(${innerFunction}, this, arguments);`);
-    return new constructor(tree.location, tree.name, tree.functionKind,
-        tree.parameterList, tree.typeAnnotation, tree.annotations, outerBody);
+    return new constructor(
+      tree.location,
+      tree.name,
+      tree.functionKind,
+      tree.parameterList,
+      tree.typeAnnotation,
+      tree.annotations,
+      outerBody
+    );
   }
 
   transformBlock(tree) {

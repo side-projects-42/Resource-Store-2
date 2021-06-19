@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {State} from './State.js';
+import { State } from "./State.js";
 
 export class FallThroughState extends State {
   /**
@@ -33,9 +33,10 @@ export class FallThroughState extends State {
    */
   replaceState(oldState, newState) {
     return new FallThroughState(
-        State.replaceStateId(this.id, oldState, newState),
-        State.replaceStateId(this.fallThroughState, oldState, newState),
-        this.statements);
+      State.replaceStateId(this.id, oldState, newState),
+      State.replaceStateId(this.fallThroughState, oldState, newState),
+      this.statements
+    );
   }
 
   /**
@@ -47,7 +48,7 @@ export class FallThroughState extends State {
   transform(enclosingFinally, machineEndState, reporter) {
     return [
       ...this.statements,
-      ...State.generateJump(enclosingFinally, this.fallThroughState)
+      ...State.generateJump(enclosingFinally, this.fallThroughState),
     ];
   }
 }

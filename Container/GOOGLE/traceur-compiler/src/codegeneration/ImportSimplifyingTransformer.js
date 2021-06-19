@@ -18,8 +18,8 @@ import {
   ImportSpecifier,
   ImportSpecifierSet,
   Module,
-} from '../syntax/trees/ParseTrees.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+} from "../syntax/trees/ParseTrees.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 import {
   ANON_BLOCK,
   IMPORT_CLAUSE_PAIR,
@@ -27,8 +27,8 @@ import {
   IMPORT_SPECIFIER_SET,
   IMPORTED_BINDING,
   NAME_SPACE_IMPORT,
-} from '../syntax/trees/ParseTreeType.js';
-import {createIdentifierToken} from './ParseTreeFactory.js';
+} from "../syntax/trees/ParseTreeType.js";
+import { createIdentifierToken } from "./ParseTreeFactory.js";
 
 /**
  * Normalizes import declarations to a simpler form. This is so that the
@@ -81,16 +81,13 @@ export class ImportSimplifyingTransformer extends ParseTreeTransformer {
     }
 
     if (importClause.type === IMPORT_CLAUSE_PAIR) {
-      let {first, second} = importClause;
+      let { first, second } = importClause;
       if (second.type === IMPORT_SPECIFIER_SET) {
         // import x, {a as b} from 'mod';
         // =>
         // import {default as x, a as b} from 'mod';
         let defaultSpecifier = this.transformAny(first);
-        let specifiers = [
-          defaultSpecifier,
-          ...second.specifiers
-        ];
+        let specifiers = [defaultSpecifier, ...second.specifiers];
         let set = new ImportSpecifierSet(first.location, specifiers);
         return new ImportDeclaration(tree.location, set, tree.moduleSpecifier);
       }
@@ -99,12 +96,18 @@ export class ImportSimplifyingTransformer extends ParseTreeTransformer {
       // =>
       // import {default as x} from 'mod';
       // import * as m from 'mod';
-      let firstImport =
-          new ImportDeclaration(tree.location, first, tree.moduleSpecifier);
+      let firstImport = new ImportDeclaration(
+        tree.location,
+        first,
+        tree.moduleSpecifier
+      );
       // Transform the default import again.
       firstImport = this.transformAny(firstImport);
-      let secondImport =
-          new ImportDeclaration(tree.location, second, tree.moduleSpecifier);
+      let secondImport = new ImportDeclaration(
+        tree.location,
+        second,
+        tree.moduleSpecifier
+      );
       return new AnonBlock(null, [firstImport, secondImport]);
     }
 
@@ -120,7 +123,7 @@ export class ImportSimplifyingTransformer extends ParseTreeTransformer {
     // x
     // =>
     // default as x
-    let name = createIdentifierToken('default');
+    let name = createIdentifierToken("default");
     return new ImportSpecifier(tree.location, tree, name);
   }
 }

@@ -20,9 +20,9 @@ import {
   CASCADE_EXPRESSION,
   IDENTIFIER_EXPRESSION,
   MEMBER_EXPRESSION,
-  MEMBER_LOOKUP_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+  MEMBER_LOOKUP_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   createAssignmentExpression,
   createBinaryOperator,
@@ -32,8 +32,8 @@ import {
   createIdentifierExpression,
   createMemberExpression,
   createMemberLookupExpression,
-  createParenExpression
-} from './ParseTreeFactory.js';
+  createParenExpression,
+} from "./ParseTreeFactory.js";
 
 /**
  * Member expressions (and member lookup expressions) are built from right to
@@ -47,25 +47,29 @@ function prependMemberExpression(name, rest) {
     case MEMBER_EXPRESSION:
       // rest = operand.name
       return createMemberExpression(
-          prependMemberExpression(name, rest.operand),
-          rest.memberName);
+        prependMemberExpression(name, rest.operand),
+        rest.memberName
+      );
     case MEMBER_LOOKUP_EXPRESSION:
       // rest = operand[memberExpression]
       return createMemberLookupExpression(
-          prependMemberExpression(name, rest.operand),
-          rest.memberExpression);
+        prependMemberExpression(name, rest.operand),
+        rest.memberExpression
+      );
     case IDENTIFIER_EXPRESSION:
       return createMemberExpression(name, rest.identifierToken);
     case CALL_EXPRESSION:
       return createCallExpression(
-          prependMemberExpression(name, rest.operand),
-          rest.args);
+        prependMemberExpression(name, rest.operand),
+        rest.args
+      );
     case CASCADE_EXPRESSION:
       return createCascadeExpression(
-          prependMemberExpression(name, rest.operand),
-          rest.expressions);
+        prependMemberExpression(name, rest.operand),
+        rest.expressions
+      );
     default:
-      throw Error('Not reachable');
+      throw Error("Not reachable");
   }
 }
 
@@ -102,8 +106,9 @@ export class CascadeExpressionTransformer extends TempVarTransformer {
     var ident = createIdentifierExpression(this.addTempVar());
 
     // Transform inner .{} before outer.
-    var expressions = this.transformList(tree.expressions.
-        map(this.desugarExpression_.bind(this, ident)));
+    var expressions = this.transformList(
+      tree.expressions.map(this.desugarExpression_.bind(this, ident))
+    );
 
     expressions.unshift(createAssignmentExpression(ident, operand));
     expressions.push(ident);
@@ -119,8 +124,11 @@ export class CascadeExpressionTransformer extends TempVarTransformer {
       case CASCADE_EXPRESSION:
         return this.desugarCascadeExpression_(ident, tree);
       default:
-        this.reporter_.reportError(tree.location.start,
-            'Unsupported expression type in cascade: %s', tree.type);
+        this.reporter_.reportError(
+          tree.location.start,
+          "Unsupported expression type in cascade: %s",
+          tree.type
+        );
     }
   }
 
@@ -135,9 +143,10 @@ export class CascadeExpressionTransformer extends TempVarTransformer {
    */
   desugarBinaryExpression_(ident, tree) {
     return createBinaryOperator(
-        prependMemberExpression(ident, tree.left),
-        tree.operator,
-        tree.right);
+      prependMemberExpression(ident, tree.left),
+      tree.operator,
+      tree.right
+    );
   }
 
   /**
@@ -175,7 +184,9 @@ export class CascadeExpressionTransformer extends TempVarTransformer {
    * @return {ParseTree}
    */
   static transformTree(identifierGenerator, reporter, tree) {
-    return new CascadeExpressionTransformer(identifierGenerator, reporter).
-        transformAny(tree);
+    return new CascadeExpressionTransformer(
+      identifierGenerator,
+      reporter
+    ).transformAny(tree);
   }
 }

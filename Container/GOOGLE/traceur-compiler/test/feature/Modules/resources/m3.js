@@ -1,2 +1,2 @@
-import {var as x} from './m2.js';
-export {x};
+import { var as x } from "./m2.js";
+export { x };

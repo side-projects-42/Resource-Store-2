@@ -12,58 +12,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-suite('Object.js', function() {
-
-  test('Object.assign(target, source)', function() {
+suite("Object.js", function () {
+  test("Object.assign(target, source)", function () {
     var target = {};
-    var source = {foo: 1};
+    var source = { foo: 1 };
 
     assert.deepEqual(Object.assign(target, source), source);
   });
 
-  test('Object.assign(target[, ...])', function() {
+  test("Object.assign(target[, ...])", function () {
     var target = {};
-    var a = {foo: 1};
-    var b = {foo: 2, bar: 1};
-    var c = {foo: 3, bar: 2, baz: 1};
+    var a = { foo: 1 };
+    var b = { foo: 2, bar: 1 };
+    var c = { foo: 3, bar: 2, baz: 1 };
 
-    assert.deepEqual(
-      Object.assign(target, a, b, c), {foo: 3, bar: 2, baz: 1}
-    );
-  });
-
-  test('Object.assign, only non-enumerable', function() {
-    var target = {};
-    var a = Object.defineProperties({}, {
-      foo: {
-        value: 1,
-        enumerable: false
-      },
-      bar: {
-        value: 1,
-        enumerable: true
-      }
+    assert.deepEqual(Object.assign(target, a, b, c), {
+      foo: 3,
+      bar: 2,
+      baz: 1,
     });
-
-    assert.deepEqual(
-      Object.assign(target, a), {bar: 1}
-    );
   });
 
-  test('Object.assign(target, undefined)', function() {
+  test("Object.assign, only non-enumerable", function () {
+    var target = {};
+    var a = Object.defineProperties(
+      {},
+      {
+        foo: {
+          value: 1,
+          enumerable: false,
+        },
+        bar: {
+          value: 1,
+          enumerable: true,
+        },
+      }
+    );
+
+    assert.deepEqual(Object.assign(target, a), { bar: 1 });
+  });
+
+  test("Object.assign(target, undefined)", function () {
     var target = {};
     var source = undefined;
 
     assert.deepEqual(Object.assign(target, source), target);
   });
 
-  test('Object.assign(target, null)', function() {
+  test("Object.assign(target, null)", function () {
     var target = {};
     var source = null;
 
     assert.deepEqual(Object.assign(target, source), target);
   });
-
 });

@@ -11,18 +11,17 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.drive');
-goog.provide('wtf.io.drive.DriveFile');
+goog.provide("wtf.io.drive");
+goog.provide("wtf.io.drive.DriveFile");
 
-goog.require('goog.asserts');
-goog.require('goog.dom');
-goog.require('goog.dom.TagName');
-goog.require('goog.result');
-goog.require('goog.result.Result');
-goog.require('goog.result.SimpleResult');
-goog.require('wtf');
-goog.require('wtf.timing');
-
+goog.require("goog.asserts");
+goog.require("goog.dom");
+goog.require("goog.dom.TagName");
+goog.require("goog.result");
+goog.require("goog.result.Result");
+goog.require("goog.result.SimpleResult");
+goog.require("wtf");
+goog.require("wtf.timing");
 
 /**
  * App ID.
@@ -30,8 +29,7 @@ goog.require('wtf.timing');
  * @type {string}
  * @private
  */
-wtf.io.drive.APP_ID_ = 'gmdhhnlkjmknaopofnadmoamhmnlicme';
-
+wtf.io.drive.APP_ID_ = "gmdhhnlkjmknaopofnadmoamhmnlicme";
 
 /**
  * Release client ID key.
@@ -39,9 +37,7 @@ wtf.io.drive.APP_ID_ = 'gmdhhnlkjmknaopofnadmoamhmnlicme';
  * @type {string}
  * @private
  */
-wtf.io.drive.RELEASE_CLIENT_ID_ =
-    '918719667958.apps.googleusercontent.com';
-
+wtf.io.drive.RELEASE_CLIENT_ID_ = "918719667958.apps.googleusercontent.com";
 
 /**
  * Debug client ID key.
@@ -50,8 +46,7 @@ wtf.io.drive.RELEASE_CLIENT_ID_ =
  * @private
  */
 wtf.io.drive.DEBUG_CLIENT_ID_ =
-    '918719667958-u64iesb8p6a7urc1mcnccv3ism7tuqns.apps.googleusercontent.com';
-
+  "918719667958-u64iesb8p6a7urc1mcnccv3ism7tuqns.apps.googleusercontent.com";
 
 /**
  * OAuth scopes that will be requested.
@@ -60,28 +55,26 @@ wtf.io.drive.DEBUG_CLIENT_ID_ =
  * @private
  */
 wtf.io.drive.OAUTH_SCOPES_ = [
-  'https://www.googleapis.com/auth/drive',
-  'https://www.googleapis.com/auth/urlshortener'
+  "https://www.googleapis.com/auth/drive",
+  "https://www.googleapis.com/auth/urlshortener",
 ];
-
 
 /**
  * Gets a value indicating whether the drive API is usable.
  * @return {boolean} True if the drive API can be used.
  */
-wtf.io.drive.isSupported = function() {
+wtf.io.drive.isSupported = function () {
   // Ignore in debug builds too, as it throws exceptions on load that are
   // annoying.
   return COMPILED && !wtf.CHROME_EXTENSION;
 };
-
 
 /**
  * Gets the OAuth client ID.
  * @return {string} Client ID.
  * @private
  */
-wtf.io.drive.getClientId_ = function() {
+wtf.io.drive.getClientId_ = function () {
   // Use the debug (localhost) oauth token unless running in the extension.
   var clientId = wtf.io.drive.DEBUG_CLIENT_ID_;
   if (wtf.CHROME_EXTENSION) {
@@ -90,14 +83,13 @@ wtf.io.drive.getClientId_ = function() {
   return clientId;
 };
 
-
 /**
  * Prepares the Drive API.
  * This should be called at startup. If it's not called the oauth popup will
  * flicker if the user is authenticated already when calling
  * {@see #authenticate}.
  */
-wtf.io.drive.prepare = function() {
+wtf.io.drive.prepare = function () {
   // Ignore if not supported.
   if (!wtf.io.drive.isSupported()) {
     return;
@@ -108,20 +100,20 @@ wtf.io.drive.prepare = function() {
   goog.asserts.assert(body);
   var script;
 
-  goog.global['wtf_io_drive_prepare_callback'] = function() {
-    delete goog.global['wtf_io_drive_prepare_callback'];
-    wtf.timing.setImmediate(function() {
+  goog.global["wtf_io_drive_prepare_callback"] = function () {
+    delete goog.global["wtf_io_drive_prepare_callback"];
+    wtf.timing.setImmediate(function () {
       // This does an immediate authenticate attempt - if the user is not authed
       // it'll fail, otherwise it'll prevent the need for the popup later on.
       // Unfortunately gapi cannot be used in its onload callback, so we wait.
       var clientId = wtf.io.drive.getClientId_();
-      var scope = wtf.io.drive.OAUTH_SCOPES_.join(' ');
+      var scope = wtf.io.drive.OAUTH_SCOPES_.join(" ");
       var config = {
-        'client_id': clientId,
-        'scope': scope,
-        'immediate': true
+        client_id: clientId,
+        scope: scope,
+        immediate: true,
       };
-      gapi.auth.authorize(config, function() {
+      gapi.auth.authorize(config, function () {
         // TODO(benvanik): set a result? make the whole flow async?
         // Error detection is flaky here.
       });
@@ -129,15 +121,15 @@ wtf.io.drive.prepare = function() {
   };
 
   script = dom.createElement(goog.dom.TagName.SCRIPT);
-  script.src = 'https://apis.google.com/js/client.js?onload=' +
-      'wtf_io_drive_prepare_callback';
+  script.src =
+    "https://apis.google.com/js/client.js?onload=" +
+    "wtf_io_drive_prepare_callback";
   body.appendChild(script);
 
   script = dom.createElement(goog.dom.TagName.SCRIPT);
-  script.src = 'https://www.google.com/jsapi';
+  script.src = "https://www.google.com/jsapi";
   body.appendChild(script);
 };
-
 
 /**
  * Authenticates the user.
@@ -145,7 +137,7 @@ wtf.io.drive.prepare = function() {
  * blocker will kill the dialog.
  * @return {!goog.result.Result} Async result, set when authenticated.
  */
-wtf.io.drive.authenticate = function() {
+wtf.io.drive.authenticate = function () {
   var result = new goog.result.SimpleResult();
 
   if (gapi.auth.getToken()) {
@@ -154,13 +146,13 @@ wtf.io.drive.authenticate = function() {
   }
 
   var clientId = wtf.io.drive.getClientId_();
-  var scope = wtf.io.drive.OAUTH_SCOPES_.join(' ');
+  var scope = wtf.io.drive.OAUTH_SCOPES_.join(" ");
   var config = {
-    'client_id': clientId,
-    'scope': scope,
-    'immediate': false
+    client_id: clientId,
+    scope: scope,
+    immediate: false,
   };
-  gapi.auth.authorize(config, function() {
+  gapi.auth.authorize(config, function () {
     var accessToken = gapi.auth.getToken();
     if (!accessToken) {
       result.setError();
@@ -172,7 +164,6 @@ wtf.io.drive.authenticate = function() {
   return result;
 };
 
-
 /**
  * Async result for the file picker scripts.
  * This will be set when the picker is loading or has loaded.
@@ -180,7 +171,6 @@ wtf.io.drive.authenticate = function() {
  * @private
  */
 wtf.io.drive.filePickerLoadResult_ = null;
-
 
 /**
  * Shows a file picker.
@@ -192,12 +182,12 @@ wtf.io.drive.filePickerLoadResult_ = null;
  * @return {!goog.result.Result} Async result. The value will be a list of
  *     ['file name', 'file id'] tuples.
  */
-wtf.io.drive.showFilePicker = function(options) {
+wtf.io.drive.showFilePicker = function (options) {
   var result = new goog.result.SimpleResult();
 
   // Authenticate first.
   // This is a no-op if the user has already authenticated.
-  goog.result.wait(wtf.io.drive.authenticate(), function(result) {
+  goog.result.wait(wtf.io.drive.authenticate(), function (result) {
     if (result.getState() == goog.result.Result.State.ERROR) {
       result.setError(result.getError());
       return;
@@ -208,42 +198,42 @@ wtf.io.drive.showFilePicker = function(options) {
   function loadPickerApi() {
     if (!wtf.io.drive.filePickerLoadResult_) {
       wtf.io.drive.filePickerLoadResult_ = new goog.result.SimpleResult();
-      google.load('picker', '1', {
-        'callback': function() {
+      google.load("picker", "1", {
+        callback: function () {
           wtf.io.drive.filePickerLoadResult_.setValue(true);
-        }
+        },
       });
     }
     goog.result.wait(wtf.io.drive.filePickerLoadResult_, show);
-  };
+  }
 
   function show() {
     var mimeTypes = [
-      '*.wtf-trace,application/x-extension-wtf-trace',
-      '*.wtf-json,application/x-extension-wtf-json',
-      'application/octet-stream'
-    ].join(',');
+      "*.wtf-trace,application/x-extension-wtf-trace",
+      "*.wtf-json,application/x-extension-wtf-json",
+      "application/octet-stream",
+    ].join(",");
 
     var views = [];
-    views.push(new google.picker.View('recently-picked'));
-    views.push(new google.picker.View('folders'));
+    views.push(new google.picker.View("recently-picked"));
+    views.push(new google.picker.View("folders"));
 
     var picker = new google.picker.PickerBuilder();
-    picker.setTitle(options.title || 'Select a file');
-    picker.enableFeature('multiselectEnabled');
+    picker.setTitle(options.title || "Select a file");
+    picker.enableFeature("multiselectEnabled");
     picker.setAppId(wtf.io.drive.APP_ID_);
     picker.setSelectableMimeTypes(mimeTypes);
-    picker.setCallback(function(data) {
-      if (data['action'] == 'picked') {
-        var docs = data['docs'];
+    picker.setCallback(function (data) {
+      if (data["action"] == "picked") {
+        var docs = data["docs"];
         var files = [];
         for (var n = 0; n < docs.length; n++) {
-          var fileName = docs[n]['name'];
-          var fileId = docs[n]['id'];
+          var fileName = docs[n]["name"];
+          var fileId = docs[n]["id"];
           files.push([fileName, fileId]);
         }
         result.setValue(files);
-      } else if (data['action'] == 'cancel') {
+      } else if (data["action"] == "cancel") {
         result.setError();
       }
     });
@@ -253,11 +243,10 @@ wtf.io.drive.showFilePicker = function(options) {
     }
     var builtPicker = picker.build();
     builtPicker.setVisible(true);
-  };
+  }
 
   return result;
 };
-
 
 /**
  * @typedef {{
@@ -270,7 +259,6 @@ wtf.io.drive.showFilePicker = function(options) {
  */
 wtf.io.drive.DriveFile;
 
-
 /**
  * Async result for the download file scripts.
  * This will be set when the download file script is loading or has loaded.
@@ -279,21 +267,20 @@ wtf.io.drive.DriveFile;
  */
 wtf.io.drive.downloadFileLoadResult_ = null;
 
-
 /**
  * Begins querying a file from Drive.
  * @param {string} fileId Drive file ID.
  * @return {!goog.result.Result} Async result. The value will be a
  *     {@see wtf.io.drive.DriveFile} object.
  */
-wtf.io.drive.queryFile = function(fileId) {
+wtf.io.drive.queryFile = function (fileId) {
   var result = new goog.result.SimpleResult();
 
   var clientId = wtf.io.drive.getClientId_();
 
   // Authenticate first.
   // This is a no-op if the user has already authenticated.
-  goog.result.wait(wtf.io.drive.authenticate(), function(result) {
+  goog.result.wait(wtf.io.drive.authenticate(), function (result) {
     if (result.getState() == goog.result.Result.State.ERROR) {
       result.setError(result.getError());
       return;
@@ -304,12 +291,12 @@ wtf.io.drive.queryFile = function(fileId) {
   function loadDriveApi() {
     if (!wtf.io.drive.downloadFileLoadResult_) {
       wtf.io.drive.downloadFileLoadResult_ = new goog.result.SimpleResult();
-      gapi.client.load('drive', 'v2', function() {
+      gapi.client.load("drive", "v2", function () {
         wtf.io.drive.downloadFileLoadResult_.setValue(true);
       });
     }
     goog.result.wait(wtf.io.drive.downloadFileLoadResult_, getMetadata);
-  };
+  }
 
   function getMetadata() {
     var token = gapi.auth.getToken();
@@ -317,13 +304,15 @@ wtf.io.drive.queryFile = function(fileId) {
     var accessToken = token.access_token;
 
     var url =
-        'https://www.googleapis.com/drive/v2/files/' + fileId +
-        '?key=' + clientId;
+      "https://www.googleapis.com/drive/v2/files/" +
+      fileId +
+      "?key=" +
+      clientId;
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-    xhr.onload = function() {
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
+    xhr.onload = function () {
       if (xhr.status != 200) {
         result.setError();
         return;
@@ -331,23 +320,22 @@ wtf.io.drive.queryFile = function(fileId) {
 
       var json = goog.global.JSON.parse(xhr.responseText);
       var driveFile = {
-        title: json['title'],
-        filename: json['originalFilename'],
-        fileExtension: json['fileExtension'],
-        mimeType: json['mimeType'],
-        downloadUrl: json['downloadUrl']
+        title: json["title"],
+        filename: json["originalFilename"],
+        fileExtension: json["fileExtension"],
+        mimeType: json["mimeType"],
+        downloadUrl: json["downloadUrl"],
       };
       result.setValue(driveFile);
     };
-    xhr.onerror = function() {
+    xhr.onerror = function () {
       result.setError();
     };
     xhr.send(null);
-  };
+  }
 
   return result;
 };
-
 
 /**
  * Begins downloading a file from Drive.
@@ -358,12 +346,12 @@ wtf.io.drive.queryFile = function(fileId) {
  *     call to {@see wtf.io.drive#queryFile}.
  * @return {!goog.result.Result} Async result. The value will be an XHR object.
  */
-wtf.io.drive.downloadFile = function(driveFile) {
+wtf.io.drive.downloadFile = function (driveFile) {
   var result = new goog.result.SimpleResult();
 
   // Authenticate first.
   // This is a no-op if the user has already authenticated.
-  goog.result.wait(wtf.io.drive.authenticate(), function(result) {
+  goog.result.wait(wtf.io.drive.authenticate(), function (result) {
     if (result.getState() == goog.result.Result.State.ERROR) {
       result.setError(result.getError());
       return;
@@ -374,12 +362,12 @@ wtf.io.drive.downloadFile = function(driveFile) {
   function loadDriveApi() {
     if (!wtf.io.drive.downloadFileLoadResult_) {
       wtf.io.drive.downloadFileLoadResult_ = new goog.result.SimpleResult();
-      gapi.client.load('drive', 'v2', function() {
+      gapi.client.load("drive", "v2", function () {
         wtf.io.drive.downloadFileLoadResult_.setValue(true);
       });
     }
     goog.result.wait(wtf.io.drive.downloadFileLoadResult_, download);
-  };
+  }
 
   function download() {
     var token = gapi.auth.getToken();
@@ -388,21 +376,21 @@ wtf.io.drive.downloadFile = function(driveFile) {
 
     var xhr = new XMLHttpRequest();
     switch (driveFile.mimeType) {
-      case 'application/octet-stream':
-        xhr.responseType = 'arraybuffer';
+      case "application/octet-stream":
+        xhr.responseType = "arraybuffer";
         break;
     }
 
-    xhr.open('GET', driveFile.downloadUrl, true);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-    xhr.onerror = function() {
+    xhr.open("GET", driveFile.downloadUrl, true);
+    xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
+    xhr.onerror = function () {
       result.setError();
     };
 
     // We don't send here, as we let the caller do it.
     // xhr.send(null);
     result.setValue(xhr);
-  };
+  }
 
   return result;
 };

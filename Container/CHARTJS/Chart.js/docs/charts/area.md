@@ -8,14 +8,14 @@ This feature is implemented by the [`filler` plugin](https://github.com/chartjs/
 
 ## Filling modes
 
-| Mode | Type | Values |
-| :--- | :--- | :--- |
-| Absolute dataset index | `number` | `1`, `2`, `3`, ... |
-| Relative dataset index | `string` | `'-1'`, `'-2'`, `'+1'`, ... |
-| Boundary | `string` | `'start'`, `'end'`, `'origin'` |
-| Disabled <sup>1</sup> | `boolean` | `false` |
-| Stacked value below | `string` | `'stack'` |
-| Axis value | `object` | `{ value: number; }` |
+| Mode                   | Type      | Values                         |
+| :--------------------- | :-------- | :----------------------------- |
+| Absolute dataset index | `number`  | `1`, `2`, `3`, ...             |
+| Relative dataset index | `string`  | `'-1'`, `'-2'`, `'+1'`, ...    |
+| Boundary               | `string`  | `'start'`, `'end'`, `'origin'` |
+| Disabled <sup>1</sup>  | `boolean` | `false`                        |
+| Stacked value below    | `string`  | `'stack'`                      |
+| Axis value             | `object`  | `{ value: number; }`           |
 
 > <sup>1</sup> for backward compatibility, `fill: true` is equivalent to `fill: 'origin'`<br/>
 
@@ -23,42 +23,42 @@ This feature is implemented by the [`filler` plugin](https://github.com/chartjs/
 
 ```javascript
 new Chart(ctx, {
-    data: {
-        datasets: [
-            {fill: 'origin'},      // 0: fill to 'origin'
-            {fill: '+2'},          // 1: fill to dataset 3
-            {fill: 1},             // 2: fill to dataset 1
-            {fill: false},         // 3: no fill
-            {fill: '-2'},          // 4: fill to dataset 2
-            {fill: {value: 25}}    // 5: fill to axis value 25
-        ]
-    }
+  data: {
+    datasets: [
+      { fill: "origin" }, // 0: fill to 'origin'
+      { fill: "+2" }, // 1: fill to dataset 3
+      { fill: 1 }, // 2: fill to dataset 1
+      { fill: false }, // 3: no fill
+      { fill: "-2" }, // 4: fill to dataset 2
+      { fill: { value: 25 } }, // 5: fill to axis value 25
+    ],
+  },
 });
 ```
 
 If you need to support multiple colors when filling from one dataset to another, you may specify an object with the following option :
 
-| Param | Type | Description |
-| :--- | :--- | :--- |
+| Param    | Type                                    | Description                                                                                                                          |
+| :------- | :-------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
 | `target` | `number`, `string`, `boolean`, `object` | The accepted values are the same as the filling mode values, so you may use absolute and relative dataset indexes and/or boundaries. |
-| `above` | `Color` | If no color is set, the default color will be the background color of the chart. |
-| `below` | `Color` | Same as the above. |
+| `above`  | `Color`                                 | If no color is set, the default color will be the background color of the chart.                                                     |
+| `below`  | `Color`                                 | Same as the above.                                                                                                                   |
 
 ### Example with multiple colors
 
 ```javascript
 new Chart(ctx, {
-    data: {
-        datasets: [
-            {
-              fill: {
-                target: 'origin',
-                above: 'rgb(255, 0, 0)',   // Area will be red above the origin
-                below: 'rgb(0, 0, 255)'    // And blue below the origin
-              }
-            }
-        ]
-    }
+  data: {
+    datasets: [
+      {
+        fill: {
+          target: "origin",
+          above: "rgb(255, 0, 0)", // Area will be red above the origin
+          below: "rgb(0, 0, 255)", // And blue below the origin
+        },
+      },
+    ],
+  },
 });
 ```
 
@@ -66,10 +66,10 @@ new Chart(ctx, {
 
 Namespace: `options.plugins.filler`
 
-| Option | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `drawTime` | `string` | `beforeDatasetDraw` | Filler draw time. Supported values: `'beforeDraw'`, `'beforeDatasetDraw'`, `'beforeDatasetsDraw'`
-| [`propagate`](#propagate) | `boolean` | `true` | Fill propagation when target is hidden.
+| Option                    | Type      | Default             | Description                                                                                       |
+| :------------------------ | :-------- | :------------------ | :------------------------------------------------------------------------------------------------ |
+| `drawTime`                | `string`  | `beforeDatasetDraw` | Filler draw time. Supported values: `'beforeDraw'`, `'beforeDatasetDraw'`, `'beforeDatasetsDraw'` |
+| [`propagate`](#propagate) | `boolean` | `true`              | Fill propagation when target is hidden.                                                           |
 
 ### propagate
 
@@ -81,22 +81,22 @@ If `true`, the fill area will be recursively extended to the visible target defi
 
 ```javascript
 new Chart(ctx, {
-    data: {
-        datasets: [
-            {fill: 'origin'},   // 0: fill to 'origin'
-            {fill: '-1'},       // 1: fill to dataset 0
-            {fill: 1},          // 2: fill to dataset 1
-            {fill: false},      // 3: no fill
-            {fill: '-2'}        // 4: fill to dataset 2
-        ]
+  data: {
+    datasets: [
+      { fill: "origin" }, // 0: fill to 'origin'
+      { fill: "-1" }, // 1: fill to dataset 0
+      { fill: 1 }, // 2: fill to dataset 1
+      { fill: false }, // 3: no fill
+      { fill: "-2" }, // 4: fill to dataset 2
+    ],
+  },
+  options: {
+    plugins: {
+      filler: {
+        propagate: true,
+      },
     },
-    options: {
-        plugins: {
-            filler: {
-                propagate: true
-            }
-        }
-    }
+  },
 });
 ```
 

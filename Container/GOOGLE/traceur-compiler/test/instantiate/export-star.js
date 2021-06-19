@@ -19,5 +19,5 @@ System.register(["./export-reassignment"], function($__export) {
   };
 });
 */
-export var b = 'localvalue';
-export * from './export-reassignment.js';
+export var b = "localvalue";
+export * from "./export-reassignment.js";

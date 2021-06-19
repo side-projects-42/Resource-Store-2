@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 
 import {
   BindingIdentifier,
@@ -29,8 +29,8 @@ import {
   PropertyNameShorthand,
   TemplateLiteralPortion,
   SuperExpression,
-  ThisExpression
-} from '../syntax/trees/ParseTrees.js';
+  ThisExpression,
+} from "../syntax/trees/ParseTrees.js";
 
 /**
  * Duplicates a ParseTree. Simply creates new leaf nodes so the
@@ -38,7 +38,6 @@ import {
  * thus create new branch nodes.
  */
 export class CloneTreeTransformer extends ParseTreeTransformer {
-
   /**
    * @param {BindingIdentifier} tree
    * @return {ParseTree}
@@ -174,6 +173,6 @@ export class CloneTreeTransformer extends ParseTreeTransformer {
   }
 }
 
-CloneTreeTransformer.cloneTree = function(tree) {
+CloneTreeTransformer.cloneTree = function (tree) {
   return new CloneTreeTransformer().transformAny(tree);
 };

@@ -3,7 +3,13 @@
 function testBlock() {
   // Test function expressions.
   {
-    var x = function g() { return 'g'; } || function h() { return 'h'; };
+    var x =
+      function g() {
+        return "g";
+      } ||
+      function h() {
+        return "h";
+      };
     return x;
   }
 }
@@ -11,4 +17,4 @@ function testBlock() {
 // ----------------------------------------------------------------------------
 
 var result = testBlock();
-assert.equal('g', result());
+assert.equal("g", result());

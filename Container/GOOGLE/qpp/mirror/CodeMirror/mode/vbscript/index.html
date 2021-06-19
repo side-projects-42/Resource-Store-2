@@ -1,18 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CodeMirror: VBScript mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="vbscript.js"></script>
-    <link rel="stylesheet" href="../../doc/docs.css">
-    <style type="text/css">.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
+    <link rel="stylesheet" href="../../doc/docs.css" />
+    <style type="text/css">
+      .CodeMirror {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+    </style>
   </head>
   <body>
     <h1>CodeMirror: VBScript mode</h1>
 
-<div><textarea id="code" name="code">
+    <div>
+      <textarea id="code" name="code">
 ' Pete Guhl
 ' 03-04-2012
 '
@@ -28,15 +34,16 @@ Else
 	' WScript.Echo "Oh Happy Day! Oh Happy DAY!"
 	boolTransmitOkYN = True
 End If
-</textarea></div>
+</textarea
+      >
+    </div>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true
+        lineNumbers: true,
       });
     </script>
 
     <p><strong>MIME types defined:</strong> <code>text/vbscript</code>.</p>
   </body>
 </html>
-

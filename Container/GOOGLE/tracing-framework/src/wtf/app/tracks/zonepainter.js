@@ -11,17 +11,15 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.tracks.ZonePainter');
+goog.provide("wtf.app.tracks.ZonePainter");
 
-goog.require('wtf');
-goog.require('wtf.events');
-goog.require('wtf.events.EventType');
-goog.require('wtf.math');
-goog.require('wtf.ui.ModifierKey');
-goog.require('wtf.ui.RangePainter');
-goog.require('wtf.ui.color.Palette');
-
-
+goog.require("wtf");
+goog.require("wtf.events");
+goog.require("wtf.events.EventType");
+goog.require("wtf.math");
+goog.require("wtf.ui.ModifierKey");
+goog.require("wtf.ui.RangePainter");
+goog.require("wtf.ui.color.Palette");
 
 /**
  * Zone track painter.
@@ -48,18 +46,19 @@ wtf.app.tracks.ZonePainter = function ZonePainter(canvas, zone, selection) {
    */
   this.selection_ = selection;
   this.selection_.addListener(
-      wtf.events.EventType.INVALIDATED, this.requestRepaint, this);
+    wtf.events.EventType.INVALIDATED,
+    this.requestRepaint,
+    this
+  );
 
   /**
    * Color palette used for drawing scopes/instances.
    * @type {!wtf.ui.color.Palette}
    * @private
    */
-  this.palette_ = new wtf.ui.color.Palette(
-      wtf.ui.color.Palette.SCOPE_COLORS);
+  this.palette_ = new wtf.ui.color.Palette(wtf.ui.color.Palette.SCOPE_COLORS);
 };
 goog.inherits(wtf.app.tracks.ZonePainter, wtf.ui.RangePainter);
-
 
 /**
  * Height of a scope (including border), in px.
@@ -69,7 +68,6 @@ goog.inherits(wtf.app.tracks.ZonePainter, wtf.ui.RangePainter);
  */
 wtf.app.tracks.ZonePainter.SCOPE_HEIGHT_ = 18;
 
-
 /**
  * Fake amount of time given to instance events so they show up.
  * @const
@@ -78,12 +76,12 @@ wtf.app.tracks.ZonePainter.SCOPE_HEIGHT_ = 18;
  */
 wtf.app.tracks.ZonePainter.INSTANCE_TIME_WIDTH_ = 0.001;
 
-
 /**
  * @override
  */
-wtf.app.tracks.ZonePainter.prototype.layoutInternal = function(
-    availableBounds) {
+wtf.app.tracks.ZonePainter.prototype.layoutInternal = function (
+  availableBounds
+) {
   var newBounds = availableBounds.clone();
   var eventList = this.zone_.getEventList();
   var maxDepth = eventList.getMaximumScopeDepth() + 2;
@@ -92,12 +90,10 @@ wtf.app.tracks.ZonePainter.prototype.layoutInternal = function(
   return newBounds;
 };
 
-
 /**
  * @override
  */
-wtf.app.tracks.ZonePainter.prototype.repaintInternal = function(
-    ctx, bounds) {
+wtf.app.tracks.ZonePainter.prototype.repaintInternal = function (ctx, bounds) {
   if (!this.isTimeRangeValid()) {
     return;
   }
@@ -106,7 +102,7 @@ wtf.app.tracks.ZonePainter.prototype.repaintInternal = function(
   var timeRight = this.timeRight;
 
   // Root time tracker.
-  ctx.fillStyle = 'rgb(200,200,200)';
+  ctx.fillStyle = "rgb(200,200,200)";
   ctx.fillRect(bounds.left, bounds.top, bounds.width, 1);
 
   var eventList = this.zone_.getEventList();
@@ -126,7 +122,6 @@ wtf.app.tracks.ZonePainter.prototype.repaintInternal = function(
   // TODO(benvanik): draw flow lines/arrows/etc.
 };
 
-
 /**
  * Draw events to the range renderers.
  * @param {!wtf.db.EventIterator} it Event iterator.
@@ -135,8 +130,12 @@ wtf.app.tracks.ZonePainter.prototype.repaintInternal = function(
  * @param {number} timeRight Right-most visible time.
  * @private
  */
-wtf.app.tracks.ZonePainter.prototype.drawEvents_ = function(
-    it, bounds, timeLeft, timeRight) {
+wtf.app.tracks.ZonePainter.prototype.drawEvents_ = function (
+  it,
+  bounds,
+  timeLeft,
+  timeRight
+) {
   var palette = this.palette_;
 
   // Get a table of matching event types (if a filter is set).
@@ -147,7 +146,8 @@ wtf.app.tracks.ZonePainter.prototype.drawEvents_ = function(
     var filter = this.selection_.getFilter();
     if (filter.getEventTypeFilter()) {
       matchedEventTypes = filter.getMatchedEventTypes(
-          this.zone_.getDatabase().getEventTypeTable());
+        this.zone_.getDatabase().getEventTypeTable()
+      );
     }
     argumentFilter = filter.getArgumentFilter();
   }
@@ -184,12 +184,20 @@ wtf.app.tracks.ZonePainter.prototype.drawEvents_ = function(
     }
 
     // Compute screen size.
-    var left = wtf.math.remap(enterTime,
-        timeLeft, timeRight,
-        bounds.left, bounds.left + bounds.width);
-    var right = wtf.math.remap(leaveTime,
-        timeLeft, timeRight,
-        bounds.left, bounds.left + bounds.width);
+    var left = wtf.math.remap(
+      enterTime,
+      timeLeft,
+      timeRight,
+      bounds.left,
+      bounds.left + bounds.width
+    );
+    var right = wtf.math.remap(
+      leaveTime,
+      timeLeft,
+      timeRight,
+      bounds.left,
+      bounds.left + bounds.width
+    );
     var screenWidth = right - left;
 
     // Clip with the screen.
@@ -199,7 +207,7 @@ wtf.app.tracks.ZonePainter.prototype.drawEvents_ = function(
       screenLeft = left;
     }
     // Math.min((bounds.left + bounds.width) - 0.999, right)
-    var screenRight = (bounds.left + bounds.width) - 0.999;
+    var screenRight = bounds.left + bounds.width - 0.999;
     if (screenRight > right) {
       screenRight = right;
     }
@@ -270,26 +278,35 @@ wtf.app.tracks.ZonePainter.prototype.drawEvents_ = function(
     if (screenWidth > 15) {
       name = name || it.getName();
       if (!isScope) {
-        name = '[' + name + ']';
+        name = "[" + name + "]";
       }
       var y = depth * wtf.app.tracks.ZonePainter.SCOPE_HEIGHT_;
       this.drawRangeLabel(
-          bounds, left, right, screenLeft, screenRight, y, name);
+        bounds,
+        left,
+        right,
+        screenLeft,
+        screenRight,
+        y,
+        name
+      );
     }
 
     it.next();
   }
 };
 
-
 wtf.preventInlining(wtf.app.tracks.ZonePainter.prototype.drawEvents_);
-
 
 /**
  * @override
  */
-wtf.app.tracks.ZonePainter.prototype.onClickInternal =
-    function(x, y, modifiers, bounds) {
+wtf.app.tracks.ZonePainter.prototype.onClickInternal = function (
+  x,
+  y,
+  modifiers,
+  bounds
+) {
   var it = this.hitTest_(x, y, bounds);
   if (!it) {
     return false;
@@ -301,27 +318,28 @@ wtf.app.tracks.ZonePainter.prototype.onClickInternal =
     if (it.isScope()) {
       var timeStart = it.getTime();
       var timeEnd = it.getEndTime();
-      commandManager.execute('goto_range', this, null, timeStart, timeEnd);
-      commandManager.execute('select_range', this, null, timeStart, timeEnd);
+      commandManager.execute("goto_range", this, null, timeStart, timeEnd);
+      commandManager.execute("select_range", this, null, timeStart, timeEnd);
     }
   } else {
     var filterString = it.getType().name;
-    commandManager.execute('filter_events', this, null, filterString, true);
+    commandManager.execute("filter_events", this, null, filterString, true);
   }
 
   return true;
 };
 
-
 /**
  * @override
  */
-wtf.app.tracks.ZonePainter.prototype.getInfoStringInternal =
-    function(x, y, bounds) {
+wtf.app.tracks.ZonePainter.prototype.getInfoStringInternal = function (
+  x,
+  y,
+  bounds
+) {
   var it = this.hitTest_(x, y, bounds);
   return it ? it.getInfoString(this.units) : undefined;
 };
-
 
 /**
  * Finds the event/scope at the given point.
@@ -331,13 +349,17 @@ wtf.app.tracks.ZonePainter.prototype.getInfoStringInternal =
  * @return {wtf.db.EventIterator} Result, if any.
  * @private
  */
-wtf.app.tracks.ZonePainter.prototype.hitTest_ = function(x, y, bounds) {
+wtf.app.tracks.ZonePainter.prototype.hitTest_ = function (x, y, bounds) {
   var timeLeft = this.timeLeft;
   var timeRight = this.timeRight;
 
-  var time = wtf.math.remap(x,
-      bounds.left, bounds.left + bounds.width,
-      timeLeft, timeRight);
+  var time = wtf.math.remap(
+    x,
+    bounds.left,
+    bounds.left + bounds.width,
+    timeLeft,
+    timeRight
+  );
 
   var eventList = this.zone_.getEventList();
   var it = eventList.getEventNearTime(time);
@@ -369,7 +391,7 @@ wtf.app.tracks.ZonePainter.prototype.hitTest_ = function(x, y, bounds) {
   } else {
     // Snap the end time to the parent.
     var timeEnd =
-        it.getTime() + wtf.app.tracks.ZonePainter.INSTANCE_TIME_WIDTH_;
+      it.getTime() + wtf.app.tracks.ZonePainter.INSTANCE_TIME_WIDTH_;
     var parentEndTime = it.getParentEndTime();
     if (parentEndTime && parentEndTime < timeEnd) {
       timeEnd = parentEndTime;

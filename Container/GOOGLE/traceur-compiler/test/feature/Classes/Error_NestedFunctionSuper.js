@@ -4,19 +4,20 @@
 
 class C {
   superM() {
-    return (function() {
+    return (function () {
       return super.m();
     })();
   }
   superX2() {
-    return (function() {
-      return (function() {
+    return (function () {
+      return (function () {
         return super.x;
       })();
     })();
   }
   constructor() {
-    (function() { super(); })();
+    (function () {
+      super();
+    })();
   }
 }
-

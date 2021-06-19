@@ -1,5 +1,7 @@
 export function X() {}
-X.toJSON = function () { return 'function X'; }
+X.toJSON = function () {
+  return "function X";
+};
 
 export function Anno(value) {
   this.annotation = true;

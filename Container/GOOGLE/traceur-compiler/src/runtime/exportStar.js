@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import exportStar from './modules/exportStar.js';
+import exportStar from "./modules/exportStar.js";
 $traceurRuntime.exportStar = exportStar;

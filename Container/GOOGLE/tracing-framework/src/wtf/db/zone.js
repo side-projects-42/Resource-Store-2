@@ -11,21 +11,19 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.Zone');
+goog.provide("wtf.db.Zone");
 
-goog.require('goog.Disposable');
-goog.require('goog.array');
-goog.require('wtf');
-goog.require('wtf.db.EventIndex');
-goog.require('wtf.db.EventList');
-goog.require('wtf.db.Filter');
-goog.require('wtf.db.FilterResult');
-goog.require('wtf.db.FrameList');
-goog.require('wtf.db.MarkList');
-goog.require('wtf.db.QueryResult');
-goog.require('wtf.db.TimeRangeList');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.array");
+goog.require("wtf");
+goog.require("wtf.db.EventIndex");
+goog.require("wtf.db.EventList");
+goog.require("wtf.db.Filter");
+goog.require("wtf.db.FilterResult");
+goog.require("wtf.db.FrameList");
+goog.require("wtf.db.MarkList");
+goog.require("wtf.db.QueryResult");
+goog.require("wtf.db.TimeRangeList");
 
 /**
  * Zone event store.
@@ -38,7 +36,7 @@ goog.require('wtf.db.TimeRangeList');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.db.Zone = function(db, name, type, location) {
+wtf.db.Zone = function (db, name, type, location) {
   goog.base(this);
 
   /**
@@ -115,15 +113,13 @@ wtf.db.Zone = function(db, name, type, location) {
 };
 goog.inherits(wtf.db.Zone, goog.Disposable);
 
-
 /**
  * @override
  */
-wtf.db.Zone.prototype.disposeInternal = function() {
+wtf.db.Zone.prototype.disposeInternal = function () {
   goog.disposeAll(this.indices_);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Resets the zone information without clearing its contents.
@@ -131,112 +127,99 @@ wtf.db.Zone.prototype.disposeInternal = function() {
  * @param {string} type Zone type.
  * @param {string} location Zone location (such as URI of the script).
  */
-wtf.db.Zone.prototype.resetInfo = function(name, type, location) {
+wtf.db.Zone.prototype.resetInfo = function (name, type, location) {
   this.name_ = name;
   this.type_ = type;
   this.location_ = location;
 };
 
-
 /**
  * Gets a string representation of the zone.
  * @return {string} String representation of the zone.
  */
-wtf.db.Zone.prototype.toString = function() {
+wtf.db.Zone.prototype.toString = function () {
   return this.name_;
 };
-
 
 /**
  * Gets an informative string about a zone.
  * @param {!wtf.db.Zone} zone Target zone.
  * @return {string} Info string.
  */
-wtf.db.Zone.getInfoString = function(zone) {
-  var lines = [
-    zone.name_ + ' (' + zone.type_ + ')'
-  ];
+wtf.db.Zone.getInfoString = function (zone) {
+  var lines = [zone.name_ + " (" + zone.type_ + ")"];
   if (zone.location_ && zone.location_.length) {
     lines.push(zone.location_);
   }
-  return lines.join('\n');
+  return lines.join("\n");
 };
-
 
 /**
  * Gets the database that owns this zone.
  * @return {!wtf.db.Database} Database.
  */
-wtf.db.Zone.prototype.getDatabase = function() {
+wtf.db.Zone.prototype.getDatabase = function () {
   return this.db_;
 };
-
 
 /**
  * Gets the name of the zone.
  * @return {string} Human-readable zone name.
  */
-wtf.db.Zone.prototype.getName = function() {
+wtf.db.Zone.prototype.getName = function () {
   return this.name_;
 };
-
 
 /**
  * Gets the type of the zone.
  * @return {string} One of {@see wtf.data.ZoneType} or a custom value.
  */
-wtf.db.Zone.prototype.getType = function() {
+wtf.db.Zone.prototype.getType = function () {
   return this.type_;
 };
-
 
 /**
  * Gets the zone location (such as URI of the script).
  * @return {string} Zone location.
  */
-wtf.db.Zone.prototype.getLocation = function() {
+wtf.db.Zone.prototype.getLocation = function () {
   return this.location_;
 };
-
 
 /**
  * Gets the event list containing all event data for this zone.
  * @return {!wtf.db.EventList} Event list.
  */
-wtf.db.Zone.prototype.getEventList = function() {
+wtf.db.Zone.prototype.getEventList = function () {
   return this.eventList_;
 };
-
 
 /**
  * Gets the frame list.
  * Note that it may be empty if this zone has no frames.
  * @return {!wtf.db.FrameList} Frame list.
  */
-wtf.db.Zone.prototype.getFrameList = function() {
+wtf.db.Zone.prototype.getFrameList = function () {
   return this.frameList_;
 };
-
 
 /**
  * Gets the mark list.
  * Note that it may be empty if this zone has no marks.
  * @return {!wtf.db.MarkList} Mark list.
  */
-wtf.db.Zone.prototype.getMarkList = function() {
+wtf.db.Zone.prototype.getMarkList = function () {
   return this.markList_;
 };
-
 
 /**
  * Gets the time range list.
  * Note that it may be empty if this zone has no time ranges.
  * @return {!wtf.db.TimeRangeList} Time range list.
  */
-wtf.db.Zone.prototype.getTimeRangeList = function() {
+wtf.db.Zone.prototype.getTimeRangeList = function () {
   return this.timeRangeList_;
 };
-
 
 /**
  * Gets an event index with the given event types.
@@ -246,7 +229,7 @@ wtf.db.Zone.prototype.getTimeRangeList = function() {
  * @param {!Array.<string>} eventNames A list of event type names.
  * @return {!wtf.db.EventIndex} Event index.
  */
-wtf.db.Zone.prototype.getSharedIndex = function(eventNames) {
+wtf.db.Zone.prototype.getSharedIndex = function (eventNames) {
   // Search for an existing index.
   for (var n = 0; n < this.indices_.length; n++) {
     if (goog.array.equals(this.indices_[n].getEventNames(), eventNames)) {
@@ -260,14 +243,13 @@ wtf.db.Zone.prototype.getSharedIndex = function(eventNames) {
   return index;
 };
 
-
 /**
  * Queries the zone.
  * Throws errors if the expression could not be parsed.
  * @param {string} expr Query string.
  * @return {wtf.db.QueryResult} Result.
  */
-wtf.db.Zone.prototype.query = function(expr) {
+wtf.db.Zone.prototype.query = function (expr) {
   var startTime = wtf.now();
 
   // Create filter.
@@ -281,40 +263,61 @@ wtf.db.Zone.prototype.query = function(expr) {
 
   var duration = wtf.now() - startTime;
   return new wtf.db.QueryResult(
-      expr, filter.getDebugString(), duration, result);
+    expr,
+    filter.getDebugString(),
+    duration,
+    result
+  );
 };
 
-
-goog.exportSymbol(
-    'wtf.db.Zone',
-    wtf.db.Zone);
+goog.exportSymbol("wtf.db.Zone", wtf.db.Zone);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'toString',
-    wtf.db.Zone.prototype.toString);
+  wtf.db.Zone.prototype,
+  "toString",
+  wtf.db.Zone.prototype.toString
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'getName',
-    wtf.db.Zone.prototype.getName);
+  wtf.db.Zone.prototype,
+  "getName",
+  wtf.db.Zone.prototype.getName
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'getType',
-    wtf.db.Zone.prototype.getType);
+  wtf.db.Zone.prototype,
+  "getType",
+  wtf.db.Zone.prototype.getType
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'getLocation',
-    wtf.db.Zone.prototype.getLocation);
+  wtf.db.Zone.prototype,
+  "getLocation",
+  wtf.db.Zone.prototype.getLocation
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'getEventList',
-    wtf.db.Zone.prototype.getEventList);
+  wtf.db.Zone.prototype,
+  "getEventList",
+  wtf.db.Zone.prototype.getEventList
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'getFrameList',
-    wtf.db.Zone.prototype.getFrameList);
+  wtf.db.Zone.prototype,
+  "getFrameList",
+  wtf.db.Zone.prototype.getFrameList
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'getMarkList',
-    wtf.db.Zone.prototype.getMarkList);
+  wtf.db.Zone.prototype,
+  "getMarkList",
+  wtf.db.Zone.prototype.getMarkList
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'getTimeRangeList',
-    wtf.db.Zone.prototype.getTimeRangeList);
+  wtf.db.Zone.prototype,
+  "getTimeRangeList",
+  wtf.db.Zone.prototype.getTimeRangeList
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'getSharedIndex',
-    wtf.db.Zone.prototype.getSharedIndex);
+  wtf.db.Zone.prototype,
+  "getSharedIndex",
+  wtf.db.Zone.prototype.getSharedIndex
+);
 goog.exportProperty(
-    wtf.db.Zone.prototype, 'query',
-    wtf.db.Zone.prototype.query);
+  wtf.db.Zone.prototype,
+  "query",
+  wtf.db.Zone.prototype.query
+);

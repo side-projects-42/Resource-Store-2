@@ -9,7 +9,7 @@ class Roo extends Animal {
         super();
       }
     }
-    this.a = new Koala;
+    this.a = new Koala();
     super();
   }
 }

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
+var fs = require("fs");
 
 /**
  * Returns all input read from |fd| as a string, correctly handling ending of
@@ -27,28 +27,31 @@ function readSyncString(fd) {
 
   var buf = new Buffer(BUFFER_SIZE);
   var len = 0;
-  var text = '';
+  var text = "";
 
   try {
-    while (len = fs.readSync(fd, buf, 0, BUFFER_SIZE, null)) {
-      text += buf.toString('utf8', 0, len);
+    while ((len = fs.readSync(fd, buf, 0, BUFFER_SIZE, null))) {
+      text += buf.toString("utf8", 0, len);
     }
   } catch (e) {
     // On Windows readSync throws if attempting to read at EOF
-    if (e.message.indexOf('EOF') != 0) {
+    if (e.message.indexOf("EOF") != 0) {
       throw e;
     }
   }
   return text;
 }
 
-var lines = readSyncString(process.stdin.fd).split('\n').filter(function(x) {
-  // JS files only
-  return x && x.match('\\.js$');
-}).map(function(x) {
-  // remove "test/feature/"
-  return x.split('/').slice(2).join('/');
-});
+var lines = readSyncString(process.stdin.fd)
+  .split("\n")
+  .filter(function (x) {
+    // JS files only
+    return x && x.match("\\.js$");
+  })
+  .map(function (x) {
+    // remove "test/feature/"
+    return x.split("/").slice(2).join("/");
+  });
 
-console.log('var testList = %s;', JSON.stringify(lines, null, 2));
-console.log('if (typeof exports === \'object\') exports.testList = testList;');
+console.log("var testList = %s;", JSON.stringify(lines, null, 2));
+console.log("if (typeof exports === 'object') exports.testList = testList;");

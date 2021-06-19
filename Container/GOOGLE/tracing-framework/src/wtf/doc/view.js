@@ -11,19 +11,17 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.doc.View');
+goog.provide("wtf.doc.View");
 
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.events.EventType');
-
-
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.events.EventType");
 
 /**
  * View and selection state.
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.doc.View = function() {
+wtf.doc.View = function () {
   goog.base(this);
 
   // TODO(benvanik): collaborator info
@@ -44,24 +42,21 @@ wtf.doc.View = function() {
 };
 goog.inherits(wtf.doc.View, wtf.events.EventEmitter);
 
-
 /**
  * Gets the time the view starts at.
  * @return {number} Wall time.
  */
-wtf.doc.View.prototype.getVisibleTimeStart = function() {
+wtf.doc.View.prototype.getVisibleTimeStart = function () {
   return this.timeStart_;
 };
-
 
 /**
  * Gets the time the view ends at.
  * @return {number} Time.
  */
-wtf.doc.View.prototype.getVisibleTimeEnd = function() {
+wtf.doc.View.prototype.getVisibleTimeEnd = function () {
   return this.timeEnd_;
 };
-
 
 /**
  * Sets the visible time range.
@@ -69,8 +64,11 @@ wtf.doc.View.prototype.getVisibleTimeEnd = function() {
  * @param {number} timeEnd End time.
  * @param {boolean=} opt_immediate Immediately set the range - don't animate.
  */
-wtf.doc.View.prototype.setVisibleRange = function(timeStart, timeEnd,
-    opt_immediate) {
+wtf.doc.View.prototype.setVisibleRange = function (
+  timeStart,
+  timeEnd,
+  opt_immediate
+) {
   if (this.timeStart_ == timeStart && this.timeEnd_ == timeEnd) {
     return;
   }
@@ -80,11 +78,10 @@ wtf.doc.View.prototype.setVisibleRange = function(timeStart, timeEnd,
   this.invalidate(opt_immediate);
 };
 
-
 /**
  * Notifies the view that events in its range have been modified.
  * @param {boolean=} opt_immediate Immediately set the range - don't animate.
  */
-wtf.doc.View.prototype.invalidate = function(opt_immediate) {
+wtf.doc.View.prototype.invalidate = function (opt_immediate) {
   this.emitEvent(wtf.events.EventType.INVALIDATED, opt_immediate || false);
 };

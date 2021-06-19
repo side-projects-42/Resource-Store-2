@@ -11,8 +11,6 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-
 /**
  * Tracing data proxy.
  * This allows a tab to enable chrome:tracing data in its session using the
@@ -21,10 +19,10 @@
  *
  * @constructor
  */
-var Tracer = function() {
+var Tracer = function () {
   // TODO(benvanik): make an option?
   var port = 9222;
-  var url = 'ws://localhost:' + port + '/devtools/browser';
+  var url = "ws://localhost:" + port + "/devtools/browser";
 
   /**
    * Target remote debugging port URL.
@@ -93,7 +91,6 @@ var Tracer = function() {
   this.attemptConnection_();
 };
 
-
 /**
  * Maximum number of connection attempts before giving up.
  * @type {number}
@@ -102,12 +99,11 @@ var Tracer = function() {
  */
 Tracer.MAX_CONNECTION_ATTEMPTS_ = 3;
 
-
 /**
  * Attempts a connection to the local browser remote debugging socket.
  * @private
  */
-Tracer.prototype.attemptConnection_ = function() {
+Tracer.prototype.attemptConnection_ = function () {
   if (this.socket_) {
     return;
   }
@@ -115,44 +111,43 @@ Tracer.prototype.attemptConnection_ = function() {
   this.connectionAttempts_++;
 
   this.socket_ = new WebSocket(this.url_);
-  this.socket_.onopen = (function(e) {
+  this.socket_.onopen = function (e) {
     // TODO(benvanik): query if tracing is available?
     this.available_ = true;
-  }).bind(this);
-  this.socket_.onmessage = (function(e) {
+  }.bind(this);
+  this.socket_.onmessage = function (e) {
     var data = JSON.parse(e.data);
-    if (data['method'] == 'Tracing.dataCollected') {
-      this.dataBuffer_.push(data['params']['value']);
-    } else if (data['method'] == 'Tracing.tracingComplete') {
+    if (data["method"] == "Tracing.dataCollected") {
+      this.dataBuffer_.push(data["params"]["value"]);
+    } else if (data["method"] == "Tracing.tracingComplete") {
       var pendingGet = this.pendingGets_.shift();
       if (pendingGet) {
         pendingGet.callback.call(pendingGet.scope, this.dataBuffer_);
       }
       this.dataBuffer_ = [];
     }
-  }).bind(this);
-  this.socket_.onerror = (function(e) {
-    console.log('Tracer: unable to connect');
+  }.bind(this);
+  this.socket_.onerror = function (e) {
+    console.log("Tracer: unable to connect");
     this.dispose();
 
     // Try again, a few times.
     if (this.connectionAttempts_ <= Tracer.MAX_CONNECTION_ATTEMPTS_) {
       var self = this;
-      window.setTimeout(function() {
+      window.setTimeout(function () {
         self.attemptConnection_();
       }, 500);
     }
-  }).bind(this);
-  this.socket_.onclose = (function(e) {
+  }.bind(this);
+  this.socket_.onclose = function (e) {
     this.dispose();
-  }).bind(this);
+  }.bind(this);
 };
-
 
 /**
  * Cleans up the tracing feature.
  */
-Tracer.prototype.dispose = function() {
+Tracer.prototype.dispose = function () {
   this.stop();
 
   this.available_ = false;
@@ -162,42 +157,40 @@ Tracer.prototype.dispose = function() {
   }
 };
 
-
 /**
  * Gets a value indicating whether tracing is available.
  * @return {boolean} True if available.
  */
-Tracer.prototype.isAvailable = function() {
-  return this.available_
+Tracer.prototype.isAvailable = function () {
+  return this.available_;
 };
-
 
 /**
  * Gets a value indicating whether tracing is active.
  * @return {boolean} True if active.
  */
-Tracer.prototype.isActive = function() {
+Tracer.prototype.isActive = function () {
   return this.active_;
 };
-
 
 /**
  * Starts tracing.
  * @param {number=} opt_tabId Requesting tab ID.
  */
-Tracer.prototype.start = function(opt_tabId) {
+Tracer.prototype.start = function (opt_tabId) {
   if (!this.available_) {
     return;
   }
 
   this.active_ = true;
   this.requestingTabId_ = opt_tabId || null;
-  this.socket_.send(JSON.stringify({
-    'id': this.nextRequestId_++,
-    'method': 'Tracing.start'
-  }));
+  this.socket_.send(
+    JSON.stringify({
+      id: this.nextRequestId_++,
+      method: "Tracing.start",
+    })
+  );
 };
-
 
 /**
  * Stops tracing.
@@ -206,7 +199,7 @@ Tracer.prototype.start = function(opt_tabId) {
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-Tracer.prototype.stop = function(opt_callback, opt_scope) {
+Tracer.prototype.stop = function (opt_callback, opt_scope) {
   if (!this.available_ || !this.active_) {
     if (opt_callback) {
       opt_callback.call(opt_scope, null);
@@ -216,25 +209,26 @@ Tracer.prototype.stop = function(opt_callback, opt_scope) {
 
   this.active_ = false;
   this.requestingTabId_ = undefined;
-  this.socket_.send(JSON.stringify({
-    'id': this.nextRequestId_++,
-    'method': 'Tracing.end'
-  }));
+  this.socket_.send(
+    JSON.stringify({
+      id: this.nextRequestId_++,
+      method: "Tracing.end",
+    })
+  );
 
   if (opt_callback) {
     this.pendingGets_.push({
       callback: opt_callback,
-      scope: opt_scope || null
+      scope: opt_scope || null,
     });
   }
 };
-
 
 /**
  * Stops tracing and resets the data.
  * @param {number=} opt_tabId Requesting tab ID.
  */
-Tracer.prototype.abort = function(opt_tabId) {
+Tracer.prototype.abort = function (opt_tabId) {
   if (this.requestingTabId_ !== opt_tabId) {
     return;
   }

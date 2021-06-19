@@ -1,4 +1,3 @@
-
 {
   "name": "testRunner",
   "version": "0.1",
@@ -6,21 +5,24 @@
   "minimum_chrome_version": "22",
   "description": "Run WebKit inspector LayoutTests in DevtoolsExtended with debugging. See options page for details.",
   // Assigns ID klmlfkibgfifmkanocmdenpieghpgifl
-     "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQsrxFHxeLyBcjzyIwH2/6q3W4IWGDfErRo0EjpsvnLD1KH9hllwoA4COdug1FTUseVL1TYVexWZR+Ct+L9clqt96acholTgh5C+RQvrsr1enuyGoRkKSfEnLNmTG7ciDTZ9NGwADyZktGjezj0ras+T+NruYzA2NMrCXaSn3qdQIDAQAB",
-   "devtools_page": "testRunnerDevtoolsPage.html",
-   "options_page": "options.html",
-    "background": {
-      "scripts": ["ChannelPlate/ChannelPlate.js", "ChannelPlate/RemoteMethodCall.js", "ChannelPlate/XHRInBackground.js", "ScreenShotInBackground.js", "BackgroundServerAPI.js", "BackgroundServer.js"] // workaround CSP
-    },
-  "permissions" :
-    [
-      "http://*/", // Cross site XHR
-      "https://*/", 
-      "experimental"  // chrome.experimental.devtools.console 
-    ],
-    "web_accessible_resources":
-    [
-      "*"
-    ],
-     "content_security_policy": "script-src 'self' 'unsafe-eval' chrome-extension-resource: ; object-src 'self' "
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQsrxFHxeLyBcjzyIwH2/6q3W4IWGDfErRo0EjpsvnLD1KH9hllwoA4COdug1FTUseVL1TYVexWZR+Ct+L9clqt96acholTgh5C+RQvrsr1enuyGoRkKSfEnLNmTG7ciDTZ9NGwADyZktGjezj0ras+T+NruYzA2NMrCXaSn3qdQIDAQAB",
+  "devtools_page": "testRunnerDevtoolsPage.html",
+  "options_page": "options.html",
+  "background": {
+    "scripts": [
+      "ChannelPlate/ChannelPlate.js",
+      "ChannelPlate/RemoteMethodCall.js",
+      "ChannelPlate/XHRInBackground.js",
+      "ScreenShotInBackground.js",
+      "BackgroundServerAPI.js",
+      "BackgroundServer.js"
+    ] // workaround CSP
+  },
+  "permissions": [
+    "http://*/", // Cross site XHR
+    "https://*/",
+    "experimental" // chrome.experimental.devtools.console
+  ],
+  "web_accessible_resources": ["*"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' chrome-extension-resource: ; object-src 'self' "
 }

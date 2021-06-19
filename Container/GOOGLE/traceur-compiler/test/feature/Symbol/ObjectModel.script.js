@@ -2,13 +2,13 @@
 // has  issues with symbols and skips .script.js files.
 // https://github.com/google/traceur-compiler/issues/2124
 
-var s = Symbol('s');
-assert.equal(typeof s, 'symbol');
+var s = Symbol("s");
+assert.equal(typeof s, "symbol");
 assert.equal(s.constructor, Symbol);
 assert.isFalse(s instanceof Symbol);
 
 assert.throws(() => {
-	new Symbol;
+  new Symbol();
 });
 
 // TODO(jjb): Our impl not to spec so generators can use Symbols without

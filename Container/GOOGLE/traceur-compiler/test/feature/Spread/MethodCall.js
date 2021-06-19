@@ -1,15 +1,15 @@
 var obj = {
-  method: function(...args) {
+  method: function (...args) {
     return {
       self: this,
-      args: args
+      args: args,
     };
-  }
+  },
 };
 
 var result = {
   obj: obj,
-  result: obj.method(0, ...[1, 2], 3)
+  result: obj.method(0, ...[1, 2], 3),
 };
 
 // ----------------------------------------------------------------------------

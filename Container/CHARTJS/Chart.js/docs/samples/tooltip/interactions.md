@@ -6,104 +6,105 @@ This sample shows how to use the tooltip position mode setting.
 // <block:actions:2>
 const actions = [
   {
-    name: 'Mode: index',
+    name: "Mode: index",
     handler(chart) {
-      chart.options.interaction.axis = 'xy';
-      chart.options.interaction.mode = 'index';
+      chart.options.interaction.axis = "xy";
+      chart.options.interaction.mode = "index";
       chart.update();
-    }
+    },
   },
   {
-    name: 'Mode: dataset',
+    name: "Mode: dataset",
     handler(chart) {
-      chart.options.interaction.axis = 'xy';
-      chart.options.interaction.mode = 'dataset';
+      chart.options.interaction.axis = "xy";
+      chart.options.interaction.mode = "dataset";
       chart.update();
-    }
+    },
   },
   {
-    name: 'Mode: point',
+    name: "Mode: point",
     handler(chart) {
-      chart.options.interaction.axis = 'xy';
-      chart.options.interaction.mode = 'point';
+      chart.options.interaction.axis = "xy";
+      chart.options.interaction.mode = "point";
       chart.update();
-    }
+    },
   },
   {
-    name: 'Mode: nearest',
+    name: "Mode: nearest",
     handler(chart) {
-      chart.options.interaction.axis = 'xy';
-      chart.options.interaction.mode = 'nearest';
+      chart.options.interaction.axis = "xy";
+      chart.options.interaction.mode = "nearest";
       chart.update();
-    }
+    },
   },
   {
-    name: 'Mode: x',
+    name: "Mode: x",
     handler(chart) {
-      chart.options.interaction.mode = 'x';
+      chart.options.interaction.mode = "x";
       chart.update();
-    }
+    },
   },
   {
-    name: 'Mode: y',
+    name: "Mode: y",
     handler(chart) {
-      chart.options.interaction.mode = 'y';
+      chart.options.interaction.mode = "y";
       chart.update();
-    }
+    },
   },
   {
-    name: 'Toggle Intersect',
+    name: "Toggle Intersect",
     handler(chart) {
-      chart.options.interaction.intersect = !chart.options.interaction.intersect;
+      chart.options.interaction.intersect =
+        !chart.options.interaction.intersect;
       chart.update();
-    }
+    },
   },
 ];
 // </block:actions>
 
 // <block:setup:1>
 const DATA_COUNT = 7;
-const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };
 const data = {
-  labels: Utils.months({count: DATA_COUNT}),
+  labels: Utils.months({ count: DATA_COUNT }),
   datasets: [
     {
-      label: 'Dataset 1',
+      label: "Dataset 1",
       data: Utils.numbers(NUMBER_CFG),
       fill: false,
       borderColor: Utils.CHART_COLORS.red,
       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
     },
     {
-      label: 'Dataset 2',
+      label: "Dataset 2",
       data: Utils.numbers(NUMBER_CFG),
       fill: false,
       borderColor: Utils.CHART_COLORS.blue,
       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
     },
-  ]
+  ],
 };
 // </block:setup>
 
 // <block:config:0>
 const config = {
-  type: 'line',
+  type: "line",
   data: data,
   options: {
     interaction: {
       intersect: false,
-      mode: 'index',
+      mode: "index",
     },
     plugins: {
       title: {
         display: true,
         text: (ctx) => {
-          const {intersect, mode} = ctx.chart.options.interaction;
-          return 'Mode: ' + mode + ', intersect: ' + intersect;
-        }
+          const { intersect, mode } = ctx.chart.options.interaction;
+          return "Mode: " + mode + ", intersect: " + intersect;
+        },
       },
-    }
-  }
+    },
+  },
 };
 // </block:config>
 

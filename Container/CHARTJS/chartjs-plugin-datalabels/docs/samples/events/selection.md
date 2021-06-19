@@ -12,7 +12,7 @@ var labels = [];
 Utils.srand(7);
 
 for (var idx = 0; idx < DATA_COUNT; ++idx) {
-  labels.push('' + idx);
+  labels.push("" + idx);
 }
 
 function lookup(context) {
@@ -34,9 +34,14 @@ function isSelected(context) {
 }
 
 function log(selected) {
-  console.log('selection: ' + selected.map(function(item) {
-    return item.value;
-  }).join(', '));
+  console.log(
+    "selection: " +
+      selected
+        .map(function (item) {
+          return item.value;
+        })
+        .join(", ")
+  );
 }
 
 function select(context) {
@@ -47,7 +52,7 @@ function select(context) {
   selection.push({
     dataset: dataset,
     index: index,
-    value: value
+    value: value,
   });
 
   log(selection);
@@ -63,68 +68,72 @@ function deselect(context) {
 // </block:setup>
 
 var config = /* <block:config:0> */ {
-  type: 'line',
+  type: "line",
   data: {
     labels: labels,
-    datasets: [{
-      backgroundColor: Utils.color(0),
-      borderColor: Utils.color(0),
-      data: Utils.numbers({
-        count: DATA_COUNT,
-        decimals: 0,
-        min: 0,
-        max: 100
-      }),
-      datalabels: {
-        align: 'start'
-      }
-    }, {
-      backgroundColor: Utils.color(1),
-      borderColor: Utils.color(1),
-      data: Utils.numbers({
-        count: DATA_COUNT,
-        decimals: 0,
-        min: 0,
-        max: 100
-      })
-    }, {
-      backgroundColor: Utils.color(2),
-      borderColor: Utils.color(2),
-      data: Utils.numbers({
-        count: DATA_COUNT,
-        decimals: 0,
-        min: 0,
-        max: 100
-      }),
-      datalabels: {
-        align: 'end'
-      }
-    }]
+    datasets: [
+      {
+        backgroundColor: Utils.color(0),
+        borderColor: Utils.color(0),
+        data: Utils.numbers({
+          count: DATA_COUNT,
+          decimals: 0,
+          min: 0,
+          max: 100,
+        }),
+        datalabels: {
+          align: "start",
+        },
+      },
+      {
+        backgroundColor: Utils.color(1),
+        borderColor: Utils.color(1),
+        data: Utils.numbers({
+          count: DATA_COUNT,
+          decimals: 0,
+          min: 0,
+          max: 100,
+        }),
+      },
+      {
+        backgroundColor: Utils.color(2),
+        borderColor: Utils.color(2),
+        data: Utils.numbers({
+          count: DATA_COUNT,
+          decimals: 0,
+          min: 0,
+          max: 100,
+        }),
+        datalabels: {
+          align: "end",
+        },
+      },
+    ],
   },
   options: {
     plugins: {
       datalabels: {
-        backgroundColor: function(context) {
+        backgroundColor: function (context) {
           return isSelected(context)
             ? context.dataset.backgroundColor
-            : 'white';
+            : "white";
         },
-        borderColor: function(context) {
+        borderColor: function (context) {
           return context.dataset.backgroundColor;
         },
         borderWidth: 2,
-        color: function(context) {
+        color: function (context) {
           return isSelected(context)
-            ? 'white'
+            ? "white"
             : context.dataset.backgroundColor;
         },
         font: {
-          weight: 'bold'
+          weight: "bold",
         },
         offset: 8,
         padding: 6,
         listeners: {
-          click: function(context) {
+          click: function (context) {
             if (isSelected(context)) {
               deselect(context);
             } else {
@@ -132,9 +141,9 @@ var config = /* <block:config:0> */ {
             }
 
             return true;
-          }
-        }
-      }
+          },
+        },
+      },
     },
 
     // Core options
@@ -144,24 +153,26 @@ var config = /* <block:config:0> */ {
         top: 42,
         right: 16,
         bottom: 32,
-        left: 8
-      }
+        left: 8,
+      },
     },
     elements: {
       line: {
-        fill: false
-      }
+        fill: false,
+      },
     },
     scales: {
-      yAxes: [{
-        stacked: true
-      }]
-    }
-  }
-} /* </block:config> */;
+      yAxes: [
+        {
+          stacked: true,
+        },
+      ],
+    },
+  },
+}; /* </block:config> */
 
 module.exports = {
   config: config,
-  output: 'Click on labels to log events'
+  output: "Click on labels to log events",
 };
 ```

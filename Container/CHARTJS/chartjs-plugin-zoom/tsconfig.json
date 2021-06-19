@@ -19,8 +19,5 @@
     "includeVersion": true,
     "out": "./dist/docs/typedoc"
   },
-  "include": [
-    "./src/**/*.js",
-    "./types"
-  ]
+  "include": ["./src/**/*.js", "./types"]
 }

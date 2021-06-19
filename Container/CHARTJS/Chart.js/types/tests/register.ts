@@ -22,8 +22,8 @@ import {
   Filler,
   Legend,
   Title,
-  Tooltip
-} from '../index.esm';
+  Tooltip,
+} from "../index.esm";
 
 Chart.register(
   ArcElement,

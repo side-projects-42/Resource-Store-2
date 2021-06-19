@@ -1,12 +1,17 @@
-import DatasetController from '../core/core.datasetController';
+import DatasetController from "../core/core.datasetController";
 import {
-  _arrayUnique, isArray, isNullOrUndef,
-  valueOrDefault, resolveObjectKey, sign, defined
-} from '../helpers';
+  _arrayUnique,
+  isArray,
+  isNullOrUndef,
+  valueOrDefault,
+  resolveObjectKey,
+  sign,
+  defined,
+} from "../helpers";
 
 function getAllScaleValues(scale) {
   if (!scale._cache.$bar) {
-    const metas = scale.getMatchingVisibleMetas('bar');
+    const metas = scale.getMatchingVisibleMetas("bar");
     let values = [];
 
     for (let i = 0, ilen = metas.length; i < ilen; i++) {
@@ -75,7 +80,7 @@ function computeFitCategoryTraits(index, ruler, options, stackCount) {
   return {
     chunk: size / stackCount,
     ratio,
-    start: ruler.pixels[index] - (size / 2)
+    start: ruler.pixels[index] - size / 2,
   };
 }
 
@@ -103,13 +108,13 @@ function computeFlexCategoryTraits(index, ruler, options, stackCount) {
     next = curr + curr - prev;
   }
 
-  const start = curr - (curr - Math.min(prev, next)) / 2 * percent;
-  const size = Math.abs(next - prev) / 2 * percent;
+  const start = curr - ((curr - Math.min(prev, next)) / 2) * percent;
+  const size = (Math.abs(next - prev) / 2) * percent;
 
   return {
     chunk: size / stackCount,
     ratio: options.barPercentage,
-    start
+    start,
   };
 }
 
@@ -136,7 +141,7 @@ function parseFloatBar(entry, item, vScale, i) {
     start: startValue,
     end: endValue,
     min,
-    max
+    max,
   };
 }
 
@@ -171,35 +176,34 @@ function isFloatBar(custom) {
 }
 
 export default class BarController extends DatasetController {
-
   /**
-	 * Overriding primitive data parsing since we support mixed primitive/array
-	 * data for float bars
-	 * @protected
-	 */
+   * Overriding primitive data parsing since we support mixed primitive/array
+   * data for float bars
+   * @protected
+   */
   parsePrimitiveData(meta, data, start, count) {
     return parseArrayOrPrimitive(meta, data, start, count);
   }
 
   /**
-	 * Overriding array data parsing since we support mixed primitive/array
-	 * data for float bars
-	 * @protected
-	 */
+   * Overriding array data parsing since we support mixed primitive/array
+   * data for float bars
+   * @protected
+   */
   parseArrayData(meta, data, start, count) {
     return parseArrayOrPrimitive(meta, data, start, count);
   }
 
   /**
-	 * Overriding object data parsing since we support mixed primitive/array
-	 * value-scale data for float bars
-	 * @protected
-	 */
+   * Overriding object data parsing since we support mixed primitive/array
+   * value-scale data for float bars
+   * @protected
+   */
   parseObjectData(meta, data, start, count) {
-    const {iScale, vScale} = meta;
-    const {xAxisKey = 'x', yAxisKey = 'y'} = this._parsing;
-    const iAxisKey = iScale.axis === 'x' ? xAxisKey : yAxisKey;
-    const vAxisKey = vScale.axis === 'x' ? xAxisKey : yAxisKey;
+    const { iScale, vScale } = meta;
+    const { xAxisKey = "x", yAxisKey = "y" } = this._parsing;
+    const iAxisKey = iScale.axis === "x" ? xAxisKey : yAxisKey;
+    const vAxisKey = vScale.axis === "x" ? xAxisKey : yAxisKey;
     const parsed = [];
     let i, ilen, item, obj;
     for (i = start, ilen = start + count; i < ilen; ++i) {
@@ -212,8 +216,8 @@ export default class BarController extends DatasetController {
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   updateRangeFromParsed(range, scale, parsed, stack) {
     super.updateRangeFromParsed(range, scale, parsed, stack);
     const custom = parsed._custom;
@@ -225,29 +229,29 @@ export default class BarController extends DatasetController {
   }
 
   /**
-	 * @return {number|boolean}
-	 * @protected
-	 */
+   * @return {number|boolean}
+   * @protected
+   */
   getMaxOverflow() {
     return 0;
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getLabelAndValue(index) {
     const me = this;
     const meta = me._cachedMeta;
-    const {iScale, vScale} = meta;
+    const { iScale, vScale } = meta;
     const parsed = me.getParsed(index);
     const custom = parsed._custom;
     const value = isFloatBar(custom)
-      ? '[' + custom.start + ', ' + custom.end + ']'
-      : '' + vScale.getLabelForValue(parsed[vScale.axis]);
+      ? "[" + custom.start + ", " + custom.end + "]"
+      : "" + vScale.getLabelForValue(parsed[vScale.axis]);
 
     return {
-      label: '' + iScale.getLabelForValue(parsed[iScale.axis]),
-      value
+      label: "" + iScale.getLabelForValue(parsed[iScale.axis]),
+      value,
     };
   }
 
@@ -270,7 +274,7 @@ export default class BarController extends DatasetController {
 
   updateElements(bars, start, count, mode) {
     const me = this;
-    const reset = mode === 'reset';
+    const reset = mode === "reset";
     const vScale = me._cachedMeta.vScale;
     const base = vScale.getBasePixel();
     const horizontal = vScale.isHorizontal();
@@ -283,34 +287,43 @@ export default class BarController extends DatasetController {
 
     for (let i = start; i < start + count; i++) {
       const parsed = me.getParsed(i);
-      const vpixels = reset || isNullOrUndef(parsed[vScale.axis]) ? {base, head: base} : me._calculateBarValuePixels(i);
+      const vpixels =
+        reset || isNullOrUndef(parsed[vScale.axis])
+          ? { base, head: base }
+          : me._calculateBarValuePixels(i);
       const ipixels = me._calculateBarIndexPixels(i, ruler);
       const stack = (parsed._stacks || {})[vScale.axis];
 
       const properties = {
         horizontal,
         base: vpixels.base,
-        enableBorderRadius: !stack || isFloatBar(parsed._custom) || (me.index === stack._top || me.index === stack._bottom),
+        enableBorderRadius:
+          !stack ||
+          isFloatBar(parsed._custom) ||
+          me.index === stack._top ||
+          me.index === stack._bottom,
         x: horizontal ? vpixels.head : ipixels.center,
         y: horizontal ? ipixels.center : vpixels.head,
         height: horizontal ? ipixels.size : Math.abs(vpixels.size),
-        width: horizontal ? Math.abs(vpixels.size) : ipixels.size
+        width: horizontal ? Math.abs(vpixels.size) : ipixels.size,
       };
 
       if (includeOptions) {
-        properties.options = sharedOptions || me.resolveDataElementOptions(i, bars[i].active ? 'active' : mode);
+        properties.options =
+          sharedOptions ||
+          me.resolveDataElementOptions(i, bars[i].active ? "active" : mode);
       }
       me.updateElement(bars[i], i, properties, mode);
     }
   }
 
   /**
-	 * Returns the stacks based on groups and bar visibility.
-	 * @param {number} [last] - The dataset index
-	 * @param {number} [dataIndex] - The data index of the ruler
-	 * @returns {string[]} The list of stack IDs
-	 * @private
-	 */
+   * Returns the stacks based on groups and bar visibility.
+   * @param {number} [last] - The dataset index
+   * @param {number} [dataIndex] - The data index of the ruler
+   * @returns {string[]} The list of stack IDs
+   * @private
+   */
   _getStacks(last, dataIndex) {
     const me = this;
     const meta = me._cachedMeta;
@@ -324,10 +337,11 @@ export default class BarController extends DatasetController {
     for (i = 0; i < ilen; ++i) {
       item = metasets[i];
 
-      if (typeof dataIndex !== 'undefined') {
-        const val = item.controller.getParsed(dataIndex)[
-          item.controller._cachedMeta.vScale.axis
-        ];
+      if (typeof dataIndex !== "undefined") {
+        const val =
+          item.controller.getParsed(dataIndex)[
+            item.controller._cachedMeta.vScale.axis
+          ];
 
         if (isNullOrUndef(val) || isNaN(val)) {
           continue;
@@ -339,8 +353,11 @@ export default class BarController extends DatasetController {
       // false     |   x   |     x     |     x
       // true      |       |     x     |
       // undefined |       |     x     |     x
-      if (stacked === false || stacks.indexOf(item.stack) === -1 ||
-				(stacked === undefined && item.stack === undefined)) {
+      if (
+        stacked === false ||
+        stacks.indexOf(item.stack) === -1 ||
+        (stacked === undefined && item.stack === undefined)
+      ) {
         stacks.push(item.stack);
       }
       if (item.index === last) {
@@ -359,35 +376,31 @@ export default class BarController extends DatasetController {
   }
 
   /**
-	 * Returns the effective number of stacks based on groups and bar visibility.
-	 * @private
-	 */
+   * Returns the effective number of stacks based on groups and bar visibility.
+   * @private
+   */
   _getStackCount(index) {
     return this._getStacks(undefined, index).length;
   }
 
   /**
-	 * Returns the stack index for the given dataset based on groups and bar visibility.
-	 * @param {number} [datasetIndex] - The dataset index
-	 * @param {string} [name] - The stack name to find
+   * Returns the stack index for the given dataset based on groups and bar visibility.
+   * @param {number} [datasetIndex] - The dataset index
+   * @param {string} [name] - The stack name to find
    * @param {number} [dataIndex]
-	 * @returns {number} The stack index
-	 * @private
-	 */
+   * @returns {number} The stack index
+   * @private
+   */
   _getStackIndex(datasetIndex, name, dataIndex) {
     const stacks = this._getStacks(datasetIndex, dataIndex);
-    const index = (name !== undefined)
-      ? stacks.indexOf(name)
-      : -1; // indexOf returns -1 if element is not present
+    const index = name !== undefined ? stacks.indexOf(name) : -1; // indexOf returns -1 if element is not present
 
-    return (index === -1)
-      ? stacks.length - 1
-      : index;
+    return index === -1 ? stacks.length - 1 : index;
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _getRuler() {
     const me = this;
     const opts = me.options;
@@ -412,18 +425,18 @@ export default class BarController extends DatasetController {
       scale: iScale,
       grouped: opts.grouped,
       // bar thickness ratio used for non-grouped bars
-      ratio: barThickness ? 1 : opts.categoryPercentage * opts.barPercentage
+      ratio: barThickness ? 1 : opts.categoryPercentage * opts.barPercentage,
     };
   }
 
   /**
-	 * Note: pixel values are not clamped to the scale area.
-	 * @private
-	 */
+   * Note: pixel values are not clamped to the scale area.
+   * @private
+   */
   _calculateBarValuePixels(index) {
     const me = this;
-    const {vScale, _stacked} = me._cachedMeta;
-    const {base: baseValue, minBarLength} = me.options;
+    const { vScale, _stacked } = me._cachedMeta;
+    const { base: baseValue, minBarLength } = me.options;
     const parsed = me.getParsed(index);
     const custom = parsed._custom;
     const floating = isFloatBar(custom);
@@ -447,7 +460,8 @@ export default class BarController extends DatasetController {
       start += value;
     }
 
-    const startValue = !isNullOrUndef(baseValue) && !floating ? baseValue : start;
+    const startValue =
+      !isNullOrUndef(baseValue) && !floating ? baseValue : start;
     let base = vScale.getPixelForValue(startValue);
 
     if (this.chart.getDataVisibility(index)) {
@@ -483,13 +497,13 @@ export default class BarController extends DatasetController {
       size,
       base,
       head,
-      center: head + size / 2
+      center: head + size / 2,
     };
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _calculateBarIndexPixels(index, ruler) {
     const me = this;
     const scale = ruler.scale;
@@ -499,12 +513,17 @@ export default class BarController extends DatasetController {
     let center, size;
     if (ruler.grouped) {
       const stackCount = skipNull ? me._getStackCount(index) : ruler.stackCount;
-      const range = options.barThickness === 'flex'
-        ? computeFlexCategoryTraits(index, ruler, options, stackCount)
-        : computeFitCategoryTraits(index, ruler, options, stackCount);
+      const range =
+        options.barThickness === "flex"
+          ? computeFlexCategoryTraits(index, ruler, options, stackCount)
+          : computeFitCategoryTraits(index, ruler, options, stackCount);
 
-      const stackIndex = me._getStackIndex(me.index, me._cachedMeta.stack, skipNull ? index : undefined);
-      center = range.start + (range.chunk * stackIndex) + (range.chunk / 2);
+      const stackIndex = me._getStackIndex(
+        me.index,
+        me._cachedMeta.stack,
+        skipNull ? index : undefined
+      );
+      center = range.start + range.chunk * stackIndex + range.chunk / 2;
       size = Math.min(maxBarThickness, range.chunk * range.ratio);
     } else {
       // For non-grouped bar charts, exact pixel values are used
@@ -516,7 +535,7 @@ export default class BarController extends DatasetController {
       base: center - size / 2,
       head: center + size / 2,
       center,
-      size
+      size,
     };
   }
 
@@ -534,17 +553,16 @@ export default class BarController extends DatasetController {
       }
     }
   }
-
 }
 
-BarController.id = 'bar';
+BarController.id = "bar";
 
 /**
  * @type {any}
  */
 BarController.defaults = {
   datasetElementType: false,
-  dataElementType: 'bar',
+  dataElementType: "bar",
 
   categoryPercentage: 0.8,
   barPercentage: 0.9,
@@ -552,10 +570,10 @@ BarController.defaults = {
 
   animations: {
     numbers: {
-      type: 'number',
-      properties: ['x', 'y', 'base', 'width', 'height']
-    }
-  }
+      type: "number",
+      properties: ["x", "y", "base", "width", "height"],
+    },
+  },
 };
 
 /**
@@ -563,20 +581,20 @@ BarController.defaults = {
  */
 BarController.overrides = {
   interaction: {
-    mode: 'index'
+    mode: "index",
   },
 
   scales: {
     _index_: {
-      type: 'category',
+      type: "category",
       offset: true,
       grid: {
-        offset: true
-      }
+        offset: true,
+      },
     },
     _value_: {
-      type: 'linear',
+      type: "linear",
       beginAtZero: true,
-    }
-  }
+    },
+  },
 };

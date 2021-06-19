@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 import {
   ArrayPattern,
   BindingElement,
   IdentifierExpression,
   ObjectPattern,
   ObjectPatternField,
-  SpreadPatternElement
-} from '../syntax/trees/ParseTrees.js';
-import {EQUAL} from '../syntax/TokenType.js';
+  SpreadPatternElement,
+} from "../syntax/trees/ParseTrees.js";
+import { EQUAL } from "../syntax/TokenType.js";
 
 /**
  * @fileoverview This transformer is used by the parser to transform a
@@ -35,7 +35,6 @@ import {EQUAL} from '../syntax/TokenType.js';
 export class AssignmentPatternTransformerError extends Error {}
 
 export class AssignmentPatternTransformer extends ParseTreeTransformer {
-
   transformBinaryOperator(tree) {
     if (tree.operator.type !== EQUAL)
       throw new AssignmentPatternTransformerError();
@@ -44,9 +43,11 @@ export class AssignmentPatternTransformer extends ParseTreeTransformer {
     // match the spec.
     // https://code.google.com/p/traceur-compiler/issues/detail?id=181
     var bindingElement = this.transformAny(tree.left);
-    return new BindingElement(tree.location,
-                              bindingElement.binding,
-                              tree.right);
+    return new BindingElement(
+      tree.location,
+      bindingElement.binding,
+      tree.right
+    );
   }
 
   transformArrayLiteralExpression(tree) {
@@ -62,8 +63,11 @@ export class AssignmentPatternTransformer extends ParseTreeTransformer {
   transformPropertyNameAssignment(tree) {
     // TODO(arv) name is currently just a token but that will change with
     // [names].
-    return new ObjectPatternField(tree.location, tree.name,
-                                  this.transformAny(tree.value));
+    return new ObjectPatternField(
+      tree.location,
+      tree.name,
+      this.transformAny(tree.value)
+    );
   }
 
   transformPropertyNameShorthand(tree) {

@@ -39,11 +39,11 @@ To disable animations
 
 ```javascript
 new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        animation: false
-    }
+  type: "line",
+  data: data,
+  options: {
+    animation: false,
+  },
 });
 ```
 
@@ -53,22 +53,22 @@ If you specify the `min` and `max`, the scale does not have to compute the range
 
 ```javascript
 new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        scales: {
-            x: {
-                type: 'time',
-                min: new Date('2019-01-01').valueOf(),
-                max: new Date('2019-12-31').valueOf()
-            },
-            y: {
-                type: 'linear',
-                min: 0,
-                max: 100
-            }
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    scales: {
+      x: {
+        type: "time",
+        min: new Date("2019-01-01").valueOf(),
+        max: new Date("2019-12-31").valueOf(),
+      },
+      y: {
+        type: "linear",
+        min: 0,
+        max: 100,
+      },
+    },
+  },
 });
 ```
 
@@ -78,11 +78,11 @@ Chromium (Chrome: version 69, Edge: 79, Opera: 56) added the ability to [transfe
 
 By moving all Chart.js calculations onto a separate thread, the main thread can be freed up for other uses. Some tips and tricks when using Chart.js in a web worker:
 
-* Transferring data between threads can be expensive, so ensure that your config and data objects are as small as possible. Try generating them on the worker side if you can (workers can make HTTP requests!) or passing them to your worker as ArrayBuffers, which can be transferred quickly from one thread to another.
-* You can't transfer functions between threads, so if your config object includes functions you'll have to strip them out before transferring and then add them back later.
-* You can't access the DOM from worker threads, so Chart.js plugins that use the DOM (including any mouse interactions) will likely not work.
-* Ensure that you have a fallback if you support browsers other than the most modern Chromium browsers.
-* Resizing the chart must be done manually. See an example in the worker code below.
+- Transferring data between threads can be expensive, so ensure that your config and data objects are as small as possible. Try generating them on the worker side if you can (workers can make HTTP requests!) or passing them to your worker as ArrayBuffers, which can be transferred quickly from one thread to another.
+- You can't transfer functions between threads, so if your config object includes functions you'll have to strip them out before transferring and then add them back later.
+- You can't access the DOM from worker threads, so Chart.js plugins that use the DOM (including any mouse interactions) will likely not work.
+- Ensure that you have a fallback if you support browsers other than the most modern Chromium browsers.
+- Resizing the chart must be done manually. See an example in the worker code below.
 
 Example main thread code:
 
@@ -91,21 +91,21 @@ const config = {};
 const canvas = new HTMLCanvasElement();
 const offscreenCanvas = canvas.transferControlToOffscreen();
 
-const worker = new Worker('worker.js');
-worker.postMessage({canvas: offscreenCanvas, config}, [offscreenCanvas]);
+const worker = new Worker("worker.js");
+worker.postMessage({ canvas: offscreenCanvas, config }, [offscreenCanvas]);
 ```
 
 Example worker code, in `worker.js`:
 
 ```javascript
-onmessage = function(event) {
-    const {canvas, config} = event.data;
-    const chart = new Chart(canvas, config);
+onmessage = function (event) {
+  const { canvas, config } = event.data;
+  const chart = new Chart(canvas, config);
 
-    // Resizing the chart must be done manually, since OffscreenCanvas does not include event listeners.
-    canvas.width = 100;
-    canvas.height = 100;
-    chart.resize();
+  // Resizing the chart must be done manually, since OffscreenCanvas does not include event listeners.
+  canvas.width = 100;
+  canvas.height = 100;
+  chart.resize();
 };
 ```
 
@@ -127,15 +127,17 @@ To enable `spanGaps`:
 
 ```javascript
 new Chart(ctx, {
-    type: 'line',
-    data: {
-        datasets: [{
-            spanGaps: true // enable for a single dataset
-        }]
-    },
-    options: {
-        spanGaps: true // enable for all datasets
-    }
+  type: "line",
+  data: {
+    datasets: [
+      {
+        spanGaps: true, // enable for a single dataset
+      },
+    ],
+  },
+  options: {
+    spanGaps: true, // enable for all datasets
+  },
 });
 ```
 
@@ -147,15 +149,17 @@ To disable lines:
 
 ```javascript
 new Chart(ctx, {
-    type: 'line',
-    data: {
-        datasets: [{
-            showLine: false // disable for a single dataset
-        }]
-    },
-    options: {
-        showLine: false // disable for all datasets
-    }
+  type: "line",
+  data: {
+    datasets: [
+      {
+        showLine: false, // disable for a single dataset
+      },
+    ],
+  },
+  options: {
+    showLine: false, // disable for all datasets
+  },
 });
 ```
 
@@ -167,24 +171,26 @@ To disable point drawing:
 
 ```javascript
 new Chart(ctx, {
-    type: 'line',
-    data: {
-        datasets: [{
-            pointRadius: 0 // disable for a single dataset
-        }]
+  type: "line",
+  data: {
+    datasets: [
+      {
+        pointRadius: 0, // disable for a single dataset
+      },
+    ],
+  },
+  options: {
+    datasets: {
+      line: {
+        pointRadius: 0, // disable for all `'line'` datasets
+      },
     },
-    options: {
-        datasets: {
-            line: {
-                pointRadius: 0 // disable for all `'line'` datasets
-            }
-        },
-        elements: {
-            point: {
-                radius: 0 // default to disabled in all datasets
-            }
-        }
-    }
+    elements: {
+      point: {
+        radius: 0, // default to disabled in all datasets
+      },
+    },
+  },
 });
 ```
 

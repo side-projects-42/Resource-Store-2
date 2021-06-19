@@ -1,0 +1,128 @@
+{
+  "projectFullName": "newrelic/nr1-deployment-analyzer",
+  "issues": {
+    "open": 0
+  },
+  "releases": 15,
+  "latestRelease": {
+    "name": "v0.3.12",
+    "date": "2021-05-07T18:19:39Z"
+  },
+  "commits": 95,
+  "lastSixMonthsCommitTotal": 25,
+  "contributors": 12,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 1395158,
+      "login": "jpvajda",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1395158?v=4",
+      "htmlUrl": "https://github.com/jpvajda",
+      "contributions": 1
+    },
+    {
+      "id": 17086744,
+      "login": "sarabartell",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/17086744?v=4",
+      "htmlUrl": "https://github.com/sarabartell",
+      "contributions": 1
+    },
+    {
+      "id": 66321197,
+      "login": "nr-opensource-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66321197?v=4",
+      "htmlUrl": "https://github.com/nr-opensource-bot",
+      "contributions": 17
+    },
+    {
+      "id": 8731013,
+      "login": "prototypicalpro",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8731013?v=4",
+      "htmlUrl": "https://github.com/prototypicalpro",
+      "contributions": 1
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 3
+    },
+    {
+      "id": 32174276,
+      "login": "semantic-release-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/32174276?v=4",
+      "htmlUrl": "https://github.com/semantic-release-bot",
+      "contributions": 3
+    },
+    {
+      "id": 70179303,
+      "login": "aswanson-nr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/70179303?v=4",
+      "htmlUrl": "https://github.com/aswanson-nr",
+      "contributions": 2
+    },
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 14
+    },
+    {
+      "id": 19733683,
+      "login": "snyk-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19733683?v=4",
+      "htmlUrl": "https://github.com/snyk-bot",
+      "contributions": 6
+    },
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 8
+    },
+    {
+      "id": 5214156,
+      "login": "norbertsuski",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/5214156?v=4",
+      "htmlUrl": "https://github.com/norbertsuski",
+      "contributions": 4
+    },
+    {
+      "id": 13043208,
+      "login": "Kav91",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13043208?v=4",
+      "htmlUrl": "https://github.com/Kav91",
+      "contributions": 9
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U2MDU=",
+      "name": "SCSS",
+      "color": "#c6538c"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic/nr1-deployment-analyzer/master/catalog/screenshots/nr1-deployment-analyzer-1.png"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

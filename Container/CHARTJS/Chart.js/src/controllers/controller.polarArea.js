@@ -1,9 +1,8 @@
-import DatasetController from '../core/core.datasetController';
-import {toRadians, PI} from '../helpers/index';
-import {formatNumber} from '../helpers/helpers.intl';
+import DatasetController from "../core/core.datasetController";
+import { toRadians, PI } from "../helpers/index";
+import { formatNumber } from "../helpers/helpers.intl";
 
 export default class PolarAreaController extends DatasetController {
-
   constructor(chart, datasetIndex) {
     super(chart, datasetIndex);
 
@@ -19,7 +18,7 @@ export default class PolarAreaController extends DatasetController {
     const value = formatNumber(meta._parsed[index].r, chart.options.locale);
 
     return {
-      label: labels[index] || '',
+      label: labels[index] || "",
       value,
     };
   }
@@ -32,26 +31,33 @@ export default class PolarAreaController extends DatasetController {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _updateRadius() {
     const me = this;
     const chart = me.chart;
     const chartArea = chart.chartArea;
     const opts = chart.options;
-    const minSize = Math.min(chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+    const minSize = Math.min(
+      chartArea.right - chartArea.left,
+      chartArea.bottom - chartArea.top
+    );
 
     const outerRadius = Math.max(minSize / 2, 0);
-    const innerRadius = Math.max(opts.cutoutPercentage ? (outerRadius / 100) * (opts.cutoutPercentage) : 1, 0);
-    const radiusLength = (outerRadius - innerRadius) / chart.getVisibleDatasetCount();
+    const innerRadius = Math.max(
+      opts.cutoutPercentage ? (outerRadius / 100) * opts.cutoutPercentage : 1,
+      0
+    );
+    const radiusLength =
+      (outerRadius - innerRadius) / chart.getVisibleDatasetCount();
 
-    me.outerRadius = outerRadius - (radiusLength * me.index);
+    me.outerRadius = outerRadius - radiusLength * me.index;
     me.innerRadius = me.outerRadius - radiusLength;
   }
 
   updateElements(arcs, start, count, mode) {
     const me = this;
-    const reset = mode === 'reset';
+    const reset = mode === "reset";
     const chart = me.chart;
     const dataset = me.getDataset();
     const opts = chart.options;
@@ -72,7 +78,9 @@ export default class PolarAreaController extends DatasetController {
       const arc = arcs[i];
       let startAngle = angle;
       let endAngle = angle + me._computeAngle(i, mode, defaultAngle);
-      let outerRadius = chart.getDataVisibility(i) ? scale.getDistanceFromCenterForValue(dataset.data[i]) : 0;
+      let outerRadius = chart.getDataVisibility(i)
+        ? scale.getDistanceFromCenterForValue(dataset.data[i])
+        : 0;
       angle = endAngle;
 
       if (reset) {
@@ -91,7 +99,7 @@ export default class PolarAreaController extends DatasetController {
         outerRadius,
         startAngle,
         endAngle,
-        options: me.resolveDataElementOptions(i, arc.active ? 'active' : mode)
+        options: me.resolveDataElementOptions(i, arc.active ? "active" : mode),
       };
 
       me.updateElement(arc, i, properties, mode);
@@ -113,33 +121,42 @@ export default class PolarAreaController extends DatasetController {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _computeAngle(index, mode, defaultAngle) {
     return this.chart.getDataVisibility(index)
-      ? toRadians(this.resolveDataElementOptions(index, mode).angle || defaultAngle)
+      ? toRadians(
+          this.resolveDataElementOptions(index, mode).angle || defaultAngle
+        )
       : 0;
   }
 }
 
-PolarAreaController.id = 'polarArea';
+PolarAreaController.id = "polarArea";
 
 /**
  * @type {any}
  */
 PolarAreaController.defaults = {
-  dataElementType: 'arc',
+  dataElementType: "arc",
   animation: {
     animateRotate: true,
-    animateScale: true
+    animateScale: true,
   },
   animations: {
     numbers: {
-      type: 'number',
-      properties: ['x', 'y', 'startAngle', 'endAngle', 'innerRadius', 'outerRadius']
+      type: "number",
+      properties: [
+        "x",
+        "y",
+        "startAngle",
+        "endAngle",
+        "innerRadius",
+        "outerRadius",
+      ],
     },
   },
-  indexAxis: 'r',
+  indexAxis: "r",
   startAngle: 0,
 };
 
@@ -167,47 +184,51 @@ PolarAreaController.overrides = {
                 hidden: !chart.getDataVisibility(i),
 
                 // Extra data used for toggling the correct item
-                index: i
+                index: i,
               };
             });
           }
           return [];
-        }
+        },
       },
 
       onClick(e, legendItem, legend) {
         legend.chart.toggleDataVisibility(legendItem.index);
         legend.chart.update();
-      }
+      },
     },
 
     // Need to override these to give a nice default
     tooltip: {
       callbacks: {
         title() {
-          return '';
+          return "";
         },
         label(context) {
-          return context.chart.data.labels[context.dataIndex] + ': ' + context.formattedValue;
-        }
-      }
-    }
+          return (
+            context.chart.data.labels[context.dataIndex] +
+            ": " +
+            context.formattedValue
+          );
+        },
+      },
+    },
   },
 
   scales: {
     r: {
-      type: 'radialLinear',
+      type: "radialLinear",
       angleLines: {
-        display: false
+        display: false,
       },
       beginAtZero: true,
       grid: {
-        circular: true
+        circular: true,
       },
       pointLabels: {
-        display: false
+        display: false,
       },
-      startAngle: 0
-    }
-  }
+      startAngle: 0,
+    },
+  },
 };

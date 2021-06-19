@@ -57,7 +57,7 @@ function* inorder2(node) {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -66,7 +66,7 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var root = tree(alphabet);
 assert.equal(alphabet, accumulate(inorder1(root)));
 assert.equal(alphabet, accumulate(inorder2(root)));

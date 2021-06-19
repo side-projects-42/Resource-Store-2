@@ -1,0 +1,24 @@
+{
+  "name": "eslint-plugin-newrelic",
+  "fullName": "newrelic/eslint-plugin-newrelic",
+  "slug": "newrelic-eslint-plugin-newrelic",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic ESLint Plugin",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/eslint-plugin-newrelic",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/eslint-plugin-newrelic",
+  "iconUrl": null,
+  "shortDescription": "JS linting rules for New Relic open source repos",
+  "description": "New Relic's opinionated set of ESLint and Prettier rules for writing JavaScript",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["tools"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic ESLint Plugin",
+    "url": "https://github.com/newrelic/eslint-plugin-newrelic"
+  }
+}

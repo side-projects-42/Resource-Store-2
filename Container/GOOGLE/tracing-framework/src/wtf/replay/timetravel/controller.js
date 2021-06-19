@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.replay.timeTravel.Controller');
+goog.provide("wtf.replay.timeTravel.Controller");
 
-goog.require('goog.soy');
-goog.require('wtf.replay.timeTravel.controller');
-goog.require('wtf.ui.Control');
-
-
+goog.require("goog.soy");
+goog.require("wtf.replay.timeTravel.controller");
+goog.require("wtf.ui.Control");
 
 /**
  * Popup replay controller dialog.
@@ -28,23 +26,26 @@ goog.require('wtf.ui.Control');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.replay.timeTravel.Controller = function(parentElement, dom) {
+wtf.replay.timeTravel.Controller = function (parentElement, dom) {
   goog.base(this, parentElement, dom);
 };
 goog.inherits(wtf.replay.timeTravel.Controller, wtf.ui.Control);
 
+/**
+ * @override
+ */
+wtf.replay.timeTravel.Controller.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(
+      wtf.replay.timeTravel.controller.control,
+      undefined,
+      undefined,
+      dom
+    )
+  );
+};
 
 /**
  * @override
  */
-wtf.replay.timeTravel.Controller.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
-      wtf.replay.timeTravel.controller.control, undefined, undefined, dom));
-};
-
-
-/**
- * @override
- */
-wtf.replay.timeTravel.Controller.prototype.layoutInternal = function() {
-};
+wtf.replay.timeTravel.Controller.prototype.layoutInternal = function () {};

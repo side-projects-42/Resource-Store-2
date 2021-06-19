@@ -19,24 +19,23 @@ function TreeMirror(root, delegate) {
 }
 
 TreeMirror.prototype = {
-  initialize: function(rootId, children) {
+  initialize: function (rootId, children) {
     this.idMap[rootId] = this.root;
 
     for (var i = 0; i < children.length; i++)
       this.deserializeNode(children[i], this.root);
   },
 
-  deserializeNode: function(nodeData, parent) {
-    if (nodeData === null)
-      return null;
+  deserializeNode: function (nodeData, parent) {
+    if (nodeData === null) return null;
 
-    if (typeof nodeData == 'number')
-      return this.idMap[nodeData];
+    if (typeof nodeData == "number") return this.idMap[nodeData];
 
-    var doc = this.root instanceof HTMLDocument ? this.root : this.root.ownerDocument;
+    var doc =
+      this.root instanceof HTMLDocument ? this.root : this.root.ownerDocument;
 
     var node;
-    switch(nodeData.nodeType) {
+    switch (nodeData.nodeType) {
       case Node.COMMENT_NODE:
         node = doc.createComment(nodeData.textContent);
         break;
@@ -46,19 +45,24 @@ TreeMirror.prototype = {
         break;
 
       case Node.DOCUMENT_TYPE_NODE:
-        node = doc.implementation.createDocumentType(nodeData.name, nodeData.publicId, nodeData.systemId);
+        node = doc.implementation.createDocumentType(
+          nodeData.name,
+          nodeData.publicId,
+          nodeData.systemId
+        );
         break;
 
       case Node.ELEMENT_NODE:
         if (this.delegate && this.delegate.createElement)
           node = this.delegate.createElement(nodeData.tagName);
-        if (!node)
-          node = doc.createElement(nodeData.tagName);
+        if (!node) node = doc.createElement(nodeData.tagName);
 
-        Object.keys(nodeData.attributes).forEach(function(name) {
-          if (!this.delegate ||
-              !this.delegate.setAttribute ||
-              !this.delegate.setAttribute(node, name, nodeData.attributes[name])) {
+        Object.keys(nodeData.attributes).forEach(function (name) {
+          if (
+            !this.delegate ||
+            !this.delegate.setAttribute ||
+            !this.delegate.setAttribute(node, name, nodeData.attributes[name])
+          ) {
             node.setAttribute(name, nodeData.attributes[name]);
           }
         }, this);
@@ -68,8 +72,7 @@ TreeMirror.prototype = {
 
     this.idMap[nodeData.id] = node;
 
-    if (parent)
-      parent.appendChild(node);
+    if (parent) parent.appendChild(node);
 
     if (nodeData.childNodes) {
       for (var i = 0; i < nodeData.childNodes.length; i++)
@@ -79,10 +82,9 @@ TreeMirror.prototype = {
     return node;
   },
 
-  applyChanged: function(removed, addedOrMoved, attributes, text) {
+  applyChanged: function (removed, addedOrMoved, attributes, text) {
     function removeNode(node) {
-      if (node.parentNode)
-        node.parentNode.removeChild(node);
+      if (node.parentNode) node.parentNode.removeChild(node);
     }
 
     function moveOrInsertNode(data) {
@@ -90,19 +92,24 @@ TreeMirror.prototype = {
       var previous = data.previousSibling;
       var node = data.node;
 
-      parent.insertBefore(node, previous ? previous.nextSibling : parent.firstChild);
+      parent.insertBefore(
+        node,
+        previous ? previous.nextSibling : parent.firstChild
+      );
     }
 
     function updateAttributes(data) {
       var node = this.deserializeNode(data.node);
-      Object.keys(data.attributes).forEach(function(attrName) {
+      Object.keys(data.attributes).forEach(function (attrName) {
         var newVal = data.attributes[attrName];
         if (newVal === null) {
           node.removeAttribute(attrName);
         } else {
-          if (!this.delegate ||
-              !this.delegate.setAttribute ||
-              !this.delegate.setAttribute(node, attrName, newVal)) {
+          if (
+            !this.delegate ||
+            !this.delegate.setAttribute ||
+            !this.delegate.setAttribute(node, attrName, newVal)
+          ) {
             node.setAttribute(attrName, newVal);
           }
         }
@@ -114,7 +121,7 @@ TreeMirror.prototype = {
       node.textContent = data.textContent;
     }
 
-    addedOrMoved.forEach(function(data) {
+    addedOrMoved.forEach(function (data) {
       data.node = this.deserializeNode(data.node);
       data.previousSibling = this.deserializeNode(data.previousSibling);
       data.parentNode = this.deserializeNode(data.parentNode);
@@ -131,16 +138,16 @@ TreeMirror.prototype = {
     attributes.forEach(updateAttributes, this);
     text.forEach(updateText, this);
 
-    removed.forEach(function(id) {
-      delete this.idMap[id]
+    removed.forEach(function (id) {
+      delete this.idMap[id];
     }, this);
-  }
-}
+  },
+};
 
 function TreeMirrorClient(target, mirror, testingQueries) {
   this.target = target;
   this.mirror = mirror;
-  this.knownNodes = new MutationSummary.NodeMap;
+  this.knownNodes = new MutationSummary.NodeMap();
 
   var rootId = this.serializeNode(target).id;
   var children = [];
@@ -153,41 +160,39 @@ function TreeMirrorClient(target, mirror, testingQueries) {
 
   var queries = [{ all: true }];
 
-  if (testingQueries)
-    queries = queries.concat(testingQueries);
+  if (testingQueries) queries = queries.concat(testingQueries);
 
   this.mutationSummary = new MutationSummary({
     rootNode: target,
-    callback: function(summaries) {
+    callback: function (summaries) {
       self.applyChanged(summaries);
     },
-    queries: queries
+    queries: queries,
   });
 }
 
 TreeMirrorClient.prototype = {
   nextId: 1,
 
-  disconnect: function() {
+  disconnect: function () {
     if (this.mutationSummary) {
       this.mutationSummary.disconnect();
       this.mutationSummary = undefined;
     }
   },
 
-  rememberNode: function(node) {
+  rememberNode: function (node) {
     var id = this.nextId++;
     this.knownNodes.set(node, id);
     return id;
   },
 
-  forgetNode: function(node) {
+  forgetNode: function (node) {
     delete this.knownNodes.delete(node);
   },
 
-  serializeNode: function(node, recursive) {
-    if (node === null)
-      return null;
+  serializeNode: function (node, recursive) {
+    if (node === null) return null;
 
     var id = this.knownNodes.get(node);
     if (id !== undefined) {
@@ -196,10 +201,10 @@ TreeMirrorClient.prototype = {
 
     var data = {
       nodeType: node.nodeType,
-      id: this.rememberNode(node)
+      id: this.rememberNode(node),
     };
 
-    switch(data.nodeType) {
+    switch (data.nodeType) {
       case Node.DOCUMENT_TYPE_NODE:
         data.name = node.name;
         data.publicId = node.publicId;
@@ -231,15 +236,17 @@ TreeMirrorClient.prototype = {
     return data;
   },
 
-  serializeAddedAndMoved: function(changed) {
-    var all = changed.added.concat(changed.reparented).concat(changed.reordered);
+  serializeAddedAndMoved: function (changed) {
+    var all = changed.added
+      .concat(changed.reparented)
+      .concat(changed.reordered);
 
-    var parentMap = new MutationSummary.NodeMap;
-    all.forEach(function(node) {
+    var parentMap = new MutationSummary.NodeMap();
+    all.forEach(function (node) {
       var parent = node.parentNode;
-      var children = parentMap.get(parent)
+      var children = parentMap.get(parent);
       if (!children) {
-        children = new MutationSummary.NodeMap;
+        children = new MutationSummary.NodeMap();
         parentMap.set(parent, children);
       }
 
@@ -248,7 +255,7 @@ TreeMirrorClient.prototype = {
 
     var moved = [];
 
-    parentMap.keys().forEach(function(parent) {
+    parentMap.keys().forEach(function (parent) {
       var children = parentMap.get(parent);
 
       var keys = children.keys();
@@ -261,7 +268,7 @@ TreeMirrorClient.prototype = {
           moved.push({
             node: this.serializeNode(node),
             previousSibling: this.serializeNode(node.previousSibling),
-            parentNode: this.serializeNode(node.parentNode)
+            parentNode: this.serializeNode(node.parentNode),
           });
 
           children.delete(node);
@@ -275,16 +282,16 @@ TreeMirrorClient.prototype = {
     return moved;
   },
 
-  serializeAttributeChanges: function(attributeChanged) {
-    var map = new MutationSummary.NodeMap;
+  serializeAttributeChanges: function (attributeChanged) {
+    var map = new MutationSummary.NodeMap();
 
-    Object.keys(attributeChanged).forEach(function(attrName) {
-      attributeChanged[attrName].forEach(function(element) {
+    Object.keys(attributeChanged).forEach(function (attrName) {
+      attributeChanged[attrName].forEach(function (element) {
         var record = map.get(element);
         if (!record) {
           record = {
             node: this.serializeNode(element),
-            attributes: {}
+            attributes: {},
           };
           map.set(element, record);
         }
@@ -293,27 +300,30 @@ TreeMirrorClient.prototype = {
       }, this);
     }, this);
 
-    return map.keys().map(function(element) {
+    return map.keys().map(function (element) {
       return map.get(element);
     });
   },
 
-  serializeCharacterDataChange: function(node) {
+  serializeCharacterDataChange: function (node) {
     return {
       node: this.serializeNode(node),
-      textContent: node.textContent
-    }
+      textContent: node.textContent,
+    };
   },
 
-  applyChanged: function(summaries) {
-    var changed = summaries[0]
+  applyChanged: function (summaries) {
+    var changed = summaries[0];
     var removed = changed.removed.map(this.serializeNode, this);
     var moved = this.serializeAddedAndMoved(changed);
     var attributes = this.serializeAttributeChanges(changed.attributeChanged);
-    var text = changed.characterDataChanged.map(this.serializeCharacterDataChange, this);
+    var text = changed.characterDataChanged.map(
+      this.serializeCharacterDataChange,
+      this
+    );
 
     this.mirror.applyChanged(removed, moved, attributes, text);
 
     changed.removed.forEach(this.forgetNode, this);
-  }
-}
+  },
+};

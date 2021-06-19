@@ -1,19 +1,24 @@
-const canvas = document.createElement('canvas');
+const canvas = document.createElement("canvas");
 canvas.width = 512;
 canvas.height = 512;
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext("2d");
 
 module.exports = {
   config: {
-    type: 'bar',
+    type: "bar",
     data: {
-      labels: [new Date(2020, 0, 2), new Date(2020, 0, 3), new Date(2020, 0, 4), new Date(2020, 0, 5)],
+      labels: [
+        new Date(2020, 0, 2),
+        new Date(2020, 0, 3),
+        new Date(2020, 0, 4),
+        new Date(2020, 0, 5),
+      ],
       datasets: [
         {
-          backgroundColor: ['red', 'green', 'blue', 'orange'],
-          data: [1, 2, 3, 4]
-        }
-      ]
+          backgroundColor: ["red", "green", "blue", "orange"],
+          data: [1, 2, 3, 4],
+        },
+      ],
     },
     options: {
       animation: false,
@@ -21,28 +26,28 @@ module.exports = {
       scales: {
         y: {
           display: false,
-          max: 5
+          max: 5,
         },
         x: {
-          type: 'time',
+          type: "time",
           min: new Date(2020, 0, 1),
           max: new Date(2020, 0, 3),
           time: {
-            unit: 'day',
-            round: 'day',
-          }
-        }
+            unit: "day",
+            round: "day",
+          },
+        },
       },
       plugins: {
         legend: false,
         zoom: {
           pan: {
             enabled: true,
-            mode: 'x',
-          }
-        }
-      }
-    }
+            mode: "x",
+          },
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
@@ -54,13 +59,13 @@ module.exports = {
         const col = i % n;
         const row = Math.floor(i / n);
         if (i > 0) {
-          chart.pan({x: -150});
+          chart.pan({ x: -150 });
           chart.update();
         }
         ctx.drawImage(chart.canvas, col * side, row * side, side, side);
       }
       Chart.helpers.clearCanvas(chart.canvas);
       chart.ctx.drawImage(canvas, 0, 0);
-    }
-  }
+    },
+  },
 };

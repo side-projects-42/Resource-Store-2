@@ -1,30 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <title>CodeMirror: Verilog mode</title>
-<meta charset="utf-8"/>
-<link rel=stylesheet href="../../doc/docs.css">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../doc/docs.css" />
 
-<link rel="stylesheet" href="../../lib/codemirror.css">
+<link rel="stylesheet" href="../../lib/codemirror.css" />
 <script src="../../lib/codemirror.js"></script>
 <script src="verilog.js"></script>
-<style>.CodeMirror {border: 2px inset #dee;}</style>
-<div id=nav>
-  <a href="http://codemirror.net"><img id=logo src="../../doc/logo.png"></a>
+<style>
+  .CodeMirror {
+    border: 2px inset #dee;
+  }
+</style>
+<div id="nav">
+  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
 
   <ul>
-    <li><a href="../../index.html">Home</a>
-    <li><a href="../../doc/manual.html">Manual</a>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../doc/manual.html">Manual</a></li>
+    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
   </ul>
+
   <ul>
-    <li><a href="../index.html">Language modes</a>
-    <li><a class=active href="#">Verilog</a>
+    <li><a href="../index.html">Language modes</a></li>
+    <li><a class="active" href="#">Verilog</a></li>
   </ul>
 </div>
 
 <article>
-<h2>Verilog mode</h2>
-<form><textarea id="code" name="code">
+  <h2>Verilog mode</h2>
+  <form>
+    <textarea id="code" name="code">
 /* Verilog demo code */
 
 module butterfly
@@ -115,18 +121,25 @@ module butterfly
     end
    
 endmodule
-</textarea></form>
+</textarea
+    >
+  </form>
 
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true,
-        mode: "text/x-verilog"
-      });
-    </script>
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true,
+      mode: "text/x-verilog",
+    });
+  </script>
 
-    <p>Simple mode that tries to handle Verilog-like languages as well as it
-    can. Takes one configuration parameters: <code>keywords</code>, an
-    object whose property names are the keywords in the language.</p>
+  <p>
+    Simple mode that tries to handle Verilog-like languages as well as it can.
+    Takes one configuration parameters: <code>keywords</code>, an object whose
+    property names are the keywords in the language.
+  </p>
 
-    <p><strong>MIME types defined:</strong> <code>text/x-verilog</code> (Verilog code).</p>
-  </article>
+  <p>
+    <strong>MIME types defined:</strong> <code>text/x-verilog</code> (Verilog
+    code).
+  </p>
+</article>

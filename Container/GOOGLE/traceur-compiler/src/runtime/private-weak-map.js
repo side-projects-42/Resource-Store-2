@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const $WeakMap = typeof WeakMap === 'function' ? WeakMap : undefined;
+const $WeakMap = typeof WeakMap === "function" ? WeakMap : undefined;
 
 export function isPrivateSymbol(s) {
   return false;

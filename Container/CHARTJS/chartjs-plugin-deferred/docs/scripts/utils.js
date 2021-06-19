@@ -12,17 +12,17 @@ function fallback(/* values ... */) {
 }
 
 export var COLORS = [
-  '#FF3784',
-  '#36A2EB',
-  '#4BC0C0',
-  '#F77825',
-  '#9966FF',
-  '#00A8C6',
-  '#379F7A',
-  '#CC2738',
-  '#8B628A',
-  '#8FBE00',
-  '#606060',
+  "#FF3784",
+  "#36A2EB",
+  "#4BC0C0",
+  "#F77825",
+  "#9966FF",
+  "#00A8C6",
+  "#379F7A",
+  "#CC2738",
+  "#8B628A",
+  "#8FBE00",
+  "#606060",
 ];
 
 // Adapted from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
@@ -72,20 +72,23 @@ export function color(offset) {
 export function generate() {
   return {
     labels: [0, 1, 2, 3, 4, 5, 6, 7],
-    datasets: [{
-      backgroundColor: color(0),
-      data: numbers({
-        count: 8,
-        max: 0,
-        min: -100
-      }),
-    }, {
-      backgroundColor: color(1),
-      data: numbers({
-        count: 8,
-        max: 100,
-        min: 0
-      }),
-    }],
+    datasets: [
+      {
+        backgroundColor: color(0),
+        data: numbers({
+          count: 8,
+          max: 0,
+          min: -100,
+        }),
+      },
+      {
+        backgroundColor: color(1),
+        data: numbers({
+          count: 8,
+          max: 100,
+          min: 0,
+        }),
+      },
+    ],
   };
 }

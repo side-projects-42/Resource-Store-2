@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import alphaRenameThisAndArguments from './alphaRenameThisAndArguments.js';
-import {parseStatement} from './PlaceholderParser.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import alphaRenameThisAndArguments from "./alphaRenameThisAndArguments.js";
+import { parseStatement } from "./PlaceholderParser.js";
 import {
   AnonBlock,
   BreakStatement,
@@ -22,8 +22,8 @@ import {
   FormalParameterList,
   FunctionExpression,
   ReturnStatement,
-  YieldExpression
-} from '../syntax/trees/ParseTrees.js';
+  YieldExpression,
+} from "../syntax/trees/ParseTrees.js";
 import {
   createArgumentList,
   createAssignmentStatement,
@@ -43,17 +43,13 @@ import {
   createVariableDeclaration,
   createVariableDeclarationList,
   createVariableStatement,
-  createVoid0
-} from './ParseTreeFactory.js';
-import {ARGUMENTS} from '../syntax/PredefinedName.js';
-import SkipFunctionsTransformerTrait from './SkipFunctionsTransformerTrait.js';
-import {StringSet} from '../util/StringSet.js';
-import {Token} from '../syntax/Token.js';
-import {
-  STAR,
-  VAR
-} from '../syntax/TokenType.js';
-
+  createVoid0,
+} from "./ParseTreeFactory.js";
+import { ARGUMENTS } from "../syntax/PredefinedName.js";
+import SkipFunctionsTransformerTrait from "./SkipFunctionsTransformerTrait.js";
+import { StringSet } from "../util/StringSet.js";
+import { Token } from "../syntax/Token.js";
+import { STAR, VAR } from "../syntax/TokenType.js";
 
 /**
  * Givens a list of statements, this extracts all the needed `return`s,
@@ -64,9 +60,9 @@ import {
  * - loopBody: Might contain a call to the function defined above, and also
  *    a switch statement for the abrupt completions
  */
-export class FnExtractAbruptCompletions extends
-    SkipFunctionsTransformerTrait(ParseTreeTransformer) {
-
+export class FnExtractAbruptCompletions extends SkipFunctionsTransformerTrait(
+  ParseTreeTransformer
+) {
   constructor(idGenerator, requestParentLabel) {
     super();
     this.idGenerator_ = idGenerator;
@@ -85,16 +81,24 @@ export class FnExtractAbruptCompletions extends
     let tmpFnName = this.idGenerator_.generateUniqueIdentifier();
     let functionKind = inGenerator ? new Token(STAR, null) : null;
     // function ( * )opt (...) { ... }
-    let functionExpression = new FunctionExpression(null, null, functionKind,
-        new FormalParameterList(null, paramList), null, [],
-        createFunctionBody(body.statements || [body]));
+    let functionExpression = new FunctionExpression(
+      null,
+      null,
+      functionKind,
+      new FormalParameterList(null, paramList),
+      null,
+      [],
+      createFunctionBody(body.statements || [body])
+    );
     // var $tmpFn = ${functionExpression}
     this.variableDeclarations_.push(
-        createVariableDeclaration(tmpFnName, functionExpression));
+      createVariableDeclaration(tmpFnName, functionExpression)
+    );
     // $tmpFn(...)
     let functionCall = createCallExpression(
-        createIdentifierExpression(tmpFnName),
-        createArgumentList(argsList));
+      createIdentifierExpression(tmpFnName),
+      createArgumentList(argsList)
+    );
     // yield* $tmpFn(...)
     if (inGenerator) {
       functionCall = new YieldExpression(null, functionCall, true);
@@ -103,24 +107,25 @@ export class FnExtractAbruptCompletions extends
     let loopBody = null;
     if (this.extractedStatements_.length || this.hasReturns) {
       let tmpVarName = createIdentifierExpression(
-          this.idGenerator_.generateUniqueIdentifier());
+        this.idGenerator_.generateUniqueIdentifier()
+      );
       // hoist declaration
       this.variableDeclarations_.push(
-          createVariableDeclaration(tmpVarName, null));
+        createVariableDeclaration(tmpVarName, null)
+      );
 
       let maybeReturn;
       if (this.hasReturns) {
         // ${tmpVarName} is either a number of an object
         // this check is enough since it's never null
-        maybeReturn = parseStatement `if (typeof ${tmpVarName} === "object")
+        maybeReturn = parseStatement`if (typeof ${tmpVarName} === "object")
             return ${tmpVarName}.v;`;
       }
 
       if (this.extractedStatements_.length) {
         // handle each extractedStatement as a case clause
-        let caseClauses = this.extractedStatements_.map(
-            (statement, index) => createCaseClause(
-                createNumberLiteral(index), [statement])
+        let caseClauses = this.extractedStatements_.map((statement, index) =>
+          createCaseClause(createNumberLiteral(index), [statement])
         );
 
         // default clause is the return statement, if it's needed
@@ -131,15 +136,17 @@ export class FnExtractAbruptCompletions extends
         // $tmpVar = $tmpFn(...); switch($tmpVar) {...}
         loopBody = createBlock([
           createExpressionStatement(
-              createAssignmentExpression(tmpVarName, functionCall)),
-          createSwitchStatement(tmpVarName, caseClauses)
+            createAssignmentExpression(tmpVarName, functionCall)
+          ),
+          createSwitchStatement(tmpVarName, caseClauses),
         ]);
       } else {
         // $tmpVar = ( yield* )opt $tmpFn(...); ${maybeReturn}
-        loopBody = createBlock( [
+        loopBody = createBlock([
           createExpressionStatement(
-              createAssignmentExpression(tmpVarName, functionCall)),
-          maybeReturn
+            createAssignmentExpression(tmpVarName, functionCall)
+          ),
+          maybeReturn,
         ]);
       }
     } else {
@@ -147,26 +154,31 @@ export class FnExtractAbruptCompletions extends
       loopBody = createBlock([createExpressionStatement(functionCall)]);
     }
 
-
     return {
       variableStatements: createVariableStatement(
-          createVariableDeclarationList(VAR, this.variableDeclarations_)),
-      loopBody: loopBody
+        createVariableDeclarationList(VAR, this.variableDeclarations_)
+      ),
+      loopBody: loopBody,
     };
   }
 
   // alphaRenameThisAndArguments
   addTempVarForArguments() {
     let tmpVarName = this.idGenerator_.generateUniqueIdentifier();
-    this.variableDeclarations_.push(createVariableDeclaration(
-        tmpVarName, createIdentifierExpression(ARGUMENTS)));
+    this.variableDeclarations_.push(
+      createVariableDeclaration(
+        tmpVarName,
+        createIdentifierExpression(ARGUMENTS)
+      )
+    );
     return tmpVarName;
   }
   // alphaRenameThisAndArguments
   addTempVarForThis() {
     let tmpVarName = this.idGenerator_.generateUniqueIdentifier();
-    this.variableDeclarations_.push(createVariableDeclaration(
-        tmpVarName, createThisExpression()));
+    this.variableDeclarations_.push(
+      createVariableDeclaration(tmpVarName, createThisExpression())
+    );
     return tmpVarName;
   }
 
@@ -183,16 +195,19 @@ export class FnExtractAbruptCompletions extends
 
   transformReturnStatement(tree) {
     this.hasReturns = true;
-    return new ReturnStatement(tree.location, createObjectLiteralForDescriptor({
-      v: tree.expression || createVoid0()
-    }));
+    return new ReturnStatement(
+      tree.location,
+      createObjectLiteralForDescriptor({
+        v: tree.expression || createVoid0(),
+      })
+    );
   }
 
   transformAbruptCompletion_(tree) {
     this.extractedStatements_.push(tree);
 
     let index = this.extractedStatements_.length - 1;
-    return parseStatement `return ${index};`
+    return parseStatement`return ${index};`;
   }
 
   transformBreakStatement(tree) {
@@ -200,8 +215,7 @@ export class FnExtractAbruptCompletions extends
       if (this.inBreakble_) {
         return super.transformBreakStatement(tree);
       } else {
-        tree = new BreakStatement(tree.location,
-            this.requestParentLabel_());
+        tree = new BreakStatement(tree.location, this.requestParentLabel_());
       }
     } else if (this.labelledStatements_.has(tree.name.value)) {
       return super.transformBreakStatement(tree);
@@ -214,8 +228,7 @@ export class FnExtractAbruptCompletions extends
       if (this.inLoop_) {
         return super.transformContinueStatement(tree);
       } else {
-        tree = new ContinueStatement(tree.location,
-            this.requestParentLabel_());
+        tree = new ContinueStatement(tree.location, this.requestParentLabel_());
       }
     } else if (this.labelledStatements_.has(tree.name.value)) {
       return super.transformContinueStatement(tree);
@@ -237,10 +250,15 @@ export class FnExtractAbruptCompletions extends
         let initializer = super.transformAny(variableDeclaration.initializer);
 
         this.variableDeclarations_.push(
-            createVariableDeclaration(variableName, null));
+          createVariableDeclaration(variableName, null)
+        );
 
-        assignments.push(createAssignmentStatement(
-            createIdentifierExpression(variableName), initializer));
+        assignments.push(
+          createAssignmentStatement(
+            createIdentifierExpression(variableName),
+            initializer
+          )
+        );
       });
 
       return new AnonBlock(null, assignments);
@@ -249,9 +267,17 @@ export class FnExtractAbruptCompletions extends
     return super.transformVariableStatement(tree);
   }
 
-  static createIIFE(idGenerator, body, paramList, argsList, requestParentLabel,
-      inGenerator) {
-    return new FnExtractAbruptCompletions(idGenerator, requestParentLabel)
-        .createIIFE(body, paramList, argsList, inGenerator);
+  static createIIFE(
+    idGenerator,
+    body,
+    paramList,
+    argsList,
+    requestParentLabel,
+    inGenerator
+  ) {
+    return new FnExtractAbruptCompletions(
+      idGenerator,
+      requestParentLabel
+    ).createIIFE(body, paramList, argsList, inGenerator);
   }
 }

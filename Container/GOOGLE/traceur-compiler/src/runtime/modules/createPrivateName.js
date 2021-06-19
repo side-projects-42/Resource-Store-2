@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const {create} = Object;
-const {floor, random} = Math;
+const { create } = Object;
+const { floor, random } = Math;
 
 // Private names are a bit simpler than Symbol since it is not supposed to be
 // exposed to user code.
@@ -26,7 +26,7 @@ let counter = 0;
  * @return {string}
  */
 function newUniqueString() {
-  return '__$' + floor(random() * 1e9) + '$' + ++counter + '$__';
+  return "__$" + floor(random() * 1e9) + "$" + ++counter + "$__";
 }
 
 export function createPrivateName() {

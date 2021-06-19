@@ -11,13 +11,12 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
 /**
  * Chrome extension.
  *
  * @constructor
  */
-var Extension = function() {
+var Extension = function () {
   /**
    * Current options values.
    * These are only ever modified by using the {@see #setOptions} call.
@@ -55,62 +54,74 @@ var Extension = function() {
    */
   this.popupWindows_ = {};
 
-  chrome.tabs.onActivated.addListener(
-      this.tabActivated_.bind(this));
-  chrome.tabs.onUpdated.addListener(
-      this.tabUpdated_.bind(this));
+  chrome.tabs.onActivated.addListener(this.tabActivated_.bind(this));
+  chrome.tabs.onUpdated.addListener(this.tabUpdated_.bind(this));
 
   // Handle tab closes.
-  chrome.tabs.onRemoved.addListener((function(tabId) {
-    for (var key in this.popupWindows_) {
-      if (this.popupWindows_[key] === tabId) {
-        delete this.popupWindows_[key];
-        break;
+  chrome.tabs.onRemoved.addListener(
+    function (tabId) {
+      for (var key in this.popupWindows_) {
+        if (this.popupWindows_[key] === tabId) {
+          delete this.popupWindows_[key];
+          break;
+        }
       }
-    }
-    if (tabId in this.injectedTabs_) {
-      var injectedTab = this.injectedTabs_[tabId];
-      this.injectedTabs_[tabId] = null;
-      injectedTab.dispose();
-    }
-  }).bind(this));
+      if (tabId in this.injectedTabs_) {
+        var injectedTab = this.injectedTabs_[tabId];
+        this.injectedTabs_[tabId] = null;
+        injectedTab.dispose();
+      }
+    }.bind(this)
+  );
 
   // Listen for commands from content scripts.
-  chrome.extension.onConnect.addListener(function(port) {
-    var options = this.getOptions();
-    if (port.name == 'injector') {
-      // Setup the extended info provider for the page.
-      var tab = port.sender.tab;
-      if (!tab) {
-        // This sometimes happens on about:blank and the new tab page.
-        return;
-      }
-      var pageUrl = URI.canonicalize(tab.url);
-      var pageStatus = options.getPageStatus(pageUrl, tab.id);
-      var pageOptions = options.getPageOptions(pageUrl);
-
-      _gaq.push(['_trackEvent', 'extension', 'injected']);
-
-      var injectedTab = new InjectedTab(
-          this, tab, pageStatus, pageOptions, port);
-      this.injectedTabs_[tab.id] = injectedTab;
-    } else if (port.name == 'popup') {
-      // Get info about the selected tab and send back.
-      // Note: port.sender is the popup tab, not the current tab.
-      chrome.tabs.getSelected(null, (function(tab) {
-        var pageUrl = URI.canonicalize(tab.url);
-        if (!pageUrl.length) {
+  chrome.extension.onConnect.addListener(
+    function (port) {
+      var options = this.getOptions();
+      if (port.name == "injector") {
+        // Setup the extended info provider for the page.
+        var tab = port.sender.tab;
+        if (!tab) {
+          // This sometimes happens on about:blank and the new tab page.
           return;
         }
-        this.sendPopupInfo_(pageUrl, tab.id, port);
+        var pageUrl = URI.canonicalize(tab.url);
+        var pageStatus = options.getPageStatus(pageUrl, tab.id);
+        var pageOptions = options.getPageOptions(pageUrl);
 
-        // Listen for messages from the popup.
-        port.onMessage.addListener((function(data, port) {
-          this.popupMessageReceived_(tab, data, port);
-        }).bind(this));
-      }).bind(this));
-    }
-  }.bind(this));
+        _gaq.push(["_trackEvent", "extension", "injected"]);
+
+        var injectedTab = new InjectedTab(
+          this,
+          tab,
+          pageStatus,
+          pageOptions,
+          port
+        );
+        this.injectedTabs_[tab.id] = injectedTab;
+      } else if (port.name == "popup") {
+        // Get info about the selected tab and send back.
+        // Note: port.sender is the popup tab, not the current tab.
+        chrome.tabs.getSelected(
+          null,
+          function (tab) {
+            var pageUrl = URI.canonicalize(tab.url);
+            if (!pageUrl.length) {
+              return;
+            }
+            this.sendPopupInfo_(pageUrl, tab.id, port);
+
+            // Listen for messages from the popup.
+            port.onMessage.addListener(
+              function (data, port) {
+                this.popupMessageReceived_(tab, data, port);
+              }.bind(this)
+            );
+          }.bind(this)
+        );
+      }
+    }.bind(this)
+  );
 
   // Detect the application.
   this.detectApplication_();
@@ -121,176 +132,202 @@ var Extension = function() {
   chrome.management.onDisabled.addListener(detectApplication);
 
   // Rescan all open tabs to reload any that are whitelisted.
-  this.options_.load(function() {
+  this.options_.load(function () {
     var whitelist = this.options_.getWhitelistedPages();
     var whitelistMap = {};
     for (var n = 0; n < whitelist.length; n++) {
       whitelistMap[whitelist[n]] = true;
     }
-    chrome.tabs.query({}, (function(tabs) {
-      var tabsReloaded = 0;
-      for (var n = 0; n < tabs.length; n++) {
-        var pageUrl = URI.canonicalize(tabs[n].url);
-        if (whitelistMap[pageUrl]) {
-          tabsReloaded++;
-          this.reloadTab(tabs[n].id, tabs[n].url);
+    chrome.tabs.query(
+      {},
+      function (tabs) {
+        var tabsReloaded = 0;
+        for (var n = 0; n < tabs.length; n++) {
+          var pageUrl = URI.canonicalize(tabs[n].url);
+          if (whitelistMap[pageUrl]) {
+            tabsReloaded++;
+            this.reloadTab(tabs[n].id, tabs[n].url);
+          }
         }
-      }
-      _gaq.push(['_trackEvent', 'extension', 'tabs_reloaded',
-          null, tabsReloaded]);
-    }).bind(this));
+        _gaq.push([
+          "_trackEvent",
+          "extension",
+          "tabs_reloaded",
+          null,
+          tabsReloaded,
+        ]);
+      }.bind(this)
+    );
   }, this);
 
   // This hacky thing lets people open wtf from the omnibox.
   // HACK(benvanik): https://code.google.com/p/chromium/issues/detail?id=237817
   try {
     chrome.omnibox.setDefaultSuggestion({
-      description: '<url><match>%s</match></url> Open trace file'
+      description: "<url><match>%s</match></url> Open trace file",
     });
-  } catch (e) {
-  }
-  chrome.omnibox.onInputChanged.addListener((function(text, suggest) {
-    suggest([
-      {
-        content: 'ui',
-        description: 'Open the UI'
-      }
-    ]);
-  }).bind(this));
-  chrome.omnibox.onInputEntered.addListener((function(text) {
-    chrome.tabs.getSelected(null, (function(tab) {
-      text = text.trim();
-      if (text == 'ui' || text.length == 0) {
-        // Open the UI.
-        _gaq.push(['_trackEvent', 'extension', 'omnibox_show_ui']);
-        this.showUi_({
-          targetTab: tab
-        });
-      } else {
-        // A URL? File path? etc?
-        if (text.indexOf('http') == 0) {
-          _gaq.push(['_trackEvent', 'extension', 'omnibox_show_file']);
-          this.showFileInUi_({
-            targetTab: tab
-          }, text);
-        }
-      }
-    }).bind(this));
-  }).bind(this));
+  } catch (e) {}
+  chrome.omnibox.onInputChanged.addListener(
+    function (text, suggest) {
+      suggest([
+        {
+          content: "ui",
+          description: "Open the UI",
+        },
+      ]);
+    }.bind(this)
+  );
+  chrome.omnibox.onInputEntered.addListener(
+    function (text) {
+      chrome.tabs.getSelected(
+        null,
+        function (tab) {
+          text = text.trim();
+          if (text == "ui" || text.length == 0) {
+            // Open the UI.
+            _gaq.push(["_trackEvent", "extension", "omnibox_show_ui"]);
+            this.showUi_({
+              targetTab: tab,
+            });
+          } else {
+            // A URL? File path? etc?
+            if (text.indexOf("http") == 0) {
+              _gaq.push(["_trackEvent", "extension", "omnibox_show_file"]);
+              this.showFileInUi_(
+                {
+                  targetTab: tab,
+                },
+                text
+              );
+            }
+          }
+        }.bind(this)
+      );
+    }.bind(this)
+  );
 
   // FileBrowserHandler requests, on Chrome OS.
   if (chrome.fileBrowserHandler) {
-    chrome.fileBrowserHandler.onExecute.addListener((function(id, details) {
-      chrome.tabs.get(details.tab_id, (function(tab) {
-        switch (id) {
-          case 'open':
-            this.showFileEntriesInUi_({
-              targetTab: tab
-            }, details.entries);
-            break;
-        }
-      }).bind(this));
-    }).bind(this));
+    chrome.fileBrowserHandler.onExecute.addListener(
+      function (id, details) {
+        chrome.tabs.get(
+          details.tab_id,
+          function (tab) {
+            switch (id) {
+              case "open":
+                this.showFileEntriesInUi_(
+                  {
+                    targetTab: tab,
+                  },
+                  details.entries
+                );
+                break;
+            }
+          }.bind(this)
+        );
+      }.bind(this)
+    );
   }
 
   // This is a workaround for a regression in Chrome that prevents blob URIs
   // from work in content scripts. Instead, we smuggle the options data
   // synchronously via HTTP headers. Yeah, I know. FML.
   // https://code.google.com/p/chromium/issues/detail?id=295829
-  chrome.webRequest.onHeadersReceived.addListener((function(details) {
-    var uuid = details.url.substr(details.url.lastIndexOf('/') + 1);
-    var headerValue = this.pageOptionsBlobs_[uuid];
-    return {
-      responseHeaders: [
-        {
-          name: 'X-WTF-Options',
-          value: headerValue
-        }
-      ]
-    };
-  }).bind(this), {
-    urls: ['http://tracing-framework.appspot.com/tab-options/*'],
-    types: ['xmlhttprequest']
-  }, ['blocking']);
+  chrome.webRequest.onHeadersReceived.addListener(
+    function (details) {
+      var uuid = details.url.substr(details.url.lastIndexOf("/") + 1);
+      var headerValue = this.pageOptionsBlobs_[uuid];
+      return {
+        responseHeaders: [
+          {
+            name: "X-WTF-Options",
+            value: headerValue,
+          },
+        ],
+      };
+    }.bind(this),
+    {
+      urls: ["http://tracing-framework.appspot.com/tab-options/*"],
+      types: ["xmlhttprequest"],
+    },
+    ["blocking"]
+  );
 };
-
 
 /**
  * Detects whether the application is installed and sets up options for it.
  * @private
  */
-Extension.prototype.detectApplication_ = function() {
+Extension.prototype.detectApplication_ = function () {
   // This is used to change the default options to use the app instead of the
   // embedded app.
   // TODO(benvanik): some way of talking to the app to get the right URL.
   var options = this.options_;
-  options.setDefaultEndpoint('page',
-      chrome.extension.getURL('app/maindisplay.html'));
-      // TODO(benvanik): use debug URL somehow?
-      //'http://localhost:8080/app/maindisplay-debug.html');
+  options.setDefaultEndpoint(
+    "page",
+    chrome.extension.getURL("app/maindisplay.html")
+  );
+  // TODO(benvanik): use debug URL somehow?
+  //'http://localhost:8080/app/maindisplay-debug.html');
 
-  chrome.management.getAll(function(results) {
+  chrome.management.getAll(function (results) {
     for (var n = 0; n < results.length; n++) {
       var result = results[n];
       if (!result.enabled) {
         continue;
       }
-      if (result.name == 'Web Tracing Framework (App/DEBUG)') {
+      if (result.name == "Web Tracing Framework (App/DEBUG)") {
         // Always prefer the debug app, if installed.
-        console.log('Discovered WTF App - debug ' + result.version);
-        options.setDefaultEndpoint('remote', 'localhost:9024');
+        console.log("Discovered WTF App - debug " + result.version);
+        options.setDefaultEndpoint("remote", "localhost:9024");
         break;
-      } else if (result.id == 'ofamllpnllolodilannpkikhjjcnfegg') {
+      } else if (result.id == "ofamllpnllolodilannpkikhjjcnfegg") {
         // Otherwise use CWS ID.
-        _gaq.push(['_trackEvent', 'extension', 'app_discovered']);
-        console.log('Discovered WTF App - release ' + result.version);
-        options.setDefaultEndpoint('remote', 'localhost:9023');
+        _gaq.push(["_trackEvent", "extension", "app_discovered"]);
+        console.log("Discovered WTF App - release " + result.version);
+        options.setDefaultEndpoint("remote", "localhost:9023");
         break;
       }
     }
   });
 };
 
-
 /**
  * Gets the current extension options.
  * The returned object should not be modified.
  * @return {!Options} Options.
  */
-Extension.prototype.getOptions = function() {
+Extension.prototype.getOptions = function () {
   return this.options_;
 };
-
 
 /**
  * Sets new options values, reloading the extension as required.
  * @param {!Options} value New options.
  */
-Extension.prototype.setOptions = function(value) {
+Extension.prototype.setOptions = function (value) {
   this.cleanup();
   this.options_ = value;
   this.options_.save();
   this.setup();
 };
 
-
 /**
  * Gets the shared tracer, if available.
  * @return {Tracer} Tracer.
  */
-Extension.prototype.getTracer = function() {
+Extension.prototype.getTracer = function () {
   if (this.tracer_ && this.tracer_.isAvailable()) {
     return this.tracer_;
   }
   return null;
 };
 
-
 /**
  * Sets up the extension in the browser.
  * This will add the (optional) page actions and browser actions.
  */
-Extension.prototype.setup = function() {
+Extension.prototype.setup = function () {
   var options = this.getOptions();
 
   // Add context menu items.
@@ -307,11 +344,10 @@ Extension.prototype.setup = function() {
   this.tracer_ = new Tracer();
 };
 
-
 /**
  * Cleans up the extension, removing all injected bits.
  */
-Extension.prototype.cleanup = function() {
+Extension.prototype.cleanup = function () {
   // Remove all context menu items.
   chrome.contextMenus.removeAll();
 
@@ -322,30 +358,27 @@ Extension.prototype.cleanup = function() {
   }
 };
 
-
 /**
  * Removes an injected tab from the list.
  * This does not dispose the tab. It should only be used by the InjectedTab
  * dispose call.
  * @param {number} tabId Tab ID.
  */
-Extension.prototype.removeInjectedTab = function(tabId) {
+Extension.prototype.removeInjectedTab = function (tabId) {
   delete this.injectedTabs_[tabId];
 };
-
 
 /**
  * Reloads the given tab.
  * @param {number} tabId Tab ID.
  * @param {string} tabUrl Target tab URL.
  */
-Extension.prototype.reloadTab = function(tabId, tabUrl) {
+Extension.prototype.reloadTab = function (tabId, tabUrl) {
   this.updatePageState_(tabId, tabUrl);
   chrome.tabs.reload(tabId, {
-    bypassCache: true
+    bypassCache: true,
   });
 };
-
 
 /**
  * Updates the page state (cookie, action visibility, etc).
@@ -353,7 +386,7 @@ Extension.prototype.reloadTab = function(tabId, tabUrl) {
  * @param {string} tabUrl Tab URL.
  * @private
  */
-Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
+Extension.prototype.updatePageState_ = function (tabId, tabUrl) {
   /**
    * Name of the cookie that contains the options for the injection.
    * The data is just a blob GUID that is used to construct a URL to the blob
@@ -361,14 +394,14 @@ Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
    * @const
    * @type {string}
    */
-  var WTF_OPTIONS_COOKIE = 'wtf';
+  var WTF_OPTIONS_COOKIE = "wtf";
 
   /**
    * Cookie used for instrumentation options.
    * @const
    * @type {string}
    */
-  var WTF_INSTRUMENTATION_COOKIE = 'wtfi';
+  var WTF_INSTRUMENTATION_COOKIE = "wtfi";
 
   var options = this.getOptions();
 
@@ -377,13 +410,15 @@ Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
   if (!pageUrl.length) {
     return;
   }
-  if (pageUrl.lastIndexOf('blob:') == 0 ||
-      pageUrl.lastIndexOf('view-source:') == 0) {
+  if (
+    pageUrl.lastIndexOf("blob:") == 0 ||
+    pageUrl.lastIndexOf("view-source:") == 0
+  ) {
     // Ignore blob: URLs.
     return;
   }
   var parsedUrl = URI.parse(pageUrl);
-  if (parsedUrl.scheme.lastIndexOf('chrome') == 0) {
+  if (parsedUrl.scheme.lastIndexOf("chrome") == 0) {
     // Ignore chrome*:// URIs - they'll error.
     return;
   }
@@ -394,7 +429,7 @@ Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
   if (forceWhitelistRegex.test(URI.parse(tabUrl).query)) {
     options.whitelistPage(pageUrl);
     // Reload the page without the parameter after updating settings.
-    reloadUrl = tabUrl.replace(forceWhitelistRegex, '');
+    reloadUrl = tabUrl.replace(forceWhitelistRegex, "");
   }
 
   // Get tab toggle status.
@@ -407,16 +442,17 @@ Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
       var pageOptions = options.getPageOptions(pageUrl);
 
       // Set availablility overrides.
-      pageOptions['wtf.trace.provider.chromeDebug.tracing'] =
-          !!this.getTracer();
+      pageOptions["wtf.trace.provider.chromeDebug.tracing"] =
+        !!this.getTracer();
 
       // Create an exported blob URL that the content script can access.
       // To save on cookie space send only the UUID.
       var pageOptionsString = JSON.stringify(pageOptions);
       var pageOptionsBlob = new Blob([pageOptionsString]);
       var pageOptionsUuid = webkitURL.createObjectURL(pageOptionsBlob);
-      pageOptionsUuid =
-          pageOptionsUuid.substr(pageOptionsUuid.lastIndexOf('/') + 1);
+      pageOptionsUuid = pageOptionsUuid.substr(
+        pageOptionsUuid.lastIndexOf("/") + 1
+      );
 
       // Stash options in our lookup for the HTTP header fallback.
       this.pageOptionsBlobs_[pageOptionsUuid] = pageOptionsString;
@@ -426,7 +462,7 @@ Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
         url: pageUrl,
         name: WTF_OPTIONS_COOKIE,
         value: pageOptionsUuid,
-        path: urlPath
+        path: urlPath,
       });
       break;
     case PageStatus.INSTRUMENTED:
@@ -437,7 +473,7 @@ Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
         url: pageUrl,
         name: WTF_INSTRUMENTATION_COOKIE,
         value: JSON.stringify(instrumentationOptions),
-        path: urlPath
+        path: urlPath,
       });
       break;
     default:
@@ -445,33 +481,33 @@ Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
     case PageStatus.BLACKLISTED:
       chrome.cookies.remove({
         url: pageUrl,
-        name: WTF_OPTIONS_COOKIE
+        name: WTF_OPTIONS_COOKIE,
       });
       chrome.cookies.remove({
         url: pageUrl,
-        name: WTF_INSTRUMENTATION_COOKIE
+        name: WTF_INSTRUMENTATION_COOKIE,
       });
       break;
   }
 
   if (options.showPageAction) {
     // Determine UI title/icon.
-    var title = '';// 'Toggle Web Tracing Framework on this page';
+    var title = ""; // 'Toggle Web Tracing Framework on this page';
     var icon;
-    var badgeText = '';
+    var badgeText = "";
     switch (status) {
       case PageStatus.NONE:
-        icon = 'pageAction';
-        badgeText = '';
+        icon = "pageAction";
+        badgeText = "";
         break;
       case PageStatus.BLACKLISTED:
-        icon = 'pageActionDisabled';
-        badgeText = '';
+        icon = "pageActionDisabled";
+        badgeText = "";
         break;
       case PageStatus.WHITELISTED:
       case PageStatus.INSTRUMENTED:
-        icon = 'pageActionEnabled';
-        badgeText = 'REC';
+        icon = "pageActionEnabled";
+        badgeText = "REC";
         break;
     }
 
@@ -479,35 +515,36 @@ Extension.prototype.updatePageState_ = function(tabId, tabUrl) {
     chrome.browserAction.setIcon({
       tabId: tabId,
       path: {
-        '19': '/assets/icons/' + icon + '19.png',
-        '38': '/assets/icons/' + icon + '38.png'
-      }
+        19: "/assets/icons/" + icon + "19.png",
+        38: "/assets/icons/" + icon + "38.png",
+      },
     });
     chrome.browserAction.setBadgeText({
       tabId: tabId,
-      text: badgeText
+      text: badgeText,
     });
 
     if (reloadUrl) {
-      chrome.tabs.update(tabId, {url: reloadUrl});
+      chrome.tabs.update(tabId, { url: reloadUrl });
     }
   }
 };
-
 
 /**
  * Handles tab activation events.
  * @param {!Object} activeInfo Activate information.
  * @private
  */
-Extension.prototype.tabActivated_ = function(activeInfo) {
-  chrome.tabs.get(activeInfo.tabId, (function(tab) {
-    if (tab) {
-      this.updatePageState_(tab.id, tab.url);
-    }
-  }).bind(this));
+Extension.prototype.tabActivated_ = function (activeInfo) {
+  chrome.tabs.get(
+    activeInfo.tabId,
+    function (tab) {
+      if (tab) {
+        this.updatePageState_(tab.id, tab.url);
+      }
+    }.bind(this)
+  );
 };
-
 
 /**
  * Handles tab update events.
@@ -516,10 +553,9 @@ Extension.prototype.tabActivated_ = function(activeInfo) {
  * @param {!Object} tab Tab.
  * @private
  */
-Extension.prototype.tabUpdated_ = function(tabId, changeInfo, tab) {
+Extension.prototype.tabUpdated_ = function (tabId, changeInfo, tab) {
   this.updatePageState_(tabId, tab.url);
 };
-
 
 /**
  * Sends the latest information to the popup.
@@ -528,19 +564,18 @@ Extension.prototype.tabUpdated_ = function(tabId, changeInfo, tab) {
  * @param {!Port} port Message port.
  * @private
  */
-Extension.prototype.sendPopupInfo_ = function(pageUrl, tabId, port) {
+Extension.prototype.sendPopupInfo_ = function (pageUrl, tabId, port) {
   var options = this.getOptions();
   port.postMessage({
-    'command': 'info',
-    'info': {
-      'url': pageUrl,
-      'status': options.getPageStatus(pageUrl, tabId),
-      'options': options.getPageOptions(pageUrl),
-      'all_addons': options.getAddons()
-    }
+    command: "info",
+    info: {
+      url: pageUrl,
+      status: options.getPageStatus(pageUrl, tabId),
+      options: options.getPageOptions(pageUrl),
+      all_addons: options.getAddons(),
+    },
   });
 };
-
 
 /**
  * Handles incoming messages from page action popups.
@@ -549,27 +584,27 @@ Extension.prototype.sendPopupInfo_ = function(pageUrl, tabId, port) {
  * @param {!Port} port Port the message was received on. Popup.
  * @private
  */
-Extension.prototype.popupMessageReceived_ = function(tab, data, port) {
+Extension.prototype.popupMessageReceived_ = function (tab, data, port) {
   var options = this.getOptions();
   var pageUrl = URI.canonicalize(tab.url);
 
   var needsReload = false;
   switch (data.command) {
-    case 'toggle':
+    case "toggle":
       // Perform toggling.
       var status = options.getPageStatus(pageUrl, tab.id);
       switch (status) {
         case PageStatus.NONE:
         case PageStatus.BLACKLISTED:
-          _gaq.push(['_trackEvent', 'extension', 'page_enabled']);
+          _gaq.push(["_trackEvent", "extension", "page_enabled"]);
           options.whitelistPage(pageUrl);
           break;
         case PageStatus.WHITELISTED:
-          _gaq.push(['_trackEvent', 'extension', 'page_disabled']);
+          _gaq.push(["_trackEvent", "extension", "page_disabled"]);
           options.blacklistPage(pageUrl);
           break;
         case PageStatus.INSTRUMENTED:
-          _gaq.push(['_trackEvent', 'extension', 'instrumentation_disabled']);
+          _gaq.push(["_trackEvent", "extension", "instrumentation_disabled"]);
           options.uninstrumentTab(tab.id);
           break;
       }
@@ -577,37 +612,40 @@ Extension.prototype.popupMessageReceived_ = function(tab, data, port) {
       this.updatePageState_(tab.id, tab.url);
       needsReload = true;
       break;
-    case 'reset_settings':
+    case "reset_settings":
       // Reset.
-      _gaq.push(['_trackEvent', 'extension', 'page_settings_reset']);
+      _gaq.push(["_trackEvent", "extension", "page_settings_reset"]);
       options.resetPageOptions(pageUrl);
       // Force update the page action ASAP.
       this.updatePageState_(tab.id, tab.url);
       needsReload = true;
       break;
 
-    case 'show_ui':
+    case "show_ui":
       this.showUi_({
-        newWindow: true
+        newWindow: true,
       });
       break;
-    case 'show_files':
-      this.showFileBlobsInUi_({
-        newWindow: true
-      }, data.files);
+    case "show_files":
+      this.showFileBlobsInUi_(
+        {
+          newWindow: true,
+        },
+        data.files
+      );
       break;
 
-    case 'instrument':
+    case "instrument":
       if (data.needsHelp) {
-        _gaq.push(['_trackEvent', 'extension', 'instrumentation_help']);
+        _gaq.push(["_trackEvent", "extension", "instrumentation_help"]);
         chrome.tabs.create({
-          url: 'https://github.com/google/tracing-framework/blob/master/docs/memory_tracing.md',
-          active: true
+          url: "https://github.com/google/tracing-framework/blob/master/docs/memory_tracing.md",
+          active: true,
         });
       } else {
-        _gaq.push(['_trackEvent', 'extension', 'instrumentation_enabled']);
+        _gaq.push(["_trackEvent", "extension", "instrumentation_enabled"]);
         options.instrumentTab(tab.id, {
-          'type': data.type
+          type: data.type,
         });
         // Force update the page action ASAP.
         this.updatePageState_(tab.id, tab.url);
@@ -615,32 +653,32 @@ Extension.prototype.popupMessageReceived_ = function(tab, data, port) {
       }
       break;
 
-    case 'add_addon':
-      _gaq.push(['_trackEvent', 'extension', 'addon_added']);
+    case "add_addon":
+      _gaq.push(["_trackEvent", "extension", "addon_added"]);
       options.addAddon(data.url, data.manifest);
       this.sendPopupInfo_(pageUrl, tab.id, port);
       break;
-    case 'remove_addon':
-      _gaq.push(['_trackEvent', 'extension', 'addon_removed']);
+    case "remove_addon":
+      _gaq.push(["_trackEvent", "extension", "addon_removed"]);
       options.removeAddon(data.url);
       this.sendPopupInfo_(pageUrl, tab.id, port);
       break;
-    case 'toggle_addon':
+    case "toggle_addon":
       var pageOptions = options.getPageOptions(pageUrl);
-      var i = pageOptions['wtf.addons'].indexOf(data.url);
+      var i = pageOptions["wtf.addons"].indexOf(data.url);
       if (data.enabled) {
         if (i == -1) {
-          pageOptions['wtf.addons'].push(data.url);
-          _gaq.push(['_trackEvent', 'extension', 'page_addon_enabled']);
+          pageOptions["wtf.addons"].push(data.url);
+          _gaq.push(["_trackEvent", "extension", "page_addon_enabled"]);
         }
       } else {
-        pageOptions['wtf.addons'].splice(i, 1);
-        _gaq.push(['_trackEvent', 'extension', 'page_addon_disabled']);
+        pageOptions["wtf.addons"].splice(i, 1);
+        _gaq.push(["_trackEvent", "extension", "page_addon_disabled"]);
       }
       options.setPageOptions(pageUrl, pageOptions);
       this.sendPopupInfo_(pageUrl, tab.id, port);
       needsReload =
-          options.getPageStatus(pageUrl, tab.id) == PageStatus.WHITELISTED;
+        options.getPageStatus(pageUrl, tab.id) == PageStatus.WHITELISTED;
       this.updatePageState_(tab.id, tab.url);
       break;
   }
@@ -648,11 +686,10 @@ Extension.prototype.popupMessageReceived_ = function(tab, data, port) {
   // Reload (and inject).
   if (needsReload) {
     chrome.tabs.reload(tab.tabId, {
-      bypassCache: true
+      bypassCache: true,
     });
   }
 };
-
 
 /**
  * Converts a list of regular arrays to Uint8Arrays.
@@ -660,7 +697,7 @@ Extension.prototype.popupMessageReceived_ = function(tab, data, port) {
  * @return {!Array.<!Uint8Array>} Target arrays.
  * @private
  */
-Extension.prototype.convertArraysToUint8Arrays_ = function(sources) {
+Extension.prototype.convertArraysToUint8Arrays_ = function (sources) {
   var targets = [];
   for (var n = 0; n < sources.length; n++) {
     var source = sources[n];
@@ -673,7 +710,6 @@ Extension.prototype.convertArraysToUint8Arrays_ = function(sources) {
   return targets;
 };
 
-
 /**
  * @typedef {{
  *   pageUrl: string|null,
@@ -683,15 +719,15 @@ Extension.prototype.convertArraysToUint8Arrays_ = function(sources) {
  */
 Extension.ShowOptions;
 
-
 /**
  * Shows the empty UI.
  * @param {Extension.ShowOptions?} options Options.
  * @private
  */
-Extension.prototype.showUi_ = function(options, opt_callback, opt_scope) {
-  var pageUrl = (options ? options.pageUrl : null) ||
-      chrome.extension.getURL('app/maindisplay.html');
+Extension.prototype.showUi_ = function (options, opt_callback, opt_scope) {
+  var pageUrl =
+    (options ? options.pageUrl : null) ||
+    chrome.extension.getURL("app/maindisplay.html");
   var newWindow = options ? options.newWindow : false;
   var sourceTab = options ? options.sourceTab : null;
   var targetTab = options ? options.targetTab : null;
@@ -699,30 +735,28 @@ Extension.prototype.showUi_ = function(options, opt_callback, opt_scope) {
   // If we have a callback it means we're likely going to be controlling the UI,
   // so prevent the splash screen.
   if (opt_callback) {
-    pageUrl += '?expect_data';
+    pageUrl += "?expect_data";
   }
 
   // TODO(benvanik): generalize this into an IPC channel
-  var waiter = function(e) {
+  var waiter = function (e) {
     // This is a packet from the wtf.ipc.MessageChannel type.
     var data = e.data;
-    if (!data ||
-        !data['wtf_ipc_connect_token'] ||
-        !data['data']['hello']) {
+    if (!data || !data["wtf_ipc_connect_token"] || !data["data"]["hello"]) {
       return;
     }
 
     // Stop snooping.
     e.preventDefault();
     e.stopPropagation();
-    window.removeEventListener('message', waiter, true);
+    window.removeEventListener("message", waiter, true);
 
     if (opt_callback) {
       opt_callback.call(opt_scope, e.source);
     }
     e.source.focus();
   };
-  window.addEventListener('message', waiter, true);
+  window.addEventListener("message", waiter, true);
 
   var existingTabId = sourceTab ? this.popupWindows_[sourceTab.id] : undefined;
   if (newWindow) {
@@ -734,20 +768,23 @@ Extension.prototype.showUi_ = function(options, opt_callback, opt_scope) {
     if (targetTab) {
       chrome.tabs.update(targetTab.id, {
         url: pageUrl,
-        active: true
+        active: true,
       });
     } else {
       var openOptions = {
         url: pageUrl,
-        active: true
+        active: true,
       };
       if (sourceTab) {
         openOptions.windowId = sourceTab.windowId;
         openOptions.index = sourceTab.index + 1;
         openOptions.openerTabId = sourceTab.id;
-        chrome.tabs.create(openOptions, (function(newTab) {
-          this.popupWindows_[sourceTab.id] = newTab.id;
-        }).bind(this));
+        chrome.tabs.create(
+          openOptions,
+          function (newTab) {
+            this.popupWindows_[sourceTab.id] = newTab.id;
+          }.bind(this)
+        );
       } else {
         chrome.tabs.create(openOptions);
       }
@@ -757,20 +794,19 @@ Extension.prototype.showUi_ = function(options, opt_callback, opt_scope) {
     // Note that we reset to the pageUrl in case we lost are arguments.
     chrome.tabs.update(existingTabId, {
       url: pageUrl,
-      active: true
+      active: true,
     });
-    chrome.tabs.get(existingTabId, function(existingTab) {
+    chrome.tabs.get(existingTabId, function (existingTab) {
       chrome.windows.update(existingTab.windowId, {
         focused: true,
-        drawAttention: true
+        drawAttention: true,
       });
     });
     chrome.tabs.update(existingTabId, {
-      active: true
+      active: true,
     });
   }
 };
-
 
 /**
  * Shows a file at the given URL in the UI.
@@ -778,42 +814,42 @@ Extension.prototype.showUi_ = function(options, opt_callback, opt_scope) {
  * @param {string} url URL to open.
  * @private
  */
-Extension.prototype.showFileInUi_ = function(options, url) {
+Extension.prototype.showFileInUi_ = function (options, url) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.responseType = 'arraybuffer';
-  xhr.onload = (function() {
+  xhr.open("GET", url, true);
+  xhr.responseType = "arraybuffer";
+  xhr.onload = function () {
     if (xhr.status == 200) {
-      var contentType = 'application/x-extension-wtf-trace';
-      var blob = new Blob([
-        new Uint8Array(xhr.response)
-      ], {
-        type: 'application/octet-stream'
+      var contentType = "application/x-extension-wtf-trace";
+      var blob = new Blob([new Uint8Array(xhr.response)], {
+        type: "application/octet-stream",
       });
       var blobUrl = URL.createObjectURL(blob);
       var contentTypes = [contentType];
       var contentSources = [url];
       var contentUrls = [blobUrl];
       var contentLength = blob.size;
-      this.showUi_(options, function(port) {
+      this.showUi_(options, function (port) {
         // NOTE: postMessage doesn't support transferrables here.
-        port.postMessage({
-          'wtf_ipc_connect_token': true,
-          'data': {
-            'command': 'snapshot',
-            'content_types': contentTypes,
-            'content_sources': contentSources,
-            'content_urls': contentUrls,
-            'content_length': contentLength,
-            'revoke_blob_urls': true
-          }
-        }, '*');
+        port.postMessage(
+          {
+            wtf_ipc_connect_token: true,
+            data: {
+              command: "snapshot",
+              content_types: contentTypes,
+              content_sources: contentSources,
+              content_urls: contentUrls,
+              content_length: contentLength,
+              revoke_blob_urls: true,
+            },
+          },
+          "*"
+        );
       });
     }
-  }).bind(this);
+  }.bind(this);
   xhr.send(null);
 };
-
 
 /**
  * Shows file blobs in the UI.
@@ -821,7 +857,7 @@ Extension.prototype.showFileInUi_ = function(options, url) {
  * @param {!Array} files File blob infos.
  * @private
  */
-Extension.prototype.showFileBlobsInUi_ = function(options, files) {
+Extension.prototype.showFileBlobsInUi_ = function (options, files) {
   if (!files.length) {
     return;
   }
@@ -832,12 +868,12 @@ Extension.prototype.showFileBlobsInUi_ = function(options, files) {
   var contentLength = 0;
   for (var n = 0; n < files.length; n++) {
     var file = files[n];
-    var contentType = 'application/x-extension-wtf-trace';
+    var contentType = "application/x-extension-wtf-trace";
     var fileName = file.name;
-    var dotIndex = fileName.lastIndexOf('.');
+    var dotIndex = fileName.lastIndexOf(".");
     if (dotIndex != -1) {
       extension = fileName.substring(dotIndex + 1);
-      contentType = 'application/x-extension-' + extension;
+      contentType = "application/x-extension-" + extension;
     }
     contentTypes.push(contentType);
 
@@ -846,22 +882,24 @@ Extension.prototype.showFileBlobsInUi_ = function(options, files) {
     contentLength += file.size;
   }
 
-  this.showUi_(options, function(port) {
+  this.showUi_(options, function (port) {
     // NOTE: postMessage doesn't support transferrables here.
-    port.postMessage({
-      'wtf_ipc_connect_token': true,
-      'data': {
-        'command': 'snapshot',
-        'content_types': contentTypes,
-        'content_sources': contentSources,
-        'content_urls': contentUrls,
-        'content_length': contentLength,
-        'revoke_blob_urls': true
-      }
-    }, '*');
+    port.postMessage(
+      {
+        wtf_ipc_connect_token: true,
+        data: {
+          command: "snapshot",
+          content_types: contentTypes,
+          content_sources: contentSources,
+          content_urls: contentUrls,
+          content_length: contentLength,
+          revoke_blob_urls: true,
+        },
+      },
+      "*"
+    );
   });
 };
-
 
 /**
  * Shows a file at the given URL in the UI.
@@ -869,53 +907,56 @@ Extension.prototype.showFileBlobsInUi_ = function(options, files) {
  * @param {!Array.<!FileEntry>} fileEntries List of HTML File System entries.
  * @private
  */
-Extension.prototype.showFileEntriesInUi_ = function(options, fileEntries) {
+Extension.prototype.showFileEntriesInUi_ = function (options, fileEntries) {
   if (!fileEntries.length) {
     return;
   }
 
-  var processFiles = (function(files) {
+  var processFiles = function (files) {
     var contentTypes = [];
     var contentSources = [];
     var contentUrls = [];
     var contentLength = 0;
     for (var n = 0; n < files.length; n++) {
-      var contentType = 'application/x-extension-wtf-trace';
+      var contentType = "application/x-extension-wtf-trace";
       var fileName = files[n].name;
-      var dotIndex = fileName.lastIndexOf('.');
+      var dotIndex = fileName.lastIndexOf(".");
       if (dotIndex != -1) {
         extension = fileName.substring(dotIndex + 1);
-        contentType = 'application/x-extension-' + extension;
+        contentType = "application/x-extension-" + extension;
       }
       contentTypes.push(contentType);
 
       var blob = new Blob([files[n]], {
-        type: 'application/octet-stream'
+        type: "application/octet-stream",
       });
       contentSources.push(fileName);
       contentUrls.push(URL.createObjectURL(blob));
       contentLength += blob.size;
     }
-    this.showUi_(options, function(port) {
+    this.showUi_(options, function (port) {
       // NOTE: postMessage doesn't support transferrables here.
-      port.postMessage({
-        'wtf_ipc_connect_token': true,
-        'data': {
-          'command': 'snapshot',
-          'content_types': contentTypes,
-          'content_sources': contentSources,
-          'content_urls': contentUrls,
-          'content_length': contentLength,
-          'revoke_blob_urls': true
-        }
-      }, '*');
+      port.postMessage(
+        {
+          wtf_ipc_connect_token: true,
+          data: {
+            command: "snapshot",
+            content_types: contentTypes,
+            content_sources: contentSources,
+            content_urls: contentUrls,
+            content_length: contentLength,
+            revoke_blob_urls: true,
+          },
+        },
+        "*"
+      );
     });
-  }).bind(this);
+  }.bind(this);
 
   var files = [];
   var remaining = fileEntries.length;
-  fileEntries.forEach(function(entry) {
-    entry.file(function(file) {
+  fileEntries.forEach(function (entry) {
+    entry.file(function (file) {
       files.push(file);
       remaining--;
       if (!remaining) {
@@ -924,7 +965,6 @@ Extension.prototype.showFileEntriesInUi_ = function(options, fileEntries) {
     });
   });
 };
-
 
 /**
  * Shows a snapshot in a new window.
@@ -937,25 +977,37 @@ Extension.prototype.showFileEntriesInUi_ = function(options, fileEntries) {
  * @param {number} contentLength Content length, in bytes.
  * @private
  */
-Extension.prototype.showSnapshot = function(
-    sourceTab, pageUrl, newWindow,
-    contentTypes, contentSources, contentUrls, contentLength) {
-  this.showUi_({
-    pageUrl: pageUrl,
-    newWindow: newWindow,
-    sourceTab: sourceTab
-  }, function(port) {
-    // NOTE: postMessage doesn't support transferrables here.
-    port.postMessage({
-      'wtf_ipc_connect_token': true,
-      'data': {
-        'command': 'snapshot',
-        'content_types': contentTypes,
-        'content_sources': contentSources,
-        'content_urls': contentUrls,
-        'content_length': contentLength,
-        'revoke_blob_urls': true
-      }
-    }, '*');
-  });
+Extension.prototype.showSnapshot = function (
+  sourceTab,
+  pageUrl,
+  newWindow,
+  contentTypes,
+  contentSources,
+  contentUrls,
+  contentLength
+) {
+  this.showUi_(
+    {
+      pageUrl: pageUrl,
+      newWindow: newWindow,
+      sourceTab: sourceTab,
+    },
+    function (port) {
+      // NOTE: postMessage doesn't support transferrables here.
+      port.postMessage(
+        {
+          wtf_ipc_connect_token: true,
+          data: {
+            command: "snapshot",
+            content_types: contentTypes,
+            content_sources: contentSources,
+            content_urls: contentUrls,
+            content_length: contentLength,
+            revoke_blob_urls: true,
+          },
+        },
+        "*"
+      );
+    }
+  );
 };

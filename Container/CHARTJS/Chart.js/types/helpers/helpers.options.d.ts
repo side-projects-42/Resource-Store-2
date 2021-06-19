@@ -1,7 +1,7 @@
-import { FontSpec } from '../index.esm';
+import { FontSpec } from "../index.esm";
 
 export interface CanvasFontSpec extends FontSpec {
-	string: string;
+  string: string;
 }
 /**
  * Parses font options and returns the font object.
@@ -28,8 +28,24 @@ export function toLineHeight(value: string, size: number): number;
  * @since 2.7.0
  */
 export function toPadding(
-  value?: number | { top?: number; left?: number; right?: number; bottom?: number; x?:number, y?: number }
-): { top: number; left: number; right: number; bottom: number; width: number; height: number };
+  value?:
+    | number
+    | {
+        top?: number;
+        left?: number;
+        right?: number;
+        bottom?: number;
+        x?: number;
+        y?: number;
+      }
+): {
+  top: number;
+  left: number;
+  right: number;
+  bottom: number;
+  width: number;
+  height: number;
+};
 
 /**
  * Evaluates the given `inputs` sequentially and returns the first defined value.
@@ -43,8 +59,8 @@ export function toPadding(
  * @since 2.7.0
  */
 export function resolve<T, C>(
-	inputs: undefined | T | ((c: C) => T) | readonly T[],
-	context?: C,
-	index?: number,
-	info?: { cacheable?: boolean }
+  inputs: undefined | T | ((c: C) => T) | readonly T[],
+  context?: C,
+  index?: number,
+  info?: { cacheable?: boolean }
 ): T | undefined;

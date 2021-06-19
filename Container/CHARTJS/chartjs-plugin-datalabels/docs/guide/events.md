@@ -2,11 +2,11 @@
 
 This plugin currently supports the following label events:
 
-| **Name** | **Chart events<sup>1</sup>** | **Description**
-| ---- | ---- | ----
-| `enter` | `mousemove` | the mouse is moved over a label
-| `leave` | `mousemove` | the mouse is moved out of a label
-| `click` | `click` | the mouse's primary button is pressed and released on a label
+| **Name** | **Chart events<sup>1</sup>** | **Description**                                               |
+| -------- | ---------------------------- | ------------------------------------------------------------- |
+| `enter`  | `mousemove`                  | the mouse is moved over a label                               |
+| `leave`  | `mousemove`                  | the mouse is moved out of a label                             |
+| `click`  | `click`                      | the mouse's primary button is pressed and released on a label |
 
 ::: tip
 <sup>1</sup> [Chart.js events](http://www.chartjs.org/docs/latest/general/interactions/events.html) that need to be enabled in order to get the associated label event working. Note that by default Chart.js enables `"mousemove", "mouseout", "click", "touchstart", "touchmove", "touchend"`, meaning that label events work out-of-the-box.
@@ -70,4 +70,3 @@ If no listener is registered, incoming events are immediately ignored, preventin
   }
 }
 ```
-

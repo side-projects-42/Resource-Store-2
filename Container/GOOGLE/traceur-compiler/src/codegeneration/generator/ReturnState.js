@@ -12,13 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  isUndefined,
-  isVoidExpression,
-} from '../../semantics/util.js';
-import {YieldState} from './YieldState.js';
-import {State} from './State.js';
-import {parseStatement} from '../PlaceholderParser.js';
+import { isUndefined, isVoidExpression } from "../../semantics/util.js";
+import { YieldState } from "./YieldState.js";
+import { State } from "./State.js";
+import { parseStatement } from "../PlaceholderParser.js";
 
 /**
  * Represents a return statement that has been added to a StateMachine.
@@ -34,7 +31,7 @@ export class ReturnState extends YieldState {
     let e = this.expression;
     let statements = [];
     if (e && !isUndefined(e) && !isVoidExpression(e))
-      statements.push(parseStatement `$ctx.returnValue = ${this.expression}`);
+      statements.push(parseStatement`$ctx.returnValue = ${this.expression}`);
     statements.push(...State.generateJump(enclosingFinally, machineEndState));
     return statements;
   }

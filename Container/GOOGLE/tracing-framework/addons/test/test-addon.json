@@ -2,8 +2,6 @@
   "name": "My Addon",
   "required_version": "1.0.5",
   "tracing": {
-    "scripts": [
-      "test-addon-trace.js"
-    ]
+    "scripts": ["test-addon-trace.js"]
   }
 }

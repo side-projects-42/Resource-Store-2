@@ -1,29 +1,29 @@
 module.exports = {
   config: {
-    type: 'scatter',
+    type: "scatter",
     options: {
       scales: {
         x: {
           display: false,
           min: 0,
-          max: 100
+          max: 100,
         },
         y: {
           display: false,
           min: 0,
-          max: 100
-        }
+          max: 100,
+        },
       },
       plugins: {
         annotation: {
           drawTime() {
-            return 'afterDatasetsDraw';
+            return "afterDatasetsDraw";
           },
           annotations: {
             auto1: {
-              type: 'line',
+              type: "line",
               scaleID() {
-                return 'y';
+                return "y";
               },
               value() {
                 return 0;
@@ -32,23 +32,23 @@ module.exports = {
                 return 80;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
                 rotation() {
-                  return 'auto';
+                  return "auto";
                 },
                 position() {
-                  return 'start';
+                  return "start";
                 },
                 backgroundColor() {
-                  return 'red';
+                  return "red";
                 },
                 content() {
-                  return 'auto rotation';
+                  return "auto rotation";
                 },
                 enabled() {
                   return true;
@@ -56,12 +56,12 @@ module.exports = {
               },
             },
             auto2: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 90;
@@ -76,20 +76,20 @@ module.exports = {
                 return 50;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
                 rotation() {
-                  return 'auto';
+                  return "auto";
                 },
                 backgroundColor() {
-                  return 'red';
+                  return "red";
                 },
                 content() {
-                  return 'auto rotation';
+                  return "auto rotation";
                 },
                 enabled() {
                   return true;
@@ -97,12 +97,12 @@ module.exports = {
               },
             },
             auto3: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 30;
@@ -117,20 +117,20 @@ module.exports = {
                 return 85;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
                 rotation() {
-                  return 'auto';
+                  return "auto";
                 },
                 backgroundColor() {
-                  return 'red';
+                  return "red";
                 },
                 content() {
-                  return 'auto rotation';
+                  return "auto rotation";
                 },
                 enabled() {
                   return true;
@@ -138,12 +138,12 @@ module.exports = {
               },
             },
             auto4: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 65;
@@ -158,20 +158,20 @@ module.exports = {
                 return 100;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
                 rotation() {
-                  return 'auto';
+                  return "auto";
                 },
                 backgroundColor() {
-                  return 'red';
+                  return "red";
                 },
                 content() {
-                  return 'auto rotation';
+                  return "auto rotation";
                 },
                 enabled() {
                   return true;
@@ -179,12 +179,12 @@ module.exports = {
               },
             },
             man1: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 10;
@@ -199,7 +199,7 @@ module.exports = {
                 return 70;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
@@ -209,10 +209,10 @@ module.exports = {
                   return 90;
                 },
                 backgroundColor() {
-                  return 'red';
+                  return "red";
                 },
                 content() {
-                  return 'rotated 90';
+                  return "rotated 90";
                 },
                 enabled() {
                   return true;
@@ -220,12 +220,12 @@ module.exports = {
               },
             },
             man2: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 10;
@@ -240,7 +240,7 @@ module.exports = {
                 return 50;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
@@ -250,22 +250,22 @@ module.exports = {
                   return -80;
                 },
                 backgroundColor() {
-                  return 'red';
+                  return "red";
                 },
                 content() {
-                  return 'rotated -80';
+                  return "rotated -80";
                 },
                 enabled() {
                   return true;
                 },
               },
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   },
   options: {
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

@@ -11,18 +11,16 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.pal.NodePlatform');
+goog.provide("wtf.pal.NodePlatform");
 
-goog.require('wtf.pal.IPlatform');
-
-
+goog.require("wtf.pal.IPlatform");
 
 /**
  * Node.js platform abstraction layer.
  * @constructor
  * @implements {wtf.pal.IPlatform}
  */
-wtf.pal.NodePlatform = function() {
+wtf.pal.NodePlatform = function () {
   /**
    * @type {string}
    * @private
@@ -34,34 +32,31 @@ wtf.pal.NodePlatform = function() {
    * @type {!NodeFsModule}
    * @private
    */
-  this.fs_ = /** @type {!NodeFsModule} */ (require('fs'));
+  this.fs_ = /** @type {!NodeFsModule} */ (require("fs"));
 };
-
 
 /**
  * @override
  */
-wtf.pal.NodePlatform.prototype.getWorkingDirectory = function() {
+wtf.pal.NodePlatform.prototype.getWorkingDirectory = function () {
   return this.workingDirectory_;
 };
 
-
 /**
  * @override
  */
-wtf.pal.NodePlatform.prototype.readTextFile = function(path) {
+wtf.pal.NodePlatform.prototype.readTextFile = function (path) {
   try {
-    return /** @type {string} */ (this.fs_.readFileSync(path, 'utf8'));
+    return /** @type {string} */ (this.fs_.readFileSync(path, "utf8"));
   } catch (e) {
     return null;
   }
 };
 
-
 /**
  * @override
  */
-wtf.pal.NodePlatform.prototype.readBinaryFile = function(path) {
+wtf.pal.NodePlatform.prototype.readBinaryFile = function (path) {
   var nodeData = null;
   try {
     nodeData = /** @type {!Buffer} */ (this.fs_.readFileSync(path));
@@ -78,21 +73,25 @@ wtf.pal.NodePlatform.prototype.readBinaryFile = function(path) {
   return data;
 };
 
-
 /**
  * @override
  */
-wtf.pal.NodePlatform.prototype.writeTextFile = function(
-    path, contents, opt_mimeType) {
-  this.fs_.writeFileSync(path, contents, 'utf8');
+wtf.pal.NodePlatform.prototype.writeTextFile = function (
+  path,
+  contents,
+  opt_mimeType
+) {
+  this.fs_.writeFileSync(path, contents, "utf8");
 };
 
-
 /**
  * @override
  */
-wtf.pal.NodePlatform.prototype.writeBinaryFile = function(
-    path, contents, opt_mimeType) {
+wtf.pal.NodePlatform.prototype.writeBinaryFile = function (
+  path,
+  contents,
+  opt_mimeType
+) {
   // TODO(benvanik): a better way to convert
   var nodeData = new Buffer(contents.length);
   for (var n = 0; n < nodeData.length; n++) {

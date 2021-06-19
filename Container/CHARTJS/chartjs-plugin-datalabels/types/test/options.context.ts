@@ -1,6 +1,6 @@
-import {Chart} from 'chart.js';
-import {Context} from '../context';
-import {Options} from '../options';
+import { Chart } from "chart.js";
+import { Context } from "../context";
+import { Options } from "../options";
 
 interface CustomContext extends Context {
   foo?: number;
@@ -11,21 +11,21 @@ const options: Options = {
   listeners: {
     click: (ctx: CustomContext) => {
       ctx.foo = 42;
-    }
+    },
   },
 };
 
-const chart = new Chart('id', {
+const chart = new Chart("id", {
   data: {
     datasets: [
       {
-        datalabels: options
-      }
-    ]
+        datalabels: options,
+      },
+    ],
   },
   options: {
     plugins: {
-      datalabels: options
-    }
-  }
+      datalabels: options,
+    },
+  },
 });

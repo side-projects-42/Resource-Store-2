@@ -14,14 +14,14 @@
 
 /** @fileoverview import all polyfills, eg for Traceur self-build. */
 
-import './polyfills/Map.js';
-import './polyfills/Set.js';
-import './polyfills/Promise.js';
-import './polyfills/String.js';
-import './polyfills/Array.js';
-import './polyfills/Object.js';
-import './polyfills/Number.js';
-import './polyfills/Math.js';
-import './polyfills/WeakMap.js';
-import './polyfills/WeakSet.js';
-import './polyfills/polyfills.js';
+import "./polyfills/Map.js";
+import "./polyfills/Set.js";
+import "./polyfills/Promise.js";
+import "./polyfills/String.js";
+import "./polyfills/Array.js";
+import "./polyfills/Object.js";
+import "./polyfills/Number.js";
+import "./polyfills/Math.js";
+import "./polyfills/WeakMap.js";
+import "./polyfills/WeakSet.js";
+import "./polyfills/polyfills.js";

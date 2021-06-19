@@ -4,11 +4,10 @@
 
 function testBlock() {
   {
-    let inner = 'inner value';
+    let inner = "inner value";
   }
 
   var x = inner;
 }
 
 // ----------------------------------------------------------------------------
-

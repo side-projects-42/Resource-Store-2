@@ -12,19 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  FunctionBody,
-  Script
-} from '../syntax/trees/ParseTrees.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {createUseStrictDirective} from './ParseTreeFactory.js';
-import {hasUseStrict} from '../semantics/util.js';
+import { FunctionBody, Script } from "../syntax/trees/ParseTrees.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { createUseStrictDirective } from "./ParseTreeFactory.js";
+import { hasUseStrict } from "../semantics/util.js";
 
 function prepend(statements) {
-  return [
-    createUseStrictDirective(),
-    ...statements
-  ]
+  return [createUseStrictDirective(), ...statements];
 }
 
 /**
@@ -33,15 +27,16 @@ function prepend(statements) {
  */
 export class MakeStrictTransformer extends ParseTreeTransformer {
   transformScript(tree) {
-    if (hasUseStrict(tree.scriptItemList))
-      return tree;
+    if (hasUseStrict(tree.scriptItemList)) return tree;
 
-    return new Script(tree.location, prepend(tree.scriptItemList),
-                      tree.moduleName);
+    return new Script(
+      tree.location,
+      prepend(tree.scriptItemList),
+      tree.moduleName
+    );
   }
   transformFunctionBody(tree) {
-    if (hasUseStrict(tree.statements))
-      return tree;
+    if (hasUseStrict(tree.statements)) return tree;
     return new FunctionBody(tree.location, prepend(tree.statements));
   }
 

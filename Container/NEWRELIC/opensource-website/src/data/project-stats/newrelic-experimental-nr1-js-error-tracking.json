@@ -1,0 +1,58 @@
+{
+  "projectFullName": "newrelic-experimental/nr1-js-error-tracking",
+  "issues": {
+    "open": 0
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 8,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 2,
+  "pullRequests": {
+    "open": 6
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 66958286,
+      "login": "nrkk-azuma",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66958286?v=4",
+      "htmlUrl": "https://github.com/nrkk-azuma",
+      "contributions": 5
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UzMDg=",
+      "name": "CSS",
+      "color": "#563d7c"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic-experimental/nr1-js-error-tracking/master/screenshots/.gitkeep",
+    "https://raw.githubusercontent.com/newrelic-experimental/nr1-js-error-tracking/master/screenshots/img1.png",
+    "https://raw.githubusercontent.com/newrelic-experimental/nr1-js-error-tracking/master/screenshots/img2.png",
+    "https://raw.githubusercontent.com/newrelic-experimental/nr1-js-error-tracking/master/catalog/screenshots/.gitkeep"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

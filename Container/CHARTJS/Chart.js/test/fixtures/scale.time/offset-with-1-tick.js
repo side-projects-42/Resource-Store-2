@@ -2,58 +2,58 @@ const data = {
   datasets: [
     {
       label: 6,
-      backgroundColor: 'red',
+      backgroundColor: "red",
       data: [
         {
-          x: '2021-03-24',
-          y: 464
-        }
-      ]
+          x: "2021-03-24",
+          y: 464,
+        },
+      ],
     },
     {
       label: 1,
-      backgroundColor: 'red',
+      backgroundColor: "red",
       data: [
         {
-          x: '2021-03-24',
-          y: 464
-        }
-      ]
+          x: "2021-03-24",
+          y: 464,
+        },
+      ],
     },
     {
       label: 17,
-      backgroundColor: 'blue',
+      backgroundColor: "blue",
       data: [
         {
-          x: '2021-03-24',
-          y: 390
-        }
-      ]
-    }
-  ]
+          x: "2021-03-24",
+          y: 390,
+        },
+      ],
+    },
+  ],
 };
 
 module.exports = {
-  description: 'https://github.com/chartjs/Chart.js/issues/8718',
+  description: "https://github.com/chartjs/Chart.js/issues/8718",
   config: {
-    type: 'bar',
+    type: "bar",
     data,
     options: {
       scales: {
         x: {
-          type: 'time',
+          type: "time",
           time: {
-            unit: 'day',
+            unit: "day",
           },
         },
         y: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
-    canvas: {width: 256, height: 128}
-  }
+    canvas: { width: 256, height: 128 },
+  },
 };

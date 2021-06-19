@@ -12,12 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  ARGUMENTS,
-  THIS
-} from '../syntax/PredefinedName.js';
-import {AlphaRenamer} from './AlphaRenamer.js';
-import {FindThisOrArguments} from './FindThisOrArguments.js';
+import { ARGUMENTS, THIS } from "../syntax/PredefinedName.js";
+import { AlphaRenamer } from "./AlphaRenamer.js";
+import { FindThisOrArguments } from "./FindThisOrArguments.js";
 
 export default function alphaRenameThisAndArguments(tempVarTransformer, tree) {
   let finder = new FindThisOrArguments();

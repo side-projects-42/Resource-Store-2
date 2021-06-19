@@ -1,0 +1,38 @@
+<style>
+.example {
+	font-size:15px;
+}
+
+.example h4 {
+	border: none;
+	text-transform: none;
+}
+
+.example th {
+	background: none;
+	color: #000;
+	text-transform: none;
+	border: none;
+}
+
+</style>
+
+<div class="intro">
+<p>
+This example demonstrates how to instantiate a Calendar, switch its template to a double-pane, and create custom renderers for its header and certain cells (based on rules), as well as turn on multiple date selection and disable certain dates from being selected.
+</p>
+
+<p>
+There are two rules provided in the example code. One matches all Saturdays and Sundays (weekends in the United States), and the other matches Tuesdays and Fridays. The first rule is used in conjunction with a custom renderer to set the corresponding date cell text color to red. The second rule is used to disable matching dates from selection and interaction.
+</p>
+</div>
+
+<div class="example yui3-skin-sam">
+    {{>calendar-multipane-source}}
+</div>
+
+<h2>Complete Example Source</h2>
+
+```
+{{>calendar-multipane-source}}
+```

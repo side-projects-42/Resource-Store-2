@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.BlobWriteTransport');
+goog.provide("wtf.io.transports.BlobWriteTransport");
 
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.WriteTransport');
-goog.require('wtf.pal');
-
-
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.WriteTransport");
+goog.require("wtf.pal");
 
 /**
  * Write-only file transport base type.
@@ -26,7 +24,7 @@ goog.require('wtf.pal');
  * @constructor
  * @extends {wtf.io.WriteTransport}
  */
-wtf.io.transports.BlobWriteTransport = function(filename) {
+wtf.io.transports.BlobWriteTransport = function (filename) {
   goog.base(this);
 
   /**
@@ -45,30 +43,29 @@ wtf.io.transports.BlobWriteTransport = function(filename) {
 };
 goog.inherits(wtf.io.transports.BlobWriteTransport, wtf.io.WriteTransport);
 
-
 /**
  * @override
  */
-wtf.io.transports.BlobWriteTransport.prototype.disposeInternal = function() {
+wtf.io.transports.BlobWriteTransport.prototype.disposeInternal = function () {
   var blob = wtf.io.Blob.create(this.blobParts_);
   var platform = wtf.pal.getPlatform();
   platform.writeBinaryFile(
-      this.filename_,
-      /** @type {!Blob} */ (wtf.io.Blob.toNative(blob)));
+    this.filename_,
+    /** @type {!Blob} */ (wtf.io.Blob.toNative(blob))
+  );
 
   // TODO(benvanik): close?
 
   // Drop all parts.
   this.blobParts_ = [];
 
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * @override
  */
-wtf.io.transports.BlobWriteTransport.prototype.write = function(data) {
+wtf.io.transports.BlobWriteTransport.prototype.write = function (data) {
   if (wtf.io.Blob.isBlob(data)) {
     // Blobs are immutable, so store off our input.
     this.blobParts_.push(data);
@@ -78,19 +75,17 @@ wtf.io.transports.BlobWriteTransport.prototype.write = function(data) {
   }
 };
 
-
 /**
  * @override
  */
-wtf.io.transports.BlobWriteTransport.prototype.flush = function() {
+wtf.io.transports.BlobWriteTransport.prototype.flush = function () {
   // No-op.
 };
-
 
 /**
  * Gets a blob containing all data that has been written to the transport.
  * @return {!wtf.io.Blob} Data blob.
  */
-wtf.io.transports.BlobWriteTransport.prototype.getBlob = function() {
+wtf.io.transports.BlobWriteTransport.prototype.getBlob = function () {
   return wtf.io.Blob.create(this.blobParts_);
 };

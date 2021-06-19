@@ -1,9 +1,9 @@
 // Options: --block-binding
 
-let x = 'let';
-var y = 'var';
+let x = "let";
+var y = "var";
 
 // ----------------------------------------------------------------------------
 
-assertEquals('let', x);
-assertEquals('var', y);
+assertEquals("let", x);
+assertEquals("var", y);

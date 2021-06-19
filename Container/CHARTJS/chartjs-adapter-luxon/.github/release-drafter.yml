@@ -1,40 +1,40 @@
-name-template: 'v$RESOLVED_VERSION'
-tag-template: 'v$RESOLVED_VERSION'
+name-template: "v$RESOLVED_VERSION"
+tag-template: "v$RESOLVED_VERSION"
 categories:
-  - title: 'Breaking Changes'
+  - title: "Breaking Changes"
     labels:
-        - 'breaking change'
-  - title: 'Enhancements'
+      - "breaking change"
+  - title: "Enhancements"
     labels:
-      - 'enhancement'
-  - title: 'Bugs Fixed'
+      - "enhancement"
+  - title: "Bugs Fixed"
     labels:
-      - 'bug'
-  - title: 'Types'
+      - "bug"
+  - title: "Types"
     labels:
-      - 'types'
-  - title: 'Documentation'
+      - "types"
+  - title: "Documentation"
     labels:
-      - 'documentation'
-  - title: 'Development'
+      - "documentation"
+  - title: "Development"
     labels:
-      - 'chore'
+      - "chore"
 exclude-labels:
-  - 'infrastructure'
-change-template: '- #$NUMBER $TITLE'
+  - "infrastructure"
+change-template: "- #$NUMBER $TITLE"
 change-title-escapes: '\<*_&`#@'
 version-resolver:
   major:
     labels:
-      - 'breaking change'
+      - "breaking change"
   minor:
     labels:
-      - 'enhancement'
+      - "enhancement"
   patch:
     labels:
-      - 'bug'
-      - 'chore'
-      - 'types'
+      - "bug"
+      - "chore"
+      - "types"
   default: patch
 template: |
   # Essential Links

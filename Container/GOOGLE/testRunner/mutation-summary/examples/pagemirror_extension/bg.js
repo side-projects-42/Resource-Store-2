@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-  chrome.tabs.create({ url: chrome.extension.getURL('mirror.html?tabId=' + tab.id) });
+chrome.browserAction.onClicked.addListener(function (tab) {
+  chrome.tabs.create({
+    url: chrome.extension.getURL("mirror.html?tabId=" + tab.id),
+  });
 });

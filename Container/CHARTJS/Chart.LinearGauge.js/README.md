@@ -71,31 +71,32 @@ All options extend any existing default chart.js settings
 	color: ''
 	highlightFill: '' // mouse hover change color
 	colorRanges: [{ // change color of indicator according to it's value
-			startpoint: 0, 
-			breakpoint: 20, 
+			startpoint: 0,
+			breakpoint: 20,
 			color: '#6154ab'
-		}, { 
-			startpoint: 20, 
-			breakpoint: 70, 
+		}, {
+			startpoint: 20,
+			breakpoint: 70,
 			color: '#74f40b'
 		}, {
-			startpoint: 70, 
-			breakpoint: 100, 
+			startpoint: 70,
+			breakpoint: 100,
 			color: '#fd0902'
 		}],
 	tooltipRanges: [{ // change tooltip of indicator according to it's value
-			startpoint: 0, 
-			breakpoint: 20, 
+			startpoint: 0,
+			breakpoint: 20,
 			tooltip: 'low'
-		}, { 
-			startpoint: 20, 
-			breakpoint: 70, 
+		}, {
+			startpoint: 20,
+			breakpoint: 70,
 			tooltip: 'normal'
 		}, {
-			startpoint: 70, 
-			breakpoint: 100, 
+			startpoint: 70,
+			breakpoint: 100,
 			tooltip: 'high'
 		}]
 	img: '' // custom image for point indicator
 	label: '' // shows before value in tooltips
 }
+```

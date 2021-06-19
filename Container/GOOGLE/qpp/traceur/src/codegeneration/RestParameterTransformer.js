@@ -12,21 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  FormalParameterList
-} from '../syntax/trees/ParseTrees.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  createBlock,
-  createIdentifierToken,
-} from './ParseTreeFactory.js';
-import {parseStatement} from './PlaceholderParser.js';
-import {prependStatements} from './PrependStatements.js';
+import { FormalParameterList } from "../syntax/trees/ParseTrees.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { createBlock, createIdentifierToken } from "./ParseTreeFactory.js";
+import { parseStatement } from "./PlaceholderParser.js";
+import { prependStatements } from "./PrependStatements.js";
 
 function hasRestParameter(formalParameterList) {
   var parameters = formalParameterList.parameters;
-  return parameters.length > 0 &&
-      parameters[parameters.length - 1].isRestParameter();
+  return (
+    parameters.length > 0 && parameters[parameters.length - 1].isRestParameter()
+  );
 }
 
 function getRestParameterLiteralToken(formalParameterList) {
@@ -40,7 +36,6 @@ function getRestParameterLiteralToken(formalParameterList) {
  * @see <a href="http://wiki.ecmascript.org/doku.php?id=harmony:rest_parameters">harmony:rest_parameters</a>
  */
 export class RestParameterTransformer extends TempVarTransformer {
-
   transformFunctionDeclaration(tree) {
     if (hasRestParameter(tree.formalParameterList))
       return this.desugarRestParameters_(tree);
@@ -59,7 +54,6 @@ export class RestParameterTransformer extends TempVarTransformer {
    * @return {ParseTree}
    */
   desugarRestParameters_(tree) {
-
     // Desugar rest parameters as follows:
     //
     // function f(x, ...y) {}
@@ -70,10 +64,10 @@ export class RestParameterTransformer extends TempVarTransformer {
 
     var formalParameterList = this.transformAny(tree.formalParameterList);
 
-    var parametersWithoutRestParam =
-        new FormalParameterList(
-            formalParameterList.location,
-            formalParameterList.parameters.slice(0, -1));
+    var parametersWithoutRestParam = new FormalParameterList(
+      formalParameterList.location,
+      formalParameterList.parameters.slice(0, -1)
+    );
 
     var startIndex = tree.formalParameterList.parameters.length - 1;
     var i = createIdentifierToken(this.getTempIdentifier());
@@ -81,12 +75,12 @@ export class RestParameterTransformer extends TempVarTransformer {
     var loop;
     if (startIndex) {
       // If startIndex is 0 we can generate slightly cleaner code.
-      loop = parseStatement `
+      loop = parseStatement`
           for (var ${name} = [], ${i} = ${startIndex};
                ${i} < arguments.length; ${i}++)
             ${name}[${i} - ${startIndex}] = arguments[${i}];`;
     } else {
-      loop = parseStatement `
+      loop = parseStatement`
           for (var ${name} = [], ${i} = 0;
                ${i} < arguments.length; ${i}++)
             ${name}[${i}] = arguments[${i}];`;
@@ -95,8 +89,13 @@ export class RestParameterTransformer extends TempVarTransformer {
     var statements = prependStatements(tree.functionBody.statements, loop);
     var functionBody = this.transformAny(createBlock(statements));
 
-    return new tree.constructor(tree.location, tree.name, tree.isGenerator,
-                                parametersWithoutRestParam, functionBody);
+    return new tree.constructor(
+      tree.location,
+      tree.name,
+      tree.isGenerator,
+      parametersWithoutRestParam,
+      functionBody
+    );
   }
 
   /**

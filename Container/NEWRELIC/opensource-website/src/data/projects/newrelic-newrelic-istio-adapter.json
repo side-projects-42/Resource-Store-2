@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-istio-adapter",
+  "fullName": "newrelic/newrelic-istio-adapter",
+  "slug": "newrelic-newrelic-istio-adapter",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Istio Adapter",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-istio-adapter",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-istio-adapter",
+  "iconUrl": null,
+  "shortDescription": "Istio Adapter to New Relic",
+  "description": "An Istio Mixer adapter to send telemetry data to New Relic.",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "Go",
+  "projectTags": ["exporter"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Istio Adapter",
+    "url": "https://github.com/newrelic/newrelic-istio-adapter"
+  }
+}

@@ -1,11 +1,11 @@
 export default {
-  id: 'samples-filler-analyser',
+  id: "samples-filler-analyser",
 
-  beforeInit: function(chart, args, options) {
+  beforeInit: function (chart, args, options) {
     this.element = document.getElementById(options.target);
   },
 
-  afterUpdate: function(chart) {
+  afterUpdate: function (chart) {
     var datasets = chart.data.datasets;
     var element = this.element;
     var stats = [];
@@ -23,38 +23,46 @@ export default {
           fill: dataset.fill,
           target: meta.fill,
           visible: meta.visible,
-          index: i
+          index: i,
         });
       }
     }
 
-    this.element.innerHTML = '<table>' +
-      '<tr>' +
-        '<th>Dataset</th>' +
-        '<th>Fill</th>' +
-        '<th>Target (visibility)</th>' +
-      '</tr>' +
-      stats.map(function(stat) {
-        var target = stat.target;
-        var row =
-          '<td><b>' + stat.index + '</b></td>' +
-          '<td>' + JSON.stringify(stat.fill) + '</td>';
+    this.element.innerHTML =
+      "<table>" +
+      "<tr>" +
+      "<th>Dataset</th>" +
+      "<th>Fill</th>" +
+      "<th>Target (visibility)</th>" +
+      "</tr>" +
+      stats
+        .map(function (stat) {
+          var target = stat.target;
+          var row =
+            "<td><b>" +
+            stat.index +
+            "</b></td>" +
+            "<td>" +
+            JSON.stringify(stat.fill) +
+            "</td>";
 
-        if (target === false) {
-          target = 'none';
-        } else if (isFinite(target)) {
-          target = 'dataset ' + target;
-        } else {
-          target = 'boundary "' + target + '"';
-        }
+          if (target === false) {
+            target = "none";
+          } else if (isFinite(target)) {
+            target = "dataset " + target;
+          } else {
+            target = 'boundary "' + target + '"';
+          }
 
-        if (stat.visible) {
-          row += '<td>' + target + '</td>';
-        } else {
-          row += '<td>(hidden)</td>';
-        }
+          if (stat.visible) {
+            row += "<td>" + target + "</td>";
+          } else {
+            row += "<td>(hidden)</td>";
+          }
 
-        return '<tr>' + row + '</tr>';
-      }).join('') + '</table>';
-  }
+          return "<tr>" + row + "</tr>";
+        })
+        .join("") +
+      "</table>";
+  },
 };

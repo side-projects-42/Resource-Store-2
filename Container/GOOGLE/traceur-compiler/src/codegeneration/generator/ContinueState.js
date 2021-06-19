@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {FallThroughState} from './FallThroughState.js';
-import {State} from './State.js';
+import { FallThroughState } from "./FallThroughState.js";
+import { State } from "./State.js";
 
 export class ContinueState extends State {
   /**
@@ -31,8 +31,10 @@ export class ContinueState extends State {
    * @return {ContinueState}
    */
   replaceState(oldState, newState) {
-    return new ContinueState(State.replaceStateId(this.id, oldState, newState),
-                                                  this.label);
+    return new ContinueState(
+      State.replaceStateId(this.id, oldState, newState),
+      this.label
+    );
   }
 
   /**
@@ -42,7 +44,7 @@ export class ContinueState extends State {
    * @return {Array.<ParseTree>}
    */
   transform(enclosingFinally, machineEndState, reporter) {
-    throw new Error('These should be removed before the transform step');
+    throw new Error("These should be removed before the transform step");
   }
 
   /**
@@ -51,15 +53,20 @@ export class ContinueState extends State {
    * @param {number=} continueState
    * @return {State}
    */
-  transformBreakOrContinue(labelSet, breakState = undefined,
-                           continueState = undefined) {
+  transformBreakOrContinue(
+    labelSet,
+    breakState = undefined,
+    continueState = undefined
+  ) {
     if (this.label === null)
       return new FallThroughState(this.id, continueState, []);
 
     if (labelSet.has(this.label)) {
-      return new FallThroughState(this.id,
-                                  labelSet.get(this.label).continueState,
-                                  []);
+      return new FallThroughState(
+        this.id,
+        labelSet.get(this.label).continueState,
+        []
+      );
     }
 
     return this;

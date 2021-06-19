@@ -1,0 +1,24 @@
+{
+  "name": "fluentd-examples",
+  "fullName": "newrelic/fluentd-examples",
+  "slug": "newrelic-fluentd-examples",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "FluentD Examples",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/fluentd-examples",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/fluentd-examples",
+  "iconUrl": null,
+  "shortDescription": "Sample FluentD configs",
+  "description": "Example Configurations for Fluentd",
+  "ossCategory": "example-code",
+  "primaryLanguage": null,
+  "projectTags": ["logging"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "FluentD Examples",
+    "url": "https://github.com/newrelic/fluentd-examples"
+  }
+}

@@ -1,4 +1,4 @@
-import {a, b} from './resources/export-star-as.js';
+import { a, b } from "./resources/export-star-as.js";
 
 assert.equal(1, a.a);
 assert.equal(2, a.b);

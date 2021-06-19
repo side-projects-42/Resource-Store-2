@@ -1,4 +1,4 @@
-import {Anno} from './setup.js';
+import { Anno } from "./setup.js";
 
 @Anno
 export class ExportedAnnotatedClass {

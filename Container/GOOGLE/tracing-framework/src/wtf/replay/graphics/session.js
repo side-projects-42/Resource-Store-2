@@ -11,20 +11,18 @@
  * @author chizeng@google.com (Chi Zeng)
  */
 
-goog.provide('wtf.replay.graphics.Session');
+goog.provide("wtf.replay.graphics.Session");
 
-goog.require('goog.asserts');
-goog.require('goog.dom.DomHelper');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.replay.graphics.ContextPool');
-goog.require('wtf.replay.graphics.FrameOverdrawVisualizer');
-goog.require('wtf.replay.graphics.FrameTimeVisualizer');
-goog.require('wtf.replay.graphics.HighlightVisualizer');
-goog.require('wtf.replay.graphics.Playback');
-goog.require('wtf.replay.graphics.SkipCallsVisualizer');
-goog.require('wtf.replay.graphics.ui.GraphicsPanel');
-
-
+goog.require("goog.asserts");
+goog.require("goog.dom.DomHelper");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.replay.graphics.ContextPool");
+goog.require("wtf.replay.graphics.FrameOverdrawVisualizer");
+goog.require("wtf.replay.graphics.FrameTimeVisualizer");
+goog.require("wtf.replay.graphics.HighlightVisualizer");
+goog.require("wtf.replay.graphics.Playback");
+goog.require("wtf.replay.graphics.SkipCallsVisualizer");
+goog.require("wtf.replay.graphics.ui.GraphicsPanel");
 
 /**
  * A session of graphics replay.
@@ -36,7 +34,7 @@ goog.require('wtf.replay.graphics.ui.GraphicsPanel');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.replay.graphics.Session = function(db, parentElement, opt_domHelper) {
+wtf.replay.graphics.Session = function (db, parentElement, opt_domHelper) {
   goog.base(this);
 
   var zone = db.getDefaultZone();
@@ -63,33 +61,40 @@ wtf.replay.graphics.Session = function(db, parentElement, opt_domHelper) {
    * @private
    */
   this.playback_ = new wtf.replay.graphics.Playback(
-      zone.getEventList(), zone.getFrameList(), this.contextPool_);
+    zone.getEventList(),
+    zone.getFrameList(),
+    this.contextPool_
+  );
   this.registerDisposable(this.playback_);
 
   // TODO(benvanik): move this out of here - right now since the UI is hardcoded
   //     into this it's fine, but other uses of the session may not want this.
   this.playback_.setContextAttributeOverrides({
-    'preserveDrawingBuffer': true
+    preserveDrawingBuffer: true,
   });
 
   // Add visualizers to the playback.
   var highlightVisualizer = new wtf.replay.graphics.HighlightVisualizer(
-      this.playback_);
-  this.playback_.addVisualizer(highlightVisualizer, 'highlight');
+    this.playback_
+  );
+  this.playback_.addVisualizer(highlightVisualizer, "highlight");
 
   var overdrawVisualizer = new wtf.replay.graphics.FrameOverdrawVisualizer(
-      this.playback_);
-  this.playback_.addVisualizer(overdrawVisualizer, 'overdraw');
+    this.playback_
+  );
+  this.playback_.addVisualizer(overdrawVisualizer, "overdraw");
 
   var frameTimeVisualizer = new wtf.replay.graphics.FrameTimeVisualizer(
-      this.playback_);
-  this.playback_.addVisualizer(frameTimeVisualizer, 'frameTime');
-  this.playback_.visualizeContinuous('frameTime');
+    this.playback_
+  );
+  this.playback_.addVisualizer(frameTimeVisualizer, "frameTime");
+  this.playback_.visualizeContinuous("frameTime");
 
   var skipCallsVisualizer = new wtf.replay.graphics.SkipCallsVisualizer(
-      this.playback_);
-  this.playback_.addVisualizer(skipCallsVisualizer, 'skipCalls');
-  this.playback_.visualizeContinuous('skipCalls');
+    this.playback_
+  );
+  this.playback_.addVisualizer(skipCallsVisualizer, "skipCalls");
+  this.playback_.visualizeContinuous("skipCalls");
 
   /**
    * A panel for controlling graphics replay.
@@ -97,15 +102,18 @@ wtf.replay.graphics.Session = function(db, parentElement, opt_domHelper) {
    * @private
    */
   this.panel_ = new wtf.replay.graphics.ui.GraphicsPanel(
-      this.playback_, zone.getEventList(), parentElement, this.domHelper_);
+    this.playback_,
+    zone.getEventList(),
+    parentElement,
+    this.domHelper_
+  );
   this.registerDisposable(this.panel_);
 };
 goog.inherits(wtf.replay.graphics.Session, wtf.events.EventEmitter);
 
-
 /**
  * Lays out all child UI.
  */
-wtf.replay.graphics.Session.prototype.layout = function() {
+wtf.replay.graphics.Session.prototype.layout = function () {
   this.panel_.layout();
 };

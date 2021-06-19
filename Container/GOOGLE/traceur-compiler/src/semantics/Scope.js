@@ -16,10 +16,10 @@ import {
   BLOCK,
   CATCH,
   FUNCTION_EXPRESSION,
-} from '../syntax/trees/ParseTreeType.js';
-import {StringMap} from '../util/StringMap.js';
-import {VAR} from '../syntax/TokenType.js';
-import {isTreeStrict} from './isTreeStrict.js';
+} from "../syntax/trees/ParseTreeType.js";
+import { StringMap } from "../util/StringMap.js";
+import { VAR } from "../syntax/TokenType.js";
+import { isTreeStrict } from "./isTreeStrict.js";
 
 function reportDuplicateVar(reporter, tree, name) {
   reporter.reportError(tree.location, `Duplicate declaration, ${name}`);
@@ -42,7 +42,7 @@ export class Scope {
     this.variableDeclarations_ = new StringMap();
     // Let and const as well as block scoped functions.
     this.lexicalDeclarations_ = new StringMap();
-    this.strictMode = parent && parent.strictMode || isTreeStrict(tree);
+    this.strictMode = (parent && parent.strictMode) || isTreeStrict(tree);
     this.inGenerator = parent ? parent.inGenerator || false : false;
   }
 
@@ -57,12 +57,14 @@ export class Scope {
   addVar(tree, reporter) {
     // We add VAR bindings to blocks so that we can check for duplicates.
     let name = tree.getStringValue();
-    if (this.lexicalDeclarations_.has(name) &&
-        !this.isFunctionExpressionName(name)) {
+    if (
+      this.lexicalDeclarations_.has(name) &&
+      !this.isFunctionExpressionName(name)
+    ) {
       reportDuplicateVar(reporter, tree, name);
       return;
     }
-    this.variableDeclarations_.set(name, {type: VAR, tree, scope: this});
+    this.variableDeclarations_.set(name, { type: VAR, tree, scope: this });
     if (!this.isVarScope && this.parent) {
       this.parent.addVar(tree, reporter);
     }
@@ -70,13 +72,15 @@ export class Scope {
 
   addDeclaration(tree, type, reporter) {
     let name = tree.getStringValue();
-    if ((this.lexicalDeclarations_.has(name) ||
-         this.variableDeclarations_.has(name)) &&
-         !this.isFunctionExpressionName(name)) {
+    if (
+      (this.lexicalDeclarations_.has(name) ||
+        this.variableDeclarations_.has(name)) &&
+      !this.isFunctionExpressionName(name)
+    ) {
       reportDuplicateVar(reporter, tree, name);
       return;
     }
-    this.lexicalDeclarations_.set(name, {type, tree, scope: this});
+    this.lexicalDeclarations_.set(name, { type, tree, scope: this });
   }
 
   // we deduce the oldType
@@ -120,8 +124,11 @@ export class Scope {
    */
   isFunctionExpressionName(name) {
     let b = this.getBindingByName(name);
-    return b && b.scope.tree.type === FUNCTION_EXPRESSION &&
-        b.scope.tree.name === b.tree;
+    return (
+      b &&
+      b.scope.tree.type === FUNCTION_EXPRESSION &&
+      b.scope.tree.name === b.tree
+    );
   }
 
   getBinding(tree) {
@@ -151,7 +158,7 @@ export class Scope {
   }
 
   getVariableBindingNames() {
-    return this.variableDeclarations_.keysAsSet()
+    return this.variableDeclarations_.keysAsSet();
   }
 
   getLexicalBindingNames() {
@@ -159,8 +166,10 @@ export class Scope {
   }
 
   hasBindingName(name) {
-    return this.lexicalDeclarations_.has(name) ||
-           this.variableDeclarations_.has(name);
+    return (
+      this.lexicalDeclarations_.has(name) ||
+      this.variableDeclarations_.has(name)
+    );
   }
 
   hasLexicalBindingName(name) {

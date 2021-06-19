@@ -1,7 +1,7 @@
-var arr = [,1, ,3,];
+var arr = [, 1, , 3];
 assert.equal(4, arr.length);
 
-var arr2 = [,1, ,...[3],];
+var arr2 = [, 1, , ...[3]];
 assert.equal(4, arr.length);
 
 var x, y;

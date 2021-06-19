@@ -37,25 +37,32 @@
  * @param {?string=} opt_fragment The URI-encoded fragment identifier.
  * @return {string} The fully combined URI.
  */
-function buildFromEncodedParts(opt_scheme, opt_userInfo,
-    opt_domain, opt_port, opt_path, opt_queryData, opt_fragment) {
+function buildFromEncodedParts(
+  opt_scheme,
+  opt_userInfo,
+  opt_domain,
+  opt_port,
+  opt_path,
+  opt_queryData,
+  opt_fragment
+) {
   var out = [];
 
   if (opt_scheme) {
-    out.push(opt_scheme, ':');
+    out.push(opt_scheme, ":");
   }
 
   if (opt_domain) {
-    out.push('//');
+    out.push("//");
 
     if (opt_userInfo) {
-      out.push(opt_userInfo, '@');
+      out.push(opt_userInfo, "@");
     }
 
     out.push(opt_domain);
 
     if (opt_port) {
-      out.push(':', opt_port);
+      out.push(":", opt_port);
     }
   }
 
@@ -64,15 +71,15 @@ function buildFromEncodedParts(opt_scheme, opt_userInfo,
   }
 
   if (opt_queryData) {
-    out.push('?', opt_queryData);
+    out.push("?", opt_queryData);
   }
 
   if (opt_fragment) {
-    out.push('#', opt_fragment);
+    out.push("#", opt_fragment);
   }
 
-  return out.join('');
-};
+  return out.join("");
+}
 
 /**
  * A regular expression for breaking a URI into its component parts.
@@ -137,24 +144,24 @@ function buildFromEncodedParts(opt_scheme, opt_userInfo,
  * @private
  */
 var splitRe = new RegExp(
-    '^' +
-    '(?:' +
-      '([^:/?#.]+)' +                     // scheme - ignore special characters
-                                          // used by other URL parts such as :,
-                                          // ?, /, #, and .
-    ':)?' +
-    '(?://' +
-      '(?:([^/?#]*)@)?' +                 // userInfo
-      '([\\w\\d\\-\\u0100-\\uffff.%]*)' + // domain - restrict to letters,
-                                          // digits, dashes, dots, percent
-                                          // escapes, and unicode characters.
-      '(?::([0-9]+))?' +                  // port
-    ')?' +
-    '([^?#]+)?' +                         // path
-    '(?:\\?([^#]*))?' +                   // query
-    '(?:#(.*))?' +                        // fragment
-    '$');
-
+  "^" +
+    "(?:" +
+    "([^:/?#.]+)" + // scheme - ignore special characters
+    // used by other URL parts such as :,
+    // ?, /, #, and .
+    ":)?" +
+    "(?://" +
+    "(?:([^/?#]*)@)?" + // userInfo
+    "([\\w\\d\\-\\u0100-\\uffff.%]*)" + // domain - restrict to letters,
+    // digits, dashes, dots, percent
+    // escapes, and unicode characters.
+    "(?::([0-9]+))?" + // port
+    ")?" +
+    "([^?#]+)?" + // path
+    "(?:\\?([^#]*))?" + // query
+    "(?:#(.*))?" + // fragment
+    "$"
+);
 
 /**
  * The index of each URI component in the return value of goog.uri.utils.split.
@@ -167,9 +174,8 @@ var ComponentIndex = {
   PORT: 4,
   PATH: 5,
   QUERY_DATA: 6,
-  FRAGMENT: 7
+  FRAGMENT: 7,
 };
-
 
 /**
  * Splits a URI into its component parts.
@@ -188,10 +194,8 @@ var ComponentIndex = {
  */
 function split(uri) {
   // See @return comment -- never null.
-  return /** @type {!Array.<string|undefined>} */ (
-      uri.match(splitRe));
+  return /** @type {!Array.<string|undefined>} */ (uri.match(splitRe));
 }
-
 
 /**
  * Removes dot segments in given path component, as described in
@@ -201,26 +205,23 @@ function split(uri) {
  * @return {string} Path component with removed dot segments.
  */
 export function removeDotSegments(path) {
-  if (path === '/')
-    return '/';
+  if (path === "/") return "/";
 
-  var leadingSlash = path[0] === '/' ? '/' : '';
-  var trailingSlash = path.slice(-1) === '/' ? '/' : '';
-  var segments = path.split('/');
+  var leadingSlash = path[0] === "/" ? "/" : "";
+  var trailingSlash = path.slice(-1) === "/" ? "/" : "";
+  var segments = path.split("/");
 
   var out = [];
   var up = 0;
   for (var pos = 0; pos < segments.length; pos++) {
     var segment = segments[pos];
     switch (segment) {
-      case '':
-      case '.':
+      case "":
+      case ".":
         break;
-      case '..':
-        if (out.length)
-          out.pop();
-        else
-          up++;
+      case "..":
+        if (out.length) out.pop();
+        else up++;
         break;
       default:
         out.push(segment);
@@ -229,14 +230,13 @@ export function removeDotSegments(path) {
 
   if (!leadingSlash) {
     while (up-- > 0) {
-      out.unshift('..');
+      out.unshift("..");
     }
 
-    if (out.length === 0)
-      out.push('.');
+    if (out.length === 0) out.push(".");
   }
 
-  return leadingSlash + out.join('/') + trailingSlash;
+  return leadingSlash + out.join("/") + trailingSlash;
 }
 
 /**
@@ -247,17 +247,18 @@ export function removeDotSegments(path) {
  */
 function joinAndCanonicalizePath(parts) {
   var path = parts[ComponentIndex.PATH];
-  path = removeDotSegments(path.replace(/\/\//.g, '/'));
+  path = removeDotSegments(path.replace(/\/\//.g, "/"));
   parts[ComponentIndex.PATH] = path;
 
   return buildFromEncodedParts(
-      parts[ComponentIndex.SCHEME],
-      parts[ComponentIndex.USER_INFO],
-      parts[ComponentIndex.DOMAIN],
-      parts[ComponentIndex.PORT],
-      parts[ComponentIndex.PATH],
-      parts[ComponentIndex.QUERY_DATA],
-      parts[ComponentIndex.FRAGMENT]);
+    parts[ComponentIndex.SCHEME],
+    parts[ComponentIndex.USER_INFO],
+    parts[ComponentIndex.DOMAIN],
+    parts[ComponentIndex.PORT],
+    parts[ComponentIndex.PATH],
+    parts[ComponentIndex.QUERY_DATA],
+    parts[ComponentIndex.FRAGMENT]
+  );
 }
 
 /**
@@ -279,8 +280,7 @@ export function canonicalizeUrl(url) {
  * @return {string}
  */
 export function resolveUrl(base, url) {
-  if (url[0] === '@')
-    return url;
+  if (url[0] === "@") return url;
 
   var parts = split(url);
   var baseParts = split(base);
@@ -297,12 +297,12 @@ export function resolveUrl(base, url) {
     }
   }
 
-  if (parts[ComponentIndex.PATH][0] == '/') {
+  if (parts[ComponentIndex.PATH][0] == "/") {
     return joinAndCanonicalizePath(parts);
   }
 
   var path = baseParts[ComponentIndex.PATH];
-  var index = path.lastIndexOf('/');
+  var index = path.lastIndexOf("/");
   path = path.slice(0, index + 1) + parts[ComponentIndex.PATH];
   parts[ComponentIndex.PATH] = path;
   return joinAndCanonicalizePath(parts);

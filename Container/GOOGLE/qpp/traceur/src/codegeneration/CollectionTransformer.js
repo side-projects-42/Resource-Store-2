@@ -18,15 +18,11 @@ import {
   ELEMENT_HAS,
   ELEMENT_SET,
   RUNTIME,
-  TRACEUR_RUNTIME
-} from '../syntax/PredefinedName.js';
-import {MEMBER_LOOKUP_EXPRESSION} from '../syntax/trees/ParseTreeType.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  DELETE,
-  EQUAL,
-  IN
-} from '../syntax/TokenType.js';
+  TRACEUR_RUNTIME,
+} from "../syntax/PredefinedName.js";
+import { MEMBER_LOOKUP_EXPRESSION } from "../syntax/trees/ParseTreeType.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { DELETE, EQUAL, IN } from "../syntax/TokenType.js";
 import {
   createArgumentList,
   createAssignmentExpression,
@@ -35,9 +31,9 @@ import {
   createCommaExpression,
   createIdentifierExpression,
   createMemberExpression,
-  createParenExpression
-} from './ParseTreeFactory.js';
-import {expandMemberLookupExpression} from './OperatorExpander.js';
+  createParenExpression,
+} from "./ParseTreeFactory.js";
+import { expandMemberLookupExpression } from "./OperatorExpander.js";
 
 /**
  * Transforms expr[expr] into traceurRuntime.elementGet(expr, expr). It also
@@ -65,7 +61,6 @@ import {expandMemberLookupExpression} from './OperatorExpander.js';
  *   object[key] = 42;
  */
 export class CollectionTransformer extends TempVarTransformer {
-
   transformBinaryOperator(tree) {
     if (tree.operator.type === IN) {
       var name = this.transformAny(tree.left);
@@ -74,13 +69,15 @@ export class CollectionTransformer extends TempVarTransformer {
       // =>
       // traceurRuntime.elementHas(object, name)
       return createCallExpression(
-          createMemberExpression(TRACEUR_RUNTIME, ELEMENT_HAS),
-          createArgumentList(object, name));
+        createMemberExpression(TRACEUR_RUNTIME, ELEMENT_HAS),
+        createArgumentList(object, name)
+      );
     }
 
-    if (tree.left.type === MEMBER_LOOKUP_EXPRESSION &&
-        tree.operator.isAssignmentOperator()) {
-
+    if (
+      tree.left.type === MEMBER_LOOKUP_EXPRESSION &&
+      tree.operator.isAssignmentOperator()
+    ) {
       if (tree.operator.type !== EQUAL) {
         tree = expandMemberLookupExpression(tree, this);
         return this.transformAny(tree);
@@ -94,8 +91,9 @@ export class CollectionTransformer extends TempVarTransformer {
       // =>
       // traceurRuntime.elementSet(operand, memberExpr, value)
       return createCallExpression(
-          createMemberExpression(TRACEUR_RUNTIME, ELEMENT_SET),
-          createArgumentList(operand, memberExpression, value));
+        createMemberExpression(TRACEUR_RUNTIME, ELEMENT_SET),
+        createArgumentList(operand, memberExpression, value)
+      );
     }
 
     return super.transformBinaryOperator(tree);
@@ -116,16 +114,15 @@ export class CollectionTransformer extends TempVarTransformer {
     var ident = createIdentifierExpression(this.addTempVar());
     var elements = tree.args.args.map(this.transformAny, this);
     var callExpr = createCallCall(
-        createCallExpression(
-          createMemberExpression(TRACEUR_RUNTIME, ELEMENT_GET),
-          createArgumentList(ident, memberExpression)),
-        ident,
-        elements);
+      createCallExpression(
+        createMemberExpression(TRACEUR_RUNTIME, ELEMENT_GET),
+        createArgumentList(ident, memberExpression)
+      ),
+      ident,
+      elements
+    );
 
-    var expressions = [
-      createAssignmentExpression(ident, operand),
-      callExpr
-    ];
+    var expressions = [createAssignmentExpression(ident, operand), callExpr];
 
     return createParenExpression(createCommaExpression(expressions));
   }
@@ -135,13 +132,16 @@ export class CollectionTransformer extends TempVarTransformer {
     // =>
     // traceurRuntime.elementGet(operand, memberExpr)
     return createCallExpression(
-        createMemberExpression(TRACEUR_RUNTIME, ELEMENT_GET),
-        createArgumentList(tree.operand, tree.memberExpression));
+      createMemberExpression(TRACEUR_RUNTIME, ELEMENT_GET),
+      createArgumentList(tree.operand, tree.memberExpression)
+    );
   }
 
   transformUnaryExpression(tree) {
-    if (tree.operator.type !== DELETE ||
-        tree.operand.type !== MEMBER_LOOKUP_EXPRESSION) {
+    if (
+      tree.operator.type !== DELETE ||
+      tree.operand.type !== MEMBER_LOOKUP_EXPRESSION
+    ) {
       return super.transformUnaryExpression(tree);
     }
 
@@ -152,8 +152,9 @@ export class CollectionTransformer extends TempVarTransformer {
     // =>
     // traceurRuntime.elementDelete(operand, memberExpr)
     return createCallExpression(
-        createMemberExpression(TRACEUR_RUNTIME, ELEMENT_DELETE),
-        createArgumentList(operand, memberExpression));
+      createMemberExpression(TRACEUR_RUNTIME, ELEMENT_DELETE),
+      createArgumentList(operand, memberExpression)
+    );
   }
 
   /**

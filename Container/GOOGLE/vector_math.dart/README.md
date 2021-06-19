@@ -7,18 +7,18 @@ A Vector math library for 2D and 3D applications.
 
 ## Features
 
-* 2D, 3D, and 4D vector and matrix types.
-* Quaternion type for animating rotations.
-* Collision detection: AABB, rays, spheres, ...
-* Utilities like color and common rendering related operations
-* Flexible getters and setters, for example, ```position.xwz = color.grb;```.
-* Fully documented.
-* Well tested.
-* Heavily optimized.
+- 2D, 3D, and 4D vector and matrix types.
+- Quaternion type for animating rotations.
+- Collision detection: AABB, rays, spheres, ...
+- Utilities like color and common rendering related operations
+- Flexible getters and setters, for example, `position.xwz = color.grb;`.
+- Fully documented.
+- Well tested.
+- Heavily optimized.
 
 ## Libraries using vector_math
 
-* [Flutter](https://github.com/flutter/flutter)
+- [Flutter](https://github.com/flutter/flutter)
 
 ## Examples
 
@@ -35,7 +35,6 @@ void main() {
 ```
 
 2\. Transforming a vector.
-
 
 ```dart
 import 'dart:math';
@@ -157,9 +156,8 @@ To run test cases:
 ~/src/vector_math/> pub run test:test
 ```
 
-To automatically generate the latest version of ```vector_math_64```:
+To automatically generate the latest version of `vector_math_64`:
 
 ```
 ~/src/vector_math/> dart tool/generate_vector_math_64.dart
 ```
-

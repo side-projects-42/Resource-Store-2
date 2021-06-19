@@ -2,53 +2,58 @@
 
 export default {
   config: {
-    type: 'bar',
+    type: "bar",
     data: {
       labels: [0],
-      datasets: [{
-        data: [2]
-      }, {
-        data: [3]
-      }, {
-        data: [4]
-      }, {
-        data: [5]
-      }]
+      datasets: [
+        {
+          data: [2],
+        },
+        {
+          data: [3],
+        },
+        {
+          data: [4],
+        },
+        {
+          data: [5],
+        },
+      ],
     },
     options: {
       elements: {
         rectangle: {
-          backgroundColor: '#444',
-        }
+          backgroundColor: "#444",
+        },
       },
       layout: {
-        padding: 20
+        padding: 20,
       },
       plugins: {
         datalabels: {
-          align: 'end',
-          anchor: 'start',
-          backgroundColor: '#fff',
+          align: "end",
+          anchor: "start",
+          backgroundColor: "#fff",
           font: {
-            size: 0
+            size: 0,
           },
-          offset: function(context) {
+          offset: function (context) {
             return context.datasetIndex * 42;
           },
           padding: {
             top: 18,
             right: 48,
             bottom: 18,
-            left: 48
-          }
-        }
-      }
-    }
+            left: 48,
+          },
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 256
-    }
-  }
+      width: 256,
+    },
+  },
 };

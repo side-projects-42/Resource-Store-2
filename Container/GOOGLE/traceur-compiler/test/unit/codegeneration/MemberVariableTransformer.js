@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert, setup} from '../../unit/unitTestRunner.js';
+import { suite, test, assert, setup } from "../../unit/unitTestRunner.js";
 
-import {Options} from '../../../src/Options.js';
-import {Parser} from '../../../src/syntax/Parser.js';
-import {ParseTreeValidator} from '../../../src/syntax/ParseTreeValidator.js';
-import {SourceFile} from '../../../src/syntax/SourceFile.js';
-import {MemberVariableTransformer} from '../../../src/codegeneration/MemberVariableTransformer.js';
-import {UniqueIdentifierGenerator} from '../../../src/codegeneration/UniqueIdentifierGenerator.js';
-import {write} from '../../../src/outputgeneration/TreeWriter.js';
+import { Options } from "../../../src/Options.js";
+import { Parser } from "../../../src/syntax/Parser.js";
+import { ParseTreeValidator } from "../../../src/syntax/ParseTreeValidator.js";
+import { SourceFile } from "../../../src/syntax/SourceFile.js";
+import { MemberVariableTransformer } from "../../../src/codegeneration/MemberVariableTransformer.js";
+import { UniqueIdentifierGenerator } from "../../../src/codegeneration/UniqueIdentifierGenerator.js";
+import { write } from "../../../src/outputgeneration/TreeWriter.js";
 
-suite('MemberVariableTransformer.js', function() {
-
+suite("MemberVariableTransformer.js", function () {
   function parseScript(content, options) {
-    var file = new SourceFile('test', content);
+    var file = new SourceFile("test", content);
     var parser = new Parser(file, null, options);
     var tree = parser.parseScript();
     ParseTreeValidator.validate(tree);
@@ -39,7 +38,7 @@ suite('MemberVariableTransformer.js', function() {
   }
 
   function testTransform(name, content, expected) {
-    test(name, function() {
+    test(name, function () {
       var options = new Options({
         memberVariables: true,
         annotations: true,
@@ -47,13 +46,17 @@ suite('MemberVariableTransformer.js', function() {
       });
       var tree = parseScript(content, options);
       var transformer = new MemberVariableTransformer(
-          new UniqueIdentifierGenerator(), null, options);
+        new UniqueIdentifierGenerator(),
+        null,
+        options
+      );
       var transformed = transformer.transformAny(tree);
       assert.equal(normalizeScript(expected, options), write(transformed));
     });
   }
 
-  testTransform('ClassDeclaration no ctor',
+  testTransform(
+    "ClassDeclaration no ctor",
     `class C {
       static c0 = 0;
       c1 = 1;
@@ -70,7 +73,8 @@ suite('MemberVariableTransformer.js', function() {
     });`
   );
 
-  testTransform('ClassDeclaration with ctor',
+  testTransform(
+    "ClassDeclaration with ctor",
     `class C {
       static c0 = 0;
       c1 = 1;
@@ -91,7 +95,8 @@ suite('MemberVariableTransformer.js', function() {
     });`
   );
 
-  testTransform('derived ClassDeclaration no ctor',
+  testTransform(
+    "derived ClassDeclaration no ctor",
     `class C extends B {
       static c0 = 0;
       c1 = 1;
@@ -108,7 +113,8 @@ suite('MemberVariableTransformer.js', function() {
     });`
   );
 
-  testTransform('derived ClassDeclaration with ctor',
+  testTransform(
+    "derived ClassDeclaration with ctor",
     `class C extends B {
       static c0 = 0;
       c1 = 1;
@@ -130,12 +136,14 @@ suite('MemberVariableTransformer.js', function() {
     });`
   );
 
-  testTransform('preserve annotations',
+  testTransform(
+    "preserve annotations",
     `@Annotation() class C {}`,
     `@Annotation() class C {}`
   );
 
-  testTransform('preserve setters, getters and methods',
+  testTransform(
+    "preserve setters, getters and methods",
     `class C {
       static get sa() {}
       get a() {}
@@ -154,7 +162,8 @@ suite('MemberVariableTransformer.js', function() {
     }`
   );
 
-  testTransform('ClassExpression',
+  testTransform(
+    "ClassExpression",
     `var c = class {
       static c0 = 0;
       c1 = 1;

@@ -1,0 +1,41 @@
+{
+  "projectFullName": "newrelic-experimental/nr-grafana-migration",
+  "issues": {
+    "open": 0
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 29,
+  "lastSixMonthsCommitTotal": 22,
+  "contributors": 1,
+  "pullRequests": {
+    "open": 1
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 184273,
+      "login": "kidk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/184273?v=4",
+      "htmlUrl": "https://github.com/kidk",
+      "contributions": 24
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDU=",
+      "name": "Python",
+      "color": "#3572A5"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

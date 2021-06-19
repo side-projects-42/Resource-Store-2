@@ -19,8 +19,8 @@ npm install luxon chartjs-adapter-luxon --save
 ```
 
 ```javascript
-import {Chart} from 'chart.js';
-import 'chartjs-adapter-luxon';
+import { Chart } from "chart.js";
+import "chartjs-adapter-luxon";
 ```
 
 ### CDN

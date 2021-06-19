@@ -1,0 +1,86 @@
+{
+  "projectFullName": "newrelic/gatsby-plugin-newrelic",
+  "issues": {
+    "open": 3
+  },
+  "releases": 5,
+  "latestRelease": {
+    "name": "v2.0.0",
+    "date": "2021-04-20T17:51:17Z"
+  },
+  "commits": 53,
+  "lastSixMonthsCommitTotal": 11,
+  "contributors": 7,
+  "pullRequests": {
+    "open": 2
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 31
+    },
+    {
+      "id": 66321197,
+      "login": "nr-opensource-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66321197?v=4",
+      "htmlUrl": "https://github.com/nr-opensource-bot",
+      "contributions": 5
+    },
+    {
+      "id": 2952843,
+      "login": "roadlittledawn",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/2952843?v=4",
+      "htmlUrl": "https://github.com/roadlittledawn",
+      "contributions": 3
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 1
+    },
+    {
+      "id": 19733683,
+      "login": "snyk-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19733683?v=4",
+      "htmlUrl": "https://github.com/snyk-bot",
+      "contributions": 1
+    },
+    {
+      "id": 703935,
+      "login": "passion4code",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/703935?v=4",
+      "htmlUrl": "https://github.com/passion4code",
+      "contributions": 1
+    },
+    {
+      "id": 996560,
+      "login": "shawncarr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/996560?v=4",
+      "htmlUrl": "https://github.com/shawncarr",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

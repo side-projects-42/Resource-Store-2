@@ -1,5 +1,5 @@
 function assertClosed(g) {
-  assert.deepEqual({value: undefined, done: true}, g.next());
+  assert.deepEqual({ value: undefined, done: true }, g.next());
 }
 
 //-----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ function* G6() {
     yield 1000;
     return 42;
     yield 2000;
-  } catch(e) {
+  } catch (e) {
     return 43;
   } finally {
     // TODO: Is 'return' allowed inside 'finally'?
@@ -48,7 +48,7 @@ function id(G) {
 }
 
 function wrap(G) {
-  return function*() {
+  return function* () {
     var r = yield* G();
     return r;
   };
@@ -62,25 +62,23 @@ var tests = [
   [G3, [], undefined],
   [G4, [], 42],
   [G5, [1000], 42],
-  [G6, [1000], 42]
+  [G6, [1000], 42],
 ];
 
 //-----------------------------------------------------------------------------
 
 [id, wrap].forEach((W) => {
-
   tests.forEach(([G, y, r]) => {
     var g = W(G)();
-    y.forEach((x) => assert.deepEqual({value: x, done: false}, g.next()));
+    y.forEach((x) => assert.deepEqual({ value: x, done: false }, g.next()));
 
-    assert.deepEqual({value: r, done: true}, g.next());
+    assert.deepEqual({ value: r, done: true }, g.next());
     assertClosed(g);
   });
 
   //----
 
   g = W(G6)();
-  assert.deepEqual({value: 1000, done: false}, g.next());
-  assert.deepEqual({value: 43, done: true}, g.throw());
-
+  assert.deepEqual({ value: 1000, done: false }, g.next());
+  assert.deepEqual({ value: 43, done: true }, g.throw());
 });

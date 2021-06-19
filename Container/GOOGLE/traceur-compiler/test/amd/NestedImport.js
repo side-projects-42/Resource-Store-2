@@ -1,3 +1,3 @@
-import {Bar} from './deps/bar.js';
+import { Bar } from "./deps/bar.js";
 
-assert.equal('Bar from bar.js', Bar);
+assert.equal("Bar from bar.js", Bar);

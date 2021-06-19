@@ -1,32 +1,32 @@
 // VERSION replaced by deploy script
 module.exports = {
-  title: 'chartjs-chart-smith',
-  tagline: 'Smith chart extension to Chart.js',
-  url: 'https://chartjs.org',
-  baseUrl: '/chartjs-chart-smith/',
-  favicon: 'img/favicon.ico',
-  organizationName: 'chartjs', // Usually your GitHub org/user name.
-  projectName: 'chartjs-chart-smith', // Usually your repo name.
+  title: "chartjs-chart-smith",
+  tagline: "Smith chart extension to Chart.js",
+  url: "https://chartjs.org",
+  baseUrl: "/chartjs-chart-smith/",
+  favicon: "img/favicon.ico",
+  organizationName: "chartjs", // Usually your GitHub org/user name.
+  projectName: "chartjs-chart-smith", // Usually your repo name.
   plugins: [],
   scripts: [
-    'https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.js',
-    'https://cdn.jsdelivr.net/npm/chartjs-chart-smith/dist/chartjs-chart-smith.min.js'
+    "https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.js",
+    "https://cdn.jsdelivr.net/npm/chartjs-chart-smith/dist/chartjs-chart-smith.min.js",
   ],
-  themes: ['@docusaurus/theme-live-codeblock'],
+  themes: ["@docusaurus/theme-live-codeblock"],
   themeConfig: {
     disableDarkMode: true, // Would need to implement for Charts embedded in docs
     navbar: {
-      title: 'Smith Chart - chartjs-chart-smith',
+      title: "Smith Chart - chartjs-chart-smith",
     },
     footer: {
-      style: 'dark',
+      style: "dark",
       links: [
         {
-          title: 'Developers',
+          title: "Developers",
           items: [
             {
-              label: 'GitHub',
-              href: 'https://github.com/chartjs/chartjs-chart-smith',
+              label: "GitHub",
+              href: "https://github.com/chartjs/chartjs-chart-smith",
             },
           ],
         },
@@ -36,15 +36,16 @@ module.exports = {
   },
   presets: [
     [
-      '@docusaurus/preset-classic',
+      "@docusaurus/preset-classic",
       {
         docs: {
-          routeBasePath: '',
-          editUrl: 'https://github.com/chartjs/chartjs-chart-smith/edit/master/docs/',
-          sidebarPath: require.resolve('./sidebars.js'),
+          routeBasePath: "",
+          editUrl:
+            "https://github.com/chartjs/chartjs-chart-smith/edit/master/docs/",
+          sidebarPath: require.resolve("./sidebars.js"),
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve("./src/css/custom.css"),
         },
       },
     ],

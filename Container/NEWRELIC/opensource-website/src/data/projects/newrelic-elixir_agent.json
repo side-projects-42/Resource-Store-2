@@ -1,0 +1,24 @@
+{
+  "name": "elixir_agent",
+  "fullName": "newrelic/elixir_agent",
+  "slug": "newrelic-elixir_agent",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Elixir Agent",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/elixir_agent",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/elixir_agent",
+  "iconUrl": null,
+  "shortDescription": "New Relic's Elixir Agent",
+  "description": "New Relic's Elixir Agent",
+  "ossCategory": "community-project",
+  "primaryLanguage": "Elixir",
+  "projectTags": ["agent"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Elixir Agent",
+    "url": "https://github.com/newrelic/elixir_agent"
+  }
+}

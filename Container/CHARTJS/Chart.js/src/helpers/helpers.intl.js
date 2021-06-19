@@ -1,4 +1,3 @@
-
 const intlCache = new Map();
 
 function getNumberFormat(locale, options) {

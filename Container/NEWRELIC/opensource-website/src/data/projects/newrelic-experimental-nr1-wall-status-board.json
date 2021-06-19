@@ -1,0 +1,24 @@
+{
+  "name": "nr1-wall-status-board",
+  "fullName": "newrelic-experimental/nr1-wall-status-board",
+  "slug": "newrelic-experimental-nr1-wall-status-board",
+  "owner": {
+    "login": "newrelic-experimental",
+    "type": "Organization"
+  },
+  "title": "Wall Status Board",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic-experimental/nr1-wall-status-board",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic-experimental/nr1-wall-status-board",
+  "iconUrl": null,
+  "shortDescription": "",
+  "description": "A nerdlet designed to allow key metrics to be observed in a way that makes incidents and platform state easy to recognise and evaluate with little cognitive effort.",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Wall Status Board",
+    "url": "https://github.com/newrelic-experimental/nr1-wall-status-board"
+  }
+}

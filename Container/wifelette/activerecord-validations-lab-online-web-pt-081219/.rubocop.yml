@@ -1,0 +1,49 @@
+AllCops:
+  Include:
+    - Rakefile
+    - config.ru
+  Exclude:
+    - db/**
+    - config/**
+    - script/**
+    - spec/**
+Layout/TrailingBlankLines:
+  Enabled: false
+Layout/TrailingWhitespace:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Style/ParallelAssignment:
+  Enabled: false
+Style/ClassVars:
+  Enabled: false
+Style/EmptyMethod:
+  Enabled: false
+Style/RedundantInterpolation:
+  Enabled: false
+Style/SymbolArray:
+  Enabled: false
+Style/MutableConstant:
+  Enabled: false
+Style/RedundantSelf:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Metrics/LineLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false

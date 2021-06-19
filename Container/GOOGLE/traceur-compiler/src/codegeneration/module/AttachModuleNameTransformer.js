@@ -1,4 +1,3 @@
-
 // Copyright 2013 Traceur Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,12 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from '../ParseTreeTransformer.js';
-import {
-  Module,
-  Script
-} from '../../syntax/trees/ParseTrees.js';
-
+import { ParseTreeTransformer } from "../ParseTreeTransformer.js";
+import { Module, Script } from "../../syntax/trees/ParseTrees.js";
 
 /**
  * Annotates a tree with its URL
@@ -41,5 +36,3 @@ export class AttachModuleNameTransformer extends ParseTreeTransformer {
     return new Script(tree.location, tree.scriptItemList, this.moduleName_);
   }
 }
-
-

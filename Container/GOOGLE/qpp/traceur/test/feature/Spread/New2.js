@@ -1,7 +1,7 @@
 function G() {}
 
 function F(x, y, z) {
-  var obj = new G;
+  var obj = new G();
   obj.x = x;
   obj.y = y;
   obj.z = z;

@@ -1,0 +1,33 @@
+import { graphql } from 'gatsby';
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import PageHeading from '../components/PageHeading';
+
+export default ({ children, pageContext }) => (
+  <Layout fullWidth editLink={pageContext.fileRelativePath}>
+    <SEO title="Contributing to a New Relic Open Source Project" />
+    <PageHeading
+      title="New Relic Open Source Standards"
+      subheader="Guidance for how we implement New Relic core values in open source"
+    />
+    <div className="primary-content">
+      <main>{children}</main>
+    </div>
+  </Layout>
+);
+
+## [Open Source Categories](/oss-category)
+
+All New Relic open source projects are [**categorized**](/oss-category) to help contributors, developers, and customers understand what to expect and how to engage with our projects.
+
+## [Contributing](/contributing)
+
+New Relic open source projects follow a [fork-and-pull-request](https://gist.github.com/tangollama/5d9d63fef0ed4498fb5fbb057bb5983d) workflow for project contribution. If you're new to open source contribution at New Relic, the content on [**this page**](/contributing) will help.
+
+## [Code of Conduct](/code-of-conduct)
+
+Read our [**Code of Conduct**](/code-of-conduct) to understand how we operate in open source and what we expect of contributors.
+
+### [Code of Conduct Reporting Guide](/code-of-conduct-reporting)
+
+Review our guidance and expectations on [**reporting Code of Conduct**](/code-of-conduct-reporting) incidents.

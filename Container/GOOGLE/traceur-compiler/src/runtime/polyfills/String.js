@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import checkObjectCoercible from '../checkObjectCoercible.js';
-import {createStringIterator} from './StringIterator.js';
+import checkObjectCoercible from "../checkObjectCoercible.js";
+import { createStringIterator } from "./StringIterator.js";
 import {
   maybeAddFunctions,
   maybeAddIterator,
-  registerPolyfill
-} from './utils.js';
+  registerPolyfill,
+} from "./utils.js";
 
 var $toString = Object.prototype.toString;
 var $indexOf = String.prototype.indexOf;
@@ -28,7 +28,7 @@ var $lastIndexOf = String.prototype.lastIndexOf;
 export function startsWith(search) {
   /*! https://mths.be/startswith v0.1.0 by @mathias */
   var string = String(this);
-  if (this == null || $toString.call(search) == '[object RegExp]') {
+  if (this == null || $toString.call(search) == "[object RegExp]") {
     throw TypeError();
   }
   var stringLength = string.length;
@@ -48,7 +48,7 @@ export function startsWith(search) {
 export function endsWith(search) {
   /*! https://mths.be/endswith v0.1.0 by @mathias */
   var string = String(this);
-  if (this == null || $toString.call(search) == '[object RegExp]') {
+  if (this == null || $toString.call(search) == "[object RegExp]") {
     throw TypeError();
   }
   var stringLength = string.length;
@@ -80,7 +80,7 @@ export function includes(search) {
     throw TypeError();
   }
   var string = String(this);
-  if (search && $toString.call(search) == '[object RegExp]') {
+  if (search && $toString.call(search) == "[object RegExp]") {
     throw TypeError();
   }
   var stringLength = string.length;
@@ -88,7 +88,8 @@ export function includes(search) {
   var searchLength = searchString.length;
   var position = arguments.length > 1 ? arguments[1] : undefined;
   var pos = position ? Number(position) : 0;
-  if (pos != pos) { // better `isNaN`
+  if (pos != pos) {
+    // better `isNaN`
     pos = 0;
   }
   var start = Math.min(Math.max(pos, 0), stringLength);
@@ -115,9 +116,9 @@ export function repeat(count) {
     throw RangeError();
   }
   if (n == 0) {
-    return '';
+    return "";
   }
-  var result = '';
+  var result = "";
   while (n--) {
     result += string;
   }
@@ -144,14 +145,17 @@ export function codePointAt(position) {
   // Get the first code unit
   var first = string.charCodeAt(index);
   var second;
-  if ( // check if it’s the start of a surrogate pair
-    first >= 0xD800 && first <= 0xDBFF && // high surrogate
+  if (
+    // check if it’s the start of a surrogate pair
+    first >= 0xd800 &&
+    first <= 0xdbff && // high surrogate
     size > index + 1 // there is a next code unit
   ) {
     second = string.charCodeAt(index + 1);
-    if (second >= 0xDC00 && second <= 0xDFFF) { // low surrogate
+    if (second >= 0xdc00 && second <= 0xdfff) {
+      // low surrogate
       // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-      return (first - 0xD800) * 0x400 + second - 0xDC00 + 0x10000;
+      return (first - 0xd800) * 0x400 + second - 0xdc00 + 0x10000;
     }
   }
   return first;
@@ -160,21 +164,20 @@ export function codePointAt(position) {
 // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-string.raw
 export function raw(callsite) {
   var raw = callsite.raw;
-  var len = raw.length >>> 0;  // ToUint
-  if (len === 0)
-    return '';
-  var s = '';
+  var len = raw.length >>> 0; // ToUint
+  if (len === 0) return "";
+  var s = "";
   var i = 0;
   while (true) {
     s += raw[i];
-    if (i + 1 === len)
-      return s;
+    if (i + 1 === len) return s;
     s += arguments[++i];
   }
 }
 
 // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-string.fromcodepoint
-export function fromCodePoint(_) {  // length = 1
+export function fromCodePoint(_) {
+  // length = 1
   // https://mths.be/fromcodepoint v0.1.0 by @mathias
   var codeUnits = [];
   var floor = Math.floor;
@@ -183,25 +186,27 @@ export function fromCodePoint(_) {  // length = 1
   var index = -1;
   var length = arguments.length;
   if (!length) {
-    return '';
+    return "";
   }
   while (++index < length) {
     var codePoint = Number(arguments[index]);
     if (
-      !isFinite(codePoint) ||  // `NaN`, `+Infinity`, or `-Infinity`
-      codePoint < 0 ||  // not a valid Unicode code point
-      codePoint > 0x10FFFF ||  // not a valid Unicode code point
-      floor(codePoint) != codePoint  // not an integer
+      !isFinite(codePoint) || // `NaN`, `+Infinity`, or `-Infinity`
+      codePoint < 0 || // not a valid Unicode code point
+      codePoint > 0x10ffff || // not a valid Unicode code point
+      floor(codePoint) != codePoint // not an integer
     ) {
-      throw RangeError('Invalid code point: ' + codePoint);
+      throw RangeError("Invalid code point: " + codePoint);
     }
-    if (codePoint <= 0xFFFF) {  // BMP code point
+    if (codePoint <= 0xffff) {
+      // BMP code point
       codeUnits.push(codePoint);
-    } else {  // Astral code point; split in surrogate halves
+    } else {
+      // Astral code point; split in surrogate halves
       // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
       codePoint -= 0x10000;
-      highSurrogate = (codePoint >> 10) + 0xD800;
-      lowSurrogate = (codePoint % 0x400) + 0xDC00;
+      highSurrogate = (codePoint >> 10) + 0xd800;
+      lowSurrogate = (codePoint % 0x400) + 0xdc00;
       codeUnits.push(highSurrogate, lowSurrogate);
     }
   }
@@ -216,19 +221,21 @@ export function stringPrototypeIterator() {
 }
 
 export function polyfillString(global) {
-  var {String} = global;
+  var { String } = global;
   maybeAddFunctions(String.prototype, [
-    'codePointAt', codePointAt,
-    'endsWith', endsWith,
-    'includes', includes,
-    'repeat', repeat,
-    'startsWith', startsWith,
+    "codePointAt",
+    codePointAt,
+    "endsWith",
+    endsWith,
+    "includes",
+    includes,
+    "repeat",
+    repeat,
+    "startsWith",
+    startsWith,
   ]);
 
-  maybeAddFunctions(String, [
-    'fromCodePoint', fromCodePoint,
-    'raw', raw,
-  ]);
+  maybeAddFunctions(String, ["fromCodePoint", fromCodePoint, "raw", raw]);
 
   maybeAddIterator(String.prototype, stringPrototypeIterator, Symbol);
 }

@@ -4,8 +4,8 @@
 */
 
 .workSpace {
-  /* as a flex item */  
-  -webkit-flex: 1;  
+  /* as a flex item */
+  -webkit-flex: 1;
   /* as a flex container */
   display: -webkit-flex;
   -webkit-flex-direction: row;
@@ -16,23 +16,22 @@
 
 .fileViews {
   /* as a flex item */
-  -webkit-flex: 1;   
+  -webkit-flex: 1;
   /* as a flex container */
-  display: -webkit-flex;  
+  display: -webkit-flex;
   -webkit-flex-flow: column;
   -webkit-flex-wrap: nowrap;
   width: 100%;
-  min-width:  0px;
+  min-width: 0px;
 }
-
 
 .fileView {
   /* as a flex item */
   display: -webkit-flex;
   -webkit-flex-direction: row;
-  -webkit-flex: 1;  /* Each file gets the same space */
+  -webkit-flex: 1; /* Each file gets the same space */
   min-height: 1em;
-  border-bottom: 1px solid #75715E;
+  border-bottom: 1px solid #75715e;
 }
 
 .box {
@@ -57,18 +56,17 @@
 }
 
 .updatedOnTurnNumber {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .querypointViewModel_syncState {
-    text-align: center;
-    color: #75715e;
+  text-align: center;
+  color: #75715e;
 }
 
 /* Editors */
 
 .CodeMirror-scroll {
-
 }
 
 .CodeMirror-lines {
@@ -77,21 +75,28 @@
 }
 
 .CodeMirror-gutter-text {
-  padding: 0em .2em .4em .4em; /* match the CodeMirror-lines so the line numbers match the lines */
+  padding: 0em 0.2em 0.4em 0.4em; /* match the CodeMirror-lines so the line numbers match the lines */
 }
 
 /* dark by default so active stands out */
-.cm-s-monokai .CodeMirror-linenumber  {color: #75715e;}
-.cm-s-monokai .qp-no-activations .CodeMirror-linenumber  {color: #75715e;}
-.cm-s-monokai .qp-traces .CodeMirror-linenumber  {color: #d0d0d0;}
-.cm-s-monokai .qp-activations .CodeMirror-linenumber {color: rgb(6, 137, 255);}
+.cm-s-monokai .CodeMirror-linenumber {
+  color: #75715e;
+}
+.cm-s-monokai .qp-no-activations .CodeMirror-linenumber {
+  color: #75715e;
+}
+.cm-s-monokai .qp-traces .CodeMirror-linenumber {
+  color: #d0d0d0;
+}
+.cm-s-monokai .qp-activations .CodeMirror-linenumber {
+  color: rgb(6, 137, 255);
+}
 .cm-s-monokai .qp-highlight {
-   background-color: #FFE792;
-   color: #000000 !important;
-   font-size: larger;
+  background-color: #ffe792;
+  color: #000000 !important;
+  font-size: larger;
 }
 .cm-s-monokai .qp-decorate {
-   border: 1px dotted rgb(255, 249, 227);
-   border-radius: 5px;
-
+  border: 1px dotted rgb(255, 249, 227);
+  border-radius: 5px;
 }

@@ -1,46 +1,46 @@
-import {Chart} from 'chart.js';
-import {Context} from '../context';
-import {Options} from '../options';
+import { Chart } from "chart.js";
+import { Context } from "../context";
+import { Options } from "../options";
 
 const options: Options = {
-  align: 'start',
-  anchor: 'start',
-  backgroundColor: 'blue',
-  borderColor: 'blue',
+  align: "start",
+  anchor: "start",
+  backgroundColor: "blue",
+  borderColor: "blue",
   borderRadius: 42,
   borderWidth: 42,
   clamp: false,
   clip: false,
-  color: 'blue',
+  color: "blue",
   display: true,
   font: {
-    family: 'foo',
+    family: "foo",
     lineHeight: 1.42,
     size: 42,
-    style: 'italic',
-    weight: 200
+    style: "italic",
+    weight: 200,
   },
-  formatter: (v: string, ctx: Context) => ctx.active ? '' + v : null,
+  formatter: (v: string, ctx: Context) => (ctx.active ? "" + v : null),
   labels: {
     foo: {},
     bar: null,
     bla: {
-      align: 'end',
-      anchor: 'end',
-      backgroundColor: 'blue',
-      borderColor: 'blue',
+      align: "end",
+      anchor: "end",
+      backgroundColor: "blue",
+      borderColor: "blue",
       borderRadius: 42,
       borderWidth: 42,
       clamp: false,
       clip: false,
-      color: 'blue',
+      color: "blue",
       display: true,
       font: {
-        family: 'foo',
+        family: "foo",
         lineHeight: 1.42,
         size: 42,
-        style: 'italic',
-        weight: 200
+        style: "italic",
+        weight: 200,
       },
       offset: 42,
       opacity: 0.42,
@@ -49,28 +49,28 @@ const options: Options = {
         enter: (ctx: Context) => false,
         leave: (ctx: Context) => {
           // return void
-        }
+        },
       },
       padding: {
         top: 42,
         right: 42,
         bottom: 42,
-        left: 42
+        left: 42,
       },
       rotation: 42,
-      textAlign: 'end',
-      textStrokeColor: 'blue',
+      textAlign: "end",
+      textStrokeColor: "blue",
       textStrokeWidth: 42,
       textShadowBlur: 42,
-      textShadowColor: 'blue'
-    }
+      textShadowColor: "blue",
+    },
   },
   listeners: {
     click: (ctx: Context) => true,
     enter: (ctx: Context) => false,
     leave: (ctx: Context) => {
       // return void
-    }
+    },
   },
   offset: 42,
   opacity: 0.42,
@@ -78,27 +78,27 @@ const options: Options = {
     top: 42,
     right: 42,
     bottom: 42,
-    left: 42
+    left: 42,
   },
   rotation: 42,
-  textAlign: 'start',
-  textStrokeColor: 'blue',
+  textAlign: "start",
+  textStrokeColor: "blue",
   textStrokeWidth: 42,
   textShadowBlur: 42,
-  textShadowColor: 'blue'
+  textShadowColor: "blue",
 };
 
-const chart = new Chart('id', {
+const chart = new Chart("id", {
   data: {
     datasets: [
       {
-        datalabels: options
-      }
-    ]
+        datalabels: options,
+      },
+    ],
   },
   options: {
     plugins: {
-      datalabels: options
-    }
-  }
+      datalabels: options,
+    },
+  },
 });

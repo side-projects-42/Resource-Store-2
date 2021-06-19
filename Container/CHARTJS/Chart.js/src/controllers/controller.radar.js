@@ -1,10 +1,9 @@
-import DatasetController from '../core/core.datasetController';
+import DatasetController from "../core/core.datasetController";
 
 export default class RadarController extends DatasetController {
-
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getLabelAndValue(index) {
     const me = this;
     const vScale = me._cachedMeta.vScale;
@@ -12,7 +11,7 @@ export default class RadarController extends DatasetController {
 
     return {
       label: vScale.getLabels()[index],
-      value: '' + vScale.getLabelForValue(parsed[vScale.axis])
+      value: "" + vScale.getLabelForValue(parsed[vScale.axis]),
     };
   }
 
@@ -26,7 +25,7 @@ export default class RadarController extends DatasetController {
     // Update Line
     line.points = points;
     // In resize mode only point locations change, so no need to set the points or options.
-    if (mode !== 'resize') {
+    if (mode !== "resize") {
       const options = me.resolveDatasetElementOptions(mode);
       if (!me.options.showLine) {
         options.borderWidth = 0;
@@ -35,7 +34,7 @@ export default class RadarController extends DatasetController {
       const properties = {
         _loop: true,
         _fullLoop: labels.length === points.length,
-        options
+        options,
       };
 
       me.updateElement(line, undefined, properties, mode);
@@ -49,11 +48,14 @@ export default class RadarController extends DatasetController {
     const me = this;
     const dataset = me.getDataset();
     const scale = me._cachedMeta.rScale;
-    const reset = mode === 'reset';
+    const reset = mode === "reset";
 
     for (let i = start; i < start + count; i++) {
       const point = points[i];
-      const options = me.resolveDataElementOptions(i, point.active ? 'active' : mode);
+      const options = me.resolveDataElementOptions(
+        i,
+        point.active ? "active" : mode
+      );
       const pointPosition = scale.getPointPositionForValue(i, dataset.data[i]);
 
       const x = reset ? scale.xCenter : pointPosition.x;
@@ -64,7 +66,7 @@ export default class RadarController extends DatasetController {
         y,
         angle: pointPosition.angle,
         skip: isNaN(x) || isNaN(y),
-        options
+        options,
       };
 
       me.updateElement(point, i, properties, mode);
@@ -72,20 +74,20 @@ export default class RadarController extends DatasetController {
   }
 }
 
-RadarController.id = 'radar';
+RadarController.id = "radar";
 
 /**
  * @type {any}
  */
 RadarController.defaults = {
-  datasetElementType: 'line',
-  dataElementType: 'point',
-  indexAxis: 'r',
+  datasetElementType: "line",
+  dataElementType: "point",
+  indexAxis: "r",
   showLine: true,
   elements: {
     line: {
-      fill: 'start'
-    }
+      fill: "start",
+    },
   },
 };
 
@@ -97,7 +99,7 @@ RadarController.overrides = {
 
   scales: {
     r: {
-      type: 'radialLinear',
-    }
-  }
+      type: "radialLinear",
+    },
+  },
 };

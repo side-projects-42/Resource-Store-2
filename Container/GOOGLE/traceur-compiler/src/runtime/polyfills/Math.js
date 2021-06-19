@@ -12,24 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {fround as jsFround} from './fround.js';
-import {
-  maybeAddFunctions,
-  registerPolyfill,
-  toUint32
-} from './utils.js';
+import { fround as jsFround } from "./fround.js";
+import { maybeAddFunctions, registerPolyfill, toUint32 } from "./utils.js";
 
 var $isFinite = isFinite;
 var $isNaN = isNaN;
-var {
-  abs,
-  ceil,
-  exp,
-  floor,
-  log,
-  pow,
-  sqrt,
-} = Math;
+var { abs, ceil, exp, floor, log, pow, sqrt } = Math;
 
 export function clz32(x) {
   // From v8
@@ -37,11 +25,26 @@ export function clz32(x) {
   if (x == 0) return 32;
   var result = 0;
   // Binary search.
-  if ((x & 0xFFFF0000) === 0) { x <<= 16; result += 16; };
-  if ((x & 0xFF000000) === 0) { x <<=  8; result +=  8; };
-  if ((x & 0xF0000000) === 0) { x <<=  4; result +=  4; };
-  if ((x & 0xC0000000) === 0) { x <<=  2; result +=  2; };
-  if ((x & 0x80000000) === 0) { x <<=  1; result +=  1; };
+  if ((x & 0xffff0000) === 0) {
+    x <<= 16;
+    result += 16;
+  }
+  if ((x & 0xff000000) === 0) {
+    x <<= 8;
+    result += 8;
+  }
+  if ((x & 0xf0000000) === 0) {
+    x <<= 4;
+    result += 4;
+  }
+  if ((x & 0xc0000000) === 0) {
+    x <<= 2;
+    result += 2;
+  }
+  if ((x & 0x80000000) === 0) {
+    x <<= 1;
+    result += 1;
+  }
   return result;
 }
 
@@ -49,11 +52,11 @@ export function imul(x, y) {
   // From MDN
   x = toUint32(+x);
   y = toUint32(+y);
-  var xh  = (x >>> 16) & 0xffff;
+  var xh = (x >>> 16) & 0xffff;
   var xl = x & 0xffff;
-  var yh  = (y >>> 16) & 0xffff;
+  var yh = (y >>> 16) & 0xffff;
   var yl = y & 0xffff;
-  return xl * yl + (((xh * yl + xl * yh) << 16) >>> 0) | 0;
+  return (xl * yl + (((xh * yl + xl * yh) << 16) >>> 0)) | 0;
 }
 
 export function sign(x) {
@@ -67,26 +70,34 @@ export function sign(x) {
 
 export function log10(x) {
   // From V8
-  return log(x) * 0.434294481903251828;  // log10(x) = log(x)/log(10).
+  return log(x) * 0.434294481903251828; // log10(x) = log(x)/log(10).
 }
 
 export function log2(x) {
   // From V8
-  return log(x) * 1.442695040888963407;  // log2(x) = log(x)/log(2).
+  return log(x) * 1.442695040888963407; // log2(x) = log(x)/log(2).
 }
 
 export function log1p(x) {
   // From es6-shim
   x = +x;
-  if (x < -1 || $isNaN(x)) { return NaN; }
-  if (x === 0 || x === Infinity) { return x; }
-  if (x === -1) { return -Infinity; }
+  if (x < -1 || $isNaN(x)) {
+    return NaN;
+  }
+  if (x === 0 || x === Infinity) {
+    return x;
+  }
+  if (x === -1) {
+    return -Infinity;
+  }
   var result = 0;
   var n = 50;
 
-  if (x < 0 || x > 1) { return log(1 + x); }
+  if (x < 0 || x > 1) {
+    return log(1 + x);
+  }
   for (var i = 1; i < n; i++) {
-    if ((i % 2) === 0) {
+    if (i % 2 === 0) {
       result -= pow(x, i) / i;
     } else {
       result += pow(x, i) / i;
@@ -99,26 +110,42 @@ export function log1p(x) {
 export function expm1(x) {
   // From es6-shim
   x = +x;
-  if (x === -Infinity) { return -1; }
-  if (!$isFinite(x) || x === 0) { return x; }
+  if (x === -Infinity) {
+    return -1;
+  }
+  if (!$isFinite(x) || x === 0) {
+    return x;
+  }
   return exp(x) - 1;
 }
 
 export function cosh(x) {
   // From es6-shim
   x = +x;
-  if (x === 0) { return 1; } // +0 or -0
-  if ($isNaN(x)) { return NaN; }
-  if (!$isFinite(x)) { return Infinity; }
-  if (x < 0) { x = -x; }
-  if (x > 21) { return exp(x) / 2; }
+  if (x === 0) {
+    return 1;
+  } // +0 or -0
+  if ($isNaN(x)) {
+    return NaN;
+  }
+  if (!$isFinite(x)) {
+    return Infinity;
+  }
+  if (x < 0) {
+    x = -x;
+  }
+  if (x > 21) {
+    return exp(x) / 2;
+  }
   return (exp(x) + exp(-x)) / 2;
 }
 
 export function sinh(x) {
   // From es6-shim
   x = +x;
-  if (!$isFinite(x) || x === 0) { return x; }
+  if (!$isFinite(x) || x === 0) {
+    return x;
+  }
   return (exp(x) - exp(-x)) / 2;
 }
 
@@ -156,9 +183,15 @@ export function asinh(x) {
 export function atanh(x) {
   // From es6-shim
   x = +x;
-  if (x === -1) { return -Infinity; }
-  if (x === 1) { return Infinity; }
-  if (x === 0) { return x; }
+  if (x === -1) {
+    return -Infinity;
+  }
+  if (x === 1) {
+    return Infinity;
+  }
+  if (x === 0) {
+    return x;
+  }
   if ($isNaN(x) || x < -1 || x > 1) {
     return NaN;
   }
@@ -191,7 +224,7 @@ export function hypot(x, y) {
     var n = args[i] / max;
     var summand = n * n - compensation;
     var preliminary = sum + summand;
-    compensation = (preliminary - sum) - summand;
+    compensation = preliminary - sum - summand;
     sum = preliminary;
   }
   return sqrt(sum) * max;
@@ -208,9 +241,9 @@ export function trunc(x) {
 
 var fround, f32;
 
-if (typeof Float32Array === 'function') {
+if (typeof Float32Array === "function") {
   f32 = new Float32Array(1);
-  fround = function(x) {
+  fround = function (x) {
     f32[0] = Number(x);
     return f32[0];
   };
@@ -218,7 +251,7 @@ if (typeof Float32Array === 'function') {
   fround = jsFround;
 }
 
-export {fround};
+export { fround };
 
 export function cbrt(x) {
   // From MDN
@@ -231,25 +264,42 @@ export function cbrt(x) {
 }
 
 export function polyfillMath(global) {
-  var {Math} = global;
+  var { Math } = global;
   maybeAddFunctions(Math, [
-    'acosh', acosh,
-    'asinh', asinh,
-    'atanh', atanh,
-    'cbrt', cbrt,
-    'clz32', clz32,
-    'cosh', cosh,
-    'expm1', expm1,
-    'fround', fround,
-    'hypot', hypot,
-    'imul', imul,
-    'log10', log10,
-    'log1p', log1p,
-    'log2', log2,
-    'sign', sign,
-    'sinh', sinh,
-    'tanh', tanh,
-    'trunc', trunc,
+    "acosh",
+    acosh,
+    "asinh",
+    asinh,
+    "atanh",
+    atanh,
+    "cbrt",
+    cbrt,
+    "clz32",
+    clz32,
+    "cosh",
+    cosh,
+    "expm1",
+    expm1,
+    "fround",
+    fround,
+    "hypot",
+    hypot,
+    "imul",
+    imul,
+    "log10",
+    log10,
+    "log1p",
+    log1p,
+    "log2",
+    log2,
+    "sign",
+    sign,
+    "sinh",
+    sinh,
+    "tanh",
+    tanh,
+    "trunc",
+    trunc,
   ]);
 }
 

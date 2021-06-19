@@ -13,14 +13,20 @@ These are some examples of **accessible** `canvas` elements.
 By setting the `role` and `aria-label`, this `canvas` now has an accessible name.
 
 ```html
-<canvas id="goodCanvas1" width="400" height="100" aria-label="Hello ARIA World" role="img"></canvas>
+<canvas
+  id="goodCanvas1"
+  width="400"
+  height="100"
+  aria-label="Hello ARIA World"
+  role="img"
+></canvas>
 ```
 
 This `canvas` element has a text alternative via fallback content.
 
 ```html
 <canvas id="okCanvas2" width="400" height="100">
-    <p>Hello Fallback World</p>
+  <p>Hello Fallback World</p>
 </canvas>
 ```
 
@@ -35,5 +41,7 @@ This `canvas` element does not have an accessible name or role.
 This `canvas` element has inaccessible fallback content.
 
 ```html
-<canvas id="badCanvas2" width="400" height="100">Your browser does not support the canvas element.</canvas>
+<canvas id="badCanvas2" width="400" height="100"
+  >Your browser does not support the canvas element.</canvas
+>
 ```

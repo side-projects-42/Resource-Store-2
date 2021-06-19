@@ -12,12 +12,10 @@
  * @author chizeng@google.com (Chi Zeng)
  */
 
-goog.provide('wtf.replay.graphics.Step');
+goog.provide("wtf.replay.graphics.Step");
 
-goog.require('goog.object');
-goog.require('wtf.db.EventIterator');
-
-
+goog.require("goog.object");
+goog.require("wtf.db.EventIterator");
 
 /**
  * Encapsulates events between 2 frames or within a frame.
@@ -35,10 +33,15 @@ goog.require('wtf.db.EventIterator');
  *     the beginning of the step. If no current context exists, -1.
  * @constructor
  */
-wtf.replay.graphics.Step = function(
-    eventList, startEventId, endEventId, opt_frame, opt_contexts,
-    opt_visibleEventTypeIds, opt_stepBeginContext) {
-
+wtf.replay.graphics.Step = function (
+  eventList,
+  startEventId,
+  endEventId,
+  opt_frame,
+  opt_contexts,
+  opt_visibleEventTypeIds,
+  opt_stepBeginContext
+) {
   /**
    * List of events for entire animation.
    * @type {!wtf.db.EventList}
@@ -91,33 +94,34 @@ wtf.replay.graphics.Step = function(
   this.stepBeginContextHandle_ = opt_stepBeginContext || -1;
 };
 
-
 /**
  * Creates an event iterator that spans the events for the step.
  * @param {boolean=} opt_visible True if only visible events should be included
  *     in the iteration. False by default.
  * @return {!wtf.db.EventIterator} The created event iterator.
  */
-wtf.replay.graphics.Step.prototype.getEventIterator = function(opt_visible) {
+wtf.replay.graphics.Step.prototype.getEventIterator = function (opt_visible) {
   if (opt_visible) {
     var indirectionTable = this.createVisibleEventsList_();
     return new wtf.db.EventIterator(
-        this.eventList_, 0, indirectionTable.length - 1, 0, indirectionTable);
+      this.eventList_,
+      0,
+      indirectionTable.length - 1,
+      0,
+      indirectionTable
+    );
   }
-  return this.eventList_.beginEventRange(
-      this.startEventId_, this.endEventId_);
+  return this.eventList_.beginEventRange(this.startEventId_, this.endEventId_);
 };
-
 
 /**
  * Gets the current context at the beginning of the step.
  * @return {number} The handle of the current context at the beginning of this
  *     step.
  */
-wtf.replay.graphics.Step.prototype.getInitialCurrentContext = function() {
+wtf.replay.graphics.Step.prototype.getInitialCurrentContext = function () {
   return this.stepBeginContextHandle_;
 };
-
 
 /**
  * Returns a mapping from indices of events that change the current context to
@@ -125,56 +129,54 @@ wtf.replay.graphics.Step.prototype.getInitialCurrentContext = function() {
  * @return {!Array.<!Array.<number>>} A list of 2-tuples. Each 2-tuple
  *     contains the ID of a context-changing event and the new context handle.
  */
-wtf.replay.graphics.Step.prototype.getContextChangingEvents = function() {
-  var createContextEventId =
-      this.eventList_.getEventTypeId('wtf.webgl#createContext');
-  var setContextEventId =
-      this.eventList_.getEventTypeId('wtf.webgl#setContext');
+wtf.replay.graphics.Step.prototype.getContextChangingEvents = function () {
+  var createContextEventId = this.eventList_.getEventTypeId(
+    "wtf.webgl#createContext"
+  );
+  var setContextEventId = this.eventList_.getEventTypeId(
+    "wtf.webgl#setContext"
+  );
   var contextChangingEvents = [];
   for (var it = this.getEventIterator(true); !it.done(); it.next()) {
     var typeId = it.getTypeId();
     if (typeId == createContextEventId || typeId == setContextEventId) {
-      contextChangingEvents.push([it.getIndex(), it.getArgument('handle')]);
+      contextChangingEvents.push([it.getIndex(), it.getArgument("handle")]);
     }
   }
 
   return contextChangingEvents;
 };
 
-
 /**
  * Returns the frame this step draws if the step draws one.
  * @return {wtf.db.Frame} The frame.
  */
-wtf.replay.graphics.Step.prototype.getFrame = function() {
+wtf.replay.graphics.Step.prototype.getFrame = function () {
   return this.frame_;
 };
-
 
 /**
  * Gets the ID of the begin event.
  * @return {number} ID of the begin event.
  */
-wtf.replay.graphics.Step.prototype.getStartEventId = function() {
+wtf.replay.graphics.Step.prototype.getStartEventId = function () {
   return this.startEventId_;
 };
-
 
 /**
  * Gets the ID of the end event.
  * @return {number} ID of the end event.
  */
-wtf.replay.graphics.Step.prototype.getEndEventId = function() {
+wtf.replay.graphics.Step.prototype.getEndEventId = function () {
   return this.endEventId_;
 };
-
 
 /**
  * Gets a list of indices of visible events.
  * @return {!Array.<number>} A list of indices of visible events.
  * @private
  */
-wtf.replay.graphics.Step.prototype.createVisibleEventsList_ = function() {
+wtf.replay.graphics.Step.prototype.createVisibleEventsList_ = function () {
   // Filter for only visible events.
   var visibleEvents = [];
   for (var it = this.getEventIterator(); !it.done(); it.next()) {
@@ -186,15 +188,13 @@ wtf.replay.graphics.Step.prototype.createVisibleEventsList_ = function() {
   return visibleEvents;
 };
 
-
 /**
  * Returns the set of handles of contexts that exist at the start of the step.
  * @return {!Object.<boolean>} The set of handles of initial contexts.
  */
-wtf.replay.graphics.Step.prototype.getInitialContexts = function() {
+wtf.replay.graphics.Step.prototype.getInitialContexts = function () {
   return this.initialContexts_;
 };
-
 
 /**
  * Constructs a list of steps.
@@ -202,8 +202,7 @@ wtf.replay.graphics.Step.prototype.getInitialContexts = function() {
  * @param {!wtf.db.FrameList} frameList A list of frames.
  * @return {!Array.<!wtf.replay.graphics.Step>} A list of steps.
  */
-wtf.replay.graphics.Step.constructStepsList = function(
-    eventList, frameList) {
+wtf.replay.graphics.Step.constructStepsList = function (eventList, frameList) {
   var steps = [];
   if (!eventList.getCount()) {
     return steps;
@@ -212,25 +211,22 @@ wtf.replay.graphics.Step.constructStepsList = function(
   // Get the set of IDs of events that should be displayed.
   // TODO(benvanik): make this list easier to add to.
   var visibleEventsRegex =
-      /^((WebGLRenderingContext#)|(wtf.webgl#)|(ANGLEInstancedArrays#))/;
+    /^((WebGLRenderingContext#)|(wtf.webgl#)|(ANGLEInstancedArrays#))/;
   var displayedEventsIds =
-      eventList.eventTypeTable.getSetMatching(visibleEventsRegex);
+    eventList.eventTypeTable.getSetMatching(visibleEventsRegex);
 
   // Get the IDs for start/end frame events if those IDs exist.
-  var frameStartEventId =
-      eventList.getEventTypeId('wtf.timing#frameStart');
-  var frameEndEventId =
-      eventList.getEventTypeId('wtf.timing#frameEnd');
-  var contextCreatedEventId =
-      eventList.getEventTypeId('wtf.webgl#createContext');
-  var contextSetEventId =
-      eventList.getEventTypeId('wtf.webgl#setContext');
+  var frameStartEventId = eventList.getEventTypeId("wtf.timing#frameStart");
+  var frameEndEventId = eventList.getEventTypeId("wtf.timing#frameEnd");
+  var contextCreatedEventId = eventList.getEventTypeId(
+    "wtf.webgl#createContext"
+  );
+  var contextSetEventId = eventList.getEventTypeId("wtf.webgl#setContext");
 
   var it = eventList.begin();
   var currentStartId = it.getId();
   var currentEndId = currentStartId;
-  var currentFrame = (frameList.getCount()) ?
-      frameList.getAllFrames()[0] : null;
+  var currentFrame = frameList.getCount() ? frameList.getAllFrames()[0] : null;
 
   // Ensure no empty steps are made.
   var noEventsForPreviousStep = true;
@@ -251,7 +247,6 @@ wtf.replay.graphics.Step.constructStepsList = function(
     if (currentEventTypeId == frameStartEventId) {
       // Only store previous step if it has at least 1 event.
       if (!noEventsForPreviousStep) {
-
         // Only include this step if it has visible events.
         if (visibleEventExists) {
           // Clone only if a context was added during the last step.
@@ -260,8 +255,14 @@ wtf.replay.graphics.Step.constructStepsList = function(
           }
 
           var newStep = new wtf.replay.graphics.Step(
-              eventList, currentStartId, currentEndId, null, contexts,
-              displayedEventsIds, stepBeginContext);
+            eventList,
+            currentStartId,
+            currentEndId,
+            null,
+            contexts,
+            displayedEventsIds,
+            stepBeginContext
+          );
           steps.push(newStep);
           contextAdded = false;
         }
@@ -280,8 +281,14 @@ wtf.replay.graphics.Step.constructStepsList = function(
         }
 
         var newStep = new wtf.replay.graphics.Step(
-            eventList, currentStartId, it.getId(), currentFrame, contexts,
-            displayedEventsIds, stepBeginContext);
+          eventList,
+          currentStartId,
+          it.getId(),
+          currentFrame,
+          contexts,
+          displayedEventsIds,
+          stepBeginContext
+        );
         steps.push(newStep);
         contextAdded = false;
       }
@@ -298,14 +305,14 @@ wtf.replay.graphics.Step.constructStepsList = function(
       }
     } else if (currentEventTypeId == contextCreatedEventId) {
       // A new context was made. Include it in the current step.
-      var handleValue = /** @type {number} */ (it.getArgument('handle'));
+      var handleValue = /** @type {number} */ (it.getArgument("handle"));
       contextsMadeSoFar[handleValue] = true;
       currentContext = handleValue;
       visibleEventExists = true;
       contextAdded = true;
       it.next();
     } else if (currentEventTypeId == contextSetEventId) {
-      currentContext = /** @type {number} */ (it.getArgument('handle'));
+      currentContext = /** @type {number} */ (it.getArgument("handle"));
       visibleEventExists = true;
       it.next();
     } else {
@@ -324,17 +331,21 @@ wtf.replay.graphics.Step.constructStepsList = function(
   // Store any events still left if there are any.
   if (!noEventsForPreviousStep && visibleEventExists) {
     var newStep = new wtf.replay.graphics.Step(
-        eventList, currentStartId, currentEndId, null, contexts,
-        displayedEventsIds, stepBeginContext);
+      eventList,
+      currentStartId,
+      currentEndId,
+      null,
+      contexts,
+      displayedEventsIds,
+      stepBeginContext
+    );
     steps.push(newStep);
   }
   return steps;
 };
 
-
+goog.exportSymbol("wtf.replay.graphics.Step", wtf.replay.graphics.Step);
 goog.exportSymbol(
-    'wtf.replay.graphics.Step',
-    wtf.replay.graphics.Step);
-goog.exportSymbol(
-    'wtf.replay.graphics.Step.constructStepsList',
-    wtf.replay.graphics.Step.constructStepsList);
+  "wtf.replay.graphics.Step.constructStepsList",
+  wtf.replay.graphics.Step.constructStepsList
+);

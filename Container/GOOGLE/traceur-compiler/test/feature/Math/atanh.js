@@ -1,4 +1,4 @@
-import {atanh} from '../../../src/runtime/polyfills/Math.js';
+import { atanh } from "../../../src/runtime/polyfills/Math.js";
 
 function testAtanh(atanh) {
   assert.equal(0, atanh(0));

@@ -1,2 +1,2 @@
-export * as a from './m.js';
-export * as b from './n.js';
+export * as a from "./m.js";
+export * as b from "./n.js";

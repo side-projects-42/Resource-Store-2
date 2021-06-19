@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ARGUMENTS} from '../syntax/PredefinedName.js';
-import {FindInFunctionScope} from './FindInFunctionScope.js';
+import { ARGUMENTS } from "../syntax/PredefinedName.js";
+import { FindInFunctionScope } from "./FindInFunctionScope.js";
 
 /**
  * This is used to find whether a function contains a reference to `arguments`.

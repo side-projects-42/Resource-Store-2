@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-telemetry-sdk-specs",
+  "fullName": "newrelic/newrelic-telemetry-sdk-specs",
+  "slug": "newrelic-newrelic-telemetry-sdk-specs",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Telemetry SDK Specs",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-telemetry-sdk-specs",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-telemetry-sdk-specs",
+  "iconUrl": null,
+  "shortDescription": "Telemetry SDK documentation",
+  "description": " Specs for the New Relic Telemetry SDKs",
+  "ossCategory": "community-project",
+  "primaryLanguage": null,
+  "projectTags": ["docs", "opentelemetry", "sdk"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Telemetry SDK Specs",
+    "url": "https://github.com/newrelic/newrelic-telemetry-sdk-specs"
+  }
+}

@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.EventType');
+goog.provide("wtf.db.EventType");
 
-goog.require('wtf.data.EventClass');
-goog.require('wtf.data.Variable');
-goog.require('wtf.db.EventTypeBuilder');
-
-
+goog.require("wtf.data.EventClass");
+goog.require("wtf.data.Variable");
+goog.require("wtf.db.EventTypeBuilder");
 
 /**
  * Event type definition.
@@ -32,7 +30,7 @@ goog.require('wtf.db.EventTypeBuilder');
  *     with the event.
  * @constructor
  */
-wtf.db.EventType = function(name, eventClass, flags, args) {
+wtf.db.EventType = function (name, eventClass, flags, args) {
   /**
    * Event ID.
    * This is set by the {@see wtf.db.EventTypeTable} when an event is defined.
@@ -90,13 +88,11 @@ wtf.db.EventType = function(name, eventClass, flags, args) {
   this.parseLegacyArguments = args.length ? builder.generateLegacy(this) : null;
 };
 
-
 /**
  * Takes a buffer offset to the event data and returns the parsed values.
  * @typedef {function(!wtf.io.BufferView.Type):!Object}
  */
 wtf.db.EventType.ParseFunction;
-
 
 /**
  * Takes a buffer offset to the event data and returns the parsed values.
@@ -104,51 +100,45 @@ wtf.db.EventType.ParseFunction;
  */
 wtf.db.EventType.LegacyParseFunction;
 
-
 /**
  * Gets a pretty-formatted name for the event.
  * @return {string} Pretty-formatted name.
  */
-wtf.db.EventType.prototype.toString = function() {
+wtf.db.EventType.prototype.toString = function () {
   return this.name;
 };
-
 
 /**
  * Gets the name of the event.
  * @return {string} Event name.
  */
-wtf.db.EventType.prototype.getName = function() {
+wtf.db.EventType.prototype.getName = function () {
   return this.name;
 };
-
 
 /**
  * Gets the class of the event.
  * @return {wtf.data.EventClass} Event class.
  */
-wtf.db.EventType.prototype.getClass = function() {
+wtf.db.EventType.prototype.getClass = function () {
   return this.eventClass;
 };
-
 
 /**
  * Gets associated event flags.
  * @return {number} A bitmask of {@see wtf.data.EventFlag}.
  */
-wtf.db.EventType.prototype.getFlags = function() {
+wtf.db.EventType.prototype.getFlags = function () {
   return this.flags;
 };
-
 
 /**
  * Gets a list of additional arguments encoded with the event.
  * @return {!Array.<!wtf.data.Variable>} Arguments.
  */
-wtf.db.EventType.prototype.getArguments = function() {
+wtf.db.EventType.prototype.getArguments = function () {
   return this.args;
 };
-
 
 /**
  * Creates an instance event type from the given signature.
@@ -156,15 +146,15 @@ wtf.db.EventType.prototype.getArguments = function() {
  * @param {number=} opt_flags A bitmask of {@see wtf.data.EventFlag} values.
  * @return {!wtf.db.EventType} Event type.
  */
-wtf.db.EventType.createInstance = function(signature, opt_flags) {
+wtf.db.EventType.createInstance = function (signature, opt_flags) {
   var parsedSignature = wtf.data.Variable.parseSignature(signature);
   return new wtf.db.EventType(
-      parsedSignature.name,
-      wtf.data.EventClass.INSTANCE,
-      opt_flags || 0,
-      parsedSignature.args);
+    parsedSignature.name,
+    wtf.data.EventClass.INSTANCE,
+    opt_flags || 0,
+    parsedSignature.args
+  );
 };
-
 
 /**
  * Creates a scope event type from the given signature.
@@ -172,15 +162,15 @@ wtf.db.EventType.createInstance = function(signature, opt_flags) {
  * @param {number=} opt_flags A bitmask of {@see wtf.data.EventFlag} values.
  * @return {!wtf.db.EventType} Event type.
  */
-wtf.db.EventType.createScope = function(signature, opt_flags) {
+wtf.db.EventType.createScope = function (signature, opt_flags) {
   var parsedSignature = wtf.data.Variable.parseSignature(signature);
   return new wtf.db.EventType(
-      parsedSignature.name,
-      wtf.data.EventClass.SCOPE,
-      opt_flags || 0,
-      parsedSignature.args);
+    parsedSignature.name,
+    wtf.data.EventClass.SCOPE,
+    opt_flags || 0,
+    parsedSignature.args
+  );
 };
-
 
 /**
  * Shared function builder singleton.
@@ -189,35 +179,41 @@ wtf.db.EventType.createScope = function(signature, opt_flags) {
  */
 wtf.db.EventType.builder_ = null;
 
-
 /**
  * Gets a shared event builder.
  * @return {!wtf.db.EventTypeBuilder} Builder.
  * @private
  */
-wtf.db.EventType.getBuilder_ = function() {
+wtf.db.EventType.getBuilder_ = function () {
   if (!wtf.db.EventType.builder_) {
     wtf.db.EventType.builder_ = new wtf.db.EventTypeBuilder();
   }
   return wtf.db.EventType.builder_;
 };
 
-
-goog.exportSymbol(
-    'wtf.db.EventType',
-    wtf.db.EventType);
+goog.exportSymbol("wtf.db.EventType", wtf.db.EventType);
 goog.exportProperty(
-    wtf.db.EventType.prototype, 'toString',
-    wtf.db.EventType.prototype.toString);
+  wtf.db.EventType.prototype,
+  "toString",
+  wtf.db.EventType.prototype.toString
+);
 goog.exportProperty(
-    wtf.db.EventType.prototype, 'getName',
-    wtf.db.EventType.prototype.getName);
+  wtf.db.EventType.prototype,
+  "getName",
+  wtf.db.EventType.prototype.getName
+);
 goog.exportProperty(
-    wtf.db.EventType.prototype, 'getClass',
-    wtf.db.EventType.prototype.getClass);
+  wtf.db.EventType.prototype,
+  "getClass",
+  wtf.db.EventType.prototype.getClass
+);
 goog.exportProperty(
-    wtf.db.EventType.prototype, 'getFlags',
-    wtf.db.EventType.prototype.getFlags);
+  wtf.db.EventType.prototype,
+  "getFlags",
+  wtf.db.EventType.prototype.getFlags
+);
 goog.exportProperty(
-    wtf.db.EventType.prototype, 'getArguments',
-    wtf.db.EventType.prototype.getArguments);
+  wtf.db.EventType.prototype,
+  "getArguments",
+  wtf.db.EventType.prototype.getArguments
+);

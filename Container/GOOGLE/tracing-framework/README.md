@@ -1,5 +1,4 @@
-Web Tracing Framework
-================================================================================
+# Web Tracing Framework
 
 [![Build Status](https://travis-ci.org/google/tracing-framework.png)](https://travis-ci.org/google/tracing-framework)
 
@@ -58,7 +57,7 @@ Have a fix or feature? Submit a pull request - we love them!
 Note that we do keep to the [style_guide](https://github.com/google/tracing-framework/blob/master/docs/style_guide.md),
 so please check it out first!
 
-As this is a Google project, you *must* first e-sign the
+As this is a Google project, you _must_ first e-sign the
 [Google Contributor License Agreement](http://code.google.com/legal/individual-cla-v1.0.html) before we can accept any
 code. It takes only a second and basically just says you won't sue us or claim
 copyright of your submitted code.

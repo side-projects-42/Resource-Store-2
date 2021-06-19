@@ -1,62 +1,60 @@
 var datasets = [];
-var values = [
-  -20,
-  -50,
-  -80
-];
+var values = [-20, -50, -80];
 
-['start', 'center', 'end'].forEach(function(anchor) {
-  [false, true].forEach(function(clamp) {
+["start", "center", "end"].forEach(function (anchor) {
+  [false, true].forEach(function (clamp) {
     datasets.push({
       data: values,
       datalabels: {
         anchor: anchor,
-        clamp: clamp
-      }
+        clamp: clamp,
+      },
     });
   });
 });
 
 export default {
   config: {
-    type: 'horizontalBar',
+    type: "horizontalBar",
     data: {
       datasets: datasets,
-      labels: values
+      labels: values,
     },
     options: {
       layout: {
         padding: {
           left: 20,
-          right: 20
-        }
+          right: 20,
+        },
       },
       scales: {
-        xAxes: [{
-          ticks: {
-            min: -40,
-            max: -60
-          }
-        }]
+        xAxes: [
+          {
+            ticks: {
+              min: -40,
+              max: -60,
+            },
+          },
+        ],
       },
       plugins: {
         datalabels: {
-          backgroundColor: '#00ff77',
-          borderColor: 'black',
+          backgroundColor: "#00ff77",
+          borderColor: "black",
           borderWidth: 2,
           font: {
-            size: 0
+            size: 0,
           },
           padding: 8,
-          offset: 0
-        }
-      }
-    }
+          offset: 0,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 512,
-      width: 192
-    }
-  }
+      width: 192,
+    },
+  },
 };

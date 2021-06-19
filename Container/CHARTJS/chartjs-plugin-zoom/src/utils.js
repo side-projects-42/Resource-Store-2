@@ -1,4 +1,4 @@
-import {each} from 'chart.js/helpers';
+import { each } from "chart.js/helpers";
 
 /**
  * @param {string|function} mode can be 'x', 'y' or 'xy'
@@ -9,10 +9,10 @@ import {each} from 'chart.js/helpers';
 export function directionEnabled(mode, dir, chart) {
   if (mode === undefined) {
     return true;
-  } else if (typeof mode === 'string') {
+  } else if (typeof mode === "string") {
     return mode.indexOf(dir) !== -1;
-  } else if (typeof mode === 'function') {
-    return mode({chart}).indexOf(dir) !== -1;
+  } else if (typeof mode === "function") {
+    return mode({ chart }).indexOf(dir) !== -1;
   }
 
   return false;
@@ -26,7 +26,7 @@ export function directionEnabled(mode, dir, chart) {
  */
 export function debounce(fn, delay) {
   let timeout;
-  return function() {
+  return function () {
     clearTimeout(timeout);
     timeout = setTimeout(fn, delay);
     return delay;
@@ -38,12 +38,17 @@ export function debounce(fn, delay) {
  * @param {import('chart.js').Chart} [chart] instance of the chart in question
  * @return {import('chart.js').Scale}
  */
-function getScaleUnderPoint({x, y}, chart) {
+function getScaleUnderPoint({ x, y }, chart) {
   const scales = chart.scales;
   const scaleIds = Object.keys(scales);
   for (let i = 0; i < scaleIds.length; i++) {
     const scale = scales[scaleIds[i]];
-    if (y >= scale.top && y <= scale.bottom && x >= scale.left && x <= scale.right) {
+    if (
+      y >= scale.top &&
+      y <= scale.bottom &&
+      x >= scale.left &&
+      x <= scale.right
+    ) {
       return scale;
     }
   }
@@ -69,7 +74,7 @@ export function getEnabledScalesByPoint(mode, point, chart) {
   }
 
   const enabledScales = [];
-  each(chart.scales, function(scaleItem) {
+  each(chart.scales, function (scaleItem) {
     if (!directionEnabled(mode, scaleItem.axis, chart)) {
       enabledScales.push(scaleItem);
     }

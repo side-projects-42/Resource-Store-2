@@ -15,22 +15,16 @@
 import {
   FOR_OF_STATEMENT,
   VARIABLE_DECLARATION_LIST,
-  LABELLED_STATEMENT
-} from '../syntax/trees/ParseTreeType.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+  LABELLED_STATEMENT,
+} from "../syntax/trees/ParseTreeType.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   createIdentifierExpression as id,
   createMemberExpression,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {
-  parseStatement,
-  parseStatements
-} from './PlaceholderParser.js';
-import {
-  AnonBlock,
-  LabelledStatement
-} from '../syntax/trees/ParseTrees.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { parseStatement, parseStatements } from "./PlaceholderParser.js";
+import { AnonBlock, LabelledStatement } from "../syntax/trees/ParseTrees.js";
 
 /**
  * Desugars for-of statement.
@@ -61,14 +55,15 @@ export class ForOfTransformer extends TempVarTransformer {
     if (tree.initializer.type === VARIABLE_DECLARATION_LIST) {
       // {var,let} initializer = $result.value;
       assignment = createVariableStatement(
-          tree.initializer.declarationType,
-          tree.initializer.declarations[0].lvalue,
-          createMemberExpression(result, 'value'));
+        tree.initializer.declarationType,
+        tree.initializer.declarations[0].lvalue,
+        createMemberExpression(result, "value")
+      );
     } else {
-      assignment = parseStatement `${tree.initializer} = ${result}.value;`;
+      assignment = parseStatement`${tree.initializer} = ${result}.value;`;
     }
 
-    innerStatement = parseStatement `
+    innerStatement = parseStatement`
         for (var ${result},
                  ${iter} = (${tree.collection})[Symbol.iterator]();
              !(${normalCompletion} = (${result} = ${iter}.next()).done);
@@ -77,12 +72,17 @@ export class ForOfTransformer extends TempVarTransformer {
           ${tree.body}
         }`;
 
-    while (labelledStatement = labelSet.pop()) {
-      innerStatement = new LabelledStatement(labelledStatement.location,
-          labelledStatement.name, innerStatement);
+    while ((labelledStatement = labelSet.pop())) {
+      innerStatement = new LabelledStatement(
+        labelledStatement.location,
+        labelledStatement.name,
+        innerStatement
+      );
     }
 
-    return new AnonBlock(null, parseStatements `
+    return new AnonBlock(
+      null,
+      parseStatements`
         var ${normalCompletion} = true;
         var ${throwCompletion} = false;
         var ${exception} = undefined;
@@ -101,7 +101,8 @@ export class ForOfTransformer extends TempVarTransformer {
               throw ${exception};
             }
           }
-        }`);
+        }`
+    );
   }
 
   transformLabelledStatement(tree) {

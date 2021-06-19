@@ -12,12 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var format = require('util').format;
+var format = require("util").format;
 
 function addAbbrev(o) {
-  var ks = [''].concat(Object.keys(o).sort()), k, kprev = '';
+  var ks = [""].concat(Object.keys(o).sort()),
+    k,
+    kprev = "";
   for (var i = ks.length - 1; i > 0; i--) {
-    var ka = k = ks[i], pre = 0;
+    var ka = (k = ks[i]),
+      pre = 0;
 
     // find length of common prefix, clamp to min of 1.
     while (kprev[pre] === k[pre]) {
@@ -26,7 +29,7 @@ function addAbbrev(o) {
     pre = pre || 1;
 
     // add all unique prefixes for k.
-    while (!o[ka = ka.slice(0, -1)] && ka.length > pre && ka > ks[i - 1]) {
+    while (!o[(ka = ka.slice(0, -1))] && ka.length > pre && ka > ks[i - 1]) {
       o[ka] = o[k];
     }
     kprev = k;
@@ -44,21 +47,23 @@ function Getopt(opts) {
 
   this.opts_ = Object.create(null);
   for (var i = 0; i < opts.length; i++) {
-    var opt = opts[i], data = null, m;
+    var opt = opts[i],
+      data = null,
+      m;
     if (Array.isArray(opt)) {
       data = opt[1] || null;
       opt = opt[0];
     }
     if (!(m = opt.match(/^([\w\-]+)(:{0,2})$/))) {
-      throw new Error('invalid option initializer: ' + opt);
+      throw new Error("invalid option initializer: " + opt);
     }
-    this.opts_[m[1]] = {name: m[1], arg: m[2], data: data};
+    this.opts_[m[1]] = { name: m[1], arg: m[2], data: data };
   }
   addAbbrev(this.opts_);
 }
 
 Getopt.prototype = {
-  getopt: function(argv) {
+  getopt: function (argv) {
     var m, arg, optInf;
     this.opt = this.optarg = this.optopt = this.optdata = null;
     if (this.optind >= argv.length) {
@@ -72,45 +77,45 @@ Getopt.prototype = {
       // short opt
       this.opt = arg[this.nextchar] || null;
       this.optarg = arg.slice(++this.nextchar) || null;
-    } else if (m = arg.match(/^--([\w\-]+)(?:=(.*))?$/)) {
+    } else if ((m = arg.match(/^--([\w\-]+)(?:=(.*))?$/))) {
       // long opt
       this.opt = m[1];
       this.optarg = m[2] === undefined ? null : m[2];
     } else {
       // free arg
       this.optind++;
-      this.opt = '=';
+      this.opt = "=";
       this.optarg = arg;
       return true;
     }
 
-    if (optInf = this.opts_[this.opt]) {
+    if ((optInf = this.opts_[this.opt])) {
       this.opt = optInf.name;
       this.optdata = optInf.data;
       switch (optInf.arg) {
-        case '':
+        case "":
           // no arg
           if (!this.nextchar && this.optarg) {
             // unexpected arg
             this.optopt = this.opt;
-            this.opt = '!';
+            this.opt = "!";
             break;
           }
           this.optarg = null;
           break;
-        case ':':
+        case ":":
           // required arg
           if (this.optarg === null) {
             if (++this.optind >= argv.length) {
               // missing arg
               this.optopt = this.opt;
-              this.opt = ':';
+              this.opt = ":";
               break;
             }
             this.optarg = argv[this.optind];
           }
-          // fall through
-        case '::':
+        // fall through
+        case "::":
           // optional arg
           this.nextchar = 0;
           break;
@@ -118,7 +123,7 @@ Getopt.prototype = {
     } else {
       // unknown opt
       this.optopt = this.opt;
-      this.opt = '?';
+      this.opt = "?";
     }
 
     if (this.nextchar && this.nextchar >= arg.length) {
@@ -128,23 +133,21 @@ Getopt.prototype = {
 
     return true;
   },
-  message: function() {
+  message: function () {
     switch (this.opt) {
-      case ':':
-        return format('missing argument for \'%s\'.', this.optopt);
-      case '?':
-        return format('unknown option \'%s\'.', this.optopt);
-      case '!':
-        return format('\'%s\' does not take an argument.', this.optopt);
-      case '=':
-        return format('optarg \'%s\'.', this.optarg);
+      case ":":
+        return format("missing argument for '%s'.", this.optopt);
+      case "?":
+        return format("unknown option '%s'.", this.optopt);
+      case "!":
+        return format("'%s' does not take an argument.", this.optopt);
+      case "=":
+        return format("optarg '%s'.", this.optarg);
       default:
-        if (this.optarg === null)
-          return format('opt \'%s\'.', this.opt);
-        else
-          return format('opt \'%s\', optarg \'%s\'.', this.opt, this.optarg);
+        if (this.optarg === null) return format("opt '%s'.", this.opt);
+        else return format("opt '%s', optarg '%s'.", this.opt, this.optarg);
     }
-  }
-}
+  },
+};
 
 exports.Getopt = Getopt;

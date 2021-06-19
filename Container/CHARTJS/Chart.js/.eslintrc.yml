@@ -15,7 +15,7 @@ parserOptions:
     impliedStrict: true
     modules: true
 
-plugins: ['html', 'es']
+plugins: ["html", "es"]
 
 rules:
   class-methods-use-this: "off"

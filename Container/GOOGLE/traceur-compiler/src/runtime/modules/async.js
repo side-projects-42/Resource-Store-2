@@ -12,12 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {createPrivateSymbol, getPrivate, setPrivate} from '../private.js';
+import { createPrivateSymbol, getPrivate, setPrivate } from "../private.js";
 
-var {
-  create,
-  defineProperty,
-} = Object;
+var { create, defineProperty } = Object;
 
 var observeName = createPrivateSymbol();
 
@@ -29,15 +26,15 @@ AsyncGeneratorFunction.prototype = AsyncGeneratorFunctionPrototype;
 
 AsyncGeneratorFunctionPrototype.constructor = AsyncGeneratorFunction;
 
-defineProperty(AsyncGeneratorFunctionPrototype, 'constructor',
-    {enumerable: false});
+defineProperty(AsyncGeneratorFunctionPrototype, "constructor", {
+  enumerable: false,
+});
 
 class AsyncGeneratorContext {
   constructor(observer) {
-    this.decoratedObserver =
-        createDecoratedGenerator(observer, () => {
-          this.done = true;
-        });
+    this.decoratedObserver = createDecoratedGenerator(observer, () => {
+      this.done = true;
+    });
     this.done = false;
     this.inReturn = false;
   }
@@ -71,49 +68,54 @@ class AsyncGeneratorContext {
   yieldFor(observable) {
     var ctx = this;
     return observeForEach(
-        observable[Symbol.observer].bind(observable),
-        function (value) {
-          if (ctx.done) {
-            this.return();
-            return;
-          }
-          var result;
-          try {
-            result = ctx.decoratedObserver.next(value);
-          } catch (e) {
-            ctx.done = true;
-            throw e;
-          }
-          if (result === undefined) {
-            return;
-          }
-          if (result.done) {
-            ctx.done = true;
-          }
-          return result;
-        });
+      observable[Symbol.observer].bind(observable),
+      function (value) {
+        if (ctx.done) {
+          this.return();
+          return;
+        }
+        var result;
+        try {
+          result = ctx.decoratedObserver.next(value);
+        } catch (e) {
+          ctx.done = true;
+          throw e;
+        }
+        if (result === undefined) {
+          return;
+        }
+        if (result.done) {
+          ctx.done = true;
+        }
+        return result;
+      }
+    );
   }
 }
 
-AsyncGeneratorFunctionPrototype.prototype[Symbol.observer] =
-    function (observer) {
-      var observe = getPrivate(this, observeName);
-      var ctx = new AsyncGeneratorContext(observer);
-      schedule(() => observe(ctx)).then(value => {
-        if (!ctx.done) {
-          ctx.decoratedObserver.return(value);
-        }
-      }).catch(error => {
-        // if ctx.inReturn is true, ctx.done is also true
-        if (!ctx.done) {
-          ctx.decoratedObserver.throw(error);
-        }
-      });
-      return ctx.decoratedObserver;
-    };
+AsyncGeneratorFunctionPrototype.prototype[Symbol.observer] = function (
+  observer
+) {
+  var observe = getPrivate(this, observeName);
+  var ctx = new AsyncGeneratorContext(observer);
+  schedule(() => observe(ctx))
+    .then((value) => {
+      if (!ctx.done) {
+        ctx.decoratedObserver.return(value);
+      }
+    })
+    .catch((error) => {
+      // if ctx.inReturn is true, ctx.done is also true
+      if (!ctx.done) {
+        ctx.decoratedObserver.throw(error);
+      }
+    });
+  return ctx.decoratedObserver;
+};
 
-defineProperty(AsyncGeneratorFunctionPrototype.prototype, Symbol.observer,
-    {enumerable: false});
+defineProperty(AsyncGeneratorFunctionPrototype.prototype, Symbol.observer, {
+  enumerable: false,
+});
 
 export function initAsyncGeneratorFunction(functionObject) {
   functionObject.prototype = create(AsyncGeneratorFunctionPrototype.prototype);
@@ -138,7 +140,7 @@ export function observeForEach(observe, next) {
       },
       return(value) {
         resolve(value);
-      }
+      },
     });
   });
 }
@@ -179,9 +181,12 @@ export function createDecoratedGenerator(generator, onDone) {
   return new DecoratedGenerator(generator, onDone);
 }
 
-Array.prototype[Symbol.observer] = function(observer) {
+Array.prototype[Symbol.observer] = function (observer) {
   let done = false;
-  let decoratedObserver = createDecoratedGenerator(observer, () => done = true);
+  let decoratedObserver = createDecoratedGenerator(
+    observer,
+    () => (done = true)
+  );
   for (var value of this) {
     decoratedObserver.next(value);
     if (done) {
@@ -192,4 +197,4 @@ Array.prototype[Symbol.observer] = function(observer) {
   return decoratedObserver;
 };
 
-defineProperty(Array.prototype, Symbol.observer, {enumerable: false});
+defineProperty(Array.prototype, Symbol.observer, { enumerable: false });

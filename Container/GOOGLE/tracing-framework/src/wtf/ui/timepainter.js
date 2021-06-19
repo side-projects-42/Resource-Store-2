@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.TimePainter');
+goog.provide("wtf.ui.TimePainter");
 
-goog.require('wtf.db.Unit');
-goog.require('wtf.ui.Painter');
-
-
+goog.require("wtf.db.Unit");
+goog.require("wtf.ui.Painter");
 
 /**
  * Paints a time range into the view.
@@ -24,7 +22,7 @@ goog.require('wtf.ui.Painter');
  * @constructor
  * @extends {wtf.ui.Painter}
  */
-wtf.ui.TimePainter = function(canvas) {
+wtf.ui.TimePainter = function (canvas) {
   goog.base(this, canvas);
 
   /**
@@ -50,30 +48,27 @@ wtf.ui.TimePainter = function(canvas) {
 };
 goog.inherits(wtf.ui.TimePainter, wtf.ui.Painter);
 
-
 /**
  * Sets the visible time range.
  * @param {number} timeLeft Left-most visible time.
  * @param {number} timeRight Right-most visible time.
  */
-wtf.ui.TimePainter.prototype.setTimeRange = function(timeLeft, timeRight) {
+wtf.ui.TimePainter.prototype.setTimeRange = function (timeLeft, timeRight) {
   this.timeLeft = timeLeft;
   this.timeRight = timeRight;
 };
 
-
 /**
  * @return {boolean} True if the time range is valid for painting.
  */
-wtf.ui.TimePainter.prototype.isTimeRangeValid = function() {
+wtf.ui.TimePainter.prototype.isTimeRangeValid = function () {
   return this.timeLeft != this.timeRight;
 };
-
 
 /**
  * Sets the units the painter draws labels in.
  * @param {wtf.db.Unit} value Units.
  */
-wtf.ui.TimePainter.prototype.setUnits = function(value) {
+wtf.ui.TimePainter.prototype.setUnits = function (value) {
   this.units = value;
 };

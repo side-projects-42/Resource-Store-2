@@ -1,22 +1,20 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
       labels: [0, 1, 2, 3, 4, 5],
       datasets: [
         {
           // option in dataset
           data: [0, 5, 10, null, -10, -5],
-          pointBorderColor: '#00ff00',
-          pointBorderWidth: [
-            1, 2, 3, 4, 5, 6
-          ]
+          pointBorderColor: "#00ff00",
+          pointBorderWidth: [1, 2, 3, 4, 5, 6],
         },
         {
           // option in element (fallback)
           data: [4, -5, -10, null, 10, 5],
-        }
-      ]
+        },
+      ],
     },
     options: {
       elements: {
@@ -24,23 +22,21 @@ module.exports = {
           fill: false,
         },
         point: {
-          borderColor: '#ff0000',
-          borderWidth: [
-            6, 5, 4, 3, 2, 1
-          ],
-          radius: 10
-        }
+          borderColor: "#ff0000",
+          borderWidth: [6, 5, 4, 3, 2, 1],
+          radius: 10,
+        },
       },
       scales: {
-        x: {display: false},
-        y: {display: false}
-      }
-    }
+        x: { display: false },
+        y: { display: false },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

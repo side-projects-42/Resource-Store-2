@@ -14,8 +14,8 @@
 
 var _gaq = _gaq || [];
 
-window['CLOSURE_NO_DEPS'] = true;
-window['CLOSURE_BASE_PATH'] = '../third_party/closure-library/closure/goog/';
+window["CLOSURE_NO_DEPS"] = true;
+window["CLOSURE_BASE_PATH"] = "../third_party/closure-library/closure/goog/";
 
 if (window.chrome && chrome.runtime) {
   // Running inside the extension - need to do some nasty loads to ensure
@@ -24,7 +24,7 @@ if (window.chrome && chrome.runtime) {
   // This tracks all script imports in order for use by the
   // debugImportAndExecute function below.
   var allImports = [];
-  window['CLOSURE_IMPORT_SCRIPT'] = function(src) {
+  window["CLOSURE_IMPORT_SCRIPT"] = function (src) {
     allImports.push(src);
     return true;
   };
@@ -35,7 +35,7 @@ if (window.chrome && chrome.runtime) {
    * @param {!Array.<string>} namespaces Namespaces to import (like 'my.app').
    * @param {!Function} callback Function call when loading completes.
    */
-  window['debugImportAndExecute'] = function(namespaces, callback) {
+  window["debugImportAndExecute"] = function (namespaces, callback) {
     for (var n = 0; n < namespaces.length; n++) {
       goog.require(namespaces[n]);
     }
@@ -46,15 +46,15 @@ if (window.chrome && chrome.runtime) {
         callback();
         return;
       }
-      var script = document.createElement('script');
+      var script = document.createElement("script");
       script.src = queue[0];
       queue.splice(0, 1);
-      script.onload = function() {
+      script.onload = function () {
         pumpQueue();
       };
       var target = document.head || document.body || document.documentElement;
       target.appendChild(script);
-    };
+    }
 
     pumpQueue();
   };
@@ -65,17 +65,17 @@ if (window.chrome && chrome.runtime) {
    * @param {!Array.<string>} namespaces Namespaces to import (like 'my.app').
    * @param {!Function} callback Function call when loading completes.
    */
-  window['debugImportAndExecute'] = function(namespaces, callback) {
+  window["debugImportAndExecute"] = function (namespaces, callback) {
     // Require all namespaces - this will emit a bunch of document.writes.
     for (var n = 0; n < namespaces.length; n++) {
       goog.require(namespaces[n]);
     }
 
     // Callback thunk.
-    window['__importCallback'] = function() {
-      delete window['__importCallback'];
+    window["__importCallback"] = function () {
+      delete window["__importCallback"];
       callback();
     };
-    document.write('<script>__importCallback()</script>');
+    document.write("<script>__importCallback()</script>");
   };
 }

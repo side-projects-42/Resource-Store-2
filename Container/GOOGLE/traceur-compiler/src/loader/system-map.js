@@ -32,13 +32,11 @@
 // return the number of prefix parts (separated by '/') matching the name
 // eg prefixMatchLength('jquery/some/thing', 'jquery') -> 1
 function prefixMatchLength(name, prefix) {
-  var prefixParts = prefix.split('/');
-  var nameParts = name.split('/');
-  if (prefixParts.length > nameParts.length)
-    return 0;
+  var prefixParts = prefix.split("/");
+  var nameParts = name.split("/");
+  if (prefixParts.length > nameParts.length) return 0;
   for (var i = 0; i < prefixParts.length; i++) {
-    if (nameParts[i] != prefixParts[i])
-      return 0;
+    if (nameParts[i] != prefixParts[i]) return 0;
   }
   return prefixParts.length;
 }
@@ -46,63 +44,60 @@ function prefixMatchLength(name, prefix) {
 // given a relative-resolved module name and normalized parent name,
 // apply the map configuration
 function applyMap(map, name, parentName) {
-
-  var curMatch, curMatchLength = 0;
-  var curParent, curParentMatchLength = 0;
+  var curMatch,
+    curMatchLength = 0;
+  var curParent,
+    curParentMatchLength = 0;
 
   // first find most specific contextual match
   if (parentName) {
     var mappedName;
-    Object.getOwnPropertyNames(map).some(function(p) {
+    Object.getOwnPropertyNames(map).some(function (p) {
       var curMap = map[p];
       // Object properties are contextual map entries.
-      if (curMap && typeof curMap === 'object') {
+      if (curMap && typeof curMap === "object") {
         // most specific parent match wins first
-        if (prefixMatchLength(parentName, p) <= curParentMatchLength)
-          return;
+        if (prefixMatchLength(parentName, p) <= curParentMatchLength) return;
 
-        Object.getOwnPropertyNames(curMap).forEach(function(q) {
+        Object.getOwnPropertyNames(curMap).forEach(function (q) {
           // most specific name match wins
           if (prefixMatchLength(name, q) > curMatchLength) {
             curMatch = q;
-            curMatchLength = q.split('/').length;
+            curMatchLength = q.split("/").length;
             curParent = p;
-            curParentMatchLength = p.split('/').length;
+            curParentMatchLength = p.split("/").length;
           }
         });
       }
       if (curMatch) {
-        var subPath = name.split('/').splice(curMatchLength).join('/');
-        mappedName =
-            map[curParent][curMatch] + (subPath ? '/' + subPath : '');
+        var subPath = name.split("/").splice(curMatchLength).join("/");
+        mappedName = map[curParent][curMatch] + (subPath ? "/" + subPath : "");
         return mappedName;
       }
     });
   }
 
-  if (mappedName)
-    return mappedName;
+  if (mappedName) return mappedName;
 
   // if we didn't find a contextual match, try the global map
-  Object.getOwnPropertyNames(map).forEach(function(p) {
+  Object.getOwnPropertyNames(map).forEach(function (p) {
     var curMap = map[p];
     // String properties are global map entries.
-    if (curMap && typeof curMap === 'string') {
+    if (curMap && typeof curMap === "string") {
       if (prefixMatchLength(name, p) > curMatchLength) {
         curMatch = p;
-        curMatchLength = p.split('/').length;
+        curMatchLength = p.split("/").length;
       }
     }
   });
 
   // return a match if any
-  if (!curMatch)
-    return name;
+  if (!curMatch) return name;
 
-  var subPath = name.split('/').splice(curMatchLength).join('/');
-  return map[curMatch] + (subPath ? '/' + subPath : '');
+  var subPath = name.split("/").splice(curMatchLength).join("/");
+  return map[curMatch] + (subPath ? "/" + subPath : "");
 }
 
 export var systemjs = {
-  applyMap: applyMap
+  applyMap: applyMap,
 };

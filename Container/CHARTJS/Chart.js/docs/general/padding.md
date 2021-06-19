@@ -10,13 +10,13 @@ For example, defining a 20px padding to all sides of chart:
 
 ```javascript
 let chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        layout: {
-            padding: 20
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    layout: {
+      padding: 20,
+    },
+  },
 });
 ```
 
@@ -29,15 +29,15 @@ Lets say you wanted to add 50px of padding to the left side of the chart canvas,
 
 ```javascript
 let chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        layout: {
-            padding: {
-                left: 50
-            }
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    layout: {
+      padding: {
+        left: 50,
+      },
+    },
+  },
 });
 ```
 

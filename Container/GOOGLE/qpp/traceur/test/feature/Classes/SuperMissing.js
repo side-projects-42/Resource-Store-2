@@ -17,9 +17,9 @@ var expectedM;
 var actualF;
 var actualM;
 
-expectedF = ({}).x;
+expectedF = {}.x;
 try {
-  ({}).method();
+  ({}.method());
 } catch (e) {
   expectedM = e;
 }

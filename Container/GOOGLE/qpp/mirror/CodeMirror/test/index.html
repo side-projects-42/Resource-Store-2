@@ -1,11 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CodeMirror: Test Suite</title>
-    <link rel="stylesheet" href="../lib/codemirror.css">
-    <link rel="stylesheet" href="../doc/docs.css">
-    <link rel="stylesheet" href="mode_test.css">
+    <link rel="stylesheet" href="../lib/codemirror.css" />
+    <link rel="stylesheet" href="../doc/docs.css" />
+    <link rel="stylesheet" href="mode_test.css" />
     <script src="../lib/codemirror.js"></script>
     <script src="../addon/mode/overlay.js"></script>
     <script src="../addon/mode/multiplex.js"></script>
@@ -19,10 +19,18 @@
     <script src="../keymap/emacs.js"></script>
 
     <style type="text/css">
-      .ok {color: #090;}
-      .fail {color: #e00;}
-      .error {color: #c90;}
-      .done {font-weight: bold;}
+      .ok {
+        color: #090;
+      }
+      .fail {
+        color: #e00;
+      }
+      .error {
+        color: #c90;
+      }
+      .done {
+        font-weight: bold;
+      }
       #progress {
         background: #45d;
         color: white;
@@ -39,7 +47,9 @@
         left: -10000px;
         top: -10000px;
       }
-      .CodeMirror { border: 1px solid black; }
+      .CodeMirror {
+        border: 1px solid black;
+      }
     </style>
   </head>
   <body>
@@ -47,13 +57,18 @@
 
     <p>A limited set of programmatic sanity tests for CodeMirror.</p>
 
-    <div style="border: 1px solid black; padding: 1px; max-width: 700px;">
-      <div style="width: 0px;" id=progress><div style="padding: 3px;">Ran <span id="progress_ran">0</span><span id="progress_total"> of 0</span> tests</div></div>
+    <div style="border: 1px solid black; padding: 1px; max-width: 700px">
+      <div style="width: 0px" id="progress">
+        <div style="padding: 3px">
+          Ran <span id="progress_ran">0</span
+          ><span id="progress_total"> of 0</span> tests
+        </div>
+      </div>
     </div>
-    <p id=status>Please enable JavaScript...</p>
-    <div id=output></div>
+    <p id="status">Please enable JavaScript...</p>
+    <div id="output"></div>
 
-    <div id=testground></div>
+    <div id="testground"></div>
 
     <script src="driver.js"></script>
     <script src="test.js"></script>
@@ -81,31 +96,35 @@
     <script src="emacs_test.js"></script>
     <script>
       window.onload = runHarness;
-      CodeMirror.on(window, 'hashchange', runHarness);
+      CodeMirror.on(window, "hashchange", runHarness);
 
       function esc(str) {
-        return str.replace(/[<&]/, function(ch) { return ch == "<" ? "&lt;" : "&amp;"; });
+        return str.replace(/[<&]/, function (ch) {
+          return ch == "<" ? "&lt;" : "&amp;";
+        });
       }
 
       var output = document.getElementById("output"),
-          progress = document.getElementById("progress"),
-          progressRan = document.getElementById("progress_ran").childNodes[0],
-          progressTotal = document.getElementById("progress_total").childNodes[0];
+        progress = document.getElementById("progress"),
+        progressRan = document.getElementById("progress_ran").childNodes[0],
+        progressTotal = document.getElementById("progress_total").childNodes[0];
       var count = 0,
-          failed = 0,
-          bad = "",
-          running = false, // Flag that states tests are running
-         quit = false, // Flag to quit tests ASAP
-         verbose = false; // Adds message for *every* test to output
+        failed = 0,
+        bad = "",
+        running = false, // Flag that states tests are running
+        quit = false, // Flag to quit tests ASAP
+        verbose = false; // Adds message for *every* test to output
 
-      function runHarness(){
+      function runHarness() {
         if (running) {
           quit = true;
-          setStatus("Restarting tests...", '', true);
-          setTimeout(function(){runHarness();}, 500);
+          setStatus("Restarting tests...", "", true);
+          setTimeout(function () {
+            runHarness();
+          }, 500);
           return;
         }
-        if (window.location.hash.substr(1)){
+        if (window.location.hash.substr(1)) {
           debug = window.location.hash.substr(1).split(",");
         } else {
           debug = null;
@@ -121,22 +140,23 @@
         totalTests = countTests();
         progressTotal.nodeValue = " of " + totalTests;
         progressRan.nodeValue = count;
-        output.innerHTML = '';
-        document.getElementById("testground").innerHTML = "<form>" +
-          "<textarea id=\"code\" name=\"code\"></textarea>" +
+        output.innerHTML = "";
+        document.getElementById("testground").innerHTML =
+          "<form>" +
+          '<textarea id="code" name="code"></textarea>' +
           "<input type=submit value=ok name=submit>" +
           "</form>";
         runTests(displayTest);
       }
 
-      function setStatus(message, className, force){
+      function setStatus(message, className, force) {
         if (quit && !force) return;
-        if (!message) throw("must provide message");
+        if (!message) throw "must provide message";
         var status = document.getElementById("status").childNodes[0];
         status.nodeValue = message;
         status.parentNode.className = className;
       }
-      function addOutput(name, className, code){
+      function addOutput(name, className, code) {
         var newOutput = document.createElement("dl");
         var newTitle = document.createElement("dt");
         newTitle.className = className;
@@ -151,7 +171,8 @@
       function displayTest(type, name, customMessage) {
         var message = "???";
         if (type != "done") ++count;
-        progress.style.width = (count * (progress.parentNode.clientWidth - 2) / totalTests) + "px";
+        progress.style.width =
+          (count * (progress.parentNode.clientWidth - 2)) / totalTests + "px";
         progressRan.nodeValue = count;
         if (type == "ok") {
           message = "Test '" + name + "' succeeded";
@@ -176,15 +197,21 @@
           }
           if (debug && debug.length) {
             var bogusTests = totalTests - count;
-            message += " — " + bogusTests + " nonexistent test" +
-              (bogusTests > 1 ? "s" : "") + " requested by location.hash: " +
-              "`" + debug.join("`, `") + "`";
+            message +=
+              " — " +
+              bogusTests +
+              " nonexistent test" +
+              (bogusTests > 1 ? "s" : "") +
+              " requested by location.hash: " +
+              "`" +
+              debug.join("`, `") +
+              "`";
           } else {
-            progressTotal.nodeValue = '';
+            progressTotal.nodeValue = "";
           }
           customMessage = true; // Hack to avoid adding to output
         }
-        if (verbose && !customMessage)  customMessage = message;
+        if (verbose && !customMessage) customMessage = message;
         setStatus(message, type);
         if (customMessage && customMessage.length > 0) {
           addOutput(name, type, customMessage);

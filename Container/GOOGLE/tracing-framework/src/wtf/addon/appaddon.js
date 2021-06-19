@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.addon.AppAddon');
+goog.provide("wtf.addon.AppAddon");
 
-goog.require('goog.asserts');
-goog.require('wtf.events.EventEmitter');
-
-
+goog.require("goog.asserts");
+goog.require("wtf.events.EventEmitter");
 
 /**
  * Abstract instantiated app UI addon.
@@ -25,7 +23,7 @@ goog.require('wtf.events.EventEmitter');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.addon.AppAddon = function(manifest) {
+wtf.addon.AppAddon = function (manifest) {
   goog.base(this);
 
   var info = manifest.getAppInfo();
@@ -47,20 +45,18 @@ wtf.addon.AppAddon = function(manifest) {
 };
 goog.inherits(wtf.addon.AppAddon, wtf.events.EventEmitter);
 
-
 /**
  * Gets the addon manifest.
  * @return {!wtf.addon.Manifest} Addon manifest.
  */
-wtf.addon.AppAddon.prototype.getManifest = function() {
+wtf.addon.AppAddon.prototype.getManifest = function () {
   return this.manifest_;
 };
-
 
 /**
  * Gets the app information associated with the addon.
  * @return {!wtf.addon.Manifest.AppInfo} App information.
  */
-wtf.addon.AppAddon.prototype.getInfo = function() {
+wtf.addon.AppAddon.prototype.getInfo = function () {
   return this.info_;
 };

@@ -1,0 +1,24 @@
+{
+  "name": "terraform-newrelic-apm",
+  "fullName": "newrelic/terraform-newrelic-apm",
+  "slug": "newrelic-terraform-newrelic-apm",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic APM Terraform Module",
+  "supportUrl": "https://discuss.newrelic.com/t/new-relic-terraform-provider-1-16-0/98241",
+  "githubUrl": "https://github.com/newrelic/terraform-newrelic-apm",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/terraform-newrelic-apm",
+  "iconUrl": null,
+  "shortDescription": "Terraform provider APM",
+  "description": "Terraform module for New Relic application monitoring",
+  "ossCategory": "community-project",
+  "projectTags": ["nri"],
+  "primaryLanguage": "HCL",
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic APM Terraform Module",
+    "url": "https://github.com/newrelic/terraform-newrelic-apm"
+  }
+}

@@ -21,7 +21,6 @@ var experimentalOptions = Object.create(null);
  * The options object.
  */
 export var options = {
-
   /**
    * Meta option. Sets all options that are of Kind.experimental
    * When getting this will return null if not all options of this kind
@@ -49,12 +48,12 @@ export var options = {
       return true;
     });
     return value;
-  }
+  },
 };
 
 // TODO: Refactor this so that we can keep all of these in one place.
 var descriptions = {
-  experimental: 'Turns on all experimental features'
+  experimental: "Turns on all experimental features",
 };
 
 /**
@@ -100,11 +99,11 @@ function setFromObject(object) {
 
 function coerceOptionValue(v) {
   switch (v) {
-    case 'false':
+    case "false":
     case false:
       return false;
-    case 'parse':
-      return 'parse';
+    case "parse":
+      return "parse";
     default:
       return true;
   }
@@ -116,7 +115,7 @@ function setOption(name, value) {
   if (name in options) {
     options[name] = value;
   } else {
-    throw Error('Unknown option: ' + name);
+    throw Error("Unknown option: " + name);
   }
 }
 
@@ -130,13 +129,14 @@ function optionCallback(name, value) {
  * @param {Commander} flags The commander object.
  */
 function addOptions(flags) {
-  Object.keys(options).forEach(function(name) {
+  Object.keys(options).forEach(function (name) {
     var dashedName = toDashCase(name);
-    if ((name in parseOptions) && (name in transformOptions))
-      flags.option('--' + dashedName + ' [true|false|parse]',
-                   descriptions[name]);
-    else
-      flags.option('--' + dashedName, descriptions[name]);
+    if (name in parseOptions && name in transformOptions)
+      flags.option(
+        "--" + dashedName + " [true|false|parse]",
+        descriptions[name]
+      );
+    else flags.option("--" + dashedName, descriptions[name]);
     flags.on(dashedName, optionCallback.bind(null, dashedName));
   });
 }
@@ -147,19 +147,19 @@ function addOptions(flags) {
  */
 function filterOption(dashedName) {
   var name = toCamelCase(dashedName);
-  return name === 'experimental' || !(name in options);
+  return name === "experimental" || !(name in options);
 }
 
 // Make sure non option fields are non enumerable.
 Object.defineProperties(options, {
-  parse: {value: parseOptions},
-  transform: {value: transformOptions},
-  reset: {value: reset},
-  fromString: {value: fromString},
-  fromArgv: {value: fromArgv},
-  setFromObject: {value: setFromObject},
-  addOptions: {value: addOptions},
-  filterOption: {value: filterOption}
+  parse: { value: parseOptions },
+  transform: { value: transformOptions },
+  reset: { value: reset },
+  fromString: { value: fromString },
+  fromArgv: { value: fromArgv },
+  setFromObject: { value: setFromObject },
+  addOptions: { value: addOptions },
+  filterOption: { value: filterOption },
 });
 
 /**
@@ -174,15 +174,14 @@ Object.defineProperties(options, {
 function parseCommand(s) {
   var re = /--([^=]+)(?:=(.+))?/;
   var m = re.exec(s);
-  if (m)
-    setOption(m[1], m[2]);
+  if (m) setOption(m[1], m[2]);
 }
 
 /**
  * Converts a string from aaa-bbb-ccc ot aaaBbbCcc
  */
 function toCamelCase(s) {
-  return s.replace(/-\w/g, function(ch) {
+  return s.replace(/-\w/g, function (ch) {
     return ch[1].toUpperCase();
   });
 }
@@ -191,8 +190,8 @@ function toCamelCase(s) {
  * Converts a string from aaa-bbb-ccc ot aaaBbbCcc
  */
 function toDashCase(s) {
-  return s.replace(/[A-W]/g, function(ch) {
-    return '-' + ch.toLowerCase();
+  return s.replace(/[A-W]/g, function (ch) {
+    return "-" + ch.toLowerCase();
   });
 }
 
@@ -206,18 +205,17 @@ var ON_BY_DEFAULT = 1;
  * Setting a feature option sets the parse and transform option.
  */
 function addFeatureOption(name, kind) {
-  if (kind === EXPERIMENTAL)
-    experimentalOptions[name] = true;
+  if (kind === EXPERIMENTAL) experimentalOptions[name] = true;
 
   Object.defineProperty(options, name, {
-    get: function() {
+    get: function () {
       if (parseOptions[name] === transformOptions[name]) {
         return parseOptions[name];
       }
-      return 'parse';
+      return "parse";
     },
-    set: function(v) {
-      if (v === 'parse') {
+    set: function (v) {
+      if (v === "parse") {
         parseOptions[name] = true;
         transformOptions[name] = false;
       } else {
@@ -225,7 +223,7 @@ function addFeatureOption(name, kind) {
       }
     },
     enumerable: true,
-    configurable: true
+    configurable: true,
   });
 
   var defaultValue = kind === ON_BY_DEFAULT;
@@ -243,35 +241,35 @@ function addBoolOption(name) {
 }
 
 // ON_BY_DEFAULT
-addFeatureOption('arrayComprehension', ON_BY_DEFAULT); // 11.4.1.2
-addFeatureOption('arrowFunctions', ON_BY_DEFAULT);     // 13.2
-addFeatureOption('classes', ON_BY_DEFAULT);            // 13.5
-addFeatureOption('defaultParameters', ON_BY_DEFAULT);  // Cant find in the spec
-addFeatureOption('destructuring', ON_BY_DEFAULT);      // 11.13.1
-addFeatureOption('forOf', ON_BY_DEFAULT);              // 12.6.4
-addFeatureOption('propertyMethods', ON_BY_DEFAULT);    // 13.3
-addFeatureOption('propertyNameShorthand', ON_BY_DEFAULT);
-addFeatureOption('templateLiterals', ON_BY_DEFAULT);   // 7.6.8
-addFeatureOption('restParameters', ON_BY_DEFAULT);     // 13.1
-addFeatureOption('spread', ON_BY_DEFAULT);             // 11.1.4, 11.2.5
-addFeatureOption('generatorComprehension', ON_BY_DEFAULT);
-addFeatureOption('generators', ON_BY_DEFAULT); // 13.4, incomplete
-addFeatureOption('modules', ON_BY_DEFAULT);    // 14
+addFeatureOption("arrayComprehension", ON_BY_DEFAULT); // 11.4.1.2
+addFeatureOption("arrowFunctions", ON_BY_DEFAULT); // 13.2
+addFeatureOption("classes", ON_BY_DEFAULT); // 13.5
+addFeatureOption("defaultParameters", ON_BY_DEFAULT); // Cant find in the spec
+addFeatureOption("destructuring", ON_BY_DEFAULT); // 11.13.1
+addFeatureOption("forOf", ON_BY_DEFAULT); // 12.6.4
+addFeatureOption("propertyMethods", ON_BY_DEFAULT); // 13.3
+addFeatureOption("propertyNameShorthand", ON_BY_DEFAULT);
+addFeatureOption("templateLiterals", ON_BY_DEFAULT); // 7.6.8
+addFeatureOption("restParameters", ON_BY_DEFAULT); // 13.1
+addFeatureOption("spread", ON_BY_DEFAULT); // 11.1.4, 11.2.5
+addFeatureOption("generatorComprehension", ON_BY_DEFAULT);
+addFeatureOption("generators", ON_BY_DEFAULT); // 13.4, incomplete
+addFeatureOption("modules", ON_BY_DEFAULT); // 14
 
 // EXPERIMENTAL
-addFeatureOption('blockBinding', EXPERIMENTAL);       // 12.1
-addFeatureOption('privateNameSyntax', EXPERIMENTAL);
-addFeatureOption('privateNames', EXPERIMENTAL);
-addFeatureOption('cascadeExpression', EXPERIMENTAL);
-addFeatureOption('trapMemberLookup', EXPERIMENTAL);
-addFeatureOption('deferredFunctions', EXPERIMENTAL);
-addFeatureOption('propertyOptionalComma', EXPERIMENTAL);
-addFeatureOption('types', EXPERIMENTAL);
+addFeatureOption("blockBinding", EXPERIMENTAL); // 12.1
+addFeatureOption("privateNameSyntax", EXPERIMENTAL);
+addFeatureOption("privateNames", EXPERIMENTAL);
+addFeatureOption("cascadeExpression", EXPERIMENTAL);
+addFeatureOption("trapMemberLookup", EXPERIMENTAL);
+addFeatureOption("deferredFunctions", EXPERIMENTAL);
+addFeatureOption("propertyOptionalComma", EXPERIMENTAL);
+addFeatureOption("types", EXPERIMENTAL);
 
-addBoolOption('debug');
-addBoolOption('sourceMaps');
-addBoolOption('freeVariableChecker');
-addBoolOption('validate');
-addBoolOption('strictSemicolons');
-addBoolOption('unstarredGenerators');
-addBoolOption('ignoreNolint');
+addBoolOption("debug");
+addBoolOption("sourceMaps");
+addBoolOption("freeVariableChecker");
+addBoolOption("validate");
+addBoolOption("strictSemicolons");
+addBoolOption("unstarredGenerators");
+addBoolOption("ignoreNolint");

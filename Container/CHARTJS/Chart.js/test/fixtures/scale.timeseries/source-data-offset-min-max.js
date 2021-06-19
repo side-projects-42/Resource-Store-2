@@ -2,32 +2,32 @@ module.exports = {
   threshold: 0.01,
   tolerance: 0.002,
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      labels: ['2017', '2019', '2020', '2025', '2042'],
-      datasets: [{data: [0, 1, 2, 3, 4], fill: false}]
+      labels: ["2017", "2019", "2020", "2025", "2042"],
+      datasets: [{ data: [0, 1, 2, 3, 4], fill: false }],
     },
     options: {
       scales: {
         x: {
-          type: 'timeseries',
-          min: '2012',
-          max: '2051',
+          type: "timeseries",
+          min: "2012",
+          max: "2051",
           offset: true,
           time: {
-            parser: 'YYYY',
+            parser: "YYYY",
           },
           ticks: {
-            source: 'data'
-          }
+            source: "data",
+          },
         },
         y: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

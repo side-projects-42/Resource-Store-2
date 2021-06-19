@@ -14,20 +14,15 @@
 
 import {
   FunctionDeclaration,
-  FunctionExpression
-} from '../syntax/trees/ParseTrees.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {
-  ARGUMENTS,
-  THIS
-} from '../syntax/PredefinedName.js';
-import {
-  createIdentifierExpression
-} from './ParseTreeFactory.js';
+  FunctionExpression,
+} from "../syntax/trees/ParseTrees.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { ARGUMENTS, THIS } from "../syntax/PredefinedName.js";
+import { createIdentifierExpression } from "./ParseTreeFactory.js";
 import {
   variablesInBlock,
-  variablesInFunction
-} from '../semantics/VariableBinder.js';
+  variablesInFunction,
+} from "../semantics/VariableBinder.js";
 
 /**
  * Replaces one identifier with another identifier (alpha
@@ -77,8 +72,7 @@ export class AlphaRenamer extends ParseTreeTransformer {
   }
 
   transformThisExpression(tree) {
-    if (this.oldName_ !== THIS)
-      return tree;
+    if (this.oldName_ !== THIS) return tree;
     return createIdentifierExpression(this.newName_);
   }
 
@@ -89,12 +83,16 @@ export class AlphaRenamer extends ParseTreeTransformer {
   transformFunctionDeclaration(tree) {
     if (this.oldName_ === tree.name) {
       // it is the function that is being renamed
-      tree = new FunctionDeclaration(tree.location, this.newName_,
-          tree.isGenerator, tree.formalParameterList, tree.functionBody);
+      tree = new FunctionDeclaration(
+        tree.location,
+        this.newName_,
+        tree.isGenerator,
+        tree.formalParameterList,
+        tree.functionBody
+      );
     }
 
-    if (this.getDoNotRecurse(tree))
-      return tree;
+    if (this.getDoNotRecurse(tree)) return tree;
     return super.transformFunctionDeclaration(tree);
   }
 
@@ -105,12 +103,16 @@ export class AlphaRenamer extends ParseTreeTransformer {
   transformFunctionExpression(tree) {
     if (this.oldName_ === tree.name) {
       // it is the function that is being renamed
-      tree = new FunctionExpression(tree.location, this.newName_,
-          tree.isGenerator, tree.formalParameterList, tree.functionBody);
+      tree = new FunctionExpression(
+        tree.location,
+        this.newName_,
+        tree.isGenerator,
+        tree.formalParameterList,
+        tree.functionBody
+      );
     }
 
-    if (this.getDoNotRecurse(tree))
-      return tree;
+    if (this.getDoNotRecurse(tree)) return tree;
     return super.transformFunctionExpression(tree);
   }
 
@@ -119,9 +121,11 @@ export class AlphaRenamer extends ParseTreeTransformer {
   //  - 'this' is implicitly bound in function bodies
   //  - this.oldName_ is rebound in the new nested scope
   getDoNotRecurse(tree) {
-    return this.oldName_ === ARGUMENTS ||
-        this.oldName_ === THIS ||
-        this.oldName_ in variablesInFunction(tree);
+    return (
+      this.oldName_ === ARGUMENTS ||
+      this.oldName_ === THIS ||
+      this.oldName_ in variablesInFunction(tree)
+    );
   }
 
   /**
@@ -129,8 +133,10 @@ export class AlphaRenamer extends ParseTreeTransformer {
    * @return {ParseTree}
    */
   transformCatch(tree) {
-    if (!tree.binding.isPattern() &&
-        this.oldName_ === tree.binding.identifierToken.value) {
+    if (
+      !tree.binding.isPattern() &&
+      this.oldName_ === tree.binding.identifierToken.value
+    ) {
       // this.oldName_ is rebound in the catch block, so don't recurse
       return tree;
     }
@@ -166,6 +172,6 @@ export class AlphaRenamer extends ParseTreeTransformer {
  * @param {string} newName the identifier that will appear instead of |oldName|.
  * @return {ParseTree} a copy of {@code tree} with replacements.
  */
-AlphaRenamer.rename = function(tree, oldName, newName) {
+AlphaRenamer.rename = function (tree, oldName, newName) {
   return new AlphaRenamer(oldName, newName).transformAny(tree);
 };

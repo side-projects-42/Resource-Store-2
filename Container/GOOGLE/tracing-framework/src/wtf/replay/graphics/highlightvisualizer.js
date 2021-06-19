@@ -11,13 +11,11 @@
  * @author scotttodd@google.com (Scott Todd)
  */
 
-goog.provide('wtf.replay.graphics.HighlightVisualizer');
+goog.provide("wtf.replay.graphics.HighlightVisualizer");
 
-goog.require('goog.webgl');
-goog.require('wtf.replay.graphics.OverdrawSurface');
-goog.require('wtf.replay.graphics.OverdrawVisualizer');
-
-
+goog.require("goog.webgl");
+goog.require("wtf.replay.graphics.OverdrawSurface");
+goog.require("wtf.replay.graphics.OverdrawVisualizer");
 
 /**
  * Visualizer for draw call highlighting using overdraw.
@@ -26,7 +24,7 @@ goog.require('wtf.replay.graphics.OverdrawVisualizer');
  * @constructor
  * @extends {wtf.replay.graphics.OverdrawVisualizer}
  */
-wtf.replay.graphics.HighlightVisualizer = function(playback) {
+wtf.replay.graphics.HighlightVisualizer = function (playback) {
   goog.base(this, playback);
 
   /**
@@ -36,9 +34,10 @@ wtf.replay.graphics.HighlightVisualizer = function(playback) {
    */
   this.firstDraw_ = true;
 };
-goog.inherits(wtf.replay.graphics.HighlightVisualizer,
-    wtf.replay.graphics.OverdrawVisualizer);
-
+goog.inherits(
+  wtf.replay.graphics.HighlightVisualizer,
+  wtf.replay.graphics.OverdrawVisualizer
+);
 
 /**
  * Returns whether the visualization for a target substep is stored.
@@ -47,16 +46,17 @@ goog.inherits(wtf.replay.graphics.HighlightVisualizer,
  * @protected
  */
 wtf.replay.graphics.HighlightVisualizer.prototype.visualizationStored =
-    function(targetSubStepIndex) {
-  // Highlight requires both the target and current substeps to match.
-  var currentStepIndex = this.playback.getCurrentStepIndex();
-  var currentSubStepIndex = this.playback.getSubStepEventIndex();
+  function (targetSubStepIndex) {
+    // Highlight requires both the target and current substeps to match.
+    var currentStepIndex = this.playback.getCurrentStepIndex();
+    var currentSubStepIndex = this.playback.getSubStepEventIndex();
 
-  return currentStepIndex == this.latestStepIndex &&
+    return (
+      currentStepIndex == this.latestStepIndex &&
       targetSubStepIndex == this.latestTargetSubStepIndex &&
-      currentSubStepIndex == this.latestSubStepIndex;
-};
-
+      currentSubStepIndex == this.latestSubStepIndex
+    );
+  };
 
 /**
  * Creates an OverdrawSurface and adds it to this.visualizerSurfaces.
@@ -67,14 +67,21 @@ wtf.replay.graphics.HighlightVisualizer.prototype.visualizationStored =
  * @protected
  * @override
  */
-wtf.replay.graphics.HighlightVisualizer.prototype.createSurface = function(
-    contextHandle, gl, width, height) {
-  var visualizerSurface = new wtf.replay.graphics.OverdrawSurface(gl,
-      width, height, {stencil: true});
+wtf.replay.graphics.HighlightVisualizer.prototype.createSurface = function (
+  contextHandle,
+  gl,
+  width,
+  height
+) {
+  var visualizerSurface = new wtf.replay.graphics.OverdrawSurface(
+    gl,
+    width,
+    height,
+    { stencil: true }
+  );
   this.visualizerSurfaces[contextHandle] = visualizerSurface;
   this.registerDisposable(visualizerSurface);
 };
-
 
 /**
  * Calls drawFunction onto the active visualizerSurface using custom GL state.
@@ -83,14 +90,16 @@ wtf.replay.graphics.HighlightVisualizer.prototype.createSurface = function(
  * @protected
  * @override
  */
-wtf.replay.graphics.HighlightVisualizer.prototype.drawToSurface = function(
-    drawFunction) {
+wtf.replay.graphics.HighlightVisualizer.prototype.drawToSurface = function (
+  drawFunction
+) {
   var contextHandle = this.latestContextHandle;
   var gl = this.contexts[contextHandle];
 
   // Do not edit calls where the target is not the visible framebuffer.
   var originalFramebuffer = /** @type {WebGLFramebuffer} */ (
-      gl.getParameter(goog.webgl.FRAMEBUFFER_BINDING));
+    gl.getParameter(goog.webgl.FRAMEBUFFER_BINDING)
+  );
   if (originalFramebuffer != null) {
     return;
   }
@@ -123,15 +132,15 @@ wtf.replay.graphics.HighlightVisualizer.prototype.drawToSurface = function(
   drawFunction();
 };
 
-
 /**
  * Runs visualization, manipulating playback and surfaces as needed.
  * @param {number} targetSubStepIndex Target subStep event index.
  * @protected
  * @override
  */
-wtf.replay.graphics.HighlightVisualizer.prototype.trigger = function(
-    targetSubStepIndex) {
+wtf.replay.graphics.HighlightVisualizer.prototype.trigger = function (
+  targetSubStepIndex
+) {
   var playback = this.playback;
   var currentSubStepIndex = playback.getSubStepEventIndex();
 
@@ -189,8 +198,8 @@ wtf.replay.graphics.HighlightVisualizer.prototype.trigger = function(
       var affectedPercent = stats.numAffected / stats.numPixels;
       affectedPercent = (affectedPercent * 100.0).toFixed(0);
 
-      var message = 'Overdraw: ' + overdrawAmount + ', ' + affectedPercent +
-          '% of screen';
+      var message =
+        "Overdraw: " + overdrawAmount + ", " + affectedPercent + "% of screen";
       this.playback.changeContextMessage(contextHandle, message);
       this.latestMessages[contextHandle] = message;
     }
@@ -203,14 +212,14 @@ wtf.replay.graphics.HighlightVisualizer.prototype.trigger = function(
   this.completed = true;
 };
 
-
 /**
  * Draws the recorded visualization for the provided context handle.
  * @param {number|string} contextHandle The context handle to draw to.
  * @protected
  * @override
  */
-wtf.replay.graphics.HighlightVisualizer.prototype.drawVisualization = function(
-    contextHandle) {
+wtf.replay.graphics.HighlightVisualizer.prototype.drawVisualization = function (
+  contextHandle
+) {
   this.visualizerSurfaces[contextHandle].drawOverdraw(true);
 };

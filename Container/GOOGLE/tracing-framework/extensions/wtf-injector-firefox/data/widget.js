@@ -11,15 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-var icon = document.querySelector('.icon-wtf');
+var icon = document.querySelector(".icon-wtf");
 
 var currentState = null;
-self.port.on('update', function(state) {
+self.port.on("update", function (state) {
   currentState = state;
-  if (currentState && currentState['enabled']) {
-    icon.src = 'assets/icons/wtf-on-32.png';
+  if (currentState && currentState["enabled"]) {
+    icon.src = "assets/icons/wtf-on-32.png";
   } else {
-    icon.src = 'assets/icons/wtf-32.png';
+    icon.src = "assets/icons/wtf-32.png";
   }
 });

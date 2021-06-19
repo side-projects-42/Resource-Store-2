@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ipc.MessageChannel');
+goog.provide("wtf.ipc.MessageChannel");
 
-goog.require('goog.events.EventType');
-goog.require('wtf.ipc.Channel');
-goog.require('wtf.trace.util');
-
-
+goog.require("goog.events.EventType");
+goog.require("wtf.ipc.Channel");
+goog.require("wtf.trace.util");
 
 /**
  * MessagePort-based IPC channel.
@@ -36,7 +34,7 @@ goog.require('wtf.trace.util');
  * @constructor
  * @extends {wtf.ipc.Channel}
  */
-wtf.ipc.MessageChannel = function(recvPort, sendPort) {
+wtf.ipc.MessageChannel = function (recvPort, sendPort) {
   goog.base(this);
 
   var self = this;
@@ -72,27 +70,31 @@ wtf.ipc.MessageChannel = function(recvPort, sendPort) {
    * @type {function ((Event|null)): (boolean|undefined)}
    * @private
    */
-  this.boundHandleMessage_ = wtf.trace.util.ignoreListener(function(e) {
+  this.boundHandleMessage_ = wtf.trace.util.ignoreListener(function (e) {
     self.handleMessage_(e);
   });
 
   this.recvPort_.addEventListener(
-      goog.events.EventType.MESSAGE, this.boundHandleMessage_, true);
+    goog.events.EventType.MESSAGE,
+    this.boundHandleMessage_,
+    true
+  );
 };
 goog.inherits(wtf.ipc.MessageChannel, wtf.ipc.Channel);
-
 
 /**
  * @override
  */
-wtf.ipc.MessageChannel.prototype.disposeInternal = function() {
+wtf.ipc.MessageChannel.prototype.disposeInternal = function () {
   this.recvPort_.removeEventListener(
-      goog.events.EventType.MESSAGE, this.boundHandleMessage_, true);
+    goog.events.EventType.MESSAGE,
+    this.boundHandleMessage_,
+    true
+  );
   this.recvPort_ = null;
   this.sendPort_ = null;
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * @typedef {{
@@ -101,14 +103,12 @@ wtf.ipc.MessageChannel.prototype.disposeInternal = function() {
  */
 wtf.ipc.MessageChannel.Packet;
 
-
 /**
  * Unique token found in all packets.
  * @const
  * @type {string}
  */
-wtf.ipc.MessageChannel.PACKET_TOKEN = 'wtf_ipc_connect_token';
-
+wtf.ipc.MessageChannel.PACKET_TOKEN = "wtf_ipc_connect_token";
 
 /**
  * Token value indicating who sent a message.
@@ -116,8 +116,7 @@ wtf.ipc.MessageChannel.PACKET_TOKEN = 'wtf_ipc_connect_token';
  * @type {string}
  * @private
  */
-wtf.ipc.MessageChannel.SENDER_TOKEN_ = 'wtf_ipc_sender_token';
-
+wtf.ipc.MessageChannel.SENDER_TOKEN_ = "wtf_ipc_sender_token";
 
 /**
  * A unique-enough ID used to differentiate this channel from others.
@@ -125,34 +124,32 @@ wtf.ipc.MessageChannel.SENDER_TOKEN_ = 'wtf_ipc_sender_token';
  * @type {string}
  * @private
  */
-wtf.ipc.MessageChannel.LOCAL_ID_ =
-    String(Number(wtf.trace.util.dateNow() + 10000));
-
+wtf.ipc.MessageChannel.LOCAL_ID_ = String(
+  Number(wtf.trace.util.dateNow() + 10000)
+);
 
 /**
  * @override
  */
-wtf.ipc.MessageChannel.prototype.isConnected = function() {
+wtf.ipc.MessageChannel.prototype.isConnected = function () {
   return !!this.sendPort_ && !this.sendPort_.closed;
 };
-
 
 /**
  * Focuses the target.
  */
-wtf.ipc.MessageChannel.prototype.focus = function() {
+wtf.ipc.MessageChannel.prototype.focus = function () {
   if (this.sendPort_) {
     this.sendPort_.focus();
   }
 };
-
 
 /**
  * Handles incoming messages.
  * @param {!Event} e Event.
  * @private
  */
-wtf.ipc.MessageChannel.prototype.handleMessage_ = function(e) {
+wtf.ipc.MessageChannel.prototype.handleMessage_ = function (e) {
   var packet = /** @type {wtf.ipc.MessageChannel.Packet} */ (e.data);
   if (!packet || !packet[wtf.ipc.MessageChannel.PACKET_TOKEN]) {
     return;
@@ -164,20 +161,23 @@ wtf.ipc.MessageChannel.prototype.handleMessage_ = function(e) {
   wtf.trace.util.ignoreEvent(e);
 
   // Ignore any messages from ourselves.
-  if (packet[wtf.ipc.MessageChannel.SENDER_TOKEN_] ==
-      wtf.ipc.MessageChannel.LOCAL_ID_) {
+  if (
+    packet[wtf.ipc.MessageChannel.SENDER_TOKEN_] ==
+    wtf.ipc.MessageChannel.LOCAL_ID_
+  ) {
     return;
   }
 
-  this.emitEvent(wtf.ipc.Channel.EventType.MESSAGE, packet['data']);
+  this.emitEvent(wtf.ipc.Channel.EventType.MESSAGE, packet["data"]);
 };
-
 
 /**
  * @override
  */
-wtf.ipc.MessageChannel.prototype.postMessage = function(
-    data, opt_transferrables) {
+wtf.ipc.MessageChannel.prototype.postMessage = function (
+  data,
+  opt_transferrables
+) {
   // If the port is closed fail.
   if (!this.sendPort_) {
     return;
@@ -185,32 +185,32 @@ wtf.ipc.MessageChannel.prototype.postMessage = function(
 
   // Create packet with callback ID so that we can track things.
   var packet = /** @type {!wtf.ipc.MessageChannel.Packet} */ ({
-    'data': data
+    data: data,
   });
   packet[wtf.ipc.MessageChannel.PACKET_TOKEN] = true;
   packet[wtf.ipc.MessageChannel.SENDER_TOKEN_] =
-      wtf.ipc.MessageChannel.LOCAL_ID_;
+    wtf.ipc.MessageChannel.LOCAL_ID_;
 
   // Always call the uninstrumented version.
   var postMessage =
-      this.sendPort_.postMessage['raw'] || this.sendPort_.postMessage;
+    this.sendPort_.postMessage["raw"] || this.sendPort_.postMessage;
 
   // Actual post.
   if (this.hasTransferablePostMessage_ === undefined && opt_transferrables) {
     // Attempt to send with transferrables, otherwise fallback and disable it
     // for future attempts.
     try {
-      postMessage.call(this.sendPort_, packet, '*', opt_transferrables);
+      postMessage.call(this.sendPort_, packet, "*", opt_transferrables);
       // Data has been sent!
       this.hasTransferablePostMessage_ = true;
     } catch (e) {
       // Send failed - try without transferrables.
       this.hasTransferablePostMessage_ = false;
-      postMessage.call(this.sendPort_, packet, '*');
+      postMessage.call(this.sendPort_, packet, "*");
     }
   } else if (this.hasTransferablePostMessage_) {
-    postMessage.call(this.sendPort_, packet, '*', opt_transferrables);
+    postMessage.call(this.sendPort_, packet, "*", opt_transferrables);
   } else {
-    postMessage.call(this.sendPort_, packet, '*');
+    postMessage.call(this.sendPort_, packet, "*");
   }
 };

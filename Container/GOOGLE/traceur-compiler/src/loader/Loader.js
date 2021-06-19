@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {InternalLoader} from './InternalLoader.js';
+import { InternalLoader } from "./InternalLoader.js";
 
 export function throwAbstractMethod() {
-  throw new Error('Unimplemented Loader function, see extended class');
+  throw new Error("Unimplemented Loader function, see extended class");
 }
 
 export class Loader {
@@ -24,8 +24,7 @@ export class Loader {
    * @param {!Object=} options
    */
   constructor(loaderCompiler) {
-    this.internalLoader_ =
-        new InternalLoader(this, loaderCompiler);
+    this.internalLoader_ = new InternalLoader(this, loaderCompiler);
     this.loaderCompiler_ = loaderCompiler;
   }
   /**
@@ -34,9 +33,10 @@ export class Loader {
    * @param {string} name, ModuleSpecifier-like name, not normalized.
    * @return {Promise.<Module>}
    */
-  import(name, {referrerName, address, metadata} = {}) {
-    return this.internalLoader_.load(name, referrerName, address, metadata).
-        then((codeUnit) => this.get(codeUnit.normalizedName));
+  import(name, { referrerName, address, metadata } = {}) {
+    return this.internalLoader_
+      .load(name, referrerName, address, metadata)
+      .then((codeUnit) => this.get(codeUnit.normalizedName));
   }
 
   /**
@@ -49,11 +49,11 @@ export class Loader {
    * @param {Object} properties referrerName and address passed to normalize.
    * @return {Promise.<Module>}
    */
-  module(source, {referrerName, address, metadata} = {}) {
+  module(source, { referrerName, address, metadata } = {}) {
     return this.internalLoader_.module(source, referrerName, address, metadata);
   }
 
-    /**
+  /**
    * Asynchronously install a new module under `name` from the `source` code.
    * All dependencies are installed in the registry.
    * @param {string} normalizedName
@@ -61,9 +61,13 @@ export class Loader {
    * @param {Object|undefined} May contain .address and .metadata. Pass to hooks
    * @return {Promise} fulfilled with undefined.
    */
-  define(normalizedName, source, {address, metadata} = {}) {
-    return this.internalLoader_.define(normalizedName, source, address,
-                                       metadata);
+  define(normalizedName, source, { address, metadata } = {}) {
+    return this.internalLoader_.define(
+      normalizedName,
+      source,
+      address,
+      metadata
+    );
   }
 
   get(normalizedName) {
@@ -95,4 +99,4 @@ export class Loader {
   }
 }
 
-export {LoaderCompiler};
+export { LoaderCompiler };

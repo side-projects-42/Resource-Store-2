@@ -38,10 +38,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.replay.timeTravel');
+goog.provide("wtf.replay.timeTravel");
 
-goog.require('wtf.replay.timeTravel.ReplaySession');
-
+goog.require("wtf.replay.timeTravel.ReplaySession");
 
 /**
  * Current replay session, if any.
@@ -49,7 +48,6 @@ goog.require('wtf.replay.timeTravel.ReplaySession');
  * @private
  */
 wtf.replay.timeTravel.session_ = null;
-
 
 /**
  * Sets up a time travel replay session in the current window.
@@ -61,7 +59,7 @@ wtf.replay.timeTravel.session_ = null;
  * @param {string} databasePath Path or URL to the WTF trace file.
  * @param {Object=} opt_options Replay options.
  */
-wtf.replay.timeTravel.setup = function(databasePath, opt_options) {
+wtf.replay.timeTravel.setup = function (databasePath, opt_options) {
   var session = wtf.replay.timeTravel.session_;
   if (session) {
     // Reuse the existing session if the options match.
@@ -77,8 +75,7 @@ wtf.replay.timeTravel.setup = function(databasePath, opt_options) {
   }
 
   // Create the session.
-  session = new wtf.replay.timeTravel.ReplaySession(
-      databasePath, opt_options);
+  session = new wtf.replay.timeTravel.ReplaySession(databasePath, opt_options);
   wtf.replay.timeTravel.session_ = session;
 
   // Prepare the session for use.
@@ -86,7 +83,4 @@ wtf.replay.timeTravel.setup = function(databasePath, opt_options) {
   session.prepareFirstUse();
 };
 
-
-goog.exportSymbol(
-    'wtf.replay.timeTravel.setup',
-    wtf.replay.timeTravel.setup);
+goog.exportSymbol("wtf.replay.timeTravel.setup", wtf.replay.timeTravel.setup);

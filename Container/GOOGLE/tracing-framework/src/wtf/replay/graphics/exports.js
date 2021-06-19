@@ -15,13 +15,12 @@
  * @author chizeng@google.com (Chi Zeng)
  */
 
-goog.provide('wtf.replay.graphics.exports');
+goog.provide("wtf.replay.graphics.exports");
 
 /** @suppress {extraRequire} */
-goog.require('wtf.replay.graphics');
+goog.require("wtf.replay.graphics");
 /** @suppress {extraRequire} */
-goog.require('wtf.util');
-
+goog.require("wtf.util");
 
 /**
  * @define {boolean} Whether to enable exporting of the wtf.replay.graphics

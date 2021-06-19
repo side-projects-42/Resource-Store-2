@@ -12,28 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-suite('LineNumbers.js', function() {
+suite("LineNumbers.js", function () {
+  test("lineNumbers", function () {
+    var src = "function foo() { return 5; }\nvar \nf\n=\n5\n;\n";
 
-  test('lineNumbers', function() {
-
-    var src = 'function foo() { return 5; }\nvar \nf\n=\n5\n;\n';
-
-    var filename = 'checkLineNumbers.js';
+    var filename = "checkLineNumbers.js";
     var sourceFile = new traceur.syntax.SourceFile(filename, src);
     var lineNumberTable = sourceFile.lineNumberTable;
 
     var lastLine = lineNumberTable.getLine(sourceFile.contents.length - 1);
     assert.equal(lastLine, 5);
 
-    var resource = '';
+    var resource = "";
     for (var line = 0; line <= lastLine; line++) {
       var offset = lineNumberTable.offsetOfLine(line);
       var column = lineNumberTable.getColumn(offset);
       var lineOut = lineNumberTable.getLine(offset);
       assert.equal(lineOut, line);
-      assert.equal(column, 0);  // check non-zero value below
+      assert.equal(column, 0); // check non-zero value below
       var nextOffset = lineNumberTable.offsetOfLine(line + 1);
       var maxOffset = sourceFile.contents.length;
       nextOffset = nextOffset > maxOffset ? maxOffset : nextOffset;
@@ -50,5 +48,4 @@ suite('LineNumbers.js', function() {
     var inBounds = lineNumberTable.getLine(6);
     assert.equal(inBounds, 0);
   });
-
 });

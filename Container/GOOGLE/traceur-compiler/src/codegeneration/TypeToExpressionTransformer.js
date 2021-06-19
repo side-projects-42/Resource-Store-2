@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 import {
   ArgumentList,
   IdentifierExpression,
-  MemberExpression
-} from '../syntax/trees/ParseTrees.js';
-import {
-  parseExpression
-} from './PlaceholderParser.js';
+  MemberExpression,
+} from "../syntax/trees/ParseTrees.js";
+import { parseExpression } from "./PlaceholderParser.js";
 
 export class TypeToExpressionTransformer extends ParseTreeTransformer {
-
   transformTypeName(tree) {
     if (tree.moduleName) {
       let operand = this.transformAny(tree.moduleName);
@@ -33,18 +30,17 @@ export class TypeToExpressionTransformer extends ParseTreeTransformer {
   }
 
   transformPredefinedType(tree) {
-    return parseExpression `$traceurRuntime.type.${tree.typeToken})`;
+    return parseExpression`$traceurRuntime.type.${tree.typeToken})`;
   }
 
   transformTypeReference(tree) {
     let typeName = this.transformAny(tree.typeName);
     let args = this.transformAny(tree.args);
     let argumentList = new ArgumentList(tree.location, [typeName, ...args]);
-    return parseExpression `$traceurRuntime.genericType(${argumentList})`;
+    return parseExpression`$traceurRuntime.genericType(${argumentList})`;
   }
 
   transformTypeArguments(tree) {
     return this.transformList(tree.args);
   }
-
 }

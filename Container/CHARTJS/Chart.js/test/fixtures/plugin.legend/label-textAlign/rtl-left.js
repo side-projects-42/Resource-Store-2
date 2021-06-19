@@ -1,31 +1,31 @@
 module.exports = {
   config: {
-    type: 'pie',
+    type: "pie",
     data: {
-      labels: ['aaaa', 'bb', 'c'],
+      labels: ["aaaa", "bb", "c"],
       datasets: [
         {
-          data: [1, 2, 3]
-        }
-      ]
+          data: [1, 2, 3],
+        },
+      ],
     },
     options: {
       plugins: {
         legend: {
-          position: 'right',
+          position: "right",
           rtl: true,
           labels: {
-            textAlign: 'left'
-          }
-        }
-      }
-    }
+            textAlign: "left",
+          },
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       width: 256,
-      height: 256
-    }
-  }
+      height: 256,
+    },
+  },
 };

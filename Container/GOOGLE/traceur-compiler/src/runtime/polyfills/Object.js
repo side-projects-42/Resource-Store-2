@@ -12,32 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  maybeAddFunctions,
-  registerPolyfill
-} from './utils.js';
-import assign from './assign.js';
-export {assign};
+import { maybeAddFunctions, registerPolyfill } from "./utils.js";
+import assign from "./assign.js";
+export { assign };
 
-var {
-  defineProperty,
-  getOwnPropertyDescriptor,
-  getOwnPropertyNames,
-} = Object;
+var { defineProperty, getOwnPropertyDescriptor, getOwnPropertyNames } = Object;
 
 // Object.is
 
 // Unlike === this returns true for (NaN, NaN) and false for (0, -0).
 export function is(left, right) {
-  if (left === right)
-    return left !== 0 || 1 / left === 1 / right;
+  if (left === right) return left !== 0 || 1 / left === 1 / right;
   return left !== left && right !== right;
 }
 
 // Object.mixin (19.1.3.15)
 export function mixin(target, source) {
   var props = getOwnPropertyNames(source);
-  var p, descriptor, length = props.length;
+  var p,
+    descriptor,
+    length = props.length;
   for (p = 0; p < length; p++) {
     var name = props[p];
     descriptor = getOwnPropertyDescriptor(source, props[p]);
@@ -47,12 +41,8 @@ export function mixin(target, source) {
 }
 
 export function polyfillObject(global) {
-  var {Object} = global;
-  maybeAddFunctions(Object, [
-    'assign', assign,
-    'is', is,
-    'mixin', mixin,
-  ]);
+  var { Object } = global;
+  maybeAddFunctions(Object, ["assign", assign, "is", is, "mixin", mixin]);
 }
 
 registerPolyfill(polyfillObject);

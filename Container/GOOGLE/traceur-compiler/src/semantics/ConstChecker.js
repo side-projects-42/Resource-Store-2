@@ -12,14 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {IDENTIFIER_EXPRESSION} from '../syntax/trees/ParseTreeType.js';
-import {
-  CONST,
-  MINUS_MINUS,
-  PLUS_PLUS
-} from '../syntax/TokenType.js';
-import {ScopeVisitor} from './ScopeVisitor.js';
-import {ScopeChainBuilder} from './ScopeChainBuilder.js';
+import { IDENTIFIER_EXPRESSION } from "../syntax/trees/ParseTreeType.js";
+import { CONST, MINUS_MINUS, PLUS_PLUS } from "../syntax/TokenType.js";
+import { ScopeVisitor } from "./ScopeVisitor.js";
+import { ScopeChainBuilder } from "./ScopeChainBuilder.js";
 
 export class ConstChecker extends ScopeVisitor {
   /**
@@ -34,13 +30,14 @@ export class ConstChecker extends ScopeVisitor {
 
   pushScope(tree) {
     // Override to return the cached scope.
-    return this.scope = this.scopeBuilder_.getScopeForTree(tree);
+    return (this.scope = this.scopeBuilder_.getScopeForTree(tree));
   }
 
   visitUnaryExpression(tree) {
-    if (tree.operand.type === IDENTIFIER_EXPRESSION &&
-        (tree.operator.type === PLUS_PLUS ||
-         tree.operator.type === MINUS_MINUS)) {
+    if (
+      tree.operand.type === IDENTIFIER_EXPRESSION &&
+      (tree.operator.type === PLUS_PLUS || tree.operator.type === MINUS_MINUS)
+    ) {
       this.validateMutation_(tree.operand);
     }
     super.visitUnaryExpression(tree);
@@ -54,8 +51,10 @@ export class ConstChecker extends ScopeVisitor {
   }
 
   visitBinaryExpression(tree) {
-    if (tree.left.type === IDENTIFIER_EXPRESSION &&
-        tree.operator.isAssignmentOperator()) {
+    if (
+      tree.left.type === IDENTIFIER_EXPRESSION &&
+      tree.operator.isAssignmentOperator()
+    ) {
       this.validateMutation_(tree.left);
     }
     super.visitBinaryExpression(tree);
@@ -71,10 +70,12 @@ export class ConstChecker extends ScopeVisitor {
       return;
     }
 
-    let {type, tree} = binding;
+    let { type, tree } = binding;
     if (type === CONST) {
-      this.reportError_(identifierExpression.location,
-          `${tree.getStringValue()} is read-only`);
+      this.reportError_(
+        identifierExpression.location,
+        `${tree.getStringValue()} is read-only`
+      );
     }
   }
 

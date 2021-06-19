@@ -13,20 +13,19 @@
 // limitations under the License.
 
 // Used by unit tests only
-import './util/MutedErrorReporter.js';
+import "./util/MutedErrorReporter.js";
 
-export {WebPageTranscoder} from './WebPageTranscoder.js';
-export {HTMLImportTranscoder} from './HTMLImportTranscoder.js';
-import {addOptions, CommandOptions, Options} from './Options.js';
+export { WebPageTranscoder } from "./WebPageTranscoder.js";
+export { HTMLImportTranscoder } from "./HTMLImportTranscoder.js";
+import { addOptions, CommandOptions, Options } from "./Options.js";
 
-import {ErrorReporter} from './util/ErrorReporter.js';
-import {CollectingErrorReporter} from './util/CollectingErrorReporter.js';
+import { ErrorReporter } from "./util/ErrorReporter.js";
+import { CollectingErrorReporter } from "./util/CollectingErrorReporter.js";
 
 export let util = {
   addOptions,
   CommandOptions,
   CollectingErrorReporter,
   ErrorReporter,
-  Options
+  Options,
 };
-

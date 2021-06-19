@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="CSSEmbed" default="build.all.jars" basedir=".">
+ 
+    <target name="clean" depends="-load.properties">
+        <delete dir="${build.dir}" quiet="true"/>
+    </target>
+ 
+    <target name="-load.properties">
+        <property file="ant.properties"/>
+    </target>
+ 
+    <target name="-init" depends="-load.properties">
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <!-- get a timestamp -->
+    <tstamp>
+      <format property="RIGHT_NOW"
+              pattern="d-MMMM-yyyy hh:mm:ss"
+              locale="en,US"/>
+    </tstamp>
+    <tstamp>
+      <format property="SIMPLE_DATE"
+              pattern="MMMM d, yyyy"
+              locale="en,US"/>
+    </tstamp>
+
+    <target name="changelog.update" depends="-load.properties">
+        <exec executable="git" failonerror="true" outputproperty="git.tag">
+            <arg line="tag"/>
+        </exec>
+        <script language="javascript"><![CDATA[
+            //get the most recent tag to get the diff
+            var tags = CSSEmbed.getProperty("git.tag").replace("\r", "").split("\n"),
+                lastTag = tags[tags.length-1];
+            CSSEmbed.setProperty("git.log.range", lastTag + "..HEAD");
+        ]]></script>
+
+        <!-- git log -pretty=format:'* %s (%an)' v0.4.0..v0.5.0-->
+        <exec executable="git" failonerror="true" outputproperty="git.changelog">
+            <arg line="log --pretty=format:'* %s (%an)' ${git.log.range}"/>
+        </exec>
+
+        <concat destfile="CHANGELOG.tmp"  fixlastline="true">
+            <header trimleading="yes">${SIMPLE_DATE} - v${cssembed.version}
+
+            ${git.changelog}
+
+            </header>
+            <fileset dir="." includes="CHANGELOG" />
+        </concat>
+
+        <delete file="CHANGELOG"/>
+        <move file="CHANGELOG.tmp" tofile="CHANGELOG"/>
+
+    </target>
+
+    <target name="build.classes" depends="-init">
+        <mkdir dir="${build.dir}/classes"/>
+        <javac srcdir="${src.dir}"
+               destdir="${build.dir}/classes"
+               includes="**/*.java"
+               deprecation="off"
+               debug="on"
+               source="${class.version}"
+               target="${class.version}">
+            <classpath>
+                <pathelement location="${lib.dir}/${ant.jar}"/>
+                <pathelement location="${lib.dir}/${jargs.jar}"/>
+                <pathelement location="${lib.dir}/${datauri.jar}"/>
+            </classpath>
+        </javac>
+    </target>
+ 
+    <target name="build.tests" depends="-init">
+        <mkdir dir="${build.dir}/testclasses"/>
+        <javac srcdir="${tests.dir}"
+               destdir="${build.dir}/testclasses"
+               includes="**/*.java"
+               deprecation="off"
+               debug="on"
+               source="${class.version}"
+               target="${class.version}">
+            <classpath>
+                <pathelement location="${lib.dir}/${ant.jar}"/>
+                <pathelement location="${lib.dir}/${jargs.jar}"/>
+                <pathelement location="${lib.dir}/${junit.jar}"/>
+                <pathelement location="${build.dir}/classes"/>
+            </classpath>
+        </javac>
+        <copy todir="${build.dir}/testclasses/net/nczonline/web/cssembed">
+            <fileset dir="${tests.dir}" includes="*.png"/>
+            <fileset dir="${tests.dir}" includes="*.css"/>
+        </copy>
+    </target>
+ 
+    <target name="build.cssembed.jar" depends="build.classes">
+        <make-jar name="${cssembed.name}" jar="${cssembed.jar}" main="${cssembed.main}">  
+            <jar-files>
+                <fileset dir="${build.dir}/classes" includes="**/*.class"/>
+            </jar-files>    
+        </make-jar>
+        
+    </target>
+    
+    <target name="build.datauri.jar" depends="build.classes">
+        <make-jar name="${datauri.name}" jar="${datauri.jar}" main="${datauri.main}">
+            <jar-files>
+                <fileset dir="${build.dir}/classes" includes="**/datauri/*.class"/>
+            </jar-files>    
+        </make-jar>
+    </target>     
+
+    <!-- build all jars -->
+    <target name="build.all.jars" depends="clean,build.cssembed.jar,build.datauri.jar"></target>
+     
+ 
+    <target name="build.dist.package" depends="build.cssembed.jar,build.datauri.jar">
+        <mkdir dir="${build.dir}/${dist.package.name}"/>
+        <mkdir dir="${build.dir}/${dist.package.name}/build"/>
+        <copy file="${build.dir}/${jar.name}" todir="${build.dir}/${dist.package.name}/build"/>
+        <copy todir="${build.dir}/${dist.package.name}">
+            <fileset dir=".">
+                <include name="ant.properties"/>
+                <include name="build.xml"/>
+                <include name="doc/**/*"/>
+                <include name="lib/**/*"/>
+                <include name="src/**/*"/>
+                <exclude name="**/.git"/>
+            </fileset>
+        </copy>
+        <zip destfile="${build.dir}/${dist.package.name}.zip"
+             basedir="${build.dir}"
+             includes="${dist.package.name}/**/*"/>
+    </target>
+ 
+    <target name="test.classes" depends="build.classes,build.tests">
+	<junit printsummary="yes" fork="yes"  errorproperty="junit.failure" failureproperty="junit.failure" showoutput="true">
+
+                <jvmarg value="-Duser.dir=${res.dir}"/>
+
+	       	<!-- classpath must include all jar dependencies and classes -->
+                <classpath>
+                    <pathelement location="${build.dir}/classes"/>
+                    <pathelement location="${build.dir}/testclasses"/>
+                    <pathelement location="${lib.dir}/${datauri.jar}"/>
+                    <pathelement location="${lib.dir}/${junit.jar}"/>
+                </classpath>
+
+	      	<!-- formatter to use for output -->
+        	<formatter type="plain" usefile="false"/>
+                
+		<!-- fully qualified classname of testsuite -->
+                <batchtest>
+                    <fileset dir="${build.dir}/testclasses">
+                        <include name="**/*Test.class" />
+                    </fileset>                    
+                </batchtest>
+	</junit>        
+        
+    </target>
+    
+    <macrodef name="make-jar">
+        <attribute name="jar"/>
+        <attribute name="main"/>
+        <attribute name="name"/>
+        <element name="jar-files"/>
+        <sequential>           
+            <mkdir dir="${build.dir}/@{name}-jar"/>
+            <unjar src="${lib.dir}/${jargs.jar}" dest="${build.dir}/@{name}-jar"/>
+            <copy todir="${build.dir}/@{name}-jar">
+                <jar-files/>
+            </copy>
+            <jar destfile="${build.dir}/@{jar}" basedir="${build.dir}/@{name}-jar">
+                <manifest>
+                    <attribute name="Main-Class" value="@{main}"/>
+                </manifest>
+            </jar>       
+        </sequential>
+    </macrodef>
+
+</project>

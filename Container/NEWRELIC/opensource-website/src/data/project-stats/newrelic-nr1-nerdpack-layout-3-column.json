@@ -1,0 +1,87 @@
+{
+  "projectFullName": "newrelic/nr1-nerdpack-layout-3-column",
+  "issues": {
+    "open": 1
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 21,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 4,
+  "pullRequests": {
+    "open": 2
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU2MjY3NDUwNTI=",
+      "title": "Upgrade layout to the latest NR1 CLI",
+      "url": "https://github.com/newrelic/nr1-nerdpack-layout-3-column/issues/5",
+      "createdAt": "2020-05-28T19:10:12Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "tangollama",
+        "id": "MDQ6VXNlcjkyOTI2MQ==",
+        "email": "",
+        "name": "Joel Worrall"
+      },
+      "number": 5,
+      "createdBy": "Joel Worrall"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 13562672,
+      "login": "jaesius",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13562672?v=4",
+      "htmlUrl": "https://github.com/jaesius",
+      "contributions": 1
+    },
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 1
+    },
+    {
+      "id": 58010132,
+      "login": "mmfred",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/58010132?v=4",
+      "htmlUrl": "https://github.com/mmfred",
+      "contributions": 2
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 13
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UzMDg=",
+      "name": "CSS",
+      "color": "#563d7c"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic/nr1-nerdpack-layout-3-column/master/screenshots/.gitkeep"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

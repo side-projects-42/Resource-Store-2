@@ -17,131 +17,131 @@
 
 -->
 <html>
-<head>
-<title></title>
-<script src="../../../node_modules/closure-library/closure/goog/base.js"></script>
-<script>
-goog.require('goog.testing.jsunit');
-</script>
-<script src="../../../bin/traceur.js"></script>
-</head>
-<body>
-<script>
+  <head>
+    <title></title>
+    <script src="../../../node_modules/closure-library/closure/goog/base.js"></script>
+    <script>
+      goog.require("goog.testing.jsunit");
+    </script>
+    <script src="../../../bin/traceur.js"></script>
+  </head>
+  <body>
+    <script>
+      var TreeWriter = traceur.outputgeneration.TreeWriter;
+      var ParseTreeTransformer = traceur.codegeneration.ParseTreeTransformer;
+      var ParseTreeValidator = traceur.syntax.ParseTreeValidator;
 
-var TreeWriter = traceur.outputgeneration.TreeWriter;
-var ParseTreeTransformer = traceur.codegeneration.ParseTreeTransformer;
-var ParseTreeValidator = traceur.syntax.ParseTreeValidator;
+      var ParseTreeFactory = traceur.codegeneration.ParseTreeFactory;
+      var createBreakStatement = ParseTreeFactory.createBreakStatement;
+      var createContinueStatement = ParseTreeFactory.createContinueStatement;
+      var createCatchStatement = ParseTreeFactory.createCatchStatement;
+      var createIdentifierToken = ParseTreeFactory.createIdentifierToken;
+      var createCatch = ParseTreeFactory.createCatch;
 
-var ParseTreeFactory = traceur.codegeneration.ParseTreeFactory;
-var createBreakStatement = ParseTreeFactory.createBreakStatement;
-var createContinueStatement = ParseTreeFactory.createContinueStatement;
-var createCatchStatement = ParseTreeFactory.createCatchStatement;
-var createIdentifierToken = ParseTreeFactory.createIdentifierToken;
-var createCatch = ParseTreeFactory.createCatch;
+      function toTree(errorReporter, name, source) {
+        var sourceFile = new traceur.syntax.SourceFile(name, source);
+        var parser = new traceur.syntax.Parser(errorReporter, sourceFile);
+        var tree = parser.parseProgram();
+        return tree;
+      }
 
-function toTree(errorReporter, name, source) {
-  var sourceFile = new traceur.syntax.SourceFile(name, source);
-  var parser = new traceur.syntax.Parser(errorReporter, sourceFile);
-  var tree = parser.parseProgram();
-  return tree;
-}
+      function TestTransformer() {}
 
-function TestTransformer() {}
+      TestTransformer.prototype = traceur.createObject(
+        ParseTreeTransformer.prototype,
+        {
+          transformBreakStatement: function (tree) {
+            return createBreakStatement(tree.name); // issue 75
+          },
 
-TestTransformer.prototype = traceur.createObject(
-  ParseTreeTransformer.prototype, {
-  
-    transformBreakStatement: function(tree) {
-      return createBreakStatement(tree.name);  // issue 75
-    },
+          transformContinueStatement: function (tree) {
+            return createContinueStatement(tree.name); // issue 75
+          },
 
-    transformContinueStatement: function(tree) {
-      return createContinueStatement(tree.name);  // issue 75
-    },
-    
-    transformCatch: function(tree) {
-      var catchBody = this.transformAny(tree.catchBody);
-      var binding = this.transformAny(tree.binding);
-      
-      return createCatch(binding.identifierToken, catchBody); // issue 71
-    }
-    
-});
+          transformCatch: function (tree) {
+            var catchBody = this.transformAny(tree.catchBody);
+            var binding = this.transformAny(tree.binding);
 
-function oneTest(name, source) {
-  var errors = [];
+            return createCatch(binding.identifierToken, catchBody); // issue 71
+          },
+        }
+      );
 
-  var errorReporter = {
-    reportError: function(position, message) {
-      errors.push({position: String(position), message: message});
-    }
-  };
+      function oneTest(name, source) {
+        var errors = [];
 
-  var tree = toTree(errorReporter, name, source);
-  var transformer = new TestTransformer();
-  var output_tree = transformer.transformAny(tree);
-  ParseTreeValidator.validate(output_tree);
-  
-  var output_source = traceur.outputgeneration.TreeWriter.write(output_tree);
-  
-  var input_value = eval(source);
-  var output_value = eval(output_source);
-  // console.log("output: "+output_value+" :\n "+output_source);
-  assertEquals(input_value, output_value);
-}
+        var errorReporter = {
+          reportError: function (position, message) {
+            errors.push({ position: String(position), message: message });
+          },
+        };
 
-function testCreateBreakStatement() {
-  var name = 'createBreakStatement';
-  var source =
-     'function f() {\n' +
-     '  var a = 1;\n' +
-     '  L1: while(a < 10) {\n' +
-     '    while(a < 9) {\n' +
-     '      a++;\n' +
-     '      break L1;\n' +
-     '    }\n' +
-     '    a++;\n' +
-     '  }\n' +
-     '  return a;\n' +
-     '}\n' +
-     'f()\n';
-  oneTest(name, source);
-}
+        var tree = toTree(errorReporter, name, source);
+        var transformer = new TestTransformer();
+        var output_tree = transformer.transformAny(tree);
+        ParseTreeValidator.validate(output_tree);
 
-function testCreateContinueStatement() {
-  var name = 'createContinueStatement';
-  var source =
-     'function f() {\n' +
-     '  var a = 1, b = 1;\n' +
-     '  L1: while(a < 10) {\n' +
-     '    a++;\n' +
-     '    while(b < a) {\n' +
-     '      b++;\n' +
-     '      continue L1;\n' +
-     '    }\n' +
-     '    b++;\n' +
-     '  }\n' +
-     '  return b;\n' +
-     '}\n' +
-     'f()\n';
-  oneTest(name, source);
-}
+        var output_source =
+          traceur.outputgeneration.TreeWriter.write(output_tree);
 
-function testCreateCatch() {
-  var name = 'createCatch';
-  var source =
-     'function f() {\n' +
-     '  var a = 1;\n' +
-     '  try {\n' +
-     '    throw undefined;\n' +
-     '  } catch (exc) {\n' +
-     '    a = 2;\n' +
-     '  }\n' + 
-     '  return a;\n' +
-     '}\n' +
-     'f()\n';
-  oneTest(name, source);
-}
-</script>
-</body>
+        var input_value = eval(source);
+        var output_value = eval(output_source);
+        // console.log("output: "+output_value+" :\n "+output_source);
+        assertEquals(input_value, output_value);
+      }
+
+      function testCreateBreakStatement() {
+        var name = "createBreakStatement";
+        var source =
+          "function f() {\n" +
+          "  var a = 1;\n" +
+          "  L1: while(a < 10) {\n" +
+          "    while(a < 9) {\n" +
+          "      a++;\n" +
+          "      break L1;\n" +
+          "    }\n" +
+          "    a++;\n" +
+          "  }\n" +
+          "  return a;\n" +
+          "}\n" +
+          "f()\n";
+        oneTest(name, source);
+      }
+
+      function testCreateContinueStatement() {
+        var name = "createContinueStatement";
+        var source =
+          "function f() {\n" +
+          "  var a = 1, b = 1;\n" +
+          "  L1: while(a < 10) {\n" +
+          "    a++;\n" +
+          "    while(b < a) {\n" +
+          "      b++;\n" +
+          "      continue L1;\n" +
+          "    }\n" +
+          "    b++;\n" +
+          "  }\n" +
+          "  return b;\n" +
+          "}\n" +
+          "f()\n";
+        oneTest(name, source);
+      }
+
+      function testCreateCatch() {
+        var name = "createCatch";
+        var source =
+          "function f() {\n" +
+          "  var a = 1;\n" +
+          "  try {\n" +
+          "    throw undefined;\n" +
+          "  } catch (exc) {\n" +
+          "    a = 2;\n" +
+          "  }\n" +
+          "  return a;\n" +
+          "}\n" +
+          "f()\n";
+        oneTest(name, source);
+      }
+    </script>
+  </body>
 </html>

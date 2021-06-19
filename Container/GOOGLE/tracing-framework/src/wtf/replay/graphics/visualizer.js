@@ -11,12 +11,10 @@
  * @author scotttodd@google.com (Scott Todd)
  */
 
-goog.provide('wtf.replay.graphics.Visualizer');
+goog.provide("wtf.replay.graphics.Visualizer");
 
-goog.require('goog.events');
-goog.require('wtf.events.EventEmitter');
-
-
+goog.require("goog.events");
+goog.require("wtf.events.EventEmitter");
 
 /**
  * Visualizer that augments and/or modifies playback.
@@ -24,7 +22,7 @@ goog.require('wtf.events.EventEmitter');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.replay.graphics.Visualizer = function(playback) {
+wtf.replay.graphics.Visualizer = function (playback) {
   goog.base(this);
 
   /**
@@ -59,7 +57,6 @@ wtf.replay.graphics.Visualizer = function(playback) {
 };
 goog.inherits(wtf.replay.graphics.Visualizer, wtf.events.EventEmitter);
 
-
 /**
  * Events related to this Visualizer.
  * @enum {string}
@@ -69,31 +66,27 @@ wtf.replay.graphics.Visualizer.EventType = {
    * Some state that affects continuous playback has been changed.
    * This change should be reflected in {@see #getStateHash}.
    */
-  STATE_CHANGED: goog.events.getUniqueId('state_changed')
+  STATE_CHANGED: goog.events.getUniqueId("state_changed"),
 };
-
 
 /**
  * Starts running this visualization without a specific target.
  */
-wtf.replay.graphics.Visualizer.prototype.startContinuous = function() {
+wtf.replay.graphics.Visualizer.prototype.startContinuous = function () {
   this.active = true;
 };
-
 
 /**
  * Stops running this visualization.
  */
-wtf.replay.graphics.Visualizer.prototype.stop = function() {
+wtf.replay.graphics.Visualizer.prototype.stop = function () {
   this.active = false;
 };
-
 
 /**
  * Resets any state that can affect playback.
  */
 wtf.replay.graphics.Visualizer.prototype.reset = goog.nullFunction;
-
 
 /**
  * Runs this visualization on a substep of the current step.
@@ -101,15 +94,16 @@ wtf.replay.graphics.Visualizer.prototype.reset = goog.nullFunction;
  */
 wtf.replay.graphics.Visualizer.prototype.applyToSubStep = goog.nullFunction;
 
-
 /**
  * Adds a mutator for the given event name.
  * @param {string} name Event name.
  * @param {wtf.replay.graphics.Visualizer.Mutator} mutator The mutator.
  * @protected
  */
-wtf.replay.graphics.Visualizer.prototype.registerMutator = function(name,
-    mutator) {
+wtf.replay.graphics.Visualizer.prototype.registerMutator = function (
+  name,
+  mutator
+) {
   var eventTypeId = this.eventList_.getEventTypeId(name);
 
   if (eventTypeId >= 0) {
@@ -119,13 +113,11 @@ wtf.replay.graphics.Visualizer.prototype.registerMutator = function(name,
   }
 };
 
-
 /**
  * Adds mutators using registerMutator.
  * @protected
  */
 wtf.replay.graphics.Visualizer.prototype.setupMutators = goog.nullFunction;
-
 
 /**
  * Each Visualizer may have its own state.
@@ -134,15 +126,13 @@ wtf.replay.graphics.Visualizer.prototype.setupMutators = goog.nullFunction;
  */
 wtf.replay.graphics.Visualizer.State;
 
-
 /**
  * Returns the current playback-affecting state.
  * @return {wtf.replay.graphics.Visualizer.State} The current state.
  */
-wtf.replay.graphics.Visualizer.prototype.getState = function() {
+wtf.replay.graphics.Visualizer.prototype.getState = function () {
   return null;
 };
-
 
 /**
  * Sets playback-affecting state.
@@ -150,14 +140,13 @@ wtf.replay.graphics.Visualizer.prototype.getState = function() {
  */
 wtf.replay.graphics.Visualizer.prototype.setState = goog.nullFunction;
 
-
 /**
  * Returns whether two states are equal.
  * @param {wtf.replay.graphics.Visualizer.State} state1 The first state.
  * @param {wtf.replay.graphics.Visualizer.State} state2 The second state.
  * @return {boolean} Whether the states are equal.
  */
-wtf.replay.graphics.Visualizer.equalStates = function(state1, state2) {
+wtf.replay.graphics.Visualizer.equalStates = function (state1, state2) {
   if (state1 == null && state2 == null) {
     return true;
   }
@@ -177,22 +166,20 @@ wtf.replay.graphics.Visualizer.equalStates = function(state1, state2) {
   return true;
 };
 
-
 /**
  * Returns a nicely formatted version of the current playback-affecting state.
  * @return {string} Formatted version of the current playback-affecting state.
  */
-wtf.replay.graphics.Visualizer.prototype.getStateName = function() {
-  return '';
+wtf.replay.graphics.Visualizer.prototype.getStateName = function () {
+  return "";
 };
-
 
 /**
  * Handles operations that should occur before the provided event.
  * @param {!wtf.db.EventIterator} it Event iterator.
  * @param {WebGLRenderingContext} gl The context.
  */
-wtf.replay.graphics.Visualizer.prototype.handlePreEvent = function(it, gl) {
+wtf.replay.graphics.Visualizer.prototype.handlePreEvent = function (it, gl) {
   if (!this.active) {
     return;
   }
@@ -209,7 +196,6 @@ wtf.replay.graphics.Visualizer.prototype.handlePreEvent = function(it, gl) {
   }
 };
 
-
 /**
  * Handles operations that should occur before any event.
  * @param {!wtf.db.EventIterator} it Event iterator.
@@ -218,14 +204,16 @@ wtf.replay.graphics.Visualizer.prototype.handlePreEvent = function(it, gl) {
  */
 wtf.replay.graphics.Visualizer.prototype.anyPreEvent = goog.nullFunction;
 
-
 /**
  * Handles operations that could occur in place of an event.
  * @param {!wtf.db.EventIterator} it Event iterator.
  * @param {WebGLRenderingContext} gl The context.
  * @return {boolean} Whether the event should be skipped in playback.
  */
-wtf.replay.graphics.Visualizer.prototype.handleReplaceEvent = function(it, gl) {
+wtf.replay.graphics.Visualizer.prototype.handleReplaceEvent = function (
+  it,
+  gl
+) {
   if (!this.active) {
     return false;
   }
@@ -237,15 +225,15 @@ wtf.replay.graphics.Visualizer.prototype.handleReplaceEvent = function(it, gl) {
   if (mutatorsForEvent) {
     for (var i = 0; i < mutatorsForEvent.length; ++i) {
       if (mutatorsForEvent[i].replace) {
-        skip = skip ||
-            mutatorsForEvent[i].replace.call(null, this, gl, it.getArguments());
+        skip =
+          skip ||
+          mutatorsForEvent[i].replace.call(null, this, gl, it.getArguments());
       }
     }
   }
 
   return skip;
 };
-
 
 /**
  * Handles operations that could occur in place of any event.
@@ -254,17 +242,16 @@ wtf.replay.graphics.Visualizer.prototype.handleReplaceEvent = function(it, gl) {
  * @return {boolean} Whether the event should be skipped in playback.
  * @protected
  */
-wtf.replay.graphics.Visualizer.prototype.anyReplaceEvent = function(it, gl) {
+wtf.replay.graphics.Visualizer.prototype.anyReplaceEvent = function (it, gl) {
   return false;
 };
-
 
 /**
  * Handles operations that should occur after the provided event.
  * @param {!wtf.db.EventIterator} it Event iterator.
  * @param {WebGLRenderingContext} gl The context.
  */
-wtf.replay.graphics.Visualizer.prototype.handlePostEvent = function(it, gl) {
+wtf.replay.graphics.Visualizer.prototype.handlePostEvent = function (it, gl) {
   if (!this.active) {
     return;
   }
@@ -281,7 +268,6 @@ wtf.replay.graphics.Visualizer.prototype.handlePostEvent = function(it, gl) {
   }
 };
 
-
 /**
  * Handles operations that should occur after any event.
  * @param {!wtf.db.EventIterator} it Event iterator.
@@ -290,14 +276,12 @@ wtf.replay.graphics.Visualizer.prototype.handlePostEvent = function(it, gl) {
  */
 wtf.replay.graphics.Visualizer.prototype.anyPostEvent = goog.nullFunction;
 
-
 /**
  * @typedef {function(
  *     !wtf.replay.graphics.Visualizer, WebGLRenderingContext,
  *     wtf.db.ArgumentData)}
  */
 wtf.replay.graphics.Visualizer.MutatorHandler;
-
 
 /**
  * @typedef {{

@@ -1,6 +1,6 @@
-const resolve = require('@rollup/plugin-node-resolve').default;
-const terser = require('rollup-plugin-terser').terser;
-const pkg = require('./package.json');
+const resolve = require("@rollup/plugin-node-resolve").default;
+const terser = require("rollup-plugin-terser").terser;
+const pkg = require("./package.json");
 
 const banner = `/*!
  * ${pkg.name} v${pkg.version}
@@ -9,14 +9,11 @@ const banner = `/*!
  * Released under the ${pkg.license} license
  */`;
 
-const input = 'src/index.js';
-const external = [
-  'chart.js',
-  'luxon'
-];
+const input = "src/index.js";
+const external = ["chart.js", "luxon"];
 const globals = {
-  'chart.js': 'Chart',
-  luxon: 'luxon'
+  "chart.js": "Chart",
+  luxon: "luxon",
 };
 
 module.exports = [
@@ -29,11 +26,11 @@ module.exports = [
       name: pkg.name,
       file: pkg.main,
       banner,
-      format: 'umd',
+      format: "umd",
       indent: false,
-      globals
+      globals,
     },
-    external
+    external,
   },
   {
     input,
@@ -41,31 +38,29 @@ module.exports = [
       resolve(),
       terser({
         output: {
-          preamble: banner
-        }
-      })
+          preamble: banner,
+        },
+      }),
     ],
     output: {
       name: pkg.name,
-      file: pkg.main.replace('.js', '.min.js'),
-      format: 'umd',
+      file: pkg.main.replace(".js", ".min.js"),
+      format: "umd",
       indent: false,
-      globals
+      globals,
     },
-    external
+    external,
   },
   {
     input,
-    plugins: [
-      resolve(),
-    ],
+    plugins: [resolve()],
     output: {
       name: pkg.name,
       file: pkg.module,
       banner,
-      format: 'esm',
+      format: "esm",
       indent: false,
     },
-    external
+    external,
   },
 ];

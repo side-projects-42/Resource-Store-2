@@ -1,13 +1,25 @@
 class ImmutablePoint {
-  get x () { return this.x_; }
-  get y () { return this.y_; }
+  get x() {
+    return this.x_;
+  }
+  get y() {
+    return this.y_;
+  }
 }
 
 class MutablePoint {
-  get x () { return this.x_; }
-  set x (x) { this.x_ = x; }
-  get y () { return this.y_; }
-  set y (y) { this.y_ = y; }
+  get x() {
+    return this.x_;
+  }
+  set x(x) {
+    this.x_ = x;
+  }
+  get y() {
+    return this.y_;
+  }
+  set y(y) {
+    this.y_ = y;
+  }
 }
 
 // ----------------------------------------------------------------------------
@@ -24,14 +36,12 @@ assert.equal(20, immutable.y_);
 
 try {
   immutable.x = 11;
-  assert.fail('should not be able to set a get only property');
-} catch (except) {
-}
+  assert.fail("should not be able to set a get only property");
+} catch (except) {}
 try {
   immutable.y = 11;
-  assert.fail('should not be able to set a get only property');
-} catch (except) {
-}
+  assert.fail("should not be able to set a get only property");
+} catch (except) {}
 assert.equal(10, immutable.x);
 assert.equal(20, immutable.y);
 
@@ -48,12 +58,12 @@ assert.equal(20, mutable.y_);
 try {
   mutable.x = 11;
 } catch (except) {
-  assert.fail('should be able to set a read/write property');
+  assert.fail("should be able to set a read/write property");
 }
 try {
   mutable.y = 12;
 } catch (except) {
-  assert.fail('should be able to set a read/write property');
+  assert.fail("should be able to set a read/write property");
 }
 assert.equal(11, mutable.x);
 assert.equal(12, mutable.y);

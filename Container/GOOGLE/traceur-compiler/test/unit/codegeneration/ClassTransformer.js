@@ -12,27 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  suite,
-  test,
-  assert,
-} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-import {CollectingErrorReporter as ErrorReporter} from '../../../src/util/CollectingErrorReporter.js';
-import {ClassTransformer} from '../../../src/codegeneration/ClassTransformer.js';
-import {Options} from '../../../src/Options.js';
-import {Parser} from '../../../src/syntax/Parser.js';
-import {ParseTreeValidator} from '../../../src/syntax/ParseTreeValidator.js';
-import {SourceFile} from '../../../src/syntax/SourceFile.js';
-import {UniqueIdentifierGenerator} from '../../../src/codegeneration/UniqueIdentifierGenerator.js';
-import {write} from '../../../src/outputgeneration/TreeWriter.js';
+import { CollectingErrorReporter as ErrorReporter } from "../../../src/util/CollectingErrorReporter.js";
+import { ClassTransformer } from "../../../src/codegeneration/ClassTransformer.js";
+import { Options } from "../../../src/Options.js";
+import { Parser } from "../../../src/syntax/Parser.js";
+import { ParseTreeValidator } from "../../../src/syntax/ParseTreeValidator.js";
+import { SourceFile } from "../../../src/syntax/SourceFile.js";
+import { UniqueIdentifierGenerator } from "../../../src/codegeneration/UniqueIdentifierGenerator.js";
+import { write } from "../../../src/outputgeneration/TreeWriter.js";
 
-suite('ClassTransformer.js', function() {
+suite("ClassTransformer.js", function () {
   var options = new Options();
-  options.blockBinding = 'parse';
+  options.blockBinding = "parse";
 
   function parseModule(content) {
-    var file = new SourceFile('test', content);
+    var file = new SourceFile("test", content);
     var parser = new Parser(file, undefined, options);
     return parser.parseModule();
   }
@@ -47,7 +43,10 @@ suite('ClassTransformer.js', function() {
       var tree = parseModule(code);
       var reporter = new ErrorReporter();
       var transformer = new ClassTransformer(
-          new UniqueIdentifierGenerator(), reporter, options);
+        new UniqueIdentifierGenerator(),
+        reporter,
+        options
+      );
       var transformed = transformer.transformAny(tree);
       new ParseTreeValidator().visitAny(transformed);
       assert.equal(write(transformed), normalize(expected));
@@ -55,23 +54,31 @@ suite('ClassTransformer.js', function() {
     });
   }
 
-  makeTest('class C {}',
-           `let C = function() {
+  makeTest(
+    "class C {}",
+    `let C = function() {
               const C = function C() {}
               return ($traceurRuntime.createClass)(C, {}, {});
-            }();`);
-  makeTest('export class C {}',
-           `export let C = function() {
+            }();`
+  );
+  makeTest(
+    "export class C {}",
+    `export let C = function() {
               const C = function C() {};
               return ($traceurRuntime.createClass)(C, {}, {});
-            }();`);
-  makeTest('export default class C {}',
-           `let C = function() {
+            }();`
+  );
+  makeTest(
+    "export default class C {}",
+    `let C = function() {
               const C = function C() {};
               return ($traceurRuntime.createClass)(C, {}, {});
             }();
-            export {C as default};`);
-  makeTest('export default class {}',
-           `export default ($traceurRuntime.createClass)(
-                function() {}, {}, {})`);
+            export {C as default};`
+  );
+  makeTest(
+    "export default class {}",
+    `export default ($traceurRuntime.createClass)(
+                function() {}, {}, {})`
+  );
 });

@@ -1,6 +1,6 @@
 function B() {}
-B.b = function() {
-  return 'B.b';
+B.b = function () {
+  return "B.b";
 };
 
 class C extends B {}
@@ -8,7 +8,7 @@ class C extends B {}
 assertEquals(Object.getPrototypeOf(C), B);
 assertEquals(Object.getPrototypeOf(C.prototype), B.prototype);
 
-assertEquals(C.b(), 'B.b');
+assertEquals(C.b(), "B.b");
 
 class D extends Object {}
 
@@ -20,4 +20,4 @@ class E {}
 
 assertEquals(Object.getPrototypeOf(E), Function.prototype);
 assertEquals(Object.getPrototypeOf(E.prototype), Object.prototype);
-assertFalse('keys' in E);
+assertFalse("keys" in E);

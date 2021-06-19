@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeValidator} from '../syntax/ParseTreeValidator.js';
+import { ParseTreeValidator } from "../syntax/ParseTreeValidator.js";
 
 /**
  * Applies an ordered series of transforms
@@ -51,14 +51,11 @@ export class MultiTransformer {
 
     this.treeTransformers_.every((transformTree) => {
       tree = transformTree(tree);
-      if (reporter.hadError())
-        return false;
-      if (validate)
-        ParseTreeValidator.validate(tree);
+      if (reporter.hadError()) return false;
+      if (validate) ParseTreeValidator.validate(tree);
       return true;
-    })
+    });
 
     return tree;
   }
-
 }

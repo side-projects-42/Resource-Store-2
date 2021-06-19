@@ -1,3 +1,3 @@
-describe('Ellipse annotation', function() {
-  describe('auto', jasmine.fixtures('ellipse'));
+describe("Ellipse annotation", function () {
+  describe("auto", jasmine.fixtures("ellipse"));
 });

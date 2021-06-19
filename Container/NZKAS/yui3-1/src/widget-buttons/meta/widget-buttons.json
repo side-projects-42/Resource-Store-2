@@ -1,0 +1,10 @@
+{
+    "widget-buttons": {
+        "requires": [
+            "widget",
+            "base-build",
+            "widget-stdmod"
+        ], 
+        "skinnable": true
+    }
+}

@@ -11,8 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.zoom.TransitionMode');
-
+goog.provide("wtf.ui.zoom.TransitionMode");
 
 /**
  * Transition mode.
@@ -27,5 +26,5 @@ wtf.ui.zoom.TransitionMode = {
   /**
    * Transition immediately, with no animation.
    */
-  IMMEDIATE: 1
+  IMMEDIATE: 1,
 };

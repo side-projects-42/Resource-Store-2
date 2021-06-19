@@ -11,23 +11,20 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-benchmark.register('enterScope', function() {
+benchmark.register("enterScope", function () {
   var scope = wtf.trace.enterScope();
   //
   wtf.trace.leaveScope(scope);
 });
 
-
-benchmark.register('enterScopeNamed', function() {
-  var scope = wtf.trace.enterScope('hello');
+benchmark.register("enterScopeNamed", function () {
+  var scope = wtf.trace.enterScope("hello");
   //
   wtf.trace.leaveScope(scope);
 });
 
-
-var customScopeEvent = wtf.trace.events.createScope('customScope()');
-benchmark.register('customScope', function() {
+var customScopeEvent = wtf.trace.events.createScope("customScope()");
+benchmark.register("customScope", function () {
   var scope = customScopeEvent();
   //
   wtf.trace.leaveScope(scope);

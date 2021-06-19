@@ -7,7 +7,7 @@ Chart.js can be integrated with plain JavaScript or with different module loader
 ```html
 <script src="path/to/chartjs/dist/chart.js"></script>
 <script>
-    var myChart = new Chart(ctx, {...});
+  var myChart = new Chart(ctx, {...});
 </script>
 ```
 
@@ -84,14 +84,14 @@ var myChart = new Chart(ctx, {...});
 A short registration format is also available to quickly register everything.
 
 ```javascript
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 ```
 
 And finally there is an separate path to do just the above for you, in one line:
 
 ```javascript
-import Chart from 'chart.js/auto';
+import Chart from "chart.js/auto";
 ```
 
 ## Require JS

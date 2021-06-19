@@ -11,44 +11,34 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.CompiledQueryExpression');
-goog.provide('wtf.db.QueryDumpFormat');
-goog.provide('wtf.db.QueryResult');
-goog.provide('wtf.db.QueryResultType');
+goog.provide("wtf.db.CompiledQueryExpression");
+goog.provide("wtf.db.QueryDumpFormat");
+goog.provide("wtf.db.QueryResult");
+goog.provide("wtf.db.QueryResultType");
 
-goog.require('goog.Disposable');
-goog.require('goog.asserts');
-
+goog.require("goog.Disposable");
+goog.require("goog.asserts");
 
 /**
  * @typedef {(RegExp|string)}
  */
 wtf.db.CompiledQueryExpression;
 
-
 /**
  * @typedef {(string|number|boolean|wtf.db.EventIterator|null)}
  */
 wtf.db.QueryResultType;
-
 
 /**
  * Format to generate text results in.
  * @enum {number}
  */
 wtf.db.QueryDumpFormat = {
-  CSV: 0
+  CSV: 0,
 };
 
-
-goog.exportSymbol(
-    'wtf.db.QueryDumpFormat',
-    wtf.db.QueryDumpFormat);
-goog.exportProperty(
-    wtf.db.QueryDumpFormat, 'CSV',
-    wtf.db.QueryDumpFormat.CSV);
-
-
+goog.exportSymbol("wtf.db.QueryDumpFormat", wtf.db.QueryDumpFormat);
+goog.exportProperty(wtf.db.QueryDumpFormat, "CSV", wtf.db.QueryDumpFormat.CSV);
 
 /**
  * Query result object.
@@ -63,7 +53,7 @@ goog.exportProperty(
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.db.QueryResult = function(expr, compiledExpr, duration, value) {
+wtf.db.QueryResult = function (expr, compiledExpr, duration, value) {
   goog.base(this);
 
   /**
@@ -96,65 +86,59 @@ wtf.db.QueryResult = function(expr, compiledExpr, duration, value) {
 };
 goog.inherits(wtf.db.QueryResult, goog.Disposable);
 
-
 /**
  * Gets the original expression used to create the query.
  * @return {string} Expression string.
  */
-wtf.db.QueryResult.prototype.getExpression = function() {
+wtf.db.QueryResult.prototype.getExpression = function () {
   return this.expr_;
 };
-
 
 /**
  * Gets the parsed expression object.
  * @return {!wtf.db.CompiledQueryExpression} Expression object.
  */
-wtf.db.QueryResult.prototype.getCompiledExpression = function() {
+wtf.db.QueryResult.prototype.getCompiledExpression = function () {
   return this.compiledExpr_;
 };
-
 
 /**
  * Gets the duration of the query execution step, in milliseconds.
  * @return {number} Duration, in ms.
  */
-wtf.db.QueryResult.prototype.getDuration = function() {
+wtf.db.QueryResult.prototype.getDuration = function () {
   return this.duration_;
 };
-
 
 /**
  * Gets the query result.
  * @return {?wtf.db.QueryResultType} Result value.
  */
-wtf.db.QueryResult.prototype.getValue = function() {
+wtf.db.QueryResult.prototype.getValue = function () {
   return this.value_;
 };
-
 
 /**
  * Dumps the results into a blob.
  * @param {wtf.db.QueryDumpFormat} format Target format.
  * @return {string?} Results.
  */
-wtf.db.QueryResult.prototype.dump = function(format) {
+wtf.db.QueryResult.prototype.dump = function (format) {
   switch (format) {
     case wtf.db.QueryDumpFormat.CSV:
       return this.dumpCsv_();
     default:
-      goog.asserts.fail('Unknown format');
+      goog.asserts.fail("Unknown format");
       return null;
   }
 };
-
 
 /**
  * Dumps the results into a blob formatted by RFC 4180 (CSV).
  * @return {string?} Results.
  * @private
  */
-wtf.db.QueryResult.prototype.dumpCsv_ = function() {
+wtf.db.QueryResult.prototype.dumpCsv_ = function () {
   var csv = [];
 
   // TODO(benvanik): add back in support for different result types. Currently
@@ -181,31 +165,40 @@ wtf.db.QueryResult.prototype.dumpCsv_ = function() {
     var line = [
       it.getTime(),
       it.getName(),
-      it.isScope() ? it.getTotalDuration() : '',
-      it.isScope() ? it.getOwnDuration() : '',
+      it.isScope() ? it.getTotalDuration() : "",
+      it.isScope() ? it.getOwnDuration() : "",
       it.getDepth(),
-      it.getArgumentString(true)
+      it.getArgumentString(true),
     ];
-    csv.push(line.join(','));
+    csv.push(line.join(","));
   }
   it.seek(0);
 
-  return csv.join('\r\n');
+  return csv.join("\r\n");
 };
 
-
 goog.exportProperty(
-    wtf.db.QueryResult.prototype, 'getExpression',
-    wtf.db.QueryResult.prototype.getExpression);
+  wtf.db.QueryResult.prototype,
+  "getExpression",
+  wtf.db.QueryResult.prototype.getExpression
+);
 goog.exportProperty(
-    wtf.db.QueryResult.prototype, 'getCompiledExpression',
-    wtf.db.QueryResult.prototype.getCompiledExpression);
+  wtf.db.QueryResult.prototype,
+  "getCompiledExpression",
+  wtf.db.QueryResult.prototype.getCompiledExpression
+);
 goog.exportProperty(
-    wtf.db.QueryResult.prototype, 'getDuration',
-    wtf.db.QueryResult.prototype.getDuration);
+  wtf.db.QueryResult.prototype,
+  "getDuration",
+  wtf.db.QueryResult.prototype.getDuration
+);
 goog.exportProperty(
-    wtf.db.QueryResult.prototype, 'getValue',
-    wtf.db.QueryResult.prototype.getValue);
+  wtf.db.QueryResult.prototype,
+  "getValue",
+  wtf.db.QueryResult.prototype.getValue
+);
 goog.exportProperty(
-    wtf.db.QueryResult.prototype, 'dump',
-    wtf.db.QueryResult.prototype.dump);
+  wtf.db.QueryResult.prototype,
+  "dump",
+  wtf.db.QueryResult.prototype.dump
+);

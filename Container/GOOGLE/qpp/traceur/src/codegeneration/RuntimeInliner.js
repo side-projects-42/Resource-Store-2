@@ -12,41 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {MutedErrorReporter} from '../util/MutedErrorReporter.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {Parser} from '../syntax/Parser.js';
-import {Program} from '../syntax/trees/ParseTrees.js';
-import {SourceFile} from '../syntax/SourceFile.js';
-import {VAR} from '../syntax/TokenType.js';
+import { MutedErrorReporter } from "../util/MutedErrorReporter.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { Parser } from "../syntax/Parser.js";
+import { Program } from "../syntax/trees/ParseTrees.js";
+import { SourceFile } from "../syntax/SourceFile.js";
+import { VAR } from "../syntax/TokenType.js";
 import {
   createIdentifierExpression,
   createVariableDeclaration,
   createVariableDeclarationList,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {prependStatements} from './PrependStatements.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { prependStatements } from "./PrependStatements.js";
 
 // Some helper functions that other runtime functions may depend on.
 var shared = {
-  toObject:
-      `function(value) {
+  toObject: `function(value) {
         if (value == null)
           throw TypeError();
         return Object(value);
       }`,
-  getDescriptors:
-      `function(object) {
+  getDescriptors: `function(object) {
         var descriptors = {}, name, names = Object.getOwnPropertyNames(object);
         for (var i = 0; i < names.length; i++) {
           var name = names[i];
           descriptors[name] = Object.getOwnPropertyDescriptor(object, name);
         }
         return descriptors;
-      }`
+      }`,
 };
 
 function parse(source, name) {
-  var file = new SourceFile(name + '@runtime', source);
+  var file = new SourceFile(name + "@runtime", source);
   var errorReporter = new MutedErrorReporter();
   return new Parser(errorReporter, file).parseAssignmentExpression();
 }
@@ -73,24 +71,27 @@ export class RuntimeInliner extends ParseTreeTransformer {
    */
   transformProgram(tree) {
     var names = Object.keys(this.map_);
-    if (!names.length)
-      return tree;
+    if (!names.length) return tree;
 
-    var vars = names.filter(function(name) {
-      return !this.map_[name].inserted;
-    }, this).map(function(name) {
-      var item = this.map_[name];
-      item.inserted = true;
-      return createVariableDeclaration(item.uid, item.expression);
-    }, this);
-    if (!vars.length)
-      return tree;
+    var vars = names
+      .filter(function (name) {
+        return !this.map_[name].inserted;
+      }, this)
+      .map(function (name) {
+        var item = this.map_[name];
+        item.inserted = true;
+        return createVariableDeclaration(item.uid, item.expression);
+      }, this);
+    if (!vars.length) return tree;
 
     var variableStatement = createVariableStatement(
-        createVariableDeclarationList(VAR, vars));
+      createVariableDeclarationList(VAR, vars)
+    );
 
     var programElements = prependStatements(
-        tree.programElements, variableStatement);
+      tree.programElements,
+      variableStatement
+    );
     return new Program(tree.location, programElements);
   }
 
@@ -100,11 +101,10 @@ export class RuntimeInliner extends ParseTreeTransformer {
    * @param {string} source
    */
   register(name, source) {
-    if (name in this.map_)
-      return;
+    if (name in this.map_) return;
 
     var self = this;
-    source = source.replace(/%([a-zA-Z0-9_$]+)/g, function(_, name) {
+    source = source.replace(/%([a-zA-Z0-9_$]+)/g, function (_, name) {
       if (name in shared) {
         self.register(name, shared[name]);
       }
@@ -147,8 +147,7 @@ export class RuntimeInliner extends ParseTreeTransformer {
    */
   get(name, source = undefined) {
     if (!(name in this.map_)) {
-      if (name in shared)
-        source = shared[name];
+      if (name in shared) source = shared[name];
       traceur.assert(source);
       this.register(name, source);
     }

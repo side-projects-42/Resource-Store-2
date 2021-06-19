@@ -12,22 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {VariableDeclaration} from '../syntax/trees/ParseTrees.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { VariableDeclaration } from "../syntax/trees/ParseTrees.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 
 /**
  * Desugars type annotations.
  */
 export class TypeTransformer extends ParseTreeTransformer {
-
   /**
    * @param {VariableDeclaration} tree
    * @return {ParseTree}
    */
   transformVariableDeclaration(tree) {
     if (tree.typeAnnotation) {
-      tree = new VariableDeclaration(tree.location, tree.lvalue, null,
-          tree.initializer);
+      tree = new VariableDeclaration(
+        tree.location,
+        tree.lvalue,
+        null,
+        tree.initializer
+      );
     }
     return super.transformVariableDeclaration(tree);
   }

@@ -12,33 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AsyncTransformer} from './generator/AsyncTransformer.js';
-import {ForInTransformPass} from './generator/ForInTransformPass.js';
-import {ForOfTransformer} from './ForOfTransformer.js';
-import {
-  GetAccessor,
-  SetAccessor
-} from '../syntax/trees/ParseTrees.js';
-import {GeneratorTransformer} from './generator/GeneratorTransformer.js';
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {parseStatement} from './PlaceholderParser.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {
-  EQUAL,
-  VAR
-} from '../syntax/TokenType.js';
+import { AsyncTransformer } from "./generator/AsyncTransformer.js";
+import { ForInTransformPass } from "./generator/ForInTransformPass.js";
+import { ForOfTransformer } from "./ForOfTransformer.js";
+import { GetAccessor, SetAccessor } from "../syntax/trees/ParseTrees.js";
+import { GeneratorTransformer } from "./generator/GeneratorTransformer.js";
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
+import { parseStatement } from "./PlaceholderParser.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { EQUAL, VAR } from "../syntax/TokenType.js";
 import {
   BINARY_OPERATOR,
   COMMA_EXPRESSION,
   IDENTIFIER_EXPRESSION,
   PAREN_EXPRESSION,
-  YIELD_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
+  YIELD_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
 import {
   FunctionDeclaration,
-  FunctionExpression
-} from '../syntax/trees/ParseTrees.js';
+  FunctionExpression,
+} from "../syntax/trees/ParseTrees.js";
 import {
   createAssignmentExpression,
   createAssignmentStatement,
@@ -50,29 +44,28 @@ import {
   createVariableDeclaration,
   createVariableDeclarationList,
   createVariableStatement,
-  createYieldStatement
-} from './ParseTreeFactory.js';
+  createYieldStatement,
+} from "./ParseTreeFactory.js";
 import {
   ACTION_SEND,
   ACTION_THROW,
   ACTION_CLOSE,
   TRACEUR_RUNTIME,
   YIELD_ACTION,
-  YIELD_SENT
-} from '../syntax/PredefinedName.js';
-import {
-  transformOptions,
-  options
-} from '../options.js';
+  YIELD_SENT,
+} from "../syntax/PredefinedName.js";
+import { transformOptions, options } from "../options.js";
 
 /**
  * @param {BinaryOperator} tree
  * @return {boolean}
  */
 function isYieldAssign(tree) {
-  return tree.operator.type === EQUAL &&
-      tree.right.type === YIELD_EXPRESSION &&
-      tree.left.isLeftHandSideExpression();
+  return (
+    tree.operator.type === EQUAL &&
+    tree.right.type === YIELD_EXPRESSION &&
+    tree.left.isLeftHandSideExpression()
+  );
 }
 
 var id = createIdentifierExpression;
@@ -134,7 +127,7 @@ class YieldExpressionTransformer extends TempVarTransformer {
     if (!throwClose) {
       // Inserted after every simple yield expression in order to handle
       // 'throw' and 'close'. No extra action is needed to handle 'send'.
-      throwClose = parseStatement `
+      throwClose = parseStatement`
           switch (${id(YIELD_ACTION)}) {
             case ${ACTION_THROW}:
               ${id(YIELD_ACTION)} = ${ACTION_SEND};
@@ -150,7 +143,8 @@ class YieldExpressionTransformer extends TempVarTransformer {
    * @return {ParseTree}
    */
   transformExpressionStatement(tree) {
-    var e = tree.expression, ex;
+    var e = tree.expression,
+      ex;
 
     // Inside EXPRESSION_STATEMENT, we should always be able to safely remove
     // parens from BINARY_OPERATOR and COMMA_EXPRESSION. This will need to be
@@ -161,8 +155,11 @@ class YieldExpressionTransformer extends TempVarTransformer {
 
     function commaWrap(lhs, rhs) {
       return createExpressionStatement(
-          createCommaExpression(
-              [createAssignmentExpression(lhs, rhs), ...ex.slice(1)]));
+        createCommaExpression([
+          createAssignmentExpression(lhs, rhs),
+          ...ex.slice(1),
+        ])
+      );
     }
 
     switch (e.type) {
@@ -177,8 +174,7 @@ class YieldExpressionTransformer extends TempVarTransformer {
           return this.factor_(ex[0].left, ex[0].right, commaWrap);
 
       case YIELD_EXPRESSION:
-        if (e.isYieldFor)
-          return this.transformYieldForExpression_(e);
+        if (e.isYieldFor) return this.transformYieldForExpression_(e);
         return createBlock(tree, throwClose);
     }
 
@@ -194,9 +190,11 @@ class YieldExpressionTransformer extends TempVarTransformer {
 
     function varWrap(lhs, rhs) {
       return createVariableStatement(
-          createVariableDeclarationList(
-              tree.declarations.declarationType,
-              [createVariableDeclaration(lhs, rhs), ...tdd.slice(1)]));
+        createVariableDeclarationList(tree.declarations.declarationType, [
+          createVariableDeclaration(lhs, rhs),
+          ...tdd.slice(1),
+        ])
+      );
     }
 
     if (isYieldVarAssign(tdd[0]))
@@ -217,13 +215,15 @@ class YieldExpressionTransformer extends TempVarTransformer {
   factor_(lhs, rhs, wrap) {
     if (rhs.isYieldFor)
       return createBlock(
-          this.transformYieldForExpression_(rhs),
-          wrap(lhs, id(YIELD_SENT)));
+        this.transformYieldForExpression_(rhs),
+        wrap(lhs, id(YIELD_SENT))
+      );
 
     return createBlock([
-        createExpressionStatement(rhs),
-        throwClose,
-        wrap(lhs, id(YIELD_SENT))]);
+      createExpressionStatement(rhs),
+      throwClose,
+      wrap(lhs, id(YIELD_SENT)),
+    ]);
   }
 
   /**
@@ -264,7 +264,7 @@ class YieldExpressionTransformer extends TempVarTransformer {
     //     result
     //   }
 
-    return parseStatement `
+    return parseStatement`
         {
           var ${g} = ${id(TRACEUR_RUNTIME)}.getIterator(${tree.expression});
           var ${next};
@@ -326,8 +326,9 @@ class YieldExpressionTransformer extends TempVarTransformer {
    * @return {ParseTree}
    */
   static transformTree(identifierGenerator, tree) {
-    return new YieldExpressionTransformer(identifierGenerator).
-        transformAny(tree);
+    return new YieldExpressionTransformer(identifierGenerator).transformAny(
+      tree
+    );
   }
 }
 
@@ -365,14 +366,18 @@ export class GeneratorTransformPass extends TempVarTransformer {
 
   transformFunction_(tree, constructor) {
     var body = this.transformBody_(tree.functionBody, tree.isGenerator);
-    if (body === tree.functionBody)
-      return tree;
+    if (body === tree.functionBody) return tree;
 
     // The generator has been transformed away.
     var isGenerator = false;
 
-    return new constructor(null, tree.name, isGenerator,
-                           tree.formalParameterList, body);
+    return new constructor(
+      null,
+      tree.name,
+      isGenerator,
+      tree.formalParameterList,
+      body
+    );
   }
 
   /**
@@ -385,30 +390,38 @@ export class GeneratorTransformPass extends TempVarTransformer {
     // transform nested functions
     var body = super.transformBlock(tree);
 
-    if (isGenerator ||
-        (options.unstarredGenerators || transformOptions.deferredFunctions)) {
+    if (
+      isGenerator ||
+      options.unstarredGenerators ||
+      transformOptions.deferredFunctions
+    ) {
       finder = new YieldFinder(tree);
-      if (!(finder.hasYield || isGenerator || finder.hasAsync))
-        return body;
+      if (!(finder.hasYield || isGenerator || finder.hasAsync)) return body;
     } else if (!isGenerator) {
       return body;
     }
 
     // We need to transform for-in loops because the object key iteration
     // cannot be interrupted.
-    if (finder.hasForIn &&
-        (transformOptions.generators || transformOptions.deferredFunctions)) {
+    if (
+      finder.hasForIn &&
+      (transformOptions.generators || transformOptions.deferredFunctions)
+    ) {
       body = ForInTransformPass.transformTree(this.identifierGenerator, body);
     }
 
     if (finder.hasYield || isGenerator) {
       if (transformOptions.generators) {
-        body = YieldExpressionTransformer.
-            transformTree(this.identifierGenerator, body);
+        body = YieldExpressionTransformer.transformTree(
+          this.identifierGenerator,
+          body
+        );
 
-        body = GeneratorTransformer.transformGeneratorBody(this.runtimeInliner_,
-                                                           this.reporter_,
-                                                           body);
+        body = GeneratorTransformer.transformGeneratorBody(
+          this.runtimeInliner_,
+          this.reporter_,
+          body
+        );
       }
     } else if (transformOptions.deferredFunctions) {
       body = AsyncTransformer.transformAsyncBody(this.reporter_, body);
@@ -422,14 +435,9 @@ export class GeneratorTransformPass extends TempVarTransformer {
    */
   transformGetAccessor(tree) {
     var body = this.transformBody_(tree.body);
-    if (body === tree.body)
-      return tree;
+    if (body === tree.body) return tree;
 
-    return new GetAccessor(
-        tree.location,
-        tree.isStatic,
-        tree.name,
-        body);
+    return new GetAccessor(tree.location, tree.isStatic, tree.name, body);
   }
 
   /**
@@ -438,15 +446,15 @@ export class GeneratorTransformPass extends TempVarTransformer {
    */
   transformSetAccessor(tree) {
     var body = this.transformBody_(tree.body);
-    if (body === tree.body)
-      return tree;
+    if (body === tree.body) return tree;
 
     return new SetAccessor(
-        tree.location,
-        tree.isStatic,
-        tree.name,
-        tree.parameter,
-        body);
+      tree.location,
+      tree.isStatic,
+      tree.name,
+      tree.parameter,
+      body
+    );
   }
 
   /**
@@ -458,6 +466,9 @@ export class GeneratorTransformPass extends TempVarTransformer {
    */
   static transformTree(identifierGenerator, runtimeInliner, reporter, tree) {
     return new GeneratorTransformPass(
-        identifierGenerator, runtimeInliner, reporter).transformAny(tree);
+      identifierGenerator,
+      runtimeInliner,
+      reporter
+    ).transformAny(tree);
   }
 }

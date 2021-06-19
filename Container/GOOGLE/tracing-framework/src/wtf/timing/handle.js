@@ -11,19 +11,16 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
+goog.provide("wtf.timing.Handle");
 
-goog.provide('wtf.timing.Handle');
-
-goog.require('goog.asserts');
-
-
+goog.require("goog.asserts");
 
 /**
  * Base timing handle/tracking object.
  * @param {Function} func Callback function.
  * @constructor
  */
-wtf.timing.Handle = function(func) {
+wtf.timing.Handle = function (func) {
   /**
    * @type {?Function}
    * @private
@@ -31,12 +28,11 @@ wtf.timing.Handle = function(func) {
   this.func_ = func;
 };
 
-
 /**
  * Issues the interval callback function.
  * @param {...*} var_args Arguments.
  */
-wtf.timing.Handle.prototype.callback = function(var_args) {
+wtf.timing.Handle.prototype.callback = function (var_args) {
   // Always check callback function - a previous callback this same tick could
   // have cleared this instance
   if (this.func_) {
@@ -44,15 +40,14 @@ wtf.timing.Handle.prototype.callback = function(var_args) {
     try {
       this.func_.apply(goog.global, arguments);
     } catch (e) {
-      goog.asserts.fail('Unhandled exception in callback: ' + e);
+      goog.asserts.fail("Unhandled exception in callback: " + e);
     }
   }
 };
 
-
 /**
  * Clears the interval so that it will no longer be called.
  */
-wtf.timing.Handle.prototype.clear = function() {
+wtf.timing.Handle.prototype.clear = function () {
   this.func_ = null;
 };

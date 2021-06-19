@@ -11,11 +11,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.WriteTransport');
+goog.provide("wtf.io.WriteTransport");
 
-goog.require('wtf.events.EventEmitter');
-
-
+goog.require("wtf.events.EventEmitter");
 
 /**
  * Write-only transport base type.
@@ -25,7 +23,7 @@ goog.require('wtf.events.EventEmitter');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.io.WriteTransport = function() {
+wtf.io.WriteTransport = function () {
   goog.base(this);
 
   /**
@@ -37,21 +35,18 @@ wtf.io.WriteTransport = function() {
 };
 goog.inherits(wtf.io.WriteTransport, wtf.events.EventEmitter);
 
-
 /**
  * @override
  */
-wtf.io.WriteTransport.prototype.disposeInternal = function() {
-  goog.base(this, 'disposeInternal');
+wtf.io.WriteTransport.prototype.disposeInternal = function () {
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Writes data to the transport.
  * @param {!wtf.io.BlobData} data Data to write.
  */
 wtf.io.WriteTransport.prototype.write = goog.abstractMethod;
-
 
 /**
  * Flushes any pending buffers to the target.

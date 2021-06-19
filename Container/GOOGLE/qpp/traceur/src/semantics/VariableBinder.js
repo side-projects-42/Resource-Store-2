@@ -18,10 +18,10 @@ import {
   OBJECT_PATTERN,
   OBJECT_PATTERN_FIELD,
   PAREN_EXPRESSION,
-  SPREAD_PATTERN_ELEMENT
-} from '../syntax/trees/ParseTreeType.js';
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {VAR} from '../syntax/TokenType.js';
+  SPREAD_PATTERN_ELEMENT,
+} from "../syntax/trees/ParseTreeType.js";
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
+import { VAR } from "../syntax/TokenType.js";
 
 // TODO: Update once destructuring has been refactored.
 
@@ -58,7 +58,7 @@ export function variablesInBlock(tree, includeFunctionScope) {
   var binder = new VariableBinder(includeFunctionScope, tree);
   binder.visitAny(tree);
   return binder.identifiers_;
-};
+}
 
 /**
  * Gets the identifiers bound in the context of a function,
@@ -102,7 +102,7 @@ export function variablesInFunction(tree) {
   var binder = new VariableBinder(true, tree.functionBody);
   binder.bindVariablesInFunction_(tree);
   return binder.identifiers_;
-};
+}
 
 /**
  * Finds the identifiers that are bound in a given scope. Identifiers
@@ -164,8 +164,7 @@ export class VariableBinder extends ParseTreeVisitor {
 
   visitFunctionDeclaration(tree) {
     // functions follow the binding rules of 'let'
-    if (this.block_ == this.scope_)
-      this.bind_(tree.name.identifierToken);
+    if (this.block_ == this.scope_) this.bind_(tree.name.identifierToken);
   }
 
   visitFunctionExpression(tree) {
@@ -179,8 +178,10 @@ export class VariableBinder extends ParseTreeVisitor {
     // "let/const" are bound if (we are scanning block scope or function) AND
     //   the scope currently processed is the scope we care about
     //   (either the block scope being scanned or the top level function scope)
-    if ((tree.declarationType == VAR && this.includeFunctionScope_) ||
-        (tree.declarationType != VAR && this.block_ == this.scope_)) {
+    if (
+      (tree.declarationType == VAR && this.includeFunctionScope_) ||
+      (tree.declarationType != VAR && this.block_ == this.scope_)
+    ) {
       // declare the variables
       super.visitVariableDeclarationList(tree);
     } else {
@@ -200,7 +201,7 @@ export class VariableBinder extends ParseTreeVisitor {
 
   /** @param {IdentifierToken} identifier */
   bind_(identifier) {
-    traceur.assert(typeof identifier.value == 'string');
+    traceur.assert(typeof identifier.value == "string");
     this.identifiers_[identifier.value] = true;
   }
 
@@ -256,7 +257,7 @@ export class VariableBinder extends ParseTreeVisitor {
         break;
 
       default:
-        throw new Error('unreachable');
+        throw new Error("unreachable");
     }
   }
 }

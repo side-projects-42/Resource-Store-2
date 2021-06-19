@@ -1,45 +1,51 @@
-import {Element} from 'chart.js';
-import {isArray, toFontString, toRadians} from 'chart.js/helpers';
-import {scaleValue, roundedRect, rotated} from '../helpers';
+import { Element } from "chart.js";
+import { isArray, toFontString, toRadians } from "chart.js/helpers";
+import { scaleValue, roundedRect, rotated } from "../helpers";
 
 const PI = Math.PI;
 const clamp = (x, from, to) => Math.min(to, Math.max(from, x));
-const pointInLine = (p1, p2, t) => ({x: p1.x + t * (p2.x - p1.x), y: p1.y + t * (p2.y - p1.y)});
-const interpolateX = (y, p1, p2) => pointInLine(p1, p2, Math.abs((y - p1.y) / (p2.y - p1.y))).x;
-const interpolateY = (x, p1, p2) => pointInLine(p1, p2, Math.abs((x - p1.x) / (p2.x - p1.x))).y;
-const toPercent = (s) => typeof s === 'string' && s.endsWith('%') && parseFloat(s) / 100;
+const pointInLine = (p1, p2, t) => ({
+  x: p1.x + t * (p2.x - p1.x),
+  y: p1.y + t * (p2.y - p1.y),
+});
+const interpolateX = (y, p1, p2) =>
+  pointInLine(p1, p2, Math.abs((y - p1.y) / (p2.y - p1.y))).x;
+const interpolateY = (x, p1, p2) =>
+  pointInLine(p1, p2, Math.abs((x - p1.x) / (p2.x - p1.x))).y;
+const toPercent = (s) =>
+  typeof s === "string" && s.endsWith("%") && parseFloat(s) / 100;
 
-function limitPointToArea({x, y}, p2, {top, right, bottom, left}) {
+function limitPointToArea({ x, y }, p2, { top, right, bottom, left }) {
   if (x < left) {
-    y = p2.x < left ? NaN : interpolateY(left, {x, y}, p2);
+    y = p2.x < left ? NaN : interpolateY(left, { x, y }, p2);
     x = left;
   }
   if (x > right) {
-    y = p2.x > right ? NaN : interpolateY(right, {x, y}, p2);
+    y = p2.x > right ? NaN : interpolateY(right, { x, y }, p2);
     x = right;
   }
   if (y < top) {
-    x = p2.y < top ? NaN : interpolateX(top, {x, y}, p2);
+    x = p2.y < top ? NaN : interpolateX(top, { x, y }, p2);
     y = top;
   }
   if (y > bottom) {
-    x = p2.y > bottom ? NaN : interpolateX(bottom, {x, y}, p2);
+    x = p2.y > bottom ? NaN : interpolateX(bottom, { x, y }, p2);
     y = bottom;
   }
-  return {x, y};
+  return { x, y };
 }
 
 function limitLineToArea(p1, p2, area) {
-  const {x, y} = limitPointToArea(p1, p2, area);
-  const {x: x2, y: y2} = limitPointToArea(p2, p1, area);
-  return {x, y, x2, y2, width: Math.abs(x2 - x), height: Math.abs(y2 - y)};
+  const { x, y } = limitPointToArea(p1, p2, area);
+  const { x: x2, y: y2 } = limitPointToArea(p2, p1, area);
+  return { x, y, x2, y2, width: Math.abs(x2 - x), height: Math.abs(y2 - y) };
 }
 
 export default class LineAnnotation extends Element {
   intersects(x, y, epsilon = 0.001) {
     // Adapted from https://stackoverflow.com/a/6853926/25507
-    const sqr = v => v * v;
-    const {x: x1, y: y1, x2, y2} = this;
+    const sqr = (v) => v * v;
+    const { x: x1, y: y1, x2, y2 } = this;
     const dx = x2 - x1;
     const dy = y2 - y1;
     const lenSq = sqr(dx) + sqr(dy);
@@ -55,7 +61,7 @@ export default class LineAnnotation extends Element {
       xx = x1 + t * dx;
       yy = y1 + t * dy;
     }
-    return (sqr(x - xx) + sqr(y - yy)) < epsilon;
+    return sqr(x - xx) + sqr(y - yy) < epsilon;
   }
 
   labelIsVisible() {
@@ -64,16 +70,24 @@ export default class LineAnnotation extends Element {
   }
 
   isOnLabel(mouseX, mouseY) {
-    const {labelRect} = this;
+    const { labelRect } = this;
     if (!labelRect || !this.labelIsVisible()) {
       return false;
     }
 
-    const {x, y} = rotated({x: mouseX, y: mouseY}, labelRect, -labelRect.rotation);
+    const { x, y } = rotated(
+      { x: mouseX, y: mouseY },
+      labelRect,
+      -labelRect.rotation
+    );
     const w2 = labelRect.width / 2;
     const h2 = labelRect.height / 2;
-    return x >= labelRect.x - w2 && x <= labelRect.x + w2 &&
-      y >= labelRect.y - h2 && y <= labelRect.y + h2;
+    return (
+      x >= labelRect.x - w2 &&
+      x <= labelRect.x + w2 &&
+      y >= labelRect.y - h2 &&
+      y <= labelRect.y + h2
+    );
   }
 
   inRange(x, y) {
@@ -84,12 +98,12 @@ export default class LineAnnotation extends Element {
   getCenterPoint() {
     return {
       x: (this.x2 + this.x) / 2,
-      y: (this.y2 + this.y) / 2
+      y: (this.y2 + this.y) / 2,
     };
   }
 
   draw(ctx) {
-    const {x, y, x2, y2, options} = this;
+    const { x, y, x2, y2, options } = this;
     ctx.save();
 
     ctx.lineWidth = options.borderWidth;
@@ -116,7 +130,7 @@ export default class LineAnnotation extends Element {
 
   resolveElementProperties(chart, options) {
     const scale = chart.scales[options.scaleID];
-    let {top: y, left: x, bottom: y2, right: x2} = chart.chartArea;
+    let { top: y, left: x, bottom: y2, right: x2 } = chart.chartArea;
     let min, max;
 
     if (scale) {
@@ -143,11 +157,11 @@ export default class LineAnnotation extends Element {
         y2 = scaleValue(yScale, options.yMax, y2);
       }
     }
-    return limitLineToArea({x, y}, {x: x2, y: y2}, chart.chartArea);
+    return limitLineToArea({ x, y }, { x: x2, y: y2 }, chart.chartArea);
   }
 }
 
-LineAnnotation.id = 'lineAnnotation';
+LineAnnotation.id = "lineAnnotation";
 LineAnnotation.defaults = {
   display: true,
   adjustScaleRange: true,
@@ -155,47 +169,51 @@ LineAnnotation.defaults = {
   borderDash: [],
   borderDashOffset: 0,
   label: {
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: "rgba(0,0,0,0.8)",
     drawTime: undefined,
     font: {
       family: undefined,
       lineHeight: undefined,
       size: undefined,
-      style: 'bold',
-      weight: undefined
+      style: "bold",
+      weight: undefined,
     },
-    color: '#fff',
+    color: "#fff",
     xPadding: 6,
     yPadding: 6,
     rotation: 0,
     cornerRadius: 6,
-    position: 'center',
+    position: "center",
     xAdjust: 0,
     yAdjust: 0,
-    textAlign: 'center',
+    textAlign: "center",
     enabled: false,
-    content: null
+    content: null,
   },
   value: undefined,
   endValue: undefined,
   scaleID: undefined,
-  xScaleID: 'x',
+  xScaleID: "x",
   xMin: undefined,
   xMax: undefined,
-  yScaleID: 'y',
+  yScaleID: "y",
   yMin: undefined,
-  yMax: undefined
+  yMax: undefined,
 };
 
 LineAnnotation.defaultRoutes = {
-  borderColor: 'color'
+  borderColor: "color",
 };
 
 function calculateAutoRotation(line) {
-  const {x, y, x2, y2} = line;
+  const { x, y, x2, y2 } = line;
   const rotation = Math.atan2(y2 - y, x2 - x);
   // Flip the rotation if it goes > PI/2 or < -PI/2, so label stays upright
-  return rotation > PI / 2 ? rotation - PI : rotation < PI / -2 ? rotation + PI : rotation;
+  return rotation > PI / 2
+    ? rotation - PI
+    : rotation < PI / -2
+    ? rotation + PI
+    : rotation;
 }
 
 function drawLabel(ctx, line, chartArea) {
@@ -203,14 +221,26 @@ function drawLabel(ctx, line, chartArea) {
 
   ctx.font = toFontString(label.font);
 
-  const {width, height} = measureLabel(ctx, label);
-  const rect = line.labelRect = calculateLabelPosition(line, width, height, chartArea);
+  const { width, height } = measureLabel(ctx, label);
+  const rect = (line.labelRect = calculateLabelPosition(
+    line,
+    width,
+    height,
+    chartArea
+  ));
 
   ctx.translate(rect.x, rect.y);
   ctx.rotate(rect.rotation);
 
   ctx.fillStyle = label.backgroundColor;
-  roundedRect(ctx, -(width / 2), -(height / 2), width, height, label.cornerRadius);
+  roundedRect(
+    ctx,
+    -(width / 2),
+    -(height / 2),
+    width,
+    height,
+    label.cornerRadius
+  );
   ctx.fill();
 
   ctx.fillStyle = label.color;
@@ -219,39 +249,41 @@ function drawLabel(ctx, line, chartArea) {
     const x = calculateLabelXAlignment(label, width);
     let textYPosition = -(height / 2) + label.yPadding;
     for (let i = 0; i < label.content.length; i++) {
-      ctx.textBaseline = 'top';
-      ctx.fillText(
-        label.content[i],
-        x,
-        textYPosition
-      );
+      ctx.textBaseline = "top";
+      ctx.fillText(label.content[i], x, textYPosition);
       textYPosition += label.font.size + label.yPadding;
     }
   } else if (label.content instanceof Image) {
     const x = -(width / 2) + label.xPadding;
     const y = -(height / 2) + label.yPadding;
-    ctx.drawImage(label.content, x, y, width - (2 * label.xPadding), height - (2 * label.yPadding));
+    ctx.drawImage(
+      label.content,
+      x,
+      y,
+      width - 2 * label.xPadding,
+      height - 2 * label.yPadding
+    );
   } else {
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
     ctx.fillText(label.content, 0, 0);
   }
 }
 
 function calculateLabelXAlignment(label, width) {
-  const {textAlign, xPadding} = label;
-  if (textAlign === 'start') {
+  const { textAlign, xPadding } = label;
+  if (textAlign === "start") {
     return -(width / 2) + xPadding;
-  } else if (textAlign === 'end') {
+  } else if (textAlign === "end") {
     return +(width / 2) - xPadding;
   }
   return 0;
 }
 
 function getImageSize(size, value) {
-  if (typeof value === 'number') {
+  if (typeof value === "number") {
     return value;
-  } else if (typeof value === 'string') {
+  } else if (typeof value === "string") {
     return toPercent(value) * size;
   }
   return size;
@@ -263,7 +295,7 @@ function measureLabel(ctx, label) {
   if (content instanceof Image) {
     return {
       width: getImageSize(content.width, label.width) + 2 * label.xPadding,
-      height: getImageSize(content.height, label.height) + 2 * label.yPadding
+      height: getImageSize(content.height, label.height) + 2 * label.yPadding,
     };
   }
   const lines = isArray(content) ? content : [content];
@@ -280,28 +312,41 @@ function measureLabel(ctx, label) {
 
   return {
     width,
-    height: count * label.font.size + ((count + 1) * label.yPadding)
+    height: count * label.font.size + (count + 1) * label.yPadding,
   };
 }
 
 function calculateLabelPosition(line, width, height, chartArea) {
   const label = line.options.label;
-  const {xAdjust, yAdjust, xPadding, yPadding, position} = label;
-  const p1 = {x: line.x, y: line.y};
-  const p2 = {x: line.x2, y: line.y2};
-  const rotation = label.rotation === 'auto' ? calculateAutoRotation(line) : toRadians(label.rotation);
+  const { xAdjust, yAdjust, xPadding, yPadding, position } = label;
+  const p1 = { x: line.x, y: line.y };
+  const p2 = { x: line.x2, y: line.y2 };
+  const rotation =
+    label.rotation === "auto"
+      ? calculateAutoRotation(line)
+      : toRadians(label.rotation);
   const size = rotatedSize(width, height, rotation);
   const t = calculateT(line, position, size, chartArea);
   const pt = pointInLine(p1, p2, t);
-  const xCoordinateSizes = {size: size.w, min: chartArea.left, max: chartArea.right, padding: xPadding};
-  const yCoordinateSizes = {size: size.h, min: chartArea.top, max: chartArea.bottom, padding: yPadding};
+  const xCoordinateSizes = {
+    size: size.w,
+    min: chartArea.left,
+    max: chartArea.right,
+    padding: xPadding,
+  };
+  const yCoordinateSizes = {
+    size: size.h,
+    min: chartArea.top,
+    max: chartArea.bottom,
+    padding: yPadding,
+  };
 
   return {
     x: adjustLabelCoordinate(pt.x, xCoordinateSizes) + xAdjust,
     y: adjustLabelCoordinate(pt.y, yCoordinateSizes) + yAdjust,
     width,
     height,
-    rotation
+    rotation,
   };
 }
 
@@ -310,7 +355,7 @@ function rotatedSize(width, height, rotation) {
   const sin = Math.sin(rotation);
   return {
     w: Math.abs(width * cos) + Math.abs(height * sin),
-    h: Math.abs(width * sin) + Math.abs(height * cos)
+    h: Math.abs(width * sin) + Math.abs(height * cos),
   };
 }
 
@@ -318,25 +363,37 @@ function calculateT(line, position, rotSize, chartArea) {
   let t = 0.5;
   const space = spaceAround(line, chartArea);
   const label = line.options.label;
-  if (position === 'start') {
-    t = calculateTAdjust({w: line.x2 - line.x, h: line.y2 - line.y}, rotSize, label, space);
-  } else if (position === 'end') {
-    t = 1 - calculateTAdjust({w: line.x - line.x2, h: line.y - line.y2}, rotSize, label, space);
+  if (position === "start") {
+    t = calculateTAdjust(
+      { w: line.x2 - line.x, h: line.y2 - line.y },
+      rotSize,
+      label,
+      space
+    );
+  } else if (position === "end") {
+    t =
+      1 -
+      calculateTAdjust(
+        { w: line.x - line.x2, h: line.y - line.y2 },
+        rotSize,
+        label,
+        space
+      );
   }
   return t;
 }
 
 function calculateTAdjust(lineSize, labelSize, label, space) {
-  const {xPadding, yPadding} = label;
+  const { xPadding, yPadding } = label;
   const lineW = lineSize.w * space.dx;
   const lineH = lineSize.h * space.dy;
-  const x = (lineW > 0) && ((labelSize.w / 2 + xPadding - space.x) / lineW);
-  const y = (lineH > 0) && ((labelSize.h / 2 + yPadding - space.y) / lineH);
+  const x = lineW > 0 && (labelSize.w / 2 + xPadding - space.x) / lineW;
+  const y = lineH > 0 && (labelSize.h / 2 + yPadding - space.y) / lineH;
   return clamp(Math.max(x, y), 0, 0.25);
 }
 
 function spaceAround(line, chartArea) {
-  const {x, x2, y, y2} = line;
+  const { x, x2, y, y2 } = line;
   const t = Math.min(y, y2) - chartArea.top;
   const l = Math.min(x, x2) - chartArea.left;
   const b = chartArea.bottom - Math.max(y, y2);
@@ -345,12 +402,12 @@ function spaceAround(line, chartArea) {
     x: Math.min(l, r),
     y: Math.min(t, b),
     dx: l < r ? 1 : -1,
-    dy: t < b ? 1 : -1
+    dy: t < b ? 1 : -1,
   };
 }
 
 function adjustLabelCoordinate(coordinate, labelSizes) {
-  const {size, min, max, padding} = labelSizes;
+  const { size, min, max, padding } = labelSizes;
   const halfSize = size / 2;
 
   if (size > max - min) {
@@ -358,11 +415,11 @@ function adjustLabelCoordinate(coordinate, labelSizes) {
     return (max + min) / 2;
   }
 
-  if (min >= (coordinate - padding - halfSize)) {
+  if (min >= coordinate - padding - halfSize) {
     coordinate = min + padding + halfSize;
   }
 
-  if (max <= (coordinate + padding + halfSize)) {
+  if (max <= coordinate + padding + halfSize) {
     coordinate = max - padding - halfSize;
   }
 

@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export {createAsyncGeneratorInstance as default} from './async.js';
+export { createAsyncGeneratorInstance as default } from "./async.js";

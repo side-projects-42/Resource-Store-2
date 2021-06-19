@@ -12,26 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
-import * as TokenType from '../../../src/syntax/TokenType.js';
-import {LiteralToken} from '../../../src/syntax/LiteralToken.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
+import * as TokenType from "../../../src/syntax/TokenType.js";
+import { LiteralToken } from "../../../src/syntax/LiteralToken.js";
 
-suite('LiteralToken.js', function() {
-
-  test('Decode newline', function() {
+suite("LiteralToken.js", function () {
+  test("Decode newline", function () {
     var token = new LiteralToken(TokenType.STRING, '"hello\nworld"');
     assert.equal(token.processedValue, "hello\nworld");
-
   });
 
-  test('Decode hex escape', function() {
-    var token = new LiteralToken(TokenType.STRING, '"\x21\"');
+  test("Decode hex escape", function () {
+    var token = new LiteralToken(TokenType.STRING, '"\x21"');
     assert.equal(token.processedValue, "!");
   });
 
-  test('Decode unicode escape', function() {
+  test("Decode unicode escape", function () {
     var token = new LiteralToken(TokenType.STRING, '"\u2713"');
     assert.equal(token.processedValue, "✓");
   });
-
 });

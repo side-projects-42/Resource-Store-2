@@ -14,23 +14,23 @@
 
 import {
   BinaryExpression,
-  UnaryExpression
-} from '../syntax/trees/ParseTrees.js';
+  UnaryExpression,
+} from "../syntax/trees/ParseTrees.js";
 import {
   IDENTIFIER_EXPRESSION,
   LITERAL_EXPRESSION,
   UNARY_EXPRESSION,
-} from '../syntax/trees/ParseTreeType.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
+} from "../syntax/trees/ParseTreeType.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
 import {
   EQUAL_EQUAL,
   EQUAL_EQUAL_EQUAL,
   NOT_EQUAL,
   NOT_EQUAL_EQUAL,
-  TYPEOF
-} from '../syntax/TokenType.js';
-import { parseExpression} from './PlaceholderParser.js';
+  TYPEOF,
+} from "../syntax/TokenType.js";
+import { parseExpression } from "./PlaceholderParser.js";
 
 function isEqualityExpression(tree) {
   switch (tree.operator.type) {
@@ -48,24 +48,23 @@ function isTypeof(tree) {
 }
 
 function isSafeTypeofString(tree) {
-  if (tree.type !== LITERAL_EXPRESSION)
-    return false;
+  if (tree.type !== LITERAL_EXPRESSION) return false;
   let value = tree.literalToken.processedValue;
   switch (value) {
-    case 'symbol':
-    case 'object':
+    case "symbol":
+    case "object":
       return false;
   }
   return true;
 }
 
-
 /**
  * This transformer transforms typeof expressions to return 'symbol' when
  * symbols have been shimmed.
  */
-export class SymbolTransformer extends
-    ImportRuntimeTrait(ParseTreeTransformer) {
+export class SymbolTransformer extends ImportRuntimeTrait(
+  ParseTreeTransformer
+) {
   /**
    * @param {UniqueIdentifierGenerator} identifierGenerator
    * @param {ErrorReporter} reporter
@@ -120,7 +119,7 @@ export class SymbolTransformer extends
       // For ident we cannot just call the function since the ident might not
       // be bound to an identifier. This is important if the free variable
       // pass is not turned on.
-      return parseExpression `(typeof ${operand} === 'undefined' ?
+      return parseExpression`(typeof ${operand} === 'undefined' ?
           'undefined' : ${expression})`;
     }
 
@@ -128,7 +127,7 @@ export class SymbolTransformer extends
   }
 
   getRuntimeTypeof(operand) {
-    let typeOf = this.getRuntimeExpression('typeof');
-    return parseExpression `${typeOf}(${operand})`;
+    let typeOf = this.getRuntimeExpression("typeof");
+    return parseExpression`${typeOf}(${operand})`;
   }
 }

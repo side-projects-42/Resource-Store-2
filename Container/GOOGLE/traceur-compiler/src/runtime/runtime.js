@@ -15,8 +15,8 @@
 /**
  * The traceur runtime.
  */
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
   if (global.$traceurRuntime) {
     // Prevents from being executed multiple times.
@@ -30,24 +30,23 @@
   setupGlobals(global);
 
   // This may get overridden in symbols.js to handle emulated symbols.
-  var typeOf = x => typeof x;
+  var typeOf = (x) => typeof x;
 
   global.$traceurRuntime = {
     options: {},
     setupGlobals: setupGlobals,
     typeof: typeOf,
   };
-})((function() {
-  try {
-    return new Function('return this;')();
-  } catch(e) {
-    if (typeof window !== 'undefined')
-      return window;
-    if (typeof global !== 'undefined')
-      return global;
-    if (typeof self !== 'undefined')
-      return self;
+})(
+  (function () {
+    try {
+      return new Function("return this;")();
+    } catch (e) {
+      if (typeof window !== "undefined") return window;
+      if (typeof global !== "undefined") return global;
+      if (typeof self !== "undefined") return self;
 
-    return this;
-  }
-})());
+      return this;
+    }
+  })()
+);

@@ -1,6 +1,5 @@
 export class A {
   foo() {
-    throw new Error('test-intepreter');
+    throw new Error("test-intepreter");
   }
 }
-

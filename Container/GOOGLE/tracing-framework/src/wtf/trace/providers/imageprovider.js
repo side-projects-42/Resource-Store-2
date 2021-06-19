@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.providers.ImageProvider');
+goog.provide("wtf.trace.providers.ImageProvider");
 
-goog.require('wtf.trace.Provider');
-goog.require('wtf.trace.eventtarget');
-
-
+goog.require("wtf.trace.Provider");
+goog.require("wtf.trace.eventtarget");
 
 /**
  * Provides Image API events.
@@ -25,14 +23,14 @@ goog.require('wtf.trace.eventtarget');
  * @constructor
  * @extends {wtf.trace.Provider}
  */
-wtf.trace.providers.ImageProvider = function(options) {
+wtf.trace.providers.ImageProvider = function (options) {
   goog.base(this, options);
 
-  if (!goog.global['Image']) {
+  if (!goog.global["Image"]) {
     return;
   }
 
-  var level = options.getNumber('wtf.trace.provider.image', 1);
+  var level = options.getNumber("wtf.trace.provider.image", 1);
   if (!level) {
     return;
   }
@@ -41,33 +39,31 @@ wtf.trace.providers.ImageProvider = function(options) {
 };
 goog.inherits(wtf.trace.providers.ImageProvider, wtf.trace.Provider);
 
-
 /**
  * @override
  */
 wtf.trace.providers.ImageProvider.prototype.getSettingsSectionConfigs =
-    function() {
-  return [
-    {
-      'title': 'Images',
-      'widgets': [
-        {
-          'type': 'checkbox',
-          'key': 'wtf.trace.provider.image',
-          'title': 'Enabled',
-          'default': true
-        }
-      ]
-    }
-  ];
-};
-
+  function () {
+    return [
+      {
+        title: "Images",
+        widgets: [
+          {
+            type: "checkbox",
+            key: "wtf.trace.provider.image",
+            title: "Enabled",
+            default: true,
+          },
+        ],
+      },
+    ];
+  };
 
 /**
  * Injects the Image shim.
  * @private
  */
-wtf.trace.providers.ImageProvider.prototype.injectImage_ = function() {
+wtf.trace.providers.ImageProvider.prototype.injectImage_ = function () {
   // var originalImage = goog.global['Image'];
 
   // TODO(benvanik): inject both Image and HTMLImageElement
@@ -94,8 +90,7 @@ wtf.trace.providers.ImageProvider.prototype.injectImage_ = function() {
   }
 
   // Create a descriptor object.
-  var descriptor = wtf.trace.eventtarget.createDescriptor(
-      'Image', eventTypes);
+  var descriptor = wtf.trace.eventtarget.createDescriptor("Image", eventTypes);
 
   // Stash the descriptor. It may be used by the hookDomEvents util.
   wtf.trace.eventtarget.setDescriptor(proto, descriptor);

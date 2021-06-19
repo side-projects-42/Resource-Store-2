@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.VirtualTableSource');
+goog.provide("wtf.ui.VirtualTableSource");
 
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.events.EventType');
-
-
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.events.EventType");
 
 /**
  * Abstract data source type for the virtual table.
@@ -24,7 +22,7 @@ goog.require('wtf.events.EventType');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.ui.VirtualTableSource = function() {
+wtf.ui.VirtualTableSource = function () {
   goog.base(this);
 
   /**
@@ -45,7 +43,6 @@ wtf.ui.VirtualTableSource = function() {
 };
 goog.inherits(wtf.ui.VirtualTableSource, wtf.events.EventEmitter);
 
-
 /**
  * @enum {string}
  */
@@ -53,51 +50,46 @@ wtf.ui.VirtualTableSource.EventType = {
   /**
    * Row count changed.
    */
-  INVALIDATE_ROW_COUNT: 'row_count_changed'
+  INVALIDATE_ROW_COUNT: "row_count_changed",
 };
-
 
 /**
  * Gets the height, in pixels, of each row.
  * @return {number} Row height.
  */
-wtf.ui.VirtualTableSource.prototype.getRowHeight = function() {
+wtf.ui.VirtualTableSource.prototype.getRowHeight = function () {
   return this.rowHeight_;
 };
-
 
 /**
  * Sets the height, in pixels, of each row.
  * @param {number} value New row height.
  */
-wtf.ui.VirtualTableSource.prototype.setRowHeight = function(value) {
+wtf.ui.VirtualTableSource.prototype.setRowHeight = function (value) {
   if (this.rowHeight_ != value) {
     this.rowHeight_ = value;
     this.emitEvent(wtf.ui.VirtualTableSource.EventType.INVALIDATE_ROW_COUNT);
   }
 };
 
-
 /**
  * Gets the total number of rows in the data source.
  * @return {number} Row count.
  */
-wtf.ui.VirtualTableSource.prototype.getRowCount = function() {
+wtf.ui.VirtualTableSource.prototype.getRowCount = function () {
   return this.rowCount_;
 };
-
 
 /**
  * Sets the total number of rows in the data source.
  * @param {number} value New row count.
  */
-wtf.ui.VirtualTableSource.prototype.setRowCount = function(value) {
+wtf.ui.VirtualTableSource.prototype.setRowCount = function (value) {
   if (this.rowCount_ != value) {
     this.rowCount_ = value;
     this.emitEvent(wtf.ui.VirtualTableSource.EventType.INVALIDATE_ROW_COUNT);
   }
 };
-
 
 /**
  * Requests a paint of the given row range.
@@ -112,7 +104,6 @@ wtf.ui.VirtualTableSource.prototype.setRowCount = function(value) {
  */
 wtf.ui.VirtualTableSource.prototype.paintRowRange = goog.abstractMethod;
 
-
 /**
  * Handles click events on the given row.
  * @param {number} row Row.
@@ -124,7 +115,6 @@ wtf.ui.VirtualTableSource.prototype.paintRowRange = goog.abstractMethod;
  */
 wtf.ui.VirtualTableSource.prototype.onClick = goog.nullFunction;
 
-
 /**
  * Attempt to describe the given row.
  * @param {number} row Row.
@@ -134,11 +124,10 @@ wtf.ui.VirtualTableSource.prototype.onClick = goog.nullFunction;
  */
 wtf.ui.VirtualTableSource.prototype.getInfoString = goog.nullFunction;
 
-
 /**
  * Invalidates the table data.
  * This should be called when the contents of any rows change.
  */
-wtf.ui.VirtualTableSource.prototype.invalidate = function() {
+wtf.ui.VirtualTableSource.prototype.invalidate = function () {
   this.emitEvent(wtf.events.EventType.INVALIDATED);
 };

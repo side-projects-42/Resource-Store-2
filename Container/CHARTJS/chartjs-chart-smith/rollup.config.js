@@ -1,8 +1,8 @@
 /* eslint-disable import/no-commonjs */
 /* eslint-env es6 */
 
-const terser = require('rollup-plugin-terser').terser;
-const pkg = require('./package.json');
+const terser = require("rollup-plugin-terser").terser;
+const pkg = require("./package.json");
 
 const banner = `/*!
  * ${pkg.name} v${pkg.version}
@@ -12,40 +12,36 @@ const banner = `/*!
  */`;
 
 module.exports = [
-	{
-		input: 'src/index.js',
-		output: {
-			file: `dist/${pkg.name}.js`,
-			banner,
-			format: 'umd',
-			indent: false,
-			globals: {
-				'chart.js': 'Chart'
-			}
-		},
-		external: [
-			'chart.js'
-		]
-	},
-	{
-		input: 'src/index.js',
-		output: {
-			file: `dist/${pkg.name}.min.js`,
-			format: 'umd',
-			indent: false,
-			globals: {
-				'chart.js': 'Chart'
-			}
-		},
-		plugins: [
-			terser({
-				output: {
-					preamble: banner
-				}
-			})
-		],
-		external: [
-			'chart.js'
-		]
-	}
+  {
+    input: "src/index.js",
+    output: {
+      file: `dist/${pkg.name}.js`,
+      banner,
+      format: "umd",
+      indent: false,
+      globals: {
+        "chart.js": "Chart",
+      },
+    },
+    external: ["chart.js"],
+  },
+  {
+    input: "src/index.js",
+    output: {
+      file: `dist/${pkg.name}.min.js`,
+      format: "umd",
+      indent: false,
+      globals: {
+        "chart.js": "Chart",
+      },
+    },
+    plugins: [
+      terser({
+        output: {
+          preamble: banner,
+        },
+      }),
+    ],
+    external: ["chart.js"],
+  },
 ];

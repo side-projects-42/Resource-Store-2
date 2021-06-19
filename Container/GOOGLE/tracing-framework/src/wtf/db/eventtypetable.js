@@ -11,9 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.EventTypeTable');
-
-
+goog.provide("wtf.db.EventTypeTable");
 
 /**
  * Event type definition table.
@@ -21,7 +19,7 @@ goog.provide('wtf.db.EventTypeTable');
  *
  * @constructor
  */
-wtf.db.EventTypeTable = function() {
+wtf.db.EventTypeTable = function () {
   /**
    * The next ID to assign to a new event type.
    * 0 is reserved.
@@ -52,7 +50,6 @@ wtf.db.EventTypeTable = function() {
   this.eventsByName_ = Object.create(null);
 };
 
-
 /**
  * Adds an event type to the event table.
  * If the event type is already defined the existing one is returned. If any of
@@ -60,7 +57,7 @@ wtf.db.EventTypeTable = function() {
  * @param {!wtf.db.EventType} eventType Event type.
  * @return {!wtf.db.EventType} The given event type or an existing one.
  */
-wtf.db.EventTypeTable.prototype.defineType = function(eventType) {
+wtf.db.EventTypeTable.prototype.defineType = function (eventType) {
   var existingEventType = this.eventsByName_[eventType.name];
   if (!existingEventType) {
     eventType.id = this.nextTypeId_++;
@@ -75,15 +72,13 @@ wtf.db.EventTypeTable.prototype.defineType = function(eventType) {
   return existingEventType;
 };
 
-
 /**
  * Gets a list of all event types.
  * @return {!Array.<!wtf.db.EventType>} List of event types. Do not modify.
  */
-wtf.db.EventTypeTable.prototype.getAll = function() {
+wtf.db.EventTypeTable.prototype.getAll = function () {
   return this.list_;
 };
-
 
 /**
  * Gets a list of events whose name matches the given regex.
@@ -92,12 +87,11 @@ wtf.db.EventTypeTable.prototype.getAll = function() {
  *     for all classes.
  * @return {!Array.<!wtf.db.EventType>} A list of matching events.
  */
-wtf.db.EventTypeTable.prototype.getAllMatching = function(regex, opt_class) {
+wtf.db.EventTypeTable.prototype.getAllMatching = function (regex, opt_class) {
   var matches = [];
   for (var n = 0; n < this.list_.length; n++) {
     var eventType = this.list_[n];
-    if (opt_class !== undefined &&
-        eventType.eventClass !== opt_class) {
+    if (opt_class !== undefined && eventType.eventClass !== opt_class) {
       continue;
     }
     if (regex.test(eventType.name)) {
@@ -107,14 +101,13 @@ wtf.db.EventTypeTable.prototype.getAllMatching = function(regex, opt_class) {
   return matches;
 };
 
-
 /**
  * Gets a set of event type IDs whose names match the given regex.
  * @param {!RegExp} regex Regex.
  * @return {!Object.<boolean>} A set of event type IDs whose names
  *     match the regex.
  */
-wtf.db.EventTypeTable.prototype.getSetMatching = function(regex) {
+wtf.db.EventTypeTable.prototype.getSetMatching = function (regex) {
   var matches = {};
   for (var n = 0; n < this.list_.length; n++) {
     var eventType = this.list_[n];
@@ -125,36 +118,37 @@ wtf.db.EventTypeTable.prototype.getSetMatching = function(regex) {
   return matches;
 };
 
-
 /**
  * Gets the event type for the given event ID.
  * @param {number} id Event ID.
  * @return {wtf.db.EventType?} Event type, if found.
  */
-wtf.db.EventTypeTable.prototype.getById = function(id) {
+wtf.db.EventTypeTable.prototype.getById = function (id) {
   return this.eventsById_[id] || null;
 };
-
 
 /**
  * Gets the event type for the given event name.
  * @param {string} name Event name.
  * @return {wtf.db.EventType?} Event type, if found.
  */
-wtf.db.EventTypeTable.prototype.getByName = function(name) {
+wtf.db.EventTypeTable.prototype.getByName = function (name) {
   return this.eventsByName_[name] || null;
 };
 
-
-goog.exportSymbol(
-    'wtf.db.EventTypeTable',
-    wtf.db.EventTypeTable);
+goog.exportSymbol("wtf.db.EventTypeTable", wtf.db.EventTypeTable);
 goog.exportProperty(
-    wtf.db.EventTypeTable.prototype, 'getAll',
-    wtf.db.EventTypeTable.prototype.getAll);
+  wtf.db.EventTypeTable.prototype,
+  "getAll",
+  wtf.db.EventTypeTable.prototype.getAll
+);
 goog.exportProperty(
-    wtf.db.EventTypeTable.prototype, 'getAllMatching',
-    wtf.db.EventTypeTable.prototype.getAllMatching);
+  wtf.db.EventTypeTable.prototype,
+  "getAllMatching",
+  wtf.db.EventTypeTable.prototype.getAllMatching
+);
 goog.exportProperty(
-    wtf.db.EventTypeTable.prototype, 'getByName',
-    wtf.db.EventTypeTable.prototype.getByName);
+  wtf.db.EventTypeTable.prototype,
+  "getByName",
+  wtf.db.EventTypeTable.prototype.getByName
+);

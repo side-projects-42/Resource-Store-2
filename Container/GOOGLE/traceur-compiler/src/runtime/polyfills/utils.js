@@ -22,7 +22,8 @@ const $TypeError = TypeError;
 const $Object = Object;
 
 export function toObject(x) {
-  if (x == null) {  // Needs to be ==
+  if (x == null) {
+    // Needs to be ==
     throw $TypeError();
   }
   return $Object(x);
@@ -33,16 +34,16 @@ export function toUint32(x) {
 }
 
 export function isObject(x) {
-  return x && (typeof x === 'object' || typeof x === 'function');
+  return x && (typeof x === "object" || typeof x === "function");
 }
 
 // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-iscallable
 export function isCallable(x) {
-  return typeof x === 'function';
+  return typeof x === "function";
 }
 
 export function isNumber(x) {
-  return typeof x === 'number';
+  return typeof x === "number";
 }
 
 // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tointeger
@@ -73,7 +74,7 @@ export function isConstructor(x) {
 
 // 15.19.4.3.4 CreateIterResultObject
 export function createIteratorResultObject(value, done) {
-  return {value: value, done: done};
+  return { value: value, done: done };
 }
 
 export function maybeDefine(object, name, descr) {
@@ -87,7 +88,7 @@ export function maybeDefineMethod(object, name, value) {
     value: value,
     configurable: true,
     enumerable: false,
-    writable: true
+    writable: true,
   });
 }
 
@@ -96,7 +97,7 @@ export function maybeDefineConst(object, name, value) {
     value: value,
     configurable: false,
     enumerable: false,
-    writable: false
+    writable: false,
   });
 }
 
@@ -117,18 +118,16 @@ export function maybeAddConsts(object, consts) {
 }
 
 export function maybeAddIterator(object, func, Symbol) {
-  if (!Symbol || !Symbol.iterator || object[Symbol.iterator])
-    return;
+  if (!Symbol || !Symbol.iterator || object[Symbol.iterator]) return;
 
   // Firefox does not have symbols so they use a hack.
-  if (object['@@iterator'])
-    func = object['@@iterator'];
+  if (object["@@iterator"]) func = object["@@iterator"];
 
   Object.defineProperty(object, Symbol.iterator, {
     value: func,
     configurable: true,
     enumerable: false,
-    writable: true
+    writable: true,
   });
 }
 

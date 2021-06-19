@@ -17,7 +17,7 @@ const $TypeError = TypeError;
 // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-checkobjectcoercible
 export default function checkObjectCoercible(v) {
   if (v === null || v === undefined) {
-    throw new $TypeError('Value cannot be converted to an Object');
+    throw new $TypeError("Value cannot be converted to an Object");
   }
   return v;
 }

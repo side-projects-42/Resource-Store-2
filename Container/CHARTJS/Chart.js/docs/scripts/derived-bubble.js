@@ -1,4 +1,4 @@
-import {Chart, BubbleController} from 'chart.js';
+import { Chart, BubbleController } from "chart.js";
 
 class Custom extends BubbleController {
   draw() {
@@ -11,8 +11,8 @@ class Custom extends BubbleController {
     var meta = this.getMeta();
     var pt0 = meta.data[0];
 
-    const {x, y} = pt0.getProps(['x', 'y']);
-    const {radius} = pt0.options;
+    const { x, y } = pt0.getProps(["x", "y"]);
+    const { radius } = pt0.options;
 
     var ctx = this.chart.ctx;
     ctx.save();
@@ -22,10 +22,10 @@ class Custom extends BubbleController {
     ctx.restore();
   }
 }
-Custom.id = 'derivedBubble';
+Custom.id = "derivedBubble";
 Custom.defaults = {
   // Custom defaults. Bubble defaults are inherited.
-  boxStrokeStyle: 'red'
+  boxStrokeStyle: "red",
 };
 // Overrides are only inherited, but not merged if defined
 // Custom.overrides = Chart.overrides.bubble;

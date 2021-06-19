@@ -1,0 +1,24 @@
+{
+  "name": "c-sdk-container-example",
+  "fullName": "newrelic/c-sdk-container-example",
+  "slug": "newrelic-c-sdk-container-example",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "C-SDK and Daemon Containers Example",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/c-sdk-container-example",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/c-sdk-container-example",
+  "iconUrl": null,
+  "shortDescription": "C-SDK container example",
+  "description": "Simple application that demonstrates the new container friendly world of the C-SDK",
+  "ossCategory": "example-code",
+  "primaryLanguage": "C",
+  "projectTags": ["sdk"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "c sdk-container-example",
+    "url": "https://github.com/newrelic/c-sdk-container-example"
+  }
+}

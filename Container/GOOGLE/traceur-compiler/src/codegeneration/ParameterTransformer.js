@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {FunctionBody} from '../syntax/trees/ParseTrees.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {prependStatements} from './PrependStatements.js';
+import { FunctionBody } from "../syntax/trees/ParseTrees.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { prependStatements } from "./PrependStatements.js";
 
 let stack = [];
 
@@ -66,12 +66,10 @@ export class ParameterTransformer extends TempVarTransformer {
     // transformGetAccessor, transformSetAccessor,
     // transformMethod)
     let statements = stack.pop();
-    if (!statements.length)
-      return transformedTree;
+    if (!statements.length) return transformedTree;
 
     // Prepend the var statements to the block.
-    statements = prependStatements(transformedTree.statements,
-                                   ...statements);
+    statements = prependStatements(transformedTree.statements, ...statements);
 
     return new FunctionBody(transformedTree.location, statements);
   }

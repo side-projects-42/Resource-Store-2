@@ -1,8 +1,8 @@
 assert.throws(() => {
   var object = {
-    "notNamedField"() {
+    notNamedField() {
       return notNamedField;
-    }
+    },
   };
   object.notNamedField();
 }, ReferenceError);

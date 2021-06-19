@@ -1,36 +1,36 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
       datasets: [
-        {label: 'a', data: []},
-        {label: 'b', data: []},
-        {label: 'c', data: []}
-      ]
+        { label: "a", data: [] },
+        { label: "b", data: [] },
+        { label: "c", data: [] },
+      ],
     },
     options: {
       plugins: {
         legend: {
-          position: 'bottom',
-          align: 'center',
+          position: "bottom",
+          align: "center",
           title: {
             display: true,
-            position: 'center',
-            text: 'title'
-          }
-        }
+            position: "center",
+            text: "title",
+          },
+        },
       },
       scales: {
-        x: {display: false},
-        y: {display: false}
-      }
-    }
+        x: { display: false },
+        y: { display: false },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 256,
-      width: 256
-    }
-  }
+      width: 256,
+    },
+  },
 };

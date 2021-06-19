@@ -1,0 +1,35 @@
+[
+	{
+		"gsx$fullname": {
+			"$t": "Scott González"
+		},
+		"gsx$emailaddress": {
+			"$t": "scott.gonzalez@gmail.com"
+		},
+		"gsx$confirmation": {
+			"$t": "I AGREE"
+		}
+	},
+	{
+		"gsx$fullname": {
+			"$t": "Alexander Schmitz"
+		},
+		"gsx$emailaddress": {
+			"$t": "arschmitz@gmail.com"
+		},
+		"gsx$confirmation": {
+			"$t": "I AGREE"
+		}
+	},
+	{
+		"gsx$fullname": {
+			"$t": "Jörn Zaefferer"
+		},
+		"gsx$emailaddress": {
+			"$t": "joern.zaefferer@gmail.com"
+		},
+		"gsx$confirmation": {
+			"$t": "I AGREE"
+		}
+	}
+]

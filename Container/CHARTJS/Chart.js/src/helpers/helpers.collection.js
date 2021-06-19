@@ -1,4 +1,4 @@
-import {_capitalize} from './helpers.core';
+import { _capitalize } from "./helpers.core";
 
 /**
  * Binary search
@@ -22,7 +22,7 @@ export function _lookup(table, value, cmp) {
     }
   }
 
-  return {lo, hi};
+  return { lo, hi };
 }
 
 /**
@@ -33,7 +33,7 @@ export function _lookup(table, value, cmp) {
  * @private
  */
 export const _lookupByKey = (table, key, value) =>
-  _lookup(table, value, index => table[index][key] < value);
+  _lookup(table, value, (index) => table[index][key] < value);
 
 /**
  * Reverse binary search
@@ -43,7 +43,7 @@ export const _lookupByKey = (table, key, value) =>
  * @private
  */
 export const _rlookupByKey = (table, key, value) =>
-  _lookup(table, value, index => table[index][key] >= value);
+  _lookup(table, value, (index) => table[index][key] >= value);
 
 /**
  * Return subset of `values` between `min` and `max` inclusive.
@@ -63,12 +63,10 @@ export function _filterBetween(values, min, max) {
     end--;
   }
 
-  return start > 0 || end < values.length
-    ? values.slice(start, end)
-    : values;
+  return start > 0 || end < values.length ? values.slice(start, end) : values;
 }
 
-const arrayEvents = ['push', 'pop', 'shift', 'splice', 'unshift'];
+const arrayEvents = ["push", "pop", "shift", "splice", "unshift"];
 
 /**
  * Hooks the array methods that add or remove values ('push', pop', 'shift', 'splice',
@@ -81,16 +79,16 @@ export function listenArrayEvents(array, listener) {
     return;
   }
 
-  Object.defineProperty(array, '_chartjs', {
+  Object.defineProperty(array, "_chartjs", {
     configurable: true,
     enumerable: false,
     value: {
-      listeners: [listener]
-    }
+      listeners: [listener],
+    },
   });
 
   arrayEvents.forEach((key) => {
-    const method = '_onData' + _capitalize(key);
+    const method = "_onData" + _capitalize(key);
     const base = array[key];
 
     Object.defineProperty(array, key, {
@@ -100,17 +98,16 @@ export function listenArrayEvents(array, listener) {
         const res = base.apply(this, args);
 
         array._chartjs.listeners.forEach((object) => {
-          if (typeof object[method] === 'function') {
+          if (typeof object[method] === "function") {
             object[method](...args);
           }
         });
 
         return res;
-      }
+      },
     });
   });
 }
-
 
 /**
  * Removes the given array event listener and cleanup extra attached properties (such as

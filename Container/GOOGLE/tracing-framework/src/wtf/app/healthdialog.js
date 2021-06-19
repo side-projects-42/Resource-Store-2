@@ -11,14 +11,12 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.HealthDialog');
+goog.provide("wtf.app.HealthDialog");
 
-goog.require('goog.soy');
-goog.require('wtf.app.healthdialog');
-goog.require('wtf.ui.Dialog');
-goog.require('wtf.util');
-
-
+goog.require("goog.soy");
+goog.require("wtf.app.healthdialog");
+goog.require("wtf.ui.Dialog");
+goog.require("wtf.util");
 
 /**
  * Health overlay screen.
@@ -30,47 +28,60 @@ goog.require('wtf.util');
  * @constructor
  * @extends {wtf.ui.Dialog}
  */
-wtf.app.HealthDialog = function(db, healthInfo, parentElement, opt_dom) {
-  goog.base(this, {
-    modal: true
-  }, parentElement, opt_dom);
+wtf.app.HealthDialog = function (db, healthInfo, parentElement, opt_dom) {
+  goog.base(
+    this,
+    {
+      modal: true,
+    },
+    parentElement,
+    opt_dom
+  );
 
   var dom = this.getDom();
 
   // Not all traces have this information.
   if (healthInfo.getOverheadPerScopeNs()) {
     dom.setTextContent(
-        this.getChildElement(goog.getCssName('overheadPerScope')),
-        (healthInfo.getOverheadPerScopeNs() / 1000) + '\u00B5s');
+      this.getChildElement(goog.getCssName("overheadPerScope")),
+      healthInfo.getOverheadPerScopeNs() / 1000 + "\u00B5s"
+    );
     dom.setTextContent(
-        this.getChildElement(goog.getCssName('totalOverhead')),
-        wtf.util.formatSmallTime(healthInfo.getTotalOverheadMs()) + ' ' +
-        '(~' + healthInfo.getTotalOverheadPercent().toFixed(3) + '%)');
+      this.getChildElement(goog.getCssName("totalOverhead")),
+      wtf.util.formatSmallTime(healthInfo.getTotalOverheadMs()) +
+        " " +
+        "(~" +
+        healthInfo.getTotalOverheadPercent().toFixed(3) +
+        "%)"
+    );
   }
 
-  var warningsDiv = this.getChildElement(goog.getCssName('warningsList'));
+  var warningsDiv = this.getChildElement(goog.getCssName("warningsList"));
   var warnings = healthInfo.getWarnings();
   for (var n = 0; n < warnings.length; n++) {
     var warning = warnings[n];
 
     var div = goog.soy.renderAsFragment(
-        wtf.app.healthdialog.warning, {
-          title: warning.getTitle(),
-          suggestion: warning.getSuggestion(),
-          details: warning.getDetails(),
-          link: warning.getLink()
-        }, undefined, dom);
+      wtf.app.healthdialog.warning,
+      {
+        title: warning.getTitle(),
+        suggestion: warning.getSuggestion(),
+        details: warning.getDetails(),
+        link: warning.getLink(),
+      },
+      undefined,
+      dom
+    );
     dom.appendChild(warningsDiv, div);
   }
 };
 goog.inherits(wtf.app.HealthDialog, wtf.ui.Dialog);
 
-
 /**
  * @override
  */
-wtf.app.HealthDialog.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
-      wtf.app.healthdialog.control, {
-      }, undefined, dom));
+wtf.app.HealthDialog.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(wtf.app.healthdialog.control, {}, undefined, dom)
+  );
 };

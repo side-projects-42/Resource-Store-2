@@ -6,8 +6,8 @@ html {
   height: 100%;
 }
 /* apply a natural box layout model to all elements */
-* {  
-  box-sizing: border-box; 
+* {
+  box-sizing: border-box;
 }
 body {
   margin: 0px;
@@ -17,7 +17,10 @@ body {
   height: 100%;
 }
 
-.cm-s-monokai {background: #272822; color: #f8f8f2;}
+.cm-s-monokai {
+  background: #272822;
+  color: #f8f8f2;
+}
 
 .hbox {
   -webkit-flex-flow: row;
@@ -30,7 +33,7 @@ body {
   -webkit-flex-flow: column;
   -webkit-flex-wrap: nowrap;
   display: -webkit-flex;
-  width: 100%;  
+  width: 100%;
   min-width: 10ex;
 }
 
@@ -50,54 +53,54 @@ body {
 }
 
 .onPanelOpen {
-    padding: 1em;
-    display: none;
-    min-height: 200px;
-    z-index: 75;
-    background-color: #272822;
-    position: absolute;
-    width: 100%;
-    color: #75715e;
-    cursor: default;
-    top: 15px;
+  padding: 1em;
+  display: none;
+  min-height: 200px;
+  z-index: 75;
+  background-color: #272822;
+  position: absolute;
+  width: 100%;
+  color: #75715e;
+  cursor: default;
+  top: 15px;
 }
 
 .IfQPNotInstalled {
-    display: block;
+  display: block;
 }
 
 .IfQPInstalled {
-    display: none;
+  display: none;
 }
 
 .QPInstalled .IfQPNotInstalled {
-    display: none;
+  display: none;
 }
 
 .QPInstalled .IfQPInstalled {
-    display: block;
+  display: block;
 }
 
 .onPanelOpen .hint {
-    float: right;
+  float: right;
 }
 
 .onPanelOpen .initialOptions {
-    padding-left: 1em;
+  padding-left: 1em;
 }
 
 .onPanelOpen button {
-    border-radius: 999px;
-    border-color: #75715e;
+  border-radius: 999px;
+  border-color: #75715e;
 }
 
 .onPanelOpen .noticeThis {
-    font-size: x-large;
+  font-size: x-large;
 }
 
 .showHelp .onPanelOpen .hint_overview {
-    color: #75715e;
-    background-color: #272822;
+  color: #75715e;
+  background-color: #272822;
 }
 
 .splitter {
@@ -108,15 +111,15 @@ body {
 }
 .panelInitialization {
   margin: 0;
-  background: gray; 
-  width:      100%;
-  height:     100%; 
-  z-index:    100;
-  top:        0; 
-  left:       0; 
+  background: gray;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
   position: fixed;
   display: table-cell;
-  vertical-align: middle; 
+  vertical-align: middle;
   text-align: center;
   padding: 3em;
 }
@@ -124,7 +127,7 @@ body {
 .largeMessage {
   padding: 3em;
   font-size: xx-large;
-  font-family: arial,san-serif;
+  font-family: arial, san-serif;
 }
 
 .unittest {
@@ -139,16 +142,16 @@ body {
 }
 
 .showHelp .helpInfo {
-    z-index: 200;
-    position: absolute;
-    display: inline;
-    color: #d0d0d0;
-    background-color: #75715e;
-    padding: 1em;
-    margin: 1em;
-    border-radius: 999px; /* any value larger than the radius of the object gives a circle */
-    width: 200px;
-} 
+  z-index: 200;
+  position: absolute;
+  display: inline;
+  color: #d0d0d0;
+  background-color: #75715e;
+  padding: 1em;
+  margin: 1em;
+  border-radius: 999px; /* any value larger than the radius of the object gives a circle */
+  width: 200px;
+}
 
 .explainTokenPanel {
   font-family: Lucida Grande, sans-serif;
@@ -168,8 +171,8 @@ a {
   cursor: pointer;
 }
 
-a:focus, a:active {
+a:focus,
+a:active {
   background-color: rgb(33, 34, 31);
   outline: none;
 }
-

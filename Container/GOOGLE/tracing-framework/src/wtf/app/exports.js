@@ -12,14 +12,13 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.exports');
+goog.provide("wtf.app.exports");
 
 /** @suppress {extraRequire} */
-goog.require('goog.events.EventWrapper');
+goog.require("goog.events.EventWrapper");
 /** @suppress {extraRequire} */
-goog.require('goog.vec.Vec3');
-goog.require('wtf.app');
-
+goog.require("goog.vec.Vec3");
+goog.require("wtf.app");
 
 /**
  * @define {boolean} Whether to enable exporting of the wtf.ui
@@ -31,10 +30,7 @@ goog.require('wtf.app');
  */
 wtf.app.exports.ENABLE_EXPORTS = false;
 
-
 if (wtf.app.exports.ENABLE_EXPORTS) {
   // wtf.app controls
-  goog.exportSymbol(
-      'wtf.app.show',
-      wtf.app.show);
+  goog.exportSymbol("wtf.app.show", wtf.app.show);
 }

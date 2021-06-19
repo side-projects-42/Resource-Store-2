@@ -1,4 +1,4 @@
-import {cbrt} from '../../../src/runtime/polyfills/Math.js';
+import { cbrt } from "../../../src/runtime/polyfills/Math.js";
 
 function testCbrt(cbrt) {
   assert.equal(0, cbrt(0));

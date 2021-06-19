@@ -1,34 +1,34 @@
-const commonjs = require('rollup-plugin-commonjs');
-const istanbul = require('rollup-plugin-istanbul');
-const resolve = require('rollup-plugin-node-resolve');
-const builds = require('./rollup.config');
-const yargs = require('yargs');
+const commonjs = require("rollup-plugin-commonjs");
+const istanbul = require("rollup-plugin-istanbul");
+const resolve = require("rollup-plugin-node-resolve");
+const builds = require("./rollup.config");
+const yargs = require("yargs");
 
-module.exports = function(karma) {
+module.exports = function (karma) {
   const args = yargs.argv;
   const regex = args.autoWatch ? /s\.js$/ : /s\.min\.js$/;
-  const pattern = !args.grep || args.grep === true ? '' : args.grep;
+  const pattern = !args.grep || args.grep === true ? "" : args.grep;
   const specs = `test/specs/**/*${pattern}*spec.js`;
   const output = builds[0].output.filter((v) => v.file.match(regex))[0];
-  const build = Object.assign({}, builds[0], {output: output});
+  const build = Object.assign({}, builds[0], { output: output });
 
   if (args.autoWatch) {
-    build.output.sourcemap = 'inline';
+    build.output.sourcemap = "inline";
   }
 
   karma.set({
-    browsers: ['firefox'],
-    frameworks: ['jasmine'],
-    reporters: ['spec', 'kjhtml'],
+    browsers: ["firefox"],
+    frameworks: ["jasmine"],
+    reporters: ["spec", "kjhtml"],
     logLevel: karma.LOG_WARN,
 
     files: [
-      {pattern: './test/fixtures/**/*.js', included: false},
-      {pattern: './test/fixtures/**/*.png', included: false},
-      'node_modules/chart.js/dist/Chart.js',
-      'test/index.js',
-      'src/plugin.js',
-      specs
+      { pattern: "./test/fixtures/**/*.js", included: false },
+      { pattern: "./test/fixtures/**/*.png", included: false },
+      "node_modules/chart.js/dist/Chart.js",
+      "test/index.js",
+      "src/plugin.js",
+      specs,
     ],
 
     // Explicitly disable hardware acceleration to make image
@@ -36,72 +36,67 @@ module.exports = function(karma) {
     // https://github.com/chartjs/Chart.js/pull/5629
     customLaunchers: {
       firefox: {
-        base: 'Firefox',
+        base: "Firefox",
         prefs: {
-          'layers.acceleration.disabled': true
-        }
-      }
+          "layers.acceleration.disabled": true,
+        },
+      },
     },
 
     preprocessors: {
-      'test/fixtures/**/*.js': ['fixtures'],
-      'test/specs/**/*.js': ['rollup'],
-      'test/index.js': ['rollup'],
-      'src/plugin.js': ['sources']
+      "test/fixtures/**/*.js": ["fixtures"],
+      "test/specs/**/*.js": ["rollup"],
+      "test/index.js": ["rollup"],
+      "src/plugin.js": ["sources"],
     },
 
     rollupPreprocessor: {
-      plugins: [
-        resolve(),
-        commonjs()
-      ],
-      external: [
-        'chart.js',
-        'chartjs-plugin-datalabels',
-      ],
+      plugins: [resolve(), commonjs()],
+      external: ["chart.js", "chartjs-plugin-datalabels"],
       output: {
-        format: 'umd',
+        format: "umd",
         globals: {
-          'chart.js': 'Chart',
-          'chartjs-plugin-datalabels': 'ChartDataLabels',
-        }
-      }
+          "chart.js": "Chart",
+          "chartjs-plugin-datalabels": "ChartDataLabels",
+        },
+      },
     },
 
     customPreprocessors: {
       fixtures: {
-        base: 'rollup',
+        base: "rollup",
         options: {
           output: {
-            format: 'iife',
-            name: 'fixture'
-          }
-        }
+            format: "iife",
+            name: "fixture",
+          },
+        },
       },
       sources: {
-        base: 'rollup',
-        options: build
-      }
-    }
+        base: "rollup",
+        options: build,
+      },
+    },
   });
 
   if (args.coverage) {
-    karma.reporters.push('coverage');
+    karma.reporters.push("coverage");
     karma.coverageReporter = {
-      dir: 'coverage/',
+      dir: "coverage/",
       reporters: [
-        {type: 'html', subdir: 'html'},
-        {type: 'lcovonly', subdir: '.'}
-      ]
+        { type: "html", subdir: "html" },
+        { type: "lcovonly", subdir: "." },
+      ],
     };
     [
       karma.rollupPreprocessor,
-      karma.customPreprocessors.sources.options
+      karma.customPreprocessors.sources.options,
     ].forEach((v) => {
       (v.plugins || (v.plugins = [])).push(
         istanbul({
-          include: 'src/**/*.js'
-        }));
+          include: "src/**/*.js",
+        })
+      );
     });
   }
 };

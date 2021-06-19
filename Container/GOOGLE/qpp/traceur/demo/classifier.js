@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var classifyTraceurTokens = function() {};
+var classifyTraceurTokens = function () {};
 
-(function() {
-  'use strict';
+(function () {
+  "use strict";
 
   var Scanner = traceur.syntax.Scanner;
   var SourceRange = traceur.util.SourceRange;
@@ -26,15 +26,15 @@ var classifyTraceurTokens = function() {};
   var Keywords = traceur.syntax.Keywords;
 
   var Classification = {
-    ERROR: 'error',
-    COMMENT: 'comment',
-    IDENTIFIER: 'identifier',
-    KEYWORD: 'keyword',
-    PUNCTUATOR: 'punctuator',
-    STRING: 'string',
-    NUMBER: 'number',
-    REGEX: 'regex',
-    CONTEXTUAL: 'contextual'
+    ERROR: "error",
+    COMMENT: "comment",
+    IDENTIFIER: "identifier",
+    KEYWORD: "keyword",
+    PUNCTUATOR: "punctuator",
+    STRING: "string",
+    NUMBER: "number",
+    REGEX: "regex",
+    CONTEXTUAL: "contextual",
   };
 
   /**
@@ -77,7 +77,7 @@ var classifyTraceurTokens = function() {};
      * @param {Classification} category
      * @param {SourceRange} location
      */
-    pushResult_: function(category, location) {
+    pushResult_: function (category, location) {
       var start = location.start.offset;
       var end = location.end.offset;
       var contents = this.source_.contents;
@@ -97,19 +97,19 @@ var classifyTraceurTokens = function() {};
 
     // Comments don't come back as tokens, so we need to override them to
     // capture the spans.
-    skipSingleLineComment_: function() {
+    skipSingleLineComment_: function () {
       var beginToken = this.index_;
       proto.skipSingleLineComment_.call(this);
       this.pushResult_(Classification.COMMENT, this.getTokenRange_(beginToken));
     },
 
-    skipMultiLineComment_: function() {
+    skipMultiLineComment_: function () {
       var beginToken = this.index_;
       proto.skipMultiLineComment_.call(this);
       this.pushResult_(Classification.COMMENT, this.getTokenRange_(beginToken));
     },
 
-    scanToken_: function() {
+    scanToken_: function () {
       var token = proto.scanToken_.call(this);
       var c;
       switch (token.type) {
@@ -128,7 +128,8 @@ var classifyTraceurTokens = function() {};
             case PredefinedName.SET:
               c = Classification.CONTEXTUAL;
               break;
-            default: // otherwise, identifier
+            default:
+              // otherwise, identifier
               c = Classification.IDENTIFIER;
           }
           break;
@@ -220,7 +221,7 @@ var classifyTraceurTokens = function() {};
       }
       this.pushResult_(c, token.location);
       return token;
-    }
+    },
   };
 
   /**
@@ -228,11 +229,10 @@ var classifyTraceurTokens = function() {};
    * @return {Array.<Classification>}
    */
   function getClassifiedTokens(source) {
-    var sourceFile = new SourceFile('inline-script', source);
+    var sourceFile = new SourceFile("inline-script", source);
     var classifier = new Classifier(new ErrorReporter(), sourceFile);
 
-    while (classifier.nextToken().type !== TokenType.END_OF_FILE) {
-    }
+    while (classifier.nextToken().type !== TokenType.END_OF_FILE) {}
 
     return classifier.classifications_;
   }
@@ -243,21 +243,21 @@ var classifyTraceurTokens = function() {};
    */
   function classifySource(source) {
     var result = [];
-    getClassifiedTokens(source).forEach(function(c) {
+    getClassifiedTokens(source).forEach(function (c) {
       if (c.category) {
-        result.push('<span class="', c.category, '">', c.text, '</span>');
+        result.push('<span class="', c.category, '">', c.text, "</span>");
       } else {
         result.push(c.text);
       }
     });
-    return result.join('');
+    return result.join("");
   }
 
   classifyTraceurTokens = classifySource;
 
   function classifyAllScripts() {
-    var scripts = document.querySelectorAll('pre');
-    Array.prototype.forEach.call(scripts, function(preElement) {
+    var scripts = document.querySelectorAll("pre");
+    Array.prototype.forEach.call(scripts, function (preElement) {
       // get textContent to strip out existing <span >tags
       var source = preElement.textContent;
       var classifiedSource = classifySource(source);
@@ -268,5 +268,4 @@ var classifyTraceurTokens = function() {};
   }
 
   classifyAllScripts();
-
 })();

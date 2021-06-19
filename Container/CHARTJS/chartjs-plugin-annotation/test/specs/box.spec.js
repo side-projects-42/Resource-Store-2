@@ -1,3 +1,3 @@
-describe('Box annotation', function() {
-  describe('auto', jasmine.fixtures('box'));
+describe("Box annotation", function () {
+  describe("auto", jasmine.fixtures("box"));
 });

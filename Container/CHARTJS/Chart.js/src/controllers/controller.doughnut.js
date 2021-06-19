@@ -1,7 +1,18 @@
-import DatasetController from '../core/core.datasetController';
-import {isArray, toPercentage, toDimension, valueOrDefault} from '../helpers/helpers.core';
-import {formatNumber} from '../helpers/helpers.intl';
-import {toRadians, PI, TAU, HALF_PI, _angleBetween} from '../helpers/helpers.math';
+import DatasetController from "../core/core.datasetController";
+import {
+  isArray,
+  toPercentage,
+  toDimension,
+  valueOrDefault,
+} from "../helpers/helpers.core";
+import { formatNumber } from "../helpers/helpers.intl";
+import {
+  toRadians,
+  PI,
+  TAU,
+  HALF_PI,
+  _angleBetween,
+} from "../helpers/helpers.math";
 
 /**
  * @typedef { import("../core/core.controller").default } Chart
@@ -20,8 +31,14 @@ function getRatioAndOffset(rotation, circumference, cutout) {
     const startY = Math.sin(startAngle);
     const endX = Math.cos(endAngle);
     const endY = Math.sin(endAngle);
-    const calcMax = (angle, a, b) => _angleBetween(angle, startAngle, endAngle, true) ? 1 : Math.max(a, a * cutout, b, b * cutout);
-    const calcMin = (angle, a, b) => _angleBetween(angle, startAngle, endAngle, true) ? -1 : Math.min(a, a * cutout, b, b * cutout);
+    const calcMax = (angle, a, b) =>
+      _angleBetween(angle, startAngle, endAngle, true)
+        ? 1
+        : Math.max(a, a * cutout, b, b * cutout);
+    const calcMin = (angle, a, b) =>
+      _angleBetween(angle, startAngle, endAngle, true)
+        ? -1
+        : Math.min(a, a * cutout, b, b * cutout);
     const maxX = calcMax(0, startX, endX);
     const maxY = calcMax(HALF_PI, startY, endY);
     const minX = calcMin(PI, startX, endX);
@@ -31,11 +48,10 @@ function getRatioAndOffset(rotation, circumference, cutout) {
     offsetX = -(maxX + minX) / 2;
     offsetY = -(maxY + minY) / 2;
   }
-  return {ratioX, ratioY, offsetX, offsetY};
+  return { ratioX, ratioY, offsetX, offsetY };
 }
 
 export default class DoughnutController extends DatasetController {
-
   constructor(chart, datasetIndex) {
     super(chart, datasetIndex);
 
@@ -49,8 +65,8 @@ export default class DoughnutController extends DatasetController {
   linkScales() {}
 
   /**
-	 * Override data parsing, since we are not using scales
-	 */
+   * Override data parsing, since we are not using scales
+   */
   parse(start, count) {
     const data = this.getDataset().data;
     const meta = this._cachedMeta;
@@ -61,23 +77,23 @@ export default class DoughnutController extends DatasetController {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _getRotation() {
     return toRadians(this.options.rotation - 90);
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _getCircumference() {
     return toRadians(this.options.circumference);
   }
 
   /**
-	 * Get the maximal rotation & circumference extents
-	 * across all visible datasets.
-	 */
+   * Get the maximal rotation & circumference extents
+   * across all visible datasets.
+   */
   _getRotationExtents() {
     let min = TAU;
     let max = -TAU;
@@ -102,36 +118,46 @@ export default class DoughnutController extends DatasetController {
   }
 
   /**
-	 * @param {string} mode
-	 */
+   * @param {string} mode
+   */
   update(mode) {
     const me = this;
     const chart = me.chart;
-    const {chartArea} = chart;
+    const { chartArea } = chart;
     const meta = me._cachedMeta;
     const arcs = meta.data;
-    const spacing = me.getMaxBorderWidth() + me.getMaxOffset(arcs) + me.options.spacing;
-    const maxSize = Math.max((Math.min(chartArea.width, chartArea.height) - spacing) / 2, 0);
+    const spacing =
+      me.getMaxBorderWidth() + me.getMaxOffset(arcs) + me.options.spacing;
+    const maxSize = Math.max(
+      (Math.min(chartArea.width, chartArea.height) - spacing) / 2,
+      0
+    );
     const cutout = Math.min(toPercentage(me.options.cutout, maxSize), 1);
     const chartWeight = me._getRingWeight(me.index);
 
     // Compute the maximal rotation & circumference limits.
     // If we only consider our dataset, this can cause problems when two datasets
     // are both less than a circle with different rotations (starting angles)
-    const {circumference, rotation} = me._getRotationExtents();
-    const {ratioX, ratioY, offsetX, offsetY} = getRatioAndOffset(rotation, circumference, cutout);
+    const { circumference, rotation } = me._getRotationExtents();
+    const { ratioX, ratioY, offsetX, offsetY } = getRatioAndOffset(
+      rotation,
+      circumference,
+      cutout
+    );
     const maxWidth = (chartArea.width - spacing) / ratioX;
     const maxHeight = (chartArea.height - spacing) / ratioY;
     const maxRadius = Math.max(Math.min(maxWidth, maxHeight) / 2, 0);
     const outerRadius = toDimension(me.options.radius, maxRadius);
     const innerRadius = Math.max(outerRadius * cutout, 0);
-    const radiusLength = (outerRadius - innerRadius) / me._getVisibleDatasetWeightTotal();
+    const radiusLength =
+      (outerRadius - innerRadius) / me._getVisibleDatasetWeightTotal();
     me.offsetX = offsetX * outerRadius;
     me.offsetY = offsetY * outerRadius;
 
     meta.total = me.calculateTotal();
 
-    me.outerRadius = outerRadius - radiusLength * me._getRingWeightOffset(me.index);
+    me.outerRadius =
+      outerRadius - radiusLength * me._getRingWeightOffset(me.index);
     me.innerRadius = Math.max(me.outerRadius - radiusLength * chartWeight, 0);
 
     me.updateElements(arcs, 0, arcs.length, mode);
@@ -145,15 +171,19 @@ export default class DoughnutController extends DatasetController {
     const opts = me.options;
     const meta = me._cachedMeta;
     const circumference = me._getCircumference();
-    if ((reset && opts.animation.animateRotate) || !this.chart.getDataVisibility(i) || meta._parsed[i] === null) {
+    if (
+      (reset && opts.animation.animateRotate) ||
+      !this.chart.getDataVisibility(i) ||
+      meta._parsed[i] === null
+    ) {
       return 0;
     }
-    return me.calculateCircumference(meta._parsed[i] * circumference / TAU);
+    return me.calculateCircumference((meta._parsed[i] * circumference) / TAU);
   }
 
   updateElements(arcs, start, count, mode) {
     const me = this;
-    const reset = mode === 'reset';
+    const reset = mode === "reset";
     const chart = me.chart;
     const chartArea = chart.chartArea;
     const opts = chart.options;
@@ -183,10 +213,12 @@ export default class DoughnutController extends DatasetController {
         endAngle: startAngle + circumference,
         circumference,
         outerRadius,
-        innerRadius
+        innerRadius,
       };
       if (includeOptions) {
-        properties.options = sharedOptions || me.resolveDataElementOptions(i, arc.active ? 'active' : mode);
+        properties.options =
+          sharedOptions ||
+          me.resolveDataElementOptions(i, arc.active ? "active" : mode);
       }
       startAngle += circumference;
 
@@ -227,7 +259,7 @@ export default class DoughnutController extends DatasetController {
     const value = formatNumber(meta._parsed[index], chart.options.locale);
 
     return {
-      label: labels[index] || '',
+      label: labels[index] || "",
       value,
     };
   }
@@ -259,8 +291,12 @@ export default class DoughnutController extends DatasetController {
 
     for (i = 0, ilen = arcs.length; i < ilen; ++i) {
       options = controller.resolveDataElementOptions(i);
-      if (options.borderAlign !== 'inner') {
-        max = Math.max(max, options.borderWidth || 0, options.hoverBorderWidth || 0);
+      if (options.borderAlign !== "inner") {
+        max = Math.max(
+          max,
+          options.borderWidth || 0,
+          options.hoverBorderWidth || 0
+        );
       }
     }
     return max;
@@ -277,9 +313,9 @@ export default class DoughnutController extends DatasetController {
   }
 
   /**
-	 * Get radius length offset of the dataset in relation to the visible datasets weights. This allows determining the inner and outer radius correctly
-	 * @private
-	 */
+   * Get radius length offset of the dataset in relation to the visible datasets weights. This allows determining the inner and outer radius correctly
+   * @private
+   */
   _getRingWeightOffset(datasetIndex) {
     let ringWeightOffset = 0;
 
@@ -293,43 +329,57 @@ export default class DoughnutController extends DatasetController {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _getRingWeight(datasetIndex) {
-    return Math.max(valueOrDefault(this.chart.data.datasets[datasetIndex].weight, 1), 0);
+    return Math.max(
+      valueOrDefault(this.chart.data.datasets[datasetIndex].weight, 1),
+      0
+    );
   }
 
   /**
-	 * Returns the sum of all visible data set weights.
-	 * @private
-	 */
+   * Returns the sum of all visible data set weights.
+   * @private
+   */
   _getVisibleDatasetWeightTotal() {
     return this._getRingWeightOffset(this.chart.data.datasets.length) || 1;
   }
 }
 
-DoughnutController.id = 'doughnut';
+DoughnutController.id = "doughnut";
 
 /**
  * @type {any}
  */
 DoughnutController.defaults = {
   datasetElementType: false,
-  dataElementType: 'arc',
+  dataElementType: "arc",
   animation: {
     // Boolean - Whether we animate the rotation of the Doughnut
     animateRotate: true,
     // Boolean - Whether we animate scaling the Doughnut from the centre
-    animateScale: false
+    animateScale: false,
   },
   animations: {
     numbers: {
-      type: 'number',
-      properties: ['circumference', 'endAngle', 'innerRadius', 'outerRadius', 'startAngle', 'x', 'y', 'offset', 'borderWidth', 'spacing']
+      type: "number",
+      properties: [
+        "circumference",
+        "endAngle",
+        "innerRadius",
+        "outerRadius",
+        "startAngle",
+        "x",
+        "y",
+        "offset",
+        "borderWidth",
+        "spacing",
+      ],
     },
   },
   // The percentage of the chart that we cut out of the middle.
-  cutout: '50%',
+  cutout: "50%",
 
   // The rotation of the chart, where the first data arc begins.
   rotation: 0,
@@ -338,17 +388,17 @@ DoughnutController.defaults = {
   circumference: 360,
 
   // The outr radius of the chart
-  radius: '100%',
+  radius: "100%",
 
   // Spacing between arcs
   spacing: 0,
 
-  indexAxis: 'r',
+  indexAxis: "r",
 };
 
 DoughnutController.descriptors = {
-  _scriptable: (name) => name !== 'spacing',
-  _indexable: (name) => name !== 'spacing',
+  _scriptable: (name) => name !== "spacing",
+  _indexable: (name) => name !== "spacing",
 };
 
 /**
@@ -376,27 +426,27 @@ DoughnutController.overrides = {
                 hidden: !chart.getDataVisibility(i),
 
                 // Extra data used for toggling the correct item
-                index: i
+                index: i,
               };
             });
           }
           return [];
-        }
+        },
       },
 
       onClick(e, legendItem, legend) {
         legend.chart.toggleDataVisibility(legendItem.index);
         legend.chart.update();
-      }
+      },
     },
     tooltip: {
       callbacks: {
         title() {
-          return '';
+          return "";
         },
         label(tooltipItem) {
           let dataLabel = tooltipItem.label;
-          const value = ': ' + tooltipItem.formattedValue;
+          const value = ": " + tooltipItem.formattedValue;
 
           if (isArray(dataLabel)) {
             // show value on first line of multiline label
@@ -408,8 +458,8 @@ DoughnutController.overrides = {
           }
 
           return dataLabel;
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };

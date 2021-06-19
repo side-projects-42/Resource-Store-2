@@ -1,16 +1,15 @@
-import { ChartDataset } from '../index.esm';
+import { ChartDataset } from "../index.esm";
 
 const dataset: ChartDataset = {
   data: [10, null, 20],
 };
 
-const lineDataset: ChartDataset<'line'> = {
+const lineDataset: ChartDataset<"line"> = {
   data: [10, null, 20],
 };
-const scatterDataset: ChartDataset<'scatter'> = {
+const scatterDataset: ChartDataset<"scatter"> = {
   data: [10, null, 20],
 };
-const radarDataset: ChartDataset<'radar'> = {
+const radarDataset: ChartDataset<"radar"> = {
   data: [10, null, 20],
 };
-

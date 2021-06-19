@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {StringSet} from '../util/StringSet.js';
-import {isStrictKeyword} from '../syntax/Keywords.js';
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
+import { StringSet } from "../util/StringSet.js";
+import { isStrictKeyword } from "../syntax/Keywords.js";
 
 /**
  * This visitor is used to find strict keywords (and eval/arguments) for
@@ -43,10 +43,14 @@ class ParameterValidationVisitor extends ParseTreeVisitor {
 
   visitBindingIdentifier(tree) {
     let name = tree.identifierToken.toString();
-    if (this.reportStrictKeywords_ &&
-        (isStrictKeyword(name) || name === 'eval' || name === 'arguments')) {
-      this.reporter_.reportError(tree.location,
-                                 `${name} is a reserved identifier`);
+    if (
+      this.reportStrictKeywords_ &&
+      (isStrictKeyword(name) || name === "eval" || name === "arguments")
+    ) {
+      this.reporter_.reportError(
+        tree.location,
+        `${name} is a reserved identifier`
+      );
     }
     if (this.names_.has(name)) {
       this.maybeReportDuplicateError_(name, tree.location);
@@ -107,6 +111,6 @@ class ParameterValidationVisitor extends ParseTreeVisitor {
   }
 }
 
-export default function(tree, isStrict, reporter) {
+export default function (tree, isStrict, reporter) {
   new ParameterValidationVisitor(isStrict, reporter).visitAny(tree);
 }

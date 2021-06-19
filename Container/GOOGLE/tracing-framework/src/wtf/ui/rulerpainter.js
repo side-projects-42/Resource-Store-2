@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.RulerPainter');
+goog.provide("wtf.ui.RulerPainter");
 
-goog.require('wtf.db.Unit');
-goog.require('wtf.math');
-goog.require('wtf.ui.TimePainter');
-
-
+goog.require("wtf.db.Unit");
+goog.require("wtf.math");
+goog.require("wtf.ui.TimePainter");
 
 /**
  * Paints a ruler into the view.
@@ -59,7 +57,6 @@ wtf.ui.RulerPainter = function RulerPainter(canvas) {
 };
 goog.inherits(wtf.ui.RulerPainter, wtf.ui.TimePainter);
 
-
 /**
  * Height of the ruler, in pixels.
  * @type {number}
@@ -67,32 +64,29 @@ goog.inherits(wtf.ui.RulerPainter, wtf.ui.TimePainter);
  */
 wtf.ui.RulerPainter.HEIGHT = 16;
 
-
 /**
  * Sets the minimum/maximum granularities.
  * @param {number} min Minimum granularity.
  * @param {number} max Maximum granularity.
  */
-wtf.ui.RulerPainter.prototype.setGranularities = function(min, max) {
+wtf.ui.RulerPainter.prototype.setGranularities = function (min, max) {
   this.minGranularity_ = min;
   this.maxGranularity_ = max;
 };
 
-
 /**
  * @override
  */
-wtf.ui.RulerPainter.prototype.layoutInternal = function(availableBounds) {
+wtf.ui.RulerPainter.prototype.layoutInternal = function (availableBounds) {
   var newBounds = availableBounds.clone();
   newBounds.height = wtf.ui.RulerPainter.HEIGHT;
   return newBounds;
 };
 
-
 /**
  * @override
  */
-wtf.ui.RulerPainter.prototype.repaintInternal = function(ctx, bounds) {
+wtf.ui.RulerPainter.prototype.repaintInternal = function (ctx, bounds) {
   if (!this.isTimeRangeValid()) {
     return;
   }
@@ -103,19 +97,22 @@ wtf.ui.RulerPainter.prototype.repaintInternal = function(ctx, bounds) {
   // TODO(benvanik): this displays under other painters - it should be moved to
   //     its own painter.
   if (this.showHoverTip_ && this.hoverX_) {
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = "#000000";
     ctx.fillRect(
-        bounds.left + this.hoverX_, bounds.top,
-        1, this.getScaledCanvasHeight() - bounds.top);
+      bounds.left + this.hoverX_,
+      bounds.top,
+      1,
+      this.getScaledCanvasHeight() - bounds.top
+    );
   }
 
   // Clip to extents.
   this.clip(bounds.left, bounds.top, bounds.width, bounds.height);
 
   // Clear gutter.
-  ctx.fillStyle = '#FFFFFF';
+  ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(bounds.left, bounds.top, bounds.width, bounds.height);
-  ctx.fillStyle = '#000000';
+  ctx.fillStyle = "#000000";
   ctx.fillRect(bounds.left, bounds.top + bounds.height - 1, bounds.width, 1);
 
   // Draw labels.
@@ -124,9 +121,9 @@ wtf.ui.RulerPainter.prototype.repaintInternal = function(ctx, bounds) {
   var duration = timeRight - timeLeft;
   var granularity = this.minGranularity_;
   var n = 0;
-  ctx.fillStyle = '#000000';
+  ctx.fillStyle = "#000000";
   while (granularity >= this.maxGranularity_ / 10) {
-    var lineSpacing = granularity / duration * width;
+    var lineSpacing = (granularity / duration) * width;
     if (lineSpacing < 25) {
       break;
     }
@@ -155,23 +152,31 @@ wtf.ui.RulerPainter.prototype.repaintInternal = function(ctx, bounds) {
     var timeString = wtf.db.Unit.format(time, this.units);
     var timeWidth = ctx.measureText(timeString).width;
     ctx.globalAlpha = 1;
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(
-        bounds.left + this.hoverX_ - timeWidth / 2 - 3, bounds.top,
-        timeWidth + 6, bounds.height - 1);
-    ctx.fillStyle = '#000000';
+      bounds.left + this.hoverX_ - timeWidth / 2 - 3,
+      bounds.top,
+      timeWidth + 6,
+      bounds.height - 1
+    );
+    ctx.fillStyle = "#000000";
     ctx.fillText(
-        timeString,
-        bounds.left + this.hoverX_ - timeWidth / 2, bounds.top + 11);
+      timeString,
+      bounds.left + this.hoverX_ - timeWidth / 2,
+      bounds.top + 11
+    );
   }
 };
-
 
 /**
  * @override
  */
-wtf.ui.RulerPainter.prototype.onMouseMoveInternal =
-    function(x, y, modifiers, bounds) {
+wtf.ui.RulerPainter.prototype.onMouseMoveInternal = function (
+  x,
+  y,
+  modifiers,
+  bounds
+) {
   if (!this.showHoverTip_) {
     return;
   }
@@ -179,11 +184,10 @@ wtf.ui.RulerPainter.prototype.onMouseMoveInternal =
   this.requestRepaint();
 };
 
-
 /**
  * @override
  */
-wtf.ui.RulerPainter.prototype.onMouseOutInternal = function() {
+wtf.ui.RulerPainter.prototype.onMouseOutInternal = function () {
   if (!this.showHoverTip_) {
     return;
   }

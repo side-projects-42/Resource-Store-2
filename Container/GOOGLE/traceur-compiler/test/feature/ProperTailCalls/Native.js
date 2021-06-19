@@ -7,4 +7,3 @@ var count = 0;
 });
 
 assert.equal(count, 6);
-

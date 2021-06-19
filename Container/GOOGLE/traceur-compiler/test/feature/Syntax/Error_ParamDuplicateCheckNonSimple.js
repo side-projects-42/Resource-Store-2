@@ -21,44 +21,30 @@
 // Error: :60:14: Duplicate parameter name i
 // Error: :63:14: Duplicate parameter name k
 
-function f(x, y, x, ...x) {
-}
+function f(x, y, x, ...x) {}
 
-function g([a, b, a], a) {
-}
+function g([a, b, a], a) {}
 
-function h(c = 1, d, c, c) {
-}
+function h(c = 1, d, c, c) {}
 
-function i({e, f}, e, e) {
-}
+function i({ e, f }, e, e) {}
 
-function j(g, g, [h]) {
-}
+function j(g, g, [h]) {}
 
-function h(i, i, j = 1) {
-}
+function h(i, i, j = 1) {}
 
-function i(k, k, ...l) {
-}
+function i(k, k, ...l) {}
 
-var f2 = (x, y, x, ...x) => {
-};
+var f2 = (x, y, x, ...x) => {};
 
-var g2 = ([a, b, a], a) => {
-};
+var g2 = ([a, b, a], a) => {};
 
-var h2 = (c = 1, d, c, c) => {
-};
+var h2 = (c = 1, d, c, c) => {};
 
-var i2 = ({e, f}, e, e) => {
-};
+var i2 = ({ e, f }, e, e) => {};
 
-var j2 = (g, g, [h]) => {
-};
+var j2 = (g, g, [h]) => {};
 
-var h2 = (i, i, j = 1) => {
-};
+var h2 = (i, i, j = 1) => {};
 
-var i2 = (k, k, ...l) => {
-};
+var i2 = (k, k, ...l) => {};

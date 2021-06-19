@@ -12,10 +12,6 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-debugImportAndExecute([
-  'wtf.app'
-], function() {
-  wtf.app.show({
-  });
+debugImportAndExecute(["wtf.app"], function () {
+  wtf.app.show({});
 });

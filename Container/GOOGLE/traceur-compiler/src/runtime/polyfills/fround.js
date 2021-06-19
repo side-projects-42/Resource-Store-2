@@ -20,27 +20,24 @@
 var $isFinite = isFinite;
 var $isNaN = isNaN;
 
-var {
-  LN2,
-  abs,
-  floor,
-  log,
-  min,
-  pow,
-} = Math;
+var { LN2, abs, floor, log, min, pow } = Math;
 
 function packIEEE754(v, ebits, fbits) {
-
   var bias = (1 << (ebits - 1)) - 1,
-      s, e, f, ln,
-      i, bits, str, bytes;
+    s,
+    e,
+    f,
+    ln,
+    i,
+    bits,
+    str,
+    bytes;
 
   function roundToEven(n) {
-    var w = floor(n), f = n - w;
-    if (f < 0.5)
-      return w;
-    if (f > 0.5)
-      return w + 1;
+    var w = floor(n),
+      f = n - w;
+    if (f < 0.5) return w;
+    if (f > 0.5) return w + 1;
     return w % 2 ? w + 1 : w;
   }
 
@@ -48,18 +45,24 @@ function packIEEE754(v, ebits, fbits) {
   if (v !== v) {
     // NaN
     // http://dev.w3.org/2006/webapi/WebIDL/#es-type-mapping
-    e = (1 << ebits) - 1; f = pow(2, fbits - 1); s = 0;
+    e = (1 << ebits) - 1;
+    f = pow(2, fbits - 1);
+    s = 0;
   } else if (v === Infinity || v === -Infinity) {
-    e = (1 << ebits) - 1; f = 0; s = (v < 0) ? 1 : 0;
+    e = (1 << ebits) - 1;
+    f = 0;
+    s = v < 0 ? 1 : 0;
   } else if (v === 0) {
-    e = 0; f = 0; s = (1 / v === -Infinity) ? 1 : 0;
+    e = 0;
+    f = 0;
+    s = 1 / v === -Infinity ? 1 : 0;
   } else {
     s = v < 0;
     v = abs(v);
 
     if (v >= pow(2, 1 - bias)) {
       e = min(floor(log(v) / LN2), 1023);
-      f = roundToEven(v / pow(2, e) * pow(2, fbits));
+      f = roundToEven((v / pow(2, e)) * pow(2, fbits));
       if (f / pow(2, fbits) >= 2) {
         e = e + 1;
         f = 1;
@@ -82,11 +85,17 @@ function packIEEE754(v, ebits, fbits) {
 
   // Pack sign, exponent, fraction
   bits = [];
-  for (i = fbits; i; i -= 1) { bits.push(f % 2 ? 1 : 0); f = floor(f / 2); }
-  for (i = ebits; i; i -= 1) { bits.push(e % 2 ? 1 : 0); e = floor(e / 2); }
+  for (i = fbits; i; i -= 1) {
+    bits.push(f % 2 ? 1 : 0);
+    f = floor(f / 2);
+  }
+  for (i = ebits; i; i -= 1) {
+    bits.push(e % 2 ? 1 : 0);
+    e = floor(e / 2);
+  }
   bits.push(s ? 1 : 0);
   bits.reverse();
-  str = bits.join('');
+  str = bits.join("");
 
   // Bits to bytes
   bytes = [];
@@ -99,17 +108,25 @@ function packIEEE754(v, ebits, fbits) {
 
 function unpackIEEE754(bytes, ebits, fbits) {
   // Bytes to bits
-  var bits = [], i, j, b, str,
-      bias, s, e, f;
+  var bits = [],
+    i,
+    j,
+    b,
+    str,
+    bias,
+    s,
+    e,
+    f;
 
   for (i = bytes.length; i; i -= 1) {
     b = bytes[i - 1];
     for (j = 8; j; j -= 1) {
-      bits.push(b % 2 ? 1 : 0); b = b >> 1;
+      bits.push(b % 2 ? 1 : 0);
+      b = b >> 1;
     }
   }
   bits.reverse();
-  str = bits.join('');
+  str = bits.join("");
 
   // Unpack sign, exponent, fraction
   bias = (1 << (ebits - 1)) - 1;

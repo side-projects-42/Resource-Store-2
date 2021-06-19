@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Symbol} from './Symbol.js';
-import {SymbolType} from './SymbolType.js';
+import { Symbol } from "./Symbol.js";
+import { SymbolType } from "./SymbolType.js";
 
 export class ExportSymbol extends Symbol {
   /**
@@ -26,4 +26,3 @@ export class ExportSymbol extends Symbol {
     this.relatedTree = relatedTree;
   }
 }
-

@@ -11,11 +11,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.Chunk');
+goog.provide("wtf.io.cff.Chunk");
 
-goog.require('goog.asserts');
-
-
+goog.require("goog.asserts");
 
 /**
  * Chunk abstract base type.
@@ -29,7 +27,7 @@ goog.require('goog.asserts');
  * @param {wtf.io.cff.ChunkType} chunkType Chunk type.
  * @constructor
  */
-wtf.io.cff.Chunk = function(chunkId, chunkType) {
+wtf.io.cff.Chunk = function (chunkId, chunkType) {
   /**
    * File-unique chunk ID.
    * @type {number}
@@ -68,14 +66,12 @@ wtf.io.cff.Chunk = function(chunkId, chunkType) {
   this.parts_ = [];
 };
 
-
 /**
  * Invalid time value used for ignoring start/end time.
  * @type {number}
  * @const
  */
-wtf.io.cff.Chunk.INVALID_TIME = 0xFFFFFFFF;
-
+wtf.io.cff.Chunk.INVALID_TIME = 0xffffffff;
 
 /**
  * Unique chunk ID.
@@ -86,24 +82,21 @@ wtf.io.cff.Chunk.INVALID_TIME = 0xFFFFFFFF;
  */
 wtf.io.cff.Chunk.nextId_ = 1;
 
-
 /**
  * Gets the file-unique chunk ID.
  * @return {number} Chunk ID.
  */
-wtf.io.cff.Chunk.prototype.getId = function() {
+wtf.io.cff.Chunk.prototype.getId = function () {
   return this.chunkId_;
 };
-
 
 /**
  * Gets the chunk type.
  * @return {wtf.io.cff.ChunkType} Chunk type.
  */
-wtf.io.cff.Chunk.prototype.getType = function() {
+wtf.io.cff.Chunk.prototype.getType = function () {
   return this.chunkType_;
 };
-
 
 /**
  * Gets the start time/value of the data in the chunk.
@@ -111,10 +104,9 @@ wtf.io.cff.Chunk.prototype.getType = function() {
  * defined.
  * @return {number} Start time/value.
  */
-wtf.io.cff.Chunk.prototype.getStartTime = function() {
+wtf.io.cff.Chunk.prototype.getStartTime = function () {
   return this.startTime_;
 };
-
 
 /**
  * Gets the end time/value of the data in the chunk.
@@ -122,10 +114,9 @@ wtf.io.cff.Chunk.prototype.getStartTime = function() {
  * defined.
  * @return {number} End time/value.
  */
-wtf.io.cff.Chunk.prototype.getEndTime = function() {
+wtf.io.cff.Chunk.prototype.getEndTime = function () {
   return this.endTime_;
 };
-
 
 /**
  * Sets the time/value range the data in this chunk covers.
@@ -134,39 +125,35 @@ wtf.io.cff.Chunk.prototype.getEndTime = function() {
  * @param {number} startTime Start time/value.
  * @param {number} endTime End time/value.
  */
-wtf.io.cff.Chunk.prototype.setTimeRange = function(startTime, endTime) {
+wtf.io.cff.Chunk.prototype.setTimeRange = function (startTime, endTime) {
   goog.asserts.assert(startTime <= endTime);
   this.startTime_ = startTime;
   this.endTime_ = endTime;
 };
-
 
 /**
  * Gets a list of the parts in the chunk.
  * Do not modify directly and instead use the mutator methods.
  * @return {!Array.<wtf.io.cff.Part>} Part list.
  */
-wtf.io.cff.Chunk.prototype.getParts = function() {
+wtf.io.cff.Chunk.prototype.getParts = function () {
   return this.parts_;
 };
-
 
 /**
  * Adds a part to the chunk.
  * @param {!wtf.io.cff.Part} part Part to add.
  */
-wtf.io.cff.Chunk.prototype.addPart = function(part) {
+wtf.io.cff.Chunk.prototype.addPart = function (part) {
   this.parts_.push(part);
 };
-
 
 /**
  * Removes all parts from the chunk.
  */
-wtf.io.cff.Chunk.prototype.removeAllParts = function() {
+wtf.io.cff.Chunk.prototype.removeAllParts = function () {
   this.parts_.length = 0;
 };
-
 
 /**
  * Loads a chunk from the given parts.

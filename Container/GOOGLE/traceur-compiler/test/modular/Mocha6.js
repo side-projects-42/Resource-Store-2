@@ -14,10 +14,9 @@
 
 /** @fileoverview Wrap Mocha in es6 layer */
 
-import {Mocha, Runner, reporters} from './MochaDependencies.js';
+import { Mocha, Runner, reporters } from "./MochaDependencies.js";
 
 export class Mocha6 extends Mocha {
-
   constructor(options) {
     super(options);
     this._vinylFiles = Object.create(null);
@@ -29,8 +28,8 @@ export class Mocha6 extends Mocha {
    */
   getContext() {
     let context = this.suite.ctx;
-    let file = '';
-    this.suite.emit('pre-require', context, file, this);
+    let file = "";
+    this.suite.emit("pre-require", context, file, this);
     return context;
   }
 
@@ -40,14 +39,15 @@ export class Mocha6 extends Mocha {
 
   importFiles() {
     let promiseImports = this.files.map((file) => {
-      file = './' + file.replace(/\\/g, '/');
+      file = "./" + file.replace(/\\/g, "/");
       let ctx = {};
-      this.suite.emit('pre-require', ctx, file, this);
-      return System.import(file, {metadata: this.options.importMetadata}).
-          then(() => {
-            this.suite.emit('require', ctx, file, this);
-            this.suite.emit('post-require', ctx, file, this);
-          });
+      this.suite.emit("pre-require", ctx, file, this);
+      return System.import(file, {
+        metadata: this.options.importMetadata,
+      }).then(() => {
+        this.suite.emit("require", ctx, file, this);
+        this.suite.emit("post-require", ctx, file, this);
+      });
     });
     return Promise.all(promiseImports);
   }
@@ -64,7 +64,7 @@ export class Mocha6 extends Mocha {
       return new Promise((resolve, reject) => {
         super.run((numberOfFailures) => {
           numberOfFailures ? reject(numberOfFailures) : resolve();
-        })
+        });
       });
     });
   }

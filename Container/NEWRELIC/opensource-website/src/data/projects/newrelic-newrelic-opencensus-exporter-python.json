@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-opencensus-exporter-python",
+  "fullName": "newrelic/newrelic-opencensus-exporter-python",
+  "slug": "newrelic-newrelic-opencensus-exporter-python",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic OpenCensus Exporter (Python)",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-opencensus-exporter-python",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-opencensus-exporter-python",
+  "iconUrl": null,
+  "shortDescription": "OpenCensus stats and traces to New Relic",
+  "description": "Export OpenCensus data to New Relic in Python",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Python",
+  "projectTags": ["opentelemetry", "exporter"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic OpenCensus Exporter (Python)",
+    "url": "https://github.com/newrelic/newrelic-opencensus-exporter-python"
+  }
+}

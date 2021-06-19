@@ -1,6 +1,6 @@
 export class q {
   foo() {
-    console.log('class method');
+    console.log("class method");
   }
 }
 export default q;

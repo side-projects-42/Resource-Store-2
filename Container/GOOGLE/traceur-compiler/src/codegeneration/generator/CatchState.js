@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {State} from './State.js';
-import {TryState} from './TryState.js';
+import { State } from "./State.js";
+import { TryState } from "./TryState.js";
 
 /**
  * Represents the dispatch portion of a try/catch block in a state machine.
@@ -43,10 +43,11 @@ export class CatchState extends TryState {
    */
   replaceState(oldState, newState) {
     return new CatchState(
-        this.identifier,
-        State.replaceStateId(this.catchState, oldState, newState),
-        State.replaceStateId(this.fallThroughState, oldState, newState),
-        this.replaceAllStates(oldState, newState),
-        this.replaceNestedTrys(oldState, newState));
+      this.identifier,
+      State.replaceStateId(this.catchState, oldState, newState),
+      State.replaceStateId(this.fallThroughState, oldState, newState),
+      this.replaceAllStates(oldState, newState),
+      this.replaceNestedTrys(oldState, newState)
+    );
   }
 }

@@ -11,15 +11,13 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.BlobDataSourceInfo');
-goog.provide('wtf.db.DataSourceInfo');
-goog.provide('wtf.db.DriveDataSourceInfo');
-goog.provide('wtf.db.UrlDataSourceInfo');
+goog.provide("wtf.db.BlobDataSourceInfo");
+goog.provide("wtf.db.DataSourceInfo");
+goog.provide("wtf.db.DriveDataSourceInfo");
+goog.provide("wtf.db.UrlDataSourceInfo");
 
 /** @suppress {extraRequire} */
-goog.require('wtf.io.drive.DriveFile');
-
-
+goog.require("wtf.io.drive.DriveFile");
 
 /**
  * Base source information about a data source.
@@ -27,7 +25,7 @@ goog.require('wtf.io.drive.DriveFile');
  * @param {string} contentType MIME type.
  * @constructor
  */
-wtf.db.DataSourceInfo = function(filename, contentType) {
+wtf.db.DataSourceInfo = function (filename, contentType) {
   /**
    * @type {string}
    */
@@ -39,8 +37,6 @@ wtf.db.DataSourceInfo = function(filename, contentType) {
   this.contentType = contentType;
 };
 
-
-
 /**
  * Source information for a blob.
  * @param {string} filename Filename.
@@ -49,7 +45,7 @@ wtf.db.DataSourceInfo = function(filename, contentType) {
  * @extends {wtf.db.DataSourceInfo}
  * @constructor
  */
-wtf.db.BlobDataSourceInfo = function(filename, contentType, blob) {
+wtf.db.BlobDataSourceInfo = function (filename, contentType, blob) {
   goog.base(this, filename, contentType);
 
   /**
@@ -60,8 +56,6 @@ wtf.db.BlobDataSourceInfo = function(filename, contentType, blob) {
 };
 goog.inherits(wtf.db.BlobDataSourceInfo, wtf.db.DataSourceInfo);
 
-
-
 /**
  * Source information for a file loaded from Drive.
  * @param {string} filename Filename.
@@ -71,8 +65,12 @@ goog.inherits(wtf.db.BlobDataSourceInfo, wtf.db.DataSourceInfo);
  * @extends {wtf.db.DataSourceInfo}
  * @constructor
  */
-wtf.db.DriveDataSourceInfo = function(filename, contentType, fileId,
-    opt_driveFile) {
+wtf.db.DriveDataSourceInfo = function (
+  filename,
+  contentType,
+  fileId,
+  opt_driveFile
+) {
   goog.base(this, filename, contentType);
 
   /**
@@ -90,8 +88,6 @@ wtf.db.DriveDataSourceInfo = function(filename, contentType, fileId,
 };
 goog.inherits(wtf.db.DriveDataSourceInfo, wtf.db.DataSourceInfo);
 
-
-
 /**
  * Source information for a URL-based resource.
  * @param {string} filename Filename.
@@ -100,7 +96,7 @@ goog.inherits(wtf.db.DriveDataSourceInfo, wtf.db.DataSourceInfo);
  * @extends {wtf.db.DataSourceInfo}
  * @constructor
  */
-wtf.db.UrlDataSourceInfo = function(filename, contentType, url) {
+wtf.db.UrlDataSourceInfo = function (filename, contentType, url) {
   goog.base(this, filename, contentType);
 
   /**

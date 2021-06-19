@@ -1,3 +1,3 @@
-import * as c from './test_c.js';
+import * as c from "./test_c.js";
 
-export var name = 'B';
+export var name = "B";

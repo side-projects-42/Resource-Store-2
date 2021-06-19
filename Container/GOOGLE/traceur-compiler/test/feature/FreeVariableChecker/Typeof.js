@@ -1,6 +1,5 @@
 function f() {
-  if (typeof x1)
-  x1;
+  if (typeof x1) x1;
 }
 
 function g() {

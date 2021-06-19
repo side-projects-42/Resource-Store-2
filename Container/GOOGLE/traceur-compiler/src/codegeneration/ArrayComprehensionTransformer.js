@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ComprehensionTransformer} from './ComprehensionTransformer.js';
-import {createIdentifierExpression} from './ParseTreeFactory.js';
-import {parseStatement} from './PlaceholderParser.js';
+import { ComprehensionTransformer } from "./ComprehensionTransformer.js";
+import { createIdentifierExpression } from "./ParseTreeFactory.js";
+import { parseStatement } from "./PlaceholderParser.js";
 
 /**
  * Array Comprehension Transformer:
@@ -45,7 +45,6 @@ import {parseStatement} from './PlaceholderParser.js';
  * with alpha renaming of this and arguments of course.
  */
 export class ArrayComprehensionTransformer extends ComprehensionTransformer {
-
   transformArrayComprehension(tree) {
     this.pushTempScope();
 
@@ -54,14 +53,18 @@ export class ArrayComprehensionTransformer extends ComprehensionTransformer {
     let index = createIdentifierExpression(this.getTempIdentifier());
     let result = createIdentifierExpression(this.getTempIdentifier());
 
-    let tempVarsStatatement = parseStatement `var ${index} = 0, ${result} = [];`;
-    let statement = parseStatement `${result}[${index}++] = ${expression};`;
-    let returnStatement = parseStatement `return ${result};`;
+    let tempVarsStatatement = parseStatement`var ${index} = 0, ${result} = [];`;
+    let statement = parseStatement`${result}[${index}++] = ${expression};`;
+    let returnStatement = parseStatement`return ${result};`;
     let functionKind = null;
 
-    result = this.transformComprehension(tree, statement, functionKind,
-                                         tempVarsStatatement,
-                                         returnStatement);
+    result = this.transformComprehension(
+      tree,
+      statement,
+      functionKind,
+      tempVarsStatatement,
+      returnStatement
+    );
     this.popTempScope();
     return result;
   }

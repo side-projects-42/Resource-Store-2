@@ -16,9 +16,9 @@ import {
   createAssignStateStatement,
   createBreakStatement,
   createCaseClause,
-  createNumberLiteral
-} from '../ParseTreeFactory.js';
-import {parseStatement} from '../PlaceholderParser.js';
+  createNumberLiteral,
+} from "../ParseTreeFactory.js";
+import { parseStatement } from "../PlaceholderParser.js";
 
 /**
  * A State in the generator state machine.
@@ -47,8 +47,10 @@ export class State {
    * @return {CaseClause}
    */
   transformMachineState(enclosingFinally, machineEndState, reporter) {
-    return createCaseClause(createNumberLiteral(this.id),
-        this.transform(enclosingFinally, machineEndState, reporter));
+    return createCaseClause(
+      createNumberLiteral(this.id),
+      this.transform(enclosingFinally, machineEndState, reporter)
+    );
   }
 
   /**
@@ -66,8 +68,11 @@ export class State {
    * @param {number=} continueState
    * @return {State}
    */
-  transformBreakOrContinue(labelSet, breakState = undefined,
-                           continueState = undefined) {
+  transformBreakOrContinue(
+    labelSet,
+    breakState = undefined,
+    continueState = undefined
+  ) {
     return this;
   }
 }
@@ -86,25 +91,25 @@ State.RETHROW_STATE = -3;
  * @param {number} fallThroughState
  * @return {Array.<ParseTree>}
  */
-State.generateJump = function(enclosingFinally, fallThroughState) {
+State.generateJump = function (enclosingFinally, fallThroughState) {
   return [
     ...State.generateAssignState(enclosingFinally, fallThroughState),
-    createBreakStatement()
+    createBreakStatement(),
   ];
 };
-
 
 /**
  * @param {FinallyState} enclosingFinally
  * @param {number} fallThroughState
  * @return {Array.<ParseTree>}
  */
-State.generateAssignState = function(enclosingFinally, fallThroughState) {
+State.generateAssignState = function (enclosingFinally, fallThroughState) {
   let assignState;
   if (State.isFinallyExit(enclosingFinally, fallThroughState)) {
     assignState = generateAssignStateOutOfFinally(
-        enclosingFinally,
-        fallThroughState);
+      enclosingFinally,
+      fallThroughState
+    );
   } else {
     assignState = [createAssignStateStatement(fallThroughState)];
   }
@@ -116,10 +121,11 @@ State.generateAssignState = function(enclosingFinally, fallThroughState) {
  * @param {number} fallThroughState
  * @return {boolean}
  */
-State.isFinallyExit = function(enclosingFinally, destination) {
+State.isFinallyExit = function (enclosingFinally, destination) {
   // TODO(arv): Track down who calls this with undefined.
-  return !!enclosingFinally &&
-      enclosingFinally.tryStates.indexOf(destination) < 0;
+  return (
+    !!enclosingFinally && enclosingFinally.tryStates.indexOf(destination) < 0
+  );
 };
 
 /**
@@ -134,7 +140,7 @@ function generateAssignStateOutOfFinally(enclosingFinally, destination) {
   // $fallThrough = destination;
   return [
     createAssignStateStatement(finallyState),
-    parseStatement `$ctx.finallyFallThrough = ${destination}`
+    parseStatement`$ctx.finallyFallThrough = ${destination}`,
   ];
 }
 
@@ -144,7 +150,7 @@ function generateAssignStateOutOfFinally(enclosingFinally, destination) {
  * @param {number} oldState
  * @param {number} newState
  */
-State.replaceStateList = function(oldStates, oldState,  newState) {
+State.replaceStateList = function (oldStates, oldState, newState) {
   let states = [];
   for (let i = 0; i < oldStates.length; i++) {
     states.push(State.replaceStateId(oldStates[i], oldState, newState));
@@ -158,7 +164,7 @@ State.replaceStateList = function(oldStates, oldState,  newState) {
  * @param {number} oldState
  * @param {number} newState
  */
-State.replaceStateId = function(current, oldState, newState) {
+State.replaceStateId = function (current, oldState, newState) {
   return current === oldState ? newState : current;
 };
 
@@ -169,7 +175,7 @@ State.replaceStateId = function(current, oldState, newState) {
  * @param {number} newState
  * @return {Array.<TryState>}
  */
-State.replaceAllStates = function(exceptionBlocks, oldState, newState) {
+State.replaceAllStates = function (exceptionBlocks, oldState, newState) {
   let result = [];
   for (let i = 0; i < exceptionBlocks.length; i++) {
     result.push(exceptionBlocks[i].replaceState(oldState, newState));

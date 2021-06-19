@@ -11,20 +11,16 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.data.Variable');
-goog.provide('wtf.data.VariableFlag');
+goog.provide("wtf.data.Variable");
+goog.provide("wtf.data.VariableFlag");
 
-goog.require('goog.string');
-
+goog.require("goog.string");
 
 /**
  * Bitmask values for variable flags.
  * @enum {number}
  */
-wtf.data.VariableFlag = {
-};
-
-
+wtf.data.VariableFlag = {};
 
 /**
  * Variable.
@@ -35,7 +31,7 @@ wtf.data.VariableFlag = {
  * @param {number=} opt_flags Bitmask of {@see wtf.data.VariableFlag} values.
  * @constructor
  */
-wtf.data.Variable = function(name, typeName, opt_flags) {
+wtf.data.Variable = function (name, typeName, opt_flags) {
   /**
    * Machine-friendly name used to uniquely identify the variable. It should be
    * a valid JavaScript literal (no spaces/etc).
@@ -58,7 +54,6 @@ wtf.data.Variable = function(name, typeName, opt_flags) {
   this.flags = opt_flags || 0;
 };
 
-
 /**
  * A simple mapping of various type names to the standardized types.
  * @const
@@ -66,31 +61,30 @@ wtf.data.Variable = function(name, typeName, opt_flags) {
  * @private
  */
 wtf.data.Variable.TYPE_MAP_ = {
-  'bool': 'bool',
-  'int8': 'int8',
-  'byte': 'int8',
-  'uint8': 'uint8',
-  'octet': 'uint8',
-  'int16': 'int16',
-  'short': 'int16',
-  'uint16': 'uint16',
-  'unsigned short': 'uint16',
-  'int32': 'int32',
-  'long': 'int32',
-  'uint32': 'uint32',
-  'unsigned long': 'uint32',
-  'float32': 'float32',
-  'float': 'float32',
-  'ascii': 'ascii',
-  'utf8': 'utf8',
-  'char': 'char',
-  'wchar': 'wchar',
-  'DOMString': 'utf8',
-  'any': 'any',
-  'flowId': 'flowId',
-  'time32': 'time32'
+  bool: "bool",
+  int8: "int8",
+  byte: "int8",
+  uint8: "uint8",
+  octet: "uint8",
+  int16: "int16",
+  short: "int16",
+  uint16: "uint16",
+  "unsigned short": "uint16",
+  int32: "int32",
+  long: "int32",
+  uint32: "uint32",
+  "unsigned long": "uint32",
+  float32: "float32",
+  float: "float32",
+  ascii: "ascii",
+  utf8: "utf8",
+  char: "char",
+  wchar: "wchar",
+  DOMString: "utf8",
+  any: "any",
+  flowId: "flowId",
+  time32: "time32",
 };
-
 
 /**
  * Creates a variable by type name.
@@ -98,14 +92,14 @@ wtf.data.Variable.TYPE_MAP_ = {
  * @param {string} type Type name.
  * @return {wtf.data.Variable} Variable type, if found.
  */
-wtf.data.Variable.create = function(name, type) {
+wtf.data.Variable.create = function (name, type) {
   var isArray = false;
-  if (goog.string.endsWith(type, '[]')) {
+  if (goog.string.endsWith(type, "[]")) {
     // type[] syntax.
     isArray = true;
-    type = type.replace('[]', '');
+    type = type.replace("[]", "");
   }
-  if (goog.string.startsWith(type, 'sequence<')) {
+  if (goog.string.startsWith(type, "sequence<")) {
     // sequence<type> syntax.
     isArray = true;
     type = type.substr(9, type.length - 10);
@@ -116,12 +110,11 @@ wtf.data.Variable.create = function(name, type) {
     return null;
   }
   if (isArray) {
-    type += '[]';
+    type += "[]";
   }
 
   return new wtf.data.Variable(name, type, 0);
 };
-
 
 /**
  * A regex for parsing signature arguments.
@@ -131,8 +124,7 @@ wtf.data.Variable.create = function(name, type) {
  * @private
  */
 wtf.data.Variable.SIGNATURE_REGEX_ =
-    /[ ]*([a-zA-Z0-9 \[\]\<\>]+) ([a-zA-Z0-9_]+)/;
-
+  /[ ]*([a-zA-Z0-9 \[\]\<\>]+) ([a-zA-Z0-9_]+)/;
 
 /**
  * Parses an argument map from the given signature string arguments block.
@@ -141,8 +133,8 @@ wtf.data.Variable.SIGNATURE_REGEX_ =
  * @return {!Array.<{ordinal: number, variable: !wtf.data.Variable}>}
  *     Arguments to write as data.
  */
-wtf.data.Variable.parseSignatureArguments = function(argsString) {
-  var signatureArgs = argsString.split(',');
+wtf.data.Variable.parseSignatureArguments = function (argsString) {
+  var signatureArgs = argsString.split(",");
 
   var argMap = [];
   var ordinal = 0;
@@ -150,13 +142,13 @@ wtf.data.Variable.parseSignatureArguments = function(argsString) {
   for (var n = 0; n < signatureArgs.length; n++) {
     var signatureArg = regex.exec(signatureArgs[n]);
     if (!signatureArg) {
-      throw new Error('Invalid signature argument: ' + signatureArgs[n]);
+      throw new Error("Invalid signature argument: " + signatureArgs[n]);
     }
 
     // 'uint8 foo' or 'uint8 foo@4'
     var argType = signatureArg[1];
     var argName = signatureArg[2];
-    var argAt = argName.indexOf('@');
+    var argAt = argName.indexOf("@");
     if (argAt != -1) {
       // Contains a location specifier.
       ordinal = Number(argName.substr(argAt + 1));
@@ -165,13 +157,13 @@ wtf.data.Variable.parseSignatureArguments = function(argsString) {
 
     var variable = wtf.data.Variable.create(argName, argType);
     if (!variable) {
-      throw new Error('Invalid signature argument type: ' + argType);
+      throw new Error("Invalid signature argument type: " + argType);
     }
 
     // Add to map.
     argMap.push({
       ordinal: ordinal,
-      variable: variable
+      variable: variable,
     });
 
     ordinal++;
@@ -180,14 +172,12 @@ wtf.data.Variable.parseSignatureArguments = function(argsString) {
   return argMap;
 };
 
-
 /**
  * Counter of invalid event signature types.
  * @type {number}
  * @private
  */
 wtf.data.Variable.invalidCount_ = 0;
-
 
 /**
  * Parses a signature string and returns the parts.
@@ -201,44 +191,51 @@ wtf.data.Variable.invalidCount_ = 0;
  *   argMap: !Array.<{ordinal: number, variable: !wtf.data.Variable}>
  * }}
  */
-wtf.data.Variable.parseSignature = function(signature) {
+wtf.data.Variable.parseSignature = function (signature) {
   // Trim.
   signature = goog.string.trim(signature);
 
   // Trim interior whitespace up until the first (.
   // This allows poorly-formed names to still work.
-  var i = signature.indexOf('(');
+  var i = signature.indexOf("(");
   if (i != -1) {
-    signature = signature.substr(0, i).replace(/ /g, '') + signature.substr(i);
+    signature = signature.substr(0, i).replace(/ /g, "") + signature.substr(i);
   } else {
-    signature = signature.replace(/ /g, '');
+    signature = signature.replace(/ /g, "");
   }
 
   // Split signature.
   // 'a.b.c(<params>)'
   // ["a.b.c(t1 x, t1 y, t3 z@3)", "a.b.c", "(<params>)", "<params>"]
   var invalid = false;
-  var signatureParts =
-      /^([a-zA-Z0-9_\.#:\$\[\]\"\'\-]+)(\((.*)\)$)?/.exec(signature);
+  var signatureParts = /^([a-zA-Z0-9_\.#:\$\[\]\"\'\-]+)(\((.*)\)$)?/.exec(
+    signature
+  );
   if (!signatureParts || !signatureParts.length) {
     goog.global.console.warn(
-        'Invalid event signature: ' + signature + ' - unable to parse');
+      "Invalid event signature: " + signature + " - unable to parse"
+    );
     invalid = true;
   }
   if (!invalid && signatureParts[0] != signature) {
     goog.global.console.warn(
-        'Invalid event signature: ' + signature + ' - not all characters used');
+      "Invalid event signature: " + signature + " - not all characters used"
+    );
     invalid = true;
   }
   if (invalid) {
     signatureParts = [
-      null, 'invalid_' + wtf.data.Variable.invalidCount_++, null, null];
+      null,
+      "invalid_" + wtf.data.Variable.invalidCount_++,
+      null,
+      null,
+    ];
   }
 
   var signatureName = signatureParts[1]; // entire name before ()
   var signatureArgs = signatureParts[3]; // contents of () (excluding ())
   if (!signatureName || !signatureName.length) {
-    throw new Error('Invalid event name: ' + signature);
+    throw new Error("Invalid event name: " + signature);
   }
 
   // Build argument mapping.
@@ -254,17 +251,16 @@ wtf.data.Variable.parseSignature = function(signature) {
   return {
     name: signatureName,
     args: argList,
-    argMap: argMap
+    argMap: argMap,
   };
 };
-
 
 /**
  * Sanitizes a name into something that can be used as a variable name.
  * @param {string} source Source name.
  * @return {string} Santized name.
  */
-wtf.data.Variable.santizeName = function(source) {
+wtf.data.Variable.santizeName = function (source) {
   // TODO(benvanik): clever things.
-  return source.replace(/ /g, '_');
+  return source.replace(/ /g, "_");
 };

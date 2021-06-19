@@ -12,12 +12,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.BufferView');
+goog.provide("wtf.io.BufferView");
 
-goog.require('goog.asserts');
-goog.require('wtf.io');
-goog.require('wtf.io.StringTable');
-
+goog.require("goog.asserts");
+goog.require("wtf.io");
+goog.require("wtf.io.StringTable");
 
 /**
  * A fixed-size binary buffer with various views into it.
@@ -50,16 +49,14 @@ goog.require('wtf.io.StringTable');
  */
 wtf.io.BufferView.Type;
 
-
 /**
  * Creates a new fixed size buffer view with the given capacity.
  * @param {number} capacity Total capacity, in bytes.
  * @return {!wtf.io.BufferView.Type} New empty buffer view.
  */
-wtf.io.BufferView.createEmpty = function(capacity) {
+wtf.io.BufferView.createEmpty = function (capacity) {
   return wtf.io.BufferView.createWithBuffer(new ArrayBuffer(capacity));
 };
-
 
 /**
  * Creates a new fixed size buffer view with a copy of the contents of the given
@@ -67,12 +64,11 @@ wtf.io.BufferView.createEmpty = function(capacity) {
  * @param {!Uint8Array} sourceBytes Source byte buffer.
  * @return {!wtf.io.BufferView.Type} New buffer view with cloned data.
  */
-wtf.io.BufferView.createCopy = function(sourceBytes) {
+wtf.io.BufferView.createCopy = function (sourceBytes) {
   var clone = new Uint8Array(sourceBytes.byteLength);
   clone.set(sourceBytes);
   return wtf.io.BufferView.createWithBuffer(clone.buffer);
 };
-
 
 /**
  * Creates a new fixed size buffer view with the given data/string table.
@@ -83,22 +79,21 @@ wtf.io.BufferView.createCopy = function(sourceBytes) {
  * @return {!wtf.io.BufferView.Type} New buffer view wrapping the given byte
  *     buffer.
  */
-wtf.io.BufferView.createWithBuffer = function(arrayBuffer, opt_stringTable) {
+wtf.io.BufferView.createWithBuffer = function (arrayBuffer, opt_stringTable) {
   return /** @type {!wtf.io.BufferView.Type} */ ({
-    'capacity': arrayBuffer.byteLength,
-    'offset': 0,
-    'stringTable': opt_stringTable || new wtf.io.StringTable(),
-    'arrayBuffer': arrayBuffer,
-    'int8Array': new Int8Array(arrayBuffer),
-    'uint8Array': new Uint8Array(arrayBuffer),
-    'int16Array': new Int16Array(arrayBuffer),
-    'uint16Array': new Uint16Array(arrayBuffer),
-    'int32Array': new Int32Array(arrayBuffer),
-    'uint32Array': new Uint32Array(arrayBuffer),
-    'float32Array': new Float32Array(arrayBuffer)
+    capacity: arrayBuffer.byteLength,
+    offset: 0,
+    stringTable: opt_stringTable || new wtf.io.StringTable(),
+    arrayBuffer: arrayBuffer,
+    int8Array: new Int8Array(arrayBuffer),
+    uint8Array: new Uint8Array(arrayBuffer),
+    int16Array: new Int16Array(arrayBuffer),
+    uint16Array: new Uint16Array(arrayBuffer),
+    int32Array: new Int32Array(arrayBuffer),
+    uint32Array: new Uint32Array(arrayBuffer),
+    float32Array: new Float32Array(arrayBuffer),
   });
 };
-
 
 /**
  * Gets the bytes of the buffer that are currently in use.
@@ -108,76 +103,73 @@ wtf.io.BufferView.createWithBuffer = function(arrayBuffer, opt_stringTable) {
  *     to be used immediately.
  * @return {!Uint8Array} Used bytes.
  */
-wtf.io.BufferView.getUsedBytes = function(bufferView, opt_allowReference) {
+wtf.io.BufferView.getUsedBytes = function (bufferView, opt_allowReference) {
   if (opt_allowReference) {
-    if (bufferView['offset'] == bufferView['capacity']) {
-      return bufferView['uint8Array'];
+    if (bufferView["offset"] == bufferView["capacity"]) {
+      return bufferView["uint8Array"];
     } else {
-      return new Uint8Array(bufferView['arrayBuffer'], 0, bufferView['offset']);
+      return new Uint8Array(bufferView["arrayBuffer"], 0, bufferView["offset"]);
     }
   } else {
     return wtf.io.sliceByteArray(
-        bufferView['uint8Array'], 0, bufferView['offset']);
+      bufferView["uint8Array"],
+      0,
+      bufferView["offset"]
+    );
   }
 };
-
 
 /**
  * Gets the capacity of the given buffer view, in bytes.
  * @param {!wtf.io.BufferView.Type} bufferView Buffer view.
  * @return {number} Buffer view capacity.
  */
-wtf.io.BufferView.getCapacity = function(bufferView) {
-  return bufferView['capacity'];
+wtf.io.BufferView.getCapacity = function (bufferView) {
+  return bufferView["capacity"];
 };
-
 
 /**
  * Gets the access offset of the given buffer view, in bytes.
  * @param {!wtf.io.BufferView.Type} bufferView Buffer view.
  * @return {number} Buffer view offset.
  */
-wtf.io.BufferView.getOffset = function(bufferView) {
-  return bufferView['offset'];
+wtf.io.BufferView.getOffset = function (bufferView) {
+  return bufferView["offset"];
 };
-
 
 /**
  * Sets the access offset of the given buffer view, in bytes.
  * @param {!wtf.io.BufferView.Type} bufferView Buffer view.
  * @param {number} value New buffer view offset.
  */
-wtf.io.BufferView.setOffset = function(bufferView, value) {
-  goog.asserts.assert(value <= bufferView['capacity']);
-  bufferView['offset'] = value;
+wtf.io.BufferView.setOffset = function (bufferView, value) {
+  goog.asserts.assert(value <= bufferView["capacity"]);
+  bufferView["offset"] = value;
 };
-
 
 /**
  * Gets the string table of the given buffer view.
  * @param {!wtf.io.BufferView.Type} bufferView Buffer view.
  * @return {!wtf.io.StringTable} String table.
  */
-wtf.io.BufferView.getStringTable = function(bufferView) {
-  return bufferView['stringTable'];
+wtf.io.BufferView.getStringTable = function (bufferView) {
+  return bufferView["stringTable"];
 };
-
 
 /**
  * Sets the string table of the given buffer view.
  * @param {!wtf.io.BufferView.Type} bufferView Buffer view.
  * @param {!wtf.io.StringTable} value New string table.
  */
-wtf.io.BufferView.setStringTable = function(bufferView, value) {
-  bufferView['stringTable'] = value;
+wtf.io.BufferView.setStringTable = function (bufferView, value) {
+  bufferView["stringTable"] = value;
 };
-
 
 /**
  * Resets the buffer offset to the start and clears its string table.
  * @param {!wtf.io.BufferView.Type} bufferView Buffer view.
  */
-wtf.io.BufferView.reset = function(bufferView) {
-  bufferView['offset'] = 0;
-  bufferView['stringTable'].reset();
+wtf.io.BufferView.reset = function (bufferView) {
+  bufferView["offset"] = 0;
+  bufferView["stringTable"].reset();
 };

@@ -1,0 +1,28 @@
+<h1>Songs Index</h1>
+
+<ul>
+  <% @songs.each do |s| %>
+  <li><%= link_to s.artist_name, artist_path(s.artist)%> - <%= link_to s.title, song_path(s)%></li>
+  <% end %>
+</ul>
+
+
+<ul>
+  <% @songs.each do |s| %>
+  <li><%= link_to s.artist_name, artist_path(s.artist)%> - <%= s.title %></li>
+  <% end %>
+</ul>
+
+<ul>
+  <% @songs.each do |s| %>
+  <li><%= s.artist_name %> - <%= link_to s.title, song_path(s)%></li>
+  <% end %>
+</ul>
+
+<%# This fourth one is precisely what they want. This is a very dumb test :p %>
+
+<ul>
+  <% @songs.each do |s| %>
+  <li><%= link_to "#{s.artist_name} - #{s.title}", song_path(s)%></li>
+  <% end %>
+</ul>

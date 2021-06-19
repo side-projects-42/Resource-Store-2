@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ExportVisitor} from './ExportVisitor.js';
-import {ValidationVisitor} from './ValidationVisitor.js';
+import { ExportVisitor } from "./ExportVisitor.js";
+import { ValidationVisitor } from "./ValidationVisitor.js";
 
 // TODO(arv): Validate that there are no free variables
 // TODO(arv): Validate that the exported reference exists
@@ -26,7 +26,6 @@ import {ValidationVisitor} from './ValidationVisitor.js';
  * @return {void}
  */
 export function buildExportList(deps, loader, reporter) {
-
   function doVisit(ctor) {
     for (let i = 0; i < deps.length; i++) {
       let visitor = new ctor(reporter, loader, deps[i]);
@@ -45,4 +44,3 @@ export function buildExportList(deps, loader, reporter) {
   reverseVisit(ExportVisitor);
   doVisit(ValidationVisitor);
 }
-

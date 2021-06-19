@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "git": {
+        "name": ".",
+        "remote": "https://github.com/googleapis/release-please.git",
+        "sha": "da156261156c3bb4a1e85e631718fddc45e1a38e"
+      }
+    },
+    {
+      "git": {
+        "name": "synthtool",
+        "remote": "https://github.com/googleapis/synthtool.git",
+        "sha": "c6706ee5d693e9ae5967614170732646590d8374"
+      }
+    }
+  ]
+}

@@ -2,11 +2,11 @@
 // Error: :11:11: yield is a reserved identifier
 
 function f() {
-  'use strict';
-  return {implements};
+  "use strict";
+  return { implements };
 }
 
 function g() {
-  'use strict';
-  return {yield};
+  "use strict";
+  return { yield };
 }

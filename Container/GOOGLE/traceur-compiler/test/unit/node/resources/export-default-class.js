@@ -1,9 +1,9 @@
 export default class Q {
   foo() {
-    console.log('class method');
+    console.log("class method");
   }
   get name() {
-    return 'Q';
+    return "Q";
   }
 }
 var p = 5;

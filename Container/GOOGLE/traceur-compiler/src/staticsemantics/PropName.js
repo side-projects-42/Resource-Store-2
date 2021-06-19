@@ -19,9 +19,9 @@ import {
   METHOD,
   PROPERTY_NAME_ASSIGNMENT,
   PROPERTY_NAME_SHORTHAND,
-  SET_ACCESSOR
-} from '../syntax/trees/ParseTreeType.js';
-import {IDENTIFIER} from '../syntax/TokenType.js';
+  SET_ACCESSOR,
+} from "../syntax/trees/ParseTreeType.js";
+import { IDENTIFIER } from "../syntax/TokenType.js";
 
 /**
  * Matches "Static Semantics: PropName" in the spec.
@@ -37,7 +37,7 @@ export function propName(tree) {
       return String(tree.literalToken.processedValue);
     }
     case COMPUTED_PROPERTY_NAME:
-      return '';
+      return "";
     case PROPERTY_NAME_SHORTHAND:
       return tree.name.toString();
     case METHOD:

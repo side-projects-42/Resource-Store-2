@@ -1,0 +1,97 @@
+{
+  "projectFullName": "newrelic/kubernetes-logging",
+  "issues": {
+    "open": 4
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 33,
+  "lastSixMonthsCommitTotal": 30,
+  "contributors": 9,
+  "pullRequests": {
+    "open": 3
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 9435570,
+      "login": "zuluecho9",
+      "avatarUrl": "https://avatars2.githubusercontent.com/u/9435570?v=4",
+      "htmlUrl": "https://github.com/zuluecho9",
+      "contributions": 1
+    },
+    {
+      "id": 7537725,
+      "login": "tejunior",
+      "avatarUrl": "https://avatars1.githubusercontent.com/u/7537725?v=4",
+      "htmlUrl": "https://github.com/tejunior",
+      "contributions": 1
+    },
+    {
+      "id": 59101374,
+      "login": "mshamota-nr",
+      "avatarUrl": "https://avatars0.githubusercontent.com/u/59101374?v=4",
+      "htmlUrl": "https://github.com/mshamota-nr",
+      "contributions": 1
+    },
+    {
+      "id": 55508447,
+      "login": "mculmone",
+      "avatarUrl": "https://avatars2.githubusercontent.com/u/55508447?v=4",
+      "htmlUrl": "https://github.com/mculmone",
+      "contributions": 1
+    },
+    {
+      "id": 11185684,
+      "login": "jrhian",
+      "avatarUrl": "https://avatars2.githubusercontent.com/u/11185684?v=4",
+      "htmlUrl": "https://github.com/jrhian",
+      "contributions": 1
+    },
+    {
+      "id": 3810702,
+      "login": "fpoppinga",
+      "avatarUrl": "https://avatars3.githubusercontent.com/u/3810702?v=4",
+      "htmlUrl": "https://github.com/fpoppinga",
+      "contributions": 1
+    },
+    {
+      "id": 7001514,
+      "login": "bmcfeely",
+      "avatarUrl": "https://avatars0.githubusercontent.com/u/7001514?v=4",
+      "htmlUrl": "https://github.com/bmcfeely",
+      "contributions": 2
+    },
+    {
+      "id": 25726,
+      "login": "Voziv",
+      "avatarUrl": "https://avatars1.githubusercontent.com/u/25726?v=4",
+      "htmlUrl": "https://github.com/Voziv",
+      "contributions": 2
+    },
+    {
+      "id": 9002169,
+      "login": "bpschmitt",
+      "avatarUrl": "https://avatars3.githubusercontent.com/u/9002169?v=4",
+      "htmlUrl": "https://github.com/bpschmitt",
+      "contributions": 5
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U0MzE=",
+      "name": "Smarty",
+      "color": null
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

@@ -11,20 +11,18 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.Statusbar');
+goog.provide("wtf.app.Statusbar");
 
-goog.require('goog.events.EventType');
-goog.require('goog.soy');
-goog.require('goog.style');
-goog.require('wtf.app.statusbar');
-goog.require('wtf.db.Unit');
-goog.require('wtf.events');
-goog.require('wtf.events.EventType');
-goog.require('wtf.events.Keyboard');
-goog.require('wtf.ui.Control');
-goog.require('wtf.util');
-
-
+goog.require("goog.events.EventType");
+goog.require("goog.soy");
+goog.require("goog.style");
+goog.require("wtf.app.statusbar");
+goog.require("wtf.db.Unit");
+goog.require("wtf.events");
+goog.require("wtf.events.EventType");
+goog.require("wtf.events.Keyboard");
+goog.require("wtf.ui.Control");
+goog.require("wtf.util");
 
 /**
  * Statusbar control.
@@ -34,7 +32,7 @@ goog.require('wtf.util');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.app.Statusbar = function(documentView, parentElement) {
+wtf.app.Statusbar = function (documentView, parentElement) {
   goog.base(this, parentElement, documentView.getDom());
 
   /**
@@ -50,33 +48,38 @@ wtf.app.Statusbar = function(documentView, parentElement) {
    * @private
    */
   this.divs_ = {
-    selectionCounts: this.getChildElement(
-        goog.getCssName('selectionCounts')),
-    selectionTimes: this.getChildElement(
-        goog.getCssName('selectionTimes')),
-    timeTotals: this.getChildElement(
-        goog.getCssName('timeTotals')),
-    timeRange: this.getChildElement(
-        goog.getCssName('timeRange'))
+    selectionCounts: this.getChildElement(goog.getCssName("selectionCounts")),
+    selectionTimes: this.getChildElement(goog.getCssName("selectionTimes")),
+    timeTotals: this.getChildElement(goog.getCssName("timeTotals")),
+    timeRange: this.getChildElement(goog.getCssName("timeRange")),
   };
 
   var commandManager = wtf.events.getCommandManager();
   var eh = this.getHandler();
-  eh.listen(this.getChildElement('selectAll'),
-      goog.events.EventType.CLICK, function(e) {
-        e.preventDefault();
-        commandManager.execute('select_all', this, null);
-      });
-  eh.listen(this.getChildElement('selectVisible'),
-      goog.events.EventType.CLICK, function(e) {
-        e.preventDefault();
-        commandManager.execute('select_visible', this, null);
-      });
-  eh.listen(this.getChildElement('viewHealthLink'),
-      goog.events.EventType.CLICK, function(e) {
-        e.preventDefault();
-        commandManager.execute('view_trace_health', this, null);
-      });
+  eh.listen(
+    this.getChildElement("selectAll"),
+    goog.events.EventType.CLICK,
+    function (e) {
+      e.preventDefault();
+      commandManager.execute("select_all", this, null);
+    }
+  );
+  eh.listen(
+    this.getChildElement("selectVisible"),
+    goog.events.EventType.CLICK,
+    function (e) {
+      e.preventDefault();
+      commandManager.execute("select_visible", this, null);
+    }
+  );
+  eh.listen(
+    this.getChildElement("viewHealthLink"),
+    goog.events.EventType.CLICK,
+    function (e) {
+      e.preventDefault();
+      commandManager.execute("view_trace_health", this, null);
+    }
+  );
 
   var db = this.documentView_.getDatabase();
   db.addListener(wtf.events.EventType.INVALIDATED, this.update_, this);
@@ -87,23 +90,27 @@ wtf.app.Statusbar = function(documentView, parentElement) {
 };
 goog.inherits(wtf.app.Statusbar, wtf.ui.Control);
 
-
 /**
  * @override
  */
-wtf.app.Statusbar.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
-      wtf.app.statusbar.control, {
-        system_key: wtf.events.Keyboard.SYSTEM_KEY
-      }, undefined, dom));
+wtf.app.Statusbar.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(
+      wtf.app.statusbar.control,
+      {
+        system_key: wtf.events.Keyboard.SYSTEM_KEY,
+      },
+      undefined,
+      dom
+    )
+  );
 };
-
 
 /**
  * Updates the statusbar when the database/selection/etc change.
  * @private
  */
-wtf.app.Statusbar.prototype.update_ = function() {
+wtf.app.Statusbar.prototype.update_ = function () {
   var dom = this.getDom();
   var db = this.documentView_.getDatabase();
   var selection = this.documentView_.getSelection();
@@ -128,33 +135,36 @@ wtf.app.Statusbar.prototype.update_ = function() {
   var table = selection.getSelectionStatistics();
   var filteredEventCount = table.getEventCount();
 
-  var selectionCounts = [
-    filteredEventCount,
-    totalEventCount
-  ].join('/');
+  var selectionCounts = [filteredEventCount, totalEventCount].join("/");
   dom.setTextContent(this.divs_.selectionCounts, selectionCounts);
 
   var totalDuration = wtf.db.Unit.format(lastEventTime - firstEventTime, units);
   if (selection.hasTimeRangeSpecified()) {
     var selectionTimeStart = selection.getTimeStart();
     var selectionTimeEnd = selection.getTimeEnd();
-    dom.setTextContent(this.divs_.selectionTimes, [
-      wtf.db.Unit.format(selectionTimeEnd - selectionTimeStart, units),
-      totalDuration
-    ].join('/'));
+    dom.setTextContent(
+      this.divs_.selectionTimes,
+      [
+        wtf.db.Unit.format(selectionTimeEnd - selectionTimeStart, units),
+        totalDuration,
+      ].join("/")
+    );
   } else {
-    dom.setTextContent(this.divs_.selectionTimes, [
-      totalDuration,
-      totalDuration
-    ].join('/'));
+    dom.setTextContent(
+      this.divs_.selectionTimes,
+      [totalDuration, totalDuration].join("/")
+    );
   }
 
   if (units == wtf.db.Unit.TIME_MILLISECONDS) {
-    dom.setTextContent(this.divs_.timeRange, [
-      wtf.util.formatWallTime(timebase + firstEventTime),
-      wtf.util.formatWallTime(timebase + lastEventTime)
-    ].join('-'));
+    dom.setTextContent(
+      this.divs_.timeRange,
+      [
+        wtf.util.formatWallTime(timebase + firstEventTime),
+        wtf.util.formatWallTime(timebase + lastEventTime),
+      ].join("-")
+    );
   } else {
-    dom.setTextContent(this.divs_.timeRange, '');
+    dom.setTextContent(this.divs_.timeRange, "");
   }
 };

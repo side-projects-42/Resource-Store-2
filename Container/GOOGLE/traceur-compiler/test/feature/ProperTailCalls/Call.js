@@ -5,9 +5,9 @@ Error.stackTraceLimit = Infinity;
 var stackSize;
 function recordStackSize() {
   try {
-    Error.prepareStackTrace = function(error, structuredStackTrace) {
+    Error.prepareStackTrace = function (error, structuredStackTrace) {
       return structuredStackTrace.length;
-    }
+    };
     stackSize = new Error().stack;
   } finally {
     delete Error.prepareStackTrace;
@@ -30,7 +30,7 @@ function f(n) {
 }
 
 function sum(n) {
-  return n * (n + 1) / 2;
+  return (n * (n + 1)) / 2;
 }
 
 assert.equal(f(50), sum(50));

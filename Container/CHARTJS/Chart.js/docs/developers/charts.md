@@ -3,18 +3,16 @@
 Chart.js 2.0 introduced the concept of controllers for each dataset. Like scales, new controllers can be written as needed.
 
 ```javascript
-class MyType extends Chart.DatasetController {
-
-}
+class MyType extends Chart.DatasetController {}
 
 Chart.register(MyType);
 
 // Now we can create a new instance of our chart, using the Chart.js API
 new Chart(ctx, {
-    // this is the string the constructor was registered at, ie Chart.controllers.MyType
-    type: 'MyType',
-    data: data,
-    options: options
+  // this is the string the constructor was registered at, ie Chart.controllers.MyType
+  type: "MyType",
+  data: data,
+  options: options,
 });
 ```
 
@@ -73,14 +71,14 @@ Extending or replacing an existing controller type is easy. Simply replace the c
 
 The built in controller types are:
 
-* `BarController`
-* `BubbleController`
-* `DoughnutController`
-* `LineController`
-* `PieController`
-* `PolarAreaController`
-* `RadarController`
-* `ScatterController`
+- `BarController`
+- `BubbleController`
+- `DoughnutController`
+- `LineController`
+- `PieController`
+- `PolarAreaController`
+- `RadarController`
+- `ScatterController`
 
 These controllers are also available in the UMD package, directly under `Chart`. Eg: `Chart.BarController`.
 
@@ -131,11 +129,11 @@ When adding a new chart type, `ChartTypeRegistry` must contains the declarations
 For example, to provide typings for a new chart type that extends from a bubble chart, you would add a `.d.ts` containing:
 
 ```ts
-import { ChartTypeRegistry } from 'chart.js'
+import { ChartTypeRegistry } from "chart.js";
 
-declare module 'chart.js' {
-    interface ChartTypeRegistry {
-        derivedBubble: ChartTypeRegistry['bubble']
-    }
+declare module "chart.js" {
+  interface ChartTypeRegistry {
+    derivedBubble: ChartTypeRegistry["bubble"];
+  }
 }
 ```

@@ -11,18 +11,16 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.zoom.Spring');
+goog.provide("wtf.ui.zoom.Spring");
 
-goog.require('wtf');
-
-
+goog.require("wtf");
 
 /**
  * Derivative-based critically damped spring.
  * @param {number} value Default value.
  * @constructor
  */
-wtf.ui.zoom.Spring = function(value) {
+wtf.ui.zoom.Spring = function (value) {
   /**
    * @type {number}
    */
@@ -52,13 +50,12 @@ wtf.ui.zoom.Spring = function(value) {
   this.dirty_ = true;
 };
 
-
 /**
  * Immediately sets the spring value.
  * @param {number} value New value.
  * @param {boolean=} opt_clean Mark as clean.
  */
-wtf.ui.zoom.Spring.prototype.set = function(value, opt_clean) {
+wtf.ui.zoom.Spring.prototype.set = function (value, opt_clean) {
   if (this.target == value) {
     return;
   }
@@ -73,12 +70,11 @@ wtf.ui.zoom.Spring.prototype.set = function(value, opt_clean) {
   }
 };
 
-
 /**
  * Begins an animated spring.
  * @param {number} value New value.
  */
-wtf.ui.zoom.Spring.prototype.animate = function(value) {
+wtf.ui.zoom.Spring.prototype.animate = function (value) {
   this.target = value;
   if (!this.dirty_) {
     this.velocity_ = 0;
@@ -87,14 +83,12 @@ wtf.ui.zoom.Spring.prototype.animate = function(value) {
   this.dirty_ = true;
 };
 
-
 /**
  * Stops any animation and holds at the current value.
  */
-wtf.ui.zoom.Spring.prototype.stop = function() {
+wtf.ui.zoom.Spring.prototype.stop = function () {
   this.set(this.current);
 };
-
 
 /**
  * Spring duration.
@@ -105,7 +99,6 @@ wtf.ui.zoom.Spring.prototype.stop = function() {
  */
 wtf.ui.zoom.Spring.DURATION_ = 2;
 
-
 /**
  * Difference under which two values are considered equal.
  * @const
@@ -114,13 +107,12 @@ wtf.ui.zoom.Spring.DURATION_ = 2;
  */
 wtf.ui.zoom.Spring.EQUAL_THRESHOLD_ = 0.00001;
 
-
 /**
  * Updates the spring value based on the current time.
  * @param {number} time Current time.
  * @return {boolean} Whether the spring is changing.
  */
-wtf.ui.zoom.Spring.prototype.update = function(time) {
+wtf.ui.zoom.Spring.prototype.update = function (time) {
   // This function tracks dirty state, timing information, and other state.
   // It's nasty, but ensures that things draw when they should and stop as soon
   // as they can.
@@ -151,15 +143,17 @@ wtf.ui.zoom.Spring.prototype.update = function(time) {
 
   // Spring logic.
   // See: http://stackoverflow.com/a/5108560
-  var Ki = 0.0020;
+  var Ki = 0.002;
   var Kp = 0.5;
   this.velocity_ += Ki * (this.target - this.current) + Kp * -this.velocity_;
 
   // Clamp velocity to prevent bouncing.
   var dvalue = this.current - this.target;
   var dvelocity = this.velocity_ * dt;
-  if (((dvelocity > 0) && (-dvalue > 0) && (-dvalue < dvelocity)) ||
-      ((dvelocity < 0) && (-dvalue < 0) && (-dvalue > dvelocity))) {
+  if (
+    (dvelocity > 0 && -dvalue > 0 && -dvalue < dvelocity) ||
+    (dvelocity < 0 && -dvalue < 0 && -dvalue > dvelocity)
+  ) {
     dvelocity = -dvalue;
     this.velocity_ = 0;
   }
@@ -171,8 +165,10 @@ wtf.ui.zoom.Spring.prototype.update = function(time) {
   //     the source/target are very small/very large numbers.
   var updateChange = Math.abs(this.target - this.current);
   var velocityChange = Math.abs(dvelocity);
-  if (updateChange < wtf.ui.zoom.Spring.EQUAL_THRESHOLD_ &&
-      velocityChange < wtf.ui.zoom.Spring.EQUAL_THRESHOLD_) {
+  if (
+    updateChange < wtf.ui.zoom.Spring.EQUAL_THRESHOLD_ &&
+    velocityChange < wtf.ui.zoom.Spring.EQUAL_THRESHOLD_
+  ) {
     this.current = this.target;
     this.lastTime_ = -1;
     this.dirty_ = false;

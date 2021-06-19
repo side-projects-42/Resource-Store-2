@@ -16,7 +16,7 @@ var object = {
     await asyncTimeout(1);
     assert.equal(2, ++x);
     done();
-  }
-}
+  },
+};
 
 object.test();

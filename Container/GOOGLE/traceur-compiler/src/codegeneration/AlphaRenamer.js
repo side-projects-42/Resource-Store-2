@@ -12,17 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ScopeTransformer} from './ScopeTransformer.js';
+import { ScopeTransformer } from "./ScopeTransformer.js";
 import {
   FunctionDeclaration,
-  FunctionExpression
-} from '../syntax/trees/ParseTrees.js';
-import {
-  THIS
-} from '../syntax/PredefinedName.js';
-import {
-  createIdentifierExpression
-} from './ParseTreeFactory.js';
+  FunctionExpression,
+} from "../syntax/trees/ParseTrees.js";
+import { THIS } from "../syntax/PredefinedName.js";
+import { createIdentifierExpression } from "./ParseTreeFactory.js";
 
 /**
  * Replaces one identifier with another identifier (alpha
@@ -58,8 +54,7 @@ export class AlphaRenamer extends ScopeTransformer {
   }
 
   transformThisExpression(tree) {
-    if (this.varName_ !== THIS)
-      return tree;
+    if (this.varName_ !== THIS) return tree;
     return createIdentifierExpression(this.newName_);
   }
 
@@ -70,9 +65,15 @@ export class AlphaRenamer extends ScopeTransformer {
   transformFunctionDeclaration(tree) {
     if (this.varName_ === tree.name) {
       // it is the function that is being renamed
-      tree = new FunctionDeclaration(tree.location, this.newName_,
-          tree.functionKind, tree.parameterList, tree.typeAnnotation,
-          tree.annotations, tree.body);
+      tree = new FunctionDeclaration(
+        tree.location,
+        this.newName_,
+        tree.functionKind,
+        tree.parameterList,
+        tree.typeAnnotation,
+        tree.annotations,
+        tree.body
+      );
     }
     return super.transformFunctionDeclaration(tree);
   }
@@ -84,9 +85,15 @@ export class AlphaRenamer extends ScopeTransformer {
   transformFunctionExpression(tree) {
     if (this.varName_ === tree.name) {
       // it is the function that is being renamed
-      tree = new FunctionExpression(tree.location, this.newName_,
-          tree.functionKind, tree.parameterList, tree.typeAnnotation,
-          tree.annotations, tree.body);
+      tree = new FunctionExpression(
+        tree.location,
+        this.newName_,
+        tree.functionKind,
+        tree.parameterList,
+        tree.typeAnnotation,
+        tree.annotations,
+        tree.body
+      );
     }
     return super.transformFunctionExpression(tree);
   }

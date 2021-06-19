@@ -1,13 +1,13 @@
-import {isNaN} from '../../../src/runtime/polyfills/Number.js';
+import { isNaN } from "../../../src/runtime/polyfills/Number.js";
 
 function testIsNaN(isNaN) {
   assert.isTrue(isNaN(NaN));
   assert.isTrue(isNaN(-NaN));
 
-  assert.isFalse(isNaN('-0'));
-  assert.isFalse(isNaN('0'));
-  assert.isFalse(isNaN('NaN'));
-  assert.isFalse(isNaN('x'));
+  assert.isFalse(isNaN("-0"));
+  assert.isFalse(isNaN("0"));
+  assert.isFalse(isNaN("NaN"));
+  assert.isFalse(isNaN("x"));
   assert.isFalse(isNaN(-0));
   assert.isFalse(isNaN(0));
   assert.isFalse(isNaN(Infinity));
@@ -23,7 +23,13 @@ function testIsNaN(isNaN) {
   assert.isFalse(isNaN(null));
   assert.isFalse(isNaN(true));
   assert.isFalse(isNaN(undefined));
-  assert.isFalse(isNaN({valueOf() { return NaN; }}));
+  assert.isFalse(
+    isNaN({
+      valueOf() {
+        return NaN;
+      },
+    })
+  );
 }
 
 testIsNaN(isNaN);

@@ -1,21 +1,82 @@
-CodeMirror.defineMode("ruby", function(config) {
+CodeMirror.defineMode("ruby", function (config) {
   function wordObj(words) {
     var o = {};
     for (var i = 0, e = words.length; i < e; ++i) o[words[i]] = true;
     return o;
   }
   var keywords = wordObj([
-    "alias", "and", "BEGIN", "begin", "break", "case", "class", "def", "defined?", "do", "else",
-    "elsif", "END", "end", "ensure", "false", "for", "if", "in", "module", "next", "not", "or",
-    "redo", "rescue", "retry", "return", "self", "super", "then", "true", "undef", "unless",
-    "until", "when", "while", "yield", "nil", "raise", "throw", "catch", "fail", "loop", "callcc",
-    "caller", "lambda", "proc", "public", "protected", "private", "require", "load",
-    "require_relative", "extend", "autoload"
+    "alias",
+    "and",
+    "BEGIN",
+    "begin",
+    "break",
+    "case",
+    "class",
+    "def",
+    "defined?",
+    "do",
+    "else",
+    "elsif",
+    "END",
+    "end",
+    "ensure",
+    "false",
+    "for",
+    "if",
+    "in",
+    "module",
+    "next",
+    "not",
+    "or",
+    "redo",
+    "rescue",
+    "retry",
+    "return",
+    "self",
+    "super",
+    "then",
+    "true",
+    "undef",
+    "unless",
+    "until",
+    "when",
+    "while",
+    "yield",
+    "nil",
+    "raise",
+    "throw",
+    "catch",
+    "fail",
+    "loop",
+    "callcc",
+    "caller",
+    "lambda",
+    "proc",
+    "public",
+    "protected",
+    "private",
+    "require",
+    "load",
+    "require_relative",
+    "extend",
+    "autoload",
   ]);
-  var indentWords = wordObj(["def", "class", "case", "for", "while", "do", "module", "then",
-                             "catch", "loop", "proc", "begin"]);
+  var indentWords = wordObj([
+    "def",
+    "class",
+    "case",
+    "for",
+    "while",
+    "do",
+    "module",
+    "then",
+    "catch",
+    "loop",
+    "proc",
+    "begin",
+  ]);
   var dedentWords = wordObj(["end", "until"]);
-  var matching = {"[": "]", "{": "}", "(": ")"};
+  var matching = { "[": "]", "{": "}", "(": ")" };
   var curPunc;
 
   function chain(newtok, stream, state) {
@@ -30,15 +91,27 @@ CodeMirror.defineMode("ruby", function(config) {
       return "comment";
     }
     if (stream.eatSpace()) return null;
-    var ch = stream.next(), m;
-    if (ch == "`" || ch == "'" || ch == '"' ||
-        (ch == "/" && !stream.eol() && stream.peek() != " ")) {
-      return chain(readQuoted(ch, "string", ch == '"' || ch == "`"), stream, state);
+    var ch = stream.next(),
+      m;
+    if (
+      ch == "`" ||
+      ch == "'" ||
+      ch == '"' ||
+      (ch == "/" && !stream.eol() && stream.peek() != " ")
+    ) {
+      return chain(
+        readQuoted(ch, "string", ch == '"' || ch == "`"),
+        stream,
+        state
+      );
     } else if (ch == "%") {
-      var style, embed = false;
+      var style,
+        embed = false;
       if (stream.eat("s")) style = "atom";
-      else if (stream.eat(/[WQ]/)) { style = "string"; embed = true; }
-      else if (stream.eat(/[wxqr]/)) style = "string";
+      else if (stream.eat(/[WQ]/)) {
+        style = "string";
+        embed = true;
+      } else if (stream.eat(/[wxqr]/)) style = "string";
       var delim = stream.eat(/[^\w\s]/);
       if (!delim) return "operator";
       if (matching.propertyIsEnumerable(delim)) delim = matching[delim];
@@ -46,7 +119,10 @@ CodeMirror.defineMode("ruby", function(config) {
     } else if (ch == "#") {
       stream.skipToEnd();
       return "comment";
-    } else if (ch == "<" && (m = stream.match(/^<-?[\`\"\']?([a-zA-Z_?]\w*)[\`\"\']?(?:;|$)/))) {
+    } else if (
+      ch == "<" &&
+      (m = stream.match(/^<-?[\`\"\']?([a-zA-Z_?]\w*)[\`\"\']?(?:;|$)/))
+    ) {
       return chain(readHereDoc(m[1]), stream, state);
     } else if (ch == "0") {
       if (stream.eat("x")) stream.eatWhile(/[\da-fA-F]/);
@@ -62,8 +138,10 @@ CodeMirror.defineMode("ruby", function(config) {
       else stream.next();
       return "string";
     } else if (ch == ":") {
-      if (stream.eat("'")) return chain(readQuoted("'", "atom", false), stream, state);
-      if (stream.eat('"')) return chain(readQuoted('"', "atom", true), stream, state);
+      if (stream.eat("'"))
+        return chain(readQuoted("'", "atom", false), stream, state);
+      if (stream.eat('"'))
+        return chain(readQuoted('"', "atom", true), stream, state);
       stream.eatWhile(/[\w\?]/);
       return "atom";
     } else if (ch == "@") {
@@ -78,7 +156,10 @@ CodeMirror.defineMode("ruby", function(config) {
       stream.eatWhile(/[\w\?]/);
       if (stream.eat(":")) return "atom";
       return "ident";
-    } else if (ch == "|" && (state.varList || state.lastTok == "{" || state.lastTok == "do")) {
+    } else if (
+      ch == "|" &&
+      (state.varList || state.lastTok == "{" || state.lastTok == "do")
+    ) {
       curPunc = "|";
       return null;
     } else if (/[\(\)\[\]{}\\;]/.test(ch)) {
@@ -96,12 +177,12 @@ CodeMirror.defineMode("ruby", function(config) {
 
   function tokenBaseUntilBrace() {
     var depth = 1;
-    return function(stream, state) {
+    return function (stream, state) {
       if (stream.peek() == "}") {
         depth--;
         if (depth == 0) {
           state.tokenize.pop();
-          return state.tokenize[state.tokenize.length-1](stream, state);
+          return state.tokenize[state.tokenize.length - 1](stream, state);
         }
       } else if (stream.peek() == "{") {
         depth++;
@@ -110,8 +191,9 @@ CodeMirror.defineMode("ruby", function(config) {
     };
   }
   function readQuoted(quote, style, embed, unescaped) {
-    return function(stream, state) {
-      var escaped = false, ch;
+    return function (stream, state) {
+      var escaped = false,
+        ch;
       while ((ch = stream.next()) != null) {
         if (ch == quote && (unescaped || !escaped)) {
           state.tokenize.pop();
@@ -127,7 +209,7 @@ CodeMirror.defineMode("ruby", function(config) {
     };
   }
   function readHereDoc(phrase) {
-    return function(stream, state) {
+    return function (stream, state) {
       if (stream.match(phrase)) state.tokenize.pop();
       else stream.skipToEnd();
       return "string";
@@ -141,56 +223,77 @@ CodeMirror.defineMode("ruby", function(config) {
   }
 
   return {
-    startState: function() {
-      return {tokenize: [tokenBase],
-              indented: 0,
-              context: {type: "top", indented: -config.indentUnit},
-              continuedLine: false,
-              lastTok: null,
-              varList: false};
+    startState: function () {
+      return {
+        tokenize: [tokenBase],
+        indented: 0,
+        context: { type: "top", indented: -config.indentUnit },
+        continuedLine: false,
+        lastTok: null,
+        varList: false,
+      };
     },
 
-    token: function(stream, state) {
+    token: function (stream, state) {
       if (stream.sol()) state.indented = stream.indentation();
-      var style = state.tokenize[state.tokenize.length-1](stream, state), kwtype;
+      var style = state.tokenize[state.tokenize.length - 1](stream, state),
+        kwtype;
       if (style == "ident") {
         var word = stream.current();
-        style = keywords.propertyIsEnumerable(stream.current()) ? "keyword"
-          : /^[A-Z]/.test(word) ? "tag"
-          : (state.lastTok == "def" || state.lastTok == "class" || state.varList) ? "def"
+        style = keywords.propertyIsEnumerable(stream.current())
+          ? "keyword"
+          : /^[A-Z]/.test(word)
+          ? "tag"
+          : state.lastTok == "def" || state.lastTok == "class" || state.varList
+          ? "def"
           : "variable";
         if (indentWords.propertyIsEnumerable(word)) kwtype = "indent";
         else if (dedentWords.propertyIsEnumerable(word)) kwtype = "dedent";
-        else if ((word == "if" || word == "unless") && stream.column() == stream.indentation())
+        else if (
+          (word == "if" || word == "unless") &&
+          stream.column() == stream.indentation()
+        )
           kwtype = "indent";
       }
-      if (curPunc || (style && style != "comment")) state.lastTok = word || curPunc || style;
+      if (curPunc || (style && style != "comment"))
+        state.lastTok = word || curPunc || style;
       if (curPunc == "|") state.varList = !state.varList;
 
       if (kwtype == "indent" || /[\(\[\{]/.test(curPunc))
-        state.context = {prev: state.context, type: curPunc || style, indented: state.indented};
-      else if ((kwtype == "dedent" || /[\)\]\}]/.test(curPunc)) && state.context.prev)
+        state.context = {
+          prev: state.context,
+          type: curPunc || style,
+          indented: state.indented,
+        };
+      else if (
+        (kwtype == "dedent" || /[\)\]\}]/.test(curPunc)) &&
+        state.context.prev
+      )
         state.context = state.context.prev;
 
       if (stream.eol())
-        state.continuedLine = (curPunc == "\\" || style == "operator");
+        state.continuedLine = curPunc == "\\" || style == "operator";
       return style;
     },
 
-    indent: function(state, textAfter) {
-      if (state.tokenize[state.tokenize.length-1] != tokenBase) return 0;
+    indent: function (state, textAfter) {
+      if (state.tokenize[state.tokenize.length - 1] != tokenBase) return 0;
       var firstChar = textAfter && textAfter.charAt(0);
       var ct = state.context;
-      var closing = ct.type == matching[firstChar] ||
-        ct.type == "keyword" && /^(?:end|until|else|elsif|when|rescue)\b/.test(textAfter);
-      return ct.indented + (closing ? 0 : config.indentUnit) +
-        (state.continuedLine ? config.indentUnit : 0);
+      var closing =
+        ct.type == matching[firstChar] ||
+        (ct.type == "keyword" &&
+          /^(?:end|until|else|elsif|when|rescue)\b/.test(textAfter));
+      return (
+        ct.indented +
+        (closing ? 0 : config.indentUnit) +
+        (state.continuedLine ? config.indentUnit : 0)
+      );
     },
 
     electricChars: "}de", // enD and rescuE
-    lineComment: "#"
+    lineComment: "#",
   };
 });
 
 CodeMirror.defineMIME("text/x-ruby", "ruby");
-

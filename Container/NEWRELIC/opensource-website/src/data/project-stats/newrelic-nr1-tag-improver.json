@@ -1,0 +1,105 @@
+{
+  "projectFullName": "newrelic/nr1-tag-improver",
+  "issues": {
+    "open": 21
+  },
+  "releases": 10,
+  "latestRelease": {
+    "name": "v1.1.2",
+    "date": "2021-04-07T19:29:17Z"
+  },
+  "commits": 119,
+  "lastSixMonthsCommitTotal": 91,
+  "contributors": 9,
+  "pullRequests": {
+    "open": 1
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 12112563,
+      "login": "JuliaNocera",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/12112563?v=4",
+      "htmlUrl": "https://github.com/JuliaNocera",
+      "contributions": 1
+    },
+    {
+      "id": 1395158,
+      "login": "jpvajda",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1395158?v=4",
+      "htmlUrl": "https://github.com/jpvajda",
+      "contributions": 1
+    },
+    {
+      "id": 66321197,
+      "login": "nr-opensource-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66321197?v=4",
+      "htmlUrl": "https://github.com/nr-opensource-bot",
+      "contributions": 9
+    },
+    {
+      "id": 482671,
+      "login": "fightingmonk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/482671?v=4",
+      "htmlUrl": "https://github.com/fightingmonk",
+      "contributions": 21
+    },
+    {
+      "id": 4672940,
+      "login": "shahramk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/4672940?v=4",
+      "htmlUrl": "https://github.com/shahramk",
+      "contributions": 42
+    },
+    {
+      "id": 6021906,
+      "login": "jpconway",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6021906?v=4",
+      "htmlUrl": "https://github.com/jpconway",
+      "contributions": 4
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 1
+    },
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 3
+    },
+    {
+      "id": 6021115,
+      "login": "amit-y",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6021115?v=4",
+      "htmlUrl": "https://github.com/amit-y",
+      "contributions": 6
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U2MDU=",
+      "name": "SCSS",
+      "color": "#c6538c"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

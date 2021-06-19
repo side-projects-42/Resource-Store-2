@@ -1,22 +1,22 @@
-import { Chart, ChartOptions } from '../../index.esm';
+import { Chart, ChartOptions } from "../../index.esm";
 
-const chart = new Chart('test', {
-  type: 'bubble',
+const chart = new Chart("test", {
+  type: "bubble",
   data: {
-    datasets: []
+    datasets: [],
   },
   options: {
     scales: {
       x: {
         min: 0,
         max: 30,
-        ticks: {}
+        ticks: {},
       },
       y: {
         min: 0,
         max: 30,
         ticks: {},
       },
-    }
-  }
+    },
+  },
 });

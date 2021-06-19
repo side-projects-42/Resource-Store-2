@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.providers.DomProvider');
+goog.provide("wtf.trace.providers.DomProvider");
 
-goog.require('wtf.data.webidl');
-goog.require('wtf.trace.Provider');
-goog.require('wtf.trace.eventtarget');
-
-
+goog.require("wtf.data.webidl");
+goog.require("wtf.trace.Provider");
+goog.require("wtf.trace.eventtarget");
 
 /**
  * Provides DOM events for common DOM types.
@@ -26,14 +24,14 @@ goog.require('wtf.trace.eventtarget');
  * @constructor
  * @extends {wtf.trace.Provider}
  */
-wtf.trace.providers.DomProvider = function(options) {
+wtf.trace.providers.DomProvider = function (options) {
   goog.base(this, options);
 
-  if (!goog.global['document']) {
+  if (!goog.global["document"]) {
     return;
   }
 
-  var level = options.getNumber('wtf.trace.provider.dom', 1);
+  var level = options.getNumber("wtf.trace.provider.dom", 1);
   if (!level) {
     return;
   }
@@ -43,8 +41,10 @@ wtf.trace.providers.DomProvider = function(options) {
    * @type {boolean}
    * @private
    */
-  this.includeEventArgs_ =
-      options.getBoolean('wtf.trace.provider.dom.eventArgs', false);
+  this.includeEventArgs_ = options.getBoolean(
+    "wtf.trace.provider.dom.eventArgs",
+    false
+  );
 
   // Note that this code is extra exception-handly - this is because it's very
   // prone to exceptions in various browsers. Being defensive here means that
@@ -53,148 +53,141 @@ wtf.trace.providers.DomProvider = function(options) {
   // exceptions like this.
   try {
     this.injectWindow_();
-  } catch (e) {
-  }
+  } catch (e) {}
 
   try {
     this.injectDocument_();
-  } catch (e) {
-  }
+  } catch (e) {}
 
   try {
     this.injectElements_();
-  } catch (e) {
-  }
+  } catch (e) {}
 };
 goog.inherits(wtf.trace.providers.DomProvider, wtf.trace.Provider);
-
 
 /**
  * @override
  */
 wtf.trace.providers.DomProvider.prototype.getSettingsSectionConfigs =
-    function() {
-  return [
-    {
-      'title': 'DOM',
-      'widgets': [
-        {
-          'type': 'checkbox',
-          'key': 'wtf.trace.provider.dom',
-          'title': 'Enabled',
-          'default': true
-        },
-        {
-          'type': 'checkbox',
-          'key': 'wtf.trace.provider.dom.eventArgs',
-          'title': 'Include event arguments',
-          'default': false
-        }
-      ]
-    }
-  ];
-};
-
+  function () {
+    return [
+      {
+        title: "DOM",
+        widgets: [
+          {
+            type: "checkbox",
+            key: "wtf.trace.provider.dom",
+            title: "Enabled",
+            default: true,
+          },
+          {
+            type: "checkbox",
+            key: "wtf.trace.provider.dom.eventArgs",
+            title: "Include event arguments",
+            default: false,
+          },
+        ],
+      },
+    ];
+  };
 
 /**
  * Injects method/event handler overrides on Window.
  * @private
  */
-wtf.trace.providers.DomProvider.prototype.injectWindow_ = function() {
+wtf.trace.providers.DomProvider.prototype.injectWindow_ = function () {
   // Both Chrome and FF support doing this on Window.prototype.
 
   // Window can be instrumented just like an HTML element.
-  this.injectElement_('Window', goog.global['Window'], Window.prototype);
+  this.injectElement_("Window", goog.global["Window"], Window.prototype);
 };
-
 
 /**
  * Injects method/event handler overrides on Document.
  * @private
  */
-wtf.trace.providers.DomProvider.prototype.injectDocument_ = function() {
+wtf.trace.providers.DomProvider.prototype.injectDocument_ = function () {
   // Both Chrome and FF support doing this on document.
 
   // Document needs instrumenting on the instance, not the prototype.
-  this.injectElement_('Document', goog.global['Document'], document);
+  this.injectElement_("Document", goog.global["Document"], document);
 };
-
 
 /**
  * Injects event handler overrides on DOM event targets.
  * @private
  */
-wtf.trace.providers.DomProvider.prototype.injectElements_ = function() {
+wtf.trace.providers.DomProvider.prototype.injectElements_ = function () {
   var elementTypes = {
-    'HTMLAnchorElement': 'a',
+    HTMLAnchorElement: "a",
     // Don't hook <applet>, as it causes IE to display warnings/errors about
     // Java not being installed.
     //'HTMLAppletElement': 'applet',
-    'HTMLAreaElement': 'area',
-    'HTMLAudioElement': 'audio',
-    'HTMLBRElement': 'br',
-    'HTMLBaseElement': 'base',
-    'HTMLBaseFontElement': 'basefont',
-    'HTMLBodyElement': 'body',
-    'HTMLButtonElement': 'button',
-    'HTMLCanvasElement': 'canvas',
-    'HTMLContentElement': 'content',
-    'HTMLDListElement': 'dl',
-    'HTMLDirectoryElement': 'dir',
-    'HTMLDivElement': 'div',
+    HTMLAreaElement: "area",
+    HTMLAudioElement: "audio",
+    HTMLBRElement: "br",
+    HTMLBaseElement: "base",
+    HTMLBaseFontElement: "basefont",
+    HTMLBodyElement: "body",
+    HTMLButtonElement: "button",
+    HTMLCanvasElement: "canvas",
+    HTMLContentElement: "content",
+    HTMLDListElement: "dl",
+    HTMLDirectoryElement: "dir",
+    HTMLDivElement: "div",
     // 'HTMLDocument',
     // 'HTMLElement',
-    'HTMLEmbedElement': 'embed',
-    'HTMLFieldSetElement': 'fieldset',
-    'HTMLFontElement': 'font',
-    'HTMLFormElement': 'form',
-    'HTMLFrameElement': 'frame',
-    'HTMLFrameSetElement': 'frameset',
-    'HTMLHRElement': 'hr',
-    'HTMLHeadElement': 'head',
-    'HTMLHeadingElement': 'h1',
-    'HTMLHtmlElement': 'html',
-    'HTMLIFrameElement': 'iframe',
-    'HTMLImageElement': 'img',
-    'HTMLInputElement': 'input',
-    'HTMLKeygenElement': 'keygen',
-    'HTMLLIElement': 'li',
-    'HTMLLabelElement': 'label',
-    'HTMLLegendElement': 'legend',
-    'HTMLLinkElement': 'link',
-    'HTMLMapElement': 'map',
-    'HTMLMarqueeElement': 'marquee',
-    'HTMLMediaElement': 'media',
-    'HTMLMenuElement': 'menu',
-    'HTMLMetaElement': 'meta',
-    'HTMLMeterElement': 'meter',
-    'HTMLModElement': 'ins',
-    'HTMLOListElement': 'ol',
-    'HTMLObjectElement': 'object',
-    'HTMLOptGroupElement': 'optgroup',
-    'HTMLOptionElement': 'option',
-    'HTMLOutputElement': 'output',
-    'HTMLParagraphElement': 'p',
-    'HTMLPreElement': 'pre',
-    'HTMLProgressElement': 'progress',
-    'HTMLQuoteElement': 'quote',
-    'HTMLScriptElement': 'script',
-    'HTMLSelectElement': 'select',
-    'HTMLSourceElement': 'source',
-    'HTMLSpanElement': 'span',
-    'HTMLStyleElement': 'style',
-    'HTMLTableCaptionElement': 'caption',
-    'HTMLTableCellElement': 'td',
-    'HTMLTableColElement': 'col',
-    'HTMLTableElement': 'table',
-    'HTMLTableRowElement': 'tr',
-    'HTMLTableSectionElement': 'thead',
-    'HTMLTextAreaElement': 'textarea',
-    'HTMLTitleElement': 'title',
-    'HTMLTrackElement': 'track',
-    'HTMLUListElement': 'ul',
-    'HTMLUnknownElement': 'UNKNOWN',
-    'HTMLVideoElement': 'video'
+    HTMLEmbedElement: "embed",
+    HTMLFieldSetElement: "fieldset",
+    HTMLFontElement: "font",
+    HTMLFormElement: "form",
+    HTMLFrameElement: "frame",
+    HTMLFrameSetElement: "frameset",
+    HTMLHRElement: "hr",
+    HTMLHeadElement: "head",
+    HTMLHeadingElement: "h1",
+    HTMLHtmlElement: "html",
+    HTMLIFrameElement: "iframe",
+    HTMLImageElement: "img",
+    HTMLInputElement: "input",
+    HTMLKeygenElement: "keygen",
+    HTMLLIElement: "li",
+    HTMLLabelElement: "label",
+    HTMLLegendElement: "legend",
+    HTMLLinkElement: "link",
+    HTMLMapElement: "map",
+    HTMLMarqueeElement: "marquee",
+    HTMLMediaElement: "media",
+    HTMLMenuElement: "menu",
+    HTMLMetaElement: "meta",
+    HTMLMeterElement: "meter",
+    HTMLModElement: "ins",
+    HTMLOListElement: "ol",
+    HTMLObjectElement: "object",
+    HTMLOptGroupElement: "optgroup",
+    HTMLOptionElement: "option",
+    HTMLOutputElement: "output",
+    HTMLParagraphElement: "p",
+    HTMLPreElement: "pre",
+    HTMLProgressElement: "progress",
+    HTMLQuoteElement: "quote",
+    HTMLScriptElement: "script",
+    HTMLSelectElement: "select",
+    HTMLSourceElement: "source",
+    HTMLSpanElement: "span",
+    HTMLStyleElement: "style",
+    HTMLTableCaptionElement: "caption",
+    HTMLTableCellElement: "td",
+    HTMLTableColElement: "col",
+    HTMLTableElement: "table",
+    HTMLTableRowElement: "tr",
+    HTMLTableSectionElement: "thead",
+    HTMLTextAreaElement: "textarea",
+    HTMLTitleElement: "title",
+    HTMLTrackElement: "track",
+    HTMLUListElement: "ul",
+    HTMLUnknownElement: "UNKNOWN",
+    HTMLVideoElement: "video",
   };
 
   for (var typeName in elementTypes) {
@@ -206,11 +199,9 @@ wtf.trace.providers.DomProvider.prototype.injectElements_ = function() {
     var el = document.createElement(tagName);
     try {
       this.injectElement_(typeName, ctor, el);
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 };
-
 
 /**
  * Injects an HTML element type.
@@ -219,8 +210,11 @@ wtf.trace.providers.DomProvider.prototype.injectElements_ = function() {
  * @param {!Object} obj Representative object.
  * @private
  */
-wtf.trace.providers.DomProvider.prototype.injectElement_ = function(
-    typeName, ctor, obj) {
+wtf.trace.providers.DomProvider.prototype.injectElement_ = function (
+  typeName,
+  ctor,
+  obj
+) {
   var proto = ctor.prototype;
 
   // Find all 'on' event names.
@@ -244,8 +238,7 @@ wtf.trace.providers.DomProvider.prototype.injectElement_ = function(
   }
 
   // Create a descriptor object.
-  var descriptor = wtf.trace.eventtarget.createDescriptor(
-      typeName, eventTypes);
+  var descriptor = wtf.trace.eventtarget.createDescriptor(typeName, eventTypes);
 
   // Stash the descriptor. It may be used by the hookDomEvents util.
   wtf.trace.eventtarget.setDescriptor(proto, descriptor);

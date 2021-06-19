@@ -36,8 +36,7 @@ export class ErrorReporter {
    * @param {Array} args
    */
   reportMessageInternal(location, format, args) {
-    if (location)
-      format = `${location}: ${format}`;
+    if (location) format = `${location}: ${format}`;
     console.error(format, ...args);
   }
 
@@ -61,18 +60,17 @@ export class ErrorReporter {
  * @return {string} The text where the source position has been prepended and
  *     where the place holders have been replaced.
  */
-ErrorReporter.format = function(location, text, args = undefined) {
+ErrorReporter.format = function (location, text, args = undefined) {
   var i = 0;
-  text = text.replace(/%./g, function(s) {
+  text = text.replace(/%./g, function (s) {
     switch (s) {
-      case '%s':
+      case "%s":
         return args && args[i++];
-      case '%%':
-        return '%';
+      case "%%":
+        return "%";
     }
     return s;
   });
-  if (location)
-    text = `${location}: ${text}`;
+  if (location) text = `${location}: ${text}`;
   return text;
 };

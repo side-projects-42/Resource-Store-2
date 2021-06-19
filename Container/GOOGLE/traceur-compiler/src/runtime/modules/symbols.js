@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import newUniqueString from '../new-unique-string.js';
-import hasNativeSymbol from '../has-native-symbols.js';
+import newUniqueString from "../new-unique-string.js";
+import hasNativeSymbol from "../has-native-symbols.js";
 
 const $create = Object.create;
 const $defineProperty = Object.defineProperty;
@@ -27,7 +27,7 @@ function nonEnum(value) {
     configurable: true,
     enumerable: false,
     value: value,
-    writable: true
+    writable: true,
   };
 }
 
@@ -57,8 +57,7 @@ var symbolValues = $create(null);
  */
 let SymbolImpl = function Symbol(description) {
   var value = new SymbolValue(description);
-  if (!(this instanceof SymbolImpl))
-    return value;
+  if (!(this instanceof SymbolImpl)) return value;
 
   // new Symbol should throw.
   //
@@ -66,14 +65,17 @@ let SymbolImpl = function Symbol(description) {
   // Object(symbol) or call a non strict function using a symbol value as
   // this. To correctly handle these two would require a lot of work for very
   // little gain so we are not doing those at the moment.
-  throw new $TypeError('Symbol cannot be new\'ed');
+  throw new $TypeError("Symbol cannot be new'ed");
 };
 
-$defineProperty(SymbolImpl.prototype, 'constructor', nonEnum(SymbolImpl));
-$defineProperty(SymbolImpl.prototype, 'toString', nonEnum(function() {
-  var symbolValue = this[symbolDataProperty];
-  return symbolValue[symbolInternalProperty];
-  /* The implementation of toString below matches the spec, but prevents
+$defineProperty(SymbolImpl.prototype, "constructor", nonEnum(SymbolImpl));
+$defineProperty(
+  SymbolImpl.prototype,
+  "toString",
+  nonEnum(function () {
+    var symbolValue = this[symbolDataProperty];
+    return symbolValue[symbolInternalProperty];
+    /* The implementation of toString below matches the spec, but prevents
   use of Symbols in eg generators unless --symbol is set. To simplify our
   code we deliberately go against the spec here.
   if (!symbolValue)
@@ -83,30 +85,34 @@ $defineProperty(SymbolImpl.prototype, 'toString', nonEnum(function() {
     desc = '';
   return 'Symbol(' + desc + ')';
   */
-}));
-$defineProperty(SymbolImpl.prototype, 'valueOf', nonEnum(function() {
-  var symbolValue = this[symbolDataProperty];
-  if (!symbolValue)
-    throw $TypeError('Conversion from symbol to string');
-  return symbolValue[symbolInternalProperty];
-}));
+  })
+);
+$defineProperty(
+  SymbolImpl.prototype,
+  "valueOf",
+  nonEnum(function () {
+    var symbolValue = this[symbolDataProperty];
+    if (!symbolValue) throw $TypeError("Conversion from symbol to string");
+    return symbolValue[symbolInternalProperty];
+  })
+);
 
 function SymbolValue(description) {
   var key = newUniqueString();
-  $defineProperty(this, symbolDataProperty, {value: this});
-  $defineProperty(this, symbolInternalProperty, {value: key});
-  $defineProperty(this, symbolDescriptionProperty, {value: description});
+  $defineProperty(this, symbolDataProperty, { value: this });
+  $defineProperty(this, symbolInternalProperty, { value: key });
+  $defineProperty(this, symbolDescriptionProperty, { value: description });
   $freeze(this);
   symbolValues[key] = this;
 }
-$defineProperty(SymbolValue.prototype, 'constructor', nonEnum(SymbolImpl));
-$defineProperty(SymbolValue.prototype, 'toString', {
+$defineProperty(SymbolValue.prototype, "constructor", nonEnum(SymbolImpl));
+$defineProperty(SymbolValue.prototype, "toString", {
   value: SymbolImpl.prototype.toString,
-  enumerable: false
+  enumerable: false,
 });
-$defineProperty(SymbolValue.prototype, 'valueOf', {
+$defineProperty(SymbolValue.prototype, "valueOf", {
   value: SymbolImpl.prototype.valueOf,
-  enumerable: false
+  enumerable: false,
 });
 
 $freeze(SymbolValue.prototype);
@@ -152,33 +158,33 @@ function getOwnPropertySymbols(object) {
 }
 
 function polyfillSymbol(global) {
-  let {Object} = global;
+  let { Object } = global;
   if (!hasNativeSymbol()) {
     global.Symbol = SymbolImpl;
     Object.getOwnPropertyNames = getOwnPropertyNames;
     Object.keys = keys;
-    $defineProperty(Object, 'getOwnPropertySymbols',
-        nonEnum(getOwnPropertySymbols));
+    $defineProperty(
+      Object,
+      "getOwnPropertySymbols",
+      nonEnum(getOwnPropertySymbols)
+    );
   }
 
   if (!global.Symbol.iterator) {
-    global.Symbol.iterator = global.Symbol('Symbol.iterator');
+    global.Symbol.iterator = global.Symbol("Symbol.iterator");
   }
   if (!global.Symbol.observer) {
-    global.Symbol.observer = global.Symbol('Symbol.observer');
+    global.Symbol.observer = global.Symbol("Symbol.observer");
   }
 }
 
 function findGlobal() {
   try {
-    return new Function('return this;')();
-  } catch(e) {
-    if (typeof window !== 'undefined')
-      return window;
-    if (typeof global !== 'undefined')
-      return global;
-    if (typeof self !== 'undefined')
-      return self;
+    return new Function("return this;")();
+  } catch (e) {
+    if (typeof window !== "undefined") return window;
+    if (typeof global !== "undefined") return global;
+    if (typeof self !== "undefined") return self;
 
     return this;
   }
@@ -186,8 +192,8 @@ function findGlobal() {
 
 polyfillSymbol(findGlobal());
 
-let typeOf = hasNativeSymbol() ?
-    x => typeof x :
-    x => x instanceof SymbolValue ? 'symbol' : typeof x;
+let typeOf = hasNativeSymbol()
+  ? (x) => typeof x
+  : (x) => (x instanceof SymbolValue ? "symbol" : typeof x);
 
-export {typeOf as typeof};
+export { typeOf as typeof };

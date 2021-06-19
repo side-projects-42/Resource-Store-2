@@ -1,8 +1,8 @@
-import {assert} from '../../../asserts.js';
+import { assert } from "../../../asserts.js";
 
 export default class C {
   m() {
-    return 'm';
+    return "m";
   }
 }
 

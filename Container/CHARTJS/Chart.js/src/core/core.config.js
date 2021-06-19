@@ -1,76 +1,105 @@
-import defaults, {overrides, descriptors} from './core.defaults';
-import {mergeIf, resolveObjectKey, isArray, isFunction, valueOrDefault, isObject} from '../helpers/helpers.core';
-import {_attachContext, _createResolver, _descriptors} from '../helpers/helpers.config';
+import defaults, { overrides, descriptors } from "./core.defaults";
+import {
+  mergeIf,
+  resolveObjectKey,
+  isArray,
+  isFunction,
+  valueOrDefault,
+  isObject,
+} from "../helpers/helpers.core";
+import {
+  _attachContext,
+  _createResolver,
+  _descriptors,
+} from "../helpers/helpers.config";
 
 export function getIndexAxis(type, options) {
   const datasetDefaults = defaults.datasets[type] || {};
   const datasetOptions = (options.datasets || {})[type] || {};
-  return datasetOptions.indexAxis || options.indexAxis || datasetDefaults.indexAxis || 'x';
+  return (
+    datasetOptions.indexAxis ||
+    options.indexAxis ||
+    datasetDefaults.indexAxis ||
+    "x"
+  );
 }
 
 function getAxisFromDefaultScaleID(id, indexAxis) {
   let axis = id;
-  if (id === '_index_') {
+  if (id === "_index_") {
     axis = indexAxis;
-  } else if (id === '_value_') {
-    axis = indexAxis === 'x' ? 'y' : 'x';
+  } else if (id === "_value_") {
+    axis = indexAxis === "x" ? "y" : "x";
   }
   return axis;
 }
 
 function getDefaultScaleIDFromAxis(axis, indexAxis) {
-  return axis === indexAxis ? '_index_' : '_value_';
+  return axis === indexAxis ? "_index_" : "_value_";
 }
 
 function axisFromPosition(position) {
-  if (position === 'top' || position === 'bottom') {
-    return 'x';
+  if (position === "top" || position === "bottom") {
+    return "x";
   }
-  if (position === 'left' || position === 'right') {
-    return 'y';
+  if (position === "left" || position === "right") {
+    return "y";
   }
 }
 
 export function determineAxis(id, scaleOptions) {
-  if (id === 'x' || id === 'y') {
+  if (id === "x" || id === "y") {
     return id;
   }
-  return scaleOptions.axis || axisFromPosition(scaleOptions.position) || id.charAt(0).toLowerCase();
+  return (
+    scaleOptions.axis ||
+    axisFromPosition(scaleOptions.position) ||
+    id.charAt(0).toLowerCase()
+  );
 }
 
 function mergeScaleConfig(config, options) {
-  const chartDefaults = overrides[config.type] || {scales: {}};
+  const chartDefaults = overrides[config.type] || { scales: {} };
   const configScales = options.scales || {};
   const chartIndexAxis = getIndexAxis(config.type, options);
   const firstIDs = Object.create(null);
   const scales = Object.create(null);
 
   // First figure out first scale id's per axis.
-  Object.keys(configScales).forEach(id => {
+  Object.keys(configScales).forEach((id) => {
     const scaleConf = configScales[id];
     const axis = determineAxis(id, scaleConf);
     const defaultId = getDefaultScaleIDFromAxis(axis, chartIndexAxis);
     const defaultScaleOptions = chartDefaults.scales || {};
     firstIDs[axis] = firstIDs[axis] || id;
-    scales[id] = mergeIf(Object.create(null), [{axis}, scaleConf, defaultScaleOptions[axis], defaultScaleOptions[defaultId]]);
+    scales[id] = mergeIf(Object.create(null), [
+      { axis },
+      scaleConf,
+      defaultScaleOptions[axis],
+      defaultScaleOptions[defaultId],
+    ]);
   });
 
   // Then merge dataset defaults to scale configs
-  config.data.datasets.forEach(dataset => {
+  config.data.datasets.forEach((dataset) => {
     const type = dataset.type || config.type;
     const indexAxis = dataset.indexAxis || getIndexAxis(type, options);
     const datasetDefaults = overrides[type] || {};
     const defaultScaleOptions = datasetDefaults.scales || {};
-    Object.keys(defaultScaleOptions).forEach(defaultID => {
+    Object.keys(defaultScaleOptions).forEach((defaultID) => {
       const axis = getAxisFromDefaultScaleID(defaultID, indexAxis);
-      const id = dataset[axis + 'AxisID'] || firstIDs[axis] || axis;
+      const id = dataset[axis + "AxisID"] || firstIDs[axis] || axis;
       scales[id] = scales[id] || Object.create(null);
-      mergeIf(scales[id], [{axis}, configScales[id], defaultScaleOptions[defaultID]]);
+      mergeIf(scales[id], [
+        { axis },
+        configScales[id],
+        defaultScaleOptions[defaultID],
+      ]);
     });
   });
 
   // apply scale defaults, if not overridden by dataset defaults
-  Object.keys(scales).forEach(key => {
+  Object.keys(scales).forEach((key) => {
     const scale = scales[key];
     mergeIf(scale, [defaults.scales[scale.type], defaults.scale]);
   });
@@ -174,11 +203,7 @@ export default class Config {
    * @return {string[][]}
    */
   datasetScopeKeys(datasetType) {
-    return cachedKeys(datasetType,
-      () => [[
-        `datasets.${datasetType}`,
-        ''
-      ]]);
+    return cachedKeys(datasetType, () => [[`datasets.${datasetType}`, ""]]);
   }
 
   /**
@@ -189,18 +214,14 @@ export default class Config {
    * @return {string[][]}
    */
   datasetAnimationScopeKeys(datasetType, transition) {
-    return cachedKeys(`${datasetType}.transition.${transition}`,
-      () => [
-        [
-          `datasets.${datasetType}.transitions.${transition}`,
-          `transitions.${transition}`,
-        ],
-        // The following are used for looking up the `animations` and `animation` keys
-        [
-          `datasets.${datasetType}`,
-          ''
-        ]
-      ]);
+    return cachedKeys(`${datasetType}.transition.${transition}`, () => [
+      [
+        `datasets.${datasetType}.transitions.${transition}`,
+        `transitions.${transition}`,
+      ],
+      // The following are used for looking up the `animations` and `animation` keys
+      [`datasets.${datasetType}`, ""],
+    ]);
   }
 
   /**
@@ -212,13 +233,14 @@ export default class Config {
    * @return {string[][]}
    */
   datasetElementScopeKeys(datasetType, elementType) {
-    return cachedKeys(`${datasetType}-${elementType}`,
-      () => [[
+    return cachedKeys(`${datasetType}-${elementType}`, () => [
+      [
         `datasets.${datasetType}.elements.${elementType}`,
         `datasets.${datasetType}`,
         `elements.${elementType}`,
-        ''
-      ]]);
+        "",
+      ],
+    ]);
   }
 
   /**
@@ -229,11 +251,9 @@ export default class Config {
   pluginScopeKeys(plugin) {
     const id = plugin.id;
     const type = this.type;
-    return cachedKeys(`${type}-plugin-${id}`,
-      () => [[
-        `plugins.${id}`,
-        ...plugin.additionalOptionScopes || [],
-      ]]);
+    return cachedKeys(`${type}-plugin-${id}`, () => [
+      [`plugins.${id}`, ...(plugin.additionalOptionScopes || [])],
+    ]);
   }
 
   /**
@@ -256,7 +276,7 @@ export default class Config {
    * @param {boolean} [resetCache] - reset the cache for this mainScope
    */
   getOptionScopes(mainScope, keyLists, resetCache) {
-    const {options, type} = this;
+    const { options, type } = this;
     const cache = this._cachedScopes(mainScope, resetCache);
     const cached = cache.get(keyLists);
     if (cached) {
@@ -265,15 +285,15 @@ export default class Config {
 
     const scopes = new Set();
 
-    keyLists.forEach(keys => {
+    keyLists.forEach((keys) => {
       if (mainScope) {
         scopes.add(mainScope);
-        keys.forEach(key => addIfFound(scopes, mainScope, key));
+        keys.forEach((key) => addIfFound(scopes, mainScope, key));
       }
-      keys.forEach(key => addIfFound(scopes, options, key));
-      keys.forEach(key => addIfFound(scopes, overrides[type] || {}, key));
-      keys.forEach(key => addIfFound(scopes, defaults, key));
-      keys.forEach(key => addIfFound(scopes, descriptors, key));
+      keys.forEach((key) => addIfFound(scopes, options, key));
+      keys.forEach((key) => addIfFound(scopes, overrides[type] || {}, key));
+      keys.forEach((key) => addIfFound(scopes, defaults, key));
+      keys.forEach((key) => addIfFound(scopes, descriptors, key));
     });
 
     const array = Array.from(scopes);
@@ -288,15 +308,15 @@ export default class Config {
    * @return {object[]}
    */
   chartOptionScopes() {
-    const {options, type} = this;
+    const { options, type } = this;
 
     return [
       options,
       overrides[type] || {},
       defaults.datasets[type] || {}, // https://github.com/chartjs/Chart.js/issues/8531
-      {type},
+      { type },
       defaults,
-      descriptors
+      descriptors,
     ];
   }
 
@@ -307,9 +327,13 @@ export default class Config {
    * @param {string[]} [prefixes]
    * @return {object}
    */
-  resolveNamedOptions(scopes, names, context, prefixes = ['']) {
-    const result = {$shared: true};
-    const {resolver, subPrefixes} = getResolver(this._resolverCache, scopes, prefixes);
+  resolveNamedOptions(scopes, names, context, prefixes = [""]) {
+    const result = { $shared: true };
+    const { resolver, subPrefixes } = getResolver(
+      this._resolverCache,
+      scopes,
+      prefixes
+    );
     let options = resolver;
     if (needContext(resolver, names)) {
       result.$shared = false;
@@ -331,8 +355,8 @@ export default class Config {
    * @param {string[]} [prefixes]
    * @param {{scriptable: boolean, indexable: boolean, allKeys?: boolean}} [descriptorDefaults]
    */
-  createResolver(scopes, context, prefixes = [''], descriptorDefaults) {
-    const {resolver} = getResolver(this._resolverCache, scopes, prefixes);
+  createResolver(scopes, context, prefixes = [""], descriptorDefaults) {
+    const { resolver } = getResolver(this._resolverCache, scopes, prefixes);
     return isObject(context)
       ? _attachContext(resolver, context, undefined, descriptorDefaults)
       : resolver;
@@ -351,7 +375,7 @@ function getResolver(resolverCache, scopes, prefixes) {
     const resolver = _createResolver(scopes, prefixes);
     cached = {
       resolver,
-      subPrefixes: prefixes.filter(p => !p.toLowerCase().includes('hover'))
+      subPrefixes: prefixes.filter((p) => !p.toLowerCase().includes("hover")),
     };
     cache.set(cacheKey, cached);
   }
@@ -359,11 +383,13 @@ function getResolver(resolverCache, scopes, prefixes) {
 }
 
 function needContext(proxy, names) {
-  const {isScriptable, isIndexable} = _descriptors(proxy);
+  const { isScriptable, isIndexable } = _descriptors(proxy);
 
   for (const prop of names) {
-    if ((isScriptable(prop) && isFunction(proxy[prop]))
-      || (isIndexable(prop) && isArray(proxy[prop]))) {
+    if (
+      (isScriptable(prop) && isFunction(proxy[prop])) ||
+      (isIndexable(prop) && isArray(proxy[prop]))
+    ) {
       return true;
     }
   }

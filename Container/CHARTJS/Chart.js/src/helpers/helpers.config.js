@@ -1,4 +1,11 @@
-import {defined, isArray, isFunction, isObject, resolveObjectKey, _capitalize} from './helpers.core';
+import {
+  defined,
+  isArray,
+  isFunction,
+  isObject,
+  resolveObjectKey,
+  _capitalize,
+} from "./helpers.core";
 
 /**
  * Creates a Proxy for resolving raw values for options.
@@ -10,18 +17,25 @@ import {defined, isArray, isFunction, isObject, resolveObjectKey, _capitalize} f
  * @returns Proxy
  * @private
  */
-export function _createResolver(scopes, prefixes = [''], rootScopes = scopes, fallback, getTarget = () => scopes[0]) {
+export function _createResolver(
+  scopes,
+  prefixes = [""],
+  rootScopes = scopes,
+  fallback,
+  getTarget = () => scopes[0]
+) {
   if (!defined(fallback)) {
-    fallback = _resolve('_fallback', scopes);
+    fallback = _resolve("_fallback", scopes);
   }
   const cache = {
-    [Symbol.toStringTag]: 'Object',
+    [Symbol.toStringTag]: "Object",
     _cacheable: true,
     _scopes: scopes,
     _rootScopes: rootScopes,
     _fallback: fallback,
     _getTarget: getTarget,
-    override: (scope) => _createResolver([scope, ...scopes], prefixes, rootScopes, fallback),
+    override: (scope) =>
+      _createResolver([scope, ...scopes], prefixes, rootScopes, fallback),
   };
   return new Proxy(cache, {
     /**
@@ -38,8 +52,9 @@ export function _createResolver(scopes, prefixes = [''], rootScopes = scopes, fa
      * A trap for getting property values.
      */
     get(target, prop) {
-      return _cached(target, prop,
-        () => _resolveWithPrefixes(prop, prefixes, scopes, target));
+      return _cached(target, prop, () =>
+        _resolveWithPrefixes(prop, prefixes, scopes, target)
+      );
     },
 
     /**
@@ -80,7 +95,7 @@ export function _createResolver(scopes, prefixes = [''], rootScopes = scopes, fa
       delete target[prop]; // remove from cache
       delete target._keys; // remove cached keys
       return true;
-    }
+    },
   });
 }
 
@@ -100,8 +115,15 @@ export function _attachContext(proxy, context, subProxy, descriptorDefaults) {
     _subProxy: subProxy,
     _stack: new Set(),
     _descriptors: _descriptors(proxy, descriptorDefaults),
-    setContext: (ctx) => _attachContext(proxy, ctx, subProxy, descriptorDefaults),
-    override: (scope) => _attachContext(proxy.override(scope), context, subProxy, descriptorDefaults)
+    setContext: (ctx) =>
+      _attachContext(proxy, ctx, subProxy, descriptorDefaults),
+    override: (scope) =>
+      _attachContext(
+        proxy.override(scope),
+        context,
+        subProxy,
+        descriptorDefaults
+      ),
   };
   return new Proxy(cache, {
     /**
@@ -117,8 +139,9 @@ export function _attachContext(proxy, context, subProxy, descriptorDefaults) {
      * A trap for getting property values.
      */
     get(target, prop, receiver) {
-      return _cached(target, prop,
-        () => _resolveWithContext(target, prop, receiver));
+      return _cached(target, prop, () =>
+        _resolveWithContext(target, prop, receiver)
+      );
     },
 
     /**
@@ -127,7 +150,9 @@ export function _attachContext(proxy, context, subProxy, descriptorDefaults) {
      */
     getOwnPropertyDescriptor(target, prop) {
       return target._descriptors.allKeys
-        ? Reflect.has(proxy, prop) ? {enumerable: true, configurable: true} : undefined
+        ? Reflect.has(proxy, prop)
+          ? { enumerable: true, configurable: true }
+          : undefined
         : Reflect.getOwnPropertyDescriptor(proxy, prop);
     },
 
@@ -159,26 +184,34 @@ export function _attachContext(proxy, context, subProxy, descriptorDefaults) {
       proxy[prop] = value; // set to proxy
       delete target[prop]; // remove from cache
       return true;
-    }
+    },
   });
 }
 
 /**
  * @private
  */
-export function _descriptors(proxy, defaults = {scriptable: true, indexable: true}) {
-  const {_scriptable = defaults.scriptable, _indexable = defaults.indexable, _allKeys = defaults.allKeys} = proxy;
+export function _descriptors(
+  proxy,
+  defaults = { scriptable: true, indexable: true }
+) {
+  const {
+    _scriptable = defaults.scriptable,
+    _indexable = defaults.indexable,
+    _allKeys = defaults.allKeys,
+  } = proxy;
   return {
     allKeys: _allKeys,
     scriptable: _scriptable,
     indexable: _indexable,
     isScriptable: isFunction(_scriptable) ? _scriptable : () => _scriptable,
-    isIndexable: isFunction(_indexable) ? _indexable : () => _indexable
+    isIndexable: isFunction(_indexable) ? _indexable : () => _indexable,
   };
 }
 
-const readKey = (prefix, name) => prefix ? prefix + _capitalize(name) : name;
-const needsSubResolver = (prop, value) => isObject(value) && prop !== 'adapters';
+const readKey = (prefix, name) => (prefix ? prefix + _capitalize(name) : name);
+const needsSubResolver = (prop, value) =>
+  isObject(value) && prop !== "adapters";
 
 function _cached(target, prop, resolve) {
   let value = target[prop]; // cached value
@@ -196,7 +229,7 @@ function _cached(target, prop, resolve) {
 }
 
 function _resolveWithContext(target, prop, receiver) {
-  const {_proxy, _context, _subProxy, _descriptors: descriptors} = target;
+  const { _proxy, _context, _subProxy, _descriptors: descriptors } = target;
   let value = _proxy[prop]; // resolve from proxy
 
   // resolve with context
@@ -208,16 +241,23 @@ function _resolveWithContext(target, prop, receiver) {
   }
   if (needsSubResolver(prop, value)) {
     // if the resolved value is an object, crate a sub resolver for it
-    value = _attachContext(value, _context, _subProxy && _subProxy[prop], descriptors);
+    value = _attachContext(
+      value,
+      _context,
+      _subProxy && _subProxy[prop],
+      descriptors
+    );
   }
   return value;
 }
 
 function _resolveScriptable(prop, value, target, receiver) {
-  const {_proxy, _context, _subProxy, _stack} = target;
+  const { _proxy, _context, _subProxy, _stack } = target;
   if (_stack.has(prop)) {
     // @ts-ignore
-    throw new Error('Recursion detected: ' + Array.from(_stack).join('->') + '->' + prop);
+    throw new Error(
+      "Recursion detected: " + Array.from(_stack).join("->") + "->" + prop
+    );
   }
   _stack.add(prop);
   value = value(_context, _subProxy || receiver);
@@ -230,18 +270,25 @@ function _resolveScriptable(prop, value, target, receiver) {
 }
 
 function _resolveArray(prop, value, target, isIndexable) {
-  const {_proxy, _context, _subProxy, _descriptors: descriptors} = target;
+  const { _proxy, _context, _subProxy, _descriptors: descriptors } = target;
 
   if (defined(_context.index) && isIndexable(prop)) {
     value = value[_context.index % value.length];
   } else if (isObject(value[0])) {
     // Array of objects, return array or resolvers
     const arr = value;
-    const scopes = _proxy._scopes.filter(s => s !== arr);
+    const scopes = _proxy._scopes.filter((s) => s !== arr);
     value = [];
     for (const item of arr) {
       const resolver = createSubResolver(scopes, _proxy, prop, item);
-      value.push(_attachContext(resolver, _context, _subProxy && _subProxy[prop], descriptors));
+      value.push(
+        _attachContext(
+          resolver,
+          _context,
+          _subProxy && _subProxy[prop],
+          descriptors
+        )
+      );
     }
   }
   return value;
@@ -251,8 +298,12 @@ function resolveFallback(fallback, prop, value) {
   return isFunction(fallback) ? fallback(prop, value) : fallback;
 }
 
-const getScope = (key, parent) => key === true ? parent
-  : typeof key === 'string' ? resolveObjectKey(parent, key) : undefined;
+const getScope = (key, parent) =>
+  key === true
+    ? parent
+    : typeof key === "string"
+    ? resolveObjectKey(parent, key)
+    : undefined;
 
 function addScopes(set, parentScopes, key, parentFallback) {
   for (const parent of parentScopes) {
@@ -260,12 +311,20 @@ function addScopes(set, parentScopes, key, parentFallback) {
     if (scope) {
       set.add(scope);
       const fallback = resolveFallback(scope._fallback, key, scope);
-      if (defined(fallback) && fallback !== key && fallback !== parentFallback) {
+      if (
+        defined(fallback) &&
+        fallback !== key &&
+        fallback !== parentFallback
+      ) {
         // When we reach the descriptor that defines a new _fallback, return that.
         // The fallback will resume to that new scope.
         return fallback;
       }
-    } else if (scope === false && defined(parentFallback) && key !== parentFallback) {
+    } else if (
+      scope === false &&
+      defined(parentFallback) &&
+      key !== parentFallback
+    ) {
       // Fallback to `false` results to `false`, when falling back to different key.
       // For example `interaction` from `hover` or `plugins.tooltip` and `animation` from `animations`
       return null;
@@ -290,8 +349,9 @@ function createSubResolver(parentScopes, resolver, prop, value) {
       return false;
     }
   }
-  return _createResolver(Array.from(set), [''], rootScopes, fallback,
-    () => subGetTarget(resolver, prop, value));
+  return _createResolver(Array.from(set), [""], rootScopes, fallback, () =>
+    subGetTarget(resolver, prop, value)
+  );
 }
 
 function addScopesFromKey(set, allScopes, key, fallback) {
@@ -349,7 +409,7 @@ function getKeysFromAllScopes(target) {
 function resolveKeysFromAllScopes(scopes) {
   const set = new Set();
   for (const scope of scopes) {
-    for (const key of Object.keys(scope).filter(k => !k.startsWith('_'))) {
+    for (const key of Object.keys(scope).filter((k) => !k.startsWith("_"))) {
       set.add(key);
     }
   }

@@ -22,15 +22,19 @@
 
 .backgroundGradient(@topColor, @bottomColor) {
   background-color: @topColor;
-  background-image: -webkit-linear-gradient(top,@topColor,@bottomColor);
-  background-image: -moz-linear-gradient(top,@topColor,@bottomColor);
-  background-image: -ms-linear-gradient(top,@topColor,@bottomColor);
-  background-image: -o-linear-gradient(top,@topColor,@bottomColor);
-  background-image: linear-gradient(top,@topColor,@bottomColor);
+  background-image: -webkit-linear-gradient(top, @topColor, @bottomColor);
+  background-image: -moz-linear-gradient(top, @topColor, @bottomColor);
+  background-image: -ms-linear-gradient(top, @topColor, @bottomColor);
+  background-image: -o-linear-gradient(top, @topColor, @bottomColor);
+  background-image: linear-gradient(top, @topColor, @bottomColor);
   // IE8+:
-  -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr=%d, endColorstr=%d)", @topColor, @bottomColor);
+  -ms-filter: %(
+    "progid:DXImageTransform.Microsoft.gradient(startColorstr=%d, endColorstr=%d)",
+    @topColor,
+    @bottomColor
+  );
   // IE10:
-  background-image: -ms-linear-gradient(top,@topColor, @bottomColor);
+  background-image: -ms-linear-gradient(top, @topColor, @bottomColor);
 }
 
 .boxSizing(@sizing: border-box) {
@@ -50,9 +54,9 @@
 .insetBoxShadow2(@hShadow1, @vShadow1, @blurRadius1, @color1,
                  @hShadow2, @vShadow2, @blurRadius2, @color2) {
   -webkit-box-shadow: inset @hShadow1 @vShadow1 @blurRadius1 @color1,
-                      inset @hShadow2, @vShadow2, @blurRadius2, @color2;
-  box-shadow: inset @hShadow1 @vShadow1 @blurRadius1 @color1,
-              inset @hShadow2, @vShadow2, @blurRadius2, @color2;
+    inset @hShadow2, @vShadow2, @blurRadius2, @color2;
+  box-shadow: inset @hShadow1 @vShadow1 @blurRadius1 @color1, inset @hShadow2,
+    @vShadow2, @blurRadius2, @color2;
 }
 
 .borderRadius(@radius) {

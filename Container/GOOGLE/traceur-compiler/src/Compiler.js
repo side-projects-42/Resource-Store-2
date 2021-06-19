@@ -12,21 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  AttachModuleNameTransformer
-} from './codegeneration/module/AttachModuleNameTransformer.js';
-import {FromOptionsTransformer} from './codegeneration/FromOptionsTransformer.js';
-import {Parser} from './syntax/Parser.js';
-import {PureES6Transformer} from './codegeneration/PureES6Transformer.js';
-import {SourceFile} from './syntax/SourceFile.js';
-import {CollectingErrorReporter} from './util/CollectingErrorReporter.js';
-import {Options, versionLockedOptions} from './Options.js';
-import {ParseTreeMapWriter} from './outputgeneration/ParseTreeMapWriter.js';
-import {ParseTreeWriter} from './outputgeneration/ParseTreeWriter.js';
+import { AttachModuleNameTransformer } from "./codegeneration/module/AttachModuleNameTransformer.js";
+import { FromOptionsTransformer } from "./codegeneration/FromOptionsTransformer.js";
+import { Parser } from "./syntax/Parser.js";
+import { PureES6Transformer } from "./codegeneration/PureES6Transformer.js";
+import { SourceFile } from "./syntax/SourceFile.js";
+import { CollectingErrorReporter } from "./util/CollectingErrorReporter.js";
+import { Options, versionLockedOptions } from "./Options.js";
+import { ParseTreeMapWriter } from "./outputgeneration/ParseTreeMapWriter.js";
+import { ParseTreeWriter } from "./outputgeneration/ParseTreeWriter.js";
 import {
   SourceMapConsumer,
-  SourceMapGenerator
-} from './outputgeneration/SourceMapIntegration.js';
+  SourceMapGenerator,
+} from "./outputgeneration/SourceMapIntegration.js";
 
 function merge(...srcs) {
   let dest = Object.create(null);
@@ -34,21 +32,18 @@ function merge(...srcs) {
     Object.keys(src).forEach((key) => {
       dest[key] = src[key];
     });
-    let srcModules = src.modules;  // modules is a getter on prototype
-    if (typeof srcModules !== 'undefined') {
+    let srcModules = src.modules; // modules is a getter on prototype
+    if (typeof srcModules !== "undefined") {
       dest.modules = srcModules;
     }
-
   });
   return dest;
 }
 
 function basePath(name) {
-  if (!name)
-    return null;
-  let lastSlash = name.lastIndexOf('/');
-  if (lastSlash < 0)
-    return null;
+  if (!name) return null;
+  let lastSlash = name.lastIndexOf("/");
+  if (lastSlash < 0) return null;
   return name.substring(0, lastSlash + 1);
 }
 
@@ -75,7 +70,7 @@ export class Compiler {
    * @return {Promise<{js: string, errors: Array, sourceMap: string}>} Transpiled code.
    */
   static script(content, options = {}) {
-    options = new Options(options);  // fresh copy, don't write on argument.
+    options = new Options(options); // fresh copy, don't write on argument.
     options.script = true;
     return new Compiler(options).compile(content);
   }
@@ -87,8 +82,8 @@ export class Compiler {
    * @return {Promise<{js: string, errors: Array, sourceMap: string}>} Transpiled code.
    */
   static module(content, options = {}) {
-    options = new Options(options);  // fresh copy, don't write on argument.
-    options.modules = 'bootstrap';
+    options = new Options(options); // fresh copy, don't write on argument.
+    options.modules = "bootstrap";
     return new Compiler(options).compile(content);
   }
   /**
@@ -99,9 +94,9 @@ export class Compiler {
    */
   static amdOptions(options = {}) {
     let amdOptions = {
-      modules: 'amd',
+      modules: "amd",
       sourceMaps: false,
-      moduleName: false
+      moduleName: false,
     };
     return merge(amdOptions, options);
   }
@@ -113,9 +108,9 @@ export class Compiler {
    */
   static closureOptions(options = {}) {
     let closureOptions = {
-      modules: 'closure',
+      modules: "closure",
       sourceMaps: false,
-      moduleName: true
+      moduleName: true,
     };
     return merge(closureOptions, options);
   }
@@ -127,9 +122,9 @@ export class Compiler {
    */
   static commonJSOptions(options = {}) {
     let commonjsOptions = {
-      modules: 'commonjs',
+      modules: "commonjs",
       sourceMaps: false,
-      moduleName: false
+      moduleName: false,
     };
     return merge(commonjsOptions, options);
   }
@@ -143,9 +138,12 @@ export class Compiler {
    * @param {string} sourceRoot defaults to dir of outputName
    * @return {string} equivalent ES5 source.
    */
-  compile(content, sourceName = '<compileSource>',
-      outputName = '<compileOutput>', sourceRoot = undefined) {
-
+  compile(
+    content,
+    sourceName = "<compileSource>",
+    outputName = "<compileOutput>",
+    sourceRoot = undefined
+  ) {
     sourceName = this.normalize(sourceName);
     outputName = this.normalize(outputName);
     let tree = this.parse(content, sourceName);
@@ -153,15 +151,13 @@ export class Compiler {
     // Attach the sourceURL only if the input and output names differ.
     let sourceURL = sourceName !== outputName ? sourceName : undefined;
     // The sourceRoot argument takes precidence over the option.
-    if (sourceRoot === undefined)
-      sourceRoot = this.options_.sourceRoot;
+    if (sourceRoot === undefined) sourceRoot = this.options_.sourceRoot;
 
     return this.write(tree, outputName, sourceRoot, sourceURL);
   }
 
   throwIfErrors(errorReporter) {
-    if (errorReporter.hadError())
-      throw errorReporter.toError();
+    if (errorReporter.hadError()) throw errorReporter.toError();
   }
 
   /**
@@ -169,7 +165,7 @@ export class Compiler {
    * @param {string} sourceName inserted into sourceMaps
    * @return {ParseTree}
    */
-  parse(content, sourceName = '<compiler-parse-input>') {
+  parse(content, sourceName = "<compiler-parse-input>") {
     sourceName = this.normalize(sourceName);
     this.sourceMapCache_ = null;
     this.sourceMapConfiguration_ = null;
@@ -177,8 +173,9 @@ export class Compiler {
     let errorReporter = new CollectingErrorReporter();
     let sourceFile = new SourceFile(sourceName, content);
     let parser = new Parser(sourceFile, errorReporter, this.options_);
-    let tree =
-        this.options_.script ? parser.parseScript() : parser.parseModule();
+    let tree = this.options_.script
+      ? parser.parseScript()
+      : parser.parseModule();
     this.throwIfErrors(errorReporter);
 
     return tree;
@@ -192,7 +189,6 @@ export class Compiler {
    * @return {ParseTree}
    */
   transform(tree, candidateModuleName = undefined, metadata = undefined) {
-
     let transformer;
     if (candidateModuleName) {
       let transformer = new AttachModuleNameTransformer(candidateModuleName);
@@ -201,8 +197,12 @@ export class Compiler {
 
     let errorReporter = new CollectingErrorReporter();
 
-    if (this.options_.outputLanguage.toLowerCase() === 'es6') {
-      transformer = new PureES6Transformer(errorReporter, this.options_, metadata);
+    if (this.options_.outputLanguage.toLowerCase() === "es6") {
+      transformer = new PureES6Transformer(
+        errorReporter,
+        this.options_,
+        metadata
+      );
     } else {
       transformer = new FromOptionsTransformer(errorReporter, this.options_);
     }
@@ -212,19 +212,22 @@ export class Compiler {
     return transformedTree;
   }
 
-  createSourceMapConfiguration_(outputName, sourceRoot = undefined,
-      sourceURL = undefined) {
+  createSourceMapConfiguration_(
+    outputName,
+    sourceRoot = undefined,
+    sourceURL = undefined
+  ) {
     if (this.options_.sourceMaps) {
       return {
         sourceMapGenerator: new SourceMapGenerator({
           file: outputName,
           sourceRoot: sourceRoot,
-          skipValidation: true
+          skipValidation: true,
         }),
         basepath: basePath(outputName),
         inputSourceMap: this.options_.inputSourceMap,
         sourceURL: sourceURL,
-        outputName: outputName
+        outputName: outputName,
       };
     }
   }
@@ -235,11 +238,13 @@ export class Compiler {
     }
 
     if (this.sourceMapConfiguration_) {
-      let sourceMap = this.sourceMapConfiguration_.sourceMapGenerator.toString();
+      let sourceMap =
+        this.sourceMapConfiguration_.sourceMapGenerator.toString();
       let inputSourceMap = this.sourceMapConfiguration_.inputSourceMap;
       if (inputSourceMap) {
         let generator = SourceMapGenerator.fromSourceMap(
-            new SourceMapConsumer(sourceMap));
+          new SourceMapConsumer(sourceMap)
+        );
         generator.applySourceMap(new SourceMapConsumer(inputSourceMap));
         sourceMap = generator.toJSON();
       }
@@ -255,7 +260,7 @@ export class Compiler {
       this.sourceMapInfo_ = {
         url: this.sourceMapConfiguration_.sourceURL,
         outputName: this.sourceMapConfiguration_.outputName,
-        map: sourceMap
+        map: sourceMap,
       };
     }
     return this.sourceMapInfo_;
@@ -269,29 +274,36 @@ export class Compiler {
    * @param {string} sourceURL value for sourceURL
    * @return {string}
    */
-  write(tree, outputName = undefined, sourceRoot = undefined,
-      sourceURL = undefined) {
+  write(
+    tree,
+    outputName = undefined,
+    sourceRoot = undefined,
+    sourceURL = undefined
+  ) {
     outputName = this.normalize(outputName);
 
-    if (sourceRoot === undefined)
-      sourceRoot = this.options_.sourceRoot;
+    if (sourceRoot === undefined) sourceRoot = this.options_.sourceRoot;
 
-    if (sourceRoot === true)
-      sourceRoot = basePath(outputName);
-    else if (!sourceRoot) // false or '' or undefined
+    if (sourceRoot === true) sourceRoot = basePath(outputName);
+    else if (!sourceRoot)
+      // false or '' or undefined
       sourceRoot = undefined;
-    else
-      sourceRoot = this.normalize(sourceRoot);
+    else sourceRoot = this.normalize(sourceRoot);
 
     let writer;
     this.sourceMapCache_ = null;
-    this.sourceMapConfiguration_ =
-        this.createSourceMapConfiguration_(outputName, sourceRoot, sourceURL);
+    this.sourceMapConfiguration_ = this.createSourceMapConfiguration_(
+      outputName,
+      sourceRoot,
+      sourceURL
+    );
     if (this.sourceMapConfiguration_) {
       this.sourceMapConfiguration_.lowResolution =
-          this.options_.lowResolutionSourceMap;
-      writer =
-          new ParseTreeMapWriter(this.sourceMapConfiguration_, this.options_);
+        this.options_.lowResolutionSourceMap;
+      writer = new ParseTreeMapWriter(
+        this.sourceMapConfiguration_,
+        this.options_
+      );
     } else {
       writer = new ParseTreeWriter(this.options_);
     }
@@ -310,15 +322,16 @@ export class Compiler {
 
   debuggerLink(sourceURL, outputName) {
     if (this.sourceMapConfiguration_) {
-      if (this.options_.sourceMaps === 'memory') {
+      if (this.options_.sourceMaps === "memory") {
         return;
       }
-      let sourceMappingURL =
-         this.sourceMappingURL(sourceURL || outputName || 'unnamed.js');
-      return '//# sourceMappingURL=' + sourceMappingURL + '\n';
+      let sourceMappingURL = this.sourceMappingURL(
+        sourceURL || outputName || "unnamed.js"
+      );
+      return "//# sourceMappingURL=" + sourceMappingURL + "\n";
     } else {
       if (sourceURL) {
-        return '//# sourceURL=' + sourceURL + '\n';
+        return "//# sourceURL=" + sourceURL + "\n";
       }
     }
   }
@@ -330,15 +343,17 @@ export class Compiler {
   sourceMappingURL(path) {
     // This implementation works for browsers. The NodeCompiler overrides
     // to use nodejs functions.
-    if (this.options_.sourceMaps === 'inline') {
+    if (this.options_.sourceMaps === "inline") {
       if (Reflect.global.btoa) {
-        return 'data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(this.getSourceMap())));
+        return (
+          "data:application/json;base64," +
+          btoa(unescape(encodeURIComponent(this.getSourceMap())))
+        );
       }
     }
-    path = path || 'unamed.js';
-    path = path.split('/').pop();
-    return path + '.map';
+    path = path || "unamed.js";
+    path = path.split("/").pop();
+    return path + ".map";
   }
 
   sourceNameFromTree(tree) {
@@ -350,6 +365,6 @@ export class Compiler {
   }
 
   normalize(name) {
-    return name && name.replace(/\\/g,'/');
+    return name && name.replace(/\\/g, "/");
   }
 }

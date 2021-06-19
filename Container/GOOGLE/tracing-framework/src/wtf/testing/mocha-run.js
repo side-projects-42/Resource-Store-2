@@ -14,30 +14,27 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.testing.mocha.run');
-
+goog.provide("wtf.testing.mocha.run");
 
 /**
  * Runs mocha with all tests currently loaded.
  */
-wtf.testing.mocha.run = function() {
-  var mocha = goog.global['mocha'];
-  mocha['run'](function() {
+wtf.testing.mocha.run = function () {
+  var mocha = goog.global["mocha"];
+  mocha["run"](function () {
     // Fired when tests have completed.
     wtf.testing.mocha.run.hasCompleted = true;
-    var mochaCompletionWaiter = goog.global['mochaCompletionWaiter'];
+    var mochaCompletionWaiter = goog.global["mochaCompletionWaiter"];
     if (mochaCompletionWaiter) {
       mochaCompletionWaiter();
     }
   });
 };
 
-
 /**
  * Set to true when the mocha run has completed.
  * @type {boolean}
  */
 wtf.testing.mocha.run.hasCompleted = false;
-
 
 wtf.testing.mocha.run();

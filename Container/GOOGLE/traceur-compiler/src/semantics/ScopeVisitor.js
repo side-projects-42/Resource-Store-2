@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {VAR} from '../syntax/TokenType.js';
-import {Scope} from './Scope.js';
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
+import { VAR } from "../syntax/TokenType.js";
+import { Scope } from "./Scope.js";
 import {
   COMPREHENSION_FOR,
-  VARIABLE_DECLARATION_LIST
-} from '../syntax/trees/ParseTreeType.js';
+  VARIABLE_DECLARATION_LIST,
+} from "../syntax/trees/ParseTreeType.js";
 
 /**
  * Base class for building up the scope chains for a tree.
@@ -45,7 +45,7 @@ export class ScopeVisitor extends ParseTreeVisitor {
   pushScope(tree) {
     let scope = this.createScope(tree);
     this.map_.set(tree, scope);
-    return this.scope = scope;
+    return (this.scope = scope);
   }
 
   /**
@@ -53,7 +53,7 @@ export class ScopeVisitor extends ParseTreeVisitor {
    */
   popScope(scope) {
     if (this.scope !== scope) {
-      throw new Error('ScopeVisitor scope mismatch');
+      throw new Error("ScopeVisitor scope mismatch");
     }
 
     this.scope = scope.parent;
@@ -151,8 +151,10 @@ export class ScopeVisitor extends ParseTreeVisitor {
   }
 
   visitLoop_(tree, func) {
-    if (tree.initializer.type !== VARIABLE_DECLARATION_LIST ||
-        tree.initializer.declarationType === VAR) {
+    if (
+      tree.initializer.type !== VARIABLE_DECLARATION_LIST ||
+      tree.initializer.declarationType === VAR
+    ) {
       func();
       return;
     }
@@ -191,7 +193,7 @@ export class ScopeVisitor extends ParseTreeVisitor {
 
     this.visitAny(tree.expression);
 
-    for(let i = scopes.length - 1; i >= 0; i--) {
+    for (let i = scopes.length - 1; i >= 0; i--) {
       if (scopes[i]) {
         this.popScope(scopes[i]);
       }

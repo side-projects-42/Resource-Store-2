@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.StreamSource');
+goog.provide("wtf.io.cff.StreamSource");
 
-goog.require('goog.events');
-goog.require('wtf.io.ReadTransport');
-goog.require('wtf.io.cff.StreamBase');
-
-
+goog.require("goog.events");
+goog.require("wtf.io.ReadTransport");
+goog.require("wtf.io.cff.StreamBase");
 
 /**
  * Stream source abstract base type.
@@ -25,7 +23,7 @@ goog.require('wtf.io.cff.StreamBase');
  * @constructor
  * @extends {wtf.io.cff.StreamBase}
  */
-wtf.io.cff.StreamSource = function(transport) {
+wtf.io.cff.StreamSource = function (transport) {
   goog.base(this);
 
   /**
@@ -36,50 +34,52 @@ wtf.io.cff.StreamSource = function(transport) {
   this.transport_ = transport;
 
   this.transport_.addListener(
-      wtf.io.ReadTransport.EventType.RECEIVE_DATA,
-      function(data) {
-        try {
-          this.dataReceived(data);
-        } catch (e) {
-          this.emitErrorEvent(e);
-        }
-      }, this);
+    wtf.io.ReadTransport.EventType.RECEIVE_DATA,
+    function (data) {
+      try {
+        this.dataReceived(data);
+      } catch (e) {
+        this.emitErrorEvent(e);
+      }
+    },
+    this
+  );
   this.transport_.addListener(
-      wtf.io.ReadTransport.EventType.END,
-      this.ended, this);
+    wtf.io.ReadTransport.EventType.END,
+    this.ended,
+    this
+  );
   this.transport_.addListener(
-      wtf.io.ReadTransport.EventType.ERROR,
-      this.emitErrorEvent, this);
+    wtf.io.ReadTransport.EventType.ERROR,
+    this.emitErrorEvent,
+    this
+  );
 };
 goog.inherits(wtf.io.cff.StreamSource, wtf.io.cff.StreamBase);
-
 
 /**
  * @override
  */
-wtf.io.cff.StreamSource.prototype.disposeInternal = function() {
+wtf.io.cff.StreamSource.prototype.disposeInternal = function () {
   goog.dispose(this.transport_);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Gets the transport this stream is reading from.
  * @return {!wtf.io.ReadTransport} Transport.
  * @protected
  */
-wtf.io.cff.StreamSource.prototype.getTransport = function() {
+wtf.io.cff.StreamSource.prototype.getTransport = function () {
   return this.transport_;
 };
-
 
 /**
  * Resumes receiving data from the transport.
  */
-wtf.io.cff.StreamSource.prototype.resume = function() {
+wtf.io.cff.StreamSource.prototype.resume = function () {
   this.transport_.resume();
 };
-
 
 /**
  * Handles incoming data from the transport.
@@ -89,7 +89,6 @@ wtf.io.cff.StreamSource.prototype.resume = function() {
  */
 wtf.io.cff.StreamSource.prototype.dataReceived = goog.abstractMethod;
 
-
 /**
  * Handles incoming data source ends.
  * No more data will arrive after this.
@@ -97,35 +96,31 @@ wtf.io.cff.StreamSource.prototype.dataReceived = goog.abstractMethod;
  */
 wtf.io.cff.StreamSource.prototype.ended = goog.nullFunction;
 
-
 /**
  * Emits a chunk receive event.
  * @param {!wtf.io.cff.Chunk} chunk New chunk.
  * @protected
  */
-wtf.io.cff.StreamSource.prototype.emitChunkReceivedEvent = function(chunk) {
+wtf.io.cff.StreamSource.prototype.emitChunkReceivedEvent = function (chunk) {
   this.emitEvent(wtf.io.cff.StreamSource.EventType.CHUNK_RECEIVED, chunk);
 };
-
 
 /**
  * Emits an error event.
  * @param {!Error} e Error object.
  * @protected
  */
-wtf.io.cff.StreamSource.prototype.emitErrorEvent = function(e) {
+wtf.io.cff.StreamSource.prototype.emitErrorEvent = function (e) {
   this.emitEvent(wtf.io.cff.StreamSource.EventType.ERROR, e);
 };
-
 
 /**
  * Emits an end event.
  * @protected
  */
-wtf.io.cff.StreamSource.prototype.emitEndEvent = function() {
+wtf.io.cff.StreamSource.prototype.emitEndEvent = function () {
   this.emitEvent(wtf.io.cff.StreamSource.EventType.END);
 };
-
 
 /**
  * Event types for {@see wtf.io.cff.StreamSource}.
@@ -136,17 +131,17 @@ wtf.io.cff.StreamSource.EventType = {
    * A new chunk was received from the source.
    * Args: [wtf.io.cff.Chunk].
    */
-  CHUNK_RECEIVED: goog.events.getUniqueId('chunk_received'),
+  CHUNK_RECEIVED: goog.events.getUniqueId("chunk_received"),
 
   /**
    * An error occurred in the underlying transport or while parsing.
    * Args: [error object].
    */
-  ERROR: goog.events.getUniqueId('error'),
+  ERROR: goog.events.getUniqueId("error"),
 
   /**
    * Stream ended and no more chunks will be received.
    * Args: [].
    */
-  END: goog.events.getUniqueId('end')
+  END: goog.events.getUniqueId("end"),
 };

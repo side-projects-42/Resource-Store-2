@@ -11,11 +11,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.StreamTarget');
+goog.provide("wtf.io.cff.StreamTarget");
 
-goog.require('wtf.io.cff.StreamBase');
-
-
+goog.require("wtf.io.cff.StreamBase");
 
 /**
  * Stream target abstract base type.
@@ -23,7 +21,7 @@ goog.require('wtf.io.cff.StreamBase');
  * @constructor
  * @extends {wtf.io.cff.StreamBase}
  */
-wtf.io.cff.StreamTarget = function(transport) {
+wtf.io.cff.StreamTarget = function (transport) {
   goog.base(this);
 
   /**
@@ -35,25 +33,22 @@ wtf.io.cff.StreamTarget = function(transport) {
 };
 goog.inherits(wtf.io.cff.StreamTarget, wtf.io.cff.StreamBase);
 
-
 /**
  * @override
  */
-wtf.io.cff.StreamTarget.prototype.disposeInternal = function() {
+wtf.io.cff.StreamTarget.prototype.disposeInternal = function () {
   goog.dispose(this.transport_);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Gets the transport this stream is writing to.
  * @return {!wtf.io.WriteTransport} Transport.
  * @protected
  */
-wtf.io.cff.StreamTarget.prototype.getTransport = function() {
+wtf.io.cff.StreamTarget.prototype.getTransport = function () {
   return this.transport_;
 };
-
 
 /**
  * Writes a chunk to the target.
@@ -63,16 +58,13 @@ wtf.io.cff.StreamTarget.prototype.getTransport = function() {
  */
 wtf.io.cff.StreamTarget.prototype.writeChunk = goog.abstractMethod;
 
-
 /**
  * Ends the stream and writes the stream epilogue.
  */
 wtf.io.cff.StreamTarget.prototype.end = goog.abstractMethod;
 
-
 /**
  * Event types for {@see wtf.io.cff.StreamTarget}.
  * @enum {string}
  */
-wtf.io.cff.StreamTarget.EventType = {
-};
+wtf.io.cff.StreamTarget.EventType = {};

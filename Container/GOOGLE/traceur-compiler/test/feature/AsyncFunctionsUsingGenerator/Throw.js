@@ -3,8 +3,7 @@
 // Async.
 
 async function asyncThrow(e) {
-  if (true)
-    throw e;
+  if (true) throw e;
   await asyncYield();
 }
 
@@ -18,7 +17,7 @@ function asyncTimeout(ms) {
   });
 }
 
-(async function() {
+(async function () {
   var value;
   try {
     value = await asyncThrow(1);

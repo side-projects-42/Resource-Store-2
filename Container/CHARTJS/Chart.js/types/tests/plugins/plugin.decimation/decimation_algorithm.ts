@@ -1,72 +1,77 @@
-import { Chart, DecimationAlgorithm } from '../../../index.esm';
+import { Chart, DecimationAlgorithm } from "../../../index.esm";
 
-const chart = new Chart('id', {
-  type: 'bubble',
+const chart = new Chart("id", {
+  type: "bubble",
   data: {
     labels: [],
-    datasets: [{
-      data: []
-    }]
+    datasets: [
+      {
+        data: [],
+      },
+    ],
   },
   options: {
     plugins: {
       decimation: {
         algorithm: DecimationAlgorithm.lttb,
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
-
-const chart2 = new Chart('id', {
-  type: 'bubble',
+const chart2 = new Chart("id", {
+  type: "bubble",
   data: {
     labels: [],
-    datasets: [{
-      data: []
-    }]
+    datasets: [
+      {
+        data: [],
+      },
+    ],
   },
   options: {
     plugins: {
       decimation: {
-        algorithm: 'lttb',
-      }
-    }
-  }
+        algorithm: "lttb",
+      },
+    },
+  },
 });
 
-
-const chart3 = new Chart('id', {
-  type: 'bubble',
+const chart3 = new Chart("id", {
+  type: "bubble",
   data: {
     labels: [],
-    datasets: [{
-      data: []
-    }]
+    datasets: [
+      {
+        data: [],
+      },
+    ],
   },
   options: {
     plugins: {
       decimation: {
         algorithm: DecimationAlgorithm.minmax,
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
-
-const chart4 = new Chart('id', {
-  type: 'bubble',
+const chart4 = new Chart("id", {
+  type: "bubble",
   data: {
     labels: [],
-    datasets: [{
-      data: []
-    }]
+    datasets: [
+      {
+        data: [],
+      },
+    ],
   },
   options: {
     plugins: {
       decimation: {
-        algorithm: 'min-max',
-      }
-    }
-  }
+        algorithm: "min-max",
+      },
+    },
+  },
 });

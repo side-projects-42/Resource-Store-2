@@ -1,7 +1,7 @@
 ---
 name: Documentation
 about: Are the docs lacking or missing something?
-labels: 'type: documentation'
+labels: "type: documentation"
 ---
 
 Documentation Is:
@@ -14,11 +14,10 @@ Documentation Is:
 
 ### Please Explain in Detail...
 
-
 ### Your Proposal for Changes
 
-
 ### Example
+
 <!--
   Provide a link to a live example demonstrating the issue or feature to be documented:
   https://codepen.io/pen?template=JXVYzq

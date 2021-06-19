@@ -1,6 +1,5 @@
 class C {
-  constructor() {
-  }
+  constructor() {}
 }
 
 class D extends C {
@@ -9,11 +8,11 @@ class D extends C {
     this.x = {
       y: () => {
         return this;
-      }
+      },
     };
   }
 }
 
 var o = new D();
-assert.equal(typeof o.x.y, 'function');
+assert.equal(typeof o.x.y, "function");
 assert.equal(o.x.y(), o);

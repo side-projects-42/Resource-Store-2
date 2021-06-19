@@ -18,22 +18,23 @@ chart is delayed for one second.
 ```js chart-editor
 Utils.srand(0);
 
-const options = /* <block:options> */
-{
-  plugins: {
-    deferred: {
-      // defaults
+const options =
+  /* <block:options> */
+  {
+    plugins: {
+      deferred: {
+        // defaults
+      },
     },
-  },
-}/* </block:options> */;
+  }; /* </block:options> */
 
 module.exports = {
   config: {
-    type: 'bar',
+    type: "bar",
     options: options,
     data: Utils.generate(),
   },
-}
+};
 ```
 
 ## Delay (1 second)
@@ -41,22 +42,23 @@ module.exports = {
 ```js chart-editor
 Utils.srand(0);
 
-const options = /* <block:options> */
-{
-  plugins: {
-    deferred: {
-      delay: 1000,
+const options =
+  /* <block:options> */
+  {
+    plugins: {
+      deferred: {
+        delay: 1000,
+      },
     },
-  },
-}/* </block:options> */;
+  }; /* </block:options> */
 
 module.exports = {
   config: {
-    type: 'bar',
+    type: "bar",
     options: options,
     data: Utils.generate(),
   },
-}
+};
 ```
 
 <div class="foot">

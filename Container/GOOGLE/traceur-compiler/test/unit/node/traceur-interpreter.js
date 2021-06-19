@@ -12,26 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-suite('node-only: interpreter', function(){
-
-  var exec = require('child_process').exec;
+suite("node-only: interpreter", function () {
+  var exec = require("child_process").exec;
   var debug = false;
 
-	function log(stdout, stderr) {
-		console.log('stdout:\n', stdout, '\n---');
-		if (stderr)
-			console.log('stderr:\n', stderr, '\n---');
-	}
+  function log(stdout, stderr) {
+    console.log("stdout:\n", stdout, "\n---");
+    if (stderr) console.log("stderr:\n", stderr, "\n---");
+  }
 
-	test('calls System', function() {
-		var cmd = './traceur ./test/unit/runtime/resources/call_loader.js';
-		exec(cmd, function(error, stdout, stderr) {
-			if (debug)
-				log(stdout, stderr);
-			// The assserts are in the code we exed here.
-		});
-	});
-
+  test("calls System", function () {
+    var cmd = "./traceur ./test/unit/runtime/resources/call_loader.js";
+    exec(cmd, function (error, stdout, stderr) {
+      if (debug) log(stdout, stderr);
+      // The assserts are in the code we exed here.
+    });
+  });
 });

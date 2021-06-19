@@ -11,12 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.util');
+goog.provide("wtf.util");
 
-goog.require('goog.asserts');
-goog.require('goog.string');
-goog.require('goog.userAgent.product');
-
+goog.require("goog.asserts");
+goog.require("goog.string");
+goog.require("goog.userAgent.product");
 
 /**
  * Pads a number with leading zeros.
@@ -24,58 +23,60 @@ goog.require('goog.userAgent.product');
  * @param {number} count Length to pad to.
  * @return {string} Padded number.
  */
-wtf.util.pad0 = function(value, count) {
+wtf.util.pad0 = function (value, count) {
   value = String(value);
   while (value.length < count) {
-    value = '0' + value;
+    value = "0" + value;
   }
   return value;
 };
-
 
 /**
  * Formats a time value, rounding to ms at 3 decimal places.
  * @param {number} value Time value.
  * @return {string} Formatted time string.
  */
-wtf.util.formatTime = function(value) {
-  return value.toFixed(3) + 'ms';
+wtf.util.formatTime = function (value) {
+  return value.toFixed(3) + "ms";
 };
-
 
 /**
  * Formats a time value, rounding to ms and to ms at 3 decimal places if <1.
  * @param {number} value Time value.
  * @return {string} Formatted time string, plus units.
  */
-wtf.util.formatSmallTime = function(value) {
+wtf.util.formatSmallTime = function (value) {
   if (value == 0) {
-    return '0ms';
+    return "0ms";
   } else if (value < 1) {
-    return value.toFixed(3) + 'ms';
+    return value.toFixed(3) + "ms";
   } else if (value < 10) {
-    return value.toFixed(2) + 'ms';
+    return value.toFixed(2) + "ms";
   }
-  return value.toFixed(0) + 'ms';
+  return value.toFixed(0) + "ms";
 };
-
 
 /**
  * Formats time in the standard format.
  * @param {number} value Wall-time.
  * @return {string} Formatted time string.
  */
-wtf.util.formatWallTime = function(value) {
+wtf.util.formatWallTime = function (value) {
   // Format time: 05:33:28.105.25530
   var dt = new Date(value);
-  return '' +
-      goog.string.padNumber(dt.getHours(), 2) + ':' +
-      goog.string.padNumber(dt.getMinutes(), 2) + ':' +
-      goog.string.padNumber(dt.getSeconds(), 2) + '.' +
-      String((dt.getMilliseconds() / 1000).toFixed(3)).slice(2, 5) + '.' +
-      goog.string.padNumber(Math.floor((value - Math.floor(value)) * 10000), 4);
+  return (
+    "" +
+    goog.string.padNumber(dt.getHours(), 2) +
+    ":" +
+    goog.string.padNumber(dt.getMinutes(), 2) +
+    ":" +
+    goog.string.padNumber(dt.getSeconds(), 2) +
+    "." +
+    String((dt.getMilliseconds() / 1000).toFixed(3)).slice(2, 5) +
+    "." +
+    goog.string.padNumber(Math.floor((value - Math.floor(value)) * 10000), 4)
+  );
 };
-
 
 // TODO(benvanik): replace with fancy tooltip formatting.
 /**
@@ -84,15 +85,15 @@ wtf.util.formatWallTime = function(value) {
  * @param {Object} data Argument data object.
  * @param {number=} opt_indent Level of indentation, defaults to 0.
  */
-wtf.util.addArgumentLines = function(lines, data, opt_indent) {
+wtf.util.addArgumentLines = function (lines, data, opt_indent) {
   if (!data) {
     return;
   }
 
-  var indent = '';
+  var indent = "";
   if (opt_indent) {
     for (var i = 0; i < opt_indent; i++) {
-      indent += '  ';
+      indent += "  ";
     }
   }
   for (var argName in data) {
@@ -101,32 +102,31 @@ wtf.util.addArgumentLines = function(lines, data, opt_indent) {
       continue;
     }
     if (argValue === null) {
-      argValue = 'null';
+      argValue = "null";
     } else if (goog.isArray(argValue)) {
-      argValue = '[' + argValue + ']';
+      argValue = "[" + argValue + "]";
     } else if (argValue.buffer && argValue.buffer instanceof ArrayBuffer) {
       // TODO(benvanik): better display of big data blobs.
-      var argString = '[';
+      var argString = "[";
       var maxCount = 16;
       for (var n = 0; n < Math.min(argValue.length, maxCount); n++) {
         if (n) {
-          argString += ',';
+          argString += ",";
         }
         argString += argValue[n];
       }
       if (argValue.length > maxCount) {
-        argString += ' ...';
+        argString += " ...";
       }
-      argString += ']';
+      argString += "]";
       argValue = argString;
     } else if (goog.isObject(argValue)) {
       // TODO(benvanik): prettier object printing.
       argValue = goog.global.JSON.stringify(argValue, undefined, 2);
     }
-    lines.push(indent + argName + ': ' + argValue);
+    lines.push(indent + argName + ": " + argValue);
   }
 };
-
 
 /**
  * Gets the compiled name of a member on an object.
@@ -135,14 +135,14 @@ wtf.util.addArgumentLines = function(lines, data, opt_indent) {
  * @param {*} memberValue Member value.
  * @return {string?} Member name, if found.
  */
-wtf.util.getCompiledMemberName = function(obj, memberValue) {
+wtf.util.getCompiledMemberName = function (obj, memberValue) {
   // This does not early-exit to ensure that duplicates throw errors instead of
   // behaving unpredictably.
   var foundName = null;
   for (var name in obj) {
     if (obj[name] === memberValue) {
       if (foundName) {
-        goog.asserts.fail('duplicate members found');
+        goog.asserts.fail("duplicate members found");
         return null;
       }
       foundName = name;
@@ -151,7 +151,6 @@ wtf.util.getCompiledMemberName = function(obj, memberValue) {
   return foundName;
 };
 
-
 /**
  * Calls a function when the DOM is ready.
  * The callback may be issued immediately if the DOM is already ready.
@@ -159,44 +158,43 @@ wtf.util.getCompiledMemberName = function(obj, memberValue) {
  * @param {Object=} opt_scope Scope to call the function in.
  * @param {Document=} opt_document Document, if not the current one.
  */
-wtf.util.callWhenDomReady = function(callback, opt_scope, opt_document) {
+wtf.util.callWhenDomReady = function (callback, opt_scope, opt_document) {
   var doc = opt_document || goog.global.document;
 
   // TODO(benvanik): prevent leaking these events.
-  if (doc.readyState == 'complete') {
+  if (doc.readyState == "complete") {
     callback.call(opt_scope);
   } else {
     var hasFired = false;
     if (doc.addEventListener) {
-      var listener = function() {
+      var listener = function () {
         if (hasFired) {
           return;
         }
         hasFired = true;
-        doc.removeEventListener('DOMContentLoaded', listener, false);
-        doc.removeEventListener('load', listener, false);
+        doc.removeEventListener("DOMContentLoaded", listener, false);
+        doc.removeEventListener("load", listener, false);
         callback.call(opt_scope);
       };
-      listener['__wtf_ignore__'] = true;
-      doc.addEventListener('DOMContentLoaded', listener, false);
-      goog.global.addEventListener('load', listener, false);
+      listener["__wtf_ignore__"] = true;
+      doc.addEventListener("DOMContentLoaded", listener, false);
+      goog.global.addEventListener("load", listener, false);
     } else if (doc.attachEvent) {
-      var listener = function() {
+      var listener = function () {
         if (hasFired) {
           return;
         }
         hasFired = true;
-        doc.detachEvent('onload', listener);
-        goog.global.detachEvent('load', listener);
+        doc.detachEvent("onload", listener);
+        goog.global.detachEvent("load", listener);
         callback.call(opt_scope);
       };
-      listener['__wtf_ignore__'] = true;
-      doc.attachEvent('onload', listener);
-      goog.global.attachEvent('load', listener);
+      listener["__wtf_ignore__"] = true;
+      doc.attachEvent("onload", listener);
+      goog.global.attachEvent("load", listener);
     }
   }
 };
-
 
 /**
  * Converts an ASCII string into a byte array.
@@ -204,14 +202,13 @@ wtf.util.callWhenDomReady = function(callback, opt_scope, opt_document) {
  * @param {string} value Source string.
  * @return {!Uint8Array} Resulting array buffer.
  */
-wtf.util.convertAsciiStringToUint8Array = function(value) {
+wtf.util.convertAsciiStringToUint8Array = function (value) {
   var buffer = new Uint8Array(value.length);
   for (var n = 0; n < buffer.length; n++) {
-    buffer[n] = value.charCodeAt(n) & 0xFF;
+    buffer[n] = value.charCodeAt(n) & 0xff;
   }
   return buffer;
 };
-
 
 /**
  * Converts a byte array into an ASCII string.
@@ -219,27 +216,26 @@ wtf.util.convertAsciiStringToUint8Array = function(value) {
  * @param {!Uint8Array} value Source buffer.
  * @return {string} Resulting string.
  */
-wtf.util.convertUint8ArrayToAsciiString = function(value) {
+wtf.util.convertUint8ArrayToAsciiString = function (value) {
   // TODO(benvanik): evaluate not using a temp array
   var out = new Array(value.length);
   for (var n = 0; n < value.length; n++) {
     out[n] = String.fromCharCode(value[n]);
   }
-  return out.join('');
+  return out.join("");
 };
-
 
 /**
  * Generates an XPath expression that tries to uniquely identify a DOM element.
  * @param {Element|Object} targetElement DOM element.
  * @return {?string} XPath string or null if not possible.
  */
-wtf.util.getElementXPath = function(targetElement) {
+wtf.util.getElementXPath = function (targetElement) {
   if (!targetElement) {
     // No element is null.
     return null;
   } else if (targetElement == goog.global) {
-    return 'window';
+    return "window";
   } else if (targetElement.id) {
     // Element has an ID - easy.
     return '//*[@id="' + targetElement.id + '"]';
@@ -253,11 +249,17 @@ wtf.util.getElementXPath = function(targetElement) {
   // Slow path - build a full xpath string.
   // We build the list of parts in reverse and then flip before joining.
   var paths = [];
-  for (var el = targetElement;
-      el && el.nodeType == Node.ELEMENT_NODE; el = el.parentNode) {
+  for (
+    var el = targetElement;
+    el && el.nodeType == Node.ELEMENT_NODE;
+    el = el.parentNode
+  ) {
     var index = 0;
-    for (var sibling = el.previousSibling; sibling;
-        sibling = sibling.previousSibling) {
+    for (
+      var sibling = el.previousSibling;
+      sibling;
+      sibling = sibling.previousSibling
+    ) {
       if (sibling.nodeType == Node.DOCUMENT_TYPE_NODE) {
         continue;
       }
@@ -265,21 +267,20 @@ wtf.util.getElementXPath = function(targetElement) {
         index++;
       }
     }
-    paths.push(el.nodeName + '[' + (index + 1) + ']');
+    paths.push(el.nodeName + "[" + (index + 1) + "]");
   }
   if (!paths.length) {
     return null;
   }
 
   // Add a leading '' to force a leading /.
-  paths.push('');
+  paths.push("");
 
   // Reverse the paths.
   wtf.util.reverse(paths);
 
-  return paths.join('/');
+  return paths.join("/");
 };
-
 
 /**
  * Attempts to find an element int he DOM by XPath.
@@ -287,22 +288,22 @@ wtf.util.getElementXPath = function(targetElement) {
  * @param {Document=} opt_document Document to query.
  * @return {Element|Object} Element, if found.
  */
-wtf.util.findElementByXPath = function(path, opt_document) {
-  var doc = opt_document || goog.global['document'];
+wtf.util.findElementByXPath = function (path, opt_document) {
+  var doc = opt_document || goog.global["document"];
   if (!path) {
     return null;
-  } else if (path == 'window') {
-    return doc['defaultView'];
+  } else if (path == "window") {
+    return doc["defaultView"];
   }
   var result = doc.evaluate(
-      path,
-      doc,
-      null,
-      XPathResult.FIRST_ORDERED_NODE_TYPE,
-      null);
+    path,
+    doc,
+    null,
+    XPathResult.FIRST_ORDERED_NODE_TYPE,
+    null
+  );
   return result.singleNodeValue;
 };
-
 
 /**
  * Reverses the contents of the array inline.
@@ -310,19 +311,20 @@ wtf.util.findElementByXPath = function(path, opt_document) {
  * slower in most other browsers.
  * @param {!Array} array Array to reverse.
  */
-wtf.util.reverse = goog.userAgent.product.CHROME ? function(array) {
-  var length = array.length;
-  var halfLength = length >> 1;
-  for (var n = 0; n < halfLength; n++) {
-    var m = length - n - 1;
-    var tmp = array[n];
-    array[n] = array[m];
-    array[m] = tmp;
-  }
-} : function(array) {
-  array.reverse();
-};
-
+wtf.util.reverse = goog.userAgent.product.CHROME
+  ? function (array) {
+      var length = array.length;
+      var halfLength = length >> 1;
+      for (var n = 0; n < halfLength; n++) {
+        var m = length - n - 1;
+        var tmp = array[n];
+        array[n] = array[m];
+        array[m] = tmp;
+      }
+    }
+  : function (array) {
+      array.reverse();
+    };
 
 /**
  * Property name used to store the cache on the global object.
@@ -330,8 +332,7 @@ wtf.util.reverse = goog.userAgent.product.CHROME ? function(array) {
  * @const
  * @private
  */
-wtf.util.GLOBAL_CACHE_KEY_ = 'wtf_util_global_cache';
-
+wtf.util.GLOBAL_CACHE_KEY_ = "wtf_util_global_cache";
 
 /**
  * Gets a global cache object that can be used to store *cache only* data.
@@ -350,7 +351,7 @@ wtf.util.GLOBAL_CACHE_KEY_ = 'wtf_util_global_cache';
  *     {@code goog.global}.
  * @return {!Object} An object that can be used to stash values.
  */
-wtf.util.getGlobalCacheObject = function(key, opt_global) {
+wtf.util.getGlobalCacheObject = function (key, opt_global) {
   var global = opt_global || goog.global;
   var root = global[wtf.util.GLOBAL_CACHE_KEY_];
   if (!root) {
@@ -363,13 +364,6 @@ wtf.util.getGlobalCacheObject = function(key, opt_global) {
   return stash;
 };
 
-
-goog.exportSymbol(
-    'wtf.util.formatTime',
-    wtf.util.formatTime);
-goog.exportSymbol(
-    'wtf.util.formatSmallTime',
-    wtf.util.formatSmallTime);
-goog.exportSymbol(
-    'wtf.util.formatWallTime',
-    wtf.util.formatWallTime);
+goog.exportSymbol("wtf.util.formatTime", wtf.util.formatTime);
+goog.exportSymbol("wtf.util.formatSmallTime", wtf.util.formatSmallTime);
+goog.exportSymbol("wtf.util.formatWallTime", wtf.util.formatWallTime);

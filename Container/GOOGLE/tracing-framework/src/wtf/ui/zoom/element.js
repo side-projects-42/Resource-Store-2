@@ -11,19 +11,17 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.zoom.Element');
+goog.provide("wtf.ui.zoom.Element");
 
-goog.require('goog.dom');
-goog.require('goog.events.BrowserEvent');
-goog.require('goog.events.EventHandler');
-goog.require('goog.events.EventType');
-goog.require('goog.math.Coordinate');
-goog.require('goog.style');
-goog.require('goog.userAgent');
-goog.require('wtf.events');
-goog.require('wtf.ui.zoom.TransitionMode');
-
-
+goog.require("goog.dom");
+goog.require("goog.events.BrowserEvent");
+goog.require("goog.events.EventHandler");
+goog.require("goog.events.EventType");
+goog.require("goog.math.Coordinate");
+goog.require("goog.style");
+goog.require("goog.userAgent");
+goog.require("wtf.events");
+goog.require("wtf.ui.zoom.TransitionMode");
 
 /**
  * Wrapper for elements that take on zooming behavior.
@@ -33,7 +31,7 @@ goog.require('wtf.ui.zoom.TransitionMode');
  * @constructor
  * @extends {goog.events.EventHandler}
  */
-wtf.ui.zoom.Element = function(el, zoomTarget) {
+wtf.ui.zoom.Element = function (el, zoomTarget) {
   goog.base(this, this);
 
   /**
@@ -84,48 +82,51 @@ wtf.ui.zoom.Element = function(el, zoomTarget) {
 
   // Relayout as required.
   this.listen(
-      this.viewportSizeMonitor_,
-      goog.events.EventType.RESIZE,
-      function() {
-        var offset = goog.style.getPageOffset(this.el);
-        this.elementOffset_.x = offset.x;
-        this.elementOffset_.y = offset.y;
-      }, false, this);
+    this.viewportSizeMonitor_,
+    goog.events.EventType.RESIZE,
+    function () {
+      var offset = goog.style.getPageOffset(this.el);
+      this.elementOffset_.x = offset.x;
+      this.elementOffset_.y = offset.y;
+    },
+    false,
+    this
+  );
 
   this.setCursor();
 };
 goog.inherits(wtf.ui.zoom.Element, goog.events.EventHandler);
 
-
 /**
  * @override
  */
-wtf.ui.zoom.Element.prototype.disposeInternal = function() {
+wtf.ui.zoom.Element.prototype.disposeInternal = function () {
   wtf.events.releaseViewportSizeMonitor(this.viewportSizeMonitor_);
 
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Binds all events to the target element.
  */
-wtf.ui.zoom.Element.prototype.bindAllEvents = function() {
+wtf.ui.zoom.Element.prototype.bindAllEvents = function () {
   this.unbindAllEvents();
 
   this.bindPanningEvents();
 
-  this.listen(this.el,
-      goog.userAgent.GECKO ? 'DOMMouseScroll' : 'mousewheel', this.mousewheel_);
+  this.listen(
+    this.el,
+    goog.userAgent.GECKO ? "DOMMouseScroll" : "mousewheel",
+    this.mousewheel_
+  );
   this.listen(this.el, goog.events.EventType.SELECTSTART, this.preventDefault_);
   this.listen(this.el, goog.events.EventType.CONTEXTMENU, this.preventDefault_);
 };
 
-
 /**
  * Binds panning events to the target element.
  */
-wtf.ui.zoom.Element.prototype.bindPanningEvents = function() {
+wtf.ui.zoom.Element.prototype.bindPanningEvents = function () {
   this.unbindPanningEvents();
 
   this.listen(this.el, goog.events.EventType.MOUSEDOWN, this.mousedown_);
@@ -139,19 +140,17 @@ wtf.ui.zoom.Element.prototype.bindPanningEvents = function() {
   this.listen(this.el, goog.events.EventType.TOUCHCANCEL, this.touchcancel_);
 };
 
-
 /**
  * Unbinds all events from the target element.
  */
-wtf.ui.zoom.Element.prototype.unbindAllEvents = function() {
+wtf.ui.zoom.Element.prototype.unbindAllEvents = function () {
   this.removeAll();
 };
-
 
 /**
  * Unbinds panning events from the target element.
  */
-wtf.ui.zoom.Element.prototype.unbindPanningEvents = function() {
+wtf.ui.zoom.Element.prototype.unbindPanningEvents = function () {
   this.unlisten(this.el, goog.events.EventType.MOUSEDOWN, this.mousedown_);
   this.unlisten(this.el, goog.events.EventType.MOUSEUP, this.mouseup_);
   this.unlisten(this.el, goog.events.EventType.MOUSEOUT, this.mouseout_);
@@ -163,32 +162,29 @@ wtf.ui.zoom.Element.prototype.unbindPanningEvents = function() {
   this.unlisten(this.el, goog.events.EventType.TOUCHCANCEL, this.touchcancel_);
 };
 
-
 /**
  * Sets the cursor for the element.
  * @param {string=} opt_name Cursor name.
  */
-wtf.ui.zoom.Element.prototype.setCursor = function(opt_name) {
+wtf.ui.zoom.Element.prototype.setCursor = function (opt_name) {
   if (goog.isDef(opt_name)) {
-    goog.style.setStyle(this.el, 'cursor', opt_name);
+    goog.style.setStyle(this.el, "cursor", opt_name);
   } else {
-    goog.style.setStyle(this.el, 'cursor', '');
+    goog.style.setStyle(this.el, "cursor", "");
   }
 };
-
 
 /**
  * Steals focus from any active input control.
  * @private
  */
-wtf.ui.zoom.Element.prototype.takeFocus_ = function() {
+wtf.ui.zoom.Element.prototype.takeFocus_ = function () {
   var doc = this.dom_.getDocument();
   if (doc.activeElement) {
     doc.activeElement.blur();
   }
   this.el.focus();
 };
-
 
 /**
  * Gets the event position offset relative to the current target, as opposed to
@@ -198,18 +194,17 @@ wtf.ui.zoom.Element.prototype.takeFocus_ = function() {
  *     target.
  * @private
  */
-wtf.ui.zoom.Element.prototype.getEventOffset_ = function(e) {
+wtf.ui.zoom.Element.prototype.getEventOffset_ = function (e) {
   var x = e.clientX - this.elementOffset_.x;
   var y = e.clientY - this.elementOffset_.y;
   return new goog.math.Coordinate(x, y);
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.mousedown_ = function(e) {
+wtf.ui.zoom.Element.prototype.mousedown_ = function (e) {
   var offset = this.getEventOffset_(e);
   var button = /** @type {goog.events.BrowserEvent.MouseButton} */ (e.button);
   this.takeFocus_();
@@ -219,12 +214,11 @@ wtf.ui.zoom.Element.prototype.mousedown_ = function(e) {
   }
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.mouseup_ = function(e) {
+wtf.ui.zoom.Element.prototype.mouseup_ = function (e) {
   var offset = this.getEventOffset_(e);
   var button = /** @type {goog.events.BrowserEvent.MouseButton} */ (e.button);
   this.takeFocus_();
@@ -234,24 +228,22 @@ wtf.ui.zoom.Element.prototype.mouseup_ = function(e) {
   }
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.mouseout_ = function(e) {
+wtf.ui.zoom.Element.prototype.mouseout_ = function (e) {
   if (this.zoomTarget.mouseOut()) {
     e.stopPropagation();
     e.preventDefault();
   }
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.mousemove_ = function(e) {
+wtf.ui.zoom.Element.prototype.mousemove_ = function (e) {
   var offset = this.getEventOffset_(e);
   if (this.zoomTarget.mouseMove(offset.x, offset.y)) {
     e.stopPropagation();
@@ -259,12 +251,11 @@ wtf.ui.zoom.Element.prototype.mousemove_ = function(e) {
   }
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.mousewheel_ = function(e) {
+wtf.ui.zoom.Element.prototype.mousewheel_ = function (e) {
   var offset = this.getEventOffset_(e);
 
   var z = 0;
@@ -291,12 +282,11 @@ wtf.ui.zoom.Element.prototype.mousewheel_ = function(e) {
   e.preventDefault();
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.touchstart_ = function(e) {
+wtf.ui.zoom.Element.prototype.touchstart_ = function (e) {
   var touchEvent = /** @type {!TouchEvent} */ (e.getBrowserEvent());
   var offset = this.getEventOffset_(e);
   var button = goog.events.BrowserEvent.MouseButton.LEFT;
@@ -321,12 +311,11 @@ wtf.ui.zoom.Element.prototype.touchstart_ = function(e) {
   e.preventDefault();
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.touchend_ = function(e) {
+wtf.ui.zoom.Element.prototype.touchend_ = function (e) {
   var touchEvent = /** @type {!TouchEvent} */ (e.getBrowserEvent());
   var offset = this.getEventOffset_(e);
   var button = goog.events.BrowserEvent.MouseButton.LEFT;
@@ -345,12 +334,11 @@ wtf.ui.zoom.Element.prototype.touchend_ = function(e) {
   e.preventDefault();
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.touchcancel_ = function(e) {
+wtf.ui.zoom.Element.prototype.touchcancel_ = function (e) {
   var touchEvent = /** @type {!TouchEvent} */ (e.getBrowserEvent());
 
   var touches = touchEvent.targetTouches;
@@ -363,12 +351,11 @@ wtf.ui.zoom.Element.prototype.touchcancel_ = function(e) {
   e.preventDefault();
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.touchmove_ = function(e) {
+wtf.ui.zoom.Element.prototype.touchmove_ = function (e) {
   var touchEvent = /** @type {!TouchEvent} */ (e.getBrowserEvent());
   var offset = this.getEventOffset_(e);
 
@@ -382,8 +369,12 @@ wtf.ui.zoom.Element.prototype.touchmove_ = function(e) {
       var scale = touchEvent.scale;
       var newScale = this.startingScale_ * scale;
       this.zoomTarget.mouseMove(offset.x, offset.y);
-      this.zoomTarget.zoomAboutCoordinate(offset.x, offset.y, newScale,
-          wtf.ui.zoom.TransitionMode.IMMEDIATE);
+      this.zoomTarget.zoomAboutCoordinate(
+        offset.x,
+        offset.y,
+        newScale,
+        wtf.ui.zoom.TransitionMode.IMMEDIATE
+      );
       this.zoomTarget.setMoved();
     }
   }
@@ -391,11 +382,10 @@ wtf.ui.zoom.Element.prototype.touchmove_ = function(e) {
   e.preventDefault();
 };
 
-
 /**
  * @param {!goog.events.BrowserEvent} e Browser event.
  * @private
  */
-wtf.ui.zoom.Element.prototype.preventDefault_ = function(e) {
+wtf.ui.zoom.Element.prototype.preventDefault_ = function (e) {
   e.preventDefault();
 };

@@ -12,12 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {State} from './State.js';
-import {
-  createBlock,
-  createIfStatement
-} from '../ParseTreeFactory.js';
-import {parseStatements} from '../PlaceholderParser.js';
+import { State } from "./State.js";
+import { createBlock, createIfStatement } from "../ParseTreeFactory.js";
+import { parseStatements } from "../PlaceholderParser.js";
 
 export class ConditionalState extends State {
   /**
@@ -43,10 +40,11 @@ export class ConditionalState extends State {
    */
   replaceState(oldState, newState) {
     return new ConditionalState(
-        State.replaceStateId(this.id, oldState, newState),
-        State.replaceStateId(this.ifState, oldState, newState),
-        State.replaceStateId(this.elseState, oldState, newState),
-        this.condition);
+      State.replaceStateId(this.id, oldState, newState),
+      State.replaceStateId(this.ifState, oldState, newState),
+      State.replaceStateId(this.elseState, oldState, newState),
+      this.condition
+    );
   }
 
   /**
@@ -58,19 +56,22 @@ export class ConditionalState extends State {
   transform(enclosingFinally, machineEndState, reporter) {
     // In case the jump goes through a finally we need to also ensure that we
     // set $ctx.finallyFallThrough which requires us to use an if statement.
-    if (State.isFinallyExit(enclosingFinally, this.ifState) ||
-        State.isFinallyExit(enclosingFinally, this.elseState)) {
+    if (
+      State.isFinallyExit(enclosingFinally, this.ifState) ||
+      State.isFinallyExit(enclosingFinally, this.elseState)
+    ) {
       return [
-        createIfStatement(this.condition,
-            createBlock(State.generateJump(enclosingFinally, this.ifState)),
-            createBlock(State.generateJump(enclosingFinally, this.elseState)))
+        createIfStatement(
+          this.condition,
+          createBlock(State.generateJump(enclosingFinally, this.ifState)),
+          createBlock(State.generateJump(enclosingFinally, this.elseState))
+        ),
       ];
     }
 
     // For the simpler and more common case we just use a conditional
     // expression.
-    return parseStatements
-        `$ctx.state = (${this.condition}) ? ${this.ifState} : ${this.elseState};
+    return parseStatements`$ctx.state = (${this.condition}) ? ${this.ifState} : ${this.elseState};
         break`;
   }
 }

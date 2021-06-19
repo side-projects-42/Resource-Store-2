@@ -1,28 +1,28 @@
 class ChainA {
   foo() {
-    return 'A';
+    return "A";
   }
 }
 
 class ChainB extends ChainA {
   foo() {
-    return super.foo() + ' B';
+    return super.foo() + " B";
   }
 }
 
 class ChainC extends ChainB {
   foo() {
-    return super.foo() + ' C';
+    return super.foo() + " C";
   }
 }
 
 class ChainD extends ChainC {
   foo() {
-    return super.foo() + ' D';
+    return super.foo() + " D";
   }
 }
 
 // ----------------------------------------------------------------------------
 
 var d = new ChainD();
-assert.equal('A B C D', d.foo());
+assert.equal("A B C D", d.foo());

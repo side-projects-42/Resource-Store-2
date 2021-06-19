@@ -2,31 +2,31 @@ module.exports = {
   threshold: 0.01,
   tolerance: 0.0025,
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      labels: ['2017', '2018', '2019', '2020', '2025'],
-      datasets: [{data: [0, 1, 2, 3, 4], fill: false}]
+      labels: ["2017", "2018", "2019", "2020", "2025"],
+      datasets: [{ data: [0, 1, 2, 3, 4], fill: false }],
     },
     options: {
       scales: {
         x: {
-          type: 'time',
+          type: "time",
           time: {
-            parser: 'YYYY',
-            unit: 'year'
+            parser: "YYYY",
+            unit: "year",
           },
           ticks: {
-            source: 'auto',
-            callback: (tick, index) => index % 2 === 0 ? undefined : tick,
-          }
+            source: "auto",
+            callback: (tick, index) => (index % 2 === 0 ? undefined : tick),
+          },
         },
         y: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

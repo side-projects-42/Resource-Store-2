@@ -1,4 +1,4 @@
-var x = '0';
+var x = "0";
 var y;
 
 class C {
@@ -29,20 +29,19 @@ class C {
   }
 }
 
-var object = new C;
+var object = new C();
 assert.equal(object[0](), 0);
 assert.equal(object[1], 1);
 object[2] = 2;
 assert.equal(y, 2);
 var g = object[3]();
-assert.deepEqual(g.next(), {value: 3, done: false});
-assert.deepEqual(g.next(), {value: undefined, done: true});
-
+assert.deepEqual(g.next(), { value: 3, done: false });
+assert.deepEqual(g.next(), { value: undefined, done: true });
 
 assert.equal(C[4](), 4);
 assert.equal(C[5], 5);
 C[6] = 6;
 assert.equal(y, 6);
 var g = C[7]();
-assert.deepEqual(g.next(), {value: 7, done: false});
-assert.deepEqual(g.next(), {value: undefined, done: true});
+assert.deepEqual(g.next(), { value: 7, done: false });
+assert.deepEqual(g.next(), { value: undefined, done: true });

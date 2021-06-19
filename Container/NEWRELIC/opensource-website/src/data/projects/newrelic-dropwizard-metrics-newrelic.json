@@ -1,0 +1,26 @@
+{
+  "name": "dropwizard-metrics-newrelic",
+  "fullName": "newrelic/dropwizard-metrics-newrelic",
+  "slug": "newrelic-dropwizard-metrics-newrelic",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Dropwizard reporter",
+  "supportUrl": "https://discuss.newrelic.com/tags/javaagent",
+  "githubUrl": "https://github.com/newrelic/dropwizard-metrics-newrelic",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/dropwizard-metrics-newrelic",
+  "defaultBranch": "main",
+  "contributingGuideUrl": "https://github.com/newrelic/dropwizard-metrics-newrelic/blob/main/CONTRIBUTING.md",
+  "iconUrl": null,
+  "shortDescription": "",
+  "description": "Implementation of a DropWizard metrics Reporter that sends data as dimensional metrics to New Relic",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Java",
+  "projectTags": ["opentelemetry", "exporter"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Dropwizard reporter",
+    "url": "https://github.com/newrelic/dropwizard-metrics-newrelic"
+  }
+}

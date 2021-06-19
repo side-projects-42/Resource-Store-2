@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ComprehensionTransformer} from './ComprehensionTransformer.js';
-import {PLUS_PLUS} from '../syntax/TokenType.js';
+import { ComprehensionTransformer } from "./ComprehensionTransformer.js";
+import { PLUS_PLUS } from "../syntax/TokenType.js";
 import {
   createArrayLiteralExpression,
   createAssignmentStatement,
@@ -21,8 +21,8 @@ import {
   createMemberLookupExpression,
   createNumberLiteral,
   createPostfixExpression,
-  createReturnStatement
-} from './ParseTreeFactory.js';
+  createReturnStatement,
+} from "./ParseTreeFactory.js";
 
 /**
  * Array Comprehension Transformer:
@@ -53,7 +53,6 @@ import {
  * with alpha renaming of this and arguments of course.
  */
 export class ArrayComprehensionTransformer extends ComprehensionTransformer {
-
   transformArrayComprehension(tree) {
     var expression = this.transformAny(tree.expression);
 
@@ -62,17 +61,25 @@ export class ArrayComprehensionTransformer extends ComprehensionTransformer {
     var resultIdentifier = createIdentifierExpression(resultName);
 
     var statement = createAssignmentStatement(
-        createMemberLookupExpression(
-            resultIdentifier,
-            createPostfixExpression(createIdentifierExpression(indexName),
-                                    PLUS_PLUS)),
-        expression);
+      createMemberLookupExpression(
+        resultIdentifier,
+        createPostfixExpression(
+          createIdentifierExpression(indexName),
+          PLUS_PLUS
+        )
+      ),
+      expression
+    );
 
     var returnStatement = createReturnStatement(resultIdentifier);
     var isGenerator = false;
 
-    return this.transformComprehension(tree, statement, isGenerator,
-                                       returnStatement);
+    return this.transformComprehension(
+      tree,
+      statement,
+      isGenerator,
+      returnStatement
+    );
   }
 }
 
@@ -81,8 +88,11 @@ export class ArrayComprehensionTransformer extends ComprehensionTransformer {
  * @param {ParseTree} tree
  * @return {ParseTree}
  */
-ArrayComprehensionTransformer.transformTree =
-    function(identifierGenerator, tree) {
-  return new ArrayComprehensionTransformer(identifierGenerator).
-      transformAny(tree);
+ArrayComprehensionTransformer.transformTree = function (
+  identifierGenerator,
+  tree
+) {
+  return new ArrayComprehensionTransformer(identifierGenerator).transformAny(
+    tree
+  );
 };

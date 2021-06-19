@@ -1,6 +1,6 @@
 # wtf-trace File Format
 
-***WARNING: the JSON format is not yet implemented!***
+**_WARNING: the JSON format is not yet implemented!_**
 
 Also known as the Chunked File Format. Code for this lives in wtf.io.cff.
 
@@ -141,7 +141,7 @@ data part used to describe the file.
 
 Contains the following parts:
 
-* File Header (required, only one)
+- File Header (required, only one)
 
 ### Chunk Type 0x2/event_data: Event Data
 
@@ -151,9 +151,9 @@ finally the event data buffer itself.
 
 Contains the following parts:
 
-* Event Buffer (required, only one)
-* String Table (optional, only one)
-* Embedded Resource (optional, multiple allowed)
+- Event Buffer (required, only one)
+- String Table (optional, only one)
+- Embedded Resource (optional, multiple allowed)
 
 Event data is read forward and all required information must be present by the
 time it starts parsing. Because of this event data must only reference data
@@ -236,7 +236,7 @@ always 1.
 
 There are many types of argument data values. See `wtf.trace.EventTypeBuilder`
 for the full list and how each is written into the file. In general, they
-follow the write* methods from `wtf.io.Buffer`.
+follow the write\* methods from `wtf.io.Buffer`.
 
 #### Zones
 
@@ -244,6 +244,7 @@ Events are attributed to zones of execution. Zones must be created via
 `wtf.zone#create` events and then made active via `wtf.zone#set`.
 
 Typical flows look like this:
+
 ```
 wtf.event#define(... wtf.zone#create ...)
 wtf.event#define(... wtf.zone#set ...)
@@ -290,5 +291,5 @@ indicate the length of the resource body.
 
 The lower 16 bits of the part type indicate the basic type of the resource:
 
-* Part type 0x40000/binary_resource: binary (ArrayBuffer) contents
-* Part type 0x40001/string_resource: string contents
+- Part type 0x40000/binary_resource: binary (ArrayBuffer) contents
+- Part type 0x40001/string_resource: string contents

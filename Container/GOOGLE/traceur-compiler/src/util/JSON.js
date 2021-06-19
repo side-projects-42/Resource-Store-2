@@ -18,7 +18,7 @@
  * @param {Function=} replacer
  */
 export function transform(v, replacer = (k, v) => v) {
-  return transform_(replacer('', v), replacer);
+  return transform_(replacer("", v), replacer);
 }
 
 function transform_(v, replacer) {

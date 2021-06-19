@@ -1,27 +1,31 @@
-import {isStopIteration} from '@iter';
+import { isStopIteration } from "@iter";
 
 // A hack to give useful error messages upon test failure.
 function assertCish(f) {
   if (!f()) {
-    fail('assertion failed: ' + f.toString());
+    fail("assertion failed: " + f.toString());
   }
 }
 
 function checkInvariants(StopIteration, GeneratorReturn, instanceofCheck) {
-  assertCish(() => 'object' === typeof StopIteration);
-  assertCish(() => 'function' === typeof GeneratorReturn);
+  assertCish(() => "object" === typeof StopIteration);
+  assertCish(() => "function" === typeof GeneratorReturn);
   assertCish(() => isStopIteration(StopIteration));
   assertCish(() => isStopIteration(new GeneratorReturn()));
   if (instanceofCheck) {
     assertCish(() => StopIteration instanceof GeneratorReturn);
   }
 
-  var g = function*() { yield 42; }();
+  var g = (function* () {
+    yield 42;
+  })();
   var gr = assertThrows(() => (g.next(), g.next()));
   assertCish(() => StopIteration === gr);
   assertCish(() => isStopIteration(gr));
 
-  var h = function*() { return 42; }();
+  var h = (function* () {
+    return 42;
+  })();
   var hr = assertThrows(() => h.next());
   assertCish(() => hr instanceof GeneratorReturn);
   assertCish(() => 42 === hr.value);
@@ -38,7 +42,8 @@ checkInvariants(StopIteration, $traceurRuntime.GeneratorReturn, false);
 
 //-----------------------------------------------------------------------------
 
-var tmp = {}, tmpStopIteration = {};
+var tmp = {},
+  tmpStopIteration = {};
 
 $traceurRuntime.setStopIteration(tmpStopIteration, tmp);
 
@@ -60,7 +65,9 @@ checkInvariants(tmp.StopIteration, $traceurRuntime.GeneratorReturn, true);
 var prevStopIteration = tmp.StopIteration;
 var prevGeneratorReturn = $traceurRuntime.GeneratorReturn;
 
-$traceurRuntime.setGeneratorReturn(function(v) { this.value = v; }, tmp);
+$traceurRuntime.setGeneratorReturn(function (v) {
+  this.value = v;
+}, tmp);
 
 //----
 

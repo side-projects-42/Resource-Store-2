@@ -14,22 +14,21 @@
 
 // Base class for inserting statements in a ParseTree
 
-(function() {
-  
-  'use strict';
+(function () {
+  "use strict";
 
   var debug = true;
 
   var ParseTreeTransformer = traceur.codegeneration.ParseTreeTransformer;
   var TokenType = traceur.syntax.TokenType;
 
-  var Trees = traceur.syntax.trees;  
+  var Trees = traceur.syntax.trees;
   var Block = Trees.Block;
   var Program = Trees.Program;
- 
+
   // For dev
   var ParseTreeValidator = traceur.syntax.ParseTreeValidator;
-  
+
   // Constant
   var generatedIdentifierBase = 1;
 
@@ -39,10 +38,10 @@
    */
   function InsertingTransformer() {
     ParseTreeTransformer.call(this);
-    this.insertions = [];      // statements to be added to this block
+    this.insertions = []; // statements to be added to this block
     this.expressionStack = []; // tracks compound expressions
-    this.insertionStack = [];  // insertions waiting for inner blocks to exit
-    this.blockStack = [];      // tracks nest blocks
+    this.insertionStack = []; // insertions waiting for inner blocks to exit
+    this.blockStack = []; // tracks nest blocks
     this.insertAbove = this.insertAbove.bind(this);
   }
 
@@ -50,38 +49,38 @@
     __proto__: ParseTreeTransformer.prototype,
 
     // When we enter a new block we create a new context for insertions
-    pushInsertions: function() {
+    pushInsertions: function () {
       this.blockStack.push(this.expressionStack);
       this.insertionStack.push(this.insertions);
       this.insertions = [];
       this.expressionStack = [];
       return true;
     },
-    
-    popInsertions: function() {
+
+    popInsertions: function () {
       this.expressionStack = this.blockStack.pop();
       if (this.insertions.length) {
         console.error(
-          'insertions were not completed on an inner block', 
+          "insertions were not completed on an inner block",
           this.insertions.slice(0)
         );
       }
       this.insertions = this.insertionStack.pop();
     },
-   
-    generateIdentifier: function(tree) {
+
+    generateIdentifier: function (tree) {
       if (!tree.location) {
-        return '__qp_' + generatedIdentifierBase++;
+        return "__qp_" + generatedIdentifierBase++;
       }
       // The end.offset points just past the last character of the token
       var end = tree.location.end.offset;
-      return '_' + (end - 1) + '_' + (end - tree.location.start.offset);
+      return "_" + (end - 1) + "_" + (end - tree.location.start.offset);
     },
-   
-    transformBlock: function(tree) {
+
+    transformBlock: function (tree) {
       this.pushInsertions();
       var elements = this.transformListInsertEach(
-        tree.statements, 
+        tree.statements,
         this.insertAbove
       );
       this.popInsertions();
@@ -90,34 +89,40 @@
       }
       return new Block(tree.location, elements);
     },
-    
-    transformCaseClause: function(tree) {
+
+    transformCaseClause: function (tree) {
       // var insertions here go above the switch statement
       var expression = this.transformAny(tree.expression);
-      this.pushInsertions();  // insertions in case statements stay there.
-      var statements = this.transformListInsertEach(tree.statements, 
-        this.insertAbove);
+      this.pushInsertions(); // insertions in case statements stay there.
+      var statements = this.transformListInsertEach(
+        tree.statements,
+        this.insertAbove
+      );
       this.popInsertions();
       if (expression === tree.expression && statements === tree.statements) {
         return tree;
       }
       return new Trees.CaseClause(tree.location, expression, statements);
     },
-    
-    transformDefaultClause: function(tree) {
+
+    transformDefaultClause: function (tree) {
       this.pushInsertions();
-      var statements =  this.transformListInsertEach(tree.statements, 
-        this.insertAbove);
+      var statements = this.transformListInsertEach(
+        tree.statements,
+        this.insertAbove
+      );
       this.popInsertions();
       if (statements === tree.statements) {
         return tree;
       }
       return new Trees.DefaultClause(tree.location, statements);
     },
-    
-    transformProgram: function(tree) {
-      var elements = this.transformListInsertEach(tree.programElements, 
-        this.insertAbove);
+
+    transformProgram: function (tree) {
+      var elements = this.transformListInsertEach(
+        tree.programElements,
+        this.insertAbove
+      );
       return new Program(tree.location, elements);
     },
 
@@ -127,8 +132,9 @@
     },
 
     // Insert between the end of the list and the element
-    insertAbove: function(list, transformedElement) {
-      if (this.insertions.length) { // add var stmts above our block
+    insertAbove: function (list, transformedElement) {
+      if (this.insertions.length) {
+        // add var stmts above our block
         list = list.concat(this.insertions);
         this.insertions = [];
       }
@@ -139,7 +145,7 @@
     },
 
     // transformList but insert inside of loop
-    transformListInsertEach: function(list, inserter) {
+    transformListInsertEach: function (list, inserter) {
       if (list === null || list.length === 0) {
         return list;
       }
@@ -154,7 +160,7 @@
         if (builder || transformed || this.insertions.length) {
           if (debug) {
             ParseTreeValidator.validate(transformedElement);
-          } 
+          }
           if (!builder) {
             builder = list.slice(0, index);
           }
@@ -164,9 +170,7 @@
 
       return builder || list;
     },
-      
   };
 
   Querypoint.InsertingTransformer = InsertingTransformer;
-
-}());
+})();

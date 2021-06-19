@@ -11,17 +11,15 @@
  * @author scotttodd@google.com (Scott Todd)
  */
 
-goog.provide('wtf.replay.graphics.DrawCallVisualizer');
+goog.provide("wtf.replay.graphics.DrawCallVisualizer");
 
-goog.require('goog.asserts');
-goog.require('goog.events');
-goog.require('goog.webgl');
-goog.require('wtf.replay.graphics.OffscreenSurface');
-goog.require('wtf.replay.graphics.Playback');
-goog.require('wtf.replay.graphics.Visualizer');
-goog.require('wtf.replay.graphics.WebGLState');
-
-
+goog.require("goog.asserts");
+goog.require("goog.events");
+goog.require("goog.webgl");
+goog.require("wtf.replay.graphics.OffscreenSurface");
+goog.require("wtf.replay.graphics.Playback");
+goog.require("wtf.replay.graphics.Visualizer");
+goog.require("wtf.replay.graphics.WebGLState");
 
 /**
  * Abstract class for a Visualizer that operates on draw calls.
@@ -30,7 +28,7 @@ goog.require('wtf.replay.graphics.WebGLState');
  * @constructor
  * @extends {wtf.replay.graphics.Visualizer}
  */
-wtf.replay.graphics.DrawCallVisualizer = function(playback) {
+wtf.replay.graphics.DrawCallVisualizer = function (playback) {
   goog.base(this, playback);
 
   /**
@@ -102,8 +100,11 @@ wtf.replay.graphics.DrawCallVisualizer = function(playback) {
    */
   this.latestProgramHandle = 0;
 
-  playback.addListener(wtf.replay.graphics.Playback.EventType.CLEAR_PROGRAMS,
-      this.clearPrograms_, this);
+  playback.addListener(
+    wtf.replay.graphics.Playback.EventType.CLEAR_PROGRAMS,
+    this.clearPrograms_,
+    this
+  );
 
   /**
    * The index of the latest step that was visualized.
@@ -142,27 +143,30 @@ wtf.replay.graphics.DrawCallVisualizer = function(playback) {
 
   // Visualizer state changing can invalidate saved visualization data.
   playback.addListener(
-      wtf.replay.graphics.Playback.EventType.VISUALIZER_STATE_CHANGED,
-      this.invalidateStored_, this);
+    wtf.replay.graphics.Playback.EventType.VISUALIZER_STATE_CHANGED,
+    this.invalidateStored_,
+    this
+  );
 };
-goog.inherits(wtf.replay.graphics.DrawCallVisualizer,
-    wtf.replay.graphics.Visualizer);
-
+goog.inherits(
+  wtf.replay.graphics.DrawCallVisualizer,
+  wtf.replay.graphics.Visualizer
+);
 
 /**
  * Adds mutators using registerMutator.
  * @protected
  * @override
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.setupMutators = function() {
-  goog.base(this, 'setupMutators');
+wtf.replay.graphics.DrawCallVisualizer.prototype.setupMutators = function () {
+  goog.base(this, "setupMutators");
 
-  this.registerMutator('wtf.webgl#setContext', {
-    post: function(visualizer, gl, args) {
+  this.registerMutator("wtf.webgl#setContext", {
+    post: function (visualizer, gl, args) {
       // Track contexts, update dimensions to match context parameters.
-      var contextHandle = args['handle'];
-      var height = args['height'];
-      var width = args['width'];
+      var contextHandle = args["handle"];
+      var height = args["height"];
+      var width = args["width"];
 
       if (visualizer.contexts[contextHandle]) {
         visualizer.playbackSurfaces[contextHandle].resize(width, height);
@@ -170,8 +174,11 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.setupMutators = function() {
       } else {
         visualizer.contexts[contextHandle] = gl;
 
-        var playbackSurface = new wtf.replay.graphics.OffscreenSurface(gl,
-            width, height);
+        var playbackSurface = new wtf.replay.graphics.OffscreenSurface(
+          gl,
+          width,
+          height
+        );
         visualizer.playbackSurfaces[contextHandle] = playbackSurface;
         visualizer.registerDisposable(playbackSurface);
 
@@ -182,15 +189,16 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.setupMutators = function() {
       }
 
       visualizer.latestContextHandle = contextHandle;
-    }
+    },
   });
 
-  this.registerMutator('WebGLRenderingContext#linkProgram', {
-    post: function(visualizer, gl, args) {
+  this.registerMutator("WebGLRenderingContext#linkProgram", {
+    post: function (visualizer, gl, args) {
       // Create variant programs whenever a program is linked.
-      var programHandle = /** @type {number} */ (args['program']);
+      var programHandle = /** @type {number} */ (args["program"]);
       var originalProgram = /** @type {WebGLProgram} */ (
-          visualizer.playback.getObject(programHandle));
+        visualizer.playback.getObject(programHandle)
+      );
       goog.asserts.assert(originalProgram);
 
       // Programs can be linked multiple times. Avoid leaking objects.
@@ -199,62 +207,71 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.setupMutators = function() {
       }
 
       visualizer.createProgram(programHandle, originalProgram, gl);
-    }
+    },
   });
 
-  this.registerMutator('WebGLRenderingContext#useProgram', {
-    post: function(visualizer, gl, args) {
-      visualizer.latestProgramHandle = args['program'];
-    }
+  this.registerMutator("WebGLRenderingContext#useProgram", {
+    post: function (visualizer, gl, args) {
+      visualizer.latestProgramHandle = args["program"];
+    },
   });
 
-  this.registerMutator('WebGLRenderingContext#deleteProgram', {
-    post: function(visualizer, gl, args) {
-      visualizer.deleteProgram_(args['program']);
-    }
+  this.registerMutator("WebGLRenderingContext#deleteProgram", {
+    post: function (visualizer, gl, args) {
+      visualizer.deleteProgram_(args["program"]);
+    },
   });
 
-  this.registerMutator('WebGLRenderingContext#drawArrays', {
-    post: function(visualizer, gl, args) {
-      visualizer.handleDrawCall(function() {
-        gl.drawArrays(
-            args['mode'], args['first'], args['count']);
+  this.registerMutator("WebGLRenderingContext#drawArrays", {
+    post: function (visualizer, gl, args) {
+      visualizer.handleDrawCall(function () {
+        gl.drawArrays(args["mode"], args["first"], args["count"]);
       });
-    }
+    },
   });
 
-  this.registerMutator('WebGLRenderingContext#drawElements', {
-    post: function(visualizer, gl, args) {
-      visualizer.handleDrawCall(function() {
+  this.registerMutator("WebGLRenderingContext#drawElements", {
+    post: function (visualizer, gl, args) {
+      visualizer.handleDrawCall(function () {
         gl.drawElements(
-            args['mode'], args['count'], args['type'],
-            args['offset']);
+          args["mode"],
+          args["count"],
+          args["type"],
+          args["offset"]
+        );
       });
-    }
+    },
   });
 
-  this.registerMutator('ANGLEInstancedArrays#drawArraysInstancedANGLE', {
-    post: function(visualizer, gl, args) {
-      var ext = gl.getExtension('ANGLE_instanced_arrays');
-      visualizer.handleDrawCall(function() {
-        ext['drawArraysInstancedANGLE'](
-            args['mode'], args['first'], args['count'], args['primcount']);
+  this.registerMutator("ANGLEInstancedArrays#drawArraysInstancedANGLE", {
+    post: function (visualizer, gl, args) {
+      var ext = gl.getExtension("ANGLE_instanced_arrays");
+      visualizer.handleDrawCall(function () {
+        ext["drawArraysInstancedANGLE"](
+          args["mode"],
+          args["first"],
+          args["count"],
+          args["primcount"]
+        );
       });
-    }
+    },
   });
 
-  this.registerMutator('ANGLEInstancedArrays#drawElementsInstancedANGLE', {
-    post: function(visualizer, gl, args) {
-      var ext = gl.getExtension('ANGLE_instanced_arrays');
-      visualizer.handleDrawCall(function() {
-        ext['drawElementsInstancedANGLE'](
-            args['mode'], args['count'], args['type'], args['offset'],
-            args['primcount']);
+  this.registerMutator("ANGLEInstancedArrays#drawElementsInstancedANGLE", {
+    post: function (visualizer, gl, args) {
+      var ext = gl.getExtension("ANGLE_instanced_arrays");
+      visualizer.handleDrawCall(function () {
+        ext["drawElementsInstancedANGLE"](
+          args["mode"],
+          args["count"],
+          args["type"],
+          args["offset"],
+          args["primcount"]
+        );
       });
-    }
+    },
   });
 };
-
 
 /**
  * Events related to this Visualizer.
@@ -264,31 +281,30 @@ wtf.replay.graphics.DrawCallVisualizer.EventType = {
   /**
    * Visibility changed.
    */
-  VISIBILITY_CHANGED: goog.events.getUniqueId('visibility_changed')
+  VISIBILITY_CHANGED: goog.events.getUniqueId("visibility_changed"),
 };
-
 
 /**
  * Sets the visibility.
  * @param {boolean} visible Whether this Visualizer is now visible.
  * @private
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.setVisible_ = function(
-    visible) {
+wtf.replay.graphics.DrawCallVisualizer.prototype.setVisible_ = function (
+  visible
+) {
   this.visible_ = visible;
   this.emitEvent(
-      wtf.replay.graphics.DrawCallVisualizer.EventType.VISIBILITY_CHANGED);
+    wtf.replay.graphics.DrawCallVisualizer.EventType.VISIBILITY_CHANGED
+  );
 };
-
 
 /**
  * Returns whether this Visualizer is currently visible.
  * @return {boolean} Whether this Visualizer is visible.
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.isVisible = function() {
+wtf.replay.graphics.DrawCallVisualizer.prototype.isVisible = function () {
   return this.visible_;
 };
-
 
 /**
  * Handles operations that should occur before any event.
@@ -297,13 +313,14 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.isVisible = function() {
  * @protected
  * @override
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.anyPreEvent = function(
-    it, gl) {
+wtf.replay.graphics.DrawCallVisualizer.prototype.anyPreEvent = function (
+  it,
+  gl
+) {
   if (this.completed) {
     this.restoreState();
   }
 };
-
 
 /**
  * Creates an OffscreenSurface and adds it to this.visualizerSurfaces.
@@ -313,48 +330,54 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.anyPreEvent = function(
  * @param {number} height The height of the surface.
  * @protected
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.createSurface = function(
-    contextHandle, gl, width, height) {
-  var visualizerSurface = new wtf.replay.graphics.OffscreenSurface(gl,
-      width, height, {stencil: true});
+wtf.replay.graphics.DrawCallVisualizer.prototype.createSurface = function (
+  contextHandle,
+  gl,
+  width,
+  height
+) {
+  var visualizerSurface = new wtf.replay.graphics.OffscreenSurface(
+    gl,
+    width,
+    height,
+    { stencil: true }
+  );
   this.visualizerSurfaces[contextHandle] = visualizerSurface;
   this.registerDisposable(visualizerSurface);
 };
-
 
 /**
  * Draws the recorded visualization for the provided context handle.
  * @param {number|string} contextHandle The context handle to draw to.
  * @protected
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.drawVisualization = function(
-    contextHandle) {
+wtf.replay.graphics.DrawCallVisualizer.prototype.drawVisualization = function (
+  contextHandle
+) {
   this.visualizerSurfaces[contextHandle].drawTexture();
 };
-
 
 /**
  * Deletes the specified program.
  * @param {number|string} programHandle Program handle from event arguments.
  * @private
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.deleteProgram_ = function(
-    programHandle) {
+wtf.replay.graphics.DrawCallVisualizer.prototype.deleteProgram_ = function (
+  programHandle
+) {
   goog.dispose(this.programs[programHandle]);
   delete this.programs[programHandle];
 };
-
 
 /**
  * Deletes all stored programs.
  * @private
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.clearPrograms_ = function() {
+wtf.replay.graphics.DrawCallVisualizer.prototype.clearPrograms_ = function () {
   for (var programHandle in this.programs) {
     this.deleteProgram_(programHandle);
   }
 };
-
 
 /**
  * Create a Program with variants for originalProgram.
@@ -364,8 +387,7 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.clearPrograms_ = function() {
  * @protected
  */
 wtf.replay.graphics.DrawCallVisualizer.prototype.createProgram =
-    goog.nullFunction;
-
+  goog.nullFunction;
 
 /**
  * Handles performing a draw call and any additional logic.
@@ -373,25 +395,25 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.createProgram =
  * @protected
  */
 wtf.replay.graphics.DrawCallVisualizer.prototype.handleDrawCall =
-    goog.nullFunction;
-
+  goog.nullFunction;
 
 /**
  * Restores state back to standard playback.
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.restoreState = function() {
+wtf.replay.graphics.DrawCallVisualizer.prototype.restoreState = function () {
   // Draw playback surfaces to the visible framebuffers.
   for (var contextHandle in this.contexts) {
     var gl = this.contexts[contextHandle];
     var originalFramebuffer = /** @type {WebGLFramebuffer} */ (
-        gl.getParameter(goog.webgl.FRAMEBUFFER_BINDING));
+      gl.getParameter(goog.webgl.FRAMEBUFFER_BINDING)
+    );
     gl.bindFramebuffer(goog.webgl.FRAMEBUFFER, null);
 
     this.playbackSurfaces[contextHandle].drawTexture();
 
     gl.bindFramebuffer(goog.webgl.FRAMEBUFFER, originalFramebuffer);
 
-    this.playback.changeContextMessage(contextHandle, ' ');
+    this.playback.changeContextMessage(contextHandle, " ");
   }
 
   this.setVisible_(false);
@@ -401,14 +423,14 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.restoreState = function() {
   this.completed = false;
 };
 
-
 /**
  * Runs this visualization on a substep of the current step.
  * @param {number=} opt_subStepIndex Target substep, or the current by default.
  * @override
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.applyToSubStep = function(
-    opt_subStepIndex) {
+wtf.replay.graphics.DrawCallVisualizer.prototype.applyToSubStep = function (
+  opt_subStepIndex
+) {
   var playback = this.playback;
   var currentStepIndex = playback.getCurrentStepIndex();
   var currentSubStepIndex = playback.getSubStepEventIndex();
@@ -423,7 +445,7 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.applyToSubStep = function(
       for (var contextHandle in this.contexts) {
         this.drawVisualization(contextHandle);
 
-        var message = this.latestMessages[contextHandle] || ' ';
+        var message = this.latestMessages[contextHandle] || " ";
         playback.changeContextMessage(contextHandle, message);
       }
       this.setVisible_(true);
@@ -440,33 +462,32 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.applyToSubStep = function(
   this.latestTargetSubStepIndex = targetSubStepIndex;
 };
 
-
 /**
  * Returns whether the visualization for a target substep is stored.
  * @param {number} targetSubStepIndex Target substep.
  * @return {boolean} Whether the visualization is stored for a target substep.
  * @protected
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.visualizationStored = function(
-    targetSubStepIndex) {
-  var currentStepIndex = this.playback.getCurrentStepIndex();
+wtf.replay.graphics.DrawCallVisualizer.prototype.visualizationStored =
+  function (targetSubStepIndex) {
+    var currentStepIndex = this.playback.getCurrentStepIndex();
 
-  return currentStepIndex == this.latestStepIndex &&
-      targetSubStepIndex == this.latestTargetSubStepIndex;
-};
-
+    return (
+      currentStepIndex == this.latestStepIndex &&
+      targetSubStepIndex == this.latestTargetSubStepIndex
+    );
+  };
 
 /**
  * Invalidates the stored visualization data.
  * @private
  */
 wtf.replay.graphics.DrawCallVisualizer.prototype.invalidateStored_ =
-    function() {
-  this.latestStepIndex = -1;
-  this.latestSubStepIndex = -1;
-  this.latestTargetSubStepIndex = -1;
-};
-
+  function () {
+    this.latestStepIndex = -1;
+    this.latestSubStepIndex = -1;
+    this.latestTargetSubStepIndex = -1;
+  };
 
 /**
  * Runs visualization, manipulating playback and surfaces as needed.
@@ -475,33 +496,31 @@ wtf.replay.graphics.DrawCallVisualizer.prototype.invalidateStored_ =
  */
 wtf.replay.graphics.DrawCallVisualizer.prototype.trigger = goog.nullFunction;
 
-
 /**
  * Prepares this Visualizer for usage.
  * @protected
  */
 wtf.replay.graphics.DrawCallVisualizer.prototype.setupVisualization =
-    function() {
-  if (this.completed) {
-    this.restoreState();
-  }
+  function () {
+    if (this.completed) {
+      this.restoreState();
+    }
 
-  this.active = true;
+    this.active = true;
 
-  // Seek from the start to the current step to update all internal state.
-  var currentStepIndex = this.playback.getCurrentStepIndex();
-  this.playback.seekStep(0);
-  this.playback.seekStep(currentStepIndex);
+    // Seek from the start to the current step to update all internal state.
+    var currentStepIndex = this.playback.getCurrentStepIndex();
+    this.playback.seekStep(0);
+    this.playback.seekStep(currentStepIndex);
 
-  this.setupSurfaces();
-};
-
+    this.setupSurfaces();
+  };
 
 /**
  * Prepares surfaces for use in a visualization run.
  * @protected
  */
-wtf.replay.graphics.DrawCallVisualizer.prototype.setupSurfaces = function() {
+wtf.replay.graphics.DrawCallVisualizer.prototype.setupSurfaces = function () {
   for (var contextHandle in this.contexts) {
     this.playbackSurfaces[contextHandle].enableResize();
     this.playbackSurfaces[contextHandle].clear([0.0, 0.0, 0.0, 0.0]);

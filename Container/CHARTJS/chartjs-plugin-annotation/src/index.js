@@ -1,5 +1,5 @@
-import {Chart} from 'chart.js';
-import Annotation from './annotation';
+import { Chart } from "chart.js";
+import Annotation from "./annotation";
 
 Chart.register(Annotation);
 

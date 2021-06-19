@@ -1,4 +1,4 @@
-import {_limitValue, _lookupByKey, isNullOrUndef, resolve} from '../helpers';
+import { _limitValue, _lookupByKey, isNullOrUndef, resolve } from "../helpers";
 
 function lttbDecimation(data, start, count, availableWidth, options) {
   /**
@@ -33,7 +33,8 @@ function lttbDecimation(data, start, count, availableWidth, options) {
 
     // Adding offset
     const avgRangeStart = Math.floor((i + 1) * bucketWidth) + 1 + start;
-    const avgRangeEnd = Math.min(Math.floor((i + 2) * bucketWidth) + 1, count) + start;
+    const avgRangeEnd =
+      Math.min(Math.floor((i + 2) * bucketWidth) + 1, count) + start;
     const avgRangeLength = avgRangeEnd - avgRangeStart;
 
     for (j = avgRangeStart; j < avgRangeEnd; j++) {
@@ -47,7 +48,7 @@ function lttbDecimation(data, start, count, availableWidth, options) {
     // Adding offset
     const rangeOffs = Math.floor(i * bucketWidth) + 1 + start;
     const rangeTo = Math.floor((i + 1) * bucketWidth) + 1 + start;
-    const {x: pointAx, y: pointAy} = data[a];
+    const { x: pointAx, y: pointAy } = data[a];
 
     // Note that this is changed from the original algorithm which initializes these
     // values to 1. The reason for this change is that if the area is small, nextA
@@ -57,10 +58,12 @@ function lttbDecimation(data, start, count, availableWidth, options) {
     maxArea = area = -1;
 
     for (j = rangeOffs; j < rangeTo; j++) {
-      area = 0.5 * Math.abs(
-        (pointAx - avgX) * (data[j].y - pointAy) -
-        (pointAx - data[j].x) * (avgY - pointAy)
-      );
+      area =
+        0.5 *
+        Math.abs(
+          (pointAx - avgX) * (data[j].y - pointAy) -
+            (pointAx - data[j].x) * (avgY - pointAy)
+        );
 
       if (area > maxArea) {
         maxArea = area;
@@ -92,7 +95,7 @@ function minMaxDecimation(data, start, count, availableWidth) {
 
   for (i = start; i < start + count; ++i) {
     point = data[i];
-    x = (point.x - xMin) / dx * availableWidth;
+    x = ((point.x - xMin) / dx) * availableWidth;
     y = point.y;
     const truncX = x | 0;
 
@@ -120,16 +123,22 @@ function minMaxDecimation(data, start, count, availableWidth) {
         const intermediateIndex1 = Math.min(minIndex, maxIndex);
         const intermediateIndex2 = Math.max(minIndex, maxIndex);
 
-        if (intermediateIndex1 !== startIndex && intermediateIndex1 !== lastIndex) {
+        if (
+          intermediateIndex1 !== startIndex &&
+          intermediateIndex1 !== lastIndex
+        ) {
           decimated.push({
             ...data[intermediateIndex1],
             x: avgX,
           });
         }
-        if (intermediateIndex2 !== startIndex && intermediateIndex2 !== lastIndex) {
+        if (
+          intermediateIndex2 !== startIndex &&
+          intermediateIndex2 !== lastIndex
+        ) {
           decimated.push({
             ...data[intermediateIndex2],
-            x: avgX
+            x: avgX,
           });
         }
       }
@@ -158,7 +167,7 @@ function cleanDecimatedDataset(dataset) {
     const data = dataset._data;
     delete dataset._decimated;
     delete dataset._data;
-    Object.defineProperty(dataset, 'data', {value: data});
+    Object.defineProperty(dataset, "data", { value: data });
   }
 }
 
@@ -174,26 +183,35 @@ function getStartAndCountOfVisiblePointsSimplified(meta, points) {
   let start = 0;
   let count;
 
-  const {iScale} = meta;
-  const {min, max, minDefined, maxDefined} = iScale.getUserBounds();
+  const { iScale } = meta;
+  const { min, max, minDefined, maxDefined } = iScale.getUserBounds();
 
   if (minDefined) {
-    start = _limitValue(_lookupByKey(points, iScale.axis, min).lo, 0, pointCount - 1);
+    start = _limitValue(
+      _lookupByKey(points, iScale.axis, min).lo,
+      0,
+      pointCount - 1
+    );
   }
   if (maxDefined) {
-    count = _limitValue(_lookupByKey(points, iScale.axis, max).hi + 1, start, pointCount) - start;
+    count =
+      _limitValue(
+        _lookupByKey(points, iScale.axis, max).hi + 1,
+        start,
+        pointCount
+      ) - start;
   } else {
     count = pointCount - start;
   }
 
-  return {start, count};
+  return { start, count };
 }
 
 export default {
-  id: 'decimation',
+  id: "decimation",
 
   defaults: {
-    algorithm: 'min-max',
+    algorithm: "min-max",
     enabled: false,
   },
 
@@ -208,22 +226,22 @@ export default {
     const availableWidth = chart.width;
 
     chart.data.datasets.forEach((dataset, datasetIndex) => {
-      const {_data, indexAxis} = dataset;
+      const { _data, indexAxis } = dataset;
       const meta = chart.getDatasetMeta(datasetIndex);
       const data = _data || dataset.data;
 
-      if (resolve([indexAxis, chart.options.indexAxis]) === 'y') {
+      if (resolve([indexAxis, chart.options.indexAxis]) === "y") {
         // Decimation is only supported for lines that have an X indexAxis
         return;
       }
 
-      if (meta.type !== 'line') {
+      if (meta.type !== "line") {
         // Only line datasets are supported
         return;
       }
 
       const xAxis = chart.scales[meta.xAxisID];
-      if (xAxis.type !== 'linear' && xAxis.type !== 'time') {
+      if (xAxis.type !== "linear" && xAxis.type !== "time") {
         // Only linear interpolation is supported
         return;
       }
@@ -233,7 +251,10 @@ export default {
         return;
       }
 
-      let {start, count} = getStartAndCountOfVisiblePointsSimplified(meta, data);
+      let { start, count } = getStartAndCountOfVisiblePointsSimplified(
+        meta,
+        data
+      );
       if (count <= 4 * availableWidth) {
         // No decimation is required until we are above this threshold
         cleanDecimatedDataset(dataset);
@@ -246,29 +267,37 @@ export default {
         // raw data in _data, but reads the decimated data from _decimated
         dataset._data = data;
         delete dataset.data;
-        Object.defineProperty(dataset, 'data', {
+        Object.defineProperty(dataset, "data", {
           configurable: true,
           enumerable: true,
-          get: function() {
+          get: function () {
             return this._decimated;
           },
-          set: function(d) {
+          set: function (d) {
             this._data = d;
-          }
+          },
         });
       }
 
       // Point the chart to the decimated data
       let decimated;
       switch (options.algorithm) {
-      case 'lttb':
-        decimated = lttbDecimation(data, start, count, availableWidth, options);
-        break;
-      case 'min-max':
-        decimated = minMaxDecimation(data, start, count, availableWidth);
-        break;
-      default:
-        throw new Error(`Unsupported decimation algorithm '${options.algorithm}'`);
+        case "lttb":
+          decimated = lttbDecimation(
+            data,
+            start,
+            count,
+            availableWidth,
+            options
+          );
+          break;
+        case "min-max":
+          decimated = minMaxDecimation(data, start, count, availableWidth);
+          break;
+        default:
+          throw new Error(
+            `Unsupported decimation algorithm '${options.algorithm}'`
+          );
       }
 
       dataset._decimated = decimated;
@@ -277,5 +306,5 @@ export default {
 
   destroy(chart) {
     cleanDecimatedData(chart);
-  }
+  },
 };

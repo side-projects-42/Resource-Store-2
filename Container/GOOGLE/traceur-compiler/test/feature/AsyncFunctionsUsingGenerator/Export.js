@@ -2,13 +2,13 @@
 // Skip !function*() {}
 // Async.
 
-import {asyncFunction} from './resources/async-function.js';
-import asyncFunctionDefault from './resources/async-function.js';
+import { asyncFunction } from "./resources/async-function.js";
+import asyncFunctionDefault from "./resources/async-function.js";
 
 assert.instanceOf(asyncFunction(), Promise);
 assert.instanceOf(asyncFunctionDefault(), Promise);
 
-(async function() {
+(async function () {
   var x = await asyncFunction();
   assert.equal(x, 1);
 

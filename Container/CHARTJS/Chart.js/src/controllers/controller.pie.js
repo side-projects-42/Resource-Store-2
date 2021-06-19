@@ -1,11 +1,9 @@
-import DoughnutController from './controller.doughnut';
+import DoughnutController from "./controller.doughnut";
 
 // Pie charts are Doughnut chart with different defaults
-export default class PieController extends DoughnutController {
+export default class PieController extends DoughnutController {}
 
-}
-
-PieController.id = 'pie';
+PieController.id = "pie";
 
 /**
  * @type {any}
@@ -21,5 +19,5 @@ PieController.defaults = {
   circumference: 360,
 
   // The outr radius of the chart
-  radius: '100%'
+  radius: "100%",
 };

@@ -1,0 +1,24 @@
+{
+  "name": "opensource-website",
+  "fullName": "newrelic/opensource-website",
+  "slug": "newrelic-opensource-website",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Open Source Website",
+  "supportUrl": "https://discuss.newrelic.com/t/opensource-newrelic-com/104943",
+  "githubUrl": "https://github.com/newrelic/opensource-website",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/opensource-website",
+  "iconUrl": null,
+  "shortDescription": "Gatsby website catalog of New Relic Open Source",
+  "description": "Data, code, and automation for opensource.newrelic.com",
+  "ossCategory": "community-project",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["docs"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Open Source Website",
+    "url": "https://github.com/newrelic/opensource-website"
+  }
+}

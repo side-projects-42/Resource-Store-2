@@ -4,4 +4,8 @@
  * @param locale The locale to pass to the Intl.NumberFormat constructor
  * @param options Number format options
  */
-export function formatNumber(num: number, locale: string, options: Intl.NumberFormatOptions): string;
+export function formatNumber(
+  num: number,
+  locale: string,
+  options: Intl.NumberFormatOptions
+): string;

@@ -12,26 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {resolveUrl} from '../../../../src/util/url.js';
-import {suite, test, assert} from '../../../unit/unitTestRunner.js';
+import { resolveUrl } from "../../../../src/util/url.js";
+import { suite, test, assert } from "../../../unit/unitTestRunner.js";
 
+var testScriptName = "../../unit/runtime/test_script.js";
+System.loadAsScript(testScriptName, { referrerName: __moduleName }).then(
+  function (result) {
+    assert("A", result[0]);
+    assert("B", result[1]);
+    assert("C", result[2]);
+  },
+  function (error) {
+    throw new Error("test_interpret loadAsScript FAILED: " + error);
+  }
+);
 
-var testScriptName = '../../unit/runtime/test_script.js';
-System.loadAsScript(testScriptName, {referrerName: __moduleName}).then(function(result) {
-  assert('A', result[0]);
-  assert('B', result[1]);
-  assert('C', result[2]);
-}, function(error) {
-  throw new Error('test_interpret loadAsScript FAILED: ' + error);
-});
-
-var testModuleName = '../../unit/runtime/test_module.js';
-System.import(testModuleName, {referrerName: __moduleName}).then(function(mod) {
-  assert('test', mod.name);
-  assert('A', mod.a);
-  assert('B', mod.b);
-  assert('C', mod.c);
-}, function(error) {
-  throw new Error('test_interpret import FAILED: ' + error);
-});
-
+var testModuleName = "../../unit/runtime/test_module.js";
+System.import(testModuleName, { referrerName: __moduleName }).then(
+  function (mod) {
+    assert("test", mod.name);
+    assert("A", mod.a);
+    assert("B", mod.b);
+    assert("C", mod.c);
+  },
+  function (error) {
+    throw new Error("test_interpret import FAILED: " + error);
+  }
+);

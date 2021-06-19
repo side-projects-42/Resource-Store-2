@@ -11,11 +11,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.timing.RenderInterval');
+goog.provide("wtf.timing.RenderInterval");
 
-goog.require('wtf.timing.Handle');
-
-
+goog.require("wtf.timing.Handle");
 
 /**
  * Rendering interval handle/tracking object.
@@ -23,7 +21,7 @@ goog.require('wtf.timing.Handle');
  * @constructor
  * @extends {wtf.timing.Handle}
  */
-wtf.timing.RenderInterval = function(func) {
+wtf.timing.RenderInterval = function (func) {
   goog.base(this, func);
 };
 goog.inherits(wtf.timing.RenderInterval, wtf.timing.Handle);

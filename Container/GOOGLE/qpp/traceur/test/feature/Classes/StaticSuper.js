@@ -1,8 +1,8 @@
-var x = 'B.getter';
+var x = "B.getter";
 
 class B {
   static method() {
-    return [this, 'B.method'];
+    return [this, "B.method"];
   }
 
   static get getter() {
@@ -28,8 +28,8 @@ class C extends B {
   }
 }
 
-assertArrayEquals([C, 'B.method'], C.method());
-assertArrayEquals([C, 'B.getter'], C.getter);
+assertArrayEquals([C, "B.method"], C.method());
+assertArrayEquals([C, "B.getter"], C.getter);
 
-C.setter = 'B.setter';
-assertArrayEquals([C, 'B.setter'], x);
+C.setter = "B.setter";
+assertArrayEquals([C, "B.setter"], x);

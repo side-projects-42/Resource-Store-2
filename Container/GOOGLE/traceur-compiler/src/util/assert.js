@@ -13,6 +13,5 @@
 // limitations under the License.
 
 export function assert(b) {
-  if (!b && $traceurRuntime.options.debug)
-    throw Error('Assertion failed');
+  if (!b && $traceurRuntime.options.debug) throw Error("Assertion failed");
 }

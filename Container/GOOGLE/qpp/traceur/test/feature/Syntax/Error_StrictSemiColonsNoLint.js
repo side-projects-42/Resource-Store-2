@@ -16,44 +16,44 @@
 
 //:nolintnot
 var L0;
-var L1 // <<< missing semicolon. The error location is at the next token.
+var L1; // <<< missing semicolon. The error location is at the next token.
 //:nolint
-var N2
+var N2;
 //:nolint These don't nest (should they?).
-var N3
+var N3;
 // hello lint
-var N4
+var N4;
 var N5;
-var N6
+var N6;
 //:lint
 //:nolint
-var N7
-var N8
+var N7;
+var N8;
 //:hello lint
-var N9
-var Na
+var N9;
+var Na;
 //:lint
-var Lb // <<< missing semicolon.
+var Lb; // <<< missing semicolon.
 //:lint
 var Lc;
 //:nolint
-var Nd
+var Nd;
 //:lint
-var Le // <<< missing semicolon.
+var Le; // <<< missing semicolon.
 //:nolint
-var Nf
+var Nf;
 //:lint
 //:lint
-var Lg // <<< missing semicolon.
+var Lg; // <<< missing semicolon.
 //:nolint
 //:nolint
 //:lintnot
-var Nh
+var Nh;
 //:nolint
 //:lint
 //:nolint
 //:lint
-var Li // <<< missing semicolon.
+var Li; // <<< missing semicolon.
 //:lint
 //:nolint
 //:lint

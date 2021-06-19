@@ -1,30 +1,30 @@
 var a = {
   foo() {
-    return 'A';
-  }
+    return "A";
+  },
 };
 
 var b = {
   __proto__: a,
   foo() {
-    return super.foo() + ' B';
-  }
+    return super.foo() + " B";
+  },
 };
 
 var c = {
   __proto__: b,
   foo() {
-    return super.foo() + ' C';
-  }
+    return super.foo() + " C";
+  },
 };
 
 var d = {
   __proto__: c,
   foo() {
-    return super.foo() + ' D';
-  }
+    return super.foo() + " D";
+  },
 };
 
 // ----------------------------------------------------------------------------
 
-assert.equal('A B C D', d.foo());
+assert.equal("A B C D", d.foo());

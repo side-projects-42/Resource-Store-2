@@ -1,7 +1,10 @@
-import {distanceBetweenPoints, callback as callHandler} from 'chart.js/helpers';
+import {
+  distanceBetweenPoints,
+  callback as callHandler,
+} from "chart.js/helpers";
 
-const clickHooks = ['click', 'dblclick'];
-const moveHooks = ['enter', 'leave'];
+const clickHooks = ["click", "dblclick"];
+const moveHooks = ["enter", "leave"];
 export const hooks = clickHooks.concat(moveHooks);
 
 export function updateListeners(chart, state, options) {
@@ -9,30 +12,30 @@ export function updateListeners(chart, state, options) {
   state.listened = false;
   state.moveListened = false;
 
-  hooks.forEach(hook => {
-    if (typeof options[hook] === 'function') {
+  hooks.forEach((hook) => {
+    if (typeof options[hook] === "function") {
       state.listened = true;
       state.listeners[hook] = options[hook];
     }
   });
-  moveHooks.forEach(hook => {
-    if (typeof options[hook] === 'function') {
+  moveHooks.forEach((hook) => {
+    if (typeof options[hook] === "function") {
       state.moveListened = true;
     }
   });
 
   if (!state.listened || !state.moveListened) {
-    annotations.forEach(scope => {
+    annotations.forEach((scope) => {
       if (!state.listened) {
-        clickHooks.forEach(hook => {
-          if (typeof scope[hook] === 'function') {
+        clickHooks.forEach((hook) => {
+          if (typeof scope[hook] === "function") {
             state.listened = true;
           }
         });
       }
       if (!state.moveListened) {
-        moveHooks.forEach(hook => {
-          if (typeof scope[hook] === 'function') {
+        moveHooks.forEach((hook) => {
+          if (typeof scope[hook] === "function") {
             state.listened = true;
             state.moveListened = true;
           }
@@ -45,14 +48,14 @@ export function updateListeners(chart, state, options) {
 export function handleEvent(chart, state, event, options) {
   if (state.listened) {
     switch (event.type) {
-    case 'mousemove':
-    case 'mouseout':
-      handleMoveEvents(chart, state, event);
-      break;
-    case 'click':
-      handleClickEvents(chart, state, event, options);
-      break;
-    default:
+      case "mousemove":
+      case "mouseout":
+        handleMoveEvents(chart, state, event);
+        break;
+      case "click":
+        handleClickEvents(chart, state, event, options);
+        break;
+      default:
     }
   }
 }
@@ -64,7 +67,7 @@ function handleMoveEvents(chart, state, event) {
 
   let element;
 
-  if (event.type === 'mousemove') {
+  if (event.type === "mousemove") {
     element = getNearestItem(state.elements, event);
   }
 
@@ -76,10 +79,20 @@ function handleMoveEvents(chart, state, event) {
 
 function dispatchMoveEvents(chart, state, previous, element) {
   if (previous && previous !== element) {
-    dispatchEvent(chart, state, previous.options.leave || state.listeners.leave, previous);
+    dispatchEvent(
+      chart,
+      state,
+      previous.options.leave || state.listeners.leave,
+      previous
+    );
   }
   if (element && element !== previous) {
-    dispatchEvent(chart, state, element.options.enter || state.listeners.enter, element);
+    dispatchEvent(
+      chart,
+      state,
+      element.options.enter || state.listeners.enter,
+      element
+    );
   }
 }
 
@@ -109,14 +122,17 @@ function handleClickEvents(chart, state, event, options) {
 }
 
 function dispatchEvent(chart, _state, handler, element) {
-  callHandler(handler, [{chart, element}]);
+  callHandler(handler, [{ chart, element }]);
 }
 
 function getNearestItem(elements, position) {
   let minDistance = Number.POSITIVE_INFINITY;
 
   return elements
-    .filter((element) => element.options.display && element.inRange(position.x, position.y))
+    .filter(
+      (element) =>
+        element.options.display && element.inRange(position.x, position.y)
+    )
     .reduce((nearestItems, element) => {
       const center = element.getCenterPoint();
       const distance = distanceBetweenPoints(position, center);

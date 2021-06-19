@@ -1,19 +1,19 @@
 :focus {
-    outline: none;
+  outline: none;
 }
 
 /* TestView */
 .fail {
-    color: red;
+  color: red;
 }
 .pass {
-    color: green;
+  color: green;
 }
 .running {
-    font-weight: bold;
+  font-weight: bold;
 }
 .timedout {
-    color: brown;
+  color: brown;
 }
 
 body {
@@ -25,13 +25,16 @@ body {
 }
 
 /* TestRunnerPanel */
- .interrupted .interrupt {
-  color:red;
+.interrupted .interrupt {
+  color: red;
 }
-.runningTests .run, .runningTests .debug, .runningTests .load {
+.runningTests .run,
+.runningTests .debug,
+.runningTests .load {
   color: silver;
 }
-.ranTests .run:before, .ranTests .debug:before {
+.ranTests .run:before,
+.ranTests .debug:before {
   content: "Re-";
 }
 .interrupted .state:after {
@@ -43,9 +46,9 @@ body {
 .runningTests .state:after {
   content: "running";
 }
- 
+
 iframe {
-    width: 0;
-    height: 0;
-    opacity: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
 }

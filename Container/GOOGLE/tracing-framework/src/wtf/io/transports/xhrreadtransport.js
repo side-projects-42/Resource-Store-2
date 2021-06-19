@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.XhrReadTransport');
+goog.provide("wtf.io.transports.XhrReadTransport");
 
-goog.require('goog.asserts');
-goog.require('wtf.io.DataFormat');
-goog.require('wtf.io.ReadTransport');
-
-
+goog.require("goog.asserts");
+goog.require("wtf.io.DataFormat");
+goog.require("wtf.io.ReadTransport");
 
 /**
  * Read-only XHR transport base type.
@@ -29,7 +27,7 @@ goog.require('wtf.io.ReadTransport');
  * @constructor
  * @extends {wtf.io.ReadTransport}
  */
-wtf.io.transports.XhrReadTransport = function(url, opt_xhr) {
+wtf.io.transports.XhrReadTransport = function (url, opt_xhr) {
   goog.base(this);
 
   /**
@@ -48,7 +46,6 @@ wtf.io.transports.XhrReadTransport = function(url, opt_xhr) {
 };
 goog.inherits(wtf.io.transports.XhrReadTransport, wtf.io.ReadTransport);
 
-
 /**
  * Timeout, in ms.
  * @type {number}
@@ -57,11 +54,10 @@ goog.inherits(wtf.io.transports.XhrReadTransport, wtf.io.ReadTransport);
  */
 wtf.io.transports.XhrReadTransport.TIMEOUT_MS_ = 120 * 1000;
 
-
 /**
  * @override
  */
-wtf.io.transports.XhrReadTransport.prototype.disposeInternal = function() {
+wtf.io.transports.XhrReadTransport.prototype.disposeInternal = function () {
   if (this.xhr_) {
     this.xhr_.onprogress = null;
     this.xhr_.onload = null;
@@ -69,15 +65,14 @@ wtf.io.transports.XhrReadTransport.prototype.disposeInternal = function() {
     this.xhr_.abort();
     this.xhr_ = null;
   }
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * @override
  */
-wtf.io.transports.XhrReadTransport.prototype.resume = function() {
-  goog.base(this, 'resume');
+wtf.io.transports.XhrReadTransport.prototype.resume = function () {
+  goog.base(this, "resume");
 
   // Setup the XHR.
   // Note that we may have been passed an XHR to use, so track that.
@@ -88,24 +83,25 @@ wtf.io.transports.XhrReadTransport.prototype.resume = function() {
 
   // Setup events.
   var self = this;
-  this.xhr_.onprogress = function(e) {
+  this.xhr_.onprogress = function (e) {
     if (e.lengthComputable) {
       self.emitProgressEvent(e.loaded, e.total);
     }
   };
-  this.xhr_.onload = function(e) {
+  this.xhr_.onload = function (e) {
     if (e.target.status == 200) {
       var data = e.target.response;
       self.emitReceiveData(data);
     } else {
-      var err = new Error('Error fetching data: ' + e.target.status + ' ' +
-          e.target.statusText);
+      var err = new Error(
+        "Error fetching data: " + e.target.status + " " + e.target.statusText
+      );
       self.emitErrorEvent(err);
     }
     goog.dispose(self);
   };
-  this.xhr_.onerror = function(e) {
-    var err = new Error('Unknown error fetching data.');
+  this.xhr_.onerror = function (e) {
+    var err = new Error("Unknown error fetching data.");
     self.emitErrorEvent(err);
     goog.dispose(self);
   };
@@ -113,25 +109,25 @@ wtf.io.transports.XhrReadTransport.prototype.resume = function() {
   // Open.
   // If we wanted to support POST reads, this would be where to do it.
   if (!reusingXhr) {
-    this.xhr_.open('GET', this.url_, true);
+    this.xhr_.open("GET", this.url_, true);
   }
 
   this.xhr_.timeout = wtf.io.transports.XhrReadTransport.TIMEOUT_MS_;
 
   // Pick response type based on desired format. This avoids any conversion.
-  var responseType = 'text';
+  var responseType = "text";
   switch (this.format) {
     case wtf.io.DataFormat.STRING:
-      responseType = 'text';
+      responseType = "text";
       break;
     case wtf.io.DataFormat.ARRAY_BUFFER:
-      responseType = 'arraybuffer';
+      responseType = "arraybuffer";
       break;
     case wtf.io.DataFormat.BLOB:
-      responseType = 'blob';
+      responseType = "blob";
       break;
     default:
-      goog.asserts.fail('Unknown data format.');
+      goog.asserts.fail("Unknown data format.");
       break;
   }
   this.xhr_.responseType = responseType;

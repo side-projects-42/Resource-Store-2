@@ -14,15 +14,15 @@ This plugin doesn't provide any public API (except the plugin options), thus you
 
 ## Table of Contents
 
-* [Getting Started](getting-started.md)
-* [Options](options.md)
-* [Labels](labels.md)
-* [Positioning](positioning.md)
-* [Formatting](formatting.md)
-* [Events](events.md)
-* [TypeScript](typescript)
-* [Migration](migration)
-* [Samples](../samples)
+- [Getting Started](getting-started.md)
+- [Options](options.md)
+- [Labels](labels.md)
+- [Positioning](positioning.md)
+- [Formatting](formatting.md)
+- [Events](events.md)
+- [TypeScript](typescript)
+- [Migration](migration)
+- [Samples](../samples)
 
 ## License
 

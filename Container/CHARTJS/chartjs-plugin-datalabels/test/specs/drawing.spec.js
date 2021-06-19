@@ -1,19 +1,21 @@
-import plugin from 'chartjs-plugin-datalabels';
+import plugin from "chartjs-plugin-datalabels";
 
-describe('drawing', function() {
+describe("drawing", function () {
   jasmine.chart.register(plugin);
 
-  describe('auto', jasmine.fixture.specs('drawing'));
+  describe("auto", jasmine.fixture.specs("drawing"));
 
   // https://github.com/chartjs/chartjs-plugin-datalabels/issues/30
-  it('should not create labels for skipped element', function() {
+  it("should not create labels for skipped element", function () {
     var chart = jasmine.chart.acquire({
-      type: 'line',
+      type: "line",
       data: {
-        datasets: [{
-          data: [42, null, NaN, undefined, 'foobar']
-        }]
-      }
+        datasets: [
+          {
+            data: [42, null, NaN, undefined, "foobar"],
+          },
+        ],
+      },
     });
 
     var ds0 = chart.getDatasetMeta(0);
@@ -28,15 +30,17 @@ describe('drawing', function() {
   });
 
   // https://github.com/chartjs/chartjs-plugin-datalabels/issues/51
-  it ('should not create labels for hidden dataset', function() {
+  it("should not create labels for hidden dataset", function () {
     var chart = jasmine.chart.acquire({
-      type: 'line',
+      type: "line",
       data: {
-        datasets: [{
-          data: [42, 43, 44, 45],
-          hidden: true
-        }]
-      }
+        datasets: [
+          {
+            data: [42, 43, 44, 45],
+            hidden: true,
+          },
+        ],
+      },
     });
 
     var ds0 = chart.getDatasetMeta(0);
@@ -49,14 +53,16 @@ describe('drawing', function() {
   });
 
   // https://github.com/chartjs/chartjs-plugin-datalabels/issues/51
-  it ('should destroy labels when dataset become hidden', function() {
+  it("should destroy labels when dataset become hidden", function () {
     var chart = jasmine.chart.acquire({
-      type: 'line',
+      type: "line",
       data: {
-        datasets: [{
-          data: [42, 43, 44, 45]
-        }]
-      }
+        datasets: [
+          {
+            data: [42, 43, 44, 45],
+          },
+        ],
+      },
     });
 
     var ds0 = chart.getDatasetMeta(0);

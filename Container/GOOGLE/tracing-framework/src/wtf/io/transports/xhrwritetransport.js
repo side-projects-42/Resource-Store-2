@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.XhrWriteTransport');
+goog.provide("wtf.io.transports.XhrWriteTransport");
 
-goog.require('goog.asserts');
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.WriteTransport');
-
-
+goog.require("goog.asserts");
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.WriteTransport");
 
 /**
  * Write-only XHR transport base type.
@@ -29,8 +27,11 @@ goog.require('wtf.io.WriteTransport');
  * @constructor
  * @extends {wtf.io.WriteTransport}
  */
-wtf.io.transports.XhrWriteTransport = function(url, opt_mimeType,
-    opt_filename) {
+wtf.io.transports.XhrWriteTransport = function (
+  url,
+  opt_mimeType,
+  opt_filename
+) {
   goog.base(this);
 
   // TODO(benvanik): use the Blob create/append loop to allow very large sizes?
@@ -73,7 +74,6 @@ wtf.io.transports.XhrWriteTransport = function(url, opt_mimeType,
 };
 goog.inherits(wtf.io.transports.XhrWriteTransport, wtf.io.WriteTransport);
 
-
 /**
  * Timeout, in ms.
  * @type {number}
@@ -82,11 +82,10 @@ goog.inherits(wtf.io.transports.XhrWriteTransport, wtf.io.WriteTransport);
  */
 wtf.io.transports.XhrWriteTransport.TIMEOUT_MS_ = 120 * 1000;
 
-
 /**
  * @override
  */
-wtf.io.transports.XhrWriteTransport.prototype.disposeInternal = function() {
+wtf.io.transports.XhrWriteTransport.prototype.disposeInternal = function () {
   this.flush();
   if (this.xhr_) {
     this.xhr_.onprogress = null;
@@ -94,38 +93,36 @@ wtf.io.transports.XhrWriteTransport.prototype.disposeInternal = function() {
     this.xhr_.onerror = null;
     this.xhr_ = null;
   }
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * @override
  */
-wtf.io.transports.XhrWriteTransport.prototype.write = function(data) {
+wtf.io.transports.XhrWriteTransport.prototype.write = function (data) {
   this.data_.push(data);
 };
 
-
 /**
  * @override
  */
-wtf.io.transports.XhrWriteTransport.prototype.flush = function() {
+wtf.io.transports.XhrWriteTransport.prototype.flush = function () {
   goog.asserts.assert(!this.xhr_);
 
   // Pick mime type based on content type.
   // TODO(benvanik): more intelligent picking. If all strings, for example, use
   // text/plain.
-  var mimeType = this.mimeType_ || 'application/octet-stream';
+  var mimeType = this.mimeType_ || "application/octet-stream";
 
   // Setup XHR.
-  var xhrObject = XMLHttpRequest['raw'] || XMLHttpRequest;
+  var xhrObject = XMLHttpRequest["raw"] || XMLHttpRequest;
   this.xhr_ = new xhrObject();
 
-  this.xhr_.onload = function(e) {
+  this.xhr_.onload = function (e) {
     // Done sending, have response.
     // TODO(benvanik): emit event.
   };
-  this.xhr_.onerror = function(e) {
+  this.xhr_.onerror = function (e) {
     // Error sending.
     // TODO(benvanik): emit event.
   };
@@ -133,13 +130,13 @@ wtf.io.transports.XhrWriteTransport.prototype.flush = function() {
   // Create blob and send.
   var parts = wtf.io.Blob.toNativeParts(this.data_);
   var blob = new Blob(parts, {
-    'type': mimeType
+    type: mimeType,
   });
-  this.xhr_.open('POST', this.url_, true);
+  this.xhr_.open("POST", this.url_, true);
   this.xhr_.timeout = wtf.io.transports.XhrWriteTransport.TIMEOUT_MS_;
-  this.xhr_.setRequestHeader('Content-Type', mimeType);
+  this.xhr_.setRequestHeader("Content-Type", mimeType);
   if (this.filename_) {
-    this.xhr_.setRequestHeader('X-Filename', this.filename_);
+    this.xhr_.setRequestHeader("X-Filename", this.filename_);
   }
   this.xhr_.send(blob);
 };

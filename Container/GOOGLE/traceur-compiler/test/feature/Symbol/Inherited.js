@@ -1,26 +1,26 @@
-'use strict';
+"use strict";
 
 var s = Symbol();
 var p = {};
 Object.defineProperty(p, s, {
-  get: function() {
+  get: function () {
     return 42;
   },
-  configurable: true
+  configurable: true,
 });
 
 var o = Object.create(p);
 assert.equal(42, o[s]);
-assert.throws(function() {
+assert.throws(function () {
   o[s] = 1;
 }, TypeError);
 
 var val;
 Object.defineProperty(p, s, {
-  set: function(v) {
+  set: function (v) {
     val = v;
   },
-  configurable: true
+  configurable: true,
 });
 
 o[s] = 33;

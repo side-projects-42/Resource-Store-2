@@ -1,0 +1,24 @@
+{
+  "name": "logstash-output-plugin",
+  "fullName": "newrelic/logstash-output-plugin",
+  "slug": "newrelic-logstash-output-plugin",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Logstash Output Plugin",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/logstash-output-plugin",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/logstash-output-plugin",
+  "iconUrl": null,
+  "shortDescription": "",
+  "description": "This is a plugin for Logstash that outputs logs to New Relic.",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Ruby",
+  "projectTags": ["logging"],
+  "acceptsContributions": false,
+  "website": {
+    "title": "New Relic Logstash Output Plugin",
+    "url": "https://github.com/newrelic/logstash-output-plugin"
+  }
+}

@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.BinaryStreamTarget');
+goog.provide("wtf.io.cff.BinaryStreamTarget");
 
-goog.require('wtf.data.formats.ChunkedFileFormat');
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.cff.ChunkType');
-goog.require('wtf.io.cff.PartType');
-goog.require('wtf.io.cff.StreamTarget');
-goog.require('wtf.version');
-
-
+goog.require("wtf.data.formats.ChunkedFileFormat");
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.cff.ChunkType");
+goog.require("wtf.io.cff.PartType");
+goog.require("wtf.io.cff.StreamTarget");
+goog.require("wtf.version");
 
 /**
  * Binary stream target.
@@ -30,23 +28,22 @@ goog.require('wtf.version');
  * @constructor
  * @extends {wtf.io.cff.StreamTarget}
  */
-wtf.io.cff.BinaryStreamTarget = function(transport) {
+wtf.io.cff.BinaryStreamTarget = function (transport) {
   goog.base(this, transport);
 
   // Write magic header.
   var header = new Uint32Array(3);
-  header[0] = 0xDEADBEEF;
+  header[0] = 0xdeadbeef;
   header[1] = wtf.version.getValue();
   header[2] = wtf.data.formats.ChunkedFileFormat.VERSION;
   transport.write(header);
 };
 goog.inherits(wtf.io.cff.BinaryStreamTarget, wtf.io.cff.StreamTarget);
 
-
 /**
  * @override
  */
-wtf.io.cff.BinaryStreamTarget.prototype.writeChunk = function(chunk) {
+wtf.io.cff.BinaryStreamTarget.prototype.writeChunk = function (chunk) {
   var transport = this.getTransport();
 
   // Gather all the different blob parts together before concating at the end.
@@ -60,19 +57,21 @@ wtf.io.cff.BinaryStreamTarget.prototype.writeChunk = function(chunk) {
   for (var n = 0; n < parts.length; n++) {
     var blobData = parts[n].toBlobData();
     var partLength;
-    if (blobData instanceof ArrayBuffer ||
-        blobData.buffer instanceof ArrayBuffer) {
+    if (
+      blobData instanceof ArrayBuffer ||
+      blobData.buffer instanceof ArrayBuffer
+    ) {
       partLength = blobData.byteLength;
     } else if (wtf.io.Blob.isBlob(blobData)) {
       partLength = blobData.getSize();
-    } else if (goog.global['Blob'] && blobData instanceof Blob) {
+    } else if (goog.global["Blob"] && blobData instanceof Blob) {
       partLength = blobData.size;
-    } else if (typeof blobData == 'string') {
+    } else if (typeof blobData == "string") {
       // Get the size by packing into a blob.
       blobData = wtf.io.Blob.create([blobData]);
       partLength = blobData.getSize();
     } else {
-      throw new Error('Invalid blob data type: ' + (typeof blobData));
+      throw new Error("Invalid blob data type: " + typeof blobData);
     }
     blobParts.push(blobData);
     partOffsets[n] = totalLength;
@@ -88,7 +87,7 @@ wtf.io.cff.BinaryStreamTarget.prototype.writeChunk = function(chunk) {
   }
 
   // Build the header (now that we have all the lengths/etc).
-  var headerByteLength = (6 + (3 * parts.length)) * 4;
+  var headerByteLength = (6 + 3 * parts.length) * 4;
   var header = new Uint32Array(headerByteLength / 4);
   var o = 0;
   header[o++] = chunk.getId();
@@ -118,11 +117,10 @@ wtf.io.cff.BinaryStreamTarget.prototype.writeChunk = function(chunk) {
   transport.write(blob);
 };
 
-
 /**
  * @override
  */
-wtf.io.cff.BinaryStreamTarget.prototype.end = function() {
+wtf.io.cff.BinaryStreamTarget.prototype.end = function () {
   // TODO(benvanik): add a footer here? May be nice to have total chunk count
   //     or a chunk table/etc to help loaders.
 };

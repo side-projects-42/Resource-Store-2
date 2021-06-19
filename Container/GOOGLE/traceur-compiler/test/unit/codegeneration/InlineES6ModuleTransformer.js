@@ -12,30 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-import {ErrorReporter} from '../../../src/util/ErrorReporter.js';
-import {Options} from '../../../src/Options.js';
-import {Parser} from '../../../src/syntax/Parser.js';
-import {SourceFile} from '../../../src/syntax/SourceFile.js';
-import {UniqueIdentifierGenerator} from '../../../src//codegeneration/UniqueIdentifierGenerator.js';
-import {InlineES6ModuleTransformer} from '../../../src/codegeneration/InlineES6ModuleTransformer.js';
-import {write} from '../../../src/outputgeneration/TreeWriter.js';
+import { ErrorReporter } from "../../../src/util/ErrorReporter.js";
+import { Options } from "../../../src/Options.js";
+import { Parser } from "../../../src/syntax/Parser.js";
+import { SourceFile } from "../../../src/syntax/SourceFile.js";
+import { UniqueIdentifierGenerator } from "../../../src//codegeneration/UniqueIdentifierGenerator.js";
+import { InlineES6ModuleTransformer } from "../../../src/codegeneration/InlineES6ModuleTransformer.js";
+import { write } from "../../../src/outputgeneration/TreeWriter.js";
 
-suite('InlineES6ModuleTransformer.js', function() {
-
+suite("InlineES6ModuleTransformer.js", function () {
   function parse(content, reporter, options) {
-    let file = new SourceFile('test', content);
+    let file = new SourceFile("test", content);
     let parser = new Parser(file, reporter, options);
     return parser.parseModule();
   }
 
-  test('Inline handles `export *` statements', function() {
+  test("Inline handles `export *` statements", function () {
     let options = new Options({
-      modules: 'inline'
+      modules: "inline",
     });
     let metadata = {
-      rootModule: null
+      rootModule: null,
     };
     let reporter = new ErrorReporter();
     let exportStarCode = `
@@ -46,23 +45,27 @@ suite('InlineES6ModuleTransformer.js', function() {
     let code = `import {TestA, TestB} from ${"'./exportStarTest'"};`;
     let expected = [
       '"use strict";',
-      'const {TestA,',
-      '  TestB} = $__exportStarTest__;',
-      'let $__0 = {};',
-      'for (let $__1 in $__resources_47_test_95_a_46_js__)',
-      '  if ($__resources_47_test_95_a_46_js__.hasOwnProperty($__1))',
-      '    $__0[$__1] = $__resources_47_test_95_a_46_js__[$__1];',
-      'for (let $__1 in $__resources_47_test_95_b_46_js__)',
-      '  if ($__resources_47_test_95_b_46_js__.hasOwnProperty($__1))',
-      '    $__0[$__1] = $__resources_47_test_95_b_46_js__[$__1];',
-      ''
-    ].join('\n');
+      "const {TestA,",
+      "  TestB} = $__exportStarTest__;",
+      "let $__0 = {};",
+      "for (let $__1 in $__resources_47_test_95_a_46_js__)",
+      "  if ($__resources_47_test_95_a_46_js__.hasOwnProperty($__1))",
+      "    $__0[$__1] = $__resources_47_test_95_a_46_js__[$__1];",
+      "for (let $__1 in $__resources_47_test_95_b_46_js__)",
+      "  if ($__resources_47_test_95_b_46_js__.hasOwnProperty($__1))",
+      "    $__0[$__1] = $__resources_47_test_95_b_46_js__[$__1];",
+      "",
+    ].join("\n");
 
     let exportStarTree = parse(exportStarCode, reporter, options);
     let tree = parse(code, reporter, options);
 
     let transformer = new InlineES6ModuleTransformer(
-      new UniqueIdentifierGenerator(), reporter, options, metadata);
+      new UniqueIdentifierGenerator(),
+      reporter,
+      options,
+      metadata
+    );
     transformer.exportVisitor.visitAny(exportStarTree);
     let transformed = transformer.transformAny(tree);
     assert.equal(write(transformed), expected);

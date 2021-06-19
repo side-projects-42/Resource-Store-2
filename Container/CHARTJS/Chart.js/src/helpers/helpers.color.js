@@ -1,6 +1,7 @@
-import colorLib from '@kurkle/color';
+import colorLib from "@kurkle/color";
 
-const isPatternOrGradient = (value) => value instanceof CanvasGradient || value instanceof CanvasPattern;
+const isPatternOrGradient = (value) =>
+  value instanceof CanvasGradient || value instanceof CanvasPattern;
 
 export function color(value) {
   return isPatternOrGradient(value) ? value : colorLib(value);

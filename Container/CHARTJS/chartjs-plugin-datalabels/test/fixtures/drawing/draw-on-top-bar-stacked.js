@@ -2,56 +2,65 @@
 
 export default {
   config: {
-    type: 'bar',
+    type: "bar",
     data: {
       labels: [0, 1],
-      datasets: [{
-        backgroundColor: '#444',
-        data: [2, 2]
-      }, {
-        backgroundColor: '#222',
-        data: [2, 2]
-      }, {
-        backgroundColor: '#444',
-        data: [2, 2]
-      }, {
-        backgroundColor: '#222',
-        data: [2, 2]
-      }]
+      datasets: [
+        {
+          backgroundColor: "#444",
+          data: [2, 2],
+        },
+        {
+          backgroundColor: "#222",
+          data: [2, 2],
+        },
+        {
+          backgroundColor: "#444",
+          data: [2, 2],
+        },
+        {
+          backgroundColor: "#222",
+          data: [2, 2],
+        },
+      ],
     },
     options: {
       elements: {
         rectangle: {
-          borderWidth: 0
-        }
+          borderWidth: 0,
+        },
       },
       layout: {
-        padding: 20
+        padding: 20,
       },
       scales: {
-        xAxes: [{
-          stacked: true
-        }],
-        yAxes: [{
-          stacked: true
-        }]
+        xAxes: [
+          {
+            stacked: true,
+          },
+        ],
+        yAxes: [
+          {
+            stacked: true,
+          },
+        ],
       },
       plugins: {
         datalabels: {
-          anchor: 'start',
-          backgroundColor: '#fff',
+          anchor: "start",
+          backgroundColor: "#fff",
           font: {
-            size: 0
+            size: 0,
           },
-          padding: 24
-        }
-      }
-    }
+          padding: 24,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 256
-    }
-  }
+      width: 256,
+    },
+  },
 };

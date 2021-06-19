@@ -2,5 +2,5 @@
 // Error: :5:3: Unexpected token [
 
 var object = {
-  [1]: 2
+  [1]: 2,
 };

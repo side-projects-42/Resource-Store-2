@@ -17,52 +17,51 @@
 
 -->
 <html>
-<head>
-<title></title>
-<script src="../../../node_modules/closure-library/closure/goog/base.js"></script>
-<script>
-// NOTE: base.js and all goog.require statements must be in JS script blocks
-// NOTE: because they use document.write to add new script tags in place
-goog.require('goog.testing.jsunit');
-</script>
-<script src="../../../bin/traceur.js"></script>
-</head>
-<body>
-<script>
-function testLineNumbers() {
+  <head>
+    <title></title>
+    <script src="../../../node_modules/closure-library/closure/goog/base.js"></script>
+    <script>
+      // NOTE: base.js and all goog.require statements must be in JS script blocks
+      // NOTE: because they use document.write to add new script tags in place
+      goog.require("goog.testing.jsunit");
+    </script>
+    <script src="../../../bin/traceur.js"></script>
+  </head>
+  <body>
+    <script>
+      function testLineNumbers() {
+        var src = "function foo() { return 5; }\nvar \nf\n=\n5\n;\n";
 
-  var src = 'function foo() { return 5; }\nvar \nf\n=\n5\n;\n';
+        var filename = "checkLineNumbers.js";
+        var sourceFile = new traceur.syntax.SourceFile(name, src);
+        var lineNumberTable = sourceFile.lineNumberTable;
 
-  var filename = 'checkLineNumbers.js';
-  var sourceFile = new traceur.syntax.SourceFile(name, src);
-  var lineNumberTable = sourceFile.lineNumberTable;
+        var lastLine = lineNumberTable.getLine(sourceFile.contents.length - 1);
+        assertEquals(lastLine, 5);
 
-  var lastLine = lineNumberTable.getLine(sourceFile.contents.length - 1);
-  assertEquals(lastLine, 5);
+        var resource = "";
+        for (var line = 0; line <= lastLine; line++) {
+          var offset = lineNumberTable.offsetOfLine(line);
+          var column = lineNumberTable.getColumn(offset);
+          var lineOut = lineNumberTable.getLine(offset);
+          assertEquals(lineOut, line);
+          assertEquals(column, 0); // check non-zero value below
+          var nextOffset = lineNumberTable.offsetOfLine(line + 1);
+          var maxOffset = sourceFile.contents.length;
+          nextOffset = nextOffset > maxOffset ? maxOffset : nextOffset;
+          resource += sourceFile.contents.substring(offset, nextOffset);
+        }
 
-  var resource = '';
-  for (var line = 0; line <= lastLine; line++) {
-    var offset = lineNumberTable.offsetOfLine(line);
-    var column = lineNumberTable.getColumn(offset);
-    var lineOut = lineNumberTable.getLine(offset);
-    assertEquals(lineOut, line);
-    assertEquals(column, 0);  // check non-zero value below
-    var nextOffset = lineNumberTable.offsetOfLine(line + 1);
-    var maxOffset = sourceFile.contents.length;
-    nextOffset = nextOffset > maxOffset ? maxOffset : nextOffset;
-    resource += sourceFile.contents.substring(offset, nextOffset);
-  }
+        assertEquals(src, resource);
 
-  assertEquals(src, resource);
+        // verify one non-zero column
+        assertEquals(lineNumberTable.getColumn(31), 2);
 
-  // verify one non-zero column
-  assertEquals(lineNumberTable.getColumn(31), 2);
-
-  var outOfBounds = lineNumberTable.getLine(-640);
-  assertEquals(outOfBounds, 0);
-  var inBounds = lineNumberTable.getLine(6);
-  assertEquals(inBounds, 0);
-}
-</script>
-</body>
+        var outOfBounds = lineNumberTable.getLine(-640);
+        assertEquals(outOfBounds, 0);
+        var inBounds = lineNumberTable.getLine(6);
+        assertEquals(inBounds, 0);
+      }
+    </script>
+  </body>
 </html>

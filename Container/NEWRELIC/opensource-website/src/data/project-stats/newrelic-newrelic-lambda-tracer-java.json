@@ -1,0 +1,100 @@
+{
+  "projectFullName": "newrelic/newrelic-lambda-tracer-java",
+  "issues": {
+    "open": 0
+  },
+  "releases": 4,
+  "latestRelease": {
+    "name": "v2.2.1",
+    "date": "2021-04-20T19:11:54Z"
+  },
+  "commits": 56,
+  "lastSixMonthsCommitTotal": 12,
+  "contributors": 9,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 46032291,
+      "login": "grahamfuller1",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/46032291?v=4",
+      "htmlUrl": "https://github.com/grahamfuller1",
+      "contributions": 2
+    },
+    {
+      "id": 28942544,
+      "login": "katiewest820",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/28942544?v=4",
+      "htmlUrl": "https://github.com/katiewest820",
+      "contributions": 2
+    },
+    {
+      "id": 43244625,
+      "login": "melissaklein24",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43244625?v=4",
+      "htmlUrl": "https://github.com/melissaklein24",
+      "contributions": 1
+    },
+    {
+      "id": 49817386,
+      "login": "jeffalder",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/49817386?v=4",
+      "htmlUrl": "https://github.com/jeffalder",
+      "contributions": 1
+    },
+    {
+      "id": 3496648,
+      "login": "jasonjkeller",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3496648?v=4",
+      "htmlUrl": "https://github.com/jasonjkeller",
+      "contributions": 15
+    },
+    {
+      "id": 11327,
+      "login": "mrickard",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/11327?v=4",
+      "htmlUrl": "https://github.com/mrickard",
+      "contributions": 3
+    },
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 1
+    },
+    {
+      "id": 24482401,
+      "login": "XiXiaPdx",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/24482401?v=4",
+      "htmlUrl": "https://github.com/XiXiaPdx",
+      "contributions": 1
+    },
+    {
+      "id": 585473,
+      "login": "MattWhelan",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/585473?v=4",
+      "htmlUrl": "https://github.com/MattWhelan",
+      "contributions": 12
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNTg=",
+      "name": "Java",
+      "color": "#b07219"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

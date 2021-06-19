@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import t from './modules/typeof.js';
+import t from "./modules/typeof.js";
 $traceurRuntime.typeof = t;

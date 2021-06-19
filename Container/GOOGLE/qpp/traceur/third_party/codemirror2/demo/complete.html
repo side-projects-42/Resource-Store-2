@@ -1,20 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>CodeMirror: Autocomplete Demo</title>
-    <link rel="stylesheet" href="../lib/codemirror.css">
+    <link rel="stylesheet" href="../lib/codemirror.css" />
     <script src="../lib/codemirror.js"></script>
     <script src="../lib/util/simple-hint.js"></script>
-    <link rel="stylesheet" href="../lib/util/simple-hint.css">
+    <link rel="stylesheet" href="../lib/util/simple-hint.css" />
     <script src="../lib/util/javascript-hint.js"></script>
     <script src="../mode/javascript/javascript.js"></script>
-    <link rel="stylesheet" href="../doc/docs.css">
-    <style type="text/css">.CodeMirror {border: 1px solid #eee;} .CodeMirror-scroll { height: 100% }</style>
+    <link rel="stylesheet" href="../doc/docs.css" />
+    <style type="text/css">
+      .CodeMirror {
+        border: 1px solid #eee;
+      }
+      .CodeMirror-scroll {
+        height: 100%;
+      }
+    </style>
   </head>
   <body>
     <h1>CodeMirror: Autocomplete demo</h1>
 
-    <form><textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
 function getCompletions(token, context) {
   var found = [], start = token.string;
   function maybeAdd(str) {
@@ -50,20 +58,24 @@ function getCompletions(token, context) {
   }
   return found;
 }
-</textarea></form>
+</textarea
+      >
+    </form>
 
-<p>Press <strong>ctrl-space</strong> to activate autocompletion. See
-the code (<a href="../lib/util/simple-hint.js">here</a>
-and <a href="../lib/util/javascript-hint.js">here</a>) to figure out
-how it works.</p>
+    <p>
+      Press <strong>ctrl-space</strong> to activate autocompletion. See the code
+      (<a href="../lib/util/simple-hint.js">here</a> and
+      <a href="../lib/util/javascript-hint.js">here</a>) to figure out how it
+      works.
+    </p>
 
     <script>
-      CodeMirror.commands.autocomplete = function(cm) {
+      CodeMirror.commands.autocomplete = function (cm) {
         CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
-      }
+      };
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
-        extraKeys: {"Ctrl-Space": "autocomplete"}
+        extraKeys: { "Ctrl-Space": "autocomplete" },
       });
     </script>
   </body>

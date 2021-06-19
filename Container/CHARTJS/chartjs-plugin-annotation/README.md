@@ -10,7 +10,9 @@
 An annotation plugin for Chart.js >= 3.0.0
 
 ---
+
 > This plugin needs to be registered. It does not function as inline plugin.
+
 ---
 
 For Chart.js 2.4.0 to 2.9.x support, use [version 0.5.7 of this plugin](https://github.com/chartjs/chartjs-plugin-annotation/releases/tag/v0.5.7)
@@ -27,8 +29,8 @@ Annotations work with line, bar, scatter and bubble charts that use linear, loga
 
 The following features still need to be done:
 
-* Box annotation labels
-* Text annotations
+- Box annotation labels
+- Text annotations
 
 ## Documentation
 

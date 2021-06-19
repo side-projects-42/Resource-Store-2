@@ -1,37 +1,37 @@
 module.exports = {
   config: {
-    type: 'polarArea',
+    type: "polarArea",
     data: {
       labels: [0, 1, 2, 3, 4, 5],
       datasets: [
         {
           // option in dataset
           data: [0, 2, 4, null, 6, 8],
-          borderWidth: function(ctx) {
+          borderWidth: function (ctx) {
             var value = ctx.dataset.data[ctx.dataIndex] || 0;
             return Math.abs(value);
-          }
+          },
         },
-      ]
+      ],
     },
     options: {
       elements: {
         arc: {
-          backgroundColor: 'transparent',
-          borderColor: '#888',
-        }
+          backgroundColor: "transparent",
+          borderColor: "#888",
+        },
       },
       scales: {
         r: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

@@ -1,4 +1,4 @@
-import {sign} from '../../../src/runtime/polyfills/Math.js';
+import { sign } from "../../../src/runtime/polyfills/Math.js";
 
 function testSign(sign) {
   assert.equal(1, sign(1));

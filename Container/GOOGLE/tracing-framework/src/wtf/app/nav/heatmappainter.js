@@ -11,14 +11,12 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.nav.HeatmapPainter');
+goog.provide("wtf.app.nav.HeatmapPainter");
 
-goog.require('goog.array');
-goog.require('wtf.db.Database');
-goog.require('wtf.math');
-goog.require('wtf.ui.TimePainter');
-
-
+goog.require("goog.array");
+goog.require("wtf.db.Database");
+goog.require("wtf.math");
+goog.require("wtf.ui.TimePainter");
 
 /**
  * Heatmap painter.
@@ -48,34 +46,50 @@ wtf.app.nav.HeatmapPainter = function HeatmapPainter(canvas, db) {
 
   // TODO(benvanik): pull from profile
   var n = 0;
-  this.bars_.push(new wtf.app.nav.HeatmapPainter.Bar_(this, db, 'flows', [
-    'wtf.flow#branch'
-  ], wtf.app.nav.HeatmapPainter.BAR_COLORS_[n++]));
-  this.bars_.push(new wtf.app.nav.HeatmapPainter.Bar_(this, db, 'GCs', [
-    'javascript#gc'
-  ], wtf.app.nav.HeatmapPainter.BAR_COLORS_[n++]));
-  this.bars_.push(new wtf.app.nav.HeatmapPainter.Bar_(this, db, 'compiles', [
-    'javascript#evalscript'
-  ], wtf.app.nav.HeatmapPainter.BAR_COLORS_[n++]));
+  this.bars_.push(
+    new wtf.app.nav.HeatmapPainter.Bar_(
+      this,
+      db,
+      "flows",
+      ["wtf.flow#branch"],
+      wtf.app.nav.HeatmapPainter.BAR_COLORS_[n++]
+    )
+  );
+  this.bars_.push(
+    new wtf.app.nav.HeatmapPainter.Bar_(
+      this,
+      db,
+      "GCs",
+      ["javascript#gc"],
+      wtf.app.nav.HeatmapPainter.BAR_COLORS_[n++]
+    )
+  );
+  this.bars_.push(
+    new wtf.app.nav.HeatmapPainter.Bar_(
+      this,
+      db,
+      "compiles",
+      ["javascript#evalscript"],
+      wtf.app.nav.HeatmapPainter.BAR_COLORS_[n++]
+    )
+  );
 };
 goog.inherits(wtf.app.nav.HeatmapPainter, wtf.ui.TimePainter);
-
 
 /**
  * @override
  */
-wtf.app.nav.HeatmapPainter.prototype.layoutInternal = function(
-    availableBounds) {
+wtf.app.nav.HeatmapPainter.prototype.layoutInternal = function (
+  availableBounds
+) {
   var newBounds = availableBounds.clone();
   return newBounds;
 };
 
-
 /**
  * @override
  */
-wtf.app.nav.HeatmapPainter.prototype.repaintInternal = function(
-    ctx, bounds) {
+wtf.app.nav.HeatmapPainter.prototype.repaintInternal = function (ctx, bounds) {
   if (!this.isTimeRangeValid()) {
     return;
   }
@@ -90,7 +104,7 @@ wtf.app.nav.HeatmapPainter.prototype.repaintInternal = function(
   this.clip(bounds.left, bounds.top, bounds.width, bounds.height);
 
   // Background.
-  ctx.fillStyle = 'rgba(0,0,0,0.05)';
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
   ctx.fillRect(bounds.left, bounds.top, bounds.width, bounds.height);
 
   // Draw heatmap bars.
@@ -98,22 +112,16 @@ wtf.app.nav.HeatmapPainter.prototype.repaintInternal = function(
   var barHeight = bounds.height / this.bars_.length;
   for (var n = 0; n < this.bars_.length; n++) {
     var bar = this.bars_[n];
-    bar.draw(
-        ctx, bounds, barY, barHeight, timeLeft, timeRight);
+    bar.draw(ctx, bounds, barY, barHeight, timeLeft, timeRight);
 
     // Border.
-    ctx.fillStyle = 'rgb(200,200,200)';
-    ctx.fillRect(
-        bounds.left, bounds.top + barY,
-        bounds.width, 1);
-    ctx.fillRect(
-        bounds.left, bounds.top + barY + barHeight,
-        bounds.width, 1);
+    ctx.fillStyle = "rgb(200,200,200)";
+    ctx.fillRect(bounds.left, bounds.top + barY, bounds.width, 1);
+    ctx.fillRect(bounds.left, bounds.top + barY + barHeight, bounds.width, 1);
 
     barY += barHeight;
   }
 };
-
 
 /**
  * Palette for bar colors.
@@ -123,15 +131,13 @@ wtf.app.nav.HeatmapPainter.prototype.repaintInternal = function(
  */
 wtf.app.nav.HeatmapPainter.BAR_COLORS_ = [
   // TODO(benvanik): prettier colors - these are from chrome://tracing
-  'rgb(49,130,189)',
-  'rgb(117,107,177)',
-  'rgb(127,135,225)',
-  'rgb(230,85,13)',
-  'rgb(116,143,119)',
-  'rgb(178,214,122)'
+  "rgb(49,130,189)",
+  "rgb(117,107,177)",
+  "rgb(127,135,225)",
+  "rgb(230,85,13)",
+  "rgb(116,143,119)",
+  "rgb(178,214,122)",
 ];
-
-
 
 /**
  * Heatmap painter event bar.
@@ -143,8 +149,13 @@ wtf.app.nav.HeatmapPainter.BAR_COLORS_ = [
  * @constructor
  * @private
  */
-wtf.app.nav.HeatmapPainter.Bar_ = function(painter, db, name, eventTypes,
-    color) {
+wtf.app.nav.HeatmapPainter.Bar_ = function (
+  painter,
+  db,
+  name,
+  eventTypes,
+  color
+) {
   /**
    * Parent painter.
    * @type {!wtf.ui.Painter}
@@ -196,22 +207,24 @@ wtf.app.nav.HeatmapPainter.Bar_ = function(painter, db, name, eventTypes,
    */
   this.cachedBuckets_ = new Uint32Array(0);
 
-  this.db_.addListener(wtf.db.Database.EventType.ZONES_ADDED, function(zones) {
-    goog.array.forEach(zones, this.addZoneIndex_, this);
-  }, this);
+  this.db_.addListener(
+    wtf.db.Database.EventType.ZONES_ADDED,
+    function (zones) {
+      goog.array.forEach(zones, this.addZoneIndex_, this);
+    },
+    this
+  );
   goog.array.forEach(this.db_.getZones(), this.addZoneIndex_, this);
 };
-
 
 /**
  * Creates an event index for the given zone.
  * @param {!wtf.db.Zone} zone Zone.
  * @private
  */
-wtf.app.nav.HeatmapPainter.Bar_.prototype.addZoneIndex_ = function(zone) {
+wtf.app.nav.HeatmapPainter.Bar_.prototype.addZoneIndex_ = function (zone) {
   this.indices_.push(zone.getSharedIndex(this.eventTypes_));
 };
-
 
 /**
  * Draws the bar.
@@ -222,8 +235,14 @@ wtf.app.nav.HeatmapPainter.Bar_.prototype.addZoneIndex_ = function(zone) {
  * @param {number} timeLeft Left-most time.
  * @param {number} timeRight Right-most time.
  */
-wtf.app.nav.HeatmapPainter.Bar_.prototype.draw = function(
-    ctx, bounds, y, h, timeLeft, timeRight) {
+wtf.app.nav.HeatmapPainter.Bar_.prototype.draw = function (
+  ctx,
+  bounds,
+  y,
+  h,
+  timeLeft,
+  timeRight
+) {
   // We use a bucket size that is an integral power of 2 in ms. So .5ms, 1ms,
   // 8ms, etc. We choose the power of 2 such that the screen size width of a
   // bucket is between 6 and 12 pixels. With this scheme we get relatively
@@ -253,7 +272,7 @@ wtf.app.nav.HeatmapPainter.Bar_.prototype.draw = function(
     }
   }
 
-  var bucketTimeLeft = timeLeft - timeLeft % bucketDuration;
+  var bucketTimeLeft = timeLeft - (timeLeft % bucketDuration);
   // var bucketTimeRight = bucketTimeLeft + bucketDuration * bucketCount;
 
   var bucketMax = 0;

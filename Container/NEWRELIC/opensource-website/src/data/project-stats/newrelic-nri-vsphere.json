@@ -1,0 +1,141 @@
+{
+  "projectFullName": "newrelic/nri-vsphere",
+  "issues": {
+    "open": 6
+  },
+  "releases": 8,
+  "latestRelease": {
+    "name": "v1.2.1",
+    "date": "2021-03-24T12:04:55Z"
+  },
+  "commits": 96,
+  "lastSixMonthsCommitTotal": 8,
+  "contributors": 12,
+  "pullRequests": {
+    "open": 4
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 482671,
+      "login": "fightingmonk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/482671?v=4",
+      "htmlUrl": "https://github.com/fightingmonk",
+      "contributions": 1
+    },
+    {
+      "id": 2054195,
+      "login": "ardias",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/2054195?v=4",
+      "htmlUrl": "https://github.com/ardias",
+      "contributions": 7
+    },
+    {
+      "id": 5143130,
+      "login": "gsanchezgavier",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/5143130?v=4",
+      "htmlUrl": "https://github.com/gsanchezgavier",
+      "contributions": 29
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 1
+    },
+    {
+      "id": 1773616,
+      "login": "theletterf",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1773616?v=4",
+      "htmlUrl": "https://github.com/theletterf",
+      "contributions": 1
+    },
+    {
+      "id": 3380451,
+      "login": "rubenruizdegauna",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3380451?v=4",
+      "htmlUrl": "https://github.com/rubenruizdegauna",
+      "contributions": 1
+    },
+    {
+      "id": 7555235,
+      "login": "jportasa",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/7555235?v=4",
+      "htmlUrl": "https://github.com/jportasa",
+      "contributions": 1
+    },
+    {
+      "id": 3230102,
+      "login": "morecar",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3230102?v=4",
+      "htmlUrl": "https://github.com/morecar",
+      "contributions": 4
+    },
+    {
+      "id": 43335750,
+      "login": "paologallinaharbur",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43335750?v=4",
+      "htmlUrl": "https://github.com/paologallinaharbur",
+      "contributions": 31
+    },
+    {
+      "id": 39911991,
+      "login": "davidbrota",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/39911991?v=4",
+      "htmlUrl": "https://github.com/davidbrota",
+      "contributions": 2
+    },
+    {
+      "id": 13043208,
+      "login": "Kav91",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13043208?v=4",
+      "htmlUrl": "https://github.com/Kav91",
+      "contributions": 4
+    },
+    {
+      "id": 73652669,
+      "login": "arvdias",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/73652669?v=4",
+      "htmlUrl": "https://github.com/arvdias",
+      "contributions": 3
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U0MDM=",
+      "name": "Makefile",
+      "color": "#427819"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxOTA=",
+      "name": "Go",
+      "color": "#00ADD8"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UyNjQ=",
+      "name": "PowerShell",
+      "color": "#012456"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U1MzU=",
+      "name": "Dockerfile",
+      "color": "#384d54"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxMzk=",
+      "name": "Shell",
+      "color": "#89e051"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

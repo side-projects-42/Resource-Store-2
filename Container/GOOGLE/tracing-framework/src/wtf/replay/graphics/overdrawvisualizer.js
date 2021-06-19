@@ -11,14 +11,12 @@
  * @author scotttodd@google.com (Scott Todd)
  */
 
-goog.provide('wtf.replay.graphics.OverdrawVisualizer');
+goog.provide("wtf.replay.graphics.OverdrawVisualizer");
 
-goog.require('goog.webgl');
-goog.require('wtf.replay.graphics.DrawCallVisualizer');
-goog.require('wtf.replay.graphics.OverdrawSurface');
-goog.require('wtf.replay.graphics.Program');
-
-
+goog.require("goog.webgl");
+goog.require("wtf.replay.graphics.DrawCallVisualizer");
+goog.require("wtf.replay.graphics.OverdrawSurface");
+goog.require("wtf.replay.graphics.Program");
 
 /**
  * Visualizer for overdraw.
@@ -27,30 +25,31 @@ goog.require('wtf.replay.graphics.Program');
  * @constructor
  * @extends {wtf.replay.graphics.DrawCallVisualizer}
  */
-wtf.replay.graphics.OverdrawVisualizer = function(playback) {
+wtf.replay.graphics.OverdrawVisualizer = function (playback) {
   goog.base(this, playback);
 };
-goog.inherits(wtf.replay.graphics.OverdrawVisualizer,
-    wtf.replay.graphics.DrawCallVisualizer);
-
+goog.inherits(
+  wtf.replay.graphics.OverdrawVisualizer,
+  wtf.replay.graphics.DrawCallVisualizer
+);
 
 /**
  * Adds mutators using registerMutator.
  * @protected
  * @override
  */
-wtf.replay.graphics.OverdrawVisualizer.prototype.setupMutators = function() {
-  goog.base(this, 'setupMutators');
+wtf.replay.graphics.OverdrawVisualizer.prototype.setupMutators = function () {
+  goog.base(this, "setupMutators");
 
-  this.registerMutator('WebGLRenderingContext#clear', {
-    post: function(visualizer, gl, args) {
+  this.registerMutator("WebGLRenderingContext#clear", {
+    post: function (visualizer, gl, args) {
       if (!visualizer.modifyDraws) {
         return;
       }
 
       var contextHandle = visualizer.latestContextHandle;
       var visualizerSurface = visualizer.visualizerSurfaces[contextHandle];
-      var drawToSurfaceFunction = function() {
+      var drawToSurfaceFunction = function () {
         visualizerSurface.drawQuad();
       };
 
@@ -67,10 +66,9 @@ wtf.replay.graphics.OverdrawVisualizer.prototype.setupMutators = function() {
       visualizer.drawToSurface(drawToSurfaceFunction);
 
       webGLState.restore();
-    }
+    },
   });
 };
-
 
 /**
  * Creates an OverdrawSurface and adds it to this.visualizerSurfaces.
@@ -81,14 +79,20 @@ wtf.replay.graphics.OverdrawVisualizer.prototype.setupMutators = function() {
  * @protected
  * @override
  */
-wtf.replay.graphics.OverdrawVisualizer.prototype.createSurface = function(
-    contextHandle, gl, width, height) {
-  var visualizerSurface = new wtf.replay.graphics.OverdrawSurface(gl,
-      width, height);
+wtf.replay.graphics.OverdrawVisualizer.prototype.createSurface = function (
+  contextHandle,
+  gl,
+  width,
+  height
+) {
+  var visualizerSurface = new wtf.replay.graphics.OverdrawSurface(
+    gl,
+    width,
+    height
+  );
   this.visualizerSurfaces[contextHandle] = visualizerSurface;
   this.registerDisposable(visualizerSurface);
 };
-
 
 /**
  * Creates a Program object with a overdraw variant.
@@ -98,21 +102,25 @@ wtf.replay.graphics.OverdrawVisualizer.prototype.createSurface = function(
  * @protected
  * @override
  */
-wtf.replay.graphics.OverdrawVisualizer.prototype.createProgram = function(
-    programHandle, originalProgram, gl) {
+wtf.replay.graphics.OverdrawVisualizer.prototype.createProgram = function (
+  programHandle,
+  originalProgram,
+  gl
+) {
   var program = new wtf.replay.graphics.Program(originalProgram, gl);
   this.registerDisposable(program);
   this.programs[programHandle] = program;
 
   var visualizerSurface = this.visualizerSurfaces[this.latestContextHandle];
 
-  var overdrawFragmentSource = 'precision mediump float;' +
-      'void main(void) { gl_FragColor = ' +
-      visualizerSurface.getThresholdDrawColor() + '; }';
+  var overdrawFragmentSource =
+    "precision mediump float;" +
+    "void main(void) { gl_FragColor = " +
+    visualizerSurface.getThresholdDrawColor() +
+    "; }";
 
-  program.createVariantProgram('overdraw', '', overdrawFragmentSource);
+  program.createVariantProgram("overdraw", "", overdrawFragmentSource);
 };
-
 
 /**
  * Handles special logic associated with performing a draw call.
@@ -120,8 +128,9 @@ wtf.replay.graphics.OverdrawVisualizer.prototype.createProgram = function(
  * @protected
  * @override
  */
-wtf.replay.graphics.OverdrawVisualizer.prototype.handleDrawCall = function(
-    drawFunction) {
+wtf.replay.graphics.OverdrawVisualizer.prototype.handleDrawCall = function (
+  drawFunction
+) {
   var contextHandle = this.latestContextHandle;
   var programHandle = this.latestProgramHandle;
 
@@ -130,22 +139,23 @@ wtf.replay.graphics.OverdrawVisualizer.prototype.handleDrawCall = function(
   }
 
   var program = this.programs[programHandle];
-  var drawToSurfaceFunction = function() {
-    program.drawWithVariant(drawFunction, 'overdraw');
+  var drawToSurfaceFunction = function () {
+    program.drawWithVariant(drawFunction, "overdraw");
   };
 
   var webGLState = this.webGLStates[contextHandle];
   webGLState.backup();
 
-  var skipCallsVisualizer = this.playback.getVisualizer('skipCalls');
-  if (!skipCallsVisualizer ||
-      !skipCallsVisualizer.isProgramSkipped(programHandle)) {
+  var skipCallsVisualizer = this.playback.getVisualizer("skipCalls");
+  if (
+    !skipCallsVisualizer ||
+    !skipCallsVisualizer.isProgramSkipped(programHandle)
+  ) {
     this.drawToSurface(drawToSurfaceFunction);
   }
 
   webGLState.restore();
 };
-
 
 /**
  * Calls drawFunction onto the active visualizerSurface using custom GL state.
@@ -154,8 +164,7 @@ wtf.replay.graphics.OverdrawVisualizer.prototype.handleDrawCall = function(
  * @protected
  */
 wtf.replay.graphics.OverdrawVisualizer.prototype.drawToSurface =
-    goog.nullFunction;
-
+  goog.nullFunction;
 
 /**
  * Draws the recorded visualization for the provided context handle.
@@ -163,7 +172,8 @@ wtf.replay.graphics.OverdrawVisualizer.prototype.drawToSurface =
  * @protected
  * @override
  */
-wtf.replay.graphics.OverdrawVisualizer.prototype.drawVisualization = function(
-    contextHandle) {
+wtf.replay.graphics.OverdrawVisualizer.prototype.drawVisualization = function (
+  contextHandle
+) {
   this.visualizerSurfaces[contextHandle].drawOverdraw(false);
 };

@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import checkObjectCoercible from '../checkObjectCoercible.js';
+import checkObjectCoercible from "../checkObjectCoercible.js";
 
 export default function spread() {
-  var rv = [], j = 0, iterResult;
+  var rv = [],
+    j = 0,
+    iterResult;
 
   for (var i = 0; i < arguments.length; i++) {
     var valueToSpread = checkObjectCoercible(arguments[i]);
@@ -23,8 +25,8 @@ export default function spread() {
     // TODO(arv): Use array specialization?
     // TODO(arv): Use Array.from?
 
-    if (typeof valueToSpread[Symbol.iterator] !== 'function') {
-      throw new TypeError('Cannot spread non-iterable object.');
+    if (typeof valueToSpread[Symbol.iterator] !== "function") {
+      throw new TypeError("Cannot spread non-iterable object.");
     }
 
     var iter = valueToSpread[Symbol.iterator]();

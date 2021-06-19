@@ -16,14 +16,10 @@ import {
   IDENTIFIER_EXPRESSION,
   LITERAL_EXPRESSION,
   PAREN_EXPRESSION,
-  UNARY_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
-import {
-  UNDEFINED
-} from '../syntax/PredefinedName.js';
-import {
-  VOID
-} from '../syntax/TokenType.js';
+  UNARY_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
+import { UNDEFINED } from "../syntax/PredefinedName.js";
+import { VOID } from "../syntax/TokenType.js";
 
 /**
  * @param {Array.<ParseTree>} list
@@ -31,10 +27,8 @@ import {
  */
 export function hasUseStrict(list) {
   for (var i = 0; i < list.length; i++) {
-    if (!list[i].isDirectivePrologue())
-      return false;
-    if (list[i].isUseStrictDirective())
-      return true;
+    if (!list[i].isDirectivePrologue()) return false;
+    if (list[i].isUseStrictDirective()) return true;
   }
   return false;
 }
@@ -44,11 +38,12 @@ export function hasUseStrict(list) {
  * @return {boolean}
  */
 export function isUndefined(tree) {
-  if (tree.type === PAREN_EXPRESSION)
-    return isUndefined(tree.expression);
+  if (tree.type === PAREN_EXPRESSION) return isUndefined(tree.expression);
 
-  return tree.type === IDENTIFIER_EXPRESSION &&
-      tree.identifierToken.value === UNDEFINED;
+  return (
+    tree.type === IDENTIFIER_EXPRESSION &&
+    tree.identifierToken.value === UNDEFINED
+  );
 }
 
 /**
@@ -56,12 +51,14 @@ export function isUndefined(tree) {
  * @return {boolean}
  */
 export function isVoidExpression(tree) {
-  if (tree.type === PAREN_EXPRESSION)
-    return isVoidExpression(tree.expression);
+  if (tree.type === PAREN_EXPRESSION) return isVoidExpression(tree.expression);
   // Any void expression without side effects can be dropped. Maybe expand
   // this as needed?
-  return tree.type === UNARY_EXPRESSION && tree.operator.type === VOID &&
-      isLiteralExpression(tree.operand);
+  return (
+    tree.type === UNARY_EXPRESSION &&
+    tree.operator.type === VOID &&
+    isLiteralExpression(tree.operand)
+  );
 }
 
 /**

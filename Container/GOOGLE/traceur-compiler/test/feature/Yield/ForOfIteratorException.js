@@ -13,8 +13,8 @@ class Iterable {
       },
       return(v) {
         this.iterable.returnCalled = true;
-      }
-    }
+      },
+    };
   }
 }
 

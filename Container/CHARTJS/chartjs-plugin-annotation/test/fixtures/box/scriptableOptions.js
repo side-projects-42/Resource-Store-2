@@ -1,27 +1,35 @@
 module.exports = {
   config: {
-    type: 'bar',
+    type: "bar",
     options: {
       scales: {
         x: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          labels: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+          ],
         },
         y: {
           display: false,
           min: 0,
-          max: 25
-        }
+          max: 25,
+        },
       },
       plugins: {
         annotation: {
           annotations: {
             box1: {
-              type: 'box',
+              type: "box",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 1.5;
@@ -36,10 +44,10 @@ module.exports = {
                 return 10;
               },
               backgroundColor() {
-                return 'rgba(33, 101, 171, 0.5)';
+                return "rgba(33, 101, 171, 0.5)";
               },
               borderColor() {
-                return 'rgb(33, 101, 171)';
+                return "rgb(33, 101, 171)";
               },
               borderDash() {
                 return [6, 6];
@@ -49,18 +57,18 @@ module.exports = {
               },
             },
             box2: {
-              type: 'box',
+              type: "box",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
-                return 'May';
+                return "May";
               },
               xMax() {
-                return 'July';
+                return "July";
               },
               yMin() {
                 return 11;
@@ -69,10 +77,10 @@ module.exports = {
                 return 15;
               },
               backgroundColor() {
-                return 'rgba(101, 33, 171, 0.5)';
+                return "rgba(101, 33, 171, 0.5)";
               },
               borderColor() {
-                return 'rgb(101, 33, 171)';
+                return "rgb(101, 33, 171)";
               },
               borderDash() {
                 return [6, 6];
@@ -82,18 +90,18 @@ module.exports = {
               },
             },
             box3: {
-              type: 'box',
+              type: "box",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return -0.5;
               },
               xMax() {
-                return 'May';
+                return "May";
               },
               yMin() {
                 return 16;
@@ -102,10 +110,10 @@ module.exports = {
                 return 20;
               },
               backgroundColor() {
-                return 'rgba(101, 33, 171, 0.5)';
+                return "rgba(101, 33, 171, 0.5)";
               },
               borderColor() {
-                return 'rgb(101, 33, 171)';
+                return "rgb(101, 33, 171)";
               },
               borderDash() {
                 return [6, 6];
@@ -113,13 +121,13 @@ module.exports = {
               borderWidth() {
                 return 5;
               },
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   },
   options: {
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

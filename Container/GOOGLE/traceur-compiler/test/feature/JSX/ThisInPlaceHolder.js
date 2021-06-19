@@ -12,19 +12,25 @@ class C {
     return <a> x {} y </a>;
   }
   o() {
-    return <a> x {}{} y </a>;
+    return (
+      <a>
+        {" "}
+        x {}
+        {} y{" "}
+      </a>
+    );
   }
   p() {
-    return <a b={this}/>;
+    return <a b={this} />;
   }
 }
 
 const c = new C();
-assert.deepEqual([' x ', c, ' y '], c.m());
-assert.deepEqual([' x ', ' y '], c.n());
-assert.deepEqual([' x ', ' y '], c.o());
+assert.deepEqual([" x ", c, " y "], c.m());
+assert.deepEqual([" x ", " y "], c.n());
+assert.deepEqual([" x ", " y "], c.o());
 
 f = (tag, props, ...children) => {
   return props;
 };
-assert.deepEqual({b: c}, c.p());
+assert.deepEqual({ b: c }, c.p());

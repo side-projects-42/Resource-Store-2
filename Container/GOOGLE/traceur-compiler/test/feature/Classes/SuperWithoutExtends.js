@@ -3,11 +3,11 @@ class C {
     this.x = true;
   }
   static m() {
-    return super.hasOwnProperty('m');
+    return super.hasOwnProperty("m");
   }
 
   m() {
-    return super.hasOwnProperty('x');
+    return super.hasOwnProperty("x");
   }
 }
 

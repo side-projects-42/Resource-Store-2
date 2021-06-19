@@ -12,27 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ArrowFunctionTransformer} from './ArrowFunctionTransformer.js';
-import {AsyncTransformer} from './generator/AsyncTransformer.js';
-import {ForInTransformPass} from './generator/ForInTransformPass.js';
-import {GeneratorTransformer} from './generator/GeneratorTransformer.js';
-import {
-  parseExpression,
-  parseStatement
-} from './PlaceholderParser.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
-import {FindInFunctionScope} from './FindInFunctionScope.js';
+import { ArrowFunctionTransformer } from "./ArrowFunctionTransformer.js";
+import { AsyncTransformer } from "./generator/AsyncTransformer.js";
+import { ForInTransformPass } from "./generator/ForInTransformPass.js";
+import { GeneratorTransformer } from "./generator/GeneratorTransformer.js";
+import { parseExpression, parseStatement } from "./PlaceholderParser.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
+import { FindInFunctionScope } from "./FindInFunctionScope.js";
 import {
   AnonBlock,
   FunctionDeclaration,
-  FunctionExpression
-} from '../syntax/trees/ParseTrees.js';
+  FunctionExpression,
+} from "../syntax/trees/ParseTrees.js";
 import {
   createBindingIdentifier,
   createIdentifierExpression as id,
-  createIdentifierToken
-} from './ParseTreeFactory.js';
+  createIdentifierToken,
+} from "./ParseTreeFactory.js";
 
 class ForInFinder extends FindInFunctionScope {
   visitForInStatement(tree) {
@@ -41,16 +38,19 @@ class ForInFinder extends FindInFunctionScope {
 }
 
 function needsTransform(tree, transformOptions) {
-  return transformOptions.generators && tree.isGenerator() ||
-      transformOptions.asyncFunctions && tree.isAsyncFunction();
+  return (
+    (transformOptions.generators && tree.isGenerator()) ||
+    (transformOptions.asyncFunctions && tree.isAsyncFunction())
+  );
 }
 
 /**
  * This pass just finds function bodies with yields in them and passes them
  * off to the GeneratorTransformer for the heavy lifting.
  */
-export class GeneratorTransformPass extends
-    ImportRuntimeTrait(TempVarTransformer) {
+export class GeneratorTransformPass extends ImportRuntimeTrait(
+  TempVarTransformer
+) {
   /**
    * @param {UniqueIdentifierGenerator} identifierGenerator
    * @param {ErrorReporter} reporter
@@ -69,31 +69,33 @@ export class GeneratorTransformPass extends
     if (!needsTransform(tree, this.tranformOptions_))
       return super.transformFunctionDeclaration(tree);
 
-    if (tree.isGenerator())
-      return this.transformGeneratorDeclaration_(tree);
+    if (tree.isGenerator()) return this.transformGeneratorDeclaration_(tree);
 
     return this.transformFunction_(tree, FunctionDeclaration, null);
   }
 
   transformGeneratorDeclaration_(tree) {
     let nameIdExpression = id(tree.name.identifierToken);
-    let initGeneratorFunction = this.getRuntimeExpression('initGeneratorFunction');
-    let setupPrototypeExpression = parseExpression
-        `${initGeneratorFunction}(${nameIdExpression})`;
+    let initGeneratorFunction = this.getRuntimeExpression(
+      "initGeneratorFunction"
+    );
+    let setupPrototypeExpression = parseExpression`${initGeneratorFunction}(${nameIdExpression})`;
 
     // Function declarations in blocks do not hoist. In that case we add the
     // variable declaration after the function declaration.
 
-    let tmpVar = id(this.inBlock_ ?
-        this.getTempIdentifier() : this.addTempVar(setupPrototypeExpression));
+    let tmpVar = id(
+      this.inBlock_
+        ? this.getTempIdentifier()
+        : this.addTempVar(setupPrototypeExpression)
+    );
     let funcDecl = this.transformFunction_(tree, FunctionDeclaration, tmpVar);
 
-    if (!this.inBlock_)
-      return funcDecl;
+    if (!this.inBlock_) return funcDecl;
 
     return new AnonBlock(null, [
       funcDecl,
-      parseStatement `var ${tmpVar} = ${setupPrototypeExpression}`
+      parseStatement`var ${tmpVar} = ${setupPrototypeExpression}`,
     ]);
   }
 
@@ -105,8 +107,7 @@ export class GeneratorTransformPass extends
     if (!needsTransform(tree, this.tranformOptions_))
       return super.transformFunctionExpression(tree);
 
-    if (tree.isGenerator())
-      return this.transformGeneratorExpression_(tree);
+    if (tree.isGenerator()) return this.transformGeneratorExpression_(tree);
 
     return this.transformFunction_(tree, FunctionExpression, null);
   }
@@ -116,19 +117,28 @@ export class GeneratorTransformPass extends
     if (!tree.name) {
       // We need a name to be able to reference the function object.
       name = createIdentifierToken(this.getTempIdentifier());
-      tree = new FunctionExpression(tree.location,
-          createBindingIdentifier(name), tree.functionKind,
-          tree.parameterList, tree.typeAnnotation, tree.annotations,
-          tree.body);
+      tree = new FunctionExpression(
+        tree.location,
+        createBindingIdentifier(name),
+        tree.functionKind,
+        tree.parameterList,
+        tree.typeAnnotation,
+        tree.annotations,
+        tree.body
+      );
     } else {
       name = tree.name.identifierToken;
     }
 
-    let functionExpression =
-        this.transformFunction_(tree, FunctionExpression, id(name));
-    let initGeneratorFunction =
-        this.getRuntimeExpression('initGeneratorFunction');
-    return parseExpression `${initGeneratorFunction}(${functionExpression })`;
+    let functionExpression = this.transformFunction_(
+      tree,
+      FunctionExpression,
+      id(name)
+    );
+    let initGeneratorFunction = this.getRuntimeExpression(
+      "initGeneratorFunction"
+    );
+    return parseExpression`${initGeneratorFunction}(${functionExpression})`;
   }
 
   transformFunction_(tree, constructor, nameExpression) {
@@ -139,21 +149,29 @@ export class GeneratorTransformPass extends
     let finder = new ForInFinder();
     finder.visitAny(body);
     if (finder.found) {
-      body = new ForInTransformPass(this.identifierGenerator, this.reporter,
-                                    this.options).transformAny(body);
+      body = new ForInTransformPass(
+        this.identifierGenerator,
+        this.reporter,
+        this.options
+      ).transformAny(body);
     }
 
     if (this.tranformOptions_.generators && tree.isGenerator()) {
-      let transformer = new GeneratorTransformer(this.identifierGenerator,
-                                                 this.reporter, this.options);
+      let transformer = new GeneratorTransformer(
+        this.identifierGenerator,
+        this.reporter,
+        this.options
+      );
       body = transformer.transformGeneratorBody(body, nameExpression);
       transformer.requiredNames.forEach((n) => {
         this.addImportedName(n);
       });
-
     } else if (this.tranformOptions_.asyncFunctions && tree.isAsyncFunction()) {
-      let transformer = new AsyncTransformer(this.identifierGenerator,
-                                             this.reporter, this.options);
+      let transformer = new AsyncTransformer(
+        this.identifierGenerator,
+        this.reporter,
+        this.options
+      );
       body = transformer.transformAsyncBody(body, nameExpression);
       transformer.requiredNames.forEach((n) => {
         this.addImportedName(n);
@@ -163,14 +181,19 @@ export class GeneratorTransformPass extends
     // The generator has been transformed away.
     let functionKind = null;
 
-    return new constructor(tree.location, tree.name, functionKind,
-                           tree.parameterList, tree.typeAnnotation || null,
-                           tree.annotations || null, body);
+    return new constructor(
+      tree.location,
+      tree.name,
+      functionKind,
+      tree.parameterList,
+      tree.typeAnnotation || null,
+      tree.annotations || null,
+      body
+    );
   }
 
   transformArrowFunction(tree) {
-    if (!tree.isAsyncFunction())
-      return super.transformArrowFunction(tree);
+    if (!tree.isAsyncFunction()) return super.transformArrowFunction(tree);
 
     return this.transformAny(ArrowFunctionTransformer.transform(this, tree));
   }

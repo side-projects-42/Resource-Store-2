@@ -1,6 +1,6 @@
 function* G() {
-  yield 'hi';
-  yield 'there';
+  yield "hi";
+  yield "there";
 }
 
 function f(...args) {
@@ -8,13 +8,13 @@ function f(...args) {
 }
 
 var result = f(0, ...[1, 2], 3, ...G());
-assert.deepEqual([0, 1, 2, 3, 'hi', 'there'], result);
+assert.deepEqual([0, 1, 2, 3, "hi", "there"], result);
 
 result = f(...G());
-assert.deepEqual(['hi', 'there'], result);
+assert.deepEqual(["hi", "there"], result);
 
 function g() {
-  'use strict';
+  "use strict";
   assert.strictEqual(undefined, this);
 }
 

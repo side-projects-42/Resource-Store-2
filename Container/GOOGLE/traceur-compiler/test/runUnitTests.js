@@ -14,32 +14,34 @@
 
 /* @fileoverview Configure mocha and run the test list */
 
-import {unitTestRunner} from './unit/unitTestRunner.js';
+import { unitTestRunner } from "./unit/unitTestRunner.js";
 
 let globs = [
-  'test/unit/util/*.js',
-  'test/unit/syntax/*.js',
-  'test/unit/codegeneration/*.js',
-  'test/unit/semantics/*.js',
-  'test/unit/tools/*.js',
-  'test/unit/runtime/*.js',
-  'test/unit/system/*.js',
-  'test/unit/node/*.js',
-  'test/unit/*.js'
+  "test/unit/util/*.js",
+  "test/unit/syntax/*.js",
+  "test/unit/codegeneration/*.js",
+  "test/unit/semantics/*.js",
+  "test/unit/tools/*.js",
+  "test/unit/runtime/*.js",
+  "test/unit/system/*.js",
+  "test/unit/node/*.js",
+  "test/unit/*.js",
 ];
 
 let inputGlob = process.argv[2];
 
 if (inputGlob) {
-	globs = [inputGlob];
+  globs = [inputGlob];
 }
 
 unitTestRunner.applyOptions(globs);
 
-unitTestRunner.run().then((failures) => {
+unitTestRunner.run().then(
+  (failures) => {
     process.exit(failures);
-  },(ex) => {
-    console.log('unitTestRunner FAILED', ex.stack || ex);
+  },
+  (ex) => {
+    console.log("unitTestRunner FAILED", ex.stack || ex);
     process.exit(-1);
   }
 );

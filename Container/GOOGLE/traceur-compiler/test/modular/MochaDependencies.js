@@ -14,16 +14,16 @@
 
 /** @fileoverview Mocha dependencies from Node */
 
-  export let Mocha;
-  export let Runner;
-  export let reporters;
+export let Mocha;
+export let Runner;
+export let reporters;
 
-  if (typeof require !== 'undefined') {
-    Mocha = require('mocha');
-    Runner = require('mocha/lib/runner');
-    reporters = require('mocha/lib/reporters');
-  } else {
-    Mocha = window.Mocha;
-    Runner = Mocha.Runner;
-    reporters = Mocha.reporters;
-  }
+if (typeof require !== "undefined") {
+  Mocha = require("mocha");
+  Runner = require("mocha/lib/runner");
+  reporters = require("mocha/lib/reporters");
+} else {
+  Mocha = window.Mocha;
+  Runner = Mocha.Runner;
+  reporters = Mocha.reporters;
+}

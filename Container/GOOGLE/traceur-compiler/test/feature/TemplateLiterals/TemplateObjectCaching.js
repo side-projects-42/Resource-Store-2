@@ -1,4 +1,4 @@
-import {cooked, raw} from './resources/template-objects.js';
+import { cooked, raw } from "./resources/template-objects.js";
 
 function assertCooked(obj) {
   assert.equal(obj, cooked);
@@ -10,8 +10,8 @@ function assertRaw(obj) {
   assert.notEqual(obj, cooked);
 }
 
-assertCooked `a${1}b`;
-assertCooked `a${2}b`;
+assertCooked`a${1}b`;
+assertCooked`a${2}b`;
 
-assertRaw `c${3}d\n`;
-assertRaw `c${4}d\n`;
+assertRaw`c${3}d\n`;
+assertRaw`c${4}d\n`;

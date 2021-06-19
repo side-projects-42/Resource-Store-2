@@ -11,15 +11,13 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.RangePainter');
+goog.provide("wtf.ui.RangePainter");
 
-goog.require('goog.dom.TagName');
-goog.require('goog.math');
-goog.require('wtf.math');
-goog.require('wtf.ui.RangeRenderer');
-goog.require('wtf.ui.TimePainter');
-
-
+goog.require("goog.dom.TagName");
+goog.require("goog.math");
+goog.require("wtf.math");
+goog.require("wtf.ui.RangeRenderer");
+goog.require("wtf.ui.TimePainter");
 
 /**
  * Optimized range renderer painter.
@@ -28,7 +26,7 @@ goog.require('wtf.ui.TimePainter');
  * @constructor
  * @extends {wtf.ui.TimePainter}
  */
-wtf.ui.RangePainter = function(canvas, opt_drawStyle) {
+wtf.ui.RangePainter = function (canvas, opt_drawStyle) {
   goog.base(this, canvas);
   var dom = this.getDom();
 
@@ -44,8 +42,9 @@ wtf.ui.RangePainter = function(canvas, opt_drawStyle) {
    * @type {!HTMLCanvasElement}
    * @private
    */
-  this.rangeStamper_ = /** @type {!HTMLCanvasElement} */(
-      dom.createElement(goog.dom.TagName.CANVAS));
+  this.rangeStamper_ = /** @type {!HTMLCanvasElement} */ (
+    dom.createElement(goog.dom.TagName.CANVAS)
+  );
 
   // Initialize range stamper to 1x1. The first time we redraw this will be
   // resized to be as wide as our draw area.
@@ -57,16 +56,19 @@ wtf.ui.RangePainter = function(canvas, opt_drawStyle) {
    * @type {!CanvasRenderingContext2D}
    * @private
    */
-  this.rangeStamperContext_ = /** @type {!CanvasRenderingContext2D} */(
-      this.rangeStamper_.getContext('2d'));
+  this.rangeStamperContext_ = /** @type {!CanvasRenderingContext2D} */ (
+    this.rangeStamper_.getContext("2d")
+  );
 
   /**
    * ImageData used for scribbling into rangeStamper.
    * @type {ImageData}
    * @private
    */
-  this.rangeStamperImageData_ =
-      this.rangeStamperContext_.createImageData(this.rangeStamper_.width, 1);
+  this.rangeStamperImageData_ = this.rangeStamperContext_.createImageData(
+    this.rangeStamper_.width,
+    1
+  );
 
   /**
    * Draw style of the current draw block.
@@ -84,7 +86,6 @@ wtf.ui.RangePainter = function(canvas, opt_drawStyle) {
 };
 goog.inherits(wtf.ui.RangePainter, wtf.ui.TimePainter);
 
-
 /**
  * Drawing style.
  * @enum {number}
@@ -98,9 +99,8 @@ wtf.ui.RangePainter.DrawStyle = {
   /**
    * Draw lines as time spans - thin bars.
    */
-  TIME_SPAN: 2
+  TIME_SPAN: 2,
 };
-
 
 /**
  * Resets range renderer caches and prepares for drawing.
@@ -109,10 +109,14 @@ wtf.ui.RangePainter.DrawStyle = {
  * @param {wtf.ui.RangePainter.DrawStyle=} opt_drawStyle Draw style.
  * @protected
  */
-wtf.ui.RangePainter.prototype.beginRenderingRanges = function(
-    bounds, count, opt_drawStyle) {
-  this.drawStyle_ = goog.isDef(opt_drawStyle) ?
-      opt_drawStyle : wtf.ui.RangePainter.DrawStyle.SCOPE;
+wtf.ui.RangePainter.prototype.beginRenderingRanges = function (
+  bounds,
+  count,
+  opt_drawStyle
+) {
+  this.drawStyle_ = goog.isDef(opt_drawStyle)
+    ? opt_drawStyle
+    : wtf.ui.RangePainter.DrawStyle.SCOPE;
 
   if (this.rangeRenderers_.length > count) {
     this.rangeRenderers_.length = count;
@@ -127,10 +131,11 @@ wtf.ui.RangePainter.prototype.beginRenderingRanges = function(
   if (bounds.width != this.rangeStamper_.width) {
     this.rangeStamper_.width = bounds.width;
     this.rangeStamperImageData_ = this.rangeStamperContext_.createImageData(
-        this.rangeStamper_.width, 1);
+      this.rangeStamper_.width,
+      1
+    );
   }
 };
-
 
 /**
  * Draws a range into the buffer.
@@ -142,11 +147,15 @@ wtf.ui.RangePainter.prototype.beginRenderingRanges = function(
  *   1.
  * @protected
  */
-wtf.ui.RangePainter.prototype.drawRange = function(
-    depth, screenLeft, screenRight, color, alpha) {
+wtf.ui.RangePainter.prototype.drawRange = function (
+  depth,
+  screenLeft,
+  screenRight,
+  color,
+  alpha
+) {
   this.rangeRenderers_[depth].drawRange(screenLeft, screenRight, color, alpha);
 };
-
 
 /**
  * Queues a label for drawing.
@@ -159,8 +168,15 @@ wtf.ui.RangePainter.prototype.drawRange = function(
  * @param {string} label Label to draw.
  * @protected
  */
-wtf.ui.RangePainter.prototype.drawRangeLabel = function(
-    bounds, left, right, screenLeft, screenRight, y, label) {
+wtf.ui.RangePainter.prototype.drawRangeLabel = function (
+  bounds,
+  left,
+  right,
+  screenLeft,
+  screenRight,
+  y,
+  label
+) {
   var ctx = this.getCanvasContext2d();
 
   // Calculate label width to determine fade.
@@ -168,7 +184,12 @@ wtf.ui.RangePainter.prototype.drawRangeLabel = function(
   var labelScreenWidth = screenRight - screenLeft + 5 + 5;
   if (labelScreenWidth >= labelWidth) {
     var labelAlpha = wtf.math.smoothRemap(
-        labelScreenWidth, labelWidth, labelWidth + 15 * 2, 0, 1);
+      labelScreenWidth,
+      labelWidth,
+      labelWidth + 15 * 2,
+      0,
+      1
+    );
 
     // Center the label within the box then clamp to the screen.
     var x = left + (right - left) / 2 - labelWidth / 2;
@@ -179,11 +200,10 @@ wtf.ui.RangePainter.prototype.drawRangeLabel = function(
       x: x,
       y: y,
       w: labelWidth,
-      alpha: labelAlpha
+      alpha: labelAlpha,
     });
   }
 };
-
 
 /**
  * Draws the ranges to the context.
@@ -192,8 +212,11 @@ wtf.ui.RangePainter.prototype.drawRangeLabel = function(
  * @param {number} rowHeight Height of each row.
  * @protected
  */
-wtf.ui.RangePainter.prototype.endRenderingRanges = function(
-    bounds, top, rowHeight) {
+wtf.ui.RangePainter.prototype.endRenderingRanges = function (
+  bounds,
+  top,
+  rowHeight
+) {
   var ctx = this.getCanvasContext2d();
   top += bounds.top;
 
@@ -204,12 +227,12 @@ wtf.ui.RangePainter.prototype.endRenderingRanges = function(
   var insetY = 0;
   var insetH = 0;
   var labelBackground = null;
-  var labelForeground = '#FFFFFF';
+  var labelForeground = "#FFFFFF";
   switch (this.drawStyle_) {
     case wtf.ui.RangePainter.DrawStyle.TIME_SPAN:
       insetY = insetH = rowHeight / 4;
-      labelBackground = '#FFFFFF';
-      labelForeground = '#000000';
+      labelBackground = "#FFFFFF";
+      labelForeground = "#000000";
       break;
   }
 
@@ -217,13 +240,15 @@ wtf.ui.RangePainter.prototype.endRenderingRanges = function(
   var y = top;
   for (var i = 0; i < this.rangeRenderers_.length; i++) {
     this.rangeRenderers_[i].getPixels(this.rangeStamperImageData_.data);
-    this.rangeStamperContext_.putImageData(
-        this.rangeStamperImageData_, 0, 0);
+    this.rangeStamperContext_.putImageData(this.rangeStamperImageData_, 0, 0);
     // Draw the ranges for this depth, stretching to height h.
     ctx.drawImage(
-        this.rangeStamper_,
-        bounds.left, y + insetY,
-        bounds.width, rowHeight - insetY - insetH);
+      this.rangeStamper_,
+      bounds.left,
+      y + insetY,
+      bounds.width,
+      rowHeight - insetY - insetH
+    );
     y += rowHeight;
   }
 
@@ -236,12 +261,16 @@ wtf.ui.RangePainter.prototype.endRenderingRanges = function(
       ctx.globalAlpha = currentAlpha;
     }
 
-    var labelHeight = 2 / 3 * rowHeight;
+    var labelHeight = (2 / 3) * rowHeight;
 
     if (labelBackground) {
       ctx.fillStyle = labelBackground;
       ctx.fillRect(
-          label.x - 4, top + label.y - 1, label.w + 8, labelHeight + 4);
+        label.x - 4,
+        top + label.y - 1,
+        label.w + 8,
+        labelHeight + 4
+      );
       ctx.fillStyle = labelForeground;
     }
 

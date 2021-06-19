@@ -23,33 +23,36 @@
  *     the exports from |factory|.
  */
 function makeDefine(mapping, id) {
-  var require = function(id) { return mapping[id]; };
-  var exports = mapping[id] = {};
+  var require = function (id) {
+    return mapping[id];
+  };
+  var exports = (mapping[id] = {});
   var module = null; // Unused arg. Included for completeness.
-  return function(factory) {
+  return function (factory) {
     factory(require, exports, module);
   };
 }
 
-var define, m = {};
+var define,
+  m = {};
 
-define = makeDefine(m, './util');
+define = makeDefine(m, "./util");
 // #include ../../node_modules/source-map/lib/source-map/util.js
-define = makeDefine(m, './array-set');
+define = makeDefine(m, "./array-set");
 // #include ../../node_modules/source-map/lib/source-map/array-set.js
-define = makeDefine(m, './base64');
+define = makeDefine(m, "./base64");
 // #include ../../node_modules/source-map/lib/source-map/base64.js
-define = makeDefine(m, './base64-vlq');
+define = makeDefine(m, "./base64-vlq");
 // #include ../../node_modules/source-map/lib/source-map/base64-vlq.js
-define = makeDefine(m, './binary-search');
+define = makeDefine(m, "./binary-search");
 // #include ../../node_modules/source-map/lib/source-map/binary-search.js
-define = makeDefine(m, './source-map-generator');
+define = makeDefine(m, "./source-map-generator");
 // #include ../../node_modules/source-map/lib/source-map/source-map-generator.js
-define = makeDefine(m, './source-map-consumer');
+define = makeDefine(m, "./source-map-consumer");
 // #include ../../node_modules/source-map/lib/source-map/source-map-consumer.js
-define = makeDefine(m, './source-node');
+define = makeDefine(m, "./source-node");
 // #include ../../node_modules/source-map/lib/source-map/source-node.js
 
-export var SourceMapGenerator = m['./source-map-generator'].SourceMapGenerator;
-export var SourceMapConsumer = m['./source-map-consumer'].SourceMapConsumer;
-export var SourceNode = m['./source-node'].SourceNode;
+export var SourceMapGenerator = m["./source-map-generator"].SourceMapGenerator;
+export var SourceMapConsumer = m["./source-map-consumer"].SourceMapConsumer;
+export var SourceNode = m["./source-node"].SourceNode;

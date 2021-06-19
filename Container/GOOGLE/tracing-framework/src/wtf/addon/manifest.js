@@ -11,9 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.addon.Manifest');
-
-
+goog.provide("wtf.addon.Manifest");
 
 /**
  * Parsed addon manifest file.
@@ -22,7 +20,7 @@ goog.provide('wtf.addon.Manifest');
  * @param {!Object} json JSON object.
  * @constructor
  */
-wtf.addon.Manifest = function(url, json) {
+wtf.addon.Manifest = function (url, json) {
   /**
    * The URL of the manifest.
    * @type {string}
@@ -35,14 +33,14 @@ wtf.addon.Manifest = function(url, json) {
    * @type {string}
    * @private
    */
-  this.name_ = json['name'];
+  this.name_ = json["name"];
 
   /**
    * Required WTF version string (e.g., '1.0.5').
    * @type {string}
    * @private
    */
-  this.requiredVersion_ = json['required_version'];
+  this.requiredVersion_ = json["required_version"];
 
   /**
    * Tracing information.
@@ -51,11 +49,11 @@ wtf.addon.Manifest = function(url, json) {
    */
   this.tracing_ = null;
 
-  var jsonTracing = json['tracing'];
+  var jsonTracing = json["tracing"];
   if (jsonTracing) {
     this.tracing_ = {
-      scripts: jsonTracing['scripts'] || [],
-      options: jsonTracing['options'] || []
+      scripts: jsonTracing["scripts"] || [],
+      options: jsonTracing["options"] || [],
     };
   }
 
@@ -66,26 +64,25 @@ wtf.addon.Manifest = function(url, json) {
    */
   this.app_ = null;
 
-  var jsonApp = json['app'];
+  var jsonApp = json["app"];
   if (jsonApp) {
     this.app_ = {
-      scripts: jsonApp['scripts'] || [],
-      options: jsonApp['options'] || [],
-      triggers: []
+      scripts: jsonApp["scripts"] || [],
+      options: jsonApp["options"] || [],
+      triggers: [],
     };
-    var jsonTriggers = jsonApp['triggers'];
+    var jsonTriggers = jsonApp["triggers"];
     if (jsonTriggers) {
       for (var n = 0; n < jsonTriggers.length; n++) {
         var jsonTrigger = jsonTriggers[n];
         this.app_.triggers.push({
-          type: jsonTrigger['type'],
-          name: jsonTrigger['name']
+          type: jsonTrigger["type"],
+          name: jsonTrigger["name"],
         });
       }
     }
   }
 };
-
 
 /**
  * @typedef {{
@@ -94,7 +91,6 @@ wtf.addon.Manifest = function(url, json) {
  * }}
  */
 wtf.addon.Manifest.TracingInfo;
-
 
 /**
  * @typedef {{
@@ -105,47 +101,42 @@ wtf.addon.Manifest.TracingInfo;
  */
 wtf.addon.Manifest.AppInfo;
 
-
 /**
  * Gets the URL the manifest was loaded from.
  * @return {string} Addon manifest URL.
  */
-wtf.addon.Manifest.prototype.getUrl = function() {
+wtf.addon.Manifest.prototype.getUrl = function () {
   return this.url_;
 };
-
 
 /**
  * Gets the human-readable addon name.
  * @return {string} Addon name.
  */
-wtf.addon.Manifest.prototype.getName = function() {
+wtf.addon.Manifest.prototype.getName = function () {
   return this.name_;
 };
-
 
 /**
  * Gets the required WTF version.
  * @return {string} Version as '1.0.5'.
  */
-wtf.addon.Manifest.prototype.getRequiredVersion = function() {
+wtf.addon.Manifest.prototype.getRequiredVersion = function () {
   return this.requiredVersion_;
 };
-
 
 /**
  * Gets the tracing information section of the manifest, if defined.
  * @return {wtf.addon.Manifest.TracingInfo?} Tracing information.
  */
-wtf.addon.Manifest.prototype.getTracingInfo = function() {
+wtf.addon.Manifest.prototype.getTracingInfo = function () {
   return this.tracing_;
 };
-
 
 /**
  * Gets the application information section of the manifest, if defined.
  * @return {wtf.addon.Manifest.AppInfo?} Application information.
  */
-wtf.addon.Manifest.prototype.getAppInfo = function() {
+wtf.addon.Manifest.prototype.getAppInfo = function () {
   return this.app_;
 };

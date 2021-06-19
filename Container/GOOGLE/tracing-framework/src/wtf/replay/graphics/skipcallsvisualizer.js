@@ -11,11 +11,9 @@
  * @author scotttodd@google.com (Scott Todd)
  */
 
-goog.provide('wtf.replay.graphics.SkipCallsVisualizer');
+goog.provide("wtf.replay.graphics.SkipCallsVisualizer");
 
-goog.require('wtf.replay.graphics.Visualizer');
-
-
+goog.require("wtf.replay.graphics.Visualizer");
 
 /**
  * Visualizer that allows for skipping calls during playback.
@@ -24,7 +22,7 @@ goog.require('wtf.replay.graphics.Visualizer');
  * @constructor
  * @extends {wtf.replay.graphics.Visualizer}
  */
-wtf.replay.graphics.SkipCallsVisualizer = function(playback) {
+wtf.replay.graphics.SkipCallsVisualizer = function (playback) {
   goog.base(this, playback);
 
   /**
@@ -50,68 +48,68 @@ wtf.replay.graphics.SkipCallsVisualizer = function(playback) {
    */
   this.skippedProgramHandles_ = [];
 };
-goog.inherits(wtf.replay.graphics.SkipCallsVisualizer,
-    wtf.replay.graphics.Visualizer);
-
+goog.inherits(
+  wtf.replay.graphics.SkipCallsVisualizer,
+  wtf.replay.graphics.Visualizer
+);
 
 /**
  * Adds mutators using registerMutator.
  * @protected
  * @override
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.setupMutators = function() {
-  goog.base(this, 'setupMutators');
+wtf.replay.graphics.SkipCallsVisualizer.prototype.setupMutators = function () {
+  goog.base(this, "setupMutators");
 
-  this.registerMutator('wtf.webgl#setContext', {
-    post: function(visualizer, gl, args) {
-      var contextHandle = args['handle'];
+  this.registerMutator("wtf.webgl#setContext", {
+    post: function (visualizer, gl, args) {
+      var contextHandle = args["handle"];
       if (!visualizer.contexts_[contextHandle]) {
         visualizer.contexts_[contextHandle] = gl;
       }
-    }
+    },
   });
 
-  this.registerMutator('WebGLRenderingContext#useProgram', {
-    post: function(visualizer, gl, args) {
-      var programHandle = args['program'];
+  this.registerMutator("WebGLRenderingContext#useProgram", {
+    post: function (visualizer, gl, args) {
+      var programHandle = args["program"];
       visualizer.latestProgramHandle_ = programHandle;
       visualizer.skippedProgramHandles_[programHandle] =
-          visualizer.skippedProgramHandles_[programHandle] || false;
-    }
+        visualizer.skippedProgramHandles_[programHandle] || false;
+    },
   });
 
-  this.registerMutator('WebGLRenderingContext#drawArrays', {
-    replace: function(visualizer, gl, args) {
+  this.registerMutator("WebGLRenderingContext#drawArrays", {
+    replace: function (visualizer, gl, args) {
       return visualizer.handleDrawCall_();
-    }
+    },
   });
 
-  this.registerMutator('WebGLRenderingContext#drawElements', {
-    replace: function(visualizer, gl, args) {
+  this.registerMutator("WebGLRenderingContext#drawElements", {
+    replace: function (visualizer, gl, args) {
       return visualizer.handleDrawCall_();
-    }
+    },
   });
 
-  this.registerMutator('ANGLEInstancedArrays#drawArraysInstancedANGLE', {
-    replace: function(visualizer, gl, args) {
+  this.registerMutator("ANGLEInstancedArrays#drawArraysInstancedANGLE", {
+    replace: function (visualizer, gl, args) {
       return visualizer.handleDrawCall_();
-    }
+    },
   });
 
-  this.registerMutator('ANGLEInstancedArrays#drawElementsInstancedANGLE', {
-    replace: function(visualizer, gl, args) {
+  this.registerMutator("ANGLEInstancedArrays#drawElementsInstancedANGLE", {
+    replace: function (visualizer, gl, args) {
       return visualizer.handleDrawCall_();
-    }
+    },
   });
 };
-
 
 /**
  * Returns the current playback-affecting state.
  * @return {wtf.replay.graphics.Visualizer.State} The current state.
  * @override
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.getState = function() {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.getState = function () {
   if (!this.active) {
     return null;
   }
@@ -124,38 +122,36 @@ wtf.replay.graphics.SkipCallsVisualizer.prototype.getState = function() {
   }
 
   if (skipped.length > 0) {
-    var state = {'scv': JSON.stringify(skipped)};
+    var state = { scv: JSON.stringify(skipped) };
     return state;
   }
   return null;
 };
 
-
 /**
  * Sets playback-affecting state.
  * @param {wtf.replay.graphics.Visualizer.State} state The new state.
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.setState = function(state) {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.setState = function (state) {
   for (var i = 0; i < this.skippedProgramHandles_.length; ++i) {
     this.skippedProgramHandles_[i] = false;
   }
-  if (state && state['scv']) {
-    var skipped = JSON.parse(state['scv']);
+  if (state && state["scv"]) {
+    var skipped = JSON.parse(state["scv"]);
     for (var i = 0; i < skipped.length; ++i) {
       this.skippedProgramHandles_[skipped[i]] = true;
     }
   }
 };
 
-
 /**
  * Returns a nicely formatted version of the current playback-affecting state.
  * @return {string} Formatted version of the current playback-affecting state.
  * @override
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.getStateName = function() {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.getStateName = function () {
   if (!this.active) {
-    return '';
+    return "";
   }
 
   var skipped = [];
@@ -167,50 +163,48 @@ wtf.replay.graphics.SkipCallsVisualizer.prototype.getStateName = function() {
   }
 
   if (skipped.length == 0) {
-    return '';
+    return "";
   }
-  return 'Skipped shader ids: ' + skipped.join(', ');
+  return "Skipped shader ids: " + skipped.join(", ");
 };
-
 
 /**
  * Returns whether this draw call should be skipped in playback.
  * @return {boolean} Whether the event should be skipped in playback.
  * @private
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.handleDrawCall_ = function() {
-  return this.isProgramSkipped(this.latestProgramHandle_);
-};
-
+wtf.replay.graphics.SkipCallsVisualizer.prototype.handleDrawCall_ =
+  function () {
+    return this.isProgramSkipped(this.latestProgramHandle_);
+  };
 
 /**
  * Resets any state that can affect playback.
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.reset = function() {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.reset = function () {
   for (var i = 0; i < this.skippedProgramHandles_.length; ++i) {
     this.skippedProgramHandles_[i] = false;
   }
 };
-
 
 /**
  * Runs this visualization on a substep of the current step.
  * @param {number=} opt_subStepIndex Target substep, or the current by default.
  * @override
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.applyToSubStep = function(
-    opt_subStepIndex) {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.applyToSubStep = function (
+  opt_subStepIndex
+) {
   var currentSubStepIndex = this.playback.getSubStepEventIndex();
   var targetSubStepIndex = opt_subStepIndex || currentSubStepIndex;
 
   var latestProgramHandle = this.getLatestProgram_(targetSubStepIndex);
 
   this.skippedProgramHandles_[latestProgramHandle] =
-      !this.skippedProgramHandles_[latestProgramHandle];
+    !this.skippedProgramHandles_[latestProgramHandle];
 
   this.emitEvent(wtf.replay.graphics.Visualizer.EventType.STATE_CHANGED);
 };
-
 
 /**
  * Gets the latest used program handle between it and the target substep index.
@@ -218,8 +212,9 @@ wtf.replay.graphics.SkipCallsVisualizer.prototype.applyToSubStep = function(
  * @return {number} The latest program handle before the target substep index.
  * @private
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.getLatestProgram_ = function(
-    targetSubStepIndex) {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.getLatestProgram_ = function (
+  targetSubStepIndex
+) {
   // TODO(scotttodd): Make this work even when the latest useProgram call was
   //   from a previous step.
   var currentStep = this.playback.getCurrentStep();
@@ -227,9 +222,9 @@ wtf.replay.graphics.SkipCallsVisualizer.prototype.getLatestProgram_ = function(
 
   var latestProgramHandle = 0;
   while (it.getIndex() < targetSubStepIndex && !it.done()) {
-    if (it.getName() == 'WebGLRenderingContext#useProgram') {
+    if (it.getName() == "WebGLRenderingContext#useProgram") {
       var args = it.getArguments();
-      latestProgramHandle = args['program'];
+      latestProgramHandle = args["program"];
     }
     it.next();
   }
@@ -237,35 +232,34 @@ wtf.replay.graphics.SkipCallsVisualizer.prototype.getLatestProgram_ = function(
   return latestProgramHandle;
 };
 
-
 /**
  * Returns whether a program handle should be skipped in playback.
  * @param {number} programHandle The program handle in question.
  * @return {boolean} Whether the program handle should be skipped in playback.
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.isProgramSkipped = function(
-    programHandle) {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.isProgramSkipped = function (
+  programHandle
+) {
   return this.skippedProgramHandles_[programHandle];
 };
-
 
 /**
  * Returns whether an event should be skipped in playback.
  * @param {!wtf.db.EventIterator} it Event iterator at the event in question.
  * @return {boolean} Whether the event should be skipped in playback.
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.isEventSkipped = function(
-    it) {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.isEventSkipped = function (
+  it
+) {
   var latestProgramHandle = this.getLatestProgram_(it.getIndex());
 
   return this.isProgramSkipped(latestProgramHandle);
 };
 
-
 /**
  * Restores state back to standard playback.
  */
-wtf.replay.graphics.SkipCallsVisualizer.prototype.restoreState = function() {
+wtf.replay.graphics.SkipCallsVisualizer.prototype.restoreState = function () {
   this.active = false;
 
   // Seek from the start to the current step to update all internal state.

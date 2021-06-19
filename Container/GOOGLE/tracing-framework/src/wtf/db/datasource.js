@@ -11,15 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.DataSource');
-goog.provide('wtf.db.PresentationHint');
+goog.provide("wtf.db.DataSource");
+goog.provide("wtf.db.PresentationHint");
 
-goog.require('goog.Disposable');
-goog.require('goog.asserts');
-goog.require('goog.async.Deferred');
-goog.require('wtf.data.formats.FileFlags');
-goog.require('wtf.db.Unit');
-
+goog.require("goog.Disposable");
+goog.require("goog.asserts");
+goog.require("goog.async.Deferred");
+goog.require("wtf.data.formats.FileFlags");
+goog.require("wtf.db.Unit");
 
 /**
  * Bitmask values indicating hints to the UI displaying the data.
@@ -38,10 +37,8 @@ wtf.db.PresentationHint = {
    * The data source contains no rendering data, such as frames.
    * This can be used to hide UI elements related to frames, timing, etc.
    */
-  NO_RENDER_DATA: 1 << 1
+  NO_RENDER_DATA: 1 << 1,
 };
-
-
 
 /**
  * Abstract single-source data stream.
@@ -53,7 +50,7 @@ wtf.db.PresentationHint = {
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.db.DataSource = function(db, sourceInfo) {
+wtf.db.DataSource = function (db, sourceInfo) {
   goog.base(this);
 
   /**
@@ -153,111 +150,99 @@ wtf.db.DataSource = function(db, sourceInfo) {
 };
 goog.inherits(wtf.db.DataSource, goog.Disposable);
 
-
 /**
  * Gets the database.
  * @return {!wtf.db.Database} Database.
  */
-wtf.db.DataSource.prototype.getDatabase = function() {
+wtf.db.DataSource.prototype.getDatabase = function () {
   return this.db_;
 };
-
 
 /**
  * Gets the source information for this data source.
  * @return {!wtf.db.DataSourceInfo} Source info.
  */
-wtf.db.DataSource.prototype.getInfo = function() {
+wtf.db.DataSource.prototype.getInfo = function () {
   return this.sourceInfo_;
 };
-
 
 /**
  * Gets a value indicating whether the source has been fully initialized.
  * This usually occurs after the header has been successfully parsed.
  * @return {boolean} True if the source has been initialized.
  */
-wtf.db.DataSource.prototype.isInitialized = function() {
+wtf.db.DataSource.prototype.isInitialized = function () {
   return this.isInitialized_;
 };
-
 
 /**
  * Gets the context information, if it has been parsed.
  * @return {!wtf.data.ContextInfo} Context information.
  */
-wtf.db.DataSource.prototype.getContextInfo = function() {
+wtf.db.DataSource.prototype.getContextInfo = function () {
   goog.asserts.assert(this.isInitialized_);
   goog.asserts.assert(this.contextInfo_);
   return this.contextInfo_;
 };
 
-
 /**
  * Gets file header flags.
  * @return {number} A bitmask of {@see wtf.data.formats.FileFlags} values.
  */
-wtf.db.DataSource.prototype.getFlags = function() {
+wtf.db.DataSource.prototype.getFlags = function () {
   return this.flags_;
 };
-
 
 /**
  * Gets a value indicating whether times in the trace are high resolution.
  * @return {boolean} True if the times are high resolution.
  */
-wtf.db.DataSource.prototype.hasHighResolutionTimes = function() {
+wtf.db.DataSource.prototype.hasHighResolutionTimes = function () {
   goog.asserts.assert(this.isInitialized_);
   return !!(this.flags_ & wtf.data.formats.FileFlags.HAS_HIGH_RESOLUTION_TIMES);
 };
-
 
 /**
  * Gets the bitmask of {@see wtf.db.PresentationHint} values that can be used to
  * help a UI decide what to draw.
  * @return {number} Bitmask.
  */
-wtf.db.DataSource.prototype.getPresentationHints = function() {
+wtf.db.DataSource.prototype.getPresentationHints = function () {
   return this.presentationHints_;
 };
-
 
 /**
  * Gets the unit of measurement the data is in.
  * @return {wtf.db.Unit} Unit of measurement.
  */
-wtf.db.DataSource.prototype.getUnits = function() {
+wtf.db.DataSource.prototype.getUnits = function () {
   return this.units_;
 };
-
 
 /**
  * Gets embedded file metadata.
  * @return {!Object} Metadata.
  */
-wtf.db.DataSource.prototype.getMetadata = function() {
+wtf.db.DataSource.prototype.getMetadata = function () {
   return this.metadata_;
 };
-
 
 /**
  * Gets the base wall-time for all relative times in the trace.
  * @return {number} Wall-time.
  */
-wtf.db.DataSource.prototype.getTimebase = function() {
+wtf.db.DataSource.prototype.getTimebase = function () {
   goog.asserts.assert(this.isInitialized_);
   return this.timebase_;
 };
-
 
 /**
  * Gets an estimated time delay between the local machine and the source.
  * @return {number} Time delay, in seconds.
  */
-wtf.db.DataSource.prototype.getTimeDelay = function() {
+wtf.db.DataSource.prototype.getTimeDelay = function () {
   return this.timeDelay_;
 };
-
 
 /**
  * Signals that the data source should start adding data.
@@ -267,12 +252,11 @@ wtf.db.DataSource.prototype.getTimeDelay = function() {
  * @return {!goog.async.Deferred} A deferred fulfilled when the data source
  *     completes loading.
  */
-wtf.db.DataSource.prototype.start = function() {
+wtf.db.DataSource.prototype.start = function () {
   goog.asserts.assert(!this.deferred_);
   this.deferred_ = new goog.async.Deferred();
   return this.deferred_;
 };
-
 
 /**
  * Initializes the trace source.
@@ -289,9 +273,15 @@ wtf.db.DataSource.prototype.start = function() {
  * @return {boolean} Whether the initialization was successful.
  * @protected
  */
-wtf.db.DataSource.prototype.initialize = function(
-    contextInfo, flags, presentationHints, units, metadata, timebase,
-    timeDelay) {
+wtf.db.DataSource.prototype.initialize = function (
+  contextInfo,
+  flags,
+  presentationHints,
+  units,
+  metadata,
+  timebase,
+  timeDelay
+) {
   goog.asserts.assert(!this.isInitialized_);
   this.isInitialized_ = true;
 
@@ -306,14 +296,13 @@ wtf.db.DataSource.prototype.initialize = function(
   return this.db_.sourceInitialized(this);
 };
 
-
 /**
  * Emits an error event.
  * @param {string} message Error message.
  * @param {string=} opt_detail Detailed information.
  * @protected
  */
-wtf.db.DataSource.prototype.error = function(message, opt_detail) {
+wtf.db.DataSource.prototype.error = function (message, opt_detail) {
   this.hasErrored = true;
 
   this.db_.sourceError(this, message, opt_detail);
@@ -324,12 +313,11 @@ wtf.db.DataSource.prototype.error = function(message, opt_detail) {
   }
 };
 
-
 /**
  * Emits an end event.
  * @protected
  */
-wtf.db.DataSource.prototype.end = function() {
+wtf.db.DataSource.prototype.end = function () {
   this.db_.sourceEnded(this);
 
   if (this.deferred_) {
@@ -338,28 +326,43 @@ wtf.db.DataSource.prototype.end = function() {
   }
 };
 
-
 goog.exportProperty(
-    wtf.db.DataSource.prototype, 'getContextInfo',
-    wtf.db.DataSource.prototype.getContextInfo);
+  wtf.db.DataSource.prototype,
+  "getContextInfo",
+  wtf.db.DataSource.prototype.getContextInfo
+);
 goog.exportProperty(
-    wtf.db.DataSource.prototype, 'getFlags',
-    wtf.db.DataSource.prototype.getFlags);
+  wtf.db.DataSource.prototype,
+  "getFlags",
+  wtf.db.DataSource.prototype.getFlags
+);
 goog.exportProperty(
-    wtf.db.DataSource.prototype, 'hasHighResolutionTimes',
-    wtf.db.DataSource.prototype.hasHighResolutionTimes);
+  wtf.db.DataSource.prototype,
+  "hasHighResolutionTimes",
+  wtf.db.DataSource.prototype.hasHighResolutionTimes
+);
 goog.exportProperty(
-    wtf.db.DataSource.prototype, 'getPresentationHints',
-    wtf.db.DataSource.prototype.getPresentationHints);
+  wtf.db.DataSource.prototype,
+  "getPresentationHints",
+  wtf.db.DataSource.prototype.getPresentationHints
+);
 goog.exportProperty(
-    wtf.db.DataSource.prototype, 'getUnits',
-    wtf.db.DataSource.prototype.getUnits);
+  wtf.db.DataSource.prototype,
+  "getUnits",
+  wtf.db.DataSource.prototype.getUnits
+);
 goog.exportProperty(
-    wtf.db.DataSource.prototype, 'getMetadata',
-    wtf.db.DataSource.prototype.getMetadata);
+  wtf.db.DataSource.prototype,
+  "getMetadata",
+  wtf.db.DataSource.prototype.getMetadata
+);
 goog.exportProperty(
-    wtf.db.DataSource.prototype, 'getTimebase',
-    wtf.db.DataSource.prototype.getTimebase);
+  wtf.db.DataSource.prototype,
+  "getTimebase",
+  wtf.db.DataSource.prototype.getTimebase
+);
 goog.exportProperty(
-    wtf.db.DataSource.prototype, 'getTimeDelay',
-    wtf.db.DataSource.prototype.getTimeDelay);
+  wtf.db.DataSource.prototype,
+  "getTimeDelay",
+  wtf.db.DataSource.prototype.getTimeDelay
+);

@@ -1,8 +1,8 @@
 module.exports = {
   config: {
-    type: 'radar',
+    type: "radar",
     data: {
-      labels: ['A', 'B', 'C', 'D', 'E']
+      labels: ["A", "B", "C", "D", "E"],
     },
     options: {
       responsive: false,
@@ -12,17 +12,17 @@ module.exports = {
             display: true,
           },
           angleLines: {
-            color: ['red', 'green'],
-            lineWidth: [1, 5]
+            color: ["red", "green"],
+            lineWidth: [1, 5],
           },
           pointLabels: {
-            display: false
+            display: false,
           },
           ticks: {
-            display: false
-          }
-        }
-      }
-    }
-  }
+            display: false,
+          },
+        },
+      },
+    },
+  },
 };

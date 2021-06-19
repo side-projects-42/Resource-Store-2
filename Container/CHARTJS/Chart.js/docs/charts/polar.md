@@ -7,32 +7,28 @@ This type of chart is often useful when we want to show a comparison data simila
 ```js chart-editor
 // <block:setup:1>
 const data = {
-  labels: [
-    'Red',
-    'Green',
-    'Yellow',
-    'Grey',
-    'Blue'
+  labels: ["Red", "Green", "Yellow", "Grey", "Blue"],
+  datasets: [
+    {
+      label: "My First Dataset",
+      data: [11, 16, 7, 3, 14],
+      backgroundColor: [
+        "rgb(255, 99, 132)",
+        "rgb(75, 192, 192)",
+        "rgb(255, 205, 86)",
+        "rgb(201, 203, 207)",
+        "rgb(54, 162, 235)",
+      ],
+    },
   ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [11, 16, 7, 3, 14],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(75, 192, 192)',
-      'rgb(255, 205, 86)',
-      'rgb(201, 203, 207)',
-      'rgb(54, 162, 235)'
-    ]
-  }]
 };
 // </block:setup>
 
 // <block:config:0>
 const config = {
-  type: 'polarArea',
+  type: "polarArea",
   data: data,
-  options: {}
+  options: {},
 };
 // </block:config>
 
@@ -46,42 +42,42 @@ module.exports = {
 
 Namespaces:
 
-* `data.datasets[index]` - options for this dataset only
-* `options.datasets.polarArea` - options for all polarArea datasets
-* `options.elements.arc` - options for all [arc elements](../configuration/elements.md#arc-configuration)
-* `options` - options for the whole chart
+- `data.datasets[index]` - options for this dataset only
+- `options.datasets.polarArea` - options for all polarArea datasets
+- `options.elements.arc` - options for all [arc elements](../configuration/elements.md#arc-configuration)
+- `options` - options for the whole chart
 
 The following options can be included in a polar area chart dataset to configure options for that specific dataset.
 
-| Name | Type | [Scriptable](../general/options.md#scriptable-options) | [Indexable](../general/options.md#indexable-options) | Default
-| ---- | ---- | :----: | :----: | ----
-| [`backgroundColor`](#styling) | [`Color`](../general/colors.md) | Yes | Yes | `'rgba(0, 0, 0, 0.1)'`
-| [`borderAlign`](#border-alignment) | `string` | Yes | Yes | `'center'`
-| [`borderColor`](#styling) | [`Color`](../general/colors.md) | Yes | Yes | `'#fff'`
-| [`borderWidth`](#styling) | `number` | Yes | Yes | `2`
-| [`clip`](#general) | `number`\|`object` | - | - | `undefined`
-| [`data`](#data-structure) | `number[]` | - | - | **required**
-| [`hoverBackgroundColor`](#interations) | [`Color`](../general/colors.md) | Yes | Yes | `undefined`
-| [`hoverBorderColor`](#interactions) | [`Color`](../general/colors.md) | Yes | Yes | `undefined`
-| [`hoverBorderWidth`](#interactions) | `number` | Yes | Yes | `undefined`
+| Name                                   | Type                            | [Scriptable](../general/options.md#scriptable-options) | [Indexable](../general/options.md#indexable-options) | Default                |
+| -------------------------------------- | ------------------------------- | :----------------------------------------------------: | :--------------------------------------------------: | ---------------------- |
+| [`backgroundColor`](#styling)          | [`Color`](../general/colors.md) |                          Yes                           |                         Yes                          | `'rgba(0, 0, 0, 0.1)'` |
+| [`borderAlign`](#border-alignment)     | `string`                        |                          Yes                           |                         Yes                          | `'center'`             |
+| [`borderColor`](#styling)              | [`Color`](../general/colors.md) |                          Yes                           |                         Yes                          | `'#fff'`               |
+| [`borderWidth`](#styling)              | `number`                        |                          Yes                           |                         Yes                          | `2`                    |
+| [`clip`](#general)                     | `number`\|`object`              |                           -                            |                          -                           | `undefined`            |
+| [`data`](#data-structure)              | `number[]`                      |                           -                            |                          -                           | **required**           |
+| [`hoverBackgroundColor`](#interations) | [`Color`](../general/colors.md) |                          Yes                           |                         Yes                          | `undefined`            |
+| [`hoverBorderColor`](#interactions)    | [`Color`](../general/colors.md) |                          Yes                           |                         Yes                          | `undefined`            |
+| [`hoverBorderWidth`](#interactions)    | `number`                        |                          Yes                           |                         Yes                          | `undefined`            |
 
 All these values, if `undefined`, fallback to the scopes described in [option resolution](../general/options)
 
 ### General
 
-| Name | Description
-| ---- | ----
-| `clip` | How to clip relative to chartArea. Positive value allows overflow, negative value clips that many pixels inside chartArea. `0` = clip at chartArea. Clipping can also be configured per side: `clip: {left: 5, top: false, right: -2, bottom: 0}`
+| Name   | Description                                                                                                                                                                                                                                       |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `clip` | How to clip relative to chartArea. Positive value allows overflow, negative value clips that many pixels inside chartArea. `0` = clip at chartArea. Clipping can also be configured per side: `clip: {left: 5, top: false, right: -2, bottom: 0}` |
 
 ### Styling
 
 The style of each arc can be controlled with the following properties:
 
-| Name | Description
-| ---- | ----
-| `backgroundColor` | arc background color.
-| `borderColor` | arc border color.
-| `borderWidth` | arc border width (in pixels).
+| Name              | Description                   |
+| ----------------- | ----------------------------- |
+| `backgroundColor` | arc background color.         |
+| `borderColor`     | arc border color.             |
+| `borderWidth`     | arc border width (in pixels). |
 
 All these values, if `undefined`, fallback to the associated [`elements.arc.*`](../configuration/elements.md#arc-configuration) options.
 
@@ -89,8 +85,8 @@ All these values, if `undefined`, fallback to the associated [`elements.arc.*`](
 
 The following values are supported for `borderAlign`.
 
-* `'center'` (default)
-* `'inner'`
+- `'center'` (default)
+- `'inner'`
 
 When `'center'` is set, the borders of arcs next to each other will overlap. When `'inner'` is set, it is guaranteed that all the borders do not overlap.
 
@@ -98,11 +94,11 @@ When `'center'` is set, the borders of arcs next to each other will overlap. Whe
 
 The interaction with each arc can be controlled with the following properties:
 
-| Name | Description
-| ---- | -----------
-| `hoverBackgroundColor` | arc background color when hovered.
-| `hoverBorderColor` | arc border color when hovered.
-| `hoverBorderWidth` | arc border width when hovered (in pixels).
+| Name                   | Description                                |
+| ---------------------- | ------------------------------------------ |
+| `hoverBackgroundColor` | arc background color when hovered.         |
+| `hoverBorderColor`     | arc border color when hovered.             |
+| `hoverBorderWidth`     | arc border width when hovered (in pixels). |
 
 All these values, if `undefined`, fallback to the associated [`elements.arc.*`](../configuration/elements.md#arc-configuration) options.
 
@@ -110,10 +106,10 @@ All these values, if `undefined`, fallback to the associated [`elements.arc.*`](
 
 These are the customisation options specific to Polar Area charts. These options are looked up on access, and form together with the [global chart default options](#default-options) the options of the chart.
 
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| `animation.animateRotate` | `boolean` | `true` | If true, the chart will animate in with a rotation animation. This property is in the `options.animation` object.
-| `animation.animateScale` | `boolean` | `true` | If true, will animate scaling the chart from the center outwards.
+| Name                      | Type      | Default | Description                                                                                                       |
+| ------------------------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
+| `animation.animateRotate` | `boolean` | `true`  | If true, the chart will animate in with a rotation animation. This property is in the `options.animation` object. |
+| `animation.animateScale`  | `boolean` | `true`  | If true, will animate scaling the chart from the center outwards.                                                 |
 
 The polar area chart uses the [radialLinear](../axes/radial/linear.md) scale. Additional configuration is provided via the scale.
 
@@ -135,15 +131,13 @@ You also need to specify an array of labels so that tooltips appear correctly fo
 
 ```javascript
 data = {
-    datasets: [{
-        data: [10, 20, 30]
-    }],
+  datasets: [
+    {
+      data: [10, 20, 30],
+    },
+  ],
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-        'Red',
-        'Yellow',
-        'Blue'
-    ]
+  // These labels appear in the legend and in the tooltips when hovering different arcs
+  labels: ["Red", "Yellow", "Blue"],
 };
 ```

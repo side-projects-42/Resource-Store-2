@@ -1,19 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CodeMirror: Groovy mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="../../addon/edit/matchbrackets.js"></script>
     <script src="groovy.js"></script>
-    <link rel="stylesheet" href="../../doc/docs.css">
-    <style>.CodeMirror {border-top: 1px solid #500; border-bottom: 1px solid #500;}</style>
+    <link rel="stylesheet" href="../../doc/docs.css" />
+    <style>
+      .CodeMirror {
+        border-top: 1px solid #500;
+        border-bottom: 1px solid #500;
+      }
+    </style>
   </head>
   <body>
     <h1>CodeMirror: Groovy mode</h1>
 
-<form><textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
 //Pattern for groovy script
 def p = ~/.*\.groovy/
 new File( 'd:\\scripts' ).eachFileMatch(p) {f ->
@@ -58,13 +64,15 @@ def change(currency, amount) {
      list += "$count ${plural(coin.toString(), count)}"
   }
 }
-</textarea></form>
+</textarea
+      >
+    </form>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
-        mode: "text/x-groovy"
+        mode: "text/x-groovy",
       });
     </script>
 

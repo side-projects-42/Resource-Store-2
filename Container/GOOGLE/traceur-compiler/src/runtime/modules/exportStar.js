@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const {defineProperty, getOwnPropertyNames} = Object;
+const { defineProperty, getOwnPropertyNames } = Object;
 
 export default function exportStar(object) {
   for (let i = 1; i < arguments.length; i++) {
@@ -20,12 +20,12 @@ export default function exportStar(object) {
     let names = getOwnPropertyNames(mod);
     for (let j = 0; j < names.length; j++) {
       let name = names[j];
-      if (name === '__esModule' || name === 'default') {
+      if (name === "__esModule" || name === "default") {
         continue;
       }
       defineProperty(object, name, {
         get: () => mod[name],
-        enumerable: true
+        enumerable: true,
       });
     }
   }

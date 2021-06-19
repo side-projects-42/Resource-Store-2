@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const {random} = Math;
+const { random } = Math;
 
 var counter = Date.now() % 1e9;
 
@@ -21,5 +21,5 @@ var counter = Date.now() % 1e9;
  * @return {string}
  */
 export default function newUniqueString() {
-  return '__$' + (random() * 1e9 >>> 1) + '$' + ++counter + '$__';
+  return "__$" + ((random() * 1e9) >>> 1) + "$" + ++counter + "$__";
 }

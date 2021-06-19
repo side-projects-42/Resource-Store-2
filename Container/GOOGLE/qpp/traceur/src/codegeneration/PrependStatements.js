@@ -14,14 +14,16 @@
 
 import {
   EXPRESSION_STATEMENT,
-  LITERAL_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
-import {STRING} from '../syntax/TokenType.js';
+  LITERAL_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
+import { STRING } from "../syntax/TokenType.js";
 
 function isStringExpressionStatement(tree) {
-  return tree.type === EXPRESSION_STATEMENT &&
-      tree.expression.type === LITERAL_EXPRESSION &&
-      tree.expression.literalToken.type === STRING;
+  return (
+    tree.type === EXPRESSION_STATEMENT &&
+    tree.expression.type === LITERAL_EXPRESSION &&
+    tree.expression.literalToken.type === STRING
+  );
 }
 
 /**
@@ -32,13 +34,11 @@ function isStringExpressionStatement(tree) {
  * @return {Array.<ParseTree>}
  */
 export function prependStatements(statements, ...statementsToPrepend) {
-  if (!statements.length)
-    return statementsToPrepend;
+  if (!statements.length) return statementsToPrepend;
 
-  if (!statementsToPrepend.length)
-    return statements;
+  if (!statementsToPrepend.length) return statements;
 
-  var transformed  = [];
+  var transformed = [];
   var inProlog = true;
   statements.forEach((statement) => {
     if (inProlog && !isStringExpressionStatement(statement)) {

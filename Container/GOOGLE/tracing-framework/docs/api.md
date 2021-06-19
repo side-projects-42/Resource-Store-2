@@ -86,12 +86,12 @@ To prevent DOM event listeners from appearing in the trace, wrap them with
 
 Supported types in event signatures:
 
-* int8/uint8
-* int16/uint16
-* int32/uint32
-* float32
-* ascii
-* utf8
-* any of the int/float types as type[] for an array
+- int8/uint8
+- int16/uint16
+- int32/uint32
+- float32
+- ascii
+- utf8
+- any of the int/float types as type[] for an array
 
 TODO: add more types (float64/number, typed arrays, etc)

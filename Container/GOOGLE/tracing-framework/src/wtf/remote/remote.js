@@ -11,11 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.remote');
+goog.provide("wtf.remote");
 
-goog.require('wtf.remote.Client');
-goog.require('wtf.trace');
-
+goog.require("wtf.remote.Client");
+goog.require("wtf.trace");
 
 /**
  * Current client.
@@ -25,7 +24,6 @@ goog.require('wtf.trace');
  */
 wtf.remote.client_ = null;
 
-
 /**
  * Connects this script to the target URI for remote control.
  * The current tracing session will be used if it exists.
@@ -34,7 +32,7 @@ wtf.remote.client_ = null;
  *
  * @param {Object=} opt_options Options overrides.
  */
-wtf.remote.connect = function(opt_options) {
+wtf.remote.connect = function (opt_options) {
   // Call prepare just in case.
   wtf.trace.prepare(opt_options);
   var traceManager = wtf.trace.getTraceManager();
@@ -49,11 +47,10 @@ wtf.remote.connect = function(opt_options) {
   wtf.remote.client_ = new wtf.remote.Client(traceManager, options);
 };
 
-
 /**
  * Disconnects from the remote target.
  */
-wtf.remote.disconnect = function() {
+wtf.remote.disconnect = function () {
   if (!wtf.remote.client_) {
     return;
   }
@@ -64,13 +61,12 @@ wtf.remote.disconnect = function() {
   wtf.remote.client_ = null;
 };
 
-
 /**
  * Whether this script is connected.
  * This will be true after a call to {@see wtf.remote#connect} even if the
  * connection is not yet established.
  * @return {boolean} True if this script is connected to a remote host.
  */
-wtf.remote.isConnected = function() {
+wtf.remote.isConnected = function () {
   return !!wtf.remote.client_;
 };

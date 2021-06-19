@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {StringSet} from '../util/StringSet.js';
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
+import { StringSet } from "../util/StringSet.js";
 
 /**
  * Finds BindingIdentifiers in the a destructuring pattern.

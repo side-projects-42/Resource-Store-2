@@ -5,11 +5,14 @@ function concatObjects() {
   var obj = {};
   for (var i = 0; i < arguments.length; i++) {
     var arg = arguments[i];
-    Object.keys(arg).forEach(function(key){
+    Object.keys(arg).forEach(function (key) {
       obj[key] = arg[key];
     });
   }
   return obj;
 }
 
-var BackgroundServerAPI = concatObjects(XHRInBackground, ScreenShotInBackground);
+var BackgroundServerAPI = concatObjects(
+  XHRInBackground,
+  ScreenShotInBackground
+);

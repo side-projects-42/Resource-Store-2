@@ -10,7 +10,7 @@ class B {
   }
 
   static set x(value) {
-     x = value;
+    x = value;
   }
 }
 
@@ -21,19 +21,19 @@ assertEquals(1, x);
 
 class StaticMethod {
   static static() {
-    return 'static method';
+    return "static method";
   }
 }
 
-assertEquals('static method', StaticMethod.static());
+assertEquals("static method", StaticMethod.static());
 
 class StaticGetter {
   static get static() {
-    return 'static getter';
+    return "static getter";
   }
 }
 
-assertEquals('static getter', StaticGetter.static);
+assertEquals("static getter", StaticGetter.static);
 
 class StaticSetter {
   static set static(value) {
@@ -41,8 +41,8 @@ class StaticSetter {
   }
 }
 
-StaticSetter.static = 'static setter';
-assertEquals('static setter', x);
+StaticSetter.static = "static setter";
+assertEquals("static setter", x);
 
 class MethodNamedStatic {
   static() {

@@ -1,0 +1,79 @@
+{
+  "projectFullName": "newrelic/newrelic-opencensus-exporter-python",
+  "issues": {
+    "open": 1
+  },
+  "releases": 6,
+  "latestRelease": {
+    "name": "v0.2.1",
+    "date": "2020-06-05T16:04:57Z"
+  },
+  "commits": 40,
+  "lastSixMonthsCommitTotal": 2,
+  "contributors": 6,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 6374032,
+      "login": "a-feld",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6374032?v=4",
+      "htmlUrl": "https://github.com/a-feld",
+      "contributions": 20
+    },
+    {
+      "id": 43244625,
+      "login": "melissaklein24",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43244625?v=4",
+      "htmlUrl": "https://github.com/melissaklein24",
+      "contributions": 1
+    },
+    {
+      "id": 9435570,
+      "login": "zuluecho9",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/9435570?v=4",
+      "htmlUrl": "https://github.com/zuluecho9",
+      "contributions": 11
+    },
+    {
+      "id": 11214426,
+      "login": "TimPansino",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/11214426?v=4",
+      "htmlUrl": "https://github.com/TimPansino",
+      "contributions": 1
+    },
+    {
+      "id": 13881487,
+      "login": "BrandonTheBuilder",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13881487?v=4",
+      "htmlUrl": "https://github.com/BrandonTheBuilder",
+      "contributions": 6
+    },
+    {
+      "id": 1342804,
+      "login": "lykkin",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1342804?v=4",
+      "htmlUrl": "https://github.com/lykkin",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDU=",
+      "name": "Python",
+      "color": "#3572A5"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

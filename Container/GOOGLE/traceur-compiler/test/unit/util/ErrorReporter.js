@@ -17,25 +17,24 @@ import {
   test,
   assert,
   setup,
-  teardown
-} from '../../unit/unitTestRunner.js';
+  teardown,
+} from "../../unit/unitTestRunner.js";
 
-import {ErrorReporter} from '../../../src/util/ErrorReporter.js';
-import {MultipleErrors} from '../../../src/util/CollectingErrorReporter.js';
-import {MutedErrorReporter} from '../../../src/util/MutedErrorReporter.js';
-import {SourceFile} from '../../../src/syntax/SourceFile.js'
-import {SourcePosition} from '../../../src/util/SourcePosition.js';
-import {SourceRange} from '../../../src/util/SourceRange.js';
-import {SyntaxErrorReporter} from '../../../src/util/SyntaxErrorReporter.js';
+import { ErrorReporter } from "../../../src/util/ErrorReporter.js";
+import { MultipleErrors } from "../../../src/util/CollectingErrorReporter.js";
+import { MutedErrorReporter } from "../../../src/util/MutedErrorReporter.js";
+import { SourceFile } from "../../../src/syntax/SourceFile.js";
+import { SourcePosition } from "../../../src/util/SourcePosition.js";
+import { SourceRange } from "../../../src/util/SourceRange.js";
+import { SyntaxErrorReporter } from "../../../src/util/SyntaxErrorReporter.js";
 
-suite('ErrorReporter.js', function() {
-
+suite("ErrorReporter.js", function () {
   var originalConsoleError = console.error;
   var args;
 
-  setup(function() {
+  setup(function () {
     args = [];
-    console.error = function() {
+    console.error = function () {
       args.push(arguments);
     };
   });
@@ -45,18 +44,18 @@ suite('ErrorReporter.js', function() {
     args = undefined;
   });
 
-  test('ErrorReporter', function() {
+  test("ErrorReporter", function () {
     var r = new ErrorReporter();
 
-    r.reportError(null, 'abcde');
+    r.reportError(null, "abcde");
 
     assert.equal(args.length, 1);
-    assert.equal(args[0][0], 'abcde');
+    assert.equal(args[0][0], "abcde");
   });
 
-  test('ErrorReporterWithLocation', function() {
+  test("ErrorReporterWithLocation", function () {
     var r = new ErrorReporter();
-    var file = new SourceFile('test.js', '');
+    var file = new SourceFile("test.js", "");
     var start = new SourcePosition(file, 1);
     start.line_ = 2;
     start.column_ = 3;
@@ -65,89 +64,86 @@ suite('ErrorReporter.js', function() {
     end.column_ = 4;
 
     var location = new SourceRange(start, end);
-    r.reportError(location, 'abcde');
+    r.reportError(location, "abcde");
 
     assert.equal(args.length, 1);
-    assert.equal(args[0][0], 'test.js:3:4: abcde');
+    assert.equal(args[0][0], "test.js:3:4: abcde");
   });
 
-  test('MutedErrorReporter', function() {
+  test("MutedErrorReporter", function () {
     var r = new MutedErrorReporter();
-    r.reportError(null, 'a%sc%se', 'b', 'd');
+    r.reportError(null, "a%sc%se", "b", "d");
     assert.equal(args.length, 0);
   });
 
-  test('SyntaxErrorReporter', function() {
+  test("SyntaxErrorReporter", function () {
     var r = new SyntaxErrorReporter();
     var thrown;
     try {
-      r.reportError(null, 'abcde');
-    } catch(syntaxError) {
+      r.reportError(null, "abcde");
+    } catch (syntaxError) {
       thrown = syntaxError;
     } finally {
       assert(thrown);
-      assert.equal('SyntaxError: abcde', thrown + '');
+      assert.equal("SyntaxError: abcde", thrown + "");
     }
   });
 
-  test('MultipleErrors', function() {
-    var accumulated = [new SyntaxError('one'), new SyntaxError('two')];
+  test("MultipleErrors", function () {
+    var accumulated = [new SyntaxError("one"), new SyntaxError("two")];
     var error = new MultipleErrors(accumulated);
-    assert.throws(function() {
+    assert.throws(function () {
       throw error;
     }, MultipleErrors);
-    assert.equal(error + '', 'MultipleErrors: ' + accumulated.join('\n'));
+    assert.equal(error + "", "MultipleErrors: " + accumulated.join("\n"));
   });
 
-  test('Only one MultipleErrors', function() {
-    var accumulated = [new SyntaxError('one')];
+  test("Only one MultipleErrors", function () {
+    var accumulated = [new SyntaxError("one")];
     var error = new MultipleErrors(accumulated);
-    assert.throws(function() {
+    assert.throws(function () {
       throw error;
     }, MultipleErrors);
-    assert.equal(error + '', 'MultipleErrors: ' + accumulated.join('\n'));
-
+    assert.equal(error + "", "MultipleErrors: " + accumulated.join("\n"));
   });
 
-  test('No MultipleErrors', function() {
+  test("No MultipleErrors", function () {
     var accumulated = [];
     var error = new MultipleErrors(accumulated);
-    assert.throws(function() {
+    assert.throws(function () {
       throw error;
     }, MultipleErrors);
-    assert.equal(error + '', 'MultipleErrors');
+    assert.equal(error + "", "MultipleErrors");
   });
 
-  test('Format', function() {
-    var  format = ErrorReporter.format;
-    assert.equal('loc: msg', format('loc', 'msg'));
-    assert.equal('msg', format(null, 'msg'));
+  test("Format", function () {
+    var format = ErrorReporter.format;
+    assert.equal("loc: msg", format("loc", "msg"));
+    assert.equal("msg", format(null, "msg"));
 
-    assert.equal('1 + 2 = 3', format(null, '%s + %s = %s', [1, 2, 3]));
-    assert.equal('a % b', format(null, 'a % b'));
-    assert.equal('a % b', format(null, 'a %% b'));
-    assert.equal('%', format(null, '%%'));
-    assert.equal('%%', format(null, '%%%'));
-    assert.equal('%%', format(null, '%%%%'));
-    assert.equal('%%%', format(null, '%%%%%'));
+    assert.equal("1 + 2 = 3", format(null, "%s + %s = %s", [1, 2, 3]));
+    assert.equal("a % b", format(null, "a % b"));
+    assert.equal("a % b", format(null, "a %% b"));
+    assert.equal("%", format(null, "%%"));
+    assert.equal("%%", format(null, "%%%"));
+    assert.equal("%%", format(null, "%%%%"));
+    assert.equal("%%%", format(null, "%%%%%"));
 
-    assert.equal('undefined', format(null, '%s'));
+    assert.equal("undefined", format(null, "%s"));
   });
 
-  test('DevtoolsLink', function() {
-    if (typeof window === 'undefined')
-      return;
+  test("DevtoolsLink", function () {
+    if (typeof window === "undefined") return;
 
-    var file = new SourceFile('error_reporter_test.html', '');
+    var file = new SourceFile("error_reporter_test.html", "");
     var location = new SourcePosition(file, 1);
     location.line_ = 108;
     location.column_ = 3;
 
-    var segments = window.location.href.split('/');
+    var segments = window.location.href.split("/");
     segments.pop();
     segments.push(location.toString());
-    var linkable = segments.join('/');
-    console.log('click on this link in devtools console: ' + linkable + '  ');
+    var linkable = segments.join("/");
+    console.log("click on this link in devtools console: " + linkable + "  ");
   });
-
 });

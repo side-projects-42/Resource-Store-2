@@ -1,45 +1,49 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CodeMirror: COBOL mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="../../addon/edit/matchbrackets.js"></script>
     <script src="cobol.js"></script>
-    <link rel="stylesheet" href="../../theme/neat.css">
-    <link rel="stylesheet" href="../../theme/elegant.css">
-    <link rel="stylesheet" href="../../theme/erlang-dark.css">
-    <link rel="stylesheet" href="../../theme/night.css">
-    <link rel="stylesheet" href="../../theme/monokai.css">
-    <link rel="stylesheet" href="../../theme/cobalt.css">
-    <link rel="stylesheet" href="../../theme/eclipse.css">
-    <link rel="stylesheet" href="../../theme/rubyblue.css">
-    <link rel="stylesheet" href="../../theme/lesser-dark.css">
-    <link rel="stylesheet" href="../../theme/xq-dark.css">
-    <link rel="stylesheet" href="../../theme/xq-light.css">
-    <link rel="stylesheet" href="../../theme/ambiance.css">
-    <link rel="stylesheet" href="../../theme/blackboard.css">
-    <link rel="stylesheet" href="../../theme/vibrant-ink.css">
-    <link rel="stylesheet" href="../../theme/solarized.css">
-    <link rel="stylesheet" href="../../theme/twilight.css">
-    <link rel="stylesheet" href="../../theme/midnight.css">
-    <link rel="stylesheet" href="../../addon/dialog/dialog.css">
+    <link rel="stylesheet" href="../../theme/neat.css" />
+    <link rel="stylesheet" href="../../theme/elegant.css" />
+    <link rel="stylesheet" href="../../theme/erlang-dark.css" />
+    <link rel="stylesheet" href="../../theme/night.css" />
+    <link rel="stylesheet" href="../../theme/monokai.css" />
+    <link rel="stylesheet" href="../../theme/cobalt.css" />
+    <link rel="stylesheet" href="../../theme/eclipse.css" />
+    <link rel="stylesheet" href="../../theme/rubyblue.css" />
+    <link rel="stylesheet" href="../../theme/lesser-dark.css" />
+    <link rel="stylesheet" href="../../theme/xq-dark.css" />
+    <link rel="stylesheet" href="../../theme/xq-light.css" />
+    <link rel="stylesheet" href="../../theme/ambiance.css" />
+    <link rel="stylesheet" href="../../theme/blackboard.css" />
+    <link rel="stylesheet" href="../../theme/vibrant-ink.css" />
+    <link rel="stylesheet" href="../../theme/solarized.css" />
+    <link rel="stylesheet" href="../../theme/twilight.css" />
+    <link rel="stylesheet" href="../../theme/midnight.css" />
+    <link rel="stylesheet" href="../../addon/dialog/dialog.css" />
     <script src="../../addon/selection/active-line.js"></script>
     <script src="../../addon/search/search.js"></script>
     <script src="../../addon/dialog/dialog.js"></script>
     <script src="../../addon/search/searchcursor.js"></script>
     <style>
-        .CodeMirror {
-          border: 1px solid #eee;
-          font-size : 20px;
-          height : auto !important;
-        }
-        .CodeMirror-activeline-background {background: #555555 !important;}
+      .CodeMirror {
+        border: 1px solid #eee;
+        font-size: 20px;
+        height: auto !important;
+      }
+      .CodeMirror-activeline-background {
+        background: #555555 !important;
+      }
     </style>
   </head>
   <body>
-    <p> Select Theme <select onchange="selectTheme()" id="selectTheme">
+    <p>
+      Select Theme
+      <select onchange="selectTheme()" id="selectTheme">
         <option>default</option>
         <option>ambiance</option>
         <option>blackboard</option>
@@ -59,26 +63,36 @@
         <option>vibrant-ink</option>
         <option>xq-dark</option>
         <option>xq-light</option>
-    </select>    Select Font Size <select onchange="selectFontsize()" id="selectFontSize">
-          <option value="13px">13px</option>
-          <option value="14px">14px</option>
-          <option value="16px">16px</option>
-          <option value="18px">18px</option>
-          <option value="20px" selected="selected">20px</option>
-          <option value="24px">24px</option>
-          <option value="26px">26px</option>
-          <option value="28px">28px</option>
-          <option value="30px">30px</option>
-          <option value="32px">32px</option>
-          <option value="34px">34px</option>
-          <option value="36px">36px</option>
-        </select>
-<label for="checkBoxReadOnly">Read-only</label>
-<input type="checkbox" id="checkBoxReadOnly" onchange="selectReadOnly()">
-<label for="id_tabToIndentSpace">Insert Spaces on Tab</label>
-<input type="checkbox" id="id_tabToIndentSpace" onchange="tabToIndentSpace()">
-</p>
-<textarea id="code" name="code">
+      </select>
+      Select Font Size
+      <select onchange="selectFontsize()" id="selectFontSize">
+        <option value="13px">13px</option>
+        <option value="14px">14px</option>
+        <option value="16px">16px</option>
+        <option value="18px">18px</option>
+        <option value="20px" selected="selected">20px</option>
+        <option value="24px">24px</option>
+        <option value="26px">26px</option>
+        <option value="28px">28px</option>
+        <option value="30px">30px</option>
+        <option value="32px">32px</option>
+        <option value="34px">34px</option>
+        <option value="36px">36px</option>
+      </select>
+      <label for="checkBoxReadOnly">Read-only</label>
+      <input
+        type="checkbox"
+        id="checkBoxReadOnly"
+        onchange="selectReadOnly()"
+      />
+      <label for="id_tabToIndentSpace">Insert Spaces on Tab</label>
+      <input
+        type="checkbox"
+        id="id_tabToIndentSpace"
+        onchange="tabToIndentSpace()"
+      />
+    </p>
+    <textarea id="code" name="code">
 ---------1---------2---------3---------4---------5---------6---------7---------8
 12345678911234567892123456789312345678941234567895123456789612345678971234567898
 000010 IDENTIFICATION DIVISION.                                        MODTGHERE
@@ -159,15 +173,16 @@
 000571     WRITE PRINT-LINE. 
 000572
 000580
-</textarea>
+</textarea
+    >
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
         mode: "text/x-cobol",
-        theme : "twilight",
+        theme: "twilight",
         styleActiveLine: true,
-        showCursorWhenSelecting : true,  
+        showCursorWhenSelecting: true,
       });
       function selectTheme() {
         var themeInput = document.getElementById("selectTheme");
@@ -176,18 +191,30 @@
       }
       function selectFontsize() {
         var fontSizeInput = document.getElementById("selectFontSize");
-        var fontSize = fontSizeInput.options[fontSizeInput.selectedIndex].innerHTML;
+        var fontSize =
+          fontSizeInput.options[fontSizeInput.selectedIndex].innerHTML;
         editor.getWrapperElement().style["font-size"] = fontSize;
         editor.refresh();
       }
       function selectReadOnly() {
-        editor.setOption("readOnly", document.getElementById("checkBoxReadOnly").checked);
+        editor.setOption(
+          "readOnly",
+          document.getElementById("checkBoxReadOnly").checked
+        );
       }
       function tabToIndentSpace() {
         if (document.getElementById("id_tabToIndentSpace").checked) {
-            editor.setOption("extraKeys", {Tab: function(cm) { cm.replaceSelection("    ", "end"); }});
+          editor.setOption("extraKeys", {
+            Tab: function (cm) {
+              cm.replaceSelection("    ", "end");
+            },
+          });
         } else {
-            editor.setOption("extraKeys", {Tab: function(cm) { cm.replaceSelection("    ", "end"); }});
+          editor.setOption("extraKeys", {
+            Tab: function (cm) {
+              cm.replaceSelection("    ", "end");
+            },
+          });
         }
       }
     </script>

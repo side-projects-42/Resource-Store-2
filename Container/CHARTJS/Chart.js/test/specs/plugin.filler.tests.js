@@ -1,57 +1,48 @@
-describe('Plugin.filler', function() {
+describe("Plugin.filler", function () {
   function decodedFillValues(chart) {
-    return chart.data.datasets.map(function(dataset, index) {
+    return chart.data.datasets.map(function (dataset, index) {
       var meta = chart.getDatasetMeta(index) || {};
       expect(meta.$filler).toBeDefined();
       return meta.$filler.fill;
     });
   }
 
-  describe('auto', jasmine.fixture.specs('plugin.filler'));
+  describe("auto", jasmine.fixture.specs("plugin.filler"));
 
-  describe('dataset.fill', function() {
-    it('should support boundaries', function() {
+  describe("dataset.fill", function () {
+    it("should support boundaries", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
-          datasets: [
-            {fill: 'origin'},
-            {fill: 'start'},
-            {fill: 'end'},
-          ]
-        }
+          datasets: [{ fill: "origin" }, { fill: "start" }, { fill: "end" }],
+        },
       });
 
-      expect(decodedFillValues(chart)).toEqual(['origin', 'start', 'end']);
+      expect(decodedFillValues(chart)).toEqual(["origin", "start", "end"]);
     });
 
-    it('should support absolute dataset index', function() {
+    it("should support absolute dataset index", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
-          datasets: [
-            {fill: 1},
-            {fill: 3},
-            {fill: 0},
-            {fill: 2},
-          ]
-        }
+          datasets: [{ fill: 1 }, { fill: 3 }, { fill: 0 }, { fill: 2 }],
+        },
       });
 
       expect(decodedFillValues(chart)).toEqual([1, 3, 0, 2]);
     });
 
-    it('should support relative dataset index', function() {
+    it("should support relative dataset index", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
           datasets: [
-            {fill: '+3'},
-            {fill: '-1'},
-            {fill: '+1'},
-            {fill: '-2'},
-          ]
-        }
+            { fill: "+3" },
+            { fill: "-1" },
+            { fill: "+1" },
+            { fill: "-2" },
+          ],
+        },
       });
 
       expect(decodedFillValues(chart)).toEqual([
@@ -62,31 +53,23 @@ describe('Plugin.filler', function() {
       ]);
     });
 
-    it('should handle default fill when true (origin)', function() {
+    it("should handle default fill when true (origin)", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
-          datasets: [
-            {fill: true},
-            {fill: false},
-          ]
-        }
+          datasets: [{ fill: true }, { fill: false }],
+        },
       });
 
-      expect(decodedFillValues(chart)).toEqual(['origin', false]);
+      expect(decodedFillValues(chart)).toEqual(["origin", false]);
     });
 
-    it('should ignore self dataset index', function() {
+    it("should ignore self dataset index", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
-          datasets: [
-            {fill: 0},
-            {fill: '-0'},
-            {fill: '+0'},
-            {fill: 3},
-          ]
-        }
+          datasets: [{ fill: 0 }, { fill: "-0" }, { fill: "+0" }, { fill: 3 }],
+        },
       });
 
       expect(decodedFillValues(chart)).toEqual([
@@ -97,17 +80,12 @@ describe('Plugin.filler', function() {
       ]);
     });
 
-    it('should ignore out of bounds dataset index', function() {
+    it("should ignore out of bounds dataset index", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
-          datasets: [
-            {fill: -2},
-            {fill: 4},
-            {fill: '-3'},
-            {fill: '+1'},
-          ]
-        }
+          datasets: [{ fill: -2 }, { fill: 4 }, { fill: "-3" }, { fill: "+1" }],
+        },
       });
 
       expect(decodedFillValues(chart)).toEqual([
@@ -118,25 +96,25 @@ describe('Plugin.filler', function() {
       ]);
     });
 
-    it('should ignore invalid values', function() {
+    it("should ignore invalid values", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
           datasets: [
-            {fill: 'foo'},
-            {fill: '+foo'},
-            {fill: '-foo'},
-            {fill: '+1.1'},
-            {fill: '-2.2'},
-            {fill: 3.3},
-            {fill: -4.4},
-            {fill: NaN},
-            {fill: Infinity},
-            {fill: ''},
-            {fill: null},
-            {fill: []},
-          ]
-        }
+            { fill: "foo" },
+            { fill: "+foo" },
+            { fill: "-foo" },
+            { fill: "+1.1" },
+            { fill: "-2.2" },
+            { fill: 3.3 },
+            { fill: -4.4 },
+            { fill: NaN },
+            { fill: Infinity },
+            { fill: "" },
+            { fill: null },
+            { fill: [] },
+          ],
+        },
       });
 
       expect(decodedFillValues(chart)).toEqual([
@@ -156,98 +134,97 @@ describe('Plugin.filler', function() {
     });
   });
 
-  describe('options.plugins.filler.propagate', function() {
-    it('should compute propagated fill targets if true', function() {
+  describe("options.plugins.filler.propagate", function () {
+    it("should compute propagated fill targets if true", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
           datasets: [
-            {fill: 'start', hidden: true},
-            {fill: '-1', hidden: true},
-            {fill: 1, hidden: true},
-            {fill: '-2', hidden: true},
-            {fill: '+1'},
-            {fill: '+2'},
-            {fill: '-1'},
-            {fill: 'end', hidden: true},
-          ]
+            { fill: "start", hidden: true },
+            { fill: "-1", hidden: true },
+            { fill: 1, hidden: true },
+            { fill: "-2", hidden: true },
+            { fill: "+1" },
+            { fill: "+2" },
+            { fill: "-1" },
+            { fill: "end", hidden: true },
+          ],
         },
         options: {
           plugins: {
             filler: {
-              propagate: true
-            }
-          }
-        }
-      });
-
-
-      expect(decodedFillValues(chart)).toEqual([
-        'start', // 'start'
-        'start', // 1 - 1 -> 0 (hidden) -> 'start'
-        'start', // 1 (hidden) -> 0 (hidden) -> 'start'
-        'start', // 3 - 2 -> 1 (hidden) -> 0 (hidden) -> 'start'
-        5,       // 4 + 1
-        'end',   // 5 + 2 -> 7 (hidden) -> 'end'
-        5,       // 6 - 1 -> 5
-        'end',   // 'end'
-      ]);
-    });
-
-    it('should preserve initial fill targets if false', function() {
-      var chart = window.acquireChart({
-        type: 'line',
-        data: {
-          datasets: [
-            {fill: 'start', hidden: true},
-            {fill: '-1', hidden: true},
-            {fill: 1, hidden: true},
-            {fill: '-2', hidden: true},
-            {fill: '+1'},
-            {fill: '+2'},
-            {fill: '-1'},
-            {fill: 'end', hidden: true},
-          ]
+              propagate: true,
+            },
+          },
         },
-        options: {
-          plugins: {
-            filler: {
-              propagate: false
-            }
-          }
-        }
       });
 
       expect(decodedFillValues(chart)).toEqual([
-        'start', // 'origin'
-        0,       // 1 - 1
-        1,       // 1
-        1,       // 3 - 2
-        5,       // 4 + 1
-        7,       // 5 + 2
-        5,       // 6 - 1
-        'end',   // 'end'
+        "start", // 'start'
+        "start", // 1 - 1 -> 0 (hidden) -> 'start'
+        "start", // 1 (hidden) -> 0 (hidden) -> 'start'
+        "start", // 3 - 2 -> 1 (hidden) -> 0 (hidden) -> 'start'
+        5, // 4 + 1
+        "end", // 5 + 2 -> 7 (hidden) -> 'end'
+        5, // 6 - 1 -> 5
+        "end", // 'end'
       ]);
     });
 
-    it('should prevent recursive propagation', function() {
+    it("should preserve initial fill targets if false", function () {
       var chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data: {
           datasets: [
-            {fill: '+2', hidden: true},
-            {fill: '-1', hidden: true},
-            {fill: '-1', hidden: true},
-            {fill: '-2'}
-          ]
+            { fill: "start", hidden: true },
+            { fill: "-1", hidden: true },
+            { fill: 1, hidden: true },
+            { fill: "-2", hidden: true },
+            { fill: "+1" },
+            { fill: "+2" },
+            { fill: "-1" },
+            { fill: "end", hidden: true },
+          ],
         },
         options: {
           plugins: {
             filler: {
-              propagate: true
-            }
-          }
-        }
+              propagate: false,
+            },
+          },
+        },
+      });
+
+      expect(decodedFillValues(chart)).toEqual([
+        "start", // 'origin'
+        0, // 1 - 1
+        1, // 1
+        1, // 3 - 2
+        5, // 4 + 1
+        7, // 5 + 2
+        5, // 6 - 1
+        "end", // 'end'
+      ]);
+    });
+
+    it("should prevent recursive propagation", function () {
+      var chart = window.acquireChart({
+        type: "line",
+        data: {
+          datasets: [
+            { fill: "+2", hidden: true },
+            { fill: "-1", hidden: true },
+            { fill: "-1", hidden: true },
+            { fill: "-2" },
+          ],
+        },
+        options: {
+          plugins: {
+            filler: {
+              propagate: true,
+            },
+          },
+        },
       });
 
       expect(decodedFillValues(chart)).toEqual([

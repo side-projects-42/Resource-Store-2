@@ -1,0 +1,26 @@
+{
+  "name": "nri-oracledb",
+  "fullName": "newrelic/nri-oracledb",
+  "slug": "newrelic-nri-oracledb",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Infrastructure Oracle Database Integration",
+  "supportUrl": "https://discuss.newrelic.com/c/support-products-agents/new-relic-infrastructure",
+  "githubUrl": "https://github.com/newrelic/nri-oracledb",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/nri-oracledb",
+  "iconUrl": null,
+  "shortDescription": "Monitoring for Oracle databases",
+  "description": "Capture critical performance metrics and inventory reported by Oracle databases",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Go",
+  "projectTags": [
+    "nri"
+  ],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Infrastructure Oracle Database Integration",
+    "url": "https://github.com/newrelic/nri-oracledb"
+  }
+}

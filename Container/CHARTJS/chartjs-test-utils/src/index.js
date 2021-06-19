@@ -1,9 +1,9 @@
-import Context from './context';
-import matchers from './matchers';
-import {_acquireChart, _releaseChart, injectCSS} from './utils';
+import Context from "./context";
+import matchers from "./matchers";
+import { _acquireChart, _releaseChart, injectCSS } from "./utils";
 
-export * from './fixture';
-export {afterEvent, waitForResize, triggerMouseEvent} from './utils';
+export * from "./fixture";
+export { afterEvent, waitForResize, triggerMouseEvent } from "./utils";
 
 // Keep track of all acquired charts to automatically release them after each specs
 var charts = {};
@@ -37,14 +37,15 @@ export function createMockContext() {
 export function injectWrapperCSS() {
   // some style initialization to limit differences between browsers across different platforms.
   injectCSS(
-    '.chartjs-wrapper, .chartjs-wrapper canvas {' +
-		'border: 0;' +
-		'margin: 0;' +
-		'padding: 0;' +
-		'}' +
-		'.chartjs-wrapper {' +
-		'position: absolute' +
-		'}');
+    ".chartjs-wrapper, .chartjs-wrapper canvas {" +
+      "border: 0;" +
+      "margin: 0;" +
+      "padding: 0;" +
+      "}" +
+      ".chartjs-wrapper {" +
+      "position: absolute" +
+      "}"
+  );
 }
 
 export function addMatchers() {
@@ -52,7 +53,7 @@ export function addMatchers() {
 }
 
 export function releaseCharts() {
-  Object.keys(charts).forEach(function(id) {
+  Object.keys(charts).forEach(function (id) {
     var chart = charts[id];
     if (!(chart.$test || {}).persistent) {
       _releaseChart(chart);

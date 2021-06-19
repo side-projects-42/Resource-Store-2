@@ -8,37 +8,39 @@ To create a Bar Funnel Chart, include `Chart.BarFunnel.js` after `Chart.js` and 
 
 ```javascript
 var chart = new Chart({
-	type: 'barFunnel',
-	data: dataObject
+  type: "barFunnel",
+  data: dataObject,
 });
 ```
 
 ### Configuration
+
 The Bar Funnel chart colored region and step labels can be configured by placing options into the config that is passed to the chart upon creation.
 
 ```javascript
 new Chart({
-	config: {
-		region: {
-			display: true,
-			borderColor: "#F6C85F",
-			backgroundColor: "rgba(246, 200, 95, 0.2)"
-		},
+  config: {
+    region: {
+      display: true,
+      borderColor: "#F6C85F",
+      backgroundColor: "rgba(246, 200, 95, 0.2)",
+    },
 
-		elements: {
-			rectangle: {
-				stepLabel: {
-					display: true,
-					fontSize: 20
-					// color: "red"
-				}
-			}
-		}
-	}
+    elements: {
+      rectangle: {
+        stepLabel: {
+          display: true,
+          fontSize: 20,
+          // color: "red"
+        },
+      },
+    },
+  },
 });
 ```
 
 ## Example
+
 ![BarFunnel Example Image](barfunnel.png)
 
 ## License

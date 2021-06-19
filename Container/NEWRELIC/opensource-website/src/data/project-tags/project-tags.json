@@ -1,0 +1,118 @@
+[
+  {
+    "title": "New Relic One Application",
+    "slug": "nr1-app"
+  },
+  {
+    "title": "New Relic Infrastructure",
+    "slug": "nri"
+  },
+  {
+    "title": "Tools",
+    "slug": "tools"
+  },
+  {
+    "title": "Template",
+    "slug": "template"
+  },
+  {
+    "title": "Training",
+    "slug": "training"
+  },
+  {
+    "title": "Exporter",
+    "slug": "exporter"
+  },
+  {
+    "title": "GraphQL",
+    "slug": "graphql"
+  },
+  {
+    "title": "Software Development Kit",
+    "slug": "sdk"
+  },
+  {
+    "title": "Network Monitoring",
+    "slug": "network"
+  },
+  {
+    "title": "Agent",
+    "slug": "agent"
+  },
+  {
+    "title": "Video",
+    "slug": "video"
+  },
+  {
+    "title": "OpenTelemetry",
+    "slug": "opentelemetry"
+  },
+  {
+    "title": "Command Line Utility",
+    "slug": "cli"
+  },
+  {
+    "title": "Logging",
+    "slug": "logging"
+  },
+  {
+    "title": "Library",
+    "slug": "lib"
+  },
+  {
+    "title": "User Experience",
+    "slug": "ux"
+  },
+  {
+    "title": "Kubernetes",
+    "slug": "k8"
+  },
+  {
+    "title": "Pivotal Cloud Foundry",
+    "slug": "pcf"
+  },
+  {
+    "title": "Documentation",
+    "slug": "docs"
+  },
+  {
+    "title": "Developer Toolkit",
+    "slug": "dev-toolkit"
+  },
+  {
+    "title": "Browser",
+    "slug": "browser"
+  },
+  {
+    "title": "CI",
+    "slug": "ci"
+  },
+  {
+    "title": "GitHub Action",
+    "slug": "github-action"
+  },
+  {
+    "title": "Terraform",
+    "slug": "terraform"
+  },
+  {
+    "title": "Open-Source-Management",
+    "slug": "open-source-management"
+  },
+  {
+    "title": "New Relic Labs",
+    "slug": "nrlabs"
+  },
+  {
+    "title": "Instrumentation",
+    "slug": "instrumentation"
+  },
+  {
+    "title": "Mobile",
+    "slug": "mobile"
+  }, 
+  {
+    "title": "Visualizations", 
+    "slug": "visualizations"
+  }
+]

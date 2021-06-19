@@ -74,4 +74,4 @@ happen automatically.
 
 Keep your working directory in the root tracing-framework\ path and
 use the `anvil` commands as described above. Builds may be a little
-slower than on *nix systems but should still work!
+slower than on \*nix systems but should still work!

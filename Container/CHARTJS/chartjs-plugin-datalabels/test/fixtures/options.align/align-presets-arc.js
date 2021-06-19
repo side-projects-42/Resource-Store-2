@@ -1,58 +1,50 @@
 var datasets = [];
 var data = [];
-var inputs = [
-  'top',
-  'start',
-  'left',
-  'center',
-  'right',
-  'end',
-  'bottom'
-];
+var inputs = ["top", "start", "left", "center", "right", "end", "bottom"];
 
 for (var i = 0; i < inputs.length; ++i) {
   data.push(1);
 }
 
-['end', 'center', 'start'].forEach(function(anchor) {
+["end", "center", "start"].forEach(function (anchor) {
   datasets.push({
     data: data,
     datalabels: {
       anchor: anchor,
-      align: inputs
-    }
+      align: inputs,
+    },
   });
 });
 
 export default {
   config: {
-    type: 'doughnut',
+    type: "doughnut",
     data: {
-      datasets: datasets
+      datasets: datasets,
     },
     options: {
       cutoutPercentage: 25,
       layout: {
-        padding: 24
+        padding: 24,
       },
       plugins: {
         datalabels: {
-          backgroundColor: '#00ff77',
-          borderColor: 'black',
+          backgroundColor: "#00ff77",
+          borderColor: "black",
           borderWidth: 2,
           font: {
-            size: 0
+            size: 0,
           },
           offset: 0,
-          padding: 8
-        }
-      }
-    }
+          padding: 8,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 512,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

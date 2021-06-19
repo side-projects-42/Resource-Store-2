@@ -6,8 +6,8 @@
   }
 
   let g = f();
-  assert.deepEqual(g.next(), {value: 1, done: false});
-  assert.deepEqual(g.next(), {value: undefined, done: true});
+  assert.deepEqual(g.next(), { value: 1, done: false });
+  assert.deepEqual(g.next(), { value: undefined, done: true });
 }
 
 {
@@ -16,6 +16,6 @@
   }
 
   let g = f();
-  assert.deepEqual(g.next(), {value: 1, done: false});
-  assert.deepEqual(g.next(), {value: undefined, done: true});
+  assert.deepEqual(g.next(), { value: 1, done: false });
+  assert.deepEqual(g.next(), { value: undefined, done: true });
 }

@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
-var traceur = require('./traceur.js');
+var fs = require("fs");
+var traceur = require("./traceur.js");
 
 var System = new traceur.loader.NodeTraceurLoader();
 
 var traceurMap;
 
 Reflect.global.System = System;
-System.map = System.semverMap('traceur@' + System.version);
+System.map = System.semverMap("traceur@" + System.version);
 
 module.exports = System;

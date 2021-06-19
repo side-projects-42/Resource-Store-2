@@ -1,6 +1,6 @@
-import Chart from 'chart.js';
-import utils from './utils';
-import positioners from './positioners';
+import Chart from "chart.js";
+import utils from "./utils";
+import positioners from "./positioners";
 
 var helpers = Chart.helpers;
 var rasterize = utils.rasterize;
@@ -18,14 +18,14 @@ function boundingRects(model) {
       x: tx - padding.left - borderWidth,
       y: ty - padding.top - borderWidth,
       w: tw + padding.width + borderWidth * 2,
-      h: th + padding.height + borderWidth * 2
+      h: th + padding.height + borderWidth * 2,
     },
     text: {
       x: tx,
       y: ty,
       w: tw,
-      h: th
-    }
+      h: th,
+    },
   };
 }
 
@@ -38,13 +38,11 @@ function getScaleOrigin(el) {
   }
 
   if (scale.xCenter !== undefined && scale.yCenter !== undefined) {
-    return {x: scale.xCenter, y: scale.yCenter};
+    return { x: scale.xCenter, y: scale.yCenter };
   }
 
   var pixel = scale.getBasePixel();
-  return horizontal ?
-    {x: pixel, y: null} :
-    {x: null, y: pixel};
+  return horizontal ? { x: pixel, y: null } : { x: null, y: pixel };
 }
 
 function getPositioner(el) {
@@ -77,7 +75,8 @@ function drawFrame(ctx, rect, model) {
     rasterize(rect.y) + borderWidth / 2,
     rasterize(rect.w) - borderWidth,
     rasterize(rect.h) - borderWidth,
-    model.borderRadius);
+    model.borderRadius
+  );
 
   ctx.closePath();
 
@@ -89,7 +88,7 @@ function drawFrame(ctx, rect, model) {
   if (borderColor && borderWidth) {
     ctx.strokeStyle = borderColor;
     ctx.lineWidth = borderWidth;
-    ctx.lineJoin = 'miter';
+    ctx.lineJoin = "miter";
     ctx.stroke();
   }
 }
@@ -100,9 +99,9 @@ function textGeometry(rect, align, font) {
   var x = rect.x;
   var y = rect.y + h / 2;
 
-  if (align === 'center') {
+  if (align === "center") {
     x += w / 2;
-  } else if (align === 'end' || align === 'right') {
+  } else if (align === "end" || align === "right") {
     x += w;
   }
 
@@ -110,7 +109,7 @@ function textGeometry(rect, align, font) {
     h: h,
     w: w,
     x: x,
-    y: y
+    y: y,
   };
 }
 
@@ -160,7 +159,7 @@ function drawText(ctx, lines, rect, model) {
 
   ctx.font = font.string;
   ctx.textAlign = align;
-  ctx.textBaseline = 'middle';
+  ctx.textBaseline = "middle";
   ctx.shadowBlur = model.textShadowBlur;
   ctx.shadowColor = model.textShadowColor;
 
@@ -168,7 +167,7 @@ function drawText(ctx, lines, rect, model) {
     ctx.fillStyle = color;
   }
   if (stroked) {
-    ctx.lineJoin = 'round';
+    ctx.lineJoin = "round";
     ctx.lineWidth = strokeWidth;
     ctx.strokeStyle = strokeColor;
   }
@@ -179,12 +178,12 @@ function drawText(ctx, lines, rect, model) {
       filled: filled,
       w: rect.w,
       x: rect.x,
-      y: rect.y + rect.h * i
+      y: rect.y + rect.h * i,
     });
   }
 }
 
-var Label = function(config, ctx, el, index) {
+var Label = function (config, ctx, el, index) {
   var me = this;
 
   me._config = config;
@@ -199,16 +198,20 @@ helpers.extend(Label.prototype, {
   /**
    * @private
    */
-  _modelize: function(display, lines, config, context) {
+  _modelize: function (display, lines, config, context) {
     var me = this;
     var index = me._index;
     var resolve = helpers.options.resolve;
     var font = utils.parseFont(resolve([config.font, {}], context, index));
-    var color = resolve([config.color, Chart.defaults.global.defaultFontColor], context, index);
+    var color = resolve(
+      [config.color, Chart.defaults.global.defaultFontColor],
+      context,
+      index
+    );
 
     return {
-      align: resolve([config.align, 'center'], context, index),
-      anchor: resolve([config.anchor, 'center'], context, index),
+      align: resolve([config.align, "center"], context, index),
+      anchor: resolve([config.anchor, "center"], context, index),
       area: context.chart.chartArea,
       backgroundColor: resolve([config.backgroundColor, null], context, index),
       borderColor: resolve([config.borderColor, null], context, index),
@@ -223,19 +226,21 @@ helpers.extend(Label.prototype, {
       offset: resolve([config.offset, 0], context, index),
       opacity: resolve([config.opacity, 1], context, index),
       origin: getScaleOrigin(me._el),
-      padding: helpers.options.toPadding(resolve([config.padding, 0], context, index)),
+      padding: helpers.options.toPadding(
+        resolve([config.padding, 0], context, index)
+      ),
       positioner: getPositioner(me._el),
       rotation: resolve([config.rotation, 0], context, index) * (Math.PI / 180),
       size: utils.textSize(me._ctx, lines, font),
-      textAlign: resolve([config.textAlign, 'start'], context, index),
+      textAlign: resolve([config.textAlign, "start"], context, index),
       textShadowBlur: resolve([config.textShadowBlur, 0], context, index),
       textShadowColor: resolve([config.textShadowColor, color], context, index),
       textStrokeColor: resolve([config.textStrokeColor, color], context, index),
-      textStrokeWidth: resolve([config.textStrokeWidth, 0], context, index)
+      textStrokeWidth: resolve([config.textStrokeWidth, 0], context, index),
     };
   },
 
-  update: function(context) {
+  update: function (context) {
     var me = this;
     var model = null;
     var rects = null;
@@ -245,11 +250,18 @@ helpers.extend(Label.prototype, {
 
     // We first resolve the display option (separately) to avoid computing
     // other options in case the label is hidden (i.e. display: false).
-    var display = helpers.options.resolve([config.display, true], context, index);
+    var display = helpers.options.resolve(
+      [config.display, true],
+      context,
+      index
+    );
 
     if (display) {
       value = context.dataset.data[index];
-      label = helpers.valueOrDefault(helpers.callback(config.formatter, [value, context]), value);
+      label = helpers.valueOrDefault(
+        helpers.callback(config.formatter, [value, context]),
+        value
+      );
       lines = helpers.isNullOrUndef(label) ? [] : utils.toTextLines(label);
 
       if (lines.length) {
@@ -262,23 +274,23 @@ helpers.extend(Label.prototype, {
     me._rects = rects;
   },
 
-  geometry: function() {
+  geometry: function () {
     return this._rects ? this._rects.frame : {};
   },
 
-  rotation: function() {
+  rotation: function () {
     return this._model ? this._model.rotation : 0;
   },
 
-  visible: function() {
+  visible: function () {
     return this._model && this._model.opacity;
   },
 
-  model: function() {
+  model: function () {
     return this._model;
   },
 
-  draw: function(chart, center) {
+  draw: function (chart, center) {
     var me = this;
     var ctx = chart.ctx;
     var model = me._model;
@@ -298,7 +310,8 @@ helpers.extend(Label.prototype, {
         area.left,
         area.top,
         area.right - area.left,
-        area.bottom - area.top);
+        area.bottom - area.top
+      );
       ctx.clip();
     }
 
@@ -310,7 +323,7 @@ helpers.extend(Label.prototype, {
     drawText(ctx, model.lines, rects.text, model);
 
     ctx.restore();
-  }
+  },
 });
 
 export default Label;

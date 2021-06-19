@@ -17,59 +17,55 @@
 
 -->
 <html>
-<head>
-<title></title>
-<script src="../../../node_modules/closure-library/closure/goog/base.js"></script>
-<script>
+  <head>
+    <title></title>
+    <script src="../../../node_modules/closure-library/closure/goog/base.js"></script>
+    <script>
+      goog.require("goog.testing.jsunit");
+    </script>
+    <script src="../../../bin/traceur.js"></script>
+  </head>
+  <body>
+    <script>
+      var removeDotSegments = traceur.util.removeDotSegments;
 
-goog.require('goog.testing.jsunit');
+      function testRemoveDotSegments() {
+        assertEquals("/", removeDotSegments("/"));
+        assertEquals(".", removeDotSegments("."));
+        assertEquals("./", removeDotSegments("./"));
+        assertEquals("/", removeDotSegments("/."));
+        assertEquals("/", removeDotSegments("/.."));
+        assertEquals("../", removeDotSegments("../"));
+        assertEquals("..", removeDotSegments(".."));
+        assertEquals("../..", removeDotSegments("../.."));
+        assertEquals("../../", removeDotSegments("../../"));
+        assertEquals("../a", removeDotSegments("../a"));
+        assertEquals("../a/", removeDotSegments("../a/"));
 
-</script>
-<script src="../../../bin/traceur.js"></script>
-</head>
-<body>
-<script>
+        assertEquals(".", removeDotSegments("a/.."));
+        assertEquals("./", removeDotSegments("a/../"));
+        assertEquals("a", removeDotSegments("a/b/.."));
+        assertEquals("a/", removeDotSegments("a/b/../"));
 
-var removeDotSegments = traceur.util.removeDotSegments;
+        assertEquals("b", removeDotSegments("a/../b"));
+        assertEquals("b/", removeDotSegments("a/../b/"));
 
-function testRemoveDotSegments() {
-  assertEquals('/', removeDotSegments('/'));
-  assertEquals('.', removeDotSegments('.'));
-  assertEquals('./', removeDotSegments('./'));
-  assertEquals('/', removeDotSegments('/.'));
-  assertEquals('/', removeDotSegments('/..'));
-  assertEquals('../', removeDotSegments('../'));
-  assertEquals('..', removeDotSegments('..'));
-  assertEquals('../..', removeDotSegments('../..'));
-  assertEquals('../../', removeDotSegments('../../'));
-  assertEquals('../a', removeDotSegments('../a'));
-  assertEquals('../a/', removeDotSegments('../a/'));
+        assertEquals("../b", removeDotSegments("a/../../b"));
+        assertEquals("../b/", removeDotSegments("a/../../b/"));
 
-  assertEquals('.', removeDotSegments('a/..'));
-  assertEquals('./', removeDotSegments('a/../'));
-  assertEquals('a', removeDotSegments('a/b/..'));
-  assertEquals('a/', removeDotSegments('a/b/../'));
+        assertEquals("..", removeDotSegments("a/../../b/.."));
+        assertEquals("../", removeDotSegments("a/../../b/../"));
 
-  assertEquals('b', removeDotSegments('a/../b'));
-  assertEquals('b/', removeDotSegments('a/../b/'));
+        assertEquals("a/b", removeDotSegments("a/./b"));
+        assertEquals("a/b/", removeDotSegments("a/./b/"));
+        assertEquals("a/b", removeDotSegments("a/././b"));
+        assertEquals("a/b/", removeDotSegments("a/././b/"));
+        assertEquals("a/b", removeDotSegments("a/././b/."));
+        assertEquals("a/b/", removeDotSegments("a/././b/./"));
 
-  assertEquals('../b', removeDotSegments('a/../../b'));
-  assertEquals('../b/', removeDotSegments('a/../../b/'));
-
-  assertEquals('..', removeDotSegments('a/../../b/..'));
-  assertEquals('../', removeDotSegments('a/../../b/../'));
-
-  assertEquals('a/b', removeDotSegments('a/./b'));
-  assertEquals('a/b/', removeDotSegments('a/./b/'));
-  assertEquals('a/b', removeDotSegments('a/././b'));
-  assertEquals('a/b/', removeDotSegments('a/././b/'));
-  assertEquals('a/b', removeDotSegments('a/././b/.'));
-  assertEquals('a/b/', removeDotSegments('a/././b/./'));
-
-  assertEquals('b', removeDotSegments('a/./../b'));
-  assertEquals('b/', removeDotSegments('a/./../b/'));
-}
-
-</script>
-</body>
+        assertEquals("b", removeDotSegments("a/./../b"));
+        assertEquals("b/", removeDotSegments("a/./../b/"));
+      }
+    </script>
+  </body>
 </html>

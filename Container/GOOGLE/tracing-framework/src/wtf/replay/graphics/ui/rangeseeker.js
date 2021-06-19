@@ -11,22 +11,20 @@
  * @author chizeng@google.com (Chi Zeng)
  */
 
-goog.provide('wtf.replay.graphics.ui.RangeSeeker');
+goog.provide("wtf.replay.graphics.ui.RangeSeeker");
 
-goog.require('goog.dom.TagName');
-goog.require('goog.dom.classes');
-goog.require('goog.events');
-goog.require('goog.events.EventType');
-goog.require('goog.soy');
-goog.require('goog.string');
-goog.require('wtf.events');
-goog.require('wtf.replay.graphics.ui.ReplayFramePainter');
-goog.require('wtf.replay.graphics.ui.graphicsRangeSeeker');
-goog.require('wtf.timing');
-goog.require('wtf.ui.Control');
-goog.require('wtf.ui.Tooltip');
-
-
+goog.require("goog.dom.TagName");
+goog.require("goog.dom.classes");
+goog.require("goog.events");
+goog.require("goog.events.EventType");
+goog.require("goog.soy");
+goog.require("goog.string");
+goog.require("wtf.events");
+goog.require("wtf.replay.graphics.ui.ReplayFramePainter");
+goog.require("wtf.replay.graphics.ui.graphicsRangeSeeker");
+goog.require("wtf.timing");
+goog.require("wtf.ui.Control");
+goog.require("wtf.ui.Tooltip");
 
 /**
  * Used for efficiently seeking within a range. Disabled by default.
@@ -40,8 +38,13 @@ goog.require('wtf.ui.Tooltip');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.replay.graphics.ui.RangeSeeker =
-    function(min, max, parentElement, opt_domHelper, opt_frameTimeVis) {
+wtf.replay.graphics.ui.RangeSeeker = function (
+  min,
+  max,
+  parentElement,
+  opt_domHelper,
+  opt_frameTimeVis
+) {
   goog.base(this, parentElement, opt_domHelper);
 
   /**
@@ -75,8 +78,9 @@ wtf.replay.graphics.ui.RangeSeeker =
    * @private
    */
   this.valueDisplayer_ = this.createValueDisplayer_();
-  this.getChildElement(goog.getCssName('graphicsReplayRangeSeekerDisplayer'))
-      .appendChild(this.valueDisplayer_);
+  this.getChildElement(
+    goog.getCssName("graphicsReplayRangeSeekerDisplayer")
+  ).appendChild(this.valueDisplayer_);
 
   /**
    * The frame time visualizer.
@@ -91,7 +95,8 @@ wtf.replay.graphics.ui.RangeSeeker =
    * @private
    */
   this.seekerCanvas_ = /** @type {!HTMLCanvasElement} */ (
-      this.getChildElement(goog.getCssName('canvas')));
+    this.getChildElement(goog.getCssName("canvas"))
+  );
 
   /**
    * The frame painter with seeking controls.
@@ -112,30 +117,30 @@ wtf.replay.graphics.ui.RangeSeeker =
 
   // Relayout as required.
   this.getHandler().listen(
-      this.viewportSizeMonitor_,
-      goog.events.EventType.RESIZE,
-      this.layout, false);
+    this.viewportSizeMonitor_,
+    goog.events.EventType.RESIZE,
+    this.layout,
+    false
+  );
 
   wtf.timing.setImmediate(this.layout, this);
   this.requestRepaint();
 };
 goog.inherits(wtf.replay.graphics.ui.RangeSeeker, wtf.ui.Control);
 
-
 /**
  * @override
  */
-wtf.replay.graphics.ui.RangeSeeker.prototype.disposeInternal = function() {
+wtf.replay.graphics.ui.RangeSeeker.prototype.disposeInternal = function () {
   var commandManager = wtf.events.getCommandManager();
   if (commandManager) {
-    commandManager.unregisterCommand('goto_replay_frame');
+    commandManager.unregisterCommand("goto_replay_frame");
   }
 
   wtf.events.releaseViewportSizeMonitor(this.viewportSizeMonitor_);
 
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Events related to playing.
@@ -146,44 +151,53 @@ wtf.replay.graphics.ui.RangeSeeker.EventType = {
    * The value of the seeker changed. The change was not caused by
    * {@see setValue}.
    */
-  VALUE_CHANGED: goog.events.getUniqueId('value_changed')
+  VALUE_CHANGED: goog.events.getUniqueId("value_changed"),
 };
-
 
 /**
  * @override
  */
-wtf.replay.graphics.ui.RangeSeeker.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
+wtf.replay.graphics.ui.RangeSeeker.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(
       wtf.replay.graphics.ui.graphicsRangeSeeker.controller,
-      undefined, undefined, dom));
+      undefined,
+      undefined,
+      dom
+    )
+  );
 };
-
 
 /**
  * Creates the frame painter with seeking controls.
  * @return {!wtf.replay.graphics.ui.ReplayFramePainter} The frame painter.
  * @private
  */
-wtf.replay.graphics.ui.RangeSeeker.prototype.createFramePainter_ = function() {
+wtf.replay.graphics.ui.RangeSeeker.prototype.createFramePainter_ = function () {
   var replayFramePainter = new wtf.replay.graphics.ui.ReplayFramePainter(
-      this.seekerCanvas_, this.min_, this.max_,
-      this.frameTimeVisualizer_);
+    this.seekerCanvas_,
+    this.min_,
+    this.max_,
+    this.frameTimeVisualizer_
+  );
   this.setPaintContext(replayFramePainter);
 
   var commandManager = wtf.events.getCommandManager();
   if (commandManager) {
     commandManager.registerSimpleCommand(
-        'goto_replay_frame', function(source, target, frame) {
-          this.setValue(frame);
-          this.emitEvent(
-              wtf.replay.graphics.ui.RangeSeeker.EventType.VALUE_CHANGED);
-        }, this);
+      "goto_replay_frame",
+      function (source, target, frame) {
+        this.setValue(frame);
+        this.emitEvent(
+          wtf.replay.graphics.ui.RangeSeeker.EventType.VALUE_CHANGED
+        );
+      },
+      this
+    );
   }
 
   return replayFramePainter;
 };
-
 
 /**
  * Creates the value displayer.
@@ -191,14 +205,16 @@ wtf.replay.graphics.ui.RangeSeeker.prototype.createFramePainter_ = function() {
  * @private
  */
 wtf.replay.graphics.ui.RangeSeeker.prototype.createValueDisplayer_ =
-    function() {
-  var valueDisplayer = this.getDom().createElement(goog.dom.TagName.INPUT);
-  goog.dom.classes.add(valueDisplayer, goog.getCssName('kTextField'));
-  valueDisplayer.type = 'text';
+  function () {
+    var valueDisplayer = this.getDom().createElement(goog.dom.TagName.INPUT);
+    goog.dom.classes.add(valueDisplayer, goog.getCssName("kTextField"));
+    valueDisplayer.type = "text";
 
-  // Update the seeker if displayer changes.
-  this.getHandler().listen(valueDisplayer,
-      goog.events.EventType.CHANGE, function() {
+    // Update the seeker if displayer changes.
+    this.getHandler().listen(
+      valueDisplayer,
+      goog.events.EventType.CHANGE,
+      function () {
         var newValue = goog.string.parseInt(valueDisplayer.value);
 
         // Clamp the value.
@@ -210,51 +226,51 @@ wtf.replay.graphics.ui.RangeSeeker.prototype.createValueDisplayer_ =
 
         this.setValue(newValue);
         this.emitEvent(
-            wtf.replay.graphics.ui.RangeSeeker.EventType.VALUE_CHANGED);
-      }, undefined, this);
-  return valueDisplayer;
-};
-
+          wtf.replay.graphics.ui.RangeSeeker.EventType.VALUE_CHANGED
+        );
+      },
+      undefined,
+      this
+    );
+    return valueDisplayer;
+  };
 
 /**
  * Determines if this range seeker is enabled.
  * @return {boolean} True if and only if this seeker is enabled.
  */
-wtf.replay.graphics.ui.RangeSeeker.prototype.isEnabled = function() {
+wtf.replay.graphics.ui.RangeSeeker.prototype.isEnabled = function () {
   return this.enabled_;
 };
-
 
 /**
  * Sets whether this range seeker is enabled.
  * @param {boolean} enabled The true/false enabled state of the range seeker.
  */
-wtf.replay.graphics.ui.RangeSeeker.prototype.setEnabled = function(enabled) {
+wtf.replay.graphics.ui.RangeSeeker.prototype.setEnabled = function (enabled) {
   if (enabled) {
     // Enable.
-    this.valueDisplayer_.removeAttribute('disabled');
+    this.valueDisplayer_.removeAttribute("disabled");
   } else {
     // Disable.
-    this.valueDisplayer_.disabled = 'disabled';
+    this.valueDisplayer_.disabled = "disabled";
   }
   this.enabled_ = enabled;
 };
-
 
 /**
  * Gets the value.
  * @return {number} The current value.
  */
-wtf.replay.graphics.ui.RangeSeeker.prototype.getValue = function() {
+wtf.replay.graphics.ui.RangeSeeker.prototype.getValue = function () {
   return this.framePainter_.getCurrentFrame();
 };
-
 
 /**
  * Sets the value. Does not emit a value changed event.
  * @param {number} value The new value.
  */
-wtf.replay.graphics.ui.RangeSeeker.prototype.setValue = function(value) {
+wtf.replay.graphics.ui.RangeSeeker.prototype.setValue = function (value) {
   this.framePainter_.setCurrentFrame(value);
   this.valueDisplayer_.value = value;
 };

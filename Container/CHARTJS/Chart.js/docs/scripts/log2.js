@@ -1,4 +1,4 @@
-import {Scale, LinearScale} from 'chart.js';
+import { Scale, LinearScale } from "chart.js";
 
 export default class Log2Axis extends Scale {
   constructor(cfg) {
@@ -13,7 +13,7 @@ export default class Log2Axis extends Scale {
   }
 
   determineDataLimits() {
-    const {min, max} = this.getMinMax(true);
+    const { min, max } = this.getMinMax(true);
     this.min = isFinite(min) ? Math.max(0, min) : null;
     this.max = isFinite(max) ? Math.max(0, max) : null;
   }
@@ -24,7 +24,7 @@ export default class Log2Axis extends Scale {
     let power = Math.floor(Math.log2(this.min || 1));
     let maxPower = Math.ceil(Math.log2(this.max || 2));
     while (power <= maxPower) {
-      ticks.push({value: Math.pow(2, power)});
+      ticks.push({ value: Math.pow(2, power) });
       power += 1;
     }
 
@@ -50,8 +50,11 @@ export default class Log2Axis extends Scale {
       value = this.min;
     }
 
-    return this.getPixelForDecimal(value === this.min ? 0
-      : (Math.log2(value) - this._startValue) / this._valueRange);
+    return this.getPixelForDecimal(
+      value === this.min
+        ? 0
+        : (Math.log2(value) - this._startValue) / this._valueRange
+    );
   }
 
   getValueForPixel(pixel) {
@@ -60,7 +63,7 @@ export default class Log2Axis extends Scale {
   }
 }
 
-Log2Axis.id = 'log2';
+Log2Axis.id = "log2";
 Log2Axis.defaults = {};
 
 // The derived axis is registered like this:

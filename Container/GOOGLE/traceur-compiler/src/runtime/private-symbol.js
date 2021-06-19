@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import newUniqueString from './new-unique-string.js';
+import newUniqueString from "./new-unique-string.js";
 
-const $Symbol = typeof Symbol === 'function' ? Symbol : undefined;
+const $Symbol = typeof Symbol === "function" ? Symbol : undefined;
 const $getOwnPropertySymbols = Object.getOwnPropertySymbols;
-const $create = Object.create
+const $create = Object.create;
 
 // Uses Symbol or Symbol polyfill.
 // We override getOwnPropertySymbols to filter out these private symbols.
@@ -25,20 +25,20 @@ const privateNames = $create(null);
 
 export function isPrivateSymbol(s) {
   return privateNames[s];
-};
+}
 
 // This creates a Symbol that we filter out in getOwnPropertySymbols.
 export function createPrivateSymbol() {
   let s = ($Symbol || newUniqueString)();
   privateNames[s] = true;
   return s;
-};
+}
 
 // Provide abstraction so that we can replace the symbol with a WeakMap in
 // the future.
 export function hasPrivate(obj, sym) {
   return hasOwnProperty.call(obj, sym);
-};
+}
 
 export function deletePrivate(obj, sym) {
   if (!hasPrivate(obj, sym)) {
@@ -46,17 +46,17 @@ export function deletePrivate(obj, sym) {
   }
   delete obj[sym];
   return true;
-};
+}
 
 export function setPrivate(obj, sym, val) {
   obj[sym] = val;
-};
+}
 
 export function getPrivate(obj, sym) {
   let val = obj[sym];
   if (val === undefined) return undefined;
   return hasOwnProperty.call(obj, sym) ? val : undefined;
-};
+}
 
 export function init() {
   if ($getOwnPropertySymbols) {

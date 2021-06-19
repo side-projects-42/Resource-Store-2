@@ -1,4 +1,4 @@
-import {WeakMap as WeakMapPF} from '../../src/runtime/polyfills/WeakMap.js';
+import { WeakMap as WeakMapPF } from "../../src/runtime/polyfills/WeakMap.js";
 
 function test(ctor) {
   var wm = new ctor();
@@ -24,11 +24,11 @@ function test(ctor) {
   assert.isFalse(wm.has(f1));
   assert.isFalse(wm.delete(f1));
 
-  var nonObjects = ['a', true, false, 42, null, undefined];
+  var nonObjects = ["a", true, false, 42, null, undefined];
 
   for (var x of nonObjects) {
     assert.throws(() => {
-      wm.set(x, o1)
+      wm.set(x, o1);
     }, TypeError);
 
     assert.equal(wm.get(x), undefined);

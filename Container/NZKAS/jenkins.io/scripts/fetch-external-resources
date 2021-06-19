@@ -1,0 +1,103 @@
+#!/usr/bin/env ruby
+#
+# This script is responsible for reaching out to the internet and downloading
+# external content which needs to be built into the site.
+
+
+require 'faraday'
+require 'faraday_middleware'
+require 'uri'
+require 'yaml'
+require 'zip'
+
+
+RESOURCES = [
+  [
+    'https://raw.githubusercontent.com/jenkinsci/jenkins/master/changelog.html',
+    'content/changelog/index.html',
+    {
+      :layout => 'post',
+      :title => 'Changelog',
+    },
+    nil
+  ],
+  [
+    'https://updates.jenkins.io/latestCore.txt',
+    'content/_tmp/latestCore.txt',
+    nil,
+    nil
+  ],
+  [
+    'https://updates.jenkins.io/stable/latestCore.txt',
+    'content/_tmp/latestLTSCore.txt',
+    nil,
+    nil
+  ],
+  [
+    'https://jenkins.ci.cloudbees.com/job/infra/job/PipelineStepsDoc/lastSuccessfulBuild/artifact/allAscii.zip',
+    'content/_tmp/allAscii.zip',
+    nil,
+    'content/doc/pipeline/steps'
+  ],
+]
+
+
+class Fetcher
+  # Fetch a single resource and return the +Faraday::Response+ for it
+  #
+  # This abstraction exists so more behaviors (caching, etc) can be injected
+  # into the fetching of specific resources themeslves
+  def fetch_resource(origin)
+    conn = Faraday.new(:ssl => {:verify => false}) do |f|
+      f.use FaradayMiddleware::FollowRedirects, limit: 5
+      f.adapter Faraday.default_adapter
+    end
+    return conn.get(origin)
+  end
+
+  # process a list of resources and generate files from them
+  def process(resources)
+    failures = []
+
+    resources.each do |origin, destination, frontmatter, zip_dest|
+      response = fetch_resource(origin)
+
+      unless response.success?
+        failures << [response, origin]
+        next
+      end
+
+      File.open(destination, 'w+') do |f|
+        if frontmatter
+          f.write(frontmatter.to_yaml)
+          f.write("---\n")
+        end
+        f.write(response.body)
+      end
+
+      #if downloading a zip file, extract it
+      if origin.include? ".zip"
+        Zip.on_exists_proc = true
+        Zip::File.open(destination) do |zip_file|
+          zip_file.each do |f|
+            fpath = File.join(zip_dest, f.name)
+            zip_file.extract(f, fpath)
+          end
+        end
+      end
+    end
+
+    # If we collected any failures, dump those out while we're here
+    unless failures.empty?
+      puts "Failed processing resources!"
+      puts
+      failures.each do |response, origin|
+        puts "#{origin} #{response.inspect}"
+      end
+      exit 1
+    end
+  end
+end
+
+
+Fetcher.new.process(RESOURCES)

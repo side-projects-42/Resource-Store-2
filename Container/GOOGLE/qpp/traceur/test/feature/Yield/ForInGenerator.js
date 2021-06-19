@@ -2,10 +2,10 @@ function* forInGenerator() {
   var object = {
     a: 0,
     b: 1,
-    c: 2
+    c: 2,
   };
   for (var key in object) {
-    if (key == 'a') {
+    if (key == "a") {
       delete object.b;
       object.d = 3;
     }
@@ -15,7 +15,7 @@ function* forInGenerator() {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -24,4 +24,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assertEquals('a0c2',accumulate(forInGenerator()));
+assertEquals("a0c2", accumulate(forInGenerator()));

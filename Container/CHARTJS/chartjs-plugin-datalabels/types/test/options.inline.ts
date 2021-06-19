@@ -1,47 +1,47 @@
-import {Chart} from 'chart.js';
-import {Context} from '../context';
+import { Chart } from "chart.js";
+import { Context } from "../context";
 
-const chart = new Chart('id', {
+const chart = new Chart("id", {
   data: {
     datasets: [
       {
         datalabels: {
-          align: 'start',
+          align: "start",
           labels: {
             foo: {},
             bar: null,
             bla: {
-              align: 'end',
+              align: "end",
               listeners: {
-                click: (ctx: Context) => true
-              }
-            }
+                click: (ctx: Context) => true,
+              },
+            },
           },
           listeners: {
-            click: (ctx: Context) => true
-          }
-        }
-      }
-    ]
+            click: (ctx: Context) => true,
+          },
+        },
+      },
+    ],
   },
   options: {
     plugins: {
       datalabels: {
-        align: 'start',
+        align: "start",
         labels: {
           foo: {},
           bar: null,
           bla: {
-            align: 'end',
+            align: "end",
             listeners: {
-              click: (ctx: Context) => true
-            }
-          }
+              click: (ctx: Context) => true,
+            },
+          },
         },
         listeners: {
-          click: (ctx: Context) => true
-        }
-      }
-    }
-  }
+          click: (ctx: Context) => true,
+        },
+      },
+    },
+  },
 });

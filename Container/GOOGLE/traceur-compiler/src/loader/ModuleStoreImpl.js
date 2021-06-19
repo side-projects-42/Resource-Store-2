@@ -11,14 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
-  var {
-    canonicalizeUrl,
-    resolveUrl,
-    isAbsolute,
-  } = $traceurRuntime;
+  var { canonicalizeUrl, resolveUrl, isAbsolute } = $traceurRuntime;
 
   var moduleInstantiators = Object.create(null);
 
@@ -27,63 +23,59 @@
   // "default baseURL is the directory that contains the HTML page"
   var baseURL;
   if (global.location && global.location.href)
-    baseURL = resolveUrl(global.location.href, './');
-  else
-    baseURL = '';
+    baseURL = resolveUrl(global.location.href, "./");
+  else baseURL = "";
 
   function UncoatedModuleEntry(url, uncoatedModule) {
     this.url = url;
     this.value_ = uncoatedModule;
   }
 
-
   function ModuleEvaluationError(erroneousModuleName, cause) {
     this.message =
-        this.constructor.name + ': ' + this.stripCause(cause) +
-        ' in ' + erroneousModuleName;
+      this.constructor.name +
+      ": " +
+      this.stripCause(cause) +
+      " in " +
+      erroneousModuleName;
 
     if (!(cause instanceof ModuleEvaluationError) && cause.stack)
       this.stack = this.stripStack(cause.stack);
-    else
-      this.stack = '';
+    else this.stack = "";
   }
 
   ModuleEvaluationError.prototype = Object.create(Error.prototype);
 
   ModuleEvaluationError.prototype.constructor = ModuleEvaluationError;
 
-  ModuleEvaluationError.prototype.stripError = function(message) {
-    return message.replace(/.*Error:/, this.constructor.name + ':');
+  ModuleEvaluationError.prototype.stripError = function (message) {
+    return message.replace(/.*Error:/, this.constructor.name + ":");
   };
 
-  ModuleEvaluationError.prototype.stripCause = function(cause) {
-    if (!cause)
-      return '';
-    if (!cause.message)
-      return cause + '';
+  ModuleEvaluationError.prototype.stripCause = function (cause) {
+    if (!cause) return "";
+    if (!cause.message) return cause + "";
     return this.stripError(cause.message);
   };
 
-  ModuleEvaluationError.prototype.loadedBy = function(moduleName) {
-    this.stack += '\n loaded by ' + moduleName;
+  ModuleEvaluationError.prototype.loadedBy = function (moduleName) {
+    this.stack += "\n loaded by " + moduleName;
   };
 
-  ModuleEvaluationError.prototype.stripStack = function(causeStack) {
+  ModuleEvaluationError.prototype.stripStack = function (causeStack) {
     var stack = [];
-    causeStack.split('\n').some((frame) => {
-      if (/UncoatedModuleInstantiator/.test(frame))
-        return true;
+    causeStack.split("\n").some((frame) => {
+      if (/UncoatedModuleInstantiator/.test(frame)) return true;
       stack.push(frame);
     });
     stack[0] = this.stripError(stack[0]);
-    return stack.join('\n');
+    return stack.join("\n");
   };
 
   function beforeLines(lines, number) {
     var result = [];
     var first = number - 3;
-    if (first < 0)
-      first = 0;
+    if (first < 0) first = 0;
     for (var i = first; i < number; i++) {
       result.push(lines[i]);
     }
@@ -92,8 +84,7 @@
 
   function afterLines(lines, number) {
     var last = number + 1;
-    if (last > lines.length - 1)
-      last = lines.length - 1;
+    if (last > lines.length - 1) last = lines.length - 1;
     var result = [];
     for (var i = number; i <= last; i++) {
       result.push(lines[i]);
@@ -102,9 +93,9 @@
   }
 
   function columnSpacing(columns) {
-    var result = '';
+    var result = "";
     for (var i = 0; i < columns - 1; i++) {
-      result += '-';
+      result += "-";
     }
     return result;
   }
@@ -114,31 +105,31 @@
     this.func = func;
   }
 
-  UncoatedModuleInstantiator.prototype =
-      Object.create(UncoatedModuleEntry.prototype);
+  UncoatedModuleInstantiator.prototype = Object.create(
+    UncoatedModuleEntry.prototype
+  );
 
-  UncoatedModuleInstantiator.prototype.getUncoatedModule = function() {
-    if (this.value_)
-      return this.value_;
+  UncoatedModuleInstantiator.prototype.getUncoatedModule = function () {
+    if (this.value_) return this.value_;
     try {
       var relativeRequire;
-      if (typeof $traceurRuntime !== 'undefined' && $traceurRuntime.require) {
+      if (typeof $traceurRuntime !== "undefined" && $traceurRuntime.require) {
         relativeRequire = $traceurRuntime.require.bind(null, this.url);
       }
-      return this.value_ = this.func.call(global, relativeRequire);
-    } catch(ex) {
+      return (this.value_ = this.func.call(global, relativeRequire));
+    } catch (ex) {
       if (ex instanceof ModuleEvaluationError) {
         ex.loadedBy(this.url);
         throw ex;
       }
       if (ex.stack) {
         // Assume V8 stack format
-        var lines = this.func.toString().split('\n')
+        var lines = this.func.toString().split("\n");
 
         var evaled = [];
-        ex.stack.split('\n').some((frame, index) => {
+        ex.stack.split("\n").some((frame, index) => {
           // End when we find ourselves on the stack.
-          if (frame.indexOf('UncoatedModuleInstantiator.getUncoatedModule') > 0)
+          if (frame.indexOf("UncoatedModuleInstantiator.getUncoatedModule") > 0)
             return true;
           // The angle bracket in the regexp will hit on evaled frames
           // and miss on eg node compiled frames.
@@ -148,17 +139,17 @@
             evaled = evaled.concat(beforeLines(lines, line));
             // The first evaled frame should be the one from 'this.func'
             if (index === 1) {
-              evaled.push(columnSpacing(m[3]) + '^ ' + this.url);
+              evaled.push(columnSpacing(m[3]) + "^ " + this.url);
             } else {
-              evaled.push(columnSpacing(m[3]) + '^');
+              evaled.push(columnSpacing(m[3]) + "^");
             }
             evaled = evaled.concat(afterLines(lines, line));
-            evaled.push('= = = = = = = = =');
+            evaled.push("= = = = = = = = =");
           } else {
             evaled.push(frame);
           }
         });
-        ex.stack = evaled.join('\n');
+        ex.stack = evaled.join("\n");
       }
 
       throw new ModuleEvaluationError(this.url, ex);
@@ -166,11 +157,10 @@
   };
 
   function getUncoatedModuleInstantiator(name) {
-    if (!name)
-      return;
+    if (!name) return;
     var url = ModuleStore.normalize(name);
     return moduleInstantiators[url];
-  };
+  }
 
   var moduleInstances = Object.create(null);
 
@@ -185,19 +175,18 @@
       if (isLive === liveModuleSentinel) {
         var descr = Object.getOwnPropertyDescriptor(uncoatedModule, name);
         // Some internal modules do not use getters at this point.
-        if (descr.get)
-          getter = descr.get;
+        if (descr.get) getter = descr.get;
       }
       if (!getter) {
         value = uncoatedModule[name];
-        getter = function() {
+        getter = function () {
           return value;
         };
       }
 
       Object.defineProperty(coatedModule, name, {
         get: getter,
-        enumerable: true
+        enumerable: true,
       });
     });
     Object.preventExtensions(coatedModule);
@@ -205,36 +194,33 @@
   }
 
   var ModuleStore = {
-
     normalize(name, refererName, refererAddress) {
-      if (typeof name !== 'string')
-          throw new TypeError('module name must be a string, not ' + typeof name);
-      if (isAbsolute(name))
-        return canonicalizeUrl(name);
-      if(/[^\.]\/\.\.\//.test(name)) {
-        throw new Error('module name embeds /../: ' + name);
+      if (typeof name !== "string")
+        throw new TypeError("module name must be a string, not " + typeof name);
+      if (isAbsolute(name)) return canonicalizeUrl(name);
+      if (/[^\.]\/\.\.\//.test(name)) {
+        throw new Error("module name embeds /../: " + name);
       }
-      if (name[0] === '.' && refererName)
-        return resolveUrl(refererName, name);
+      if (name[0] === "." && refererName) return resolveUrl(refererName, name);
       return canonicalizeUrl(name);
     },
 
     get(normalizedName) {
       var m = getUncoatedModuleInstantiator(normalizedName);
-      if (!m)
-        return undefined;
+      if (!m) return undefined;
       var moduleInstance = moduleInstances[m.url];
-      if (moduleInstance)
-        return moduleInstance;
+      if (moduleInstance) return moduleInstance;
 
       moduleInstance = Module(m.getUncoatedModule(), liveModuleSentinel);
-      return moduleInstances[m.url] = moduleInstance;
+      return (moduleInstances[m.url] = moduleInstance);
     },
 
     set(normalizedName, module) {
-      normalizedName = String(normalizedName);  // Req. by spec., why?
-      moduleInstantiators[normalizedName] =
-          new UncoatedModuleInstantiator(normalizedName, () => module);
+      normalizedName = String(normalizedName); // Req. by spec., why?
+      moduleInstantiators[normalizedName] = new UncoatedModuleInstantiator(
+        normalizedName,
+        () => module
+      );
       moduleInstances[normalizedName] = module;
     },
 
@@ -251,24 +237,26 @@
     registerModule(name, deps, func) {
       var normalizedName = ModuleStore.normalize(name);
       if (moduleInstantiators[normalizedName])
-        throw new Error('duplicate module named ' + normalizedName);
-      moduleInstantiators[normalizedName] =
-          new UncoatedModuleInstantiator(normalizedName, func);
+        throw new Error("duplicate module named " + normalizedName);
+      moduleInstantiators[normalizedName] = new UncoatedModuleInstantiator(
+        normalizedName,
+        func
+      );
     },
 
     bundleStore: Object.create(null),
 
     register(name, deps, func) {
-      if (!deps || !deps.length && !func.length) {
+      if (!deps || (!deps.length && !func.length)) {
         // Traceur System.register
         this.registerModule(name, deps, func);
       } else {
         // System.register instantiate form
         this.bundleStore[name] = {
           deps: deps,
-          execute: function() {
+          execute: function () {
             var depMap = {};
-            deps.forEach((dep, index) => depMap[dep] = arguments[index]);
+            deps.forEach((dep, index) => (depMap[dep] = arguments[index]));
 
             // TODO: separate into two-phase declaration / execution
             var registryEntry = func.call(this, depMap);
@@ -276,7 +264,7 @@
             registryEntry.execute.call(this);
 
             return registryEntry.exports;
-          }
+          },
         };
       }
     },
@@ -286,12 +274,12 @@
     },
   };
 
-  var moduleStoreModule = new Module({ModuleStore});
-  ModuleStore.set('@traceur/src/runtime/ModuleStore.js', moduleStoreModule);
+  var moduleStoreModule = new Module({ ModuleStore });
+  ModuleStore.set("@traceur/src/runtime/ModuleStore.js", moduleStoreModule);
 
   // Override setupGlobals so that System is added to future globals.
   var setupGlobals = $traceurRuntime.setupGlobals;
-  $traceurRuntime.setupGlobals = function(global) {
+  $traceurRuntime.setupGlobals = function (global) {
     setupGlobals(global);
   };
 
@@ -300,18 +288,16 @@
   $traceurRuntime.getModule = ModuleStore.get;
   $traceurRuntime.setModule = ModuleStore.set;
   $traceurRuntime.normalizeModuleName = ModuleStore.normalize;
+})(
+  (function () {
+    try {
+      return new Function("return this;")();
+    } catch (e) {
+      if (typeof window !== "undefined") return window;
+      if (typeof global !== "undefined") return global;
+      if (typeof self !== "undefined") return self;
 
-})((function() {
-  try {
-    return new Function('return this;')();
-  } catch(e) {
-    if (typeof window !== 'undefined')
-      return window;
-    if (typeof global !== 'undefined')
-      return global;
-    if (typeof self !== 'undefined')
-      return self;
-
-    return this;
-  }
-})());
+      return this;
+    }
+  })()
+);

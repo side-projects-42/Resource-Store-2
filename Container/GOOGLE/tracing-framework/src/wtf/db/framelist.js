@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.FrameList');
+goog.provide("wtf.db.FrameList");
 
-goog.require('goog.array');
-goog.require('goog.math');
-goog.require('wtf.db.Frame');
-goog.require('wtf.db.IAncillaryList');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.events.EventType');
-
-
+goog.require("goog.array");
+goog.require("goog.math");
+goog.require("wtf.db.Frame");
+goog.require("wtf.db.IAncillaryList");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.events.EventType");
 
 /**
  * Frame list.
@@ -30,7 +28,7 @@ goog.require('wtf.events.EventType');
  * @extends {wtf.events.EventEmitter}
  * @implements {wtf.db.IAncillaryList}
  */
-wtf.db.FrameList = function(eventList) {
+wtf.db.FrameList = function (eventList) {
   goog.base(this);
 
   /**
@@ -59,24 +57,21 @@ wtf.db.FrameList = function(eventList) {
 };
 goog.inherits(wtf.db.FrameList, wtf.events.EventEmitter);
 
-
 /**
  * @override
  */
-wtf.db.FrameList.prototype.disposeInternal = function() {
+wtf.db.FrameList.prototype.disposeInternal = function () {
   this.eventList_.unregisterAncillaryList(this);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Gets the total number of frames.
  * @return {number} Frame count.
  */
-wtf.db.FrameList.prototype.getCount = function() {
+wtf.db.FrameList.prototype.getCount = function () {
   return this.frameList_.length;
 };
-
 
 /**
  * Gets a list of all frames.
@@ -84,67 +79,61 @@ wtf.db.FrameList.prototype.getCount = function() {
  * number.
  * @return {!Array.<!wtf.db.Frame>} Frame list.
  */
-wtf.db.FrameList.prototype.getAllFrames = function() {
+wtf.db.FrameList.prototype.getAllFrames = function () {
   return this.frameList_;
 };
-
 
 /**
  * Gets the frame by frame number.
  * @param {number} value Frame number.
  * @return {wtf.db.Frame} Frame, if it exists.
  */
-wtf.db.FrameList.prototype.getFrame = function(value) {
+wtf.db.FrameList.prototype.getFrame = function (value) {
   return this.frames_[value] || null;
 };
-
 
 /**
  * Gets the frame preceeding the given frame.
  * @param {!wtf.db.Frame} frame Base frame.
  * @return {wtf.db.Frame} Preceeding frame, if any.
  */
-wtf.db.FrameList.prototype.getPreviousFrame = function(frame) {
+wtf.db.FrameList.prototype.getPreviousFrame = function (frame) {
   var n = frame.getOrdinal();
   return n > 0 ? this.frameList_[n - 1] : null;
 };
-
 
 /**
  * Gets the frame following the given frame.
  * @param {!wtf.db.Frame} frame Base frame.
  * @return {wtf.db.Frame} Following frame, if any.
  */
-wtf.db.FrameList.prototype.getNextFrame = function(frame) {
+wtf.db.FrameList.prototype.getNextFrame = function (frame) {
   var n = frame.getOrdinal();
   return n < this.frameList_.length - 1 ? this.frameList_[n + 1] : null;
 };
-
 
 /**
  * Gets the frame that contains the given time.
  * @param {number} time Time.
  * @return {wtf.db.Frame} Frame, if any.
  */
-wtf.db.FrameList.prototype.getFrameAtTime = function(time) {
+wtf.db.FrameList.prototype.getFrameAtTime = function (time) {
   if (!this.frameList_.length) {
     return null;
   }
-  var index = goog.array.binarySelect(
-      this.frameList_, wtf.db.Frame.selector, { time: time });
+  var index = goog.array.binarySelect(this.frameList_, wtf.db.Frame.selector, {
+    time: time,
+  });
   if (index < 0) {
     index = -index - 2;
   }
   index = goog.math.clamp(index, 0, this.frameList_.length - 1);
   var frame = this.frameList_[index];
-  if (frame &&
-      frame.getTime() <= time &&
-      frame.getEndTime() >= time) {
+  if (frame && frame.getTime() <= time && frame.getEndTime() >= time) {
     return frame;
   }
   return null;
 };
-
 
 /**
  * Gets the two frames the given time is between.
@@ -154,14 +143,15 @@ wtf.db.FrameList.prototype.getFrameAtTime = function(time) {
  * @param {number} time Search time.
  * @return {!Array.<wtf.db.Frame>} Surrounding frames.
  */
-wtf.db.FrameList.prototype.getIntraFrameAtTime = function(time) {
+wtf.db.FrameList.prototype.getIntraFrameAtTime = function (time) {
   if (!this.frameList_.length) {
     return [null, null];
   }
 
   // Find the frame to the left of the time.
-  var index = goog.array.binarySelect(
-      this.frameList_, wtf.db.Frame.selector, { time: time });
+  var index = goog.array.binarySelect(this.frameList_, wtf.db.Frame.selector, {
+    time: time,
+  });
   if (index < 0) {
     index = -index - 1;
     // Select the previous frame.
@@ -178,7 +168,6 @@ wtf.db.FrameList.prototype.getIntraFrameAtTime = function(time) {
   return [previousFrame, nextFrame];
 };
 
-
 /**
  * Iterates over the list of frames, returning each one that intersects the
  * given time range in order.
@@ -190,14 +179,19 @@ wtf.db.FrameList.prototype.getIntraFrameAtTime = function(time) {
  * @param {T=} opt_scope Scope to call the function in.
  * @template T
  */
-wtf.db.FrameList.prototype.forEachIntersecting = function(
-    timeStart, timeEnd, callback, opt_scope) {
+wtf.db.FrameList.prototype.forEachIntersecting = function (
+  timeStart,
+  timeEnd,
+  callback,
+  opt_scope
+) {
   if (!this.frameList_.length) {
     return;
   }
 
-  var index = goog.array.binarySelect(
-      this.frameList_, wtf.db.Frame.selector, { time: timeStart });
+  var index = goog.array.binarySelect(this.frameList_, wtf.db.Frame.selector, {
+    time: timeStart,
+  });
   if (index < 0) {
     index = -index - 1;
     // Select the previous frame.
@@ -218,24 +212,25 @@ wtf.db.FrameList.prototype.forEachIntersecting = function(
   }
 };
 
-
 /**
  * @override
  */
-wtf.db.FrameList.prototype.beginRebuild = function(eventTypeTable) {
+wtf.db.FrameList.prototype.beginRebuild = function (eventTypeTable) {
   return [
-    eventTypeTable.getByName('wtf.timing#frameStart'),
-    eventTypeTable.getByName('wtf.timing#frameEnd')
+    eventTypeTable.getByName("wtf.timing#frameStart"),
+    eventTypeTable.getByName("wtf.timing#frameEnd"),
   ];
 };
 
-
 /**
  * @override
  */
-wtf.db.FrameList.prototype.handleEvent = function(
-    eventTypeIndex, eventType, it) {
-  var number = /** @type {number} */ (it.getArgument('number'));
+wtf.db.FrameList.prototype.handleEvent = function (
+  eventTypeIndex,
+  eventType,
+  it
+) {
+  var number = /** @type {number} */ (it.getArgument("number"));
   var frame = this.frames_[number];
   if (!frame) {
     frame = new wtf.db.Frame(number);
@@ -252,11 +247,10 @@ wtf.db.FrameList.prototype.handleEvent = function(
   }
 };
 
-
 /**
  * @override
  */
-wtf.db.FrameList.prototype.endRebuild = function() {
+wtf.db.FrameList.prototype.endRebuild = function () {
   // Scan frames and remove any that are partial.
   // They aren't worth the extra work to render like that.
   var validFrames = [];
@@ -274,28 +268,43 @@ wtf.db.FrameList.prototype.endRebuild = function() {
   this.emitEvent(wtf.events.EventType.INVALIDATED);
 };
 
-
 goog.exportProperty(
-    wtf.db.FrameList.prototype, 'getCount',
-    wtf.db.FrameList.prototype.getCount);
+  wtf.db.FrameList.prototype,
+  "getCount",
+  wtf.db.FrameList.prototype.getCount
+);
 goog.exportProperty(
-    wtf.db.FrameList.prototype, 'getAllFrames',
-    wtf.db.FrameList.prototype.getAllFrames);
+  wtf.db.FrameList.prototype,
+  "getAllFrames",
+  wtf.db.FrameList.prototype.getAllFrames
+);
 goog.exportProperty(
-    wtf.db.FrameList.prototype, 'getFrame',
-    wtf.db.FrameList.prototype.getFrame);
+  wtf.db.FrameList.prototype,
+  "getFrame",
+  wtf.db.FrameList.prototype.getFrame
+);
 goog.exportProperty(
-    wtf.db.FrameList.prototype, 'getPreviousFrame',
-    wtf.db.FrameList.prototype.getPreviousFrame);
+  wtf.db.FrameList.prototype,
+  "getPreviousFrame",
+  wtf.db.FrameList.prototype.getPreviousFrame
+);
 goog.exportProperty(
-    wtf.db.FrameList.prototype, 'getNextFrame',
-    wtf.db.FrameList.prototype.getNextFrame);
+  wtf.db.FrameList.prototype,
+  "getNextFrame",
+  wtf.db.FrameList.prototype.getNextFrame
+);
 goog.exportProperty(
-    wtf.db.FrameList.prototype, 'getFrameAtTime',
-    wtf.db.FrameList.prototype.getFrameAtTime);
+  wtf.db.FrameList.prototype,
+  "getFrameAtTime",
+  wtf.db.FrameList.prototype.getFrameAtTime
+);
 goog.exportProperty(
-    wtf.db.FrameList.prototype, 'getIntraFrameAtTime',
-    wtf.db.FrameList.prototype.getIntraFrameAtTime);
+  wtf.db.FrameList.prototype,
+  "getIntraFrameAtTime",
+  wtf.db.FrameList.prototype.getIntraFrameAtTime
+);
 goog.exportProperty(
-    wtf.db.FrameList.prototype, 'forEachIntersecting',
-    wtf.db.FrameList.prototype.forEachIntersecting);
+  wtf.db.FrameList.prototype,
+  "forEachIntersecting",
+  wtf.db.FrameList.prototype.forEachIntersecting
+);

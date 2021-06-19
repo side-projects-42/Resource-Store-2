@@ -9,10 +9,10 @@ function* test() {
 }
 
 var it = test();
-assert.deepEqual({value: 42, done: false}, it.next());
+assert.deepEqual({ value: 42, done: false }, it.next());
 assert.isFalse(finallyVisited);
 
-assert.deepEqual({value: undefined, done: true}, it.next());
+assert.deepEqual({ value: undefined, done: true }, it.next());
 assert.isTrue(finallyVisited);
 
 finallyVisited = false;

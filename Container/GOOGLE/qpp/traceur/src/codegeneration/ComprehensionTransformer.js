@@ -12,22 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  ARGUMENTS,
-  THIS
-} from '../syntax/PredefinedName.js';
-import {AlphaRenamer} from './AlphaRenamer.js';
-import {FindInFunctionScope} from './FindInFunctionScope.js';
-import {FunctionExpression} from '../syntax/trees/ParseTrees.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  LET,
-  VAR
-} from '../syntax/TokenType.js';
+import { ARGUMENTS, THIS } from "../syntax/PredefinedName.js";
+import { AlphaRenamer } from "./AlphaRenamer.js";
+import { FindInFunctionScope } from "./FindInFunctionScope.js";
+import { FunctionExpression } from "../syntax/trees/ParseTrees.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { LET, VAR } from "../syntax/TokenType.js";
 import {
   COMPREHENSION_FOR,
-  COMPREHENSION_IF
-  } from '../syntax/trees/ParseTreeType.js';
+  COMPREHENSION_IF,
+} from "../syntax/trees/ParseTreeType.js";
 import {
   createBlock,
   createCallExpression,
@@ -37,9 +31,9 @@ import {
   createIfStatement,
   createParenExpression,
   createThisExpression,
-  createVariableDeclarationList
-} from './ParseTreeFactory.js';
-import {options} from '../options.js';
+  createVariableDeclarationList,
+} from "./ParseTreeFactory.js";
+import { options } from "../options.js";
 
 /**
  * This is used to find whether a function contains a reference to 'this'.
@@ -56,8 +50,7 @@ class ThisFinder extends FindInFunctionScope {
  */
 class ArgumentsFinder extends FindInFunctionScope {
   visitIdentifierExpression(tree) {
-    if (tree.identifierToken.value === ARGUMENTS)
-      this.found = true;
+    if (tree.identifierToken.value === ARGUMENTS) this.found = true;
   }
 }
 
@@ -80,7 +73,6 @@ export class ComprehensionTransformer extends TempVarTransformer {
    * @return {ParseTree}
    */
   transformComprehension(tree, statement, isGenerator, returnStatement) {
-
     // This should really be a let but we don't support let in generators.
     // https://code.google.com/p/traceur-compiler/issues/detail?id=6
     var bindingKind = isGenerator || !options.blockBinding ? VAR : LET;
@@ -95,37 +87,40 @@ export class ComprehensionTransformer extends TempVarTransformer {
         case COMPREHENSION_FOR:
           var left = this.transformAny(item.left);
           var iterator = this.transformAny(item.iterator);
-          var initializer = createVariableDeclarationList(bindingKind,
-                                                          left, null);
+          var initializer = createVariableDeclarationList(
+            bindingKind,
+            left,
+            null
+          );
           statement = createForOfStatement(initializer, iterator, statement);
           break;
         default:
-          throw new Error('Unreachable.');
+          throw new Error("Unreachable.");
       }
     }
 
     var argumentsFinder = new ArgumentsFinder(statement);
     if (argumentsFinder.found) {
-      var tempVar = this.addTempVar(
-          createIdentifierExpression(ARGUMENTS));
-      statement = AlphaRenamer.rename(statement, ARGUMENTS,
-                                      tempVar);
+      var tempVar = this.addTempVar(createIdentifierExpression(ARGUMENTS));
+      statement = AlphaRenamer.rename(statement, ARGUMENTS, tempVar);
     }
 
     var thisFinder = new ThisFinder(statement);
     if (thisFinder.found) {
       var tempVar = this.addTempVar(createThisExpression());
-      statement = AlphaRenamer.rename(statement, THIS,
-                                      tempVar);
+      statement = AlphaRenamer.rename(statement, THIS, tempVar);
     }
 
     var statements = [statement];
-    if (returnStatement)
-      statements.push(returnStatement);
+    if (returnStatement) statements.push(returnStatement);
 
-    var func = new FunctionExpression(null, null, isGenerator,
-                                      createEmptyParameterList(),
-                                      createBlock(statements));
+    var func = new FunctionExpression(
+      null,
+      null,
+      isGenerator,
+      createEmptyParameterList(),
+      createBlock(statements)
+    );
 
     return createParenExpression(createCallExpression(func));
   }

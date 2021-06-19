@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {BIND} from '../syntax/PredefinedName.js';
-import {FindInFunctionScope} from './FindInFunctionScope.js';
-import {
-  FormalParameterList
-} from '../syntax/trees/ParseTrees.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {BLOCK} from '../syntax/trees/ParseTreeType.js';
+import { BIND } from "../syntax/PredefinedName.js";
+import { FindInFunctionScope } from "./FindInFunctionScope.js";
+import { FormalParameterList } from "../syntax/trees/ParseTrees.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { BLOCK } from "../syntax/trees/ParseTreeType.js";
 import {
   createArgumentList,
   createBlock,
@@ -27,8 +25,8 @@ import {
   createMemberExpression,
   createParenExpression,
   createReturnStatement,
-  createThisExpression
-} from './ParseTreeFactory.js';
+  createThisExpression,
+} from "./ParseTreeFactory.js";
 
 /**
  * This is used to find whether a function contains a reference to 'this'.
@@ -74,16 +72,20 @@ export class ArrowFunctionTransformer extends ParseTreeTransformer {
 
     // function(params) { ... }
     var result = createParenExpression(
-        createFunctionExpression(
-            new FormalParameterList(null, parameters), functionBody));
+      createFunctionExpression(
+        new FormalParameterList(null, parameters),
+        functionBody
+      )
+    );
 
     // If we have a reference to 'this' in the body we need to bind this.
     var finder = new ThisFinder(functionBody);
     if (finder.found) {
       // (function(params) { ... }).bind(thisBinding);
       return createCallExpression(
-          createMemberExpression(result, BIND),
-          createArgumentList(createThisExpression()));
+        createMemberExpression(result, BIND),
+        createArgumentList(createThisExpression())
+      );
     }
 
     return result;

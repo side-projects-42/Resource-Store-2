@@ -1,7 +1,8 @@
-(function() {
-
+(function () {
   // ensure non strict mode.
-  function f() { return this; }
+  function f() {
+    return this;
+  }
   assert(f.call(undefined) !== undefined);
 
   var yield = 1;
@@ -13,12 +14,12 @@
   assert.equal(g(2), 2);
 
   var o = {
-    yield: yield
+    yield: yield,
   };
   assert.equal(o.yield, 1);
 
   var o2 = {
-    yield
+    yield,
   };
   assert.equal(o.yield, 1);
 

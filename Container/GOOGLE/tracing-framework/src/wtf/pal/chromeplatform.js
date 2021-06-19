@@ -11,18 +11,16 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.pal.ChromePlatform');
+goog.provide("wtf.pal.ChromePlatform");
 
-goog.require('wtf.pal.BrowserPlatform');
-
-
+goog.require("wtf.pal.BrowserPlatform");
 
 /**
  * Chrome extension platform abstraction layer implementation.
  * @constructor
  * @extends {wtf.pal.BrowserPlatform}
  */
-wtf.pal.ChromePlatform = function() {
+wtf.pal.ChromePlatform = function () {
   goog.base(this);
 };
 goog.inherits(wtf.pal.ChromePlatform, wtf.pal.BrowserPlatform);

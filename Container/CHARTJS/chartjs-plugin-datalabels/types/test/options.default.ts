@@ -1,21 +1,21 @@
-import {Chart} from 'chart.js';
-import {Options} from '../options';
+import { Chart } from "chart.js";
+import { Options } from "../options";
 
 const options: Options = {
   // all optional datalabels options
 };
 
-const chart = new Chart('id', {
+const chart = new Chart("id", {
   data: {
     datasets: [
       {
-        datalabels: options
-      }
-    ]
+        datalabels: options,
+      },
+    ],
   },
   options: {
     plugins: {
-      datalabels: options
-    }
-  }
+      datalabels: options,
+    },
+  },
 });

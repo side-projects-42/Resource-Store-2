@@ -1,0 +1,24 @@
+{
+  "name": "nr1-service-instance-explorer",
+  "fullName": "newrelic-experimental/nr1-service-instance-explorer",
+  "slug": "newrelic-experimental-nr1-service-instance-explorer",
+  "owner": {
+    "login": "newrelic-experimental",
+    "type": "Organization"
+  },
+  "title": "Service Instance Explorer",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic-experimental/nr1-service-instance-explorer",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic-experimental/nr1-service-instance-explorer",
+  "iconUrl": null,
+  "shortDescription": "Explore where Services are running",
+  "description": "An New Relic One application that provides simple tabular view of application/service instances and the compute they are running on/in",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app", "nrlabs"] ,
+  "acceptsContributions": true,
+  "website": {
+    "title": "Service Instance Explorer",
+    "url": "https://github.com/newrelic-experimental/nr1-service-instance-explorer"
+  }
+}

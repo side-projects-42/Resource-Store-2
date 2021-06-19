@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // A Project that can compile all of script elements in a page
 
-import {Compiler} from './codegeneration/Compiler.js';
-import {ErrorReporter} from './util/ErrorReporter.js';
-import {Project} from './semantics/symbols/Project.js';
-import {SourceFile} from './syntax/SourceFile.js';
-import {TreeWriter} from './outputgeneration/TreeWriter.js';
+import { Compiler } from "./codegeneration/Compiler.js";
+import { ErrorReporter } from "./util/ErrorReporter.js";
+import { Project } from "./semantics/symbols/Project.js";
+import { SourceFile } from "./syntax/SourceFile.js";
+import { TreeWriter } from "./outputgeneration/TreeWriter.js";
 
 export class WebPageProject extends Project {
   constructor(url) {
@@ -31,32 +30,29 @@ export class WebPageProject extends Project {
   asyncLoad_(url, fncOfContent, onScriptsReady) {
     this.numPending_++;
     this.loadResource(url, (content) => {
-      if (content) 
-        fncOfContent(content);
-      else 
-        console.warn('Failed to load', url);
+      if (content) fncOfContent(content);
+      else console.warn("Failed to load", url);
 
-      if (--this.numPending_ <= 0) 
-        onScriptsReady();
+      if (--this.numPending_ <= 0) onScriptsReady();
     });
   }
 
   /** over-ride-able
    * @param {string} url Uniform Resource Locator
-   * @param {function(string) | null} callback 
+   * @param {function(string) | null} callback
    */
   loadResource(url, fncOfContentOrNull) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.addEventListener('load', (e) => {
+    xhr.open("GET", url);
+    xhr.addEventListener("load", (e) => {
       if (xhr.status == 200 || xhr.status == 0)
         fncOfContentOrNull(xhr.responseText);
     });
     var onFailure = () => {
       fncOfContentOrNull(null);
     };
-    xhr.addEventListener('error', onFailure, false);
-    xhr.addEventListener('abort', onFailure, false);
+    xhr.addEventListener("error", onFailure, false);
+    xhr.addEventListener("abort", onFailure, false);
     xhr.send();
   }
 
@@ -73,11 +69,11 @@ export class WebPageProject extends Project {
   nextInlineScriptName_() {
     this.numberInlined_ += 1;
     if (!this.inlineScriptNameBase_) {
-      var segments = this.url.split('.');
+      var segments = this.url.split(".");
       segments.pop();
-      this.inlineScriptNameBase_ = segments.join('.');
+      this.inlineScriptNameBase_ = segments.join(".");
     }
-    return this.inlineScriptNameBase_ + '_' + this.numberInlined_ + '.js';
+    return this.inlineScriptNameBase_ + "_" + this.numberInlined_ + ".js";
   }
 
   addFilesFromScriptElements(scriptElements, onScriptsReady) {
@@ -85,25 +81,24 @@ export class WebPageProject extends Project {
       var scriptElement = scriptElements[i];
       if (!scriptElement.src) {
         var name = this.nextInlineScriptName_();
-        var content =  scriptElement.textContent;
+        var content = scriptElement.textContent;
         this.addFileFromScriptElement(scriptElement, name, content);
       } else {
         var name = scriptElement.src;
         this.asyncLoad_(
-            name,
-            this.addFileFromScriptElement.bind(this, scriptElement, name),
-            onScriptsReady
+          name,
+          this.addFileFromScriptElement.bind(this, scriptElement, name),
+          onScriptsReady
         );
       }
     }
     // in case we did not load any scripts async
-    if (this.numPending_ <= 0) 
-      onScriptsReady(); 
+    if (this.numPending_ <= 0) onScriptsReady();
   }
 
   get reporter() {
     if (!this.reporter_) {
-      this.reporter_ =  new ErrorReporter();
+      this.reporter_ = new ErrorReporter();
     }
     return this.reporter_;
   }
@@ -118,15 +113,15 @@ export class WebPageProject extends Project {
   compile() {
     var trees = this.compiler.compile_();
     if (this.reporter.hadError()) {
-      console.warn('Traceur compilation errors', this.reporter);
+      console.warn("Traceur compilation errors", this.reporter);
       return;
     }
     return trees;
   }
 
   putFile(file) {
-    var scriptElement = document.createElement('script');
-    scriptElement.setAttribute('data-traceur-src-url', file.name);
+    var scriptElement = document.createElement("script");
+    scriptElement.setAttribute("data-traceur-src-url", file.name);
     scriptElement.textContent = file.generatedSource;
 
     var parent = file.scriptElement.parentNode;
@@ -144,23 +139,25 @@ export class WebPageProject extends Project {
 
   generateSourceFromTrees(trees) {
     return trees.keys().map((file) => {
-        var tree = trees.get(file);
-        var opts = {showLineNumbers: false};
-        file.generatedSource = TreeWriter.write(tree, opts);
-        return file;
+      var tree = trees.get(file);
+      var opts = { showLineNumbers: false };
+      file.generatedSource = TreeWriter.write(tree, opts);
+      return file;
     });
   }
 
   run() {
-    document.addEventListener('DOMContentLoaded', () => {
-      var selector = 'script[type="text/traceur"]';
-      var scripts = document.querySelectorAll(selector);
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+        var selector = 'script[type="text/traceur"]';
+        var scripts = document.querySelectorAll(selector);
 
-      if (!scripts.length) {
-        return;  // nothing to do
-      }
+        if (!scripts.length) {
+          return; // nothing to do
+        }
 
-      /* TODO: add traceur runtime library here
+        /* TODO: add traceur runtime library here
       scriptsToRun.push(
         { scriptElement: null,
           parentNode: scripts[0].parentNode,
@@ -168,10 +165,12 @@ export class WebPageProject extends Project {
           contents: runtime });
       */
 
-      this.addFilesFromScriptElements(scripts, () => {
-        var trees = this.compile();
-        this.runInWebPage(trees);     
-      });
-    }, false);
+        this.addFilesFromScriptElements(scripts, () => {
+          var trees = this.compile();
+          this.runInWebPage(trees);
+        });
+      },
+      false
+    );
   }
 }

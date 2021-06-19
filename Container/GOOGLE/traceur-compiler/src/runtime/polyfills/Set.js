@@ -12,22 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  isObject,
-  registerPolyfill
-} from './utils.js';
-import {Map} from './Map.js'
-import hasNativeSymbol from '../has-native-symbols.js';
+import { isObject, registerPolyfill } from "./utils.js";
+import { Map } from "./Map.js";
+import hasNativeSymbol from "../has-native-symbols.js";
 
-let {hasOwnProperty} = Object.prototype;
+let { hasOwnProperty } = Object.prototype;
 
 export class Set {
   constructor(iterable = undefined) {
-    if (!isObject(this))
-      throw new TypeError('Set called on incompatible type');
+    if (!isObject(this)) throw new TypeError("Set called on incompatible type");
 
-    if (hasOwnProperty.call(this, 'map_')) {
-      throw new TypeError('Set can not be reentrantly initialised');
+    if (hasOwnProperty.call(this, "map_")) {
+      throw new TypeError("Set can not be reentrantly initialised");
     }
 
     this.map_ = new Map();
@@ -79,19 +75,23 @@ export class Set {
 Object.defineProperty(Set.prototype, Symbol.iterator, {
   configurable: true,
   writable: true,
-  value: Set.prototype.values
+  value: Set.prototype.values,
 });
 
-Object.defineProperty(Set.prototype, 'keys', {
+Object.defineProperty(Set.prototype, "keys", {
   configurable: true,
   writable: true,
-  value: Set.prototype.values
+  value: Set.prototype.values,
 });
 
 function needsPolyfill(global) {
-  let {Set, Symbol} = global;
-  if (!Set || !hasNativeSymbol() ||
-      !Set.prototype[Symbol.iterator] || !Set.prototype.values) {
+  let { Set, Symbol } = global;
+  if (
+    !Set ||
+    !hasNativeSymbol() ||
+    !Set.prototype[Symbol.iterator] ||
+    !Set.prototype.values
+  ) {
     return true;
   }
   try {

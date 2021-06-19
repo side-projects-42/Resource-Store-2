@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import initAsyncGeneratorFunction from './modules/initAsyncGeneratorFunction.js';
-import createAsyncGeneratorInstance from './modules/createAsyncGeneratorInstance.js';
-import observeForEach from './modules/observeForEach.js';
-import schedule from './modules/schedule.js';
-import createDecoratedGenerator from './modules/createDecoratedGenerator.js';
+import initAsyncGeneratorFunction from "./modules/initAsyncGeneratorFunction.js";
+import createAsyncGeneratorInstance from "./modules/createAsyncGeneratorInstance.js";
+import observeForEach from "./modules/observeForEach.js";
+import schedule from "./modules/schedule.js";
+import createDecoratedGenerator from "./modules/createDecoratedGenerator.js";
 
 $traceurRuntime.initAsyncGeneratorFunction = initAsyncGeneratorFunction;
 $traceurRuntime.createAsyncGeneratorInstance = createAsyncGeneratorInstance;

@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import spawn from './modules/spawn.js'
+import spawn from "./modules/spawn.js";
 $traceurRuntime.spawn = spawn;

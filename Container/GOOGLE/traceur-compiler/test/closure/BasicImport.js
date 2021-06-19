@@ -1,3 +1,3 @@
-import {Foo} from './deps/foo';
+import { Foo } from "./deps/foo";
 
 console.log(Foo);

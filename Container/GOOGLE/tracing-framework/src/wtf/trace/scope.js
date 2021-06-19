@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.Scope');
+goog.provide("wtf.trace.Scope");
 
-goog.require('wtf');
-goog.require('wtf.trace.BuiltinEvents');
-
-
+goog.require("wtf");
+goog.require("wtf.trace.BuiltinEvents");
 
 /**
  * Scope tracking utility.
@@ -25,7 +23,7 @@ goog.require('wtf.trace.BuiltinEvents');
  *
  * @constructor
  */
-wtf.trace.Scope = function() {
+wtf.trace.Scope = function () {
   /**
    * The flow this scope is tracking, if any.
    * @type {wtf.trace.Flow}
@@ -39,7 +37,6 @@ wtf.trace.Scope = function() {
    */
   this.stackDepth_ = 0;
 };
-
 
 /**
  * Pool of scopes.
@@ -74,9 +71,8 @@ wtf.trace.Scope.pool_ = {
    * {@see #currentDepth}.
    * @type {!Array.<wtf.trace.Scope>}
    */
-  stack: []
+  stack: [],
 };
-
 
 /**
  * Enters a typed scope.
@@ -86,7 +82,7 @@ wtf.trace.Scope.pool_ = {
  * @param {number} time Time for the enter.
  * @return {!wtf.trace.Scope} An initialized scope.
  */
-wtf.trace.Scope.enterTyped = function(time) {
+wtf.trace.Scope.enterTyped = function (time) {
   // Pop a scope from the pool or allocate a new one.
   var pool = wtf.trace.Scope.pool_;
   var scope;
@@ -104,7 +100,6 @@ wtf.trace.Scope.enterTyped = function(time) {
   return scope;
 };
 
-
 /**
  * Leaves a scope.
  * The scope will be exited.
@@ -115,7 +110,7 @@ wtf.trace.Scope.enterTyped = function(time) {
  * @return {T|undefined} The value passed as {@code opt_result}.
  * @template T
  */
-wtf.trace.Scope.leave = function(scope, opt_result, opt_time) {
+wtf.trace.Scope.leave = function (scope, opt_result, opt_time) {
   if (!scope) {
     return opt_result;
   }
@@ -146,13 +141,12 @@ wtf.trace.Scope.leave = function(scope, opt_result, opt_time) {
   return opt_result;
 };
 
-
 /**
  * Gets the flow set on any ancestor scope, if any.
  * If there are no active scopes (in the root) this always returns null.
  * @return {wtf.trace.Flow} Flow.
  */
-wtf.trace.Scope.getCurrentFlow = function() {
+wtf.trace.Scope.getCurrentFlow = function () {
   var pool = wtf.trace.Scope.pool_;
   var depth = pool.currentDepth;
   while (depth > 0) {
@@ -164,13 +158,12 @@ wtf.trace.Scope.getCurrentFlow = function() {
   return null;
 };
 
-
 /**
  * Sets the flow on the deepest current scope, if any.
  * If there are no active scopes (in the root) this is ignored.
  * @param {wtf.trace.Flow} value New flow value.
  */
-wtf.trace.Scope.setCurrentFlow = function(value) {
+wtf.trace.Scope.setCurrentFlow = function (value) {
   var pool = wtf.trace.Scope.pool_;
   var scope = pool.stack[pool.currentDepth];
   if (scope) {

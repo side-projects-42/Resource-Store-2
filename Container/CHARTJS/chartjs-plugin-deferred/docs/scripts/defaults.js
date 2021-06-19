@@ -1,15 +1,15 @@
-import {defaults, helpers} from 'chart.js';
+import { defaults, helpers } from "chart.js";
 
-const {merge} = helpers;
+const { merge } = helpers;
 
 merge(defaults.global, {
   legend: {
-    display: false
+    display: false,
   },
   title: {
-    display: false
+    display: false,
   },
   tooltips: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });

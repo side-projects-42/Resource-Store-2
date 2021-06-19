@@ -1,6 +1,6 @@
 class B {
   constructor() {
-    this._y = {v: 321};
+    this._y = { v: 321 };
     this._z = 1;
   }
   set x(value) {
@@ -13,7 +13,7 @@ class B {
     return this._x;
   }
   getV() {
-    return this._y.v
+    return this._y.v;
   }
 
   set z(v) {
@@ -29,20 +29,20 @@ class C extends B {
     super();
   }
   set x(value) {
-    assert.equal(super.x = value, value);
+    assert.equal((super.x = value), value);
   }
   set v(value) {
-    return super.x.v = value;
+    return (super.x.v = value);
   }
   inc(val) {
-    assert.equal(super.z += val, 4);
+    assert.equal((super.z += val), 4);
   }
   incLookup(val) {
-    assert.equal(super['z'] += val, 9);
+    assert.equal((super["z"] += val), 9);
   }
 }
 
-var c = new C;
+var c = new C();
 c.x = 42;
 assert.equal(42, c.getX());
 

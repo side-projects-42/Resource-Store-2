@@ -11,15 +11,13 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.Session');
+goog.provide("wtf.trace.Session");
 
-goog.require('goog.Disposable');
-goog.require('goog.asserts');
-goog.require('goog.userAgent');
-goog.require('wtf.trace.BuiltinEvents');
-goog.require('wtf.trace.Scope');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.asserts");
+goog.require("goog.userAgent");
+goog.require("wtf.trace.BuiltinEvents");
+goog.require("wtf.trace.Scope");
 
 /**
  * An active recording session.
@@ -33,7 +31,7 @@ goog.require('wtf.trace.Scope');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.trace.Session = function(traceManager, options, defaultBufferSize) {
+wtf.trace.Session = function (traceManager, options, defaultBufferSize) {
   goog.base(this);
 
   /**
@@ -66,8 +64,9 @@ wtf.trace.Session = function(traceManager, options, defaultBufferSize) {
    * @protected
    */
   this.maximumMemoryUsage = this.options_.getNumber(
-      'wtf.trace.session.maximumMemoryUsage',
-      wtf.trace.Session.DEFAULT_MAX_MEMORY_USAGE_);
+    "wtf.trace.session.maximumMemoryUsage",
+    wtf.trace.Session.DEFAULT_MAX_MEMORY_USAGE_
+  );
 
   /**
    * Buffer size, in bytes.
@@ -78,8 +77,9 @@ wtf.trace.Session = function(traceManager, options, defaultBufferSize) {
    * @protected
    */
   this.bufferSize = this.options_.getNumber(
-      'wtf.trace.session.bufferSize',
-      defaultBufferSize);
+    "wtf.trace.session.bufferSize",
+    defaultBufferSize
+  );
 
   /**
    * Current write chunk.
@@ -108,21 +108,20 @@ wtf.trace.Session = function(traceManager, options, defaultBufferSize) {
 };
 goog.inherits(wtf.trace.Session, goog.Disposable);
 
-
 /**
  * Default maximum memory usage.
  * @const
  * @type {number}
  * @private
  */
-wtf.trace.Session.DEFAULT_MAX_MEMORY_USAGE_ =
-    goog.userAgent.MOBILE ? 16 * 1024 * 1024 : 512 * 1024 * 1024;
-
+wtf.trace.Session.DEFAULT_MAX_MEMORY_USAGE_ = goog.userAgent.MOBILE
+  ? 16 * 1024 * 1024
+  : 512 * 1024 * 1024;
 
 /**
  * @override
  */
-wtf.trace.Session.prototype.disposeInternal = function() {
+wtf.trace.Session.prototype.disposeInternal = function () {
   // Retire the current chunk but do not allocate a new one.
   if (this.currentChunk) {
     this.retireChunk(this.currentChunk);
@@ -130,28 +129,25 @@ wtf.trace.Session.prototype.disposeInternal = function() {
     this.currentBufferView_ = null;
   }
 
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Gets the trace manager.
  * @return {!wtf.trace.TraceManager} Trace manager.
  */
-wtf.trace.Session.prototype.getTraceManager = function() {
+wtf.trace.Session.prototype.getTraceManager = function () {
   return this.traceManager_;
 };
-
 
 /**
  * Gets the options object.
  * The return value should not be modified.
  * @return {!wtf.util.Options} Options object.
  */
-wtf.trace.Session.prototype.getOptions = function() {
+wtf.trace.Session.prototype.getOptions = function () {
   return this.options_;
 };
-
 
 /**
  * Gets a modifiable metadata object.
@@ -159,10 +155,9 @@ wtf.trace.Session.prototype.getOptions = function() {
  * file header.
  * @return {!Object} Metadata.
  */
-wtf.trace.Session.prototype.getMetadata = function() {
+wtf.trace.Session.prototype.getMetadata = function () {
   return this.metadata_;
 };
-
 
 /**
  * Starts a recording session.
@@ -170,13 +165,12 @@ wtf.trace.Session.prototype.getMetadata = function() {
  * on the active mode).
  * @protected
  */
-wtf.trace.Session.prototype.startInternal = function() {
+wtf.trace.Session.prototype.startInternal = function () {
   // Allocate a new buffer.
   goog.asserts.assert(!this.currentChunk);
   this.currentChunk = this.nextChunk();
   this.currentBufferView_ = this.currentChunk.getBinaryBuffer();
 };
-
 
 /**
  * Allocates a new buffer.
@@ -189,7 +183,6 @@ wtf.trace.Session.prototype.startInternal = function() {
  */
 wtf.trace.Session.prototype.nextChunk = goog.abstractMethod;
 
-
 /**
  * Retires a used buffer.
  * @param {!wtf.io.cff.chunks.EventDataChunk} chunk A used chunk. May contain
@@ -197,7 +190,6 @@ wtf.trace.Session.prototype.nextChunk = goog.abstractMethod;
  * @protected
  */
 wtf.trace.Session.prototype.retireChunk = goog.abstractMethod;
-
 
 /**
  * Acquires the next buffer with the requested amount of space available.
@@ -211,12 +203,12 @@ wtf.trace.Session.prototype.retireChunk = goog.abstractMethod;
  * @param {number} size Size, in bytes, that will be written.
  * @return {wtf.io.BufferView.Type?} A buffer with the requested size available.
  */
-wtf.trace.Session.prototype.acquireBuffer = function(time, size) {
+wtf.trace.Session.prototype.acquireBuffer = function (time, size) {
   // If the current buffer has space return it for reuse.
   var bufferView = this.currentBufferView_;
   if (bufferView) {
     // This is the 99% path. It should be very, very fast.
-    if (bufferView['capacity'] - bufferView['offset'] >= size) {
+    if (bufferView["capacity"] - bufferView["offset"] >= size) {
       return bufferView;
     }
   }
@@ -236,8 +228,9 @@ wtf.trace.Session.prototype.acquireBuffer = function(time, size) {
 
   // Attempt to allocate a new buffer.
   this.currentChunk = this.nextChunk();
-  this.currentBufferView_ =
-      this.currentChunk ? this.currentChunk.getBinaryBuffer() : null;
+  this.currentBufferView_ = this.currentChunk
+    ? this.currentChunk.getBinaryBuffer()
+    : null;
   bufferView = this.currentBufferView_;
 
   // If no buffer could be allocated, flag a discontinuity.
@@ -269,7 +262,6 @@ wtf.trace.Session.prototype.acquireBuffer = function(time, size) {
   return bufferView;
 };
 
-
 /**
  * An alias to the {@see wtf.trace.Scope#enterTyped} static method.
  * This is here to enable easy access from generated code.
@@ -277,13 +269,14 @@ wtf.trace.Session.prototype.acquireBuffer = function(time, size) {
  */
 wtf.trace.Session.prototype.enterTypedScope = wtf.trace.Scope.enterTyped;
 
-
 // Always export names used in generated code.
 goog.exportProperty(
-    wtf.trace.Session.prototype,
-    'acquireBuffer',
-    wtf.trace.Session.prototype.acquireBuffer);
+  wtf.trace.Session.prototype,
+  "acquireBuffer",
+  wtf.trace.Session.prototype.acquireBuffer
+);
 goog.exportProperty(
-    wtf.trace.Session.prototype,
-    'enterTypedScope',
-    wtf.trace.Session.prototype.enterTypedScope);
+  wtf.trace.Session.prototype,
+  "enterTypedScope",
+  wtf.trace.Session.prototype.enterTypedScope
+);

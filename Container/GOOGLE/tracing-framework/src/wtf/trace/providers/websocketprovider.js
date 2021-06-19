@@ -11,15 +11,13 @@
  * @author henridf@sessionbox.com (Henri Dubois-Ferriere, Sessionbox)
  */
 
-goog.provide('wtf.trace.providers.WebSocketProvider');
+goog.provide("wtf.trace.providers.WebSocketProvider");
 
-goog.require('wtf.trace.Provider');
-goog.require('wtf.trace.Scope');
-goog.require('wtf.trace.events');
-goog.require('wtf.trace.eventtarget');
-goog.require('wtf.trace.eventtarget.BaseEventTarget');
-
-
+goog.require("wtf.trace.Provider");
+goog.require("wtf.trace.Scope");
+goog.require("wtf.trace.events");
+goog.require("wtf.trace.eventtarget");
+goog.require("wtf.trace.eventtarget.BaseEventTarget");
 
 /**
  * Provides WebSocket API events.
@@ -28,14 +26,14 @@ goog.require('wtf.trace.eventtarget.BaseEventTarget');
  * @constructor
  * @extends {wtf.trace.Provider}
  */
-wtf.trace.providers.WebSocketProvider = function(options) {
+wtf.trace.providers.WebSocketProvider = function (options) {
   goog.base(this, options);
 
-  if (!goog.global['WebSocket']) {
+  if (!goog.global["WebSocket"]) {
     return;
   }
 
-  var level = options.getNumber('wtf.trace.provider.websocket', 1);
+  var level = options.getNumber("wtf.trace.provider.websocket", 1);
   if (!level) {
     return;
   }
@@ -44,50 +42,50 @@ wtf.trace.providers.WebSocketProvider = function(options) {
 };
 goog.inherits(wtf.trace.providers.WebSocketProvider, wtf.trace.Provider);
 
-
 /**
  * @override
  */
 wtf.trace.providers.WebSocketProvider.prototype.getSettingsSectionConfigs =
-    function() {
-  return [
-    {
-      'title': 'WebSockets',
-      'widgets': [
-        {
-          'type': 'checkbox',
-          'key': 'wtf.trace.provider.websocket',
-          'title': 'Enabled',
-          'default': true
-        }
-      ]
-    }
-  ];
-};
-
+  function () {
+    return [
+      {
+        title: "WebSockets",
+        widgets: [
+          {
+            type: "checkbox",
+            key: "wtf.trace.provider.websocket",
+            title: "Enabled",
+            default: true,
+          },
+        ],
+      },
+    ];
+  };
 
 /**
  * Injects the WebSocket shim.
  * @private
  */
-wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function() {
-  var originalWs = goog.global['WebSocket'];
+wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function () {
+  var originalWs = goog.global["WebSocket"];
 
   // Get all event types from the IDL store.
   // This will be a map of event name to the {@code EVENT_TYPES} objects.
   // NOTE: disabled full events until Issue #365.
   // var eventTypes = wtf.data.webidl.getAllEvents('WebSocket');
   var eventTypes = {
-    'open': null,
-    'error': null,
-    'close': null,
-    'message': null
+    open: null,
+    error: null,
+    close: null,
+    message: null,
   };
 
   var descriptor = wtf.trace.eventtarget.createDescriptor(
-      'WebSocket', eventTypes);
+    "WebSocket",
+    eventTypes
+  );
 
-  var ctorEvent = wtf.trace.events.createScope('WebSocket()');
+  var ctorEvent = wtf.trace.events.createScope("WebSocket()");
 
   /**
    * Proxy WebSocket.
@@ -105,9 +103,10 @@ wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function() {
      * @type {!WebSocket}
      * @private
      */
-    this.handle_ = arguments.length == 1 ?
-        new originalWs(url) :
-        new originalWs(url, opt_protocols);
+    this.handle_ =
+      arguments.length == 1
+        ? new originalWs(url)
+        : new originalWs(url, opt_protocols);
 
     /**
      * Event type trackers, by name.
@@ -122,8 +121,8 @@ wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function() {
      * @private
      */
     this.props_ = {
-      'url': url,
-      'protocol': opt_protocols
+      url: url,
+      protocol: opt_protocols,
     };
 
     wtf.trace.Scope.leave(scope);
@@ -131,25 +130,25 @@ wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function() {
   goog.inherits(ProxyWebSocket, wtf.trace.eventtarget.BaseEventTarget);
 
   // Constants.
-  ProxyWebSocket['CONNECTING'] = 0;
-  ProxyWebSocket['OPEN'] = 1;
-  ProxyWebSocket['CLOSING'] = 2;
-  ProxyWebSocket['CLOSED'] = 3;
-  ProxyWebSocket.prototype['CONNECTING'] = 0;
-  ProxyWebSocket.prototype['OPEN'] = 1;
-  ProxyWebSocket.prototype['CLOSING'] = 2;
-  ProxyWebSocket.prototype['CLOSED'] = 3;
+  ProxyWebSocket["CONNECTING"] = 0;
+  ProxyWebSocket["OPEN"] = 1;
+  ProxyWebSocket["CLOSING"] = 2;
+  ProxyWebSocket["CLOSED"] = 3;
+  ProxyWebSocket.prototype["CONNECTING"] = 0;
+  ProxyWebSocket.prototype["OPEN"] = 1;
+  ProxyWebSocket.prototype["CLOSING"] = 2;
+  ProxyWebSocket.prototype["CLOSED"] = 3;
 
   // Event tracking.
-  ProxyWebSocket.prototype.beginTrackingEvent = function(type) {
+  ProxyWebSocket.prototype.beginTrackingEvent = function (type) {
     var self = this;
-    var tracker = function(e) {
-      self['dispatchEvent'](e);
+    var tracker = function (e) {
+      self["dispatchEvent"](e);
     };
     this.trackers_[type] = tracker;
     this.handle_.addEventListener(type, tracker, false);
   };
-  ProxyWebSocket.prototype.endTrackingEvent = function(type) {
+  ProxyWebSocket.prototype.endTrackingEvent = function (type) {
     this.handle_.removeEventListener(type, this.trackers_[type], false);
     delete this.trackers_[type];
   };
@@ -158,13 +157,12 @@ wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function() {
   var eventInfos = descriptor.eventInfos;
   for (var n = 0; n < eventInfos.length; n++) {
     var eventInfo = eventInfos[n];
-    Object.defineProperty(ProxyWebSocket.prototype,
-        'on' + eventInfo.name, {
-          'configurable': true,
-          'enumerable': true,
-          'get': eventInfo.getter,
-          'set': eventInfo.setter
-        });
+    Object.defineProperty(ProxyWebSocket.prototype, "on" + eventInfo.name, {
+      configurable: true,
+      enumerable: true,
+      get: eventInfo.getter,
+      set: eventInfo.setter,
+    });
   }
 
   /**
@@ -175,33 +173,34 @@ wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function() {
    */
   function setupProxyProperty(name, opt_setPropsValue) {
     Object.defineProperty(ProxyWebSocket.prototype, name, {
-      'configurable': true,
-      'enumerable': true,
-      'get': function() {
+      configurable: true,
+      enumerable: true,
+      get: function () {
         return this.handle_[name];
       },
-      'set': opt_setPropsValue ? function(value) {
-        this.props_[name] = value;
-        this.handle_[name] = value;
-      } : function(value) {
-        this.handle_[name] = value;
-      }
+      set: opt_setPropsValue
+        ? function (value) {
+            this.props_[name] = value;
+            this.handle_[name] = value;
+          }
+        : function (value) {
+            this.handle_[name] = value;
+          },
     });
-  };
+  }
 
-  setupProxyProperty('url', true);
-  setupProxyProperty('readyState');
-  setupProxyProperty('bufferedAmount');
-  setupProxyProperty('protocol', true);
-  setupProxyProperty('extensions');
-  setupProxyProperty('binaryType');
+  setupProxyProperty("url", true);
+  setupProxyProperty("readyState");
+  setupProxyProperty("bufferedAmount");
+  setupProxyProperty("protocol", true);
+  setupProxyProperty("extensions");
+  setupProxyProperty("binaryType");
 
-  var sendEvent = wtf.trace.events.createScope(
-      'WebSocket#send(ascii url)');
-  ProxyWebSocket.prototype['send'] = function(data) {
+  var sendEvent = wtf.trace.events.createScope("WebSocket#send(ascii url)");
+  ProxyWebSocket.prototype["send"] = function (data) {
     var props = this.props_;
 
-    var scope = sendEvent(props['url']);
+    var scope = sendEvent(props["url"]);
 
     try {
       return this.handle_.send.apply(this.handle_, arguments);
@@ -210,9 +209,8 @@ wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function() {
     }
   };
 
-  var closeEvent = wtf.trace.events.createScope(
-      'WebSocket#close()');
-  ProxyWebSocket.prototype['close'] = function() {
+  var closeEvent = wtf.trace.events.createScope("WebSocket#close()");
+  ProxyWebSocket.prototype["close"] = function () {
     var scope = closeEvent();
     try {
       return this.handle_.close.apply(this.handle_, arguments);
@@ -221,6 +219,6 @@ wtf.trace.providers.WebSocketProvider.prototype.injectWs_ = function() {
     }
   };
 
-  ProxyWebSocket['raw'] = originalWs;
-  this.injectFunction(goog.global, 'WebSocket', ProxyWebSocket);
+  ProxyWebSocket["raw"] = originalWs;
+  this.injectFunction(goog.global, "WebSocket", ProxyWebSocket);
 };

@@ -5,19 +5,18 @@
  * found in the LICENSE file.
  */
 
-goog.provide('wtf.db.FrameList_test');
+goog.provide("wtf.db.FrameList_test");
 
-goog.require('wtf.db.EventList');
-goog.require('wtf.db.EventTypeTable');
-goog.require('wtf.db.FrameList');
-goog.require('wtf.testing');
-
+goog.require("wtf.db.EventList");
+goog.require("wtf.db.EventTypeTable");
+goog.require("wtf.db.FrameList");
+goog.require("wtf.testing");
 
 /**
  * wtf.db.FrameList testing.
  */
-wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
-  test('#ctor', function() {
+wtf.db.FrameList_test = suite("wtf.db.FrameList", function () {
+  test("#ctor", function () {
     var eventTypeTable = new wtf.db.EventTypeTable();
     var eventList = new wtf.db.EventList(eventTypeTable);
 
@@ -32,7 +31,7 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
     assert.lengthOf(eventList.ancillaryLists_, 0);
   });
 
-  test('rebuildEmpty', function() {
+  test("rebuildEmpty", function () {
     var eventTypeTable = new wtf.db.EventTypeTable();
     var eventList = new wtf.db.EventList(eventTypeTable);
     var frameList = new wtf.db.FrameList(eventList);
@@ -40,23 +39,21 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
     assert.equal(frameList.getCount(), 0);
 
     wtf.testing.insertEvents(eventList, {
-      instanceEventTypes: [
-        'someInstanceEvent()'
-      ],
+      instanceEventTypes: ["someInstanceEvent()"],
       events: [
-        [0, 'someInstanceEvent'],
-        [20, 'someInstanceEvent'],
-        [40, 'someInstanceEvent'],
-        [60, 'someInstanceEvent'],
-        [80, 'someInstanceEvent']
-      ]
+        [0, "someInstanceEvent"],
+        [20, "someInstanceEvent"],
+        [40, "someInstanceEvent"],
+        [60, "someInstanceEvent"],
+        [80, "someInstanceEvent"],
+      ],
     });
 
     assert.equal(frameList.getCount(), 0);
     assert.lengthOf(frameList.getAllFrames(), 0);
   });
 
-  test('rebuildEvents', function() {
+  test("rebuildEvents", function () {
     var eventTypeTable = new wtf.db.EventTypeTable();
     var eventList = new wtf.db.EventList(eventTypeTable);
     var frameList = new wtf.db.FrameList(eventList);
@@ -65,21 +62,21 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
 
     wtf.testing.insertEvents(eventList, {
       instanceEventTypes: [
-        'wtf.timing#frameStart(uint32 number)',
-        'wtf.timing#frameEnd(uint32 number)',
-        'someInstanceEvent()'
+        "wtf.timing#frameStart(uint32 number)",
+        "wtf.timing#frameEnd(uint32 number)",
+        "someInstanceEvent()",
       ],
       events: [
-        [0, 'someInstanceEvent'],
-        [10, 'wtf.timing#frameStart', 100],
-        [20, 'someInstanceEvent'],
-        [30, 'wtf.timing#frameEnd', 100],
-        [40, 'someInstanceEvent'],
-        [50, 'wtf.timing#frameStart', 200],
-        [60, 'someInstanceEvent'],
-        [70, 'wtf.timing#frameEnd', 200],
-        [80, 'someInstanceEvent']
-      ]
+        [0, "someInstanceEvent"],
+        [10, "wtf.timing#frameStart", 100],
+        [20, "someInstanceEvent"],
+        [30, "wtf.timing#frameEnd", 100],
+        [40, "someInstanceEvent"],
+        [50, "wtf.timing#frameStart", 200],
+        [60, "someInstanceEvent"],
+        [70, "wtf.timing#frameEnd", 200],
+        [80, "someInstanceEvent"],
+      ],
     });
 
     assert.equal(frameList.getCount(), 2);
@@ -100,7 +97,7 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
     assert.equal(frame200.getDuration(), 20);
   });
 
-  test('rebuildIncremental', function() {
+  test("rebuildIncremental", function () {
     var eventTypeTable = new wtf.db.EventTypeTable();
     var eventList = new wtf.db.EventList(eventTypeTable);
     var frameList = new wtf.db.FrameList(eventList);
@@ -109,17 +106,17 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
 
     wtf.testing.insertEvents(eventList, {
       instanceEventTypes: [
-        'wtf.timing#frameStart(uint32 number)',
-        'wtf.timing#frameEnd(uint32 number)',
-        'someInstanceEvent()'
+        "wtf.timing#frameStart(uint32 number)",
+        "wtf.timing#frameEnd(uint32 number)",
+        "someInstanceEvent()",
       ],
       events: [
-        [0, 'someInstanceEvent'],
-        [10, 'wtf.timing#frameStart', 100],
-        [20, 'someInstanceEvent'],
-        [30, 'wtf.timing#frameEnd', 100],
-        [40, 'someInstanceEvent']
-      ]
+        [0, "someInstanceEvent"],
+        [10, "wtf.timing#frameStart", 100],
+        [20, "someInstanceEvent"],
+        [30, "wtf.timing#frameEnd", 100],
+        [40, "someInstanceEvent"],
+      ],
     });
 
     assert.equal(frameList.getCount(), 1);
@@ -127,51 +124,51 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
 
     wtf.testing.insertEvents(eventList, {
       instanceEventTypes: [
-        'wtf.timing#frameStart(uint32 number)',
-        'wtf.timing#frameEnd(uint32 number)',
-        'someInstanceEvent()'
+        "wtf.timing#frameStart(uint32 number)",
+        "wtf.timing#frameEnd(uint32 number)",
+        "someInstanceEvent()",
       ],
       events: [
-        [50, 'wtf.timing#frameStart', 200],
-        [60, 'someInstanceEvent'],
-        [70, 'wtf.timing#frameEnd', 200],
-        [80, 'someInstanceEvent']
-      ]
+        [50, "wtf.timing#frameStart", 200],
+        [60, "someInstanceEvent"],
+        [70, "wtf.timing#frameEnd", 200],
+        [80, "someInstanceEvent"],
+      ],
     });
 
     assert.equal(frameList.getCount(), 2);
     assert.lengthOf(frameList.getAllFrames(), 2);
   });
 
-  test('frames', function() {
+  test("frames", function () {
     var eventTypeTable = new wtf.db.EventTypeTable();
     var eventList = new wtf.db.EventList(eventTypeTable);
     var frameList = new wtf.db.FrameList(eventList);
     wtf.testing.insertEvents(eventList, {
       instanceEventTypes: [
-        'wtf.timing#frameStart(uint32 number)',
-        'wtf.timing#frameEnd(uint32 number)',
-        'someInstanceEvent()'
+        "wtf.timing#frameStart(uint32 number)",
+        "wtf.timing#frameEnd(uint32 number)",
+        "someInstanceEvent()",
       ],
       events: [
-        [0, 'someInstanceEvent'],
-        [10, 'wtf.timing#frameStart', 100],
-        [20, 'someInstanceEvent'],
-        [30, 'wtf.timing#frameEnd', 100],
-        [40, 'someInstanceEvent'],
-        [50, 'wtf.timing#frameStart', 200],
-        [60, 'someInstanceEvent'],
-        [70, 'wtf.timing#frameEnd', 200],
-        [80, 'someInstanceEvent'],
-        [90, 'wtf.timing#frameStart', 300],
-        [100, 'someInstanceEvent'],
-        [110, 'wtf.timing#frameEnd', 300],
-        [120, 'someInstanceEvent'],
-        [130, 'wtf.timing#frameStart', 400],
-        [140, 'someInstanceEvent'],
-        [150, 'wtf.timing#frameEnd', 400],
-        [160, 'someInstanceEvent']
-      ]
+        [0, "someInstanceEvent"],
+        [10, "wtf.timing#frameStart", 100],
+        [20, "someInstanceEvent"],
+        [30, "wtf.timing#frameEnd", 100],
+        [40, "someInstanceEvent"],
+        [50, "wtf.timing#frameStart", 200],
+        [60, "someInstanceEvent"],
+        [70, "wtf.timing#frameEnd", 200],
+        [80, "someInstanceEvent"],
+        [90, "wtf.timing#frameStart", 300],
+        [100, "someInstanceEvent"],
+        [110, "wtf.timing#frameEnd", 300],
+        [120, "someInstanceEvent"],
+        [130, "wtf.timing#frameStart", 400],
+        [140, "someInstanceEvent"],
+        [150, "wtf.timing#frameEnd", 400],
+        [160, "someInstanceEvent"],
+      ],
     });
 
     var frame100 = frameList.getFrame(100);
@@ -189,8 +186,12 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
 
     assert.equal(frameList.getCount(), 4);
     assert.lengthOf(frameList.getAllFrames(), 4);
-    assert.deepEqual(
-        frameList.getAllFrames(), [frame100, frame200, frame300, frame400]);
+    assert.deepEqual(frameList.getAllFrames(), [
+      frame100,
+      frame200,
+      frame300,
+      frame400,
+    ]);
 
     assert.isNull(frameList.getPreviousFrame(frame100));
     assert.equal(frameList.getNextFrame(frame100), frame200);
@@ -214,43 +215,41 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
     assert.deepEqual(frameList.getIntraFrameAtTime(151), [frame400, null]);
 
     var intersecting = [];
-    frameList.forEachIntersecting(0, 1000, function(frame) {
+    frameList.forEachIntersecting(0, 1000, function (frame) {
       intersecting.push(frame);
     });
     assert.lengthOf(intersecting, 4);
 
     intersecting = [];
-    frameList.forEachIntersecting(40, 80, function(frame) {
+    frameList.forEachIntersecting(40, 80, function (frame) {
       intersecting.push(frame);
     });
     assert.deepEqual(intersecting, [frame200]);
 
     intersecting = [];
-    frameList.forEachIntersecting(100, 150, function(frame) {
+    frameList.forEachIntersecting(100, 150, function (frame) {
       intersecting.push(frame);
     });
     assert.deepEqual(intersecting, [frame300, frame400]);
   });
 
-  test('framesEmpty', function() {
+  test("framesEmpty", function () {
     var eventTypeTable = new wtf.db.EventTypeTable();
     var eventList = new wtf.db.EventList(eventTypeTable);
     var frameList = new wtf.db.FrameList(eventList);
     wtf.testing.insertEvents(eventList, {
-      instanceEventTypes: [
-        'someInstanceEvent()'
-      ],
+      instanceEventTypes: ["someInstanceEvent()"],
       events: [
-        [0, 'someInstanceEvent'],
-        [20, 'someInstanceEvent'],
-        [40, 'someInstanceEvent'],
-        [60, 'someInstanceEvent'],
-        [80, 'someInstanceEvent'],
-        [100, 'someInstanceEvent'],
-        [120, 'someInstanceEvent'],
-        [140, 'someInstanceEvent'],
-        [160, 'someInstanceEvent']
-      ]
+        [0, "someInstanceEvent"],
+        [20, "someInstanceEvent"],
+        [40, "someInstanceEvent"],
+        [60, "someInstanceEvent"],
+        [80, "someInstanceEvent"],
+        [100, "someInstanceEvent"],
+        [120, "someInstanceEvent"],
+        [140, "someInstanceEvent"],
+        [160, "someInstanceEvent"],
+      ],
     });
 
     assert.equal(frameList.getCount(), 0);
@@ -262,8 +261,8 @@ wtf.db.FrameList_test = suite('wtf.db.FrameList', function() {
     assert.deepEqual(frameList.getIntraFrameAtTime(0), [null, null]);
     assert.deepEqual(frameList.getIntraFrameAtTime(151), [null, null]);
 
-    frameList.forEachIntersecting(0, 1000, function(frame) {
-      assert.fail('Should be nothing intersecting!');
+    frameList.forEachIntersecting(0, 1000, function (frame) {
+      assert.fail("Should be nothing intersecting!");
     });
   });
 });

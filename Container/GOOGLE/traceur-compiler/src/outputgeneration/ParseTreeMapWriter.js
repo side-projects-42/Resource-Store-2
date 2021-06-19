@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeWriter} from './ParseTreeWriter.js';
-import {StringSet} from '../util/StringSet.js';
+import { ParseTreeWriter } from "./ParseTreeWriter.js";
+import { StringSet } from "../util/StringSet.js";
 
 /**
  * Converts a ParseTree to text and a source Map.
@@ -31,7 +31,7 @@ export class ParseTreeMapWriter extends ParseTreeWriter {
     this.outputLineCount_ = 1;
     this.isFirstMapping_ = true;
     this.sourcesInMap_ = new StringSet();
-    this.relativeSourceName_ = '';
+    this.relativeSourceName_ = "";
     this.generated_ = null;
     this.original_ = null;
     this.previousMapping_ = null;
@@ -56,13 +56,11 @@ export class ParseTreeMapWriter extends ParseTreeWriter {
       return;
     }
 
-    if (tree.location !== null)
-      this.enterBranch(tree.location);
+    if (tree.location !== null) this.enterBranch(tree.location);
 
     super.visitAny(tree);
 
-    if (tree.location !== null)
-      this.exitBranch(tree.location);
+    if (tree.location !== null) this.exitBranch(tree.location);
   }
 
   writeCurrentln_() {
@@ -72,8 +70,8 @@ export class ParseTreeMapWriter extends ParseTreeWriter {
     // Every time we write an output line, then next mapping will start
     // on column 1.
     this.generated_ = {
-      line: this.outputLineCount_,  // lines are one based.
-      column: 0 // columns are zero based.
+      line: this.outputLineCount_, // lines are one based.
+      column: 0, // columns are zero based.
     };
     this.flushMappings();
   }
@@ -85,44 +83,45 @@ export class ParseTreeMapWriter extends ParseTreeWriter {
   }
 
   generate() {
-    let length = this.currentLine_.length
+    let length = this.currentLine_.length;
     let column = length ? length - 1 : 0;
     this.generated_ = {
       line: this.outputLineCount_,
-      column: column
+      column: column,
     };
     this.flushMappings();
   }
 
   enterBranch(location) {
-    let {line, column, source} = location.start;
+    let { line, column, source } = location.start;
     this.originate(line, column, source);
   }
 
   exitBranch(location) {
-    let {line, column, source} = location.end;
+    let { line, column, source } = location.end;
     this.originate(line, column ? column - 1 : 0, source);
   }
 
   /**
-  * Set the original coordinates for the generated position.
-  * @param {number} line
-  * @param {number} column
-  * @param {SourceFile} source
-  */
+   * Set the original coordinates for the generated position.
+   * @param {number} line
+   * @param {number} column
+   * @param {SourceFile} source
+   */
   originate(line, column, source) {
-    line++;  // source map lib uses one-based lines.
+    line++; // source map lib uses one-based lines.
     // Try to get a mapping for every input line.
-    if (this.original_ && this.original_.line !== line)
-      this.flushMappings();
+    if (this.original_ && this.original_.line !== line) this.flushMappings();
     // The first mapping on each output line must cover beginning columns.
-    this.original_ = {line, column};
-    let {name} = source;
+    this.original_ = { line, column };
+    let { name } = source;
     if (name && !this.sourcesInMap_.has(name)) {
       this.sourcesInMap_.add(name);
       this.relativeSourceName_ = relativePath(name, this.basepath_);
-      this.sourceMapGenerator_.setSourceContent(this.relativeSourceName_,
-          source.contents);
+      this.sourceMapGenerator_.setSourceContent(
+        this.relativeSourceName_,
+        source.contents
+      );
     }
     this.flushMappings();
   }
@@ -140,24 +139,26 @@ export class ParseTreeMapWriter extends ParseTreeWriter {
   }
 
   skipMapping() {
-    if (!this.previousMapping_)
-      return false;
-    if (this.lowResolution_ &&
-        this.previousMapping_.generated.line === this.generated_.line)
+    if (!this.previousMapping_) return false;
+    if (
+      this.lowResolution_ &&
+      this.previousMapping_.generated.line === this.generated_.line
+    )
       return true;
-    if (this.isSame(this.previousMapping_.generated, this.generated_) &&
-        this.isSame(this.previousMapping_.original, this.original_))
+    if (
+      this.isSame(this.previousMapping_.generated, this.generated_) &&
+      this.isSame(this.previousMapping_.original, this.original_)
+    )
       return true;
   }
 
   addMapping() {
-    if (this.skipMapping())
-      return;
+    if (this.skipMapping()) return;
 
     let mapping = {
       generated: this.generated_,
       original: this.original_,
-      source: this.relativeSourceName_
+      source: this.relativeSourceName_,
     };
     this.sourceMapGenerator_.addMapping(mapping);
     this.previousMapping_ = mapping;
@@ -165,23 +166,23 @@ export class ParseTreeMapWriter extends ParseTreeWriter {
 }
 
 export function relativePath(name, sourceRoot) {
-  if (!name || name[0] === '@')  // @ means internal name
+  if (!name || name[0] === "@")
+    // @ means internal name
     return name;
-  if (!sourceRoot)
-    return name;
+  if (!sourceRoot) return name;
 
-  let nameSegments = name.split('/');
-  let rootSegments = sourceRoot.split('/');
+  let nameSegments = name.split("/");
+  let rootSegments = sourceRoot.split("/");
 
   if (rootSegments[rootSegments.length - 1]) {
     // We can't patch this up because we can't know whether the caller sent
     // a file path or a directory w/o a slash by mistake
-    throw new Error('rootPath must end in /');
+    throw new Error("rootPath must end in /");
   }
   let commonSegmentsLength = 0;
   let uniqueSegments = [];
   let foundUnique = false;
-  nameSegments.forEach((segment, index)  => {
+  nameSegments.forEach((segment, index) => {
     if (!foundUnique && segment === rootSegments[index]) {
       commonSegmentsLength++;
       return;
@@ -196,8 +197,8 @@ export function relativePath(name, sourceRoot) {
   let dotDotSegments = rootSegments.length - commonSegmentsLength - 1;
   let segments = [];
   while (dotDotSegments--) {
-    segments.push('..');
+    segments.push("..");
   }
   segments.push(...uniqueSegments);
-  return segments.join('/');
+  return segments.join("/");
 }

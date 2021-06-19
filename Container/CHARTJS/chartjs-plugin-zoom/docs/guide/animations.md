@@ -25,7 +25,7 @@ If you want to disable zoom animations:
     transitions: {
       zoom: {
         animation: {
-          duration: 0
+          duration: 0;
         }
       }
     }

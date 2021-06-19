@@ -1,4 +1,4 @@
-import {trunc} from '../../../src/runtime/polyfills/Math.js';
+import { trunc } from "../../../src/runtime/polyfills/Math.js";
 
 function testTrunc(trunc) {
   assert.equal(0, trunc(0));

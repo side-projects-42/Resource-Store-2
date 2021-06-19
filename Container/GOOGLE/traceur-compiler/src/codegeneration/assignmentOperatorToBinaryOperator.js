@@ -36,8 +36,8 @@ import {
   STAR_STAR,
   STAR_STAR_EQUAL,
   UNSIGNED_RIGHT_SHIFT,
-  UNSIGNED_RIGHT_SHIFT_EQUAL
-} from '../syntax/TokenType.js';
+  UNSIGNED_RIGHT_SHIFT_EQUAL,
+} from "../syntax/TokenType.js";
 
 /**
  * Returns the binary operator that the assignment operator should use. For
@@ -70,7 +70,7 @@ function assignmentOperatorToBinaryOperator(type) {
     case BAR_EQUAL:
       return BAR;
     default:
-      throw Error('unreachable');
+      throw Error("unreachable");
   }
 }
 

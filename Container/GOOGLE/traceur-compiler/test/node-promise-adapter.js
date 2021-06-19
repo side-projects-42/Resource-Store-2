@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
-require('../src/node/require').makeDefault(function(filename) {
+require("../src/node/require").makeDefault(function (filename) {
   return /polyfills[\/\\]Promise\.js/;
 });
 
-var Promise = require('../src/runtime/polyfills/Promise').Promise;
+var Promise = require("../src/runtime/polyfills/Promise").Promise;
 
 exports.deferred = function () {
   var resolve, reject;
-  var promise = new Promise(function(res, rej) {
+  var promise = new Promise(function (res, rej) {
     resolve = res;
     reject = rej;
   });
@@ -30,7 +30,7 @@ exports.deferred = function () {
   return {
     promise: promise,
     resolve: resolve,
-    reject: reject
+    reject: reject,
   };
 };
 

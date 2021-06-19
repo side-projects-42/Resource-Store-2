@@ -26,17 +26,17 @@ instrumentation providers. They can be specified as a value to the
 
 The target mode for tracing.
 
-* `snapshotting`: click to take a snapshot and open it in the UI or save to a
-file.
-* `streaming`: stream all events to the UI or a file.
+- `snapshotting`: click to take a snapshot and open it in the UI or save to a
+  file.
+- `streaming`: stream all events to the UI or a file.
 
 ### wtf.trace.format
 
 The format of the resulting trace data.
 
-* `binary`: an optimized binary format that's efficient to load and has small
-file sizes.
-* `json`: a JSON-based file format. Sort-of.
+- `binary`: an optimized binary format that's efficient to load and has small
+  file sizes.
+- `json`: a JSON-based file format. Sort-of.
 
 ### wtf.trace.target
 
@@ -44,10 +44,10 @@ A string value indicating the target for the tracing session.
 
 Supported targets:
 
-* `null`: used for testing, a black hole.
-* `http[s]://host:port/path`: an HTTP(S) endpoint to receive POSTS.
-* `file://filename_prefix`: a local saved file with the given prefix.
-* Custom objects: see below.
+- `null`: used for testing, a black hole.
+- `http[s]://host:port/path`: an HTTP(S) endpoint to receive POSTS.
+- `file://filename_prefix`: a local saved file with the given prefix.
+- Custom objects: see below.
 
 #### Custom Objects
 
@@ -55,11 +55,11 @@ To programmatically receive written data you can pass an object. This object
 must contain a `write` method and may optionally contain `flush` and `close`
 methods.
 
-* `write(Uint8Array|Array, length, done)`: write the given bytes up to the
+- `write(Uint8Array|Array, length, done)`: write the given bytes up to the
   provided length (do not trust the array length). You must call done() when
   writing has completed.
-* `flush()`: write any pending data, if required.
-* `close()`: the stream is closed and no more data will be written.
+- `flush()`: write any pending data, if required.
+- `close()`: the stream is closed and no more data will be written.
 
 ### wtf.trace.session.bufferSize
 
@@ -89,7 +89,7 @@ flushing.
 When set to true all providers and global hooks will be disabled. This is useful
 when including the tracing script to do file manipulation/etc.
 
-### wtf.trace.provider.*
+### wtf.trace.provider.\*
 
 Each event provider can be toggled here to allow for the choice of which kind
 of events to include in the stream or the fidelity of the events added.
@@ -138,20 +138,20 @@ override object `wtf_hud_options`.
 
 Docking position of the HUD overlay. May be one of:
 
-* `tl`: Top Left.
-* `tm`: Top Middle.
-* `tr`: Top Right.
-* `bl`: Bottom Left.
-* `bm`: Bottom Middle.
-* `br`: Bottom Right.
+- `tl`: Top Left.
+- `tm`: Top Middle.
+- `tr`: Top Right.
+- `bl`: Bottom Left.
+- `bm`: Bottom Middle.
+- `br`: Bottom Right.
 
 ### wtf.hud.app.mode/wtf.hud.app.endpoint
 
 The mode used for communicating with the visualizer application. May be one of:
 
-* `page`: If set, `wtf.hud.app.endpoint` is a URL to the page that will be
-opened in a new window.
-* `remote`: If set, `wtf.hud.app.endpoint` is a `host:port` of a target HTTP server that will listen for POSTs.
+- `page`: If set, `wtf.hud.app.endpoint` is a URL to the page that will be
+  opened in a new window.
+- `remote`: If set, `wtf.hud.app.endpoint` is a `host:port` of a target HTTP server that will listen for POSTs.
 
 ## Remote Control
 

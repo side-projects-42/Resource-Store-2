@@ -1,16 +1,18 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      datasets: [{
-        data: [10, 20, 30, 0, 55],
-      }],
-      labels: ['A', 'B', 'C', 'D', 'E']
+      datasets: [
+        {
+          data: [10, 20, 30, 0, 55],
+        },
+      ],
+      labels: ["A", "B", "C", "D", "E"],
     },
     options: {
       scales: {
         x: {
-          min: 'C'
+          min: "C",
         },
       },
       plugins: {
@@ -18,22 +20,22 @@ module.exports = {
         annotation: {
           annotations: {
             annotation1: {
-              type: 'line',
-              xScale: 'x',
-              yScale: 'y',
+              type: "line",
+              xScale: "x",
+              yScale: "y",
               borderWidth: 3,
-              borderColor: 'black',
-              xMin: 'B',
-              xMax: 'D',
+              borderColor: "black",
+              xMin: "B",
+              xMax: "D",
               yMin: 0,
               yMax: 60,
-            }
-          }
-        }
+            },
+          },
+        },
       },
-    }
+    },
   },
   options: {
     spriteText: true,
-  }
+  },
 };

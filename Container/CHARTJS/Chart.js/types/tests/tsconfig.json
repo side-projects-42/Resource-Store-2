@@ -6,8 +6,5 @@
     "strict": true,
     "noEmit": true
   },
-  "include": [
-    "./**/*.ts",
-    "../index.esm.d.ts"
-  ]
+  "include": ["./**/*.ts", "../index.esm.d.ts"]
 }

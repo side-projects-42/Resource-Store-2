@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const {keys} = Object;
+const { keys } = Object;
 
 // Object.assign (19.1.3.1)
 export default function assign(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i];
     var props = source == null ? [] : keys(source);
-    var p, length = props.length;
+    var p,
+      length = props.length;
     for (p = 0; p < length; p++) {
       var name = props[p];
       target[name] = source[name];

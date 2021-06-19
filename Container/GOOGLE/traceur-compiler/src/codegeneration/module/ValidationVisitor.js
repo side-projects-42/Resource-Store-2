@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ModuleVisitor} from './ModuleVisitor.js';
+import { ModuleVisitor } from "./ModuleVisitor.js";
 
 /**
  * Validates that symbols are exported when we extract them.
@@ -23,7 +23,6 @@ import {ModuleVisitor} from './ModuleVisitor.js';
  * validates that 'm' exports a and that 'n' exports c.
  */
 export class ValidationVisitor extends ModuleVisitor {
-
   checkExport_(tree, name) {
     let description = this.validatingModuleDescription_;
     if (description && !description.getExport(name)) {
@@ -35,8 +34,10 @@ export class ValidationVisitor extends ModuleVisitor {
   checkImport_(tree, name) {
     let existingImport = this.moduleSymbol.getImport(name);
     if (existingImport) {
-      this.reportError(tree, `'${name}' was previously imported at ${
-          existingImport.location.start}`);
+      this.reportError(
+        tree,
+        `'${name}' was previously imported at ${existingImport.location.start}`
+      );
     } else {
       this.moduleSymbol.addImport(name, tree);
     }
@@ -61,8 +62,7 @@ export class ValidationVisitor extends ModuleVisitor {
     // re-export.
     if (tree.moduleSpecifier) {
       let name = tree.moduleSpecifier.token.processedValue;
-      let moduleDescription =
-          this.getExportsListForModuleSpecifier(name);
+      let moduleDescription = this.getExportsListForModuleSpecifier(name);
       this.visitAndValidate_(moduleDescription, tree.exportClause);
     }
     // The else case is checked else where and duplicate exports are caught
@@ -78,13 +78,12 @@ export class ValidationVisitor extends ModuleVisitor {
     // export name from 'module'
     // same as
     // export {default as name} from 'module'
-    this.checkExport_(tree, 'default');
+    this.checkExport_(tree, "default");
   }
 
   visitImportDeclaration(tree) {
     let name = tree.moduleSpecifier.token.processedValue;
-    let moduleDescription =
-        this.getExportsListForModuleSpecifier(name);
+    let moduleDescription = this.getExportsListForModuleSpecifier(name);
     this.visitAndValidate_(moduleDescription, tree.importClause);
   }
 
@@ -98,7 +97,7 @@ export class ValidationVisitor extends ModuleVisitor {
   visitImportedBinding(tree) {
     let importName = tree.binding.getStringValue();
     this.checkImport_(tree, importName);
-    this.checkExport_(tree, 'default');
+    this.checkExport_(tree, "default");
   }
 
   visitNameSpaceImport(tree) {

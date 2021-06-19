@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var serverURL = 'ws://localhost:8080/projector';
+var serverURL = "ws://localhost:8080/projector";
 
 var socket;
 
@@ -20,49 +20,45 @@ function socketSend(msg) {
   socket.send(JSON.stringify(msg));
 }
 
-window.addEventListener('load', function() {
-  chrome.extension.sendMessage({ mirror : true}, function(response) {
-    if (response.mirror)
-      startMirroring();
-    else
-      stopMirroring();
+window.addEventListener("load", function () {
+  chrome.extension.sendMessage({ mirror: true }, function (response) {
+    if (response.mirror) startMirroring();
+    else stopMirroring();
   });
 });
 
 function startMirroring() {
-  if (socket)
-    return;
+  if (socket) return;
 
   socket = new WebSocket(serverURL);
   var mirrorClient;
 
-  socket.onopen = function() {
+  socket.onopen = function () {
     socketSend({ base: location.href.match(/^(.*\/)[^\/]*$/)[1] });
     mirrorClient = new TreeMirrorClient(document, {
-      initialize: function(rootId, children) {
+      initialize: function (rootId, children) {
         socketSend({
-          f: 'initialize',
-          args: [rootId, children]
+          f: "initialize",
+          args: [rootId, children],
         });
       },
 
-      applyChanged: function(removed, addedOrMoved, attributes, text) {
+      applyChanged: function (removed, addedOrMoved, attributes, text) {
         socketSend({
-          f: 'applyChanged',
-          args: [removed, addedOrMoved, attributes, text]
+          f: "applyChanged",
+          args: [removed, addedOrMoved, attributes, text],
         });
-      }
+      },
     });
-  }
+  };
 
-  socket.onclose = function() {
+  socket.onclose = function () {
     mirrorClient.disconnect();
     socket = undefined;
-  }
+  };
 }
 
 function stopMirroring() {
-  if (socket)
-    socket.close();
+  if (socket) socket.close();
   socket = undefined;
 }

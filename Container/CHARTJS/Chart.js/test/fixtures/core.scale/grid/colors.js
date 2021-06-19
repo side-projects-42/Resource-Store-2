@@ -1,38 +1,40 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      labels: ['1', '2', '3', '4', '5', '6'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3]
-      }],
+      labels: ["1", "2", "3", "4", "5", "6"],
+      datasets: [
+        {
+          label: "# of Votes",
+          data: [12, 19, 3, 5, 2, 3],
+        },
+      ],
     },
     options: {
       scales: {
         x: {
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            borderColor: 'blue',
+            borderColor: "blue",
             borderWidth: 2,
-            color: 'green',
+            color: "green",
             drawTicks: false,
-          }
+          },
         },
         y: {
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            borderColor: 'black',
+            borderColor: "black",
             borderWidth: 2,
-            color: 'red',
+            color: "red",
             drawTicks: false,
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 };

@@ -1,7 +1,7 @@
 // Should not compile.
 
 var object = {
-  "notNamedField"() {
+  notNamedField() {
     return notNamedField;
-  }
+  },
 };

@@ -1,6 +1,6 @@
 // Should not compile.
 // Error: 'identifier' expected
 
-function f(x,) {
+function f(x) {
   return x;
 }

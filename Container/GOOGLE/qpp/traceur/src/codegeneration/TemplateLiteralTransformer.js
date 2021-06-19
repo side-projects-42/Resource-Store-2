@@ -16,26 +16,16 @@ import {
   BINARY_OPERATOR,
   COMMA_EXPRESSION,
   CONDITIONAL_EXPRESSION,
-  TEMPLATE_LITERAL_PORTION
-} from '../syntax/trees/ParseTreeType.js';
+  TEMPLATE_LITERAL_PORTION,
+} from "../syntax/trees/ParseTreeType.js";
 import {
   LiteralExpression,
-  ParenExpression
-} from '../syntax/trees/ParseTrees.js';
-import {LiteralToken} from '../syntax/LiteralToken.js';
-import {
-  DEFINE_PROPERTIES,
-  OBJECT,
-  RAW
-} from '../syntax/PredefinedName.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  PERCENT,
-  PLUS,
-  SLASH,
-  STAR,
-  STRING
-} from '../syntax/TokenType.js';
+  ParenExpression,
+} from "../syntax/trees/ParseTrees.js";
+import { LiteralToken } from "../syntax/LiteralToken.js";
+import { DEFINE_PROPERTIES, OBJECT, RAW } from "../syntax/PredefinedName.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { PERCENT, PLUS, SLASH, STAR, STRING } from "../syntax/TokenType.js";
 import {
   createArgumentList,
   createArrayLiteralExpression,
@@ -48,8 +38,8 @@ import {
   createOperatorToken,
   createPropertyDescriptor,
   createPropertyNameAssignment,
-  createStringLiteral
-} from './ParseTreeFactory.js';
+  createStringLiteral,
+} from "./ParseTreeFactory.js";
 
 /**
  * Creates an object like:
@@ -66,17 +56,21 @@ import {
 function createCallSiteIdObject(tree) {
   var elements = tree.elements;
   return createObjectFreeze(
-      createCallExpression(
-          createMemberExpression(OBJECT, DEFINE_PROPERTIES),
-          createArgumentList(
-              createCookedStringArray(elements),
-              createObjectLiteralExpression(
-                  createPropertyNameAssignment(
-                      RAW,
-                      createPropertyDescriptor({
-                        value: createObjectFreeze(
-                            createRawStringArray(elements))
-                      }))))));
+    createCallExpression(
+      createMemberExpression(OBJECT, DEFINE_PROPERTIES),
+      createArgumentList(
+        createCookedStringArray(elements),
+        createObjectLiteralExpression(
+          createPropertyNameAssignment(
+            RAW,
+            createPropertyDescriptor({
+              value: createObjectFreeze(createRawStringArray(elements)),
+            })
+          )
+        )
+      )
+    )
+  );
 }
 
 /**
@@ -88,7 +82,7 @@ function createCallSiteIdObject(tree) {
 function maybeAddEmptyStringAtEnd(elements, items) {
   var length = elements.length;
   if (!length || elements[length - 1].type !== TEMPLATE_LITERAL_PORTION)
-    items.push(createStringLiteral(''));
+    items.push(createStringLiteral(""));
 }
 
 function createRawStringArray(elements) {
@@ -96,8 +90,7 @@ function createRawStringArray(elements) {
   for (var i = 0; i < elements.length; i += 2) {
     var str = replaceRaw(JSON.stringify(elements[i].value.value));
     var loc = elements[i].location;
-    var expr = new LiteralExpression(loc, new LiteralToken(STRING,
-                                                           str, loc));
+    var expr = new LiteralExpression(loc, new LiteralToken(STRING, str, loc));
     items.push(expr);
   }
   maybeAddEmptyStringAtEnd(elements, items);
@@ -120,14 +113,14 @@ function createCookedStringArray(elements) {
 }
 
 function replaceRaw(s) {
-  return s.replace(/\u2028|\u2029/g, function(c) {
+  return s.replace(/\u2028|\u2029/g, function (c) {
     switch (c) {
-      case '\u2028':
-        return '\\u2028';
-      case '\u2029':
-        return '\\u2029';
+      case "\u2028":
+        return "\\u2028";
+      case "\u2029":
+        return "\\u2029";
       default:
-        throw Error('Not reachable');
+        throw Error("Not reachable");
     }
   });
 }
@@ -139,21 +132,24 @@ function replaceRaw(s) {
  */
 function cookString(s) {
   var sb = ['"'];
-  var i = 0, k = 1, c, c2;
+  var i = 0,
+    k = 1,
+    c,
+    c2;
   while (i < s.length) {
     c = s[i++];
     switch (c) {
-      case '\\':
+      case "\\":
         c2 = s[i++];
         switch (c2) {
           // Strip line continuation.
-          case '\n':
-          case '\u2028':
-          case '\u2029':
+          case "\n":
+          case "\u2028":
+          case "\u2029":
             break;
-          case '\r':
+          case "\r":
             // \ \r \n should be stripped as one
-            if (s[i + 1] === '\n') {
+            if (s[i + 1] === "\n") {
               i++;
             }
             break;
@@ -170,26 +166,26 @@ function cookString(s) {
         break;
 
       // Whitespace
-      case '\n':
-        sb[k++] = '\\n';
+      case "\n":
+        sb[k++] = "\\n";
         break;
-      case '\r':
-        sb[k++] = '\\r';
+      case "\r":
+        sb[k++] = "\\r";
         break;
-      case '\t':
-        sb[k++] = '\\t';
+      case "\t":
+        sb[k++] = "\\t";
         break;
-      case '\f':
-        sb[k++] = '\\f';
+      case "\f":
+        sb[k++] = "\\f";
         break;
-      case '\b':
-        sb[k++] = '\\b';
+      case "\b":
+        sb[k++] = "\\b";
         break;
-      case '\u2028':
-        sb[k++] = '\\u2028';
+      case "\u2028":
+        sb[k++] = "\\u2028";
         break;
-      case '\u2029':
-        sb[k++] = '\\u2029';
+      case "\u2029":
+        sb[k++] = "\\u2029";
         break;
 
       default:
@@ -198,11 +194,10 @@ function cookString(s) {
   }
 
   sb[k++] = '"';
-  return sb.join('');
+  return sb.join("");
 }
 
 export class TemplateLiteralTransformer extends TempVarTransformer {
-
   /**
    * Override to not use functions scope for temporary variables since we
    * only want to scope these to modules or global.
@@ -212,8 +207,7 @@ export class TemplateLiteralTransformer extends TempVarTransformer {
   }
 
   transformTemplateLiteralExpression(tree) {
-    if (!tree.operand)
-      return this.createDefaultTemplateLiteral(tree);
+    if (!tree.operand) return this.createDefaultTemplateLiteral(tree);
 
     var operand = this.transformAny(tree.operand);
     var elements = tree.elements;
@@ -242,7 +236,7 @@ export class TemplateLiteralTransformer extends TempVarTransformer {
           case SLASH:
             return transformedTree;
         }
-        // Fall through.
+      // Fall through.
       case COMMA_EXPRESSION:
       case CONDITIONAL_EXPRESSION:
         return new ParenExpression(null, transformedTree);
@@ -260,27 +254,27 @@ export class TemplateLiteralTransformer extends TempVarTransformer {
     var length = tree.elements.length;
     if (length === 0) {
       var loc = tree.location;
-      return new LiteralExpression(loc, new LiteralToken(STRING,
-                                                         '""', loc));
+      return new LiteralExpression(loc, new LiteralToken(STRING, '""', loc));
     }
 
-    var firstNonEmpty = tree.elements[0].value.value === '' ? -1 : 0;
+    var firstNonEmpty = tree.elements[0].value.value === "" ? -1 : 0;
     var binaryExpression = this.transformAny(tree.elements[0]);
-    if (length == 1)
-      return binaryExpression;
+    if (length == 1) return binaryExpression;
 
     var plusToken = createOperatorToken(PLUS);
     for (var i = 1; i < length; i++) {
       var element = tree.elements[i];
       if (element.type === TEMPLATE_LITERAL_PORTION) {
-        if (element.value.value === '')
-          continue;
+        if (element.value.value === "") continue;
         else if (firstNonEmpty < 0 && i === 2)
           binaryExpression = binaryExpression.right;
       }
       var transformedTree = this.transformAny(tree.elements[i]);
-      binaryExpression = createBinaryOperator(binaryExpression, plusToken,
-                                              transformedTree);
+      binaryExpression = createBinaryOperator(
+        binaryExpression,
+        plusToken,
+        transformedTree
+      );
     }
 
     return new ParenExpression(null, binaryExpression);
@@ -292,7 +286,8 @@ export class TemplateLiteralTransformer extends TempVarTransformer {
    * @return {ParseTree}
    */
   static transformTree(identifierGenerator, tree) {
-    return new TemplateLiteralTransformer(identifierGenerator).
-        transformAny(tree);
+    return new TemplateLiteralTransformer(identifierGenerator).transformAny(
+      tree
+    );
   }
 }

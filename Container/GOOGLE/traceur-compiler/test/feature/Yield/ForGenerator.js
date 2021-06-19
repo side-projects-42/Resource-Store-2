@@ -1,5 +1,6 @@
 function* forGenerator() {
-  var a = 1, b = 1;
+  var a = 1,
+    b = 1;
   for (var i = 0; i < 4; i++) {
     // TODO(jmesserly): this was changed until we get destructing
     //[a, b] = [b, a + b];
@@ -13,7 +14,7 @@ function* forGenerator() {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -22,4 +23,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('1235', accumulate(forGenerator()));
+assert.equal("1235", accumulate(forGenerator()));

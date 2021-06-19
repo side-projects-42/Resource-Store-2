@@ -11,11 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf');
+goog.provide("wtf");
 
 /** @suppress {extraRequire} */
-goog.require('wtf.version');
-
+goog.require("wtf.version");
 
 /**
  * @define {boolean} True if running under node. Guard all node code with this
@@ -23,13 +22,11 @@ goog.require('wtf.version');
  */
 wtf.NODE = false;
 
-
 /**
  * @define {boolean} True to enable a 'min' build, which cuts out most expesive
  * or helpful features (error dialogs, human-friendly strings, etc).
  */
 wtf.MIN_BUILD = false;
-
 
 /**
  * @define {boolean} True to enable a 'prod' build, which essentially uses min
@@ -37,16 +34,12 @@ wtf.MIN_BUILD = false;
  */
 wtf.PROD_BUILD = false;
 
-
 /**
  * Whether the current code is running inside of a Chrome extension.
  * @type {boolean}
  */
 wtf.CHROME_EXTENSION =
-    goog.global['chrome'] &&
-    chrome.runtime &&
-    chrome.runtime.id;
-
+  goog.global["chrome"] && chrome.runtime && chrome.runtime.id;
 
 /**
  * Stashed inline functions from {@see wtf.preventInlining}.
@@ -55,17 +48,15 @@ wtf.CHROME_EXTENSION =
  */
 wtf.dummyStore_ = [];
 
-
 /**
  * Prevents jscompiler from inlining a function.
  * Call this from the global scope to prevent the given function from being
  * inlined into callers (and potentially breaking optimizations).
  * @param {Function} fn Function to prevent inlining on.
  */
-wtf.preventInlining = function(fn) {
+wtf.preventInlining = function (fn) {
   wtf.dummyStore_.push(fn);
 };
-
 
 /**
  * Whether the runtime can provide high-resolution times.
@@ -73,31 +64,31 @@ wtf.preventInlining = function(fn) {
  * @type {boolean}
  */
 wtf.hasHighResolutionTimes =
-    wtf.NODE ||
-    !!(goog.global['performance'] && (
-        goog.global['performance']['now'] ||
-        goog.global['performance']['webkitNow']));
-
+  wtf.NODE ||
+  !!(
+    goog.global["performance"] &&
+    (goog.global["performance"]["now"] ||
+      goog.global["performance"]["webkitNow"])
+  );
 
 /**
  * Creates a high performance time function from window.performance, if present.
  * @return {number} A time, in ms.
  * @private
  */
-wtf.performanceNow_ = (function() {
-  var performance = goog.global['performance'];
-  if (performance && performance['now']) {
-    return function() {
-      return performance['now']();
+wtf.performanceNow_ = (function () {
+  var performance = goog.global["performance"];
+  if (performance && performance["now"]) {
+    return function () {
+      return performance["now"]();
     };
-  } else if (performance && performance['webkitNow']) {
-    return function() {
-      return performance['webkitNow']();
+  } else if (performance && performance["webkitNow"]) {
+    return function () {
+      return performance["webkitNow"]();
     };
   }
   return undefined;
 })();
-
 
 /**
  * Calculates a base time when using window.performance instead of using
@@ -116,7 +107,7 @@ wtf.performanceNow_ = (function() {
  *     performance.now.
  * @private
  */
-wtf.computeHighPrecisionTimebase_ = function() {
+wtf.computeHighPrecisionTimebase_ = function () {
   var initialDateNow = Date.now();
   var syncedDateNow;
   var syncedPerfNow;
@@ -134,22 +125,21 @@ wtf.computeHighPrecisionTimebase_ = function() {
   return syncedDateNow - syncedPerfNow;
 };
 
-
 /**
  * Returns the wall time that {@see wtf#now} is relative to.
  * This is often the page load time.
  *
  * @return {number} A time, in ms.
  */
-wtf.timebase = (function() {
+wtf.timebase = (function () {
   var timebase;
 
   if (wtf.NODE) {
     try {
-      var microtime = require('microtime');
-      timebase = microtime['nowDouble']() * 1000;
+      var microtime = require("microtime");
+      timebase = microtime["nowDouble"]() * 1000;
     } catch (e) {
-      var timeValue = goog.global['process']['hrtime']();
+      var timeValue = goog.global["process"]["hrtime"]();
       timebase = timeValue[0] * 1000 + timeValue[1] / 1000000;
     }
   } else {
@@ -160,11 +150,10 @@ wtf.timebase = (function() {
     }
   }
 
-  return function() {
+  return function () {
     return timebase;
   };
 })();
-
 
 /**
  * Returns a non-wall time timestamp in milliseconds.
@@ -177,19 +166,19 @@ wtf.timebase = (function() {
  * @return {number} A monotonically increasing timer with sub-millisecond
  *      resolution (if supported).
  */
-wtf.now = (function() {
+wtf.now = (function () {
   if (wtf.NODE) {
     var timebase = wtf.timebase();
     try {
-      var microtime = require('microtime');
+      var microtime = require("microtime");
       return function wtfNowMicrotime() {
-        return microtime['nowDouble']() * 1000 - timebase;
+        return microtime["nowDouble"]() * 1000 - timebase;
       };
     } catch (e) {
-      var hrtime = goog.global['process']['hrtime'];
+      var hrtime = goog.global["process"]["hrtime"];
       return function wtfNowHrtime() {
         var timeValue = hrtime();
-        return (timeValue[0] * 1000 - timebase) + timeValue[1] / 1000000;
+        return timeValue[0] * 1000 - timebase + timeValue[1] / 1000000;
       };
     }
   }
@@ -208,13 +197,12 @@ wtf.now = (function() {
   }
 })();
 
-
 /**
  * Runs a microbenchmark to try to compute the overhead of a call to
  * {@see wtf#now}.
  * @return {number} Estimated overhead, in nanoseconds (1/1000 us).
  */
-wtf.computeNowOverhead = function() {
+wtf.computeNowOverhead = function () {
   // This is in a function so that v8 can JIT it easier.
   // We then run it a few times to try to factor out the JIT time.
   function computeInner(iterations) {
@@ -225,7 +213,7 @@ wtf.computeNowOverhead = function() {
       dummy += wtf.now();
     }
     return dummy;
-  };
+  }
 
   var iterations = 100000;
   var dummy = 0;
@@ -235,28 +223,18 @@ wtf.computeNowOverhead = function() {
     dummy += computeInner(iterations);
     duration = wtf.now() - startTime;
   }
-  return (duration * 1000 * 1000 / iterations) | 0; // ms -> us -> ns
+  return ((duration * 1000 * 1000) / iterations) | 0; // ms -> us -> ns
 };
-
 
 /**
  * Logs a deprecation message.
  * @param {string} message Message.
  */
-wtf.deprecated = goog.global.console ?
-    goog.global.console.log.bind(goog.global.console) :
-    goog.nullFunction;
+wtf.deprecated = goog.global.console
+  ? goog.global.console.log.bind(goog.global.console)
+  : goog.nullFunction;
 
-
-goog.exportSymbol(
-    'wtf.hasHighResolutionTimes',
-    wtf.hasHighResolutionTimes);
-goog.exportSymbol(
-    'wtf.timebase',
-    wtf.timebase);
-goog.exportSymbol(
-    'wtf.now',
-    wtf.now);
-goog.exportSymbol(
-    'wtf.computeNowOverhead',
-    wtf.computeNowOverhead);
+goog.exportSymbol("wtf.hasHighResolutionTimes", wtf.hasHighResolutionTimes);
+goog.exportSymbol("wtf.timebase", wtf.timebase);
+goog.exportSymbol("wtf.now", wtf.now);
+goog.exportSymbol("wtf.computeNowOverhead", wtf.computeNowOverhead);

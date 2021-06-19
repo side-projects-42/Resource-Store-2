@@ -1,41 +1,40 @@
-describe('Display options', function() {
-
-  it('should not throw any exception', function() {
+describe("Display options", function () {
+  it("should not throw any exception", function () {
     function createAndUpdateChart() {
       const config = {
-        type: 'line',
+        type: "line",
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
           datasets: [
             {
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3]
-            }
-          ]
+              label: "# of Votes",
+              data: [12, 19, 3, 5, 2, 3],
+            },
+          ],
         },
         options: {
           scales: {
             y: {
-              beginAtZero: true
-            }
+              beginAtZero: true,
+            },
           },
           plugins: {
             annotation: {
-              drawTime: 'afterDatasetsDraw',
+              drawTime: "afterDatasetsDraw",
               dblClickSpeed: 350,
               annotations: {
                 my: {
                   display: true,
-                  type: 'line',
-                  scaleID: 'y',
+                  type: "line",
+                  scaleID: "y",
                   value: 10,
-                  borderColor: 'red',
-                  borderWidth: 2
-                }
-              }
-            }
-          }
-        }
+                  borderColor: "red",
+                  borderWidth: 2,
+                },
+              },
+            },
+          },
+        },
       };
 
       var chart = acquireChart(config);
@@ -43,15 +42,15 @@ describe('Display options', function() {
       chart.update();
       chart.options.plugins.annotation.annotations.my.display = false;
       chart.update();
-      chart.options.plugins.annotation.annotations.my.display = function() {
+      chart.options.plugins.annotation.annotations.my.display = function () {
         return true;
       };
       chart.update();
-      chart.options.plugins.annotation.annotations.my.display = function() {
+      chart.options.plugins.annotation.annotations.my.display = function () {
         return false;
       };
       chart.update();
-      chart.options.plugins.annotation.annotations.my.display = function() {
+      chart.options.plugins.annotation.annotations.my.display = function () {
         return null;
       };
       chart.update();

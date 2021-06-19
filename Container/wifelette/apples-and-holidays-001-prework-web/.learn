@@ -1,0 +1,12 @@
+tags:
+  - collect
+  - map
+  - select
+  - hashes
+  - iteration
+  - enumerables
+  - compact
+  - flatten
+languages:
+  - ruby
+resources: 2

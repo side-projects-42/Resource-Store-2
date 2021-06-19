@@ -1,46 +1,46 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
       datasets: [
         {
           data: [
-            {x: 0, y: 0},
-            {x: 1, y: 20},
-            {x: 1.00001, y: 30},
-            {x: 2, y: 100},
-            {x: 2.00001, y: 100}
+            { x: 0, y: 0 },
+            { x: 1, y: 20 },
+            { x: 1.00001, y: 30 },
+            { x: 2, y: 100 },
+            { x: 2.00001, y: 100 },
           ],
-          backgroundColor: '#FF000070',
-          borderColor: 'black',
+          backgroundColor: "#FF000070",
+          borderColor: "black",
           radius: 0,
           segment: {
-            borderDash: ctx => ctx.p0.parsed.x > 1 ? [10, 5] : undefined,
+            borderDash: (ctx) => (ctx.p0.parsed.x > 1 ? [10, 5] : undefined),
           },
-          fill: true
-        }
-      ]
+          fill: true,
+        },
+      ],
     },
     options: {
       plugins: {
-        legend: false
+        legend: false,
       },
       scales: {
         x: {
-          type: 'linear',
+          type: "linear",
           alignToPixels: true,
-          display: false
+          display: false,
         },
         y: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       width: 300,
-      height: 240
-    }
-  }
+      height: 240,
+    },
+  },
 };

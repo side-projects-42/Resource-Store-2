@@ -1,6 +1,5 @@
-import {isNullOrUndef, valueOrDefault} from '../helpers/helpers.core';
-import {_factorize} from '../helpers/helpers.math';
-
+import { isNullOrUndef, valueOrDefault } from "../helpers/helpers.core";
+import { _factorize } from "../helpers/helpers.math";
 
 /**
  * @typedef { import("./core.controller").default } Chart
@@ -33,12 +32,27 @@ export function autoSkip(scale, ticks) {
 
   if (numMajorIndices > 0) {
     let i, ilen;
-    const avgMajorSpacing = numMajorIndices > 1 ? Math.round((last - first) / (numMajorIndices - 1)) : null;
-    skip(ticks, newTicks, spacing, isNullOrUndef(avgMajorSpacing) ? 0 : first - avgMajorSpacing, first);
+    const avgMajorSpacing =
+      numMajorIndices > 1
+        ? Math.round((last - first) / (numMajorIndices - 1))
+        : null;
+    skip(
+      ticks,
+      newTicks,
+      spacing,
+      isNullOrUndef(avgMajorSpacing) ? 0 : first - avgMajorSpacing,
+      first
+    );
     for (i = 0, ilen = numMajorIndices - 1; i < ilen; i++) {
       skip(ticks, newTicks, spacing, majorIndices[i], majorIndices[i + 1]);
     }
-    skip(ticks, newTicks, spacing, last, isNullOrUndef(avgMajorSpacing) ? ticks.length : last + avgMajorSpacing);
+    skip(
+      ticks,
+      newTicks,
+      spacing,
+      last,
+      isNullOrUndef(avgMajorSpacing) ? ticks.length : last + avgMajorSpacing
+    );
     return newTicks;
   }
   skip(ticks, newTicks, spacing);
@@ -147,7 +161,6 @@ function skip(ticks, newTicks, spacing, majorStart, majorEnd) {
     }
   }
 }
-
 
 /**
  * @param {number[]} arr

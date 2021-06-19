@@ -11,10 +11,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.PartType');
+goog.provide("wtf.io.cff.PartType");
 
-goog.require('goog.asserts');
-
+goog.require("goog.asserts");
 
 /**
  * Chunk part type ID.
@@ -23,30 +22,29 @@ goog.require('goog.asserts');
  */
 wtf.io.cff.PartType = {
   /** {@see wtf.io.cff.parts.FileHeaderPart} */
-  FILE_HEADER: 'file_header',
+  FILE_HEADER: "file_header",
   /** {@see wtf.io.cff.parts.JsonEventBufferPart} */
-  JSON_EVENT_BUFFER: 'json_event_buffer',
+  JSON_EVENT_BUFFER: "json_event_buffer",
   /** {@see wtf.io.cff.parts.LegacyEventBufferPart} */
-  LEGACY_EVENT_BUFFER: 'legacy_event_buffer',
+  LEGACY_EVENT_BUFFER: "legacy_event_buffer",
   /** {@see wtf.io.cff.parts.BinaryEventBufferPart} */
-  BINARY_EVENT_BUFFER: 'binary_event_buffer',
+  BINARY_EVENT_BUFFER: "binary_event_buffer",
   /** {@see wtf.io.cff.parts.StringTablePart} */
-  STRING_TABLE: 'string_table',
+  STRING_TABLE: "string_table",
   /** {@see wtf.io.cff.parts.BinaryResourcePart} */
-  BINARY_RESOURCE: 'binary_resource',
+  BINARY_RESOURCE: "binary_resource",
   /** {@see wtf.io.cff.parts.StringResourcePart} */
-  STRING_RESOURCE: 'string_resource',
+  STRING_RESOURCE: "string_resource",
 
-  UNKNOWN: 'unknown_type'
+  UNKNOWN: "unknown_type",
 };
-
 
 /**
  * Checks whether the given part type is valid/known.
  * @param {string|wtf.io.cff.PartType} value Part type value.
  * @return {boolean} True if the type is valid.
  */
-wtf.io.cff.PartType.isValid = function(value) {
+wtf.io.cff.PartType.isValid = function (value) {
   switch (value) {
     case wtf.io.cff.PartType.FILE_HEADER:
     case wtf.io.cff.PartType.JSON_EVENT_BUFFER:
@@ -59,7 +57,6 @@ wtf.io.cff.PartType.isValid = function(value) {
   }
   return false;
 };
-
 
 /**
  * Chunk part type ID values in numeric form.
@@ -76,16 +73,15 @@ wtf.io.cff.IntegerPartType_ = {
   BINARY_RESOURCE: 0x40000,
   STRING_RESOURCE: 0x40001,
 
-  UNKNOWN: -1
+  UNKNOWN: -1,
 };
-
 
 /**
  * Converts a chunk type enum value to an integer value.
  * @param {wtf.io.cff.PartType} value Part type enum value.
  * @return {number} Integer value.
  */
-wtf.io.cff.PartType.toInteger = function(value) {
+wtf.io.cff.PartType.toInteger = function (value) {
   switch (value) {
     case wtf.io.cff.PartType.FILE_HEADER:
       return wtf.io.cff.IntegerPartType_.FILE_HEADER;
@@ -102,18 +98,17 @@ wtf.io.cff.PartType.toInteger = function(value) {
     case wtf.io.cff.PartType.STRING_RESOURCE:
       return wtf.io.cff.IntegerPartType_.STRING_RESOURCE;
     default:
-      goog.asserts.fail('Unknown part type: ' + value);
+      goog.asserts.fail("Unknown part type: " + value);
       return wtf.io.cff.IntegerPartType_.UNKNOWN;
   }
 };
-
 
 /**
  * Converts a part type integer to an enum value.
  * @param {number} value Part type integer value.
  * @return {wtf.io.cff.PartType} Enum value.
  */
-wtf.io.cff.PartType.fromInteger = function(value) {
+wtf.io.cff.PartType.fromInteger = function (value) {
   switch (value) {
     case wtf.io.cff.IntegerPartType_.FILE_HEADER:
       return wtf.io.cff.PartType.FILE_HEADER;
@@ -130,7 +125,7 @@ wtf.io.cff.PartType.fromInteger = function(value) {
     case wtf.io.cff.IntegerPartType_.STRING_RESOURCE:
       return wtf.io.cff.PartType.STRING_RESOURCE;
     default:
-      goog.asserts.fail('Unknown part type: ' + value);
+      goog.asserts.fail("Unknown part type: " + value);
       return wtf.io.cff.PartType.UNKNOWN;
   }
 };

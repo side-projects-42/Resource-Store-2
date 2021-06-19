@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import asyncWrap from './modules/asyncWrap.js';
-import initGeneratorFunction from './modules/initGeneratorFunction.js';
-import createGeneratorInstance from './modules/createGeneratorInstance.js';
+import asyncWrap from "./modules/asyncWrap.js";
+import initGeneratorFunction from "./modules/initGeneratorFunction.js";
+import createGeneratorInstance from "./modules/createGeneratorInstance.js";
 
 $traceurRuntime.asyncWrap = asyncWrap;
 $traceurRuntime.initGeneratorFunction = initGeneratorFunction;

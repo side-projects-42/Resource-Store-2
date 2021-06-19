@@ -1,0 +1,77 @@
+{
+  "projectFullName": "newrelic/nr-integrations-builder",
+  "issues": {
+    "open": 0
+  },
+  "releases": 4,
+  "latestRelease": {
+    "name": "v1.0.1",
+    "date": "2018-05-02T09:02:33Z"
+  },
+  "commits": 94,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 5,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 1902623,
+      "login": "trutx",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1902623?v=4",
+      "htmlUrl": "https://github.com/trutx",
+      "contributions": 1
+    },
+    {
+      "id": 877369,
+      "login": "ramonguiu",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/877369?v=4",
+      "htmlUrl": "https://github.com/ramonguiu",
+      "contributions": 1
+    },
+    {
+      "id": 10852,
+      "login": "areina",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/10852?v=4",
+      "htmlUrl": "https://github.com/areina",
+      "contributions": 19
+    },
+    {
+      "id": 939550,
+      "login": "mariomac",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/939550?v=4",
+      "htmlUrl": "https://github.com/mariomac",
+      "contributions": 5
+    },
+    {
+      "id": 1876430,
+      "login": "xino12",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1876430?v=4",
+      "htmlUrl": "https://github.com/xino12",
+      "contributions": 2
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U0MDM=",
+      "name": "Makefile",
+      "color": "#427819"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxOTA=",
+      "name": "Go",
+      "color": "#00ADD8"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

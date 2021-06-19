@@ -1,41 +1,41 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
       datasets: [
         {
-          label: '# of Votes',
+          label: "# of Votes",
           data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1
+          borderWidth: 1,
         },
         {
-          label: '# of Points',
+          label: "# of Points",
           data: [7, 11, 5, 8, 3, 7],
-          borderWidth: 1
-        }
-      ]
+          borderWidth: 1,
+        },
+      ],
     },
     options: {
       scales: {
-        x: {display: false},
-        y: {display: false}
+        x: { display: false },
+        y: { display: false },
       },
       plugins: {
         title: false,
         tooltip: false,
         filler: false,
         legend: {
-          position: 'left',
-        }
-      }
-    }
+          position: "left",
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       width: 150,
-      height: 75
-    }
-  }
+      height: 75,
+    },
+  },
 };

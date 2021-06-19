@@ -14,4 +14,4 @@ parserOptions:
     impliedStrict: true
     modules: true
 
-plugins: ['es']
+plugins: ["es"]

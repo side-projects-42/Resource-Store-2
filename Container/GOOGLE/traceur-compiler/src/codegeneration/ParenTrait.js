@@ -22,7 +22,7 @@ import {
   ParenExpression,
   PropertyNameAssignment,
   VariableDeclaration,
-} from '../syntax/trees/ParseTrees.js';
+} from "../syntax/trees/ParseTrees.js";
 import {
   CALL_EXPRESSION,
   COMMA_EXPRESSION,
@@ -30,8 +30,8 @@ import {
   OBJECT_LITERAL,
   OBJECT_PATTERN,
   TEMPLATE_LITERAL_EXPRESSION,
-  YIELD_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
+  YIELD_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
 
 function wrap(tree) {
   return new ParenExpression(tree.location, tree);
@@ -59,13 +59,19 @@ export function ParenTrait(ParseTreeTransformerClass) {
       let initializer = this.transformAny(tree.initializer);
       if (initializer !== null && initializer.type === COMMA_EXPRESSION) {
         initializer = wrap(initializer);
-      } else if (tree.lvalue === lvalue &&
-          tree.typeAnnotation === typeAnnotation &&
-          tree.initializer === initializer) {
+      } else if (
+        tree.lvalue === lvalue &&
+        tree.typeAnnotation === typeAnnotation &&
+        tree.initializer === initializer
+      ) {
         return tree;
       }
-      return new VariableDeclaration(tree.location, lvalue, typeAnnotation,
-                                     initializer);
+      return new VariableDeclaration(
+        tree.location,
+        lvalue,
+        typeAnnotation,
+        initializer
+      );
     }
 
     transformExpressionStatement(tree) {
@@ -173,9 +179,11 @@ export function ParenTrait(ParseTreeTransformerClass) {
       if (right.type == COMMA_EXPRESSION) {
         right = wrap(right);
       }
-      if (condition === tree.condition &&
-          left === tree.left &&
-          right === tree.right) {
+      if (
+        condition === tree.condition &&
+        left === tree.left &&
+        right === tree.right
+      ) {
         return tree;
       }
       return new ConditionalExpression(tree.location, condition, left, right);

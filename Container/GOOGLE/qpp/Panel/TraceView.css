@@ -8,7 +8,6 @@
   position: relative;
 }
 .traceView .fileName {
-
 }
 
 .traceView {
@@ -26,30 +25,31 @@
 }
 
 .activation span {
-    line-height: 1.0;
+  line-height: 1;
 }
 
-.traceBody::-webkit-scrollbar{
-    width: 8px;
-    height: 16px;
+.traceBody::-webkit-scrollbar {
+  width: 8px;
+  height: 16px;
 }
 
-.traceBody::-webkit-scrollbar-thumb{
-    background-color: rgba(248,248,242,0.4);
-    -webkit-box-shadow: inset 1px 1px 0 rgba(39,40,34,0.10),inset 0 -1px 0 rgba(39,40,34,0.07);
+.traceBody::-webkit-scrollbar-thumb {
+  background-color: rgba(248, 248, 242, 0.4);
+  -webkit-box-shadow: inset 1px 1px 0 rgba(39, 40, 34, 0.1),
+    inset 0 -1px 0 rgba(39, 40, 34, 0.07);
 }
 
-.traceBody::-webkit-scrollbar-button{
-    width: 0;
-    height: 0;
-    display: none;
+.traceBody::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
-.traceBody::-webkit-scrollbar-corner{
-    background-color: transparent;
+.traceBody::-webkit-scrollbar-corner {
+  background-color: transparent;
 }
 
-.traceBody{
+.traceBody {
   overflow-y: scroll;
   display: block;
 }

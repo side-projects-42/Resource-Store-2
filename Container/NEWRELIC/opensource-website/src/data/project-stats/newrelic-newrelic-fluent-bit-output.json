@@ -1,0 +1,115 @@
+{
+  "projectFullName": "newrelic/newrelic-fluent-bit-output",
+  "issues": {
+    "open": 6
+  },
+  "releases": 16,
+  "latestRelease": {
+    "name": "v1.5.0",
+    "date": "2021-04-30T15:55:19Z"
+  },
+  "commits": 84,
+  "lastSixMonthsCommitTotal": 6,
+  "contributors": 9,
+  "pullRequests": {
+    "open": 3
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 7886905,
+      "login": "fryckbos",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/7886905?v=4",
+      "htmlUrl": "https://github.com/fryckbos",
+      "contributions": 1
+    },
+    {
+      "id": 7001514,
+      "login": "bmcfeely",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/7001514?v=4",
+      "htmlUrl": "https://github.com/bmcfeely",
+      "contributions": 6
+    },
+    {
+      "id": 43244625,
+      "login": "melissaklein24",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43244625?v=4",
+      "htmlUrl": "https://github.com/melissaklein24",
+      "contributions": 2
+    },
+    {
+      "id": 13105375,
+      "login": "matildasmeds",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13105375?v=4",
+      "htmlUrl": "https://github.com/matildasmeds",
+      "contributions": 1
+    },
+    {
+      "id": 62337995,
+      "login": "jodstrcil",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/62337995?v=4",
+      "htmlUrl": "https://github.com/jodstrcil",
+      "contributions": 1
+    },
+    {
+      "id": 59101374,
+      "login": "mshamota-nr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/59101374?v=4",
+      "htmlUrl": "https://github.com/mshamota-nr",
+      "contributions": 5
+    },
+    {
+      "id": 7537725,
+      "login": "tejunior",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/7537725?v=4",
+      "htmlUrl": "https://github.com/tejunior",
+      "contributions": 3
+    },
+    {
+      "id": 2571329,
+      "login": "ngotim",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/2571329?v=4",
+      "htmlUrl": "https://github.com/ngotim",
+      "contributions": 2
+    },
+    {
+      "id": 6243832,
+      "login": "jsubirat",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6243832?v=4",
+      "htmlUrl": "https://github.com/jsubirat",
+      "contributions": 39
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U0MDM=",
+      "name": "Makefile",
+      "color": "#427819"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxOTA=",
+      "name": "Go",
+      "color": "#00ADD8"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxMzk=",
+      "name": "Shell",
+      "color": "#89e051"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U1MzU=",
+      "name": "Dockerfile",
+      "color": "#384d54"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

@@ -4,9 +4,9 @@ The logarithmic scale is used to chart numerical data. It can be placed on eithe
 
 ## Configuration Options
 
-!!!include(axes/cartesian/_common.md)!!!
+!!!include(axes/cartesian/\_common.md)!!!
 
-!!!include(axes/_common.md)!!!
+!!!include(axes/\_common.md)!!!
 
 ## Tick Configuration
 
@@ -14,13 +14,13 @@ The logarithmic scale is used to chart numerical data. It can be placed on eithe
 
 Namespace: `options.scales[scaleId]`
 
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| `format` | `object` | | The [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) options used by the default label formatter
+| Name     | Type     | Default | Description                                                                                                                                                               |
+| -------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `format` | `object` |         | The [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) options used by the default label formatter |
 
-!!!include(axes/cartesian/_common_ticks.md)!!!
+!!!include(axes/cartesian/\_common_ticks.md)!!!
 
-!!!include(axes/_common_ticks.md)!!!
+!!!include(axes/\_common_ticks.md)!!!
 
 ## Internal data format
 

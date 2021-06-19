@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CONST, LET} from '../syntax/TokenType.js';
-import {ModuleTransformer} from './ModuleTransformer.js';
+import { CONST, LET } from "../syntax/TokenType.js";
+import { ModuleTransformer } from "./ModuleTransformer.js";
 import {
   createAssignmentStatement,
   createArgumentList,
@@ -31,11 +31,11 @@ import {
   createReturnStatement,
   createUseStrictDirective,
   createVariableDeclarationList,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {IMPORT_SPECIFIER_SET} from '../syntax/trees/ParseTreeType.js';
-import {AnonBlock} from '../syntax/trees/ParseTrees.js';
-import {parseStatement} from './PlaceholderParser.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { IMPORT_SPECIFIER_SET } from "../syntax/trees/ParseTreeType.js";
+import { AnonBlock } from "../syntax/trees/ParseTrees.js";
+import { parseStatement } from "./PlaceholderParser.js";
 
 let anonInlineModules = 0;
 
@@ -73,7 +73,6 @@ let anonInlineModules = 0;
  *  }
  */
 export class InlineES6ModuleTransformer extends ModuleTransformer {
-
   constructor(identifierGenerator, reporter, options, metadata) {
     super(identifierGenerator, reporter, options);
     this.metadata_ = metadata;
@@ -94,7 +93,7 @@ export class InlineES6ModuleTransformer extends ModuleTransformer {
    * @returns {Array} statements
    */
   wrapModule(statements) {
-    let seed = this.moduleName || 'anon_' + ++anonInlineModules;
+    let seed = this.moduleName || "anon_" + ++anonInlineModules;
     let idName = this.getTempVarNameForModuleName(seed);
 
     if (this.isRootModule) {
@@ -114,8 +113,7 @@ export class InlineES6ModuleTransformer extends ModuleTransformer {
    * @returns {Tree}
    */
   transformExportDeclaration(tree) {
-    if (this.isRootModule)
-      return tree;
+    if (this.isRootModule) return tree;
 
     this.exportVisitor.visitAny(tree);
     return this.transformAny(tree.declaration);
@@ -127,9 +125,11 @@ export class InlineES6ModuleTransformer extends ModuleTransformer {
    * @returns {VariableStatement}
    */
   transformImportDeclaration(tree) {
-    if (!tree.importClause ||
+    if (
+      !tree.importClause ||
       (tree.importClause.type === IMPORT_SPECIFIER_SET &&
-      tree.importClause.specifiers.length === 0)) {
+        tree.importClause.specifiers.length === 0)
+    ) {
       return createExpressionStatement(this.transformAny(tree.moduleSpecifier));
     }
     let binding = this.transformAny(tree.importClause);
@@ -161,15 +161,17 @@ export class InlineES6ModuleTransformer extends ModuleTransformer {
       let starExports = this.exportVisitor.starExports;
       let starIdents = starExports.map((moduleSpecifier) => {
         return createIdentifierExpression(
-          this.getTempVarNameForModuleSpecifier(moduleSpecifier));
+          this.getTempVarNameForModuleSpecifier(moduleSpecifier)
+        );
       });
 
-      if (exportProperties.length)
-        starIdents.push(exportObject);
+      if (exportProperties.length) starIdents.push(exportObject);
 
       // let ${exports} = {};
       let exports = this.getTempIdentifier();
-      statements.push(createVariableStatement(LET, exports, createObjectLiteral("")));
+      statements.push(
+        createVariableStatement(LET, exports, createObjectLiteral(""))
+      );
 
       let key = this.getTempIdentifier();
       starIdents.forEach((starIdent) => {
@@ -184,23 +186,31 @@ export class InlineES6ModuleTransformer extends ModuleTransformer {
             createIfStatement(
               // (${starIdent}.hasOwnProperty(${key}))
               createCallExpression(
-                createMemberExpression(starIdent, 'hasOwnProperty'),
-                createArgumentList([createIdentifierExpression(key)])),
+                createMemberExpression(starIdent, "hasOwnProperty"),
+                createArgumentList([createIdentifierExpression(key)])
+              ),
               // true part: $exports[${key}] = $starIdent[${key}]
               createAssignmentStatement(
                 createMemberLookupExpression(
                   createIdentifierExpression(exports),
-                  createIdentifierExpression(key)),
+                  createIdentifierExpression(key)
+                ),
                 createMemberLookupExpression(
                   starIdent,
-                  createIdentifierExpression(key)))))
+                  createIdentifierExpression(key)
+                )
+              )
+            )
+          )
         );
       });
       // return ${exports}
-      statements.push(createReturnStatement(createIdentifierExpression(exports)));
+      statements.push(
+        createReturnStatement(createIdentifierExpression(exports))
+      );
       return statements;
     }
-    statements.push(parseStatement `return ${exportObject}`);
+    statements.push(parseStatement`return ${exportObject}`);
     return statements;
   }
 

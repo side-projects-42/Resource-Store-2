@@ -10,7 +10,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -20,19 +20,21 @@ function _defineProperty(obj, key, value) {
 }
 
 function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
+  _extends =
+    Object.assign ||
+    function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
 
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
         }
       }
-    }
 
-    return target;
-  };
+      return target;
+    };
 
   return _extends.apply(this, arguments);
 }
@@ -42,9 +44,10 @@ function ownKeys(object, enumerableOnly) {
 
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
+    if (enumerableOnly)
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
     keys.push.apply(keys, symbols);
   }
 
@@ -63,7 +66,11 @@ function _objectSpread2(target) {
       Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
     } else {
       ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        Object.defineProperty(
+          target,
+          key,
+          Object.getOwnPropertyDescriptor(source, key)
+        );
       });
     }
   }
@@ -72,37 +79,41 @@ function _objectSpread2(target) {
 }
 
 function noop() {}
-var uid = function () {
+var uid = (function () {
   var id = 0;
   return function () {
     return id++;
   };
-}();
+})();
 function isNullOrUndef(value) {
-  return value === null || typeof value === 'undefined';
+  return value === null || typeof value === "undefined";
 }
 function isArray(value) {
   if (Array.isArray && Array.isArray(value)) {
     return true;
   }
   var type = Object.prototype.toString.call(value);
-  if (type.substr(0, 7) === '[object' && type.substr(-6) === 'Array]') {
+  if (type.substr(0, 7) === "[object" && type.substr(-6) === "Array]") {
     return true;
   }
   return false;
 }
 function isObject(value) {
-  return value !== null && Object.prototype.toString.call(value) === '[object Object]';
+  return (
+    value !== null &&
+    Object.prototype.toString.call(value) === "[object Object]"
+  );
 }
-var isNumberFinite = value => (typeof value === 'number' || value instanceof Number) && isFinite(+value);
+var isNumberFinite = (value) =>
+  (typeof value === "number" || value instanceof Number) && isFinite(+value);
 function valueOrDefault(value, defaultValue) {
-  return typeof value === 'undefined' ? defaultValue : value;
+  return typeof value === "undefined" ? defaultValue : value;
 }
 function valueAtIndexOrDefault(value, index, defaultValue) {
   return valueOrDefault(isArray(value) ? value[index] : value, defaultValue);
 }
 function callback(fn, args, thisArg) {
-  if (fn && typeof fn.call === 'function') {
+  if (fn && typeof fn.call === "function") {
     return fn.apply(thisArg, args);
   }
 }
@@ -206,7 +217,7 @@ function merge(target, source, options) {
 }
 function mergeIf(target, source) {
   return merge(target, source, {
-    merger: _mergerIf
+    merger: _mergerIf,
   });
 }
 function _mergerIf(key, target, source) {
@@ -220,9 +231,13 @@ function _mergerIf(key, target, source) {
 }
 function inherits(extensions) {
   var me = this;
-  var ChartElement = extensions && Object.prototype.hasOwnProperty.call(extensions, 'constructor') ? extensions.constructor : function () {
-    return me.apply(this, arguments);
-  };
+  var ChartElement =
+    extensions &&
+    Object.prototype.hasOwnProperty.call(extensions, "constructor")
+      ? extensions.constructor
+      : function () {
+          return me.apply(this, arguments);
+        };
   var Surrogate = function Surrogate() {
     this.constructor = ChartElement;
   };
@@ -237,31 +252,38 @@ function inherits(extensions) {
 }
 function _deprecated(scope, value, previous, current) {
   if (value !== undefined) {
-    console.warn(scope + ': "' + previous + '" is deprecated. Please use "' + current + '" instead');
+    console.warn(
+      scope +
+        ': "' +
+        previous +
+        '" is deprecated. Please use "' +
+        current +
+        '" instead'
+    );
   }
 }
 
-var coreHelpers = /*#__PURE__*/Object.freeze({
-__proto__: null,
-noop: noop,
-uid: uid,
-isNullOrUndef: isNullOrUndef,
-isArray: isArray,
-isObject: isObject,
-isFinite: isNumberFinite,
-valueOrDefault: valueOrDefault,
-valueAtIndexOrDefault: valueAtIndexOrDefault,
-callback: callback,
-each: each,
-arrayEquals: arrayEquals,
-_elementsEqual: _elementsEqual,
-clone: clone,
-_merger: _merger,
-merge: merge,
-mergeIf: mergeIf,
-_mergerIf: _mergerIf,
-inherits: inherits,
-_deprecated: _deprecated
+var coreHelpers = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  noop: noop,
+  uid: uid,
+  isNullOrUndef: isNullOrUndef,
+  isArray: isArray,
+  isObject: isObject,
+  isFinite: isNumberFinite,
+  valueOrDefault: valueOrDefault,
+  valueAtIndexOrDefault: valueAtIndexOrDefault,
+  callback: callback,
+  each: each,
+  arrayEquals: arrayEquals,
+  _elementsEqual: _elementsEqual,
+  clone: clone,
+  _merger: _merger,
+  merge: merge,
+  mergeIf: mergeIf,
+  _mergerIf: _mergerIf,
+  inherits: inherits,
+  _deprecated: _deprecated,
 });
 
 var PI = Math.PI;
@@ -269,7 +291,7 @@ var RAD_PER_DEG = PI / 180;
 var DOUBLE_PI = PI * 2;
 var HALF_PI = PI / 2;
 var QUARTER_PI = PI / 4;
-var TWO_THIRDS_PI = PI * 2 / 3;
+var TWO_THIRDS_PI = (PI * 2) / 3;
 function _measureText(ctx, data, gc, longest, string) {
   var textWidth = data[string];
   if (!textWidth) {
@@ -283,8 +305,8 @@ function _measureText(ctx, data, gc, longest, string) {
 }
 function _longestText(ctx, font, arrayOfThings, cache) {
   cache = cache || {};
-  var data = cache.data = cache.data || {};
-  var gc = cache.garbageCollect = cache.garbageCollect || [];
+  var data = (cache.data = cache.data || {});
+  var gc = (cache.garbageCollect = cache.garbageCollect || []);
   if (cache.font !== font) {
     data = cache.data = {};
     gc = cache.garbageCollect = [];
@@ -302,7 +324,11 @@ function _longestText(ctx, font, arrayOfThings, cache) {
     } else if (isArray(thing)) {
       for (j = 0, jlen = thing.length; j < jlen; j++) {
         nestedThing = thing[j];
-        if (nestedThing !== undefined && nestedThing !== null && !isArray(nestedThing)) {
+        if (
+          nestedThing !== undefined &&
+          nestedThing !== null &&
+          !isArray(nestedThing)
+        ) {
           longest = _measureText(ctx, data, gc, longest, nestedThing);
         }
       }
@@ -321,7 +347,10 @@ function _longestText(ctx, font, arrayOfThings, cache) {
 function _alignPixel(chart, pixel, width) {
   var devicePixelRatio = chart.currentDevicePixelRatio;
   var halfWidth = width / 2;
-  return Math.round((pixel - halfWidth) * devicePixelRatio) / devicePixelRatio + halfWidth;
+  return (
+    Math.round((pixel - halfWidth) * devicePixelRatio) / devicePixelRatio +
+    halfWidth
+  );
 }
 function clear(chart) {
   chart.ctx.clearRect(0, 0, chart.width, chart.height);
@@ -332,13 +361,22 @@ function drawPoint(ctx, options, x, y) {
   var rotation = options.rotation;
   var radius = options.radius;
   var rad = (rotation || 0) * RAD_PER_DEG;
-  if (style && typeof style === 'object') {
+  if (style && typeof style === "object") {
     type = style.toString();
-    if (type === '[object HTMLImageElement]' || type === '[object HTMLCanvasElement]') {
+    if (
+      type === "[object HTMLImageElement]" ||
+      type === "[object HTMLCanvasElement]"
+    ) {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(rad);
-      ctx.drawImage(style, -style.width / 2, -style.height / 2, style.width, style.height);
+      ctx.drawImage(
+        style,
+        -style.width / 2,
+        -style.height / 2,
+        style.width,
+        style.height
+      );
       ctx.restore();
       return;
     }
@@ -352,7 +390,7 @@ function drawPoint(ctx, options, x, y) {
       ctx.arc(x, y, radius, 0, DOUBLE_PI);
       ctx.closePath();
       break;
-    case 'triangle':
+    case "triangle":
       ctx.moveTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
       rad += TWO_THIRDS_PI;
       ctx.lineTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
@@ -360,7 +398,7 @@ function drawPoint(ctx, options, x, y) {
       ctx.lineTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
       ctx.closePath();
       break;
-    case 'rectRounded':
+    case "rectRounded":
       cornerRadius = radius * 0.516;
       size = radius - cornerRadius;
       xOffset = Math.cos(rad + QUARTER_PI) * size;
@@ -371,14 +409,14 @@ function drawPoint(ctx, options, x, y) {
       ctx.arc(x - yOffset, y + xOffset, cornerRadius, rad + HALF_PI, rad + PI);
       ctx.closePath();
       break;
-    case 'rect':
+    case "rect":
       if (!rotation) {
         size = Math.SQRT1_2 * radius;
         ctx.rect(x - size, y - size, 2 * size, 2 * size);
         break;
       }
       rad += QUARTER_PI;
-    case 'rectRot':
+    case "rectRot":
       xOffset = Math.cos(rad) * radius;
       yOffset = Math.sin(rad) * radius;
       ctx.moveTo(x - xOffset, y - yOffset);
@@ -387,9 +425,9 @@ function drawPoint(ctx, options, x, y) {
       ctx.lineTo(x - yOffset, y + xOffset);
       ctx.closePath();
       break;
-    case 'crossRot':
+    case "crossRot":
       rad += QUARTER_PI;
-    case 'cross':
+    case "cross":
       xOffset = Math.cos(rad) * radius;
       yOffset = Math.sin(rad) * radius;
       ctx.moveTo(x - xOffset, y - yOffset);
@@ -397,7 +435,7 @@ function drawPoint(ctx, options, x, y) {
       ctx.moveTo(x + yOffset, y - xOffset);
       ctx.lineTo(x - yOffset, y + xOffset);
       break;
-    case 'star':
+    case "star":
       xOffset = Math.cos(rad) * radius;
       yOffset = Math.sin(rad) * radius;
       ctx.moveTo(x - xOffset, y - yOffset);
@@ -412,13 +450,13 @@ function drawPoint(ctx, options, x, y) {
       ctx.moveTo(x + yOffset, y - xOffset);
       ctx.lineTo(x - yOffset, y + xOffset);
       break;
-    case 'line':
+    case "line":
       xOffset = Math.cos(rad) * radius;
       yOffset = Math.sin(rad) * radius;
       ctx.moveTo(x - xOffset, y - yOffset);
       ctx.lineTo(x + xOffset, y + yOffset);
       break;
-    case 'dash':
+    case "dash":
       ctx.moveTo(x, y);
       ctx.lineTo(x + Math.cos(rad) * radius, y + Math.sin(rad) * radius);
       break;
@@ -430,7 +468,12 @@ function drawPoint(ctx, options, x, y) {
 }
 function _isPointInArea(point, area) {
   var epsilon = 0.5;
-  return point.x > area.left - epsilon && point.x < area.right + epsilon && point.y > area.top - epsilon && point.y < area.bottom + epsilon;
+  return (
+    point.x > area.left - epsilon &&
+    point.x < area.right + epsilon &&
+    point.y > area.top - epsilon &&
+    point.y < area.bottom + epsilon
+  );
 }
 function clipArea(ctx, area) {
   ctx.save();
@@ -445,11 +488,11 @@ function _steppedLineTo(ctx, previous, target, flip, mode) {
   if (!previous) {
     return ctx.lineTo(target.x, target.y);
   }
-  if (mode === 'middle') {
+  if (mode === "middle") {
     var midpoint = (previous.x + target.x) / 2.0;
     ctx.lineTo(midpoint, previous.y);
     ctx.lineTo(midpoint, target.y);
-  } else if (mode === 'after' !== !!flip) {
+  } else if ((mode === "after") !== !!flip) {
     ctx.lineTo(previous.x, target.y);
   } else {
     ctx.lineTo(target.x, previous.y);
@@ -460,21 +503,28 @@ function _bezierCurveTo(ctx, previous, target, flip) {
   if (!previous) {
     return ctx.lineTo(target.x, target.y);
   }
-  ctx.bezierCurveTo(flip ? previous.controlPointPreviousX : previous.controlPointNextX, flip ? previous.controlPointPreviousY : previous.controlPointNextY, flip ? target.controlPointNextX : target.controlPointPreviousX, flip ? target.controlPointNextY : target.controlPointPreviousY, target.x, target.y);
+  ctx.bezierCurveTo(
+    flip ? previous.controlPointPreviousX : previous.controlPointNextX,
+    flip ? previous.controlPointPreviousY : previous.controlPointNextY,
+    flip ? target.controlPointNextX : target.controlPointPreviousX,
+    flip ? target.controlPointNextY : target.controlPointPreviousY,
+    target.x,
+    target.y
+  );
 }
 
-var canvas = /*#__PURE__*/Object.freeze({
-__proto__: null,
-_measureText: _measureText,
-_longestText: _longestText,
-_alignPixel: _alignPixel,
-clear: clear,
-drawPoint: drawPoint,
-_isPointInArea: _isPointInArea,
-clipArea: clipArea,
-unclipArea: unclipArea,
-_steppedLineTo: _steppedLineTo,
-_bezierCurveTo: _bezierCurveTo
+var canvas = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  _measureText: _measureText,
+  _longestText: _longestText,
+  _alignPixel: _alignPixel,
+  clear: clear,
+  drawPoint: drawPoint,
+  _isPointInArea: _isPointInArea,
+  clipArea: clipArea,
+  unclipArea: unclipArea,
+  _steppedLineTo: _steppedLineTo,
+  _bezierCurveTo: _bezierCurveTo,
 });
 
 var PI$1 = Math.PI;
@@ -496,12 +546,14 @@ function _factorize(value) {
   result.sort((a, b) => a - b).pop();
   return result;
 }
-var log10 = Math.log10 || function (x) {
-  var exponent = Math.log(x) * Math.LOG10E;
-  var powerOf10 = Math.round(exponent);
-  var isPowerOf10 = x === Math.pow(10, powerOf10);
-  return isPowerOf10 ? powerOf10 : exponent;
-};
+var log10 =
+  Math.log10 ||
+  function (x) {
+    var exponent = Math.log(x) * Math.LOG10E;
+    var powerOf10 = Math.round(exponent);
+    var isPowerOf10 = x === Math.pow(10, powerOf10);
+    return isPowerOf10 ? powerOf10 : exponent;
+  };
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
@@ -522,15 +574,17 @@ function _setMinAndMaxByKey(array, target, property) {
     }
   }
 }
-var sign = Math.sign ? function (x) {
-  return Math.sign(x);
-} : function (x) {
-  x = +x;
-  if (x === 0 || isNaN(x)) {
-    return x;
-  }
-  return x > 0 ? 1 : -1;
-};
+var sign = Math.sign
+  ? function (x) {
+      return Math.sign(x);
+    }
+  : function (x) {
+      x = +x;
+      if (x === 0 || isNaN(x)) {
+        return x;
+      }
+      return x > 0 ? 1 : -1;
+    };
 function toRadians(degrees) {
   return degrees * (PI$1 / 180);
 }
@@ -552,24 +606,27 @@ function _decimalPlaces(x) {
 function getAngleFromPoint(centrePoint, anglePoint) {
   var distanceFromXCenter = anglePoint.x - centrePoint.x;
   var distanceFromYCenter = anglePoint.y - centrePoint.y;
-  var radialDistanceFromCenter = Math.sqrt(distanceFromXCenter * distanceFromXCenter + distanceFromYCenter * distanceFromYCenter);
+  var radialDistanceFromCenter = Math.sqrt(
+    distanceFromXCenter * distanceFromXCenter +
+      distanceFromYCenter * distanceFromYCenter
+  );
   var angle = Math.atan2(distanceFromYCenter, distanceFromXCenter);
   if (angle < -0.5 * PI$1) {
     angle += TAU;
   }
   return {
     angle,
-    distance: radialDistanceFromCenter
+    distance: radialDistanceFromCenter,
   };
 }
 function distanceBetweenPoints(pt1, pt2) {
   return Math.sqrt(Math.pow(pt2.x - pt1.x, 2) + Math.pow(pt2.y - pt1.y, 2));
 }
 function _angleDiff(a, b) {
-  return (a - b + PITAU) % TAU - PI$1;
+  return ((a - b + PITAU) % TAU) - PI$1;
 }
 function _normalizeAngle(a) {
-  return (a % TAU + TAU) % TAU;
+  return ((a % TAU) + TAU) % TAU;
 }
 function _angleBetween(angle, start, end) {
   var a = _normalizeAngle(angle);
@@ -579,30 +636,34 @@ function _angleBetween(angle, start, end) {
   var angleToEnd = _normalizeAngle(e - a);
   var startToAngle = _normalizeAngle(a - s);
   var endToAngle = _normalizeAngle(a - e);
-  return a === s || a === e || angleToStart > angleToEnd && startToAngle < endToAngle;
+  return (
+    a === s ||
+    a === e ||
+    (angleToStart > angleToEnd && startToAngle < endToAngle)
+  );
 }
 function _limitValue(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
-var math = /*#__PURE__*/Object.freeze({
-__proto__: null,
-_factorize: _factorize,
-log10: log10,
-isNumber: isNumber,
-almostEquals: almostEquals,
-almostWhole: almostWhole,
-_setMinAndMaxByKey: _setMinAndMaxByKey,
-sign: sign,
-toRadians: toRadians,
-toDegrees: toDegrees,
-_decimalPlaces: _decimalPlaces,
-getAngleFromPoint: getAngleFromPoint,
-distanceBetweenPoints: distanceBetweenPoints,
-_angleDiff: _angleDiff,
-_normalizeAngle: _normalizeAngle,
-_angleBetween: _angleBetween,
-_limitValue: _limitValue
+var math = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  _factorize: _factorize,
+  log10: log10,
+  isNumber: isNumber,
+  almostEquals: almostEquals,
+  almostWhole: almostWhole,
+  _setMinAndMaxByKey: _setMinAndMaxByKey,
+  sign: sign,
+  toRadians: toRadians,
+  toDegrees: toDegrees,
+  _decimalPlaces: _decimalPlaces,
+  getAngleFromPoint: getAngleFromPoint,
+  distanceBetweenPoints: distanceBetweenPoints,
+  _angleDiff: _angleDiff,
+  _normalizeAngle: _normalizeAngle,
+  _angleBetween: _angleBetween,
+  _limitValue: _limitValue,
 });
 
 var EPSILON = Number.EPSILON || 1e-14;
@@ -610,8 +671,12 @@ function splineCurve(firstPoint, middlePoint, afterPoint, t) {
   var previous = firstPoint.skip ? middlePoint : firstPoint;
   var current = middlePoint;
   var next = afterPoint.skip ? middlePoint : afterPoint;
-  var d01 = Math.sqrt(Math.pow(current.x - previous.x, 2) + Math.pow(current.y - previous.y, 2));
-  var d12 = Math.sqrt(Math.pow(next.x - current.x, 2) + Math.pow(next.y - current.y, 2));
+  var d01 = Math.sqrt(
+    Math.pow(current.x - previous.x, 2) + Math.pow(current.y - previous.y, 2)
+  );
+  var d12 = Math.sqrt(
+    Math.pow(next.x - current.x, 2) + Math.pow(next.y - current.y, 2)
+  );
   var s01 = d01 / (d01 + d12);
   var s12 = d12 / (d01 + d12);
   s01 = isNaN(s01) ? 0 : s01;
@@ -621,19 +686,19 @@ function splineCurve(firstPoint, middlePoint, afterPoint, t) {
   return {
     previous: {
       x: current.x - fa * (next.x - previous.x),
-      y: current.y - fa * (next.y - previous.y)
+      y: current.y - fa * (next.y - previous.y),
     },
     next: {
       x: current.x + fb * (next.x - previous.x),
-      y: current.y + fb * (next.y - previous.y)
-    }
+      y: current.y + fb * (next.y - previous.y),
+    },
   };
 }
 function splineCurveMonotone(points) {
-  var pointsWithTangents = (points || []).map(point => ({
+  var pointsWithTangents = (points || []).map((point) => ({
     model: point,
     deltaK: 0,
-    mK: 0
+    mK: 0,
   }));
   var pointsLen = pointsWithTangents.length;
   var i, pointBefore, pointCurrent, pointAfter;
@@ -646,7 +711,10 @@ function splineCurveMonotone(points) {
     pointAfter = i < pointsLen - 1 ? pointsWithTangents[i + 1] : null;
     if (pointAfter && !pointAfter.model.skip) {
       var slopeDeltaX = pointAfter.model.x - pointCurrent.model.x;
-      pointCurrent.deltaK = slopeDeltaX !== 0 ? (pointAfter.model.y - pointCurrent.model.y) / slopeDeltaX : 0;
+      pointCurrent.deltaK =
+        slopeDeltaX !== 0
+          ? (pointAfter.model.y - pointCurrent.model.y) / slopeDeltaX
+          : 0;
     }
     if (!pointBefore || pointBefore.model.skip) {
       pointCurrent.mK = pointCurrent.deltaK;
@@ -690,12 +758,14 @@ function splineCurveMonotone(points) {
     if (pointBefore && !pointBefore.model.skip) {
       deltaX = (pointCurrent.model.x - pointBefore.model.x) / 3;
       pointCurrent.model.controlPointPreviousX = pointCurrent.model.x - deltaX;
-      pointCurrent.model.controlPointPreviousY = pointCurrent.model.y - deltaX * pointCurrent.mK;
+      pointCurrent.model.controlPointPreviousY =
+        pointCurrent.model.y - deltaX * pointCurrent.mK;
     }
     if (pointAfter && !pointAfter.model.skip) {
       deltaX = (pointAfter.model.x - pointCurrent.model.x) / 3;
       pointCurrent.model.controlPointNextX = pointCurrent.model.x + deltaX;
-      pointCurrent.model.controlPointNextY = pointCurrent.model.y + deltaX * pointCurrent.mK;
+      pointCurrent.model.controlPointNextY =
+        pointCurrent.model.y + deltaX * pointCurrent.mK;
     }
   }
 }
@@ -710,27 +780,48 @@ function capBezierPoints(points, area) {
       continue;
     }
     if (i > 0 && _isPointInArea(points[i - 1], area)) {
-      point.controlPointPreviousX = capControlPoint(point.controlPointPreviousX, area.left, area.right);
-      point.controlPointPreviousY = capControlPoint(point.controlPointPreviousY, area.top, area.bottom);
+      point.controlPointPreviousX = capControlPoint(
+        point.controlPointPreviousX,
+        area.left,
+        area.right
+      );
+      point.controlPointPreviousY = capControlPoint(
+        point.controlPointPreviousY,
+        area.top,
+        area.bottom
+      );
     }
     if (i < points.length - 1 && _isPointInArea(points[i + 1], area)) {
-      point.controlPointNextX = capControlPoint(point.controlPointNextX, area.left, area.right);
-      point.controlPointNextY = capControlPoint(point.controlPointNextY, area.top, area.bottom);
+      point.controlPointNextX = capControlPoint(
+        point.controlPointNextX,
+        area.left,
+        area.right
+      );
+      point.controlPointNextY = capControlPoint(
+        point.controlPointNextY,
+        area.top,
+        area.bottom
+      );
     }
   }
 }
 function _updateBezierControlPoints(points, options, area, loop) {
   var i, ilen, point, controlPoints;
   if (options.spanGaps) {
-    points = points.filter(pt => !pt.skip);
+    points = points.filter((pt) => !pt.skip);
   }
-  if (options.cubicInterpolationMode === 'monotone') {
+  if (options.cubicInterpolationMode === "monotone") {
     splineCurveMonotone(points);
   } else {
     var prev = loop ? points[points.length - 1] : points[0];
     for (i = 0, ilen = points.length; i < ilen; ++i) {
       point = points[i];
-      controlPoints = splineCurve(prev, point, points[Math.min(i + 1, ilen - (loop ? 0 : 1)) % ilen], options.tension);
+      controlPoints = splineCurve(
+        prev,
+        point,
+        points[Math.min(i + 1, ilen - (loop ? 0 : 1)) % ilen],
+        options.tension
+      );
       point.controlPointPreviousX = controlPoints.previous.x;
       point.controlPointPreviousY = controlPoints.previous.y;
       point.controlPointNextX = controlPoints.next.x;
@@ -743,29 +834,29 @@ function _updateBezierControlPoints(points, options, area, loop) {
   }
 }
 
-var curve = /*#__PURE__*/Object.freeze({
-__proto__: null,
-splineCurve: splineCurve,
-splineCurveMonotone: splineCurveMonotone,
-_updateBezierControlPoints: _updateBezierControlPoints
+var curve = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  splineCurve: splineCurve,
+  splineCurveMonotone: splineCurveMonotone,
+  _updateBezierControlPoints: _updateBezierControlPoints,
 });
 
 function isConstrainedValue(value) {
-  return value !== undefined && value !== null && value !== 'none';
+  return value !== undefined && value !== null && value !== "none";
 }
 function _getParentNode(domNode) {
   var parent = domNode.parentNode;
-  if (parent && parent.toString() === '[object ShadowRoot]') {
+  if (parent && parent.toString() === "[object ShadowRoot]") {
     parent = parent.host;
   }
   return parent;
 }
 function parseMaxStyle(styleValue, node, parentProperty) {
   var valueInPixels;
-  if (typeof styleValue === 'string') {
+  if (typeof styleValue === "string") {
     valueInPixels = parseInt(styleValue, 10);
-    if (styleValue.indexOf('%') !== -1) {
-      valueInPixels = valueInPixels / 100 * node.parentNode[parentProperty];
+    if (styleValue.indexOf("%") !== -1) {
+      valueInPixels = (valueInPixels / 100) * node.parentNode[parentProperty];
     }
   } else {
     valueInPixels = styleValue;
@@ -781,21 +872,34 @@ function getConstraintDimension(domNode, maxStyle, percentageProperty) {
   var hasCContainer = isConstrainedValue(constrainedContainer);
   var infinity = Number.POSITIVE_INFINITY;
   if (hasCNode || hasCContainer) {
-    return Math.min(hasCNode ? parseMaxStyle(constrainedNode, domNode, percentageProperty) : infinity, hasCContainer ? parseMaxStyle(constrainedContainer, parentNode, percentageProperty) : infinity);
+    return Math.min(
+      hasCNode
+        ? parseMaxStyle(constrainedNode, domNode, percentageProperty)
+        : infinity,
+      hasCContainer
+        ? parseMaxStyle(constrainedContainer, parentNode, percentageProperty)
+        : infinity
+    );
   }
 }
 function getStyle(el, property) {
-  return el.currentStyle ? el.currentStyle[property] : document.defaultView.getComputedStyle(el, null).getPropertyValue(property);
+  return el.currentStyle
+    ? el.currentStyle[property]
+    : document.defaultView
+        .getComputedStyle(el, null)
+        .getPropertyValue(property);
 }
 function getConstraintWidth(domNode) {
-  return getConstraintDimension(domNode, 'max-width', 'clientWidth');
+  return getConstraintDimension(domNode, "max-width", "clientWidth");
 }
 function getConstraintHeight(domNode) {
-  return getConstraintDimension(domNode, 'max-height', 'clientHeight');
+  return getConstraintDimension(domNode, "max-height", "clientHeight");
 }
 function _calculatePadding(container, padding, parentDimension) {
   padding = getStyle(container, padding);
-  return padding.indexOf('%') > -1 ? parentDimension * parseInt(padding, 10) / 100 : parseInt(padding, 10);
+  return padding.indexOf("%") > -1
+    ? (parentDimension * parseInt(padding, 10)) / 100
+    : parseInt(padding, 10);
 }
 function getRelativePosition(evt, chart) {
   var mouseX, mouseY;
@@ -810,30 +914,40 @@ function getRelativePosition(evt, chart) {
     mouseX = e.clientX;
     mouseY = e.clientY;
   }
-  var paddingLeft = parseFloat(getStyle(canvasElement, 'padding-left'));
-  var paddingTop = parseFloat(getStyle(canvasElement, 'padding-top'));
-  var paddingRight = parseFloat(getStyle(canvasElement, 'padding-right'));
-  var paddingBottom = parseFloat(getStyle(canvasElement, 'padding-bottom'));
-  var width = boundingRect.right - boundingRect.left - paddingLeft - paddingRight;
-  var height = boundingRect.bottom - boundingRect.top - paddingTop - paddingBottom;
-  mouseX = Math.round((mouseX - boundingRect.left - paddingLeft) / width * canvasElement.width / chart.currentDevicePixelRatio);
-  mouseY = Math.round((mouseY - boundingRect.top - paddingTop) / height * canvasElement.height / chart.currentDevicePixelRatio);
+  var paddingLeft = parseFloat(getStyle(canvasElement, "padding-left"));
+  var paddingTop = parseFloat(getStyle(canvasElement, "padding-top"));
+  var paddingRight = parseFloat(getStyle(canvasElement, "padding-right"));
+  var paddingBottom = parseFloat(getStyle(canvasElement, "padding-bottom"));
+  var width =
+    boundingRect.right - boundingRect.left - paddingLeft - paddingRight;
+  var height =
+    boundingRect.bottom - boundingRect.top - paddingTop - paddingBottom;
+  mouseX = Math.round(
+    (((mouseX - boundingRect.left - paddingLeft) / width) *
+      canvasElement.width) /
+      chart.currentDevicePixelRatio
+  );
+  mouseY = Math.round(
+    (((mouseY - boundingRect.top - paddingTop) / height) *
+      canvasElement.height) /
+      chart.currentDevicePixelRatio
+  );
   return {
     x: mouseX,
-    y: mouseY
+    y: mouseY,
   };
 }
 function getMaximumWidth(domNode) {
   var container = _getParentNode(domNode);
   if (!container) {
-    if (typeof domNode.clientWidth === 'number') {
+    if (typeof domNode.clientWidth === "number") {
       return domNode.clientWidth;
     }
     return domNode.width;
   }
   var clientWidth = container.clientWidth;
-  var paddingLeft = _calculatePadding(container, 'padding-left', clientWidth);
-  var paddingRight = _calculatePadding(container, 'padding-right', clientWidth);
+  var paddingLeft = _calculatePadding(container, "padding-left", clientWidth);
+  var paddingRight = _calculatePadding(container, "padding-right", clientWidth);
   var w = clientWidth - paddingLeft - paddingRight;
   var cw = getConstraintWidth(domNode);
   return isNaN(cw) ? w : Math.min(w, cw);
@@ -841,42 +955,45 @@ function getMaximumWidth(domNode) {
 function getMaximumHeight(domNode) {
   var container = _getParentNode(domNode);
   if (!container) {
-    if (typeof domNode.clientHeight === 'number') {
+    if (typeof domNode.clientHeight === "number") {
       return domNode.clientHeight;
     }
     return domNode.height;
   }
   var clientHeight = container.clientHeight;
-  var paddingTop = _calculatePadding(container, 'padding-top', clientHeight);
-  var paddingBottom = _calculatePadding(container, 'padding-bottom', clientHeight);
+  var paddingTop = _calculatePadding(container, "padding-top", clientHeight);
+  var paddingBottom = _calculatePadding(
+    container,
+    "padding-bottom",
+    clientHeight
+  );
   var h = clientHeight - paddingTop - paddingBottom;
   var ch = getConstraintHeight(domNode);
   return isNaN(ch) ? h : Math.min(h, ch);
 }
 function retinaScale(chart, forceRatio) {
-  var pixelRatio = chart.currentDevicePixelRatio = forceRatio || typeof window !== 'undefined' && window.devicePixelRatio || 1;
-  var {
-    canvas,
-    width,
-    height
-  } = chart;
+  var pixelRatio = (chart.currentDevicePixelRatio =
+    forceRatio ||
+    (typeof window !== "undefined" && window.devicePixelRatio) ||
+    1);
+  var { canvas, width, height } = chart;
   canvas.height = height * pixelRatio;
   canvas.width = width * pixelRatio;
   chart.ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   if (canvas.style && !canvas.style.height && !canvas.style.width) {
-    canvas.style.height = height + 'px';
-    canvas.style.width = width + 'px';
+    canvas.style.height = height + "px";
+    canvas.style.width = width + "px";
   }
 }
 
-var dom = /*#__PURE__*/Object.freeze({
-__proto__: null,
-_getParentNode: _getParentNode,
-getStyle: getStyle,
-getRelativePosition: getRelativePosition,
-getMaximumWidth: getMaximumWidth,
-getMaximumHeight: getMaximumHeight,
-retinaScale: retinaScale
+var dom = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  _getParentNode: _getParentNode,
+  getStyle: getStyle,
+  getRelativePosition: getRelativePosition,
+  getMaximumWidth: getMaximumWidth,
+  getMaximumHeight: getMaximumHeight,
+  retinaScale: retinaScale,
 });
 
 var effects = {
@@ -987,9 +1104,13 @@ var effects = {
       p = 0.3;
     }
     {
-      s = p / (2 * Math.PI) * Math.asin(1 / a);
+      s = (p / (2 * Math.PI)) * Math.asin(1 / a);
     }
-    return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t - s) * (2 * Math.PI) / p));
+    return -(
+      a *
+      Math.pow(2, 10 * (t -= 1)) *
+      Math.sin(((t - s) * (2 * Math.PI)) / p)
+    );
   },
   easeOutElastic(t) {
     var s = 1.70158;
@@ -1005,9 +1126,11 @@ var effects = {
       p = 0.3;
     }
     {
-      s = p / (2 * Math.PI) * Math.asin(1 / a);
+      s = (p / (2 * Math.PI)) * Math.asin(1 / a);
     }
-    return a * Math.pow(2, -10 * t) * Math.sin((t - s) * (2 * Math.PI) / p) + 1;
+    return (
+      a * Math.pow(2, -10 * t) * Math.sin(((t - s) * (2 * Math.PI)) / p) + 1
+    );
   },
   easeInOutElastic(t) {
     var s = 1.70158;
@@ -1023,12 +1146,23 @@ var effects = {
       p = 0.45;
     }
     {
-      s = p / (2 * Math.PI) * Math.asin(1 / a);
+      s = (p / (2 * Math.PI)) * Math.asin(1 / a);
     }
     if (t < 1) {
-      return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t - s) * (2 * Math.PI) / p));
+      return (
+        -0.5 *
+        (a *
+          Math.pow(2, 10 * (t -= 1)) *
+          Math.sin(((t - s) * (2 * Math.PI)) / p))
+      );
     }
-    return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t - s) * (2 * Math.PI) / p) * 0.5 + 1;
+    return (
+      a *
+        Math.pow(2, -10 * (t -= 1)) *
+        Math.sin(((t - s) * (2 * Math.PI)) / p) *
+        0.5 +
+      1
+    );
   },
   easeInBack(t) {
     var s = 1.70158;
@@ -1065,23 +1199,23 @@ var effects = {
       return effects.easeInBounce(t * 2) * 0.5;
     }
     return effects.easeOutBounce(t * 2 - 1) * 0.5 + 0.5;
-  }
+  },
 };
 
 class Defaults {
   constructor() {
-    this.color = 'rgba(0,0,0,0.1)';
+    this.color = "rgba(0,0,0,0.1)";
     this.elements = {};
-    this.events = ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'];
-    this.fontColor = '#666';
+    this.events = ["mousemove", "mouseout", "click", "touchstart", "touchmove"];
+    this.fontColor = "#666";
     this.fontFamily = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
     this.fontSize = 12;
-    this.fontStyle = 'normal';
+    this.fontStyle = "normal";
     this.lineHeight = 1.2;
     this.hover = {
       onHover: null,
-      mode: 'nearest',
-      intersect: true
+      mode: "nearest",
+      intersect: true,
     };
     this.maintainAspectRatio = true;
     this.onClick = null;
@@ -1104,18 +1238,24 @@ function toFontString(font) {
   if (!font || isNullOrUndef(font.size) || isNullOrUndef(font.family)) {
     return null;
   }
-  return (font.style ? font.style + ' ' : '') + (font.weight ? font.weight + ' ' : '') + font.size + 'px ' + font.family;
+  return (
+    (font.style ? font.style + " " : "") +
+    (font.weight ? font.weight + " " : "") +
+    font.size +
+    "px " +
+    font.family
+  );
 }
 function toLineHeight(value, size) {
-  var matches = ('' + value).match(/^(normal|(\d+(?:\.\d+)?)(px|em|%)?)$/);
-  if (!matches || matches[1] === 'normal') {
+  var matches = ("" + value).match(/^(normal|(\d+(?:\.\d+)?)(px|em|%)?)$/);
+  if (!matches || matches[1] === "normal") {
     return size * 1.2;
   }
   value = +matches[2];
   switch (matches[3]) {
-    case 'px':
+    case "px":
       return value;
-    case '%':
+    case "%":
       value /= 100;
       break;
   }
@@ -1137,21 +1277,24 @@ function toPadding(value) {
     bottom: b,
     left: l,
     height: t + b,
-    width: l + r
+    width: l + r,
   };
 }
 function _parseFont(options) {
   var size = valueOrDefault(options.fontSize, defaults.fontSize);
-  if (typeof size === 'string') {
+  if (typeof size === "string") {
     size = parseInt(size, 10);
   }
   var font = {
     family: valueOrDefault(options.fontFamily, defaults.fontFamily),
-    lineHeight: toLineHeight(valueOrDefault(options.lineHeight, defaults.lineHeight), size),
+    lineHeight: toLineHeight(
+      valueOrDefault(options.lineHeight, defaults.lineHeight),
+      size
+    ),
     size,
     style: valueOrDefault(options.fontStyle, defaults.fontStyle),
     weight: null,
-    string: ''
+    string: "",
   };
   font.string = toFontString(font);
   return font;
@@ -1164,7 +1307,7 @@ function resolve(inputs, context, index, info) {
     if (value === undefined) {
       continue;
     }
-    if (context !== undefined && typeof value === 'function') {
+    if (context !== undefined && typeof value === "function") {
       value = value(context);
       cacheable = false;
     }
@@ -1181,12 +1324,12 @@ function resolve(inputs, context, index, info) {
   }
 }
 
-var options = /*#__PURE__*/Object.freeze({
-__proto__: null,
-toLineHeight: toLineHeight,
-toPadding: toPadding,
-_parseFont: _parseFont,
-resolve: resolve
+var options = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  toLineHeight: toLineHeight,
+  toPadding: toPadding,
+  _parseFont: _parseFont,
+  resolve: resolve,
 });
 
 var getRightToLeftAdapter = function getRightToLeftAdapter(rectX, width) {
@@ -1198,17 +1341,17 @@ var getRightToLeftAdapter = function getRightToLeftAdapter(rectX, width) {
       width = w;
     },
     textAlign(align) {
-      if (align === 'center') {
+      if (align === "center") {
         return align;
       }
-      return align === 'right' ? 'left' : 'right';
+      return align === "right" ? "left" : "right";
     },
     xPlus(x, value) {
       return x - value;
     },
     leftForLtr(x, itemWidth) {
       return x - itemWidth;
-    }
+    },
   };
 };
 var getLeftToRightAdapter = function getLeftToRightAdapter() {
@@ -1216,8 +1359,7 @@ var getLeftToRightAdapter = function getLeftToRightAdapter() {
     x(x) {
       return x;
     },
-    setWidth(w) {
-    },
+    setWidth(w) {},
     textAlign(align) {
       return align;
     },
@@ -1226,7 +1368,7 @@ var getLeftToRightAdapter = function getLeftToRightAdapter() {
     },
     leftForLtr(x, _itemWidth) {
       return x;
-    }
+    },
   };
 };
 function getRtlAdapter(rtl, rectX, width) {
@@ -1234,25 +1376,28 @@ function getRtlAdapter(rtl, rectX, width) {
 }
 function overrideTextDirection(ctx, direction) {
   var style, original;
-  if (direction === 'ltr' || direction === 'rtl') {
+  if (direction === "ltr" || direction === "rtl") {
     style = ctx.canvas.style;
-    original = [style.getPropertyValue('direction'), style.getPropertyPriority('direction')];
-    style.setProperty('direction', direction, 'important');
+    original = [
+      style.getPropertyValue("direction"),
+      style.getPropertyPriority("direction"),
+    ];
+    style.setProperty("direction", direction, "important");
     ctx.prevTextDirection = original;
   }
 }
 function restoreTextDirection(ctx, original) {
   if (original !== undefined) {
     delete ctx.prevTextDirection;
-    ctx.canvas.style.setProperty('direction', original[0], original[1]);
+    ctx.canvas.style.setProperty("direction", original[0], original[1]);
   }
 }
 
-var rtl = /*#__PURE__*/Object.freeze({
-__proto__: null,
-getRtlAdapter: getRtlAdapter,
-overrideTextDirection: overrideTextDirection,
-restoreTextDirection: restoreTextDirection
+var rtl = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  getRtlAdapter: getRtlAdapter,
+  overrideTextDirection: overrideTextDirection,
+  restoreTextDirection: restoreTextDirection,
 });
 
 /*!
@@ -1283,32 +1428,32 @@ var map = {
   c: 12,
   d: 13,
   e: 14,
-  f: 15
+  f: 15,
 };
-var hex = '0123456789ABCDEF';
-var h1 = b => hex[b & 0xF];
-var h2 = b => hex[(b & 0xF0) >> 4] + hex[b & 0xF];
-var eq = b => (b & 0xF0) >> 4 === (b & 0xF);
+var hex = "0123456789ABCDEF";
+var h1 = (b) => hex[b & 0xf];
+var h2 = (b) => hex[(b & 0xf0) >> 4] + hex[b & 0xf];
+var eq = (b) => (b & 0xf0) >> 4 === (b & 0xf);
 function isShort(v) {
   return eq(v.r) && eq(v.g) && eq(v.b) && eq(v.a);
 }
 function hexParse(str) {
   var len = str.length;
   var ret;
-  if (str[0] === '#') {
+  if (str[0] === "#") {
     if (len === 4 || len === 5) {
       ret = {
-        r: 255 & map[str[1]] * 17,
-        g: 255 & map[str[2]] * 17,
-        b: 255 & map[str[3]] * 17,
-        a: len === 5 ? map[str[4]] * 17 : 255
+        r: 255 & (map[str[1]] * 17),
+        g: 255 & (map[str[2]] * 17),
+        b: 255 & (map[str[3]] * 17),
+        a: len === 5 ? map[str[4]] * 17 : 255,
       };
     } else if (len === 7 || len === 9) {
       ret = {
-        r: map[str[1]] << 4 | map[str[2]],
-        g: map[str[3]] << 4 | map[str[4]],
-        b: map[str[5]] << 4 | map[str[6]],
-        a: len === 9 ? map[str[7]] << 4 | map[str[8]] : 255
+        r: (map[str[1]] << 4) | map[str[2]],
+        g: (map[str[3]] << 4) | map[str[4]],
+        b: (map[str[5]] << 4) | map[str[6]],
+        a: len === 9 ? (map[str[7]] << 4) | map[str[8]] : 255,
       };
     }
   }
@@ -1316,10 +1461,10 @@ function hexParse(str) {
 }
 function hexString(v) {
   var f = isShort(v) ? h1 : h2;
-  return v ? '#' + f(v.r) + f(v.g) + f(v.b) + (v.a < 255 ? f(v.a) : '') : v;
+  return v ? "#" + f(v.r) + f(v.g) + f(v.b) + (v.a < 255 ? f(v.a) : "") : v;
 }
 function round(v) {
-  return v + 0.5 | 0;
+  return (v + 0.5) | 0;
 }
 var lim = (v, l, h) => Math.max(Math.min(v, h), l);
 function p2b(v) {
@@ -1334,7 +1479,8 @@ function b2n(v) {
 function n2p(v) {
   return lim(round(v * 100), 0, 100);
 }
-var RGB_RE = /^rgba?\(\s*([-+.\d]+)(%)?[\s,]+([-+.e\d]+)(%)?[\s,]+([-+.e\d]+)(%)?(?:[\s,/]+([-+.e\d]+)(%)?)?\s*\)$/;
+var RGB_RE =
+  /^rgba?\(\s*([-+.\d]+)(%)?[\s,]+([-+.e\d]+)(%)?[\s,]+([-+.e\d]+)(%)?(?:[\s,/]+([-+.e\d]+)(%)?)?\s*\)$/;
 function rgbParse(str) {
   var m = RGB_RE.exec(str);
   var a = 255;
@@ -1356,24 +1502,40 @@ function rgbParse(str) {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 function rgbString(v) {
-  return v && (v.a < 255 ? "rgba(".concat(v.r, ", ").concat(v.g, ", ").concat(v.b, ", ").concat(b2n(v.a), ")") : "rgb(".concat(v.r, ", ").concat(v.g, ", ").concat(v.b, ")"));
+  return (
+    v &&
+    (v.a < 255
+      ? "rgba("
+          .concat(v.r, ", ")
+          .concat(v.g, ", ")
+          .concat(v.b, ", ")
+          .concat(b2n(v.a), ")")
+      : "rgb(".concat(v.r, ", ").concat(v.g, ", ").concat(v.b, ")"))
+  );
 }
-var HUE_RE = /^(hsla?|hwb|hsv)\(\s*([-+.e\d]+)(?:deg)?[\s,]+([-+.e\d]+)%[\s,]+([-+.e\d]+)%(?:[\s,]+([-+.e\d]+)(%)?)?\s*\)$/;
+var HUE_RE =
+  /^(hsla?|hwb|hsv)\(\s*([-+.e\d]+)(?:deg)?[\s,]+([-+.e\d]+)%[\s,]+([-+.e\d]+)%(?:[\s,]+([-+.e\d]+)(%)?)?\s*\)$/;
 function hsl2rgbn(h, s, l) {
   var a = s * Math.min(l, 1 - l);
   var f = function f(n) {
-    var k = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (n + h / 30) % 12;
+    var k =
+      arguments.length > 1 && arguments[1] !== undefined
+        ? arguments[1]
+        : (n + h / 30) % 12;
     return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
   };
   return [f(0), f(8), f(4)];
 }
 function hsv2rgbn(h, s, v) {
   var f = function f(n) {
-    var k = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (n + h / 60) % 6;
+    var k =
+      arguments.length > 1 && arguments[1] !== undefined
+        ? arguments[1]
+        : (n + h / 60) % 6;
     return v - v * s * Math.max(Math.min(k, 4 - k, 1), 0);
   };
   return [f(5), f(3), f(1)];
@@ -1404,7 +1566,12 @@ function rgb2hsl(v) {
   if (max !== min) {
     d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    h = max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    h =
+      max === r
+        ? (g - b) / d + (g < b ? 6 : 0)
+        : max === g
+        ? (b - r) / d + 2
+        : (r - g) / d + 4;
     h = h * 60 + 0.5;
   }
   return [h | 0, s || 0, l];
@@ -1422,7 +1589,7 @@ function hsv2rgb(h, s, v) {
   return calln(hsv2rgbn, h, s, v);
 }
 function hue(h) {
-  return (h % 360 + 360) % 360;
+  return ((h % 360) + 360) % 360;
 }
 function hueParse(str) {
   var m = HUE_RE.exec(str);
@@ -1437,9 +1604,9 @@ function hueParse(str) {
   var h = hue(+m[2]);
   var p1 = +m[3] / 100;
   var p2 = +m[4] / 100;
-  if (m[1] === 'hwb') {
+  if (m[1] === "hwb") {
     v = hwb2rgb(h, p1, p2);
-  } else if (m[1] === 'hsv') {
+  } else if (m[1] === "hsv") {
     v = hsv2rgb(h, p1, p2);
   } else {
     v = hsl2rgb(h, p1, p2);
@@ -1448,7 +1615,7 @@ function hueParse(str) {
     r: v[0],
     g: v[1],
     b: v[2],
-    a: a
+    a: a,
   };
 }
 function rotate(v, deg) {
@@ -1467,36 +1634,42 @@ function hslString(v) {
   var h = a[0];
   var s = n2p(a[1]);
   var l = n2p(a[2]);
-  return v.a < 255 ? "hsla(".concat(h, ", ").concat(s, "%, ").concat(l, "%, ").concat(b2n(v.a), ")") : "hsl(".concat(h, ", ").concat(s, "%, ").concat(l, "%)");
+  return v.a < 255
+    ? "hsla("
+        .concat(h, ", ")
+        .concat(s, "%, ")
+        .concat(l, "%, ")
+        .concat(b2n(v.a), ")")
+    : "hsl(".concat(h, ", ").concat(s, "%, ").concat(l, "%)");
 }
 var map$1 = {
-  x: 'dark',
-  Z: 'light',
-  Y: 're',
-  X: 'blu',
-  W: 'gr',
-  V: 'medium',
-  U: 'slate',
-  A: 'ee',
-  T: 'ol',
-  S: 'or',
-  B: 'ra',
-  C: 'lateg',
-  D: 'ights',
-  R: 'in',
-  Q: 'turquois',
-  E: 'hi',
-  P: 'ro',
-  O: 'al',
-  N: 'le',
-  M: 'de',
-  L: 'yello',
-  F: 'en',
-  K: 'ch',
-  G: 'arks',
-  H: 'ea',
-  I: 'ightg',
-  J: 'wh'
+  x: "dark",
+  Z: "light",
+  Y: "re",
+  X: "blu",
+  W: "gr",
+  V: "medium",
+  U: "slate",
+  A: "ee",
+  T: "ol",
+  S: "or",
+  B: "ra",
+  C: "lateg",
+  D: "ights",
+  R: "in",
+  Q: "turquois",
+  E: "hi",
+  P: "ro",
+  O: "al",
+  N: "le",
+  M: "de",
+  L: "yello",
+  F: "en",
+  K: "ch",
+  G: "arks",
+  H: "ea",
+  I: "ightg",
+  J: "wh",
 };
 function unpack(obj) {
   var unpacked = {};
@@ -1510,169 +1683,171 @@ function unpack(obj) {
       nk = nk.replace(k, map$1[k]);
     }
     k = parseInt(obj[ok], 16);
-    unpacked[nk] = [k >> 16 & 0xFF, k >> 8 & 0xFF, k & 0xFF];
+    unpacked[nk] = [(k >> 16) & 0xff, (k >> 8) & 0xff, k & 0xff];
   }
   return unpacked;
 }
 var names = unpack({
-  OiceXe: 'f0f8ff',
-  antiquewEte: 'faebd7',
-  aqua: 'ffff',
-  aquamarRe: '7fffd4',
-  azuY: 'f0ffff',
-  beige: 'f5f5dc',
-  bisque: 'ffe4c4',
-  black: '0',
-  blanKedOmond: 'ffebcd',
-  Xe: 'ff',
-  XeviTet: '8a2be2',
-  bPwn: 'a52a2a',
-  burlywood: 'deb887',
-  caMtXe: '5f9ea0',
-  KartYuse: '7fff00',
-  KocTate: 'd2691e',
-  cSO: 'ff7f50',
-  cSnflowerXe: '6495ed',
-  cSnsilk: 'fff8dc',
-  crimson: 'dc143c',
-  cyan: 'ffff',
-  xXe: '8b',
-  xcyan: '8b8b',
-  xgTMnPd: 'b8860b',
-  xWay: 'a9a9a9',
-  xgYF: '6400',
-  xgYy: 'a9a9a9',
-  xkhaki: 'bdb76b',
-  xmagFta: '8b008b',
-  xTivegYF: '556b2f',
-  xSange: 'ff8c00',
-  xScEd: '9932cc',
-  xYd: '8b0000',
-  xsOmon: 'e9967a',
-  xsHgYF: '8fbc8f',
-  xUXe: '483d8b',
-  xUWay: '2f4f4f',
-  xUgYy: '2f4f4f',
-  xQe: 'ced1',
-  xviTet: '9400d3',
-  dAppRk: 'ff1493',
-  dApskyXe: 'bfff',
-  dimWay: '696969',
-  dimgYy: '696969',
-  dodgerXe: '1e90ff',
-  fiYbrick: 'b22222',
-  flSOwEte: 'fffaf0',
-  foYstWAn: '228b22',
-  fuKsia: 'ff00ff',
-  gaRsbSo: 'dcdcdc',
-  ghostwEte: 'f8f8ff',
-  gTd: 'ffd700',
-  gTMnPd: 'daa520',
-  Way: '808080',
-  gYF: '8000',
-  gYFLw: 'adff2f',
-  gYy: '808080',
-  honeyMw: 'f0fff0',
-  hotpRk: 'ff69b4',
-  RdianYd: 'cd5c5c',
-  Rdigo: '4b0082',
-  ivSy: 'fffff0',
-  khaki: 'f0e68c',
-  lavFMr: 'e6e6fa',
-  lavFMrXsh: 'fff0f5',
-  lawngYF: '7cfc00',
-  NmoncEffon: 'fffacd',
-  ZXe: 'add8e6',
-  ZcSO: 'f08080',
-  Zcyan: 'e0ffff',
-  ZgTMnPdLw: 'fafad2',
-  ZWay: 'd3d3d3',
-  ZgYF: '90ee90',
-  ZgYy: 'd3d3d3',
-  ZpRk: 'ffb6c1',
-  ZsOmon: 'ffa07a',
-  ZsHgYF: '20b2aa',
-  ZskyXe: '87cefa',
-  ZUWay: '778899',
-  ZUgYy: '778899',
-  ZstAlXe: 'b0c4de',
-  ZLw: 'ffffe0',
-  lime: 'ff00',
-  limegYF: '32cd32',
-  lRF: 'faf0e6',
-  magFta: 'ff00ff',
-  maPon: '800000',
-  VaquamarRe: '66cdaa',
-  VXe: 'cd',
-  VScEd: 'ba55d3',
-  VpurpN: '9370db',
-  VsHgYF: '3cb371',
-  VUXe: '7b68ee',
-  VsprRggYF: 'fa9a',
-  VQe: '48d1cc',
-  VviTetYd: 'c71585',
-  midnightXe: '191970',
-  mRtcYam: 'f5fffa',
-  mistyPse: 'ffe4e1',
-  moccasR: 'ffe4b5',
-  navajowEte: 'ffdead',
-  navy: '80',
-  Tdlace: 'fdf5e6',
-  Tive: '808000',
-  TivedBb: '6b8e23',
-  Sange: 'ffa500',
-  SangeYd: 'ff4500',
-  ScEd: 'da70d6',
-  pOegTMnPd: 'eee8aa',
-  pOegYF: '98fb98',
-  pOeQe: 'afeeee',
-  pOeviTetYd: 'db7093',
-  papayawEp: 'ffefd5',
-  pHKpuff: 'ffdab9',
-  peru: 'cd853f',
-  pRk: 'ffc0cb',
-  plum: 'dda0dd',
-  powMrXe: 'b0e0e6',
-  purpN: '800080',
-  YbeccapurpN: '663399',
-  Yd: 'ff0000',
-  Psybrown: 'bc8f8f',
-  PyOXe: '4169e1',
-  saddNbPwn: '8b4513',
-  sOmon: 'fa8072',
-  sandybPwn: 'f4a460',
-  sHgYF: '2e8b57',
-  sHshell: 'fff5ee',
-  siFna: 'a0522d',
-  silver: 'c0c0c0',
-  skyXe: '87ceeb',
-  UXe: '6a5acd',
-  UWay: '708090',
-  UgYy: '708090',
-  snow: 'fffafa',
-  sprRggYF: 'ff7f',
-  stAlXe: '4682b4',
-  tan: 'd2b48c',
-  teO: '8080',
-  tEstN: 'd8bfd8',
-  tomato: 'ff6347',
-  Qe: '40e0d0',
-  viTet: 'ee82ee',
-  JHt: 'f5deb3',
-  wEte: 'ffffff',
-  wEtesmoke: 'f5f5f5',
-  Lw: 'ffff00',
-  LwgYF: '9acd32'
+  OiceXe: "f0f8ff",
+  antiquewEte: "faebd7",
+  aqua: "ffff",
+  aquamarRe: "7fffd4",
+  azuY: "f0ffff",
+  beige: "f5f5dc",
+  bisque: "ffe4c4",
+  black: "0",
+  blanKedOmond: "ffebcd",
+  Xe: "ff",
+  XeviTet: "8a2be2",
+  bPwn: "a52a2a",
+  burlywood: "deb887",
+  caMtXe: "5f9ea0",
+  KartYuse: "7fff00",
+  KocTate: "d2691e",
+  cSO: "ff7f50",
+  cSnflowerXe: "6495ed",
+  cSnsilk: "fff8dc",
+  crimson: "dc143c",
+  cyan: "ffff",
+  xXe: "8b",
+  xcyan: "8b8b",
+  xgTMnPd: "b8860b",
+  xWay: "a9a9a9",
+  xgYF: "6400",
+  xgYy: "a9a9a9",
+  xkhaki: "bdb76b",
+  xmagFta: "8b008b",
+  xTivegYF: "556b2f",
+  xSange: "ff8c00",
+  xScEd: "9932cc",
+  xYd: "8b0000",
+  xsOmon: "e9967a",
+  xsHgYF: "8fbc8f",
+  xUXe: "483d8b",
+  xUWay: "2f4f4f",
+  xUgYy: "2f4f4f",
+  xQe: "ced1",
+  xviTet: "9400d3",
+  dAppRk: "ff1493",
+  dApskyXe: "bfff",
+  dimWay: "696969",
+  dimgYy: "696969",
+  dodgerXe: "1e90ff",
+  fiYbrick: "b22222",
+  flSOwEte: "fffaf0",
+  foYstWAn: "228b22",
+  fuKsia: "ff00ff",
+  gaRsbSo: "dcdcdc",
+  ghostwEte: "f8f8ff",
+  gTd: "ffd700",
+  gTMnPd: "daa520",
+  Way: "808080",
+  gYF: "8000",
+  gYFLw: "adff2f",
+  gYy: "808080",
+  honeyMw: "f0fff0",
+  hotpRk: "ff69b4",
+  RdianYd: "cd5c5c",
+  Rdigo: "4b0082",
+  ivSy: "fffff0",
+  khaki: "f0e68c",
+  lavFMr: "e6e6fa",
+  lavFMrXsh: "fff0f5",
+  lawngYF: "7cfc00",
+  NmoncEffon: "fffacd",
+  ZXe: "add8e6",
+  ZcSO: "f08080",
+  Zcyan: "e0ffff",
+  ZgTMnPdLw: "fafad2",
+  ZWay: "d3d3d3",
+  ZgYF: "90ee90",
+  ZgYy: "d3d3d3",
+  ZpRk: "ffb6c1",
+  ZsOmon: "ffa07a",
+  ZsHgYF: "20b2aa",
+  ZskyXe: "87cefa",
+  ZUWay: "778899",
+  ZUgYy: "778899",
+  ZstAlXe: "b0c4de",
+  ZLw: "ffffe0",
+  lime: "ff00",
+  limegYF: "32cd32",
+  lRF: "faf0e6",
+  magFta: "ff00ff",
+  maPon: "800000",
+  VaquamarRe: "66cdaa",
+  VXe: "cd",
+  VScEd: "ba55d3",
+  VpurpN: "9370db",
+  VsHgYF: "3cb371",
+  VUXe: "7b68ee",
+  VsprRggYF: "fa9a",
+  VQe: "48d1cc",
+  VviTetYd: "c71585",
+  midnightXe: "191970",
+  mRtcYam: "f5fffa",
+  mistyPse: "ffe4e1",
+  moccasR: "ffe4b5",
+  navajowEte: "ffdead",
+  navy: "80",
+  Tdlace: "fdf5e6",
+  Tive: "808000",
+  TivedBb: "6b8e23",
+  Sange: "ffa500",
+  SangeYd: "ff4500",
+  ScEd: "da70d6",
+  pOegTMnPd: "eee8aa",
+  pOegYF: "98fb98",
+  pOeQe: "afeeee",
+  pOeviTetYd: "db7093",
+  papayawEp: "ffefd5",
+  pHKpuff: "ffdab9",
+  peru: "cd853f",
+  pRk: "ffc0cb",
+  plum: "dda0dd",
+  powMrXe: "b0e0e6",
+  purpN: "800080",
+  YbeccapurpN: "663399",
+  Yd: "ff0000",
+  Psybrown: "bc8f8f",
+  PyOXe: "4169e1",
+  saddNbPwn: "8b4513",
+  sOmon: "fa8072",
+  sandybPwn: "f4a460",
+  sHgYF: "2e8b57",
+  sHshell: "fff5ee",
+  siFna: "a0522d",
+  silver: "c0c0c0",
+  skyXe: "87ceeb",
+  UXe: "6a5acd",
+  UWay: "708090",
+  UgYy: "708090",
+  snow: "fffafa",
+  sprRggYF: "ff7f",
+  stAlXe: "4682b4",
+  tan: "d2b48c",
+  teO: "8080",
+  tEstN: "d8bfd8",
+  tomato: "ff6347",
+  Qe: "40e0d0",
+  viTet: "ee82ee",
+  JHt: "f5deb3",
+  wEte: "ffffff",
+  wEtesmoke: "f5f5f5",
+  Lw: "ffff00",
+  LwgYF: "9acd32",
 });
 names.transparent = [0, 0, 0, 0];
 function nameParse(str) {
   var a = names[str];
-  return a && {
-    r: a[0],
-    g: a[1],
-    b: a[2],
-    a: a.length === 4 ? a[3] : 255
-  };
+  return (
+    a && {
+      r: a[0],
+      g: a[1],
+      b: a[2],
+      a: a.length === 4 ? a[3] : 255,
+    }
+  );
 }
 function modHSL(v, i, ratio) {
   if (v) {
@@ -1692,7 +1867,7 @@ function fromObject(input) {
     r: 0,
     g: 0,
     b: 0,
-    a: 255
+    a: 255,
   };
   if (Array.isArray(input)) {
     if (input.length >= 3) {
@@ -1700,7 +1875,7 @@ function fromObject(input) {
         r: input[0],
         g: input[1],
         b: input[2],
-        a: 255
+        a: 255,
       };
       if (input.length > 3) {
         v.a = n2b(input[3]);
@@ -1711,14 +1886,14 @@ function fromObject(input) {
       r: 0,
       g: 0,
       b: 0,
-      a: 1
+      a: 1,
     });
     v.a = n2b(v.a);
   }
   return v;
 }
 function functionParse(str) {
-  if (str.charAt(0) === 'r') {
+  if (str.charAt(0) === "r") {
     return rgbParse(str);
   }
   return hueParse(str);
@@ -1730,9 +1905,9 @@ class Color {
     }
     var type = typeof input;
     var v;
-    if (type === 'object') {
+    if (type === "object") {
       v = fromObject(input);
-    } else if (type === 'string') {
+    } else if (type === "string") {
       v = hexParse(input) || nameParse(input) || functionParse(input);
     }
     this._rgb = v;
@@ -1771,9 +1946,9 @@ class Color {
       var a = c1.a - c2.a;
       var w1 = ((w * a === -1 ? w : (w + a) / (1 + w * a)) + 1) / 2.0;
       w2 = 1 - w1;
-      c1.r = 0xFF & w1 * c1.r + w2 * c2.r + 0.5;
-      c1.g = 0xFF & w1 * c1.g + w2 * c2.g + 0.5;
-      c1.b = 0xFF & w1 * c1.b + w2 * c2.b + 0.5;
+      c1.r = 0xff & (w1 * c1.r + w2 * c2.r + 0.5);
+      c1.g = 0xff & (w1 * c1.g + w2 * c2.g + 0.5);
+      c1.b = 0xff & (w1 * c1.b + w2 * c2.b + 0.5);
       c1.a = p * c1.a + (1 - p) * c2.a;
       me.rgb = c1;
     }
@@ -1834,12 +2009,15 @@ function index(input) {
   return new Color(input);
 }
 
-var isPatternOrGradient = value => value instanceof CanvasGradient || value instanceof CanvasPattern;
+var isPatternOrGradient = (value) =>
+  value instanceof CanvasGradient || value instanceof CanvasPattern;
 function color(value) {
   return isPatternOrGradient(value) ? value : index(value);
 }
 function getHoverColor(value) {
-  return isPatternOrGradient(value) ? value : index(value).saturate(0.5).darken(0.1).hexString();
+  return isPatternOrGradient(value)
+    ? value
+    : index(value).saturate(0.5).darken(0.1).hexString();
 }
 
 var helpers = _objectSpread2({}, coreHelpers, {
@@ -1847,36 +2025,36 @@ var helpers = _objectSpread2({}, coreHelpers, {
   curve,
   dom,
   easing: {
-    effects
+    effects,
   },
   options,
   math,
   rtl,
-  requestAnimFrame: function () {
-    if (typeof window === 'undefined') {
+  requestAnimFrame: (function () {
+    if (typeof window === "undefined") {
       return function (callback) {
         callback();
       };
     }
     return window.requestAnimationFrame;
-  }(),
+  })(),
   fontString(pixelSize, fontStyle, fontFamily) {
-    return fontStyle + ' ' + pixelSize + 'px ' + fontFamily;
+    return fontStyle + " " + pixelSize + "px " + fontFamily;
   },
   color,
-  getHoverColor
+  getHoverColor,
 });
 
 function drawFPS(chart, count, date, lastDate) {
-  var fps = 1000 / (date - lastDate) | 0;
+  var fps = (1000 / (date - lastDate)) | 0;
   var ctx = chart.ctx;
   ctx.save();
   ctx.clearRect(0, 0, 50, 24);
-  ctx.fillStyle = 'black';
-  ctx.textAlign = 'right';
+  ctx.fillStyle = "black";
+  ctx.textAlign = "right";
   if (count) {
     ctx.fillText(count, 50, 8);
-    ctx.fillText(fps + ' fps', 50, 18);
+    ctx.fillText(fps + " fps", 50, 18);
   }
   ctx.restore();
 }
@@ -1890,11 +2068,13 @@ class Animator {
   _notify(chart, anims, date, type) {
     var callbacks = anims.listeners[type] || [];
     var numSteps = anims.duration;
-    callbacks.forEach(fn => fn({
-      chart,
-      numSteps,
-      currentStep: date - anims.start
-    }));
+    callbacks.forEach((fn) =>
+      fn({
+        chart,
+        numSteps,
+        currentStep: date - anims.start,
+      })
+    );
   }
   _refresh() {
     var me = this;
@@ -1938,10 +2118,10 @@ class Animator {
       if (chart.options.animation.debug) {
         drawFPS(chart, items.length, date, me._lastDate);
       }
-      me._notify(chart, anims, date, 'progress');
+      me._notify(chart, anims, date, "progress");
       if (!items.length) {
         anims.running = false;
-        me._notify(chart, anims, date, 'complete');
+        me._notify(chart, anims, date, "complete");
       }
       remaining += items.length;
     });
@@ -1959,8 +2139,8 @@ class Animator {
         items: [],
         listeners: {
           complete: [],
-          progress: []
-        }
+          progress: [],
+        },
       };
       charts.set(chart, anims);
     }
@@ -1985,7 +2165,10 @@ class Animator {
     }
     anims.running = true;
     anims.start = Date.now();
-    anims.duration = anims.items.reduce((acc, cur) => Math.max(acc, cur._duration), 0);
+    anims.duration = anims.items.reduce(
+      (acc, cur) => Math.max(acc, cur._duration),
+      0
+    );
     this._refresh();
   }
   running(chart) {
@@ -2009,7 +2192,7 @@ class Animator {
       items[i].cancel();
     }
     anims.items = [];
-    this._notify(chart, anims, Date.now(), 'complete');
+    this._notify(chart, anims, Date.now(), "complete");
   }
   remove(chart) {
     return this._charts.delete(chart);
@@ -2017,7 +2200,7 @@ class Animator {
 }
 var Animator$1 = new Animator();
 
-var transparent = 'transparent';
+var transparent = "transparent";
 var interpolators = {
   boolean(from, to, factor) {
     return factor > 0.5 ? to : from;
@@ -2029,7 +2212,7 @@ var interpolators = {
   },
   number(from, to, factor) {
     return from + (to - from) * factor;
-  }
+  },
 };
 class Animation {
   constructor(cfg, target, prop, to) {
@@ -2038,7 +2221,7 @@ class Animation {
     var from = resolve([cfg.from, currentValue, to]);
     this._active = true;
     this._fn = cfg.fn || interpolators[cfg.type || typeof from];
-    this._easing = effects[cfg.easing || 'linear'];
+    this._easing = effects[cfg.easing || "linear"];
     this._start = Math.floor(Date.now() + (cfg.delay || 0));
     this._duration = Math.floor(cfg.duration);
     this._loop = !!cfg.loop;
@@ -2075,56 +2258,56 @@ class Animation {
       me._target[prop] = from;
       return;
     }
-    factor = elapsed / duration % 2;
+    factor = (elapsed / duration) % 2;
     factor = loop && factor > 1 ? 2 - factor : factor;
     factor = me._easing(Math.min(1, Math.max(0, factor)));
     me._target[prop] = me._fn(from, to, factor);
   }
 }
 
-var numbers = ['x', 'y', 'borderWidth', 'radius', 'tension'];
-var colors = ['borderColor', 'backgroundColor'];
-defaults.set('animation', {
+var numbers = ["x", "y", "borderWidth", "radius", "tension"];
+var colors = ["borderColor", "backgroundColor"];
+defaults.set("animation", {
   duration: 1000,
-  easing: 'easeOutQuart',
+  easing: "easeOutQuart",
   onProgress: noop,
   onComplete: noop,
   colors: {
-    type: 'color',
-    properties: colors
+    type: "color",
+    properties: colors,
   },
   numbers: {
-    type: 'number',
-    properties: numbers
+    type: "number",
+    properties: numbers,
   },
   active: {
-    duration: 400
+    duration: 400,
   },
   resize: {
-    duration: 0
+    duration: 0,
   },
   show: {
     colors: {
-      type: 'color',
+      type: "color",
       properties: colors,
-      from: 'transparent'
+      from: "transparent",
     },
     visible: {
-      type: 'boolean',
-      duration: 0
-    }
+      type: "boolean",
+      duration: 0,
+    },
   },
   hide: {
     colors: {
-      type: 'color',
+      type: "color",
       properties: colors,
-      to: 'transparent'
+      to: "transparent",
     },
     visible: {
-      type: 'boolean',
-      easing: 'easeInExpo'
-    }
-  }
+      type: "boolean",
+      easing: "easeInExpo",
+    },
+  },
 });
 function copyOptions(target, values) {
   var oldOpts = target.options;
@@ -2134,7 +2317,7 @@ function copyOptions(target, values) {
   }
   if (oldOpts.$shared) {
     target.options = _extends({}, oldOpts, newOpts, {
-      $shared: false
+      $shared: false,
     });
   } else {
     _extends(oldOpts, newOpts);
@@ -2143,7 +2326,7 @@ function copyOptions(target, values) {
 }
 function extensibleConfig(animations) {
   var result = {};
-  Object.keys(animations).forEach(key => {
+  Object.keys(animations).forEach((key) => {
     var value = animations[key];
     if (!isObject(value)) {
       result[key] = value;
@@ -2163,12 +2346,12 @@ class Animations {
     }
     var animatedProps = this._properties;
     var animDefaults = extensibleConfig(animations);
-    Object.keys(animations).forEach(key => {
+    Object.keys(animations).forEach((key) => {
       var cfg = animations[key];
       if (!isObject(cfg)) {
         return;
       }
-      (cfg.properties || [key]).forEach(prop => {
+      (cfg.properties || [key]).forEach((prop) => {
         if (!animatedProps.has(prop)) {
           animatedProps.set(prop, _extends({}, animDefaults, cfg));
         } else if (prop === key) {
@@ -2188,7 +2371,7 @@ class Animations {
       if (options.$shared) {
         target.options = options = _extends({}, options, {
           $shared: false,
-          $animations: {}
+          $animations: {},
         });
       }
       animations = this._createAnimations(options, newOptions);
@@ -2205,10 +2388,10 @@ class Animations {
     var i;
     for (i = props.length - 1; i >= 0; --i) {
       var prop = props[i];
-      if (prop.charAt(0) === '$') {
+      if (prop.charAt(0) === "$") {
         continue;
       }
-      if (prop === 'options') {
+      if (prop === "options") {
         animations.push(...this._animateOptions(target, values));
         continue;
       }
@@ -2242,48 +2425,52 @@ class Animations {
 }
 
 var resolve$1 = helpers.options.resolve;
-var arrayEvents = ['push', 'pop', 'shift', 'splice', 'unshift'];
+var arrayEvents = ["push", "pop", "shift", "splice", "unshift"];
 function listenArrayEvents(array, listener) {
   if (array._chartjs) {
     array._chartjs.listeners.push(listener);
     return;
   }
-  Object.defineProperty(array, '_chartjs', {
+  Object.defineProperty(array, "_chartjs", {
     configurable: true,
     enumerable: false,
     value: {
-      listeners: [listener]
-    }
+      listeners: [listener],
+    },
   });
-  arrayEvents.forEach(key => {
-    var method = '_onData' + key.charAt(0).toUpperCase() + key.slice(1);
+  arrayEvents.forEach((key) => {
+    var method = "_onData" + key.charAt(0).toUpperCase() + key.slice(1);
     var base = array[key];
     Object.defineProperty(array, key, {
       configurable: true,
       enumerable: false,
       value() {
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        for (
+          var _len = arguments.length, args = new Array(_len), _key = 0;
+          _key < _len;
+          _key++
+        ) {
           args[_key] = arguments[_key];
         }
         var res = base.apply(this, args);
-        array._chartjs.listeners.forEach(object => {
-          if (typeof object[method] === 'function') {
+        array._chartjs.listeners.forEach((object) => {
+          if (typeof object[method] === "function") {
             object[method](...args);
           }
         });
         return res;
-      }
+      },
     });
   });
 }
 function scaleClip(scale, allowedOverflow) {
-  var opts = scale && scale.options || {};
+  var opts = (scale && scale.options) || {};
   var reverse = opts.reverse;
   var min = opts.min === undefined ? allowedOverflow : 0;
   var max = opts.max === undefined ? allowedOverflow : 0;
   return {
     start: reverse ? max : min,
-    end: reverse ? min : max
+    end: reverse ? min : max,
   };
 }
 function defaultClip(xScale, yScale, allowedOverflow) {
@@ -2296,7 +2483,7 @@ function defaultClip(xScale, yScale, allowedOverflow) {
     top: y.end,
     right: x.end,
     bottom: y.start,
-    left: x.start
+    left: x.start,
   };
 }
 function toClip(value) {
@@ -2313,7 +2500,7 @@ function toClip(value) {
     top: t,
     right: r,
     bottom: b,
-    left: l
+    left: l,
   };
 }
 function unlistenArrayEvents(array, listener) {
@@ -2329,7 +2516,7 @@ function unlistenArrayEvents(array, listener) {
   if (listeners.length > 0) {
     return;
   }
-  arrayEvents.forEach(key => {
+  arrayEvents.forEach((key) => {
     delete array[key];
   });
   delete array._chartjs;
@@ -2355,7 +2542,11 @@ function applyStack(stack, value, dsIndex, allOther) {
       break;
     }
     otherValue = stack.values[datasetIndex];
-    if (!isNaN(otherValue) && (value === 0 || helpers.math.sign(value) === helpers.math.sign(otherValue))) {
+    if (
+      !isNaN(otherValue) &&
+      (value === 0 ||
+        helpers.math.sign(value) === helpers.math.sign(otherValue))
+    ) {
       value += otherValue;
     }
   }
@@ -2369,28 +2560,25 @@ function convertObjectDataToArray(data) {
     key = keys[i];
     adata[i] = {
       x: key,
-      y: data[key]
+      y: data[key],
     };
   }
   return adata;
 }
 function isStacked(scale, meta) {
   var stacked = scale && scale.options.stacked;
-  return stacked || stacked === undefined && meta.stack !== undefined;
+  return stacked || (stacked === undefined && meta.stack !== undefined);
 }
 function getStackKey(indexScale, valueScale, meta) {
-  return indexScale.id + '.' + valueScale.id + '.' + meta.stack + '.' + meta.type;
+  return (
+    indexScale.id + "." + valueScale.id + "." + meta.stack + "." + meta.type
+  );
 }
 function getUserBounds(scale) {
-  var {
-    min,
-    max,
-    minDefined,
-    maxDefined
-  } = scale.getUserBounds();
+  var { min, max, minDefined, maxDefined } = scale.getUserBounds();
   return {
     min: minDefined ? min : Number.NEGATIVE_INFINITY,
-    max: maxDefined ? max : Number.POSITIVE_INFINITY
+    max: maxDefined ? max : Number.POSITIVE_INFINITY,
   };
 }
 function getOrCreateStack(stacks, stackKey, indexValue) {
@@ -2398,16 +2586,9 @@ function getOrCreateStack(stacks, stackKey, indexValue) {
   return subStack[indexValue] || (subStack[indexValue] = {});
 }
 function updateStacks(controller, parsed) {
-  var {
-    chart,
-    _cachedMeta: meta
-  } = controller;
+  var { chart, _cachedMeta: meta } = controller;
   var stacks = chart._stacks || (chart._stacks = {});
-  var {
-    iScale,
-    vScale,
-    index: datasetIndex
-  } = meta;
+  var { iScale, vScale, index: datasetIndex } = meta;
   var iAxis = iScale.axis;
   var vAxis = vScale.axis;
   var key = getStackKey(iScale, vScale, meta);
@@ -2415,10 +2596,7 @@ function updateStacks(controller, parsed) {
   var stack;
   for (var i = 0; i < ilen; ++i) {
     var item = parsed[i];
-    var {
-      [iAxis]: index,
-      [vAxis]: value
-    } = item;
+    var { [iAxis]: index, [vAxis]: value } = item;
     var itemStacks = item._stacks || (item._stacks = {});
     stack = itemStacks[vAxis] = getOrCreateStack(stacks, key, index);
     stack[datasetIndex] = value;
@@ -2426,7 +2604,9 @@ function updateStacks(controller, parsed) {
 }
 function getFirstScaleId(chart, axis) {
   var scales = chart.scales;
-  return Object.keys(scales).filter(key => scales[key].axis === axis).shift();
+  return Object.keys(scales)
+    .filter((key) => scales[key].axis === axis)
+    .shift();
 }
 class DatasetController {
   constructor(chart, datasetIndex) {
@@ -2462,9 +2642,9 @@ class DatasetController {
     var chart = me.chart;
     var meta = me._cachedMeta;
     var dataset = me.getDataset();
-    var xid = meta.xAxisID = dataset.xAxisID || getFirstScaleId(chart, 'x');
-    var yid = meta.yAxisID = dataset.yAxisID || getFirstScaleId(chart, 'y');
-    var rid = meta.rAxisID = dataset.rAxisID || getFirstScaleId(chart, 'r');
+    var xid = (meta.xAxisID = dataset.xAxisID || getFirstScaleId(chart, "x"));
+    var yid = (meta.yAxisID = dataset.yAxisID || getFirstScaleId(chart, "y"));
+    var rid = (meta.rAxisID = dataset.rAxisID || getFirstScaleId(chart, "r"));
     meta.xScale = me.getScaleForId(xid);
     meta.yScale = me.getScaleForId(yid);
     meta.rScale = me.getScaleForId(rid);
@@ -2497,7 +2677,7 @@ class DatasetController {
     return scale === meta.iScale ? meta.vScale : meta.iScale;
   }
   reset() {
-    this._update('reset');
+    this._update("reset");
   }
   _destroy() {
     if (this._data) {
@@ -2544,7 +2724,7 @@ class DatasetController {
     var meta = me._cachedMeta;
     me._dataCheck();
     var data = me._data;
-    var metaData = meta.data = new Array(data.length);
+    var metaData = (meta.data = new Array(data.length));
     for (var i = 0, ilen = data.length; i < ilen; ++i) {
       metaData[i] = new me.dataElementType();
     }
@@ -2563,38 +2743,41 @@ class DatasetController {
     meta._stacked = isStacked(meta.vScale, meta);
     if (meta.stack !== dataset.stack) {
       stackChanged = true;
-      meta._parsed.forEach(parsed => {
+      meta._parsed.forEach((parsed) => {
         delete parsed._stacks[meta.vScale.id][meta.index];
       });
       meta.stack = dataset.stack;
     }
-    me._resyncElements(dataChanged || labelsChanged || scaleChanged || stackChanged);
+    me._resyncElements(
+      dataChanged || labelsChanged || scaleChanged || stackChanged
+    );
     if (stackChanged) {
       updateStacks(me, meta._parsed);
     }
   }
   configure() {
     var me = this;
-    me._config = helpers.merge({}, [me.chart.options[me._type].datasets, me.getDataset()], {
-      merger(key, target, source) {
-        if (key !== 'data') {
-          helpers._merger(key, target, source);
-        }
+    me._config = helpers.merge(
+      {},
+      [me.chart.options[me._type].datasets, me.getDataset()],
+      {
+        merger(key, target, source) {
+          if (key !== "data") {
+            helpers._merger(key, target, source);
+          }
+        },
       }
-    });
-    me._parsing = resolve$1([me._config.parsing, me.chart.options.parsing, true]);
+    );
+    me._parsing = resolve$1([
+      me._config.parsing,
+      me.chart.options.parsing,
+      true,
+    ]);
   }
   parse(start, count) {
     var me = this;
-    var {
-      _cachedMeta: meta,
-      _data: data
-    } = me;
-    var {
-      iScale,
-      vScale,
-      _stacked
-    } = meta;
+    var { _cachedMeta: meta, _data: data } = me;
+    var { iScale, vScale, _stacked } = meta;
     var iAxis = iScale.axis;
     var sorted = true;
     var i, parsed, cur, prev;
@@ -2631,10 +2814,7 @@ class DatasetController {
     vScale.invalidateCaches();
   }
   parsePrimitiveData(meta, data, start, count) {
-    var {
-      iScale,
-      vScale
-    } = meta;
+    var { iScale, vScale } = meta;
     var iAxis = iScale.axis;
     var vAxis = vScale.axis;
     var labels = iScale.getLabels();
@@ -2645,16 +2825,13 @@ class DatasetController {
       index = i + start;
       parsed[i] = {
         [iAxis]: singleScale || iScale.parse(labels[index], index),
-        [vAxis]: vScale.parse(data[index], index)
+        [vAxis]: vScale.parse(data[index], index),
       };
     }
     return parsed;
   }
   parseArrayData(meta, data, start, count) {
-    var {
-      xScale,
-      yScale
-    } = meta;
+    var { xScale, yScale } = meta;
     var parsed = new Array(count);
     var i, ilen, index, item;
     for (i = 0, ilen = count; i < ilen; ++i) {
@@ -2662,24 +2839,21 @@ class DatasetController {
       item = data[index];
       parsed[i] = {
         x: xScale.parse(item[0], index),
-        y: yScale.parse(item[1], index)
+        y: yScale.parse(item[1], index),
       };
     }
     return parsed;
   }
   parseObjectData(meta, data, start, count) {
-    var {
-      xScale,
-      yScale
-    } = meta;
+    var { xScale, yScale } = meta;
     var parsed = new Array(count);
     var i, ilen, index, item;
     for (i = 0, ilen = count; i < ilen; ++i) {
       index = i + start;
       item = data[index];
       parsed[i] = {
-        x: xScale.parseObject(item, 'x', index),
-        y: yScale.parseObject(item, 'y', index)
+        x: xScale.parseObject(item, "x", index),
+        y: yScale.parseObject(item, "y", index),
       };
     }
     return parsed;
@@ -2693,7 +2867,7 @@ class DatasetController {
     var value = parsed[scale.axis];
     var stack = {
       keys: getSortedDatasetIndices(chart, true),
-      values: parsed._stacks[scale.axis]
+      values: parsed._stacks[scale.axis],
     };
     return applyStack(stack, value, meta.index);
   }
@@ -2703,16 +2877,14 @@ class DatasetController {
     var sorted = meta._sorted && scale === meta.iScale;
     var ilen = _parsed.length;
     var otherScale = this._getOtherScale(scale);
-    var stack = canStack && meta._stacked && {
-      keys: getSortedDatasetIndices(this.chart, true),
-      values: null
-    };
+    var stack = canStack &&
+      meta._stacked && {
+        keys: getSortedDatasetIndices(this.chart, true),
+        values: null,
+      };
     var min = Number.POSITIVE_INFINITY;
     var max = Number.NEGATIVE_INFINITY;
-    var {
-      min: otherMin,
-      max: otherMax
-    } = getUserBounds(otherScale);
+    var { min: otherMin, max: otherMax } = getUserBounds(otherScale);
     var i, value, parsed, otherValue;
     function _compute() {
       if (stack) {
@@ -2750,7 +2922,7 @@ class DatasetController {
     }
     return {
       min,
-      max
+      max,
     };
   }
   getAllParsedValues(scale) {
@@ -2770,7 +2942,7 @@ class DatasetController {
     var meta = me._cachedMeta;
     var iScale = meta.iScale;
     var vScale = meta.vScale;
-    var cache = me._scaleStacked = {};
+    var cache = (me._scaleStacked = {});
     if (iScale && vScale) {
       cache[iScale.id] = iScale.options.stacked;
       cache[vScale.id] = vScale.options.stacked;
@@ -2782,7 +2954,13 @@ class DatasetController {
     var iScale = meta.iScale;
     var vScale = meta.vScale;
     var cache = me._scaleStacked;
-    return !cache || !iScale || !vScale || cache[iScale.id] !== iScale.options.stacked || cache[vScale.id] !== vScale.options.stacked;
+    return (
+      !cache ||
+      !iScale ||
+      !vScale ||
+      cache[iScale.id] !== iScale.options.stacked ||
+      cache[vScale.id] !== vScale.options.stacked
+    );
   }
   getMaxOverflow() {
     return false;
@@ -2794,8 +2972,8 @@ class DatasetController {
     var vScale = meta.vScale;
     var parsed = me.getParsed(index);
     return {
-      label: iScale ? '' + iScale.getLabelForValue(parsed[iScale.axis]) : '',
-      value: vScale ? '' + vScale.getLabelForValue(parsed[vScale.axis]) : ''
+      label: iScale ? "" + iScale.getLabelForValue(parsed[iScale.axis]) : "",
+      value: vScale ? "" + vScale.getLabelForValue(parsed[vScale.axis]) : "",
     };
   }
   _update(mode) {
@@ -2805,7 +2983,12 @@ class DatasetController {
     me._cachedAnimations = {};
     me._cachedDataOpts = {};
     me.update(mode);
-    meta._clip = toClip(helpers.valueOrDefault(me._config.clip, defaultClip(meta.xScale, meta.yScale, me.getMaxOverflow())));
+    meta._clip = toClip(
+      helpers.valueOrDefault(
+        me._config.clip,
+        defaultClip(meta.xScale, meta.yScale, me.getMaxOverflow())
+      )
+    );
     me._cacheScaleStackStatus();
   }
   update(mode) {}
@@ -2826,7 +3009,9 @@ class DatasetController {
     var me = this;
     var getHoverColor = helpers.getHoverColor;
     var normalOptions = me.getStyle(index);
-    var missingColors = Object.keys(normalOptions).filter(key => key.indexOf('Color') !== -1 && !(key in options));
+    var missingColors = Object.keys(normalOptions).filter(
+      (key) => key.indexOf("Color") !== -1 && !(key in options)
+    );
     var i = missingColors.length - 1;
     var color;
     for (; i >= 0; i--) {
@@ -2841,7 +3026,10 @@ class DatasetController {
     if (!me._config) {
       me.configure();
     }
-    var options = dataset && index === undefined ? me.resolveDatasetElementOptions(active) : me.resolveDataElementOptions(index || 0, active && 'active');
+    var options =
+      dataset && index === undefined
+        ? me.resolveDatasetElementOptions(active)
+        : me.resolveDataElementOptions(index || 0, active && "active");
     if (active) {
       me._addAutomaticHoverColors(index, options);
     }
@@ -2853,7 +3041,7 @@ class DatasetController {
       dataIndex: index,
       dataset: this.getDataset(),
       datasetIndex: this.index,
-      active
+      active,
     };
   }
   resolveDatasetElementOptions(active) {
@@ -2867,7 +3055,9 @@ class DatasetController {
     var i, ilen, key, readKey, value;
     for (i = 0, ilen = elementOptions.length; i < ilen; ++i) {
       key = elementOptions[i];
-      readKey = active ? 'hover' + key.charAt(0).toUpperCase() + key.slice(1) : key;
+      readKey = active
+        ? "hover" + key.charAt(0).toUpperCase() + key.slice(1)
+        : key;
       value = resolve$1([datasetOpts[readKey], options[readKey]], context);
       if (value !== undefined) {
         values[key] = value;
@@ -2877,7 +3067,7 @@ class DatasetController {
   }
   resolveDataElementOptions(index, mode) {
     var me = this;
-    var active = mode === 'active';
+    var active = mode === "active";
     var cached = me._cachedDataOpts;
     if (cached[mode]) {
       return cached[mode];
@@ -2889,14 +3079,21 @@ class DatasetController {
     var values = {};
     var context = me._getContext(index, active);
     var info = {
-      cacheable: !active
+      cacheable: !active,
     };
     var keys, i, ilen, key, value, readKey;
     if (helpers.isArray(elementOptions)) {
       for (i = 0, ilen = elementOptions.length; i < ilen; ++i) {
         key = elementOptions[i];
-        readKey = active ? 'hover' + key.charAt(0).toUpperCase() + key.slice(1) : key;
-        value = resolve$1([datasetOpts[readKey], options[readKey]], context, index, info);
+        readKey = active
+          ? "hover" + key.charAt(0).toUpperCase() + key.slice(1)
+          : key;
+        value = resolve$1(
+          [datasetOpts[readKey], options[readKey]],
+          context,
+          index,
+          info
+        );
         if (value !== undefined) {
           values[key] = value;
         }
@@ -2905,8 +3102,19 @@ class DatasetController {
       keys = Object.keys(elementOptions);
       for (i = 0, ilen = keys.length; i < ilen; ++i) {
         key = keys[i];
-        readKey = active ? 'hover' + key.charAt(0).toUpperCase() + key.slice(1) : key;
-        value = resolve$1([datasetOpts[elementOptions[readKey]], datasetOpts[readKey], options[readKey]], context, index, info);
+        readKey = active
+          ? "hover" + key.charAt(0).toUpperCase() + key.slice(1)
+          : key;
+        value = resolve$1(
+          [
+            datasetOpts[elementOptions[readKey]],
+            datasetOpts[readKey],
+            options[readKey],
+          ],
+          context,
+          index,
+          info
+        );
         if (value !== undefined) {
           values[key] = value;
         }
@@ -2922,12 +3130,12 @@ class DatasetController {
     var me = this;
     var chart = me.chart;
     var cached = me._cachedAnimations;
-    mode = mode || 'default';
+    mode = mode || "default";
     if (cached[mode]) {
       return cached[mode];
     }
     var info = {
-      cacheable: true
+      cacheable: true,
     };
     var context = me._getContext(index, active);
     var datasetAnim = resolve$1([me._config.animation], context, index, info);
@@ -2946,21 +3154,28 @@ class DatasetController {
     if (!mode) {
       this._sharedOptions = options && options.$shared;
     }
-    if (mode !== 'reset' && options && options.$shared && el && el.options && el.options.$shared) {
+    if (
+      mode !== "reset" &&
+      options &&
+      options.$shared &&
+      el &&
+      el.options &&
+      el.options.$shared
+    ) {
       return {
         target: el.options,
-        options
+        options,
       };
     }
   }
   includeOptions(mode, sharedOptions) {
-    if (mode === 'hide' || mode === 'show') {
+    if (mode === "hide" || mode === "show") {
       return true;
     }
-    return mode !== 'resize' && !sharedOptions;
+    return mode !== "resize" && !sharedOptions;
   }
   updateElement(element, index, properties, mode) {
-    if (mode === 'reset' || mode === 'none') {
+    if (mode === "reset" || mode === "none") {
       _extends(element, properties);
     } else {
       this._resolveAnimations(index, mode).update(element, properties);
@@ -2968,31 +3183,34 @@ class DatasetController {
   }
   updateSharedOptions(sharedOptions, mode) {
     if (sharedOptions) {
-      this._resolveAnimations(undefined, mode).update(sharedOptions.target, sharedOptions.options);
+      this._resolveAnimations(undefined, mode).update(
+        sharedOptions.target,
+        sharedOptions.options
+      );
     }
   }
   _setStyle(element, index, mode, active) {
     element.active = active;
     this._resolveAnimations(index, mode, active).update(element, {
-      options: this.getStyle(index, active)
+      options: this.getStyle(index, active),
     });
   }
   removeHoverStyle(element, datasetIndex, index) {
-    this._setStyle(element, index, 'active', false);
+    this._setStyle(element, index, "active", false);
   }
   setHoverStyle(element, datasetIndex, index) {
-    this._setStyle(element, index, 'active', true);
+    this._setStyle(element, index, "active", true);
   }
   _removeDatasetHoverStyle() {
     var element = this._cachedMeta.dataset;
     if (element) {
-      this._setStyle(element, undefined, 'active', false);
+      this._setStyle(element, undefined, "active", false);
     }
   }
   _setDatasetHoverStyle() {
     var element = this._cachedMeta.dataset;
     if (element) {
-      this._setStyle(element, undefined, 'active', true);
+      this._setStyle(element, undefined, "active", true);
     }
   }
   _resyncElements(changed) {
@@ -3027,7 +3245,7 @@ class DatasetController {
       meta._parsed.splice(start, 0, ...new Array(count));
     }
     me.parse(start, count);
-    me.updateElements(elements, start, 'reset');
+    me.updateElements(elements, start, "reset");
   }
   updateElements(element, start, mode) {}
   _removeElements(start, count) {
@@ -3058,8 +3276,21 @@ class DatasetController {
 _defineProperty(DatasetController, "extend", helpers.inherits);
 DatasetController.prototype.datasetElementType = null;
 DatasetController.prototype.dataElementType = null;
-DatasetController.prototype.datasetElementOptions = ['backgroundColor', 'borderCapStyle', 'borderColor', 'borderDash', 'borderDashOffset', 'borderJoinStyle', 'borderWidth'];
-DatasetController.prototype.dataElementOptions = ['backgroundColor', 'borderColor', 'borderWidth', 'pointStyle'];
+DatasetController.prototype.datasetElementOptions = [
+  "backgroundColor",
+  "borderCapStyle",
+  "borderColor",
+  "borderDash",
+  "borderDashOffset",
+  "borderJoinStyle",
+  "borderWidth",
+];
+DatasetController.prototype.dataElementOptions = [
+  "backgroundColor",
+  "borderColor",
+  "borderWidth",
+  "pointStyle",
+];
 
 class Element$1 {
   constructor() {
@@ -3070,13 +3301,10 @@ class Element$1 {
     this.$animations = undefined;
   }
   tooltipPosition(useFinalPosition) {
-    var {
-      x,
-      y
-    } = this.getProps(['x', 'y'], useFinalPosition);
+    var { x, y } = this.getProps(["x", "y"], useFinalPosition);
     return {
       x,
-      y
+      y,
     };
   }
   hasValue() {
@@ -3089,8 +3317,9 @@ class Element$1 {
       return me;
     }
     var ret = {};
-    props.forEach(prop => {
-      ret[prop] = anims[prop] && anims[prop].active ? anims[prop]._to : me[prop];
+    props.forEach((prop) => {
+      ret[prop] =
+        anims[prop] && anims[prop].active ? anims[prop]._to : me[prop];
     });
     return ret;
   }
@@ -3098,30 +3327,43 @@ class Element$1 {
 _defineProperty(Element$1, "extend", inherits);
 
 var TAU$1 = Math.PI * 2;
-defaults.set('elements', {
+defaults.set("elements", {
   arc: {
     backgroundColor: defaults.color,
-    borderAlign: 'center',
-    borderColor: '#fff',
-    borderWidth: 2
-  }
+    borderAlign: "center",
+    borderColor: "#fff",
+    borderWidth: 2,
+  },
 });
 function clipArc(ctx, arc) {
-  var {
-    startAngle,
-    endAngle,
-    pixelMargin,
-    x,
-    y
-  } = arc;
+  var { startAngle, endAngle, pixelMargin, x, y } = arc;
   var angleMargin = pixelMargin / arc.outerRadius;
   ctx.beginPath();
-  ctx.arc(x, y, arc.outerRadius, startAngle - angleMargin, endAngle + angleMargin);
+  ctx.arc(
+    x,
+    y,
+    arc.outerRadius,
+    startAngle - angleMargin,
+    endAngle + angleMargin
+  );
   if (arc.innerRadius > pixelMargin) {
     angleMargin = pixelMargin / arc.innerRadius;
-    ctx.arc(x, y, arc.innerRadius - pixelMargin, endAngle + angleMargin, startAngle - angleMargin, true);
+    ctx.arc(
+      x,
+      y,
+      arc.innerRadius - pixelMargin,
+      endAngle + angleMargin,
+      startAngle - angleMargin,
+      true
+    );
   } else {
-    ctx.arc(x, y, pixelMargin, endAngle + Math.PI / 2, startAngle - Math.PI / 2);
+    ctx.arc(
+      x,
+      y,
+      pixelMargin,
+      endAngle + Math.PI / 2,
+      startAngle - Math.PI / 2
+    );
   }
   ctx.closePath();
   ctx.clip();
@@ -3139,7 +3381,14 @@ function drawFullCircleBorders(ctx, vm, arc, inner) {
     }
   }
   ctx.beginPath();
-  ctx.arc(arc.x, arc.y, arc.innerRadius, arc.startAngle + TAU$1, arc.startAngle, true);
+  ctx.arc(
+    arc.x,
+    arc.y,
+    arc.innerRadius,
+    arc.startAngle + TAU$1,
+    arc.startAngle,
+    true
+  );
   for (i = 0; i < arc.fullCircles; ++i) {
     ctx.stroke();
   }
@@ -3151,13 +3400,13 @@ function drawFullCircleBorders(ctx, vm, arc, inner) {
 }
 function drawBorder(ctx, vm, arc) {
   var options = vm.options;
-  var inner = options.borderAlign === 'inner';
+  var inner = options.borderAlign === "inner";
   if (inner) {
     ctx.lineWidth = options.borderWidth * 2;
-    ctx.lineJoin = 'round';
+    ctx.lineJoin = "round";
   } else {
     ctx.lineWidth = options.borderWidth;
-    ctx.lineJoin = 'bevel';
+    ctx.lineJoin = "bevel";
   }
   if (arc.fullCircles) {
     drawFullCircleBorders(ctx, vm, arc, inner);
@@ -3185,39 +3434,38 @@ class Arc extends Element$1 {
     }
   }
   inRange(chartX, chartY, useFinalPosition) {
-    var point = this.getProps(['x', 'y'], useFinalPosition);
-    var {
-      angle,
-      distance
-    } = getAngleFromPoint(point, {
+    var point = this.getProps(["x", "y"], useFinalPosition);
+    var { angle, distance } = getAngleFromPoint(point, {
       x: chartX,
-      y: chartY
+      y: chartY,
     });
-    var {
-      startAngle,
-      endAngle,
-      innerRadius,
-      outerRadius,
-      circumference
-    } = this.getProps(['startAngle', 'endAngle', 'innerRadius', 'outerRadius', 'circumference'], useFinalPosition);
-    var betweenAngles = circumference >= TAU$1 || _angleBetween(angle, startAngle, endAngle);
+    var { startAngle, endAngle, innerRadius, outerRadius, circumference } =
+      this.getProps(
+        [
+          "startAngle",
+          "endAngle",
+          "innerRadius",
+          "outerRadius",
+          "circumference",
+        ],
+        useFinalPosition
+      );
+    var betweenAngles =
+      circumference >= TAU$1 || _angleBetween(angle, startAngle, endAngle);
     var withinRadius = distance >= innerRadius && distance <= outerRadius;
     return betweenAngles && withinRadius;
   }
   getCenterPoint(useFinalPosition) {
-    var {
-      x,
-      y,
-      startAngle,
-      endAngle,
-      innerRadius,
-      outerRadius
-    } = this.getProps(['x', 'y', 'startAngle', 'endAngle', 'innerRadius', 'outerRadius'], useFinalPosition);
+    var { x, y, startAngle, endAngle, innerRadius, outerRadius } =
+      this.getProps(
+        ["x", "y", "startAngle", "endAngle", "innerRadius", "outerRadius"],
+        useFinalPosition
+      );
     var halfAngle = (startAngle + endAngle) / 2;
     var halfRadius = (innerRadius + outerRadius) / 2;
     return {
       x: x + Math.cos(halfAngle) * halfRadius,
-      y: y + Math.sin(halfAngle) * halfRadius
+      y: y + Math.sin(halfAngle) * halfRadius,
     };
   }
   tooltipPosition(useFinalPosition) {
@@ -3226,7 +3474,7 @@ class Arc extends Element$1 {
   draw(ctx) {
     var me = this;
     var options = me.options;
-    var pixelMargin = options.borderAlign === 'inner' ? 0.33 : 0;
+    var pixelMargin = options.borderAlign === "inner" ? 0.33 : 0;
     var arc = {
       x: me.x,
       y: me.y,
@@ -3235,7 +3483,7 @@ class Arc extends Element$1 {
       pixelMargin,
       startAngle: me.startAngle,
       endAngle: me.endAngle,
-      fullCircles: Math.floor(me.circumference / TAU$1)
+      fullCircles: Math.floor(me.circumference / TAU$1),
     };
     var i;
     ctx.save();
@@ -3245,12 +3493,19 @@ class Arc extends Element$1 {
       arc.endAngle = arc.startAngle + TAU$1;
       ctx.beginPath();
       ctx.arc(arc.x, arc.y, arc.outerRadius, arc.startAngle, arc.endAngle);
-      ctx.arc(arc.x, arc.y, arc.innerRadius, arc.endAngle, arc.startAngle, true);
+      ctx.arc(
+        arc.x,
+        arc.y,
+        arc.innerRadius,
+        arc.endAngle,
+        arc.startAngle,
+        true
+      );
       ctx.closePath();
       for (i = 0; i < arc.fullCircles; ++i) {
         ctx.fill();
       }
-      arc.endAngle = arc.startAngle + me.circumference % TAU$1;
+      arc.endAngle = arc.startAngle + (me.circumference % TAU$1);
     }
     ctx.beginPath();
     ctx.arc(arc.x, arc.y, arc.outerRadius, arc.startAngle, arc.endAngle);
@@ -3263,28 +3518,39 @@ class Arc extends Element$1 {
     ctx.restore();
   }
 }
-_defineProperty(Arc, "_type", 'arc');
+_defineProperty(Arc, "_type", "arc");
 
 function _pointInLine(p1, p2, t, mode) {
   return {
     x: p1.x + t * (p2.x - p1.x),
-    y: p1.y + t * (p2.y - p1.y)
+    y: p1.y + t * (p2.y - p1.y),
   };
 }
 function _steppedInterpolation(p1, p2, t, mode) {
   return {
     x: p1.x + t * (p2.x - p1.x),
-    y: mode === 'middle' ? t < 0.5 ? p1.y : p2.y : mode === 'after' ? t < 1 ? p1.y : p2.y : t > 0 ? p2.y : p1.y
+    y:
+      mode === "middle"
+        ? t < 0.5
+          ? p1.y
+          : p2.y
+        : mode === "after"
+        ? t < 1
+          ? p1.y
+          : p2.y
+        : t > 0
+        ? p2.y
+        : p1.y,
   };
 }
 function _bezierInterpolation(p1, p2, t, mode) {
   var cp1 = {
     x: p1.controlPointNextX,
-    y: p1.controlPointNextY
+    y: p1.controlPointNextY,
   };
   var cp2 = {
     x: p2.controlPointPreviousX,
-    y: p2.controlPointPreviousY
+    y: p2.controlPointPreviousY,
   };
   var a = _pointInLine(p1, cp1, t);
   var b = _pointInLine(cp1, cp2, t);
@@ -3295,48 +3561,43 @@ function _bezierInterpolation(p1, p2, t, mode) {
 }
 
 function propertyFn(property) {
-  if (property === 'angle') {
+  if (property === "angle") {
     return {
       between: _angleBetween,
       compare: _angleDiff,
-      normalize: _normalizeAngle
+      normalize: _normalizeAngle,
     };
   }
   return {
     between: (n, s, e) => n >= s && n <= e,
     compare: (a, b) => a - b,
-    normalize: x => x
+    normalize: (x) => x,
   };
 }
 function makeSubSegment(start, end, loop, count) {
   return {
     start: start % count,
     end: end % count,
-    loop: loop && (end - start + 1) % count === 0
+    loop: loop && (end - start + 1) % count === 0,
   };
 }
 function getSegment(segment, points, bounds) {
-  var {
-    property,
-    start: startBound,
-    end: endBound
-  } = bounds;
-  var {
-    between,
-    normalize
-  } = propertyFn(property);
+  var { property, start: startBound, end: endBound } = bounds;
+  var { between, normalize } = propertyFn(property);
   var count = points.length;
-  var {
-    start,
-    end,
-    loop
-  } = segment;
+  var { start, end, loop } = segment;
   var i, ilen;
   if (loop) {
     start += count;
     end += count;
     for (i = 0, ilen = count; i < ilen; ++i) {
-      if (!between(normalize(points[start % count][property]), startBound, endBound)) {
+      if (
+        !between(
+          normalize(points[start % count][property]),
+          startBound,
+          endBound
+        )
+      ) {
         break;
       }
       start--;
@@ -3351,29 +3612,17 @@ function getSegment(segment, points, bounds) {
   return {
     start,
     end,
-    loop
+    loop,
   };
 }
 function _boundSegment(segment, points, bounds) {
   if (!bounds) {
     return [segment];
   }
-  var {
-    property,
-    start: startBound,
-    end: endBound
-  } = bounds;
+  var { property, start: startBound, end: endBound } = bounds;
   var count = points.length;
-  var {
-    compare,
-    between,
-    normalize
-  } = propertyFn(property);
-  var {
-    start,
-    end,
-    loop
-  } = getSegment(segment, points, bounds);
+  var { compare, between, normalize } = propertyFn(property);
+  var { start, end, loop } = getSegment(segment, points, bounds);
   var result = [];
   var inside = false;
   var subStart = null;
@@ -3431,7 +3680,7 @@ function findStartAndEnd(points, count, loop, spanGaps) {
   end %= count;
   return {
     start,
-    end
+    end,
   };
 }
 function solidSegments(points, start, max, loop) {
@@ -3448,7 +3697,7 @@ function solidSegments(points, start, max, loop) {
         result.push({
           start: start % count,
           end: (end - 1) % count,
-          loop
+          loop,
         });
         start = last = cur.stop ? end : null;
       }
@@ -3464,7 +3713,7 @@ function solidSegments(points, start, max, loop) {
     result.push({
       start: start % count,
       end: last % count,
-      loop
+      loop,
     });
   }
   return result;
@@ -3477,16 +3726,15 @@ function _computeSegments(line) {
     return [];
   }
   var loop = !!line._loop;
-  var {
-    start,
-    end
-  } = findStartAndEnd(points, count, loop, spanGaps);
+  var { start, end } = findStartAndEnd(points, count, loop, spanGaps);
   if (spanGaps === true) {
-    return [{
-      start,
-      end,
-      loop
-    }];
+    return [
+      {
+        start,
+        end,
+        loop,
+      },
+    ];
   }
   var max = end < start ? end + count : end;
   var completeLoop = !!line._fullLoop && start === 0 && end === count - 1;
@@ -3494,19 +3742,19 @@ function _computeSegments(line) {
 }
 
 var defaultColor = defaults.color;
-defaults.set('elements', {
+defaults.set("elements", {
   line: {
     backgroundColor: defaultColor,
-    borderCapStyle: 'butt',
+    borderCapStyle: "butt",
     borderColor: defaultColor,
     borderDash: [],
     borderDashOffset: 0,
-    borderJoinStyle: 'miter',
+    borderJoinStyle: "miter",
     borderWidth: 3,
     capBezierPoints: true,
     fill: true,
-    tension: 0.4
-  }
+    tension: 0.4,
+  },
 });
 function setStyle(ctx, vm) {
   ctx.lineCap = vm.borderCapStyle;
@@ -3529,21 +3777,11 @@ function getLineMethod(options) {
   return lineTo;
 }
 function pathSegment(ctx, line, segment, params) {
-  var {
-    start,
-    end,
-    loop
-  } = segment;
-  var {
-    points,
-    options
-  } = line;
+  var { start, end, loop } = segment;
+  var { points, options } = line;
   var lineMethod = getLineMethod(options);
   var count = points.length;
-  var {
-    move = true,
-    reverse
-  } = params || {};
+  var { move = true, reverse } = params || {};
   var ilen = end < start ? count + end - start : end - start;
   var i, point, prev;
   for (i = 0; i <= ilen; ++i) {
@@ -3567,14 +3805,8 @@ function pathSegment(ctx, line, segment, params) {
 function fastPathSegment(ctx, line, segment, params) {
   var points = line.points;
   var count = points.length;
-  var {
-    start,
-    end
-  } = segment;
-  var {
-    move = true,
-    reverse
-  } = params || {};
+  var { start, end } = segment;
+  var { move = true, reverse } = params || {};
   var ilen = end < start ? count + end - start : end - start;
   var avgX = 0;
   var countX = 0;
@@ -3615,7 +3847,8 @@ function fastPathSegment(ctx, line, segment, params) {
 function _getSegmentMethod(line) {
   var opts = line.options;
   var borderDash = opts.borderDash && opts.borderDash.length;
-  var useFastPath = !line._loop && !opts.tension && !opts.stepped && !borderDash;
+  var useFastPath =
+    !line._loop && !opts.tension && !opts.stepped && !borderDash;
   return useFastPath ? fastPathSegment : pathSegment;
 }
 function _getInterpolationMethod(options) {
@@ -3680,7 +3913,7 @@ class Line extends Element$1 {
     var segments = _boundSegments(me, {
       property,
       start: value,
-      end: value
+      end: value,
     });
     if (!segments.length) {
       return;
@@ -3689,10 +3922,7 @@ class Line extends Element$1 {
     var _interpolate = _getInterpolationMethod(options);
     var i, ilen;
     for (i = 0, ilen = segments.length; i < ilen; ++i) {
-      var {
-        start,
-        end
-      } = segments[i];
+      var { start, end } = segments[i];
       var p1 = points[start];
       var p2 = points[end];
       if (p1 === p2) {
@@ -3736,10 +3966,10 @@ class Line extends Element$1 {
     ctx.restore();
   }
 }
-_defineProperty(Line, "_type", 'line');
+_defineProperty(Line, "_type", "line");
 
 var defaultColor$1 = defaults.color;
-defaults.set('elements', {
+defaults.set("elements", {
   point: {
     backgroundColor: defaultColor$1,
     borderColor: defaultColor$1,
@@ -3747,9 +3977,9 @@ defaults.set('elements', {
     hitRadius: 1,
     hoverBorderWidth: 1,
     hoverRadius: 4,
-    pointStyle: 'circle',
-    radius: 3
-  }
+    pointStyle: "circle",
+    radius: 3,
+  },
 });
 class Point extends Element$1 {
   constructor(cfg) {
@@ -3763,40 +3993,33 @@ class Point extends Element$1 {
   }
   inRange(mouseX, mouseY, useFinalPosition) {
     var options = this.options;
-    var {
-      x,
-      y
-    } = this.getProps(['x', 'y'], useFinalPosition);
-    return Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2) < Math.pow(options.hitRadius + options.radius, 2);
+    var { x, y } = this.getProps(["x", "y"], useFinalPosition);
+    return (
+      Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2) <
+      Math.pow(options.hitRadius + options.radius, 2)
+    );
   }
   inXRange(mouseX, useFinalPosition) {
     var options = this.options;
-    var {
-      x
-    } = this.getProps(['x'], useFinalPosition);
+    var { x } = this.getProps(["x"], useFinalPosition);
     return Math.abs(mouseX - x) < options.radius + options.hitRadius;
   }
   inYRange(mouseY, useFinalPosition) {
     var options = this.options;
-    var {
-      y
-    } = this.getProps(['x'], useFinalPosition);
+    var { y } = this.getProps(["x"], useFinalPosition);
     return Math.abs(mouseY - y) < options.radius + options.hitRadius;
   }
   getCenterPoint(useFinalPosition) {
-    var {
-      x,
-      y
-    } = this.getProps(['x', 'y'], useFinalPosition);
+    var { x, y } = this.getProps(["x", "y"], useFinalPosition);
     return {
       x,
-      y
+      y,
     };
   }
   size() {
     var options = this.options || {};
     var radius = Math.max(options.radius, options.hoverRadius) || 0;
-    var borderWidth = radius && options.borderWidth || 0;
+    var borderWidth = (radius && options.borderWidth) || 0;
     return (radius + borderWidth) * 2;
   }
   draw(ctx, chartArea) {
@@ -3817,25 +4040,22 @@ class Point extends Element$1 {
     return options.radius + options.hitRadius;
   }
 }
-_defineProperty(Point, "_type", 'point');
+_defineProperty(Point, "_type", "point");
 
 var defaultColor$2 = defaults.color;
-defaults.set('elements', {
+defaults.set("elements", {
   rectangle: {
     backgroundColor: defaultColor$2,
     borderColor: defaultColor$2,
-    borderSkipped: 'bottom',
-    borderWidth: 0
-  }
+    borderSkipped: "bottom",
+    borderWidth: 0,
+  },
 });
 function getBarBounds(bar, useFinalPosition) {
-  var {
-    x,
-    y,
-    base,
-    width,
-    height
-  } = bar.getProps(['x', 'y', 'base', 'width', 'height'], useFinalPosition);
+  var { x, y, base, width, height } = bar.getProps(
+    ["x", "y", "base", "width", "height"],
+    useFinalPosition
+  );
   var left, right, top, bottom, half;
   if (bar.horizontal) {
     half = height / 2;
@@ -3854,7 +4074,7 @@ function getBarBounds(bar, useFinalPosition) {
     left,
     top,
     right,
-    bottom
+    bottom,
   };
 }
 function swap(orig, v1, v2) {
@@ -3868,10 +4088,10 @@ function parseBorderSkipped(bar) {
   }
   if (bar.horizontal) {
     if (bar.base > bar.x) {
-      edge = swap(edge, 'left', 'right');
+      edge = swap(edge, "left", "right");
     }
   } else if (bar.base < bar.y) {
-    edge = swap(edge, 'bottom', 'top');
+    edge = swap(edge, "bottom", "top");
   }
   res[edge] = true;
   return res;
@@ -3895,7 +4115,7 @@ function parseBorderWidth(bar, maxW, maxH) {
     t: skipOrLimit(skip.top, t, 0, maxH),
     r: skipOrLimit(skip.right, r, 0, maxW),
     b: skipOrLimit(skip.bottom, b, 0, maxH),
-    l: skipOrLimit(skip.left, l, 0, maxW)
+    l: skipOrLimit(skip.left, l, 0, maxW),
   };
 }
 function boundingRects(bar) {
@@ -3908,21 +4128,26 @@ function boundingRects(bar) {
       x: bounds.left,
       y: bounds.top,
       w: width,
-      h: height
+      h: height,
     },
     inner: {
       x: bounds.left + border.l,
       y: bounds.top + border.t,
       w: width - border.l - border.r,
-      h: height - border.t - border.b
-    }
+      h: height - border.t - border.b,
+    },
   };
 }
 function inRange(bar, x, y, useFinalPosition) {
   var skipX = x === null;
   var skipY = y === null;
-  var bounds = !bar || skipX && skipY ? false : getBarBounds(bar, useFinalPosition);
-  return bounds && (skipX || x >= bounds.left && x <= bounds.right) && (skipY || y >= bounds.top && y <= bounds.bottom);
+  var bounds =
+    !bar || (skipX && skipY) ? false : getBarBounds(bar, useFinalPosition);
+  return (
+    bounds &&
+    (skipX || (x >= bounds.left && x <= bounds.right)) &&
+    (skipY || (y >= bounds.top && y <= bounds.bottom))
+  );
 }
 class Rectangle extends Element$1 {
   constructor(cfg) {
@@ -3938,10 +4163,7 @@ class Rectangle extends Element$1 {
   }
   draw(ctx) {
     var options = this.options;
-    var {
-      inner,
-      outer
-    } = boundingRects(this);
+    var { inner, outer } = boundingRects(this);
     ctx.save();
     if (outer.w !== inner.w || outer.h !== inner.h) {
       ctx.beginPath();
@@ -3949,7 +4171,7 @@ class Rectangle extends Element$1 {
       ctx.clip();
       ctx.rect(inner.x, inner.y, inner.w, inner.h);
       ctx.fillStyle = options.borderColor;
-      ctx.fill('evenodd');
+      ctx.fill("evenodd");
     }
     ctx.fillStyle = options.backgroundColor;
     ctx.fillRect(inner.x, inner.y, inner.w, inner.h);
@@ -3965,60 +4187,59 @@ class Rectangle extends Element$1 {
     return inRange(this, null, mouseY, useFinalPosition);
   }
   getCenterPoint(useFinalPosition) {
-    var {
-      x,
-      y,
-      base,
-      horizontal
-    } = this.getProps(['x', 'y', 'base', 'horizontal', useFinalPosition]);
+    var { x, y, base, horizontal } = this.getProps([
+      "x",
+      "y",
+      "base",
+      "horizontal",
+      useFinalPosition,
+    ]);
     return {
       x: horizontal ? (x + base) / 2 : x,
-      y: horizontal ? y : (y + base) / 2
+      y: horizontal ? y : (y + base) / 2,
     };
   }
   getRange(axis) {
-    return axis === 'x' ? this.width / 2 : this.height / 2;
+    return axis === "x" ? this.width / 2 : this.height / 2;
   }
 }
-_defineProperty(Rectangle, "_type", 'rectangle');
+_defineProperty(Rectangle, "_type", "rectangle");
 
-
-
-var elements = /*#__PURE__*/Object.freeze({
-__proto__: null,
-Arc: Arc,
-Line: Line,
-Point: Point,
-Rectangle: Rectangle
+var elements = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  Arc: Arc,
+  Line: Line,
+  Point: Point,
+  Rectangle: Rectangle,
 });
 
-defaults.set('bar', {
+defaults.set("bar", {
   hover: {
-    mode: 'index'
+    mode: "index",
   },
   datasets: {
     categoryPercentage: 0.8,
     barPercentage: 0.9,
     animation: {
       numbers: {
-        type: 'number',
-        properties: ['x', 'y', 'base', 'width', 'height']
-      }
-    }
+        type: "number",
+        properties: ["x", "y", "base", "width", "height"],
+      },
+    },
   },
   scales: {
     x: {
-      type: 'category',
+      type: "category",
       offset: true,
       gridLines: {
-        offsetGridLines: true
-      }
+        offsetGridLines: true,
+      },
     },
     y: {
-      type: 'linear',
-      beginAtZero: true
-    }
-  }
+      type: "linear",
+      beginAtZero: true,
+    },
+  },
 });
 function computeMinSampleSize(scale, pixels) {
   var min = scale._length;
@@ -4037,7 +4258,9 @@ function computeFitCategoryTraits(index, ruler, options) {
   var thickness = options.barThickness;
   var count = ruler.stackCount;
   var curr = ruler.pixels[index];
-  var min = isNullOrUndef(thickness) ? computeMinSampleSize(ruler.scale, ruler.pixels) : -1;
+  var min = isNullOrUndef(thickness)
+    ? computeMinSampleSize(ruler.scale, ruler.pixels)
+    : -1;
   var size, ratio;
   if (isNullOrUndef(thickness)) {
     size = min * options.categoryPercentage;
@@ -4049,7 +4272,7 @@ function computeFitCategoryTraits(index, ruler, options) {
   return {
     chunk: size / count,
     ratio,
-    start: curr - size / 2
+    start: curr - size / 2,
   };
 }
 function computeFlexCategoryTraits(index, ruler, options) {
@@ -4064,12 +4287,12 @@ function computeFlexCategoryTraits(index, ruler, options) {
   if (next === null) {
     next = curr + curr - prev;
   }
-  var start = curr - (curr - Math.min(prev, next)) / 2 * percent;
-  var size = Math.abs(next - prev) / 2 * percent;
+  var start = curr - ((curr - Math.min(prev, next)) / 2) * percent;
+  var size = (Math.abs(next - prev) / 2) * percent;
   return {
     chunk: size / ruler.stackCount,
     ratio: options.barPercentage,
-    start
+    start,
   };
 }
 function parseFloatBar(arr, item, vScale, i) {
@@ -4090,7 +4313,7 @@ function parseFloatBar(arr, item, vScale, i) {
     start: startValue,
     end: endValue,
     min,
-    max
+    max,
   };
 }
 function parseArrayOrPrimitive(meta, data, start, count) {
@@ -4124,10 +4347,7 @@ class BarController extends DatasetController {
     return parseArrayOrPrimitive(meta, data, start, count);
   }
   parseObjectData(meta, data, start, count) {
-    var {
-      iScale,
-      vScale
-    } = meta;
+    var { iScale, vScale } = meta;
     var vProp = vScale.axis;
     var parsed = [];
     var i, ilen, item, obj, value;
@@ -4148,16 +4368,15 @@ class BarController extends DatasetController {
   getLabelAndValue(index) {
     var me = this;
     var meta = me._cachedMeta;
-    var {
-      iScale,
-      vScale
-    } = meta;
+    var { iScale, vScale } = meta;
     var parsed = me.getParsed(index);
     var custom = parsed._custom;
-    var value = isFloatBar(custom) ? '[' + custom.start + ', ' + custom.end + ']' : '' + vScale.getLabelForValue(parsed[vScale.axis]);
+    var value = isFloatBar(custom)
+      ? "[" + custom.start + ", " + custom.end + "]"
+      : "" + vScale.getLabelForValue(parsed[vScale.axis]);
     return {
-      label: '' + iScale.getLabelForValue(parsed[iScale.axis]),
-      value
+      label: "" + iScale.getLabelForValue(parsed[iScale.axis]),
+      value,
     };
   }
   initialize() {
@@ -4174,7 +4393,7 @@ class BarController extends DatasetController {
   }
   updateElements(rectangles, start, mode) {
     var me = this;
-    var reset = mode === 'reset';
+    var reset = mode === "reset";
     var vscale = me._cachedMeta.vScale;
     var base = vscale.getBasePixel();
     var horizontal = vscale.isHorizontal();
@@ -4191,10 +4410,10 @@ class BarController extends DatasetController {
       var properties = {
         horizontal,
         base: reset ? base : vpixels.base,
-        x: horizontal ? reset ? base : vpixels.head : ipixels.center,
+        x: horizontal ? (reset ? base : vpixels.head) : ipixels.center,
         y: horizontal ? ipixels.center : reset ? base : vpixels.head,
         height: horizontal ? ipixels.size : undefined,
-        width: horizontal ? undefined : ipixels.size
+        width: horizontal ? undefined : ipixels.size,
       };
       if (includeOptions) {
         properties.options = options;
@@ -4214,7 +4433,11 @@ class BarController extends DatasetController {
     var i, item;
     for (i = 0; i < ilen; ++i) {
       item = metasets[i];
-      if (stacked === false || stacks.indexOf(item.stack) === -1 || stacked === undefined && item.stack === undefined) {
+      if (
+        stacked === false ||
+        stacks.indexOf(item.stack) === -1 ||
+        (stacked === undefined && item.stack === undefined)
+      ) {
         stacks.push(item.stack);
       }
       if (item.index === last) {
@@ -4248,7 +4471,7 @@ class BarController extends DatasetController {
       start: iScale._startPixel,
       end: iScale._endPixel,
       stackCount: me._getStackCount(),
-      scale: iScale
+      scale: iScale,
     };
   }
   _calculateBarValuePixels(index, options) {
@@ -4274,7 +4497,11 @@ class BarController extends DatasetController {
       }
       start += value;
     }
-    var base = _limitValue(vScale.getPixelForValue(start), vScale._startPixel - 10, vScale._endPixel + 10);
+    var base = _limitValue(
+      vScale.getPixelForValue(start),
+      vScale._startPixel - 10,
+      vScale._endPixel + 10
+    );
     head = vScale.getPixelForValue(start + length);
     size = head - base;
     if (minBarLength !== undefined && Math.abs(size) < minBarLength) {
@@ -4285,20 +4512,26 @@ class BarController extends DatasetController {
       size,
       base,
       head,
-      center: head + size / 2
+      center: head + size / 2,
     };
   }
   _calculateBarIndexPixels(index, ruler, options) {
     var me = this;
-    var range = options.barThickness === 'flex' ? computeFlexCategoryTraits(index, ruler, options) : computeFitCategoryTraits(index, ruler, options);
+    var range =
+      options.barThickness === "flex"
+        ? computeFlexCategoryTraits(index, ruler, options)
+        : computeFitCategoryTraits(index, ruler, options);
     var stackIndex = me._getStackIndex(me.index, me._cachedMeta.stack);
     var center = range.start + range.chunk * stackIndex + range.chunk / 2;
-    var size = Math.min(valueOrDefault(options.maxBarThickness, Infinity), range.chunk * range.ratio);
+    var size = Math.min(
+      valueOrDefault(options.maxBarThickness, Infinity),
+      range.chunk * range.ratio
+    );
     return {
       base: center - size / 2,
       head: center + size / 2,
       center,
-      size
+      size,
     };
   }
   draw() {
@@ -4319,44 +4552,51 @@ class BarController extends DatasetController {
   }
 }
 BarController.prototype.dataElementType = Rectangle;
-BarController.prototype.dataElementOptions = ['backgroundColor', 'borderColor', 'borderSkipped', 'borderWidth', 'barPercentage', 'barThickness', 'categoryPercentage', 'maxBarThickness', 'minBarLength'];
+BarController.prototype.dataElementOptions = [
+  "backgroundColor",
+  "borderColor",
+  "borderSkipped",
+  "borderWidth",
+  "barPercentage",
+  "barThickness",
+  "categoryPercentage",
+  "maxBarThickness",
+  "minBarLength",
+];
 
-defaults.set('bubble', {
+defaults.set("bubble", {
   animation: {
     numbers: {
-      properties: ['x', 'y', 'borderWidth', 'radius']
-    }
+      properties: ["x", "y", "borderWidth", "radius"],
+    },
   },
   scales: {
     x: {
-      type: 'linear'
+      type: "linear",
     },
     y: {
-      type: 'linear'
-    }
+      type: "linear",
+    },
   },
   tooltips: {
     callbacks: {
       title() {
-        return '';
-      }
-    }
-  }
+        return "";
+      },
+    },
+  },
 });
 class BubbleController extends DatasetController {
   parseObjectData(meta, data, start, count) {
-    var {
-      xScale,
-      yScale
-    } = meta;
+    var { xScale, yScale } = meta;
     var parsed = [];
     var i, ilen, item;
     for (i = start, ilen = start + count; i < ilen; ++i) {
       item = data[i];
       parsed.push({
-        x: xScale.parseObject(item, 'x', i),
-        y: yScale.parseObject(item, 'y', i),
-        _custom: item && item.r && +item.r
+        x: xScale.parseObject(item, "x", i),
+        y: yScale.parseObject(item, "y", i),
+        _custom: item && item.r && +item.r,
       });
     }
     return parsed;
@@ -4374,17 +4614,14 @@ class BubbleController extends DatasetController {
   getLabelAndValue(index) {
     var me = this;
     var meta = me._cachedMeta;
-    var {
-      xScale,
-      yScale
-    } = meta;
+    var { xScale, yScale } = meta;
     var parsed = me.getParsed(index);
     var x = xScale.getLabelForValue(parsed.x);
     var y = yScale.getLabelForValue(parsed.y);
     var r = parsed._custom;
     return {
       label: meta.label,
-      value: '(' + x + ', ' + y + (r ? ', ' + r : '') + ')'
+      value: "(" + x + ", " + y + (r ? ", " + r : "") + ")",
     };
   }
   update(mode) {
@@ -4394,11 +4631,8 @@ class BubbleController extends DatasetController {
   }
   updateElements(points, start, mode) {
     var me = this;
-    var reset = mode === 'reset';
-    var {
-      xScale,
-      yScale
-    } = me._cachedMeta;
+    var reset = mode === "reset";
+    var { xScale, yScale } = me._cachedMeta;
     var firstOpts = me.resolveDataElementOptions(start, mode);
     var sharedOptions = me.getSharedOptions(mode, points[start], firstOpts);
     var includeOptions = me.includeOptions(mode, sharedOptions);
@@ -4406,12 +4640,14 @@ class BubbleController extends DatasetController {
       var point = points[i];
       var index = start + i;
       var parsed = !reset && me.getParsed(index);
-      var x = reset ? xScale.getPixelForDecimal(0.5) : xScale.getPixelForValue(parsed.x);
+      var x = reset
+        ? xScale.getPixelForDecimal(0.5)
+        : xScale.getPixelForValue(parsed.x);
       var y = reset ? yScale.getBasePixel() : yScale.getPixelForValue(parsed.y);
       var properties = {
         x,
         y,
-        skip: isNaN(x) || isNaN(y)
+        skip: isNaN(x) || isNaN(y),
       };
       if (includeOptions) {
         properties.options = me.resolveDataElementOptions(i, mode);
@@ -4433,34 +4669,58 @@ class BubbleController extends DatasetController {
       chart,
       dataIndex: index,
       dataset,
-      datasetIndex: me.index
+      datasetIndex: me.index,
     };
     if (values.$shared) {
       values = _extends({}, values, {
-        $shared: false
+        $shared: false,
       });
     }
-    if (mode !== 'active') {
+    if (mode !== "active") {
       values.radius = 0;
     }
-    values.radius += resolve([parsed && parsed._custom, me._config.radius, chart.options.elements.point.radius], context, index);
+    values.radius += resolve(
+      [
+        parsed && parsed._custom,
+        me._config.radius,
+        chart.options.elements.point.radius,
+      ],
+      context,
+      index
+    );
     return values;
   }
 }
 BubbleController.prototype.dataElementType = Point;
-BubbleController.prototype.dataElementOptions = ['backgroundColor', 'borderColor', 'borderWidth', 'hitRadius', 'radius', 'pointStyle', 'rotation'];
+BubbleController.prototype.dataElementOptions = [
+  "backgroundColor",
+  "borderColor",
+  "borderWidth",
+  "hitRadius",
+  "radius",
+  "pointStyle",
+  "rotation",
+];
 
 var PI$2 = Math.PI;
 var DOUBLE_PI$1 = PI$2 * 2;
 var HALF_PI$1 = PI$2 / 2;
-defaults.set('doughnut', {
+defaults.set("doughnut", {
   animation: {
     numbers: {
-      type: 'number',
-      properties: ['circumference', 'endAngle', 'innerRadius', 'outerRadius', 'startAngle', 'x', 'y']
+      type: "number",
+      properties: [
+        "circumference",
+        "endAngle",
+        "innerRadius",
+        "outerRadius",
+        "startAngle",
+        "x",
+        "y",
+      ],
     },
     animateRotate: true,
-    animateScale: false
+    animateScale: false,
   },
   legend: {
     labels: {
@@ -4476,17 +4736,17 @@ defaults.set('doughnut', {
               strokeStyle: style.borderColor,
               lineWidth: style.borderWidth,
               hidden: !chart.getDataVisibility(i),
-              index: i
+              index: i,
             };
           });
         }
         return [];
-      }
+      },
     },
     onClick(e, legendItem) {
       this.chart.toggleDataVisibility(legendItem.index);
       this.chart.update();
-    }
+    },
   },
   cutoutPercentage: 50,
   rotation: -HALF_PI$1,
@@ -4494,11 +4754,13 @@ defaults.set('doughnut', {
   tooltips: {
     callbacks: {
       title() {
-        return '';
+        return "";
       },
       label(tooltipItem, data) {
         var dataLabel = data.labels[tooltipItem.index];
-        var value = ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+        var value =
+          ": " +
+          data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
         if (isArray(dataLabel)) {
           dataLabel = dataLabel.slice();
           dataLabel[0] += value;
@@ -4506,9 +4768,9 @@ defaults.set('doughnut', {
           dataLabel += value;
         }
         return dataLabel;
-      }
-    }
-  }
+      },
+    },
+  },
 });
 function getRatioAndOffset(rotation, circumference, cutout) {
   var ratioX = 1;
@@ -4517,20 +4779,34 @@ function getRatioAndOffset(rotation, circumference, cutout) {
   var offsetY = 0;
   if (circumference < DOUBLE_PI$1) {
     var startAngle = rotation % DOUBLE_PI$1;
-    startAngle += startAngle >= PI$2 ? -DOUBLE_PI$1 : startAngle < -PI$2 ? DOUBLE_PI$1 : 0;
+    startAngle +=
+      startAngle >= PI$2 ? -DOUBLE_PI$1 : startAngle < -PI$2 ? DOUBLE_PI$1 : 0;
     var endAngle = startAngle + circumference;
     var startX = Math.cos(startAngle);
     var startY = Math.sin(startAngle);
     var endX = Math.cos(endAngle);
     var endY = Math.sin(endAngle);
-    var contains0 = startAngle <= 0 && endAngle >= 0 || endAngle >= DOUBLE_PI$1;
-    var contains90 = startAngle <= HALF_PI$1 && endAngle >= HALF_PI$1 || endAngle >= DOUBLE_PI$1 + HALF_PI$1;
+    var contains0 =
+      (startAngle <= 0 && endAngle >= 0) || endAngle >= DOUBLE_PI$1;
+    var contains90 =
+      (startAngle <= HALF_PI$1 && endAngle >= HALF_PI$1) ||
+      endAngle >= DOUBLE_PI$1 + HALF_PI$1;
     var contains180 = startAngle === -PI$2 || endAngle >= PI$2;
-    var contains270 = startAngle <= -HALF_PI$1 && endAngle >= -HALF_PI$1 || endAngle >= PI$2 + HALF_PI$1;
-    var minX = contains180 ? -1 : Math.min(startX, startX * cutout, endX, endX * cutout);
-    var minY = contains270 ? -1 : Math.min(startY, startY * cutout, endY, endY * cutout);
-    var maxX = contains0 ? 1 : Math.max(startX, startX * cutout, endX, endX * cutout);
-    var maxY = contains90 ? 1 : Math.max(startY, startY * cutout, endY, endY * cutout);
+    var contains270 =
+      (startAngle <= -HALF_PI$1 && endAngle >= -HALF_PI$1) ||
+      endAngle >= PI$2 + HALF_PI$1;
+    var minX = contains180
+      ? -1
+      : Math.min(startX, startX * cutout, endX, endX * cutout);
+    var minY = contains270
+      ? -1
+      : Math.min(startY, startY * cutout, endY, endY * cutout);
+    var maxX = contains0
+      ? 1
+      : Math.max(startX, startX * cutout, endX, endX * cutout);
+    var maxY = contains90
+      ? 1
+      : Math.max(startY, startY * cutout, endY, endY * cutout);
     ratioX = (maxX - minX) / 2;
     ratioY = (maxY - minY) / 2;
     offsetX = -(maxX + minX) / 2;
@@ -4540,7 +4816,7 @@ function getRatioAndOffset(rotation, circumference, cutout) {
     ratioX,
     ratioY,
     offsetX,
-    offsetY
+    offsetY,
   };
 }
 class DoughnutController extends DatasetController {
@@ -4572,30 +4848,28 @@ class DoughnutController extends DatasetController {
   update(mode) {
     var me = this;
     var chart = me.chart;
-    var {
-      chartArea,
-      options
-    } = chart;
+    var { chartArea, options } = chart;
     var meta = me._cachedMeta;
     var arcs = meta.data;
     var cutout = options.cutoutPercentage / 100 || 0;
     var chartWeight = me._getRingWeight(me.index);
-    var {
-      ratioX,
-      ratioY,
-      offsetX,
-      offsetY
-    } = getRatioAndOffset(options.rotation, options.circumference, cutout);
+    var { ratioX, ratioY, offsetX, offsetY } = getRatioAndOffset(
+      options.rotation,
+      options.circumference,
+      cutout
+    );
     var borderWidth = me.getMaxBorderWidth();
     var maxWidth = (chartArea.right - chartArea.left - borderWidth) / ratioX;
     var maxHeight = (chartArea.bottom - chartArea.top - borderWidth) / ratioY;
     var outerRadius = Math.max(Math.min(maxWidth, maxHeight) / 2, 0);
     var innerRadius = Math.max(outerRadius * cutout, 0);
-    var radiusLength = (outerRadius - innerRadius) / me._getVisibleDatasetWeightTotal();
+    var radiusLength =
+      (outerRadius - innerRadius) / me._getVisibleDatasetWeightTotal();
     me.offsetX = offsetX * outerRadius;
     me.offsetY = offsetY * outerRadius;
     meta.total = me.calculateTotal();
-    me.outerRadius = outerRadius - radiusLength * me._getRingWeightOffset(me.index);
+    me.outerRadius =
+      outerRadius - radiusLength * me._getRingWeightOffset(me.index);
     me.innerRadius = Math.max(me.outerRadius - radiusLength * chartWeight, 0);
     me.updateElements(arcs, 0, mode);
   }
@@ -4603,11 +4877,17 @@ class DoughnutController extends DatasetController {
     var me = this;
     var opts = me.chart.options;
     var meta = me._cachedMeta;
-    return reset && opts.animation.animateRotate ? 0 : this.chart.getDataVisibility(i) ? me.calculateCircumference(meta._parsed[i] * opts.circumference / DOUBLE_PI$1) : 0;
+    return reset && opts.animation.animateRotate
+      ? 0
+      : this.chart.getDataVisibility(i)
+      ? me.calculateCircumference(
+          (meta._parsed[i] * opts.circumference) / DOUBLE_PI$1
+        )
+      : 0;
   }
   updateElements(arcs, start, mode) {
     var me = this;
-    var reset = mode === 'reset';
+    var reset = mode === "reset";
     var chart = me.chart;
     var chartArea = chart.chartArea;
     var opts = chart.options;
@@ -4636,7 +4916,7 @@ class DoughnutController extends DatasetController {
         endAngle: startAngle + circumference,
         circumference,
         outerRadius,
-        innerRadius
+        innerRadius,
       };
       if (includeOptions) {
         properties.options = me.resolveDataElementOptions(index, mode);
@@ -4689,8 +4969,12 @@ class DoughnutController extends DatasetController {
     }
     for (i = 0, ilen = arcs.length; i < ilen; ++i) {
       options = controller.resolveDataElementOptions(i);
-      if (options.borderAlign !== 'inner') {
-        max = Math.max(max, options.borderWidth || 0, options.hoverBorderWidth || 0);
+      if (options.borderAlign !== "inner") {
+        max = Math.max(
+          max,
+          options.borderWidth || 0,
+          options.hoverBorderWidth || 0
+        );
       }
     }
     return max;
@@ -4705,46 +4989,57 @@ class DoughnutController extends DatasetController {
     return ringWeightOffset;
   }
   _getRingWeight(datasetIndex) {
-    return Math.max(valueOrDefault(this.chart.data.datasets[datasetIndex].weight, 1), 0);
+    return Math.max(
+      valueOrDefault(this.chart.data.datasets[datasetIndex].weight, 1),
+      0
+    );
   }
   _getVisibleDatasetWeightTotal() {
     return this._getRingWeightOffset(this.chart.data.datasets.length) || 1;
   }
 }
 DoughnutController.prototype.dataElementType = Arc;
-DoughnutController.prototype.dataElementOptions = ['backgroundColor', 'borderColor', 'borderWidth', 'borderAlign', 'hoverBackgroundColor', 'hoverBorderColor', 'hoverBorderWidth'];
+DoughnutController.prototype.dataElementOptions = [
+  "backgroundColor",
+  "borderColor",
+  "borderWidth",
+  "borderAlign",
+  "hoverBackgroundColor",
+  "hoverBorderColor",
+  "hoverBorderWidth",
+];
 
-defaults.set('horizontalBar', {
+defaults.set("horizontalBar", {
   hover: {
-    mode: 'index',
-    axis: 'y'
+    mode: "index",
+    axis: "y",
   },
   scales: {
     x: {
-      type: 'linear',
-      beginAtZero: true
+      type: "linear",
+      beginAtZero: true,
     },
     y: {
-      type: 'category',
+      type: "category",
       offset: true,
       gridLines: {
-        offsetGridLines: true
-      }
-    }
+        offsetGridLines: true,
+      },
+    },
   },
   datasets: {
     categoryPercentage: 0.8,
-    barPercentage: 0.9
+    barPercentage: 0.9,
   },
   elements: {
     rectangle: {
-      borderSkipped: 'left'
-    }
+      borderSkipped: "left",
+    },
   },
   tooltips: {
-    mode: 'index',
-    axis: 'y'
-  }
+    mode: "index",
+    axis: "y",
+  },
 });
 class HorizontalBarController extends BarController {
   getValueScaleId() {
@@ -4755,20 +5050,20 @@ class HorizontalBarController extends BarController {
   }
 }
 
-defaults.set('line', {
+defaults.set("line", {
   showLines: true,
   spanGaps: false,
   hover: {
-    mode: 'index'
+    mode: "index",
   },
   scales: {
     x: {
-      type: 'category'
+      type: "category",
     },
     y: {
-      type: 'linear'
-    }
-  }
+      type: "linear",
+    },
+  },
 });
 class LineController extends DatasetController {
   constructor(chart, datasetIndex) {
@@ -4782,11 +5077,14 @@ class LineController extends DatasetController {
     var points = meta.data || [];
     var options = me.chart.options;
     var config = me._config;
-    var showLine = me._showLine = valueOrDefault(config.showLine, options.showLines);
-    if (showLine && mode !== 'resize') {
+    var showLine = (me._showLine = valueOrDefault(
+      config.showLine,
+      options.showLines
+    ));
+    if (showLine && mode !== "resize") {
       var properties = {
         points,
-        options: me.resolveDatasetElementOptions()
+        options: me.resolveDatasetElementOptions(),
       };
       me.updateElement(line, undefined, properties, mode);
     }
@@ -4794,16 +5092,15 @@ class LineController extends DatasetController {
   }
   updateElements(points, start, mode) {
     var me = this;
-    var reset = mode === 'reset';
-    var {
-      xScale,
-      yScale,
-      _stacked
-    } = me._cachedMeta;
+    var reset = mode === "reset";
+    var { xScale, yScale, _stacked } = me._cachedMeta;
     var firstOpts = me.resolveDataElementOptions(start, mode);
     var sharedOptions = me.getSharedOptions(mode, points[start], firstOpts);
     var includeOptions = me.includeOptions(mode, sharedOptions);
-    var spanGaps = valueOrDefault(me._config.spanGaps, me.chart.options.spanGaps);
+    var spanGaps = valueOrDefault(
+      me._config.spanGaps,
+      me.chart.options.spanGaps
+    );
     var maxGapLength = isNumber(spanGaps) ? spanGaps : Number.POSITIVE_INFINITY;
     var prevParsed;
     for (var i = 0; i < points.length; ++i) {
@@ -4811,12 +5108,16 @@ class LineController extends DatasetController {
       var point = points[i];
       var parsed = me.getParsed(index);
       var x = xScale.getPixelForValue(parsed.x);
-      var y = reset ? yScale.getBasePixel() : yScale.getPixelForValue(_stacked ? me.applyStack(yScale, parsed) : parsed.y);
+      var y = reset
+        ? yScale.getBasePixel()
+        : yScale.getPixelForValue(
+            _stacked ? me.applyStack(yScale, parsed) : parsed.y
+          );
       var properties = {
         x,
         y,
         skip: isNaN(x) || isNaN(y),
-        stop: i > 0 && parsed.x - prevParsed.x > maxGapLength
+        stop: i > 0 && parsed.x - prevParsed.x > maxGapLength,
       };
       if (includeOptions) {
         properties.options = me.resolveDataElementOptions(index, mode);
@@ -4840,7 +5141,7 @@ class LineController extends DatasetController {
   getMaxOverflow() {
     var me = this;
     var meta = me._cachedMeta;
-    var border = me._showLine && meta.dataset.options.borderWidth || 0;
+    var border = (me._showLine && meta.dataset.options.borderWidth) || 0;
     var data = meta.data || [];
     if (!data.length) {
       return border;
@@ -4877,45 +5178,63 @@ class LineController extends DatasetController {
 }
 LineController.prototype.datasetElementType = Line;
 LineController.prototype.dataElementType = Point;
-LineController.prototype.datasetElementOptions = ['backgroundColor', 'borderCapStyle', 'borderColor', 'borderDash', 'borderDashOffset', 'borderJoinStyle', 'borderWidth', 'capBezierPoints', 'cubicInterpolationMode', 'fill'];
+LineController.prototype.datasetElementOptions = [
+  "backgroundColor",
+  "borderCapStyle",
+  "borderColor",
+  "borderDash",
+  "borderDashOffset",
+  "borderJoinStyle",
+  "borderWidth",
+  "capBezierPoints",
+  "cubicInterpolationMode",
+  "fill",
+];
 LineController.prototype.dataElementOptions = {
-  backgroundColor: 'pointBackgroundColor',
-  borderColor: 'pointBorderColor',
-  borderWidth: 'pointBorderWidth',
-  hitRadius: 'pointHitRadius',
-  hoverHitRadius: 'pointHitRadius',
-  hoverBackgroundColor: 'pointHoverBackgroundColor',
-  hoverBorderColor: 'pointHoverBorderColor',
-  hoverBorderWidth: 'pointHoverBorderWidth',
-  hoverRadius: 'pointHoverRadius',
-  pointStyle: 'pointStyle',
-  radius: 'pointRadius',
-  rotation: 'pointRotation'
+  backgroundColor: "pointBackgroundColor",
+  borderColor: "pointBorderColor",
+  borderWidth: "pointBorderWidth",
+  hitRadius: "pointHitRadius",
+  hoverHitRadius: "pointHitRadius",
+  hoverBackgroundColor: "pointHoverBackgroundColor",
+  hoverBorderColor: "pointHoverBorderColor",
+  hoverBorderWidth: "pointHoverBorderWidth",
+  hoverRadius: "pointHoverRadius",
+  pointStyle: "pointStyle",
+  radius: "pointRadius",
+  rotation: "pointRotation",
 };
 
-defaults.set('polarArea', {
+defaults.set("polarArea", {
   animation: {
     numbers: {
-      type: 'number',
-      properties: ['x', 'y', 'startAngle', 'endAngle', 'innerRadius', 'outerRadius']
+      type: "number",
+      properties: [
+        "x",
+        "y",
+        "startAngle",
+        "endAngle",
+        "innerRadius",
+        "outerRadius",
+      ],
     },
     animateRotate: true,
-    animateScale: true
+    animateScale: true,
   },
   scales: {
     r: {
-      type: 'radialLinear',
+      type: "radialLinear",
       angleLines: {
-        display: false
+        display: false,
       },
       beginAtZero: true,
       gridLines: {
-        circular: true
+        circular: true,
       },
       pointLabels: {
-        display: false
-      }
-    }
+        display: false,
+      },
+    },
   },
   startAngle: 0,
   legend: {
@@ -4932,28 +5251,28 @@ defaults.set('polarArea', {
               strokeStyle: style.borderColor,
               lineWidth: style.borderWidth,
               hidden: !chart.getDataVisibility(i),
-              index: i
+              index: i,
             };
           });
         }
         return [];
-      }
+      },
     },
     onClick(e, legendItem) {
       this.chart.toggleDataVisibility(legendItem.index);
       this.chart.update();
-    }
+    },
   },
   tooltips: {
     callbacks: {
       title() {
-        return '';
+        return "";
       },
       label(item, data) {
-        return data.labels[item.index] + ': ' + item.value;
-      }
-    }
-  }
+        return data.labels[item.index] + ": " + item.value;
+      },
+    },
+  },
 });
 function getStartAngleRadians(deg) {
   return toRadians(deg) - 0.5 * Math.PI;
@@ -4980,16 +5299,23 @@ class PolarAreaController extends DatasetController {
     var chart = me.chart;
     var chartArea = chart.chartArea;
     var opts = chart.options;
-    var minSize = Math.min(chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+    var minSize = Math.min(
+      chartArea.right - chartArea.left,
+      chartArea.bottom - chartArea.top
+    );
     var outerRadius = Math.max(minSize / 2, 0);
-    var innerRadius = Math.max(opts.cutoutPercentage ? outerRadius / 100 * opts.cutoutPercentage : 1, 0);
-    var radiusLength = (outerRadius - innerRadius) / chart.getVisibleDatasetCount();
+    var innerRadius = Math.max(
+      opts.cutoutPercentage ? (outerRadius / 100) * opts.cutoutPercentage : 1,
+      0
+    );
+    var radiusLength =
+      (outerRadius - innerRadius) / chart.getVisibleDatasetCount();
     me.outerRadius = outerRadius - radiusLength * me.index;
     me.innerRadius = me.outerRadius - radiusLength;
   }
   updateElements(arcs, start, mode) {
     var me = this;
-    var reset = mode === 'reset';
+    var reset = mode === "reset";
     var chart = me.chart;
     var dataset = me.getDataset();
     var opts = chart.options;
@@ -5009,7 +5335,9 @@ class PolarAreaController extends DatasetController {
       var index = start + i;
       var startAngle = angle;
       var endAngle = angle + me._computeAngle(index);
-      var outerRadius = this.chart.getDataVisibility(index) ? scale.getDistanceFromCenterForValue(dataset.data[index]) : 0;
+      var outerRadius = this.chart.getDataVisibility(index)
+        ? scale.getDistanceFromCenterForValue(dataset.data[index])
+        : 0;
       angle = endAngle;
       if (reset) {
         if (animationOpts.animateScale) {
@@ -5027,7 +5355,7 @@ class PolarAreaController extends DatasetController {
         outerRadius,
         startAngle,
         endAngle,
-        options: me.resolveDataElementOptions(index)
+        options: me.resolveDataElementOptions(index),
       };
       me.updateElement(arc, index, properties, mode);
     }
@@ -5055,31 +5383,43 @@ class PolarAreaController extends DatasetController {
       chart: me.chart,
       dataIndex: index,
       dataset,
-      datasetIndex: me.index
+      datasetIndex: me.index,
     };
-    return resolve([me.chart.options.elements.arc.angle, 2 * Math.PI / count], context, index);
+    return resolve(
+      [me.chart.options.elements.arc.angle, (2 * Math.PI) / count],
+      context,
+      index
+    );
   }
 }
 PolarAreaController.prototype.dataElementType = Arc;
-PolarAreaController.prototype.dataElementOptions = ['backgroundColor', 'borderColor', 'borderWidth', 'borderAlign', 'hoverBackgroundColor', 'hoverBorderColor', 'hoverBorderWidth'];
+PolarAreaController.prototype.dataElementOptions = [
+  "backgroundColor",
+  "borderColor",
+  "borderWidth",
+  "borderAlign",
+  "hoverBackgroundColor",
+  "hoverBorderColor",
+  "hoverBorderWidth",
+];
 
-defaults.set('pie', clone(defaults.doughnut));
-defaults.set('pie', {
-  cutoutPercentage: 0
+defaults.set("pie", clone(defaults.doughnut));
+defaults.set("pie", {
+  cutoutPercentage: 0,
 });
 
-defaults.set('radar', {
+defaults.set("radar", {
   spanGaps: false,
   scales: {
     r: {
-      type: 'radialLinear'
-    }
+      type: "radialLinear",
+    },
   },
   elements: {
     line: {
-      tension: 0
-    }
-  }
+      tension: 0,
+    },
+  },
 });
 class RadarController extends DatasetController {
   getIndexScaleId() {
@@ -5094,7 +5434,7 @@ class RadarController extends DatasetController {
     var parsed = me.getParsed(index);
     return {
       label: vScale.getLabels()[index],
-      value: '' + vScale.getLabelForValue(parsed[vScale.axis])
+      value: "" + vScale.getLabelForValue(parsed[vScale.axis]),
     };
   }
   update(mode) {
@@ -5107,7 +5447,7 @@ class RadarController extends DatasetController {
       points,
       _loop: true,
       _fullLoop: labels.length === points.length,
-      options: me.resolveDatasetElementOptions()
+      options: me.resolveDatasetElementOptions(),
     };
     me.updateElement(line, undefined, properties, mode);
     me.updateElements(points, 0, mode);
@@ -5117,13 +5457,16 @@ class RadarController extends DatasetController {
     var me = this;
     var dataset = me.getDataset();
     var scale = me.chart.scales.r;
-    var reset = mode === 'reset';
+    var reset = mode === "reset";
     var i;
     for (i = 0; i < points.length; i++) {
       var point = points[i];
       var index = start + i;
       var options = me.resolveDataElementOptions(index);
-      var pointPosition = scale.getPointPositionForValue(index, dataset.data[index]);
+      var pointPosition = scale.getPointPositionForValue(
+        index,
+        dataset.data[index]
+      );
       var x = reset ? scale.xCenter : pointPosition.x;
       var y = reset ? scale.yCenter : pointPosition.y;
       var properties = {
@@ -5131,7 +5474,7 @@ class RadarController extends DatasetController {
         y,
         angle: pointPosition.angle,
         skip: isNaN(x) || isNaN(y),
-        options
+        options,
       };
       me.updateElement(point, index, properties, mode);
     }
@@ -5142,49 +5485,61 @@ class RadarController extends DatasetController {
     var options = me.chart.options;
     var values = super.resolveDatasetElementOptions(active);
     values.spanGaps = valueOrDefault(config.spanGaps, options.spanGaps);
-    values.tension = valueOrDefault(config.lineTension, options.elements.line.tension);
+    values.tension = valueOrDefault(
+      config.lineTension,
+      options.elements.line.tension
+    );
     return values;
   }
 }
 RadarController.prototype.datasetElementType = Line;
 RadarController.prototype.dataElementType = Point;
-RadarController.prototype.datasetElementOptions = ['backgroundColor', 'borderColor', 'borderCapStyle', 'borderDash', 'borderDashOffset', 'borderJoinStyle', 'borderWidth', 'fill'];
+RadarController.prototype.datasetElementOptions = [
+  "backgroundColor",
+  "borderColor",
+  "borderCapStyle",
+  "borderDash",
+  "borderDashOffset",
+  "borderJoinStyle",
+  "borderWidth",
+  "fill",
+];
 RadarController.prototype.dataElementOptions = {
-  backgroundColor: 'pointBackgroundColor',
-  borderColor: 'pointBorderColor',
-  borderWidth: 'pointBorderWidth',
-  hitRadius: 'pointHitRadius',
-  hoverBackgroundColor: 'pointHoverBackgroundColor',
-  hoverBorderColor: 'pointHoverBorderColor',
-  hoverBorderWidth: 'pointHoverBorderWidth',
-  hoverRadius: 'pointHoverRadius',
-  pointStyle: 'pointStyle',
-  radius: 'pointRadius',
-  rotation: 'pointRotation'
+  backgroundColor: "pointBackgroundColor",
+  borderColor: "pointBorderColor",
+  borderWidth: "pointBorderWidth",
+  hitRadius: "pointHitRadius",
+  hoverBackgroundColor: "pointHoverBackgroundColor",
+  hoverBorderColor: "pointHoverBorderColor",
+  hoverBorderWidth: "pointHoverBorderWidth",
+  hoverRadius: "pointHoverRadius",
+  pointStyle: "pointStyle",
+  radius: "pointRadius",
+  rotation: "pointRotation",
 };
 
-defaults.set('scatter', {
+defaults.set("scatter", {
   scales: {
     x: {
-      type: 'linear'
+      type: "linear",
     },
     y: {
-      type: 'linear'
-    }
+      type: "linear",
+    },
   },
   datasets: {
-    showLine: false
+    showLine: false,
   },
   tooltips: {
     callbacks: {
       title() {
-        return '';
+        return "";
       },
       label(item) {
-        return '(' + item.label + ', ' + item.value + ')';
-      }
-    }
-  }
+        return "(" + item.label + ", " + item.value + ")";
+      },
+    },
+  },
 });
 
 var controllers = {
@@ -5196,7 +5551,7 @@ var controllers = {
   polarArea: PolarAreaController,
   pie: DoughnutController,
   radar: RadarController,
-  scatter: LineController
+  scatter: LineController,
 };
 
 function _lookup(table, value) {
@@ -5204,7 +5559,7 @@ function _lookup(table, value) {
   var lo = 0;
   var mid;
   while (hi - lo > 1) {
-    mid = lo + hi >> 1;
+    mid = (lo + hi) >> 1;
     if (table[mid] < value) {
       lo = mid;
     } else {
@@ -5213,7 +5568,7 @@ function _lookup(table, value) {
   }
   return {
     lo,
-    hi
+    hi,
   };
 }
 function _lookupByKey(table, key, value) {
@@ -5221,7 +5576,7 @@ function _lookupByKey(table, key, value) {
   var lo = 0;
   var mid;
   while (hi - lo > 1) {
-    mid = lo + hi >> 1;
+    mid = (lo + hi) >> 1;
     if (table[mid][key] < value) {
       lo = mid;
     } else {
@@ -5230,7 +5585,7 @@ function _lookupByKey(table, key, value) {
   }
   return {
     lo,
-    hi
+    hi,
   };
 }
 function _rlookupByKey(table, key, value) {
@@ -5238,7 +5593,7 @@ function _rlookupByKey(table, key, value) {
   var lo = 0;
   var mid;
   while (hi - lo > 1) {
-    mid = lo + hi >> 1;
+    mid = (lo + hi) >> 1;
     if (table[mid][key] < value) {
       hi = mid;
     } else {
@@ -5247,15 +5602,15 @@ function _rlookupByKey(table, key, value) {
   }
   return {
     lo,
-    hi
+    hi,
   };
 }
 
 function getRelativePosition$1(e, chart) {
-  if ('native' in e) {
+  if ("native" in e) {
     return {
       x: e.x,
-      y: e.y
+      y: e.y,
     };
   }
   return helpers.dom.getRelativePosition(e, chart);
@@ -5264,10 +5619,7 @@ function evaluateAllVisibleItems(chart, handler) {
   var metasets = chart.getSortedVisibleDatasetMetas();
   var index, data, element;
   for (var i = 0, ilen = metasets.length; i < ilen; ++i) {
-    ({
-      index,
-      data
-    } = metasets[i]);
+    ({ index, data } = metasets[i]);
     for (var j = 0, jlen = data.length; j < jlen; ++j) {
       element = data[j];
       if (!element.skip) {
@@ -5277,11 +5629,7 @@ function evaluateAllVisibleItems(chart, handler) {
   }
 }
 function binarySearch(metaset, axis, value, intersect) {
-  var {
-    controller,
-    data,
-    _sorted
-  } = metaset;
+  var { controller, data, _sorted } = metaset;
   var iScale = controller._cachedMeta.iScale;
   if (iScale && axis === iScale.axis && _sorted && data.length) {
     var lookupMethod = iScale._reversePixels ? _rlookupByKey : _lookupByKey;
@@ -5289,34 +5637,28 @@ function binarySearch(metaset, axis, value, intersect) {
       return lookupMethod(data, axis, value);
     } else if (controller._sharedOptions) {
       var el = data[0];
-      var range = typeof el.getRange === 'function' && el.getRange(axis);
+      var range = typeof el.getRange === "function" && el.getRange(axis);
       if (range) {
         var start = lookupMethod(data, axis, value - range);
         var end = lookupMethod(data, axis, value + range);
         return {
           lo: start.lo,
-          hi: end.hi
+          hi: end.hi,
         };
       }
     }
   }
   return {
     lo: 0,
-    hi: data.length - 1
+    hi: data.length - 1,
   };
 }
 function optimizedEvaluateItems(chart, axis, position, handler, intersect) {
   var metasets = chart.getSortedVisibleDatasetMetas();
   var value = position[axis];
   for (var i = 0, ilen = metasets.length; i < ilen; ++i) {
-    var {
-      index,
-      data
-    } = metasets[i];
-    var {
-      lo,
-      hi
-    } = binarySearch(metasets[i], axis, value, intersect);
+    var { index, data } = metasets[i];
+    var { lo, hi } = binarySearch(metasets[i], axis, value, intersect);
     for (var j = lo; j <= hi; ++j) {
       var element = data[j];
       if (!element.skip) {
@@ -5326,8 +5668,8 @@ function optimizedEvaluateItems(chart, axis, position, handler, intersect) {
   }
 }
 function getDistanceMetricForAxis(axis) {
-  var useX = axis.indexOf('x') !== -1;
-  var useY = axis.indexOf('y') !== -1;
+  var useX = axis.indexOf("x") !== -1;
+  var useY = axis.indexOf("y") !== -1;
   return function (pt1, pt2) {
     var deltaX = useX ? Math.abs(pt1.x - pt2.x) : 0;
     var deltaY = useY ? Math.abs(pt1.y - pt2.y) : 0;
@@ -5344,7 +5686,7 @@ function getIntersectItems(chart, position, axis, useFinalPosition) {
       items.push({
         element,
         datasetIndex,
-        index
+        index,
       });
     }
   };
@@ -5359,23 +5701,28 @@ function getNearestItems(chart, position, axis, intersect, useFinalPosition) {
     return items;
   }
   var evaluationFunc = function evaluationFunc(element, datasetIndex, index) {
-    if (intersect && !element.inRange(position.x, position.y, useFinalPosition)) {
+    if (
+      intersect &&
+      !element.inRange(position.x, position.y, useFinalPosition)
+    ) {
       return;
     }
     var center = element.getCenterPoint(useFinalPosition);
     var distance = distanceMetric(position, center);
     if (distance < minDistance) {
-      items = [{
-        element,
-        datasetIndex,
-        index
-      }];
+      items = [
+        {
+          element,
+          datasetIndex,
+          index,
+        },
+      ];
       minDistance = distance;
     } else if (distance === minDistance) {
       items.push({
         element,
         datasetIndex,
-        index
+        index,
       });
     }
   };
@@ -5386,20 +5733,22 @@ var Interaction = {
   modes: {
     index(chart, e, options, useFinalPosition) {
       var position = getRelativePosition$1(e, chart);
-      var axis = options.axis || 'x';
-      var items = options.intersect ? getIntersectItems(chart, position, axis, useFinalPosition) : getNearestItems(chart, position, axis, false, useFinalPosition);
+      var axis = options.axis || "x";
+      var items = options.intersect
+        ? getIntersectItems(chart, position, axis, useFinalPosition)
+        : getNearestItems(chart, position, axis, false, useFinalPosition);
       var elements = [];
       if (!items.length) {
         return [];
       }
-      chart.getSortedVisibleDatasetMetas().forEach(meta => {
+      chart.getSortedVisibleDatasetMetas().forEach((meta) => {
         var index = items[0].index;
         var element = meta.data[index];
         if (element && !element.skip) {
           elements.push({
             element,
             datasetIndex: meta.index,
-            index
+            index,
           });
         }
       });
@@ -5407,8 +5756,10 @@ var Interaction = {
     },
     dataset(chart, e, options, useFinalPosition) {
       var position = getRelativePosition$1(e, chart);
-      var axis = options.axis || 'xy';
-      var items = options.intersect ? getIntersectItems(chart, position, axis, useFinalPosition) : getNearestItems(chart, position, axis, false, useFinalPosition);
+      var axis = options.axis || "xy";
+      var items = options.intersect
+        ? getIntersectItems(chart, position, axis, useFinalPosition)
+        : getNearestItems(chart, position, axis, false, useFinalPosition);
       if (items.length > 0) {
         var datasetIndex = items[0].datasetIndex;
         var data = chart.getDatasetMeta(datasetIndex).data;
@@ -5417,7 +5768,7 @@ var Interaction = {
           items.push({
             element: data[i],
             datasetIndex,
-            index: i
+            index: i,
           });
         }
       }
@@ -5425,13 +5776,19 @@ var Interaction = {
     },
     point(chart, e, options, useFinalPosition) {
       var position = getRelativePosition$1(e, chart);
-      var axis = options.axis || 'xy';
+      var axis = options.axis || "xy";
       return getIntersectItems(chart, position, axis, useFinalPosition);
     },
     nearest(chart, e, options, useFinalPosition) {
       var position = getRelativePosition$1(e, chart);
-      var axis = options.axis || 'xy';
-      return getNearestItems(chart, position, axis, options.intersect, useFinalPosition);
+      var axis = options.axis || "xy";
+      return getNearestItems(
+        chart,
+        position,
+        axis,
+        options.intersect,
+        useFinalPosition
+      );
     },
     x(chart, e, options, useFinalPosition) {
       var position = getRelativePosition$1(e, chart);
@@ -5442,7 +5799,7 @@ var Interaction = {
           items.push({
             element,
             datasetIndex,
-            index
+            index,
           });
         }
         if (element.inRange(position.x, position.y, useFinalPosition)) {
@@ -5463,7 +5820,7 @@ var Interaction = {
           items.push({
             element,
             datasetIndex,
-            index
+            index,
           });
         }
         if (element.inRange(position.x, position.y, useFinalPosition)) {
@@ -5474,22 +5831,26 @@ var Interaction = {
         return [];
       }
       return items;
-    }
-  }
+    },
+  },
 };
 
-var STATIC_POSITIONS = ['left', 'top', 'right', 'bottom'];
+var STATIC_POSITIONS = ["left", "top", "right", "bottom"];
 function filterByPosition(array, position) {
-  return array.filter(v => v.pos === position);
+  return array.filter((v) => v.pos === position);
 }
 function filterDynamicPositionByAxis(array, axis) {
-  return array.filter(v => STATIC_POSITIONS.indexOf(v.pos) === -1 && v.box.axis === axis);
+  return array.filter(
+    (v) => STATIC_POSITIONS.indexOf(v.pos) === -1 && v.box.axis === axis
+  );
 }
 function sortByWeight(array, reverse) {
   return array.sort((a, b) => {
     var v0 = reverse ? b : a;
     var v1 = reverse ? a : b;
-    return v0.weight === v1.weight ? v0.index - v1.index : v0.weight - v1.weight;
+    return v0.weight === v1.weight
+      ? v0.index - v1.index
+      : v0.weight - v1.weight;
   });
 }
 function wrapBoxes(boxes) {
@@ -5502,7 +5863,7 @@ function wrapBoxes(boxes) {
       box,
       pos: box.position,
       horizontal: box.isHorizontal(),
-      weight: box.weight
+      weight: box.weight,
     });
   }
   return layoutBoxes;
@@ -5511,28 +5872,36 @@ function setLayoutDims(layouts, params) {
   var i, ilen, layout;
   for (i = 0, ilen = layouts.length; i < ilen; ++i) {
     layout = layouts[i];
-    layout.width = layout.horizontal ? layout.box.fullWidth && params.availableWidth : params.vBoxMaxWidth;
+    layout.width = layout.horizontal
+      ? layout.box.fullWidth && params.availableWidth
+      : params.vBoxMaxWidth;
     layout.height = layout.horizontal && params.hBoxMaxHeight;
   }
 }
 function buildLayoutBoxes(boxes) {
   var layoutBoxes = wrapBoxes(boxes);
-  var left = sortByWeight(filterByPosition(layoutBoxes, 'left'), true);
-  var right = sortByWeight(filterByPosition(layoutBoxes, 'right'));
-  var top = sortByWeight(filterByPosition(layoutBoxes, 'top'), true);
-  var bottom = sortByWeight(filterByPosition(layoutBoxes, 'bottom'));
-  var centerHorizontal = filterDynamicPositionByAxis(layoutBoxes, 'x');
-  var centerVertical = filterDynamicPositionByAxis(layoutBoxes, 'y');
+  var left = sortByWeight(filterByPosition(layoutBoxes, "left"), true);
+  var right = sortByWeight(filterByPosition(layoutBoxes, "right"));
+  var top = sortByWeight(filterByPosition(layoutBoxes, "top"), true);
+  var bottom = sortByWeight(filterByPosition(layoutBoxes, "bottom"));
+  var centerHorizontal = filterDynamicPositionByAxis(layoutBoxes, "x");
+  var centerVertical = filterDynamicPositionByAxis(layoutBoxes, "y");
   return {
     leftAndTop: left.concat(top),
-    rightAndBottom: right.concat(centerVertical).concat(bottom).concat(centerHorizontal),
-    chartArea: filterByPosition(layoutBoxes, 'chartArea'),
+    rightAndBottom: right
+      .concat(centerVertical)
+      .concat(bottom)
+      .concat(centerHorizontal),
+    chartArea: filterByPosition(layoutBoxes, "chartArea"),
     vertical: left.concat(right).concat(centerVertical),
-    horizontal: top.concat(bottom).concat(centerHorizontal)
+    horizontal: top.concat(bottom).concat(centerHorizontal),
   };
 }
 function getCombinedMax(maxPadding, chartArea, a, b) {
-  return Math.max(maxPadding[a], chartArea[a]) + Math.max(maxPadding[b], chartArea[b]);
+  return (
+    Math.max(maxPadding[a], chartArea[a]) +
+    Math.max(maxPadding[b], chartArea[b])
+  );
 }
 function updateDims(chartArea, params, layout) {
   var box = layout.box;
@@ -5549,12 +5918,16 @@ function updateDims(chartArea, params, layout) {
     maxPadding.bottom = Math.max(maxPadding.bottom, boxPadding.bottom);
     maxPadding.right = Math.max(maxPadding.right, boxPadding.right);
   }
-  var newWidth = params.outerWidth - getCombinedMax(maxPadding, chartArea, 'left', 'right');
-  var newHeight = params.outerHeight - getCombinedMax(maxPadding, chartArea, 'top', 'bottom');
+  var newWidth =
+    params.outerWidth - getCombinedMax(maxPadding, chartArea, "left", "right");
+  var newHeight =
+    params.outerHeight - getCombinedMax(maxPadding, chartArea, "top", "bottom");
   if (newWidth !== chartArea.w || newHeight !== chartArea.h) {
     chartArea.w = newWidth;
     chartArea.h = newHeight;
-    return layout.horizontal ? newWidth !== chartArea.w : newHeight !== chartArea.h;
+    return layout.horizontal
+      ? newWidth !== chartArea.w
+      : newHeight !== chartArea.h;
   }
 }
 function handleMaxPadding(chartArea) {
@@ -5564,10 +5937,10 @@ function handleMaxPadding(chartArea) {
     chartArea[pos] += change;
     return change;
   }
-  chartArea.y += updatePos('top');
-  chartArea.x += updatePos('left');
-  updatePos('right');
-  updatePos('bottom');
+  chartArea.y += updatePos("top");
+  chartArea.x += updatePos("left");
+  updatePos("right");
+  updatePos("bottom");
 }
 function getMargins(horizontal, chartArea) {
   var maxPadding = chartArea.maxPadding;
@@ -5576,14 +5949,16 @@ function getMargins(horizontal, chartArea) {
       left: 0,
       top: 0,
       right: 0,
-      bottom: 0
+      bottom: 0,
     };
-    positions.forEach(pos => {
+    positions.forEach((pos) => {
       margin[pos] = Math.max(chartArea[pos], maxPadding[pos]);
     });
     return margin;
   }
-  return horizontal ? marginForPositions(['left', 'right']) : marginForPositions(['top', 'bottom']);
+  return horizontal
+    ? marginForPositions(["left", "right"])
+    : marginForPositions(["top", "bottom"]);
 }
 function fitBoxes(boxes, chartArea, params) {
   var refitBoxes = [];
@@ -5591,7 +5966,11 @@ function fitBoxes(boxes, chartArea, params) {
   for (i = 0, ilen = boxes.length; i < ilen; ++i) {
     layout = boxes[i];
     box = layout.box;
-    box.update(layout.width || chartArea.w, layout.height || chartArea.h, getMargins(layout.horizontal, chartArea));
+    box.update(
+      layout.width || chartArea.w,
+      layout.height || chartArea.h,
+      getMargins(layout.horizontal, chartArea)
+    );
     if (updateDims(chartArea, params, layout)) {
       changed = true;
       if (refitBoxes.length) {
@@ -5614,7 +5993,9 @@ function placeBoxes(boxes, chartArea, params) {
     box = layout.box;
     if (layout.horizontal) {
       box.left = box.fullWidth ? userPadding.left : chartArea.left;
-      box.right = box.fullWidth ? params.outerWidth - userPadding.right : chartArea.left + chartArea.w;
+      box.right = box.fullWidth
+        ? params.outerWidth - userPadding.right
+        : chartArea.left + chartArea.w;
       box.top = y;
       box.bottom = y + box.height;
       box.width = box.right - box.left;
@@ -5631,13 +6012,13 @@ function placeBoxes(boxes, chartArea, params) {
   chartArea.x = x;
   chartArea.y = y;
 }
-defaults.set('layout', {
+defaults.set("layout", {
   padding: {
     top: 0,
     right: 0,
     bottom: 0,
-    left: 0
-  }
+    left: 0,
+  },
 });
 var layouts = {
   defaults: {},
@@ -5646,16 +6027,20 @@ var layouts = {
       chart.boxes = [];
     }
     item.fullWidth = item.fullWidth || false;
-    item.position = item.position || 'top';
+    item.position = item.position || "top";
     item.weight = item.weight || 0;
-    item._layers = item._layers || function () {
-      return [{
-        z: 0,
-        draw(chartArea) {
-          item.draw(chartArea);
-        }
-      }];
-    };
+    item._layers =
+      item._layers ||
+      function () {
+        return [
+          {
+            z: 0,
+            draw(chartArea) {
+              item.draw(chartArea);
+            },
+          },
+        ];
+      };
     chart.boxes.push(item);
   },
   removeBox(chart, layoutItem) {
@@ -5665,7 +6050,7 @@ var layouts = {
     }
   },
   configure(chart, item, options) {
-    var props = ['fullWidth', 'position', 'weight'];
+    var props = ["fullWidth", "position", "weight"];
     var ilen = props.length;
     var i = 0;
     var prop;
@@ -5693,15 +6078,18 @@ var layouts = {
       padding,
       availableWidth,
       vBoxMaxWidth: availableWidth / 2 / verticalBoxes.length,
-      hBoxMaxHeight: availableHeight / 2
+      hBoxMaxHeight: availableHeight / 2,
     });
-    var chartArea = _extends({
-      maxPadding: _extends({}, padding),
-      w: availableWidth,
-      h: availableHeight,
-      x: padding.left,
-      y: padding.top
-    }, padding);
+    var chartArea = _extends(
+      {
+        maxPadding: _extends({}, padding),
+        w: availableWidth,
+        h: availableHeight,
+        x: padding.left,
+        y: padding.top,
+      },
+      padding
+    );
     setLayoutDims(verticalBoxes.concat(horizontalBoxes), params);
     fitBoxes(verticalBoxes, chartArea, params);
     if (fitBoxes(horizontalBoxes, chartArea, params)) {
@@ -5718,14 +6106,14 @@ var layouts = {
       right: chartArea.left + chartArea.w,
       bottom: chartArea.top + chartArea.h,
       height: chartArea.h,
-      width: chartArea.w
+      width: chartArea.w,
     };
-    each(boxes.chartArea, layout => {
+    each(boxes.chartArea, (layout) => {
       var box = layout.box;
       _extends(box, chart.chartArea);
       box.update(chartArea.w, chartArea.h);
     });
-  }
+  },
 };
 
 class BasePlatform {
@@ -5742,12 +6130,12 @@ class BasePlatform {
 
 class BasicPlatform extends BasePlatform {
   acquireContext(item) {
-    return item && item.getContext && item.getContext('2d') || null;
+    return (item && item.getContext && item.getContext("2d")) || null;
   }
 }
 
-var MapShim = function () {
-  if (typeof Map !== 'undefined') {
+var MapShim = (function () {
+  if (typeof Map !== "undefined") {
     return Map;
   }
   function getIndex(arr, key) {
@@ -5761,72 +6149,73 @@ var MapShim = function () {
     });
     return result;
   }
-  return (
-    function () {
-      function class_1() {
-        this.__entries__ = [];
+  return (function () {
+    function class_1() {
+      this.__entries__ = [];
+    }
+    Object.defineProperty(class_1.prototype, "size", {
+      get: function get() {
+        return this.__entries__.length;
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    class_1.prototype.get = function (key) {
+      var index = getIndex(this.__entries__, key);
+      var entry = this.__entries__[index];
+      return entry && entry[1];
+    };
+    class_1.prototype.set = function (key, value) {
+      var index = getIndex(this.__entries__, key);
+      if (~index) {
+        this.__entries__[index][1] = value;
+      } else {
+        this.__entries__.push([key, value]);
       }
-      Object.defineProperty(class_1.prototype, "size", {
-        get: function get() {
-          return this.__entries__.length;
-        },
-        enumerable: true,
-        configurable: true
-      });
-      class_1.prototype.get = function (key) {
-        var index = getIndex(this.__entries__, key);
-        var entry = this.__entries__[index];
-        return entry && entry[1];
-      };
-      class_1.prototype.set = function (key, value) {
-        var index = getIndex(this.__entries__, key);
-        if (~index) {
-          this.__entries__[index][1] = value;
-        } else {
-          this.__entries__.push([key, value]);
-        }
-      };
-      class_1.prototype.delete = function (key) {
-        var entries = this.__entries__;
-        var index = getIndex(entries, key);
-        if (~index) {
-          entries.splice(index, 1);
-        }
-      };
-      class_1.prototype.has = function (key) {
-        return !!~getIndex(this.__entries__, key);
-      };
-      class_1.prototype.clear = function () {
-        this.__entries__.splice(0);
-      };
-      class_1.prototype.forEach = function (callback, ctx) {
-        if (ctx === void 0) {
-          ctx = null;
-        }
-        for (var _i = 0, _a = this.__entries__; _i < _a.length; _i++) {
-          var entry = _a[_i];
-          callback.call(ctx, entry[1], entry[0]);
-        }
-      };
-      return class_1;
-    }()
-  );
-}();
-var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && window.document === document;
-var global$1 = function () {
-  if (typeof global !== 'undefined' && global.Math === Math) {
+    };
+    class_1.prototype.delete = function (key) {
+      var entries = this.__entries__;
+      var index = getIndex(entries, key);
+      if (~index) {
+        entries.splice(index, 1);
+      }
+    };
+    class_1.prototype.has = function (key) {
+      return !!~getIndex(this.__entries__, key);
+    };
+    class_1.prototype.clear = function () {
+      this.__entries__.splice(0);
+    };
+    class_1.prototype.forEach = function (callback, ctx) {
+      if (ctx === void 0) {
+        ctx = null;
+      }
+      for (var _i = 0, _a = this.__entries__; _i < _a.length; _i++) {
+        var entry = _a[_i];
+        callback.call(ctx, entry[1], entry[0]);
+      }
+    };
+    return class_1;
+  })();
+})();
+var isBrowser =
+  typeof window !== "undefined" &&
+  typeof document !== "undefined" &&
+  window.document === document;
+var global$1 = (function () {
+  if (typeof global !== "undefined" && global.Math === Math) {
     return global;
   }
-  if (typeof self !== 'undefined' && self.Math === Math) {
+  if (typeof self !== "undefined" && self.Math === Math) {
     return self;
   }
-  if (typeof window !== 'undefined' && window.Math === Math) {
+  if (typeof window !== "undefined" && window.Math === Math) {
     return window;
   }
-  return Function('return this')();
-}();
-var requestAnimationFrame$1 = function () {
-  if (typeof requestAnimationFrame === 'function') {
+  return Function("return this")();
+})();
+var requestAnimationFrame$1 = (function () {
+  if (typeof requestAnimationFrame === "function") {
     return requestAnimationFrame.bind(global$1);
   }
   return function (callback) {
@@ -5834,12 +6223,12 @@ var requestAnimationFrame$1 = function () {
       return callback(Date.now());
     }, 1000 / 60);
   };
-}();
+})();
 var trailingTimeout = 2;
 function throttle(callback, delay) {
   var leadingCall = false,
-      trailingCall = false,
-      lastCallTime = 0;
+    trailingCall = false,
+    lastCallTime = 0;
   function resolvePending() {
     if (leadingCall) {
       leadingCall = false;
@@ -5869,10 +6258,18 @@ function throttle(callback, delay) {
   return proxy;
 }
 var REFRESH_DELAY = 20;
-var transitionKeys = ['top', 'right', 'bottom', 'left', 'width', 'height', 'size', 'weight'];
-var mutationObserverSupported = typeof MutationObserver !== 'undefined';
-var ResizeObserverController =
-function () {
+var transitionKeys = [
+  "top",
+  "right",
+  "bottom",
+  "left",
+  "width",
+  "height",
+  "size",
+  "weight",
+];
+var mutationObserverSupported = typeof MutationObserver !== "undefined";
+var ResizeObserverController = (function () {
   function ResizeObserverController() {
     this.connected_ = false;
     this.mutationEventsAdded_ = false;
@@ -5918,18 +6315,18 @@ function () {
     if (!isBrowser || this.connected_) {
       return;
     }
-    document.addEventListener('transitionend', this.onTransitionEnd_);
-    window.addEventListener('resize', this.refresh);
+    document.addEventListener("transitionend", this.onTransitionEnd_);
+    window.addEventListener("resize", this.refresh);
     if (mutationObserverSupported) {
       this.mutationsObserver_ = new MutationObserver(this.refresh);
       this.mutationsObserver_.observe(document, {
         attributes: true,
         childList: true,
         characterData: true,
-        subtree: true
+        subtree: true,
       });
     } else {
-      document.addEventListener('DOMSubtreeModified', this.refresh);
+      document.addEventListener("DOMSubtreeModified", this.refresh);
       this.mutationEventsAdded_ = true;
     }
     this.connected_ = true;
@@ -5938,13 +6335,13 @@ function () {
     if (!isBrowser || !this.connected_) {
       return;
     }
-    document.removeEventListener('transitionend', this.onTransitionEnd_);
-    window.removeEventListener('resize', this.refresh);
+    document.removeEventListener("transitionend", this.onTransitionEnd_);
+    window.removeEventListener("resize", this.refresh);
     if (this.mutationsObserver_) {
       this.mutationsObserver_.disconnect();
     }
     if (this.mutationEventsAdded_) {
-      document.removeEventListener('DOMSubtreeModified', this.refresh);
+      document.removeEventListener("DOMSubtreeModified", this.refresh);
     }
     this.mutationsObserver_ = null;
     this.mutationEventsAdded_ = false;
@@ -5952,7 +6349,7 @@ function () {
   };
   ResizeObserverController.prototype.onTransitionEnd_ = function (_a) {
     var _b = _a.propertyName,
-        propertyName = _b === void 0 ? '' : _b;
+      propertyName = _b === void 0 ? "" : _b;
     var isReflowProperty = transitionKeys.some(function (key) {
       return !!~propertyName.indexOf(key);
     });
@@ -5968,7 +6365,7 @@ function () {
   };
   ResizeObserverController.instance_ = null;
   return ResizeObserverController;
-}();
+})();
 var defineConfigurable = function defineConfigurable(target, props) {
   for (var _i = 0, _a = Object.keys(props); _i < _a.length; _i++) {
     var key = _a[_i];
@@ -5976,13 +6373,14 @@ var defineConfigurable = function defineConfigurable(target, props) {
       value: props[key],
       enumerable: false,
       writable: false,
-      configurable: true
+      configurable: true,
     });
   }
   return target;
 };
 var getWindowOf = function getWindowOf(target) {
-  var ownerGlobal = target && target.ownerDocument && target.ownerDocument.defaultView;
+  var ownerGlobal =
+    target && target.ownerDocument && target.ownerDocument.defaultView;
   return ownerGlobal || global$1;
 };
 var emptyRect = createRectInit(0, 0, 0, 0);
@@ -5995,16 +6393,16 @@ function getBordersSize(styles) {
     positions[_i - 1] = arguments[_i];
   }
   return positions.reduce(function (size, position) {
-    var value = styles['border-' + position + '-width'];
+    var value = styles["border-" + position + "-width"];
     return size + toFloat(value);
   }, 0);
 }
 function getPaddings(styles) {
-  var positions = ['top', 'right', 'bottom', 'left'];
+  var positions = ["top", "right", "bottom", "left"];
   var paddings = {};
   for (var _i = 0, positions_1 = positions; _i < positions_1.length; _i++) {
     var position = positions_1[_i];
-    var value = styles['padding-' + position];
+    var value = styles["padding-" + position];
     paddings[position] = toFloat(value);
   }
   return paddings;
@@ -6015,7 +6413,7 @@ function getSVGContentRect(target) {
 }
 function getHTMLElementContentRect(target) {
   var clientWidth = target.clientWidth,
-      clientHeight = target.clientHeight;
+    clientHeight = target.clientHeight;
   if (!clientWidth && !clientHeight) {
     return emptyRect;
   }
@@ -6024,13 +6422,13 @@ function getHTMLElementContentRect(target) {
   var horizPad = paddings.left + paddings.right;
   var vertPad = paddings.top + paddings.bottom;
   var width = toFloat(styles.width),
-      height = toFloat(styles.height);
-  if (styles.boxSizing === 'border-box') {
+    height = toFloat(styles.height);
+  if (styles.boxSizing === "border-box") {
     if (Math.round(width + horizPad) !== clientWidth) {
-      width -= getBordersSize(styles, 'left', 'right') + horizPad;
+      width -= getBordersSize(styles, "left", "right") + horizPad;
     }
     if (Math.round(height + vertPad) !== clientHeight) {
-      height -= getBordersSize(styles, 'top', 'bottom') + vertPad;
+      height -= getBordersSize(styles, "top", "bottom") + vertPad;
     }
   }
   if (!isDocumentElement(target)) {
@@ -6045,16 +6443,19 @@ function getHTMLElementContentRect(target) {
   }
   return createRectInit(paddings.left, paddings.top, width, height);
 }
-var isSVGGraphicsElement = function () {
-  if (typeof SVGGraphicsElement !== 'undefined') {
+var isSVGGraphicsElement = (function () {
+  if (typeof SVGGraphicsElement !== "undefined") {
     return function (target) {
       return target instanceof getWindowOf(target).SVGGraphicsElement;
     };
   }
   return function (target) {
-    return target instanceof getWindowOf(target).SVGElement && typeof target.getBBox === 'function';
+    return (
+      target instanceof getWindowOf(target).SVGElement &&
+      typeof target.getBBox === "function"
+    );
   };
-}();
+})();
 function isDocumentElement(target) {
   return target === getWindowOf(target).document.documentElement;
 }
@@ -6069,10 +6470,11 @@ function getContentRect(target) {
 }
 function createReadOnlyRect(_a) {
   var x = _a.x,
-      y = _a.y,
-      width = _a.width,
-      height = _a.height;
-  var Constr = typeof DOMRectReadOnly !== 'undefined' ? DOMRectReadOnly : Object;
+    y = _a.y,
+    width = _a.width,
+    height = _a.height;
+  var Constr =
+    typeof DOMRectReadOnly !== "undefined" ? DOMRectReadOnly : Object;
   var rect = Object.create(Constr.prototype);
   defineConfigurable(rect, {
     x: x,
@@ -6082,7 +6484,7 @@ function createReadOnlyRect(_a) {
     top: y,
     right: x + width,
     bottom: height + y,
-    left: x
+    left: x,
   });
   return rect;
 }
@@ -6091,11 +6493,10 @@ function createRectInit(x, y, width, height) {
     x: x,
     y: y,
     width: width,
-    height: height
+    height: height,
   };
 }
-var ResizeObservation =
-function () {
+var ResizeObservation = (function () {
   function ResizeObservation(target) {
     this.broadcastWidth = 0;
     this.broadcastHeight = 0;
@@ -6105,7 +6506,9 @@ function () {
   ResizeObservation.prototype.isActive = function () {
     var rect = getContentRect(this.target);
     this.contentRect_ = rect;
-    return rect.width !== this.broadcastWidth || rect.height !== this.broadcastHeight;
+    return (
+      rect.width !== this.broadcastWidth || rect.height !== this.broadcastHeight
+    );
   };
   ResizeObservation.prototype.broadcastRect = function () {
     var rect = this.contentRect_;
@@ -6114,25 +6517,25 @@ function () {
     return rect;
   };
   return ResizeObservation;
-}();
-var ResizeObserverEntry =
-function () {
+})();
+var ResizeObserverEntry = (function () {
   function ResizeObserverEntry(target, rectInit) {
     var contentRect = createReadOnlyRect(rectInit);
     defineConfigurable(this, {
       target: target,
-      contentRect: contentRect
+      contentRect: contentRect,
     });
   }
   return ResizeObserverEntry;
-}();
-var ResizeObserverSPI =
-function () {
+})();
+var ResizeObserverSPI = (function () {
   function ResizeObserverSPI(callback, controller, callbackCtx) {
     this.activeObservations_ = [];
     this.observations_ = new MapShim();
-    if (typeof callback !== 'function') {
-      throw new TypeError('The callback provided as parameter 1 is not a function.');
+    if (typeof callback !== "function") {
+      throw new TypeError(
+        "The callback provided as parameter 1 is not a function."
+      );
     }
     this.callback_ = callback;
     this.controller_ = controller;
@@ -6140,9 +6543,9 @@ function () {
   }
   ResizeObserverSPI.prototype.observe = function (target) {
     if (!arguments.length) {
-      throw new TypeError('1 argument required, but only 0 present.');
+      throw new TypeError("1 argument required, but only 0 present.");
     }
-    if (typeof Element === 'undefined' || !(Element instanceof Object)) {
+    if (typeof Element === "undefined" || !(Element instanceof Object)) {
       return;
     }
     if (!(target instanceof getWindowOf(target).Element)) {
@@ -6158,9 +6561,9 @@ function () {
   };
   ResizeObserverSPI.prototype.unobserve = function (target) {
     if (!arguments.length) {
-      throw new TypeError('1 argument required, but only 0 present.');
+      throw new TypeError("1 argument required, but only 0 present.");
     }
-    if (typeof Element === 'undefined' || !(Element instanceof Object)) {
+    if (typeof Element === "undefined" || !(Element instanceof Object)) {
       return;
     }
     if (!(target instanceof getWindowOf(target).Element)) {
@@ -6195,7 +6598,10 @@ function () {
     }
     var ctx = this.callbackCtx_;
     var entries = this.activeObservations_.map(function (observation) {
-      return new ResizeObserverEntry(observation.target, observation.broadcastRect());
+      return new ResizeObserverEntry(
+        observation.target,
+        observation.broadcastRect()
+      );
     });
     this.callback_.call(ctx, entries, ctx);
     this.clearActive();
@@ -6207,47 +6613,46 @@ function () {
     return this.activeObservations_.length > 0;
   };
   return ResizeObserverSPI;
-}();
-var observers = typeof WeakMap !== 'undefined' ? new WeakMap() : new MapShim();
-var ResizeObserver =
-function () {
+})();
+var observers = typeof WeakMap !== "undefined" ? new WeakMap() : new MapShim();
+var ResizeObserver = (function () {
   function ResizeObserver(callback) {
     if (!(this instanceof ResizeObserver)) {
-      throw new TypeError('Cannot call a class as a function.');
+      throw new TypeError("Cannot call a class as a function.");
     }
     if (!arguments.length) {
-      throw new TypeError('1 argument required, but only 0 present.');
+      throw new TypeError("1 argument required, but only 0 present.");
     }
     var controller = ResizeObserverController.getInstance();
     var observer = new ResizeObserverSPI(callback, controller, this);
     observers.set(this, observer);
   }
   return ResizeObserver;
-}();
-['observe', 'unobserve', 'disconnect'].forEach(function (method) {
+})();
+["observe", "unobserve", "disconnect"].forEach(function (method) {
   ResizeObserver.prototype[method] = function () {
     var _a;
     return (_a = observers.get(this))[method].apply(_a, arguments);
   };
 });
-var index$1 = function () {
-  if (typeof global$1.ResizeObserver !== 'undefined') {
+var index$1 = (function () {
+  if (typeof global$1.ResizeObserver !== "undefined") {
     return global$1.ResizeObserver;
   }
   return ResizeObserver;
-}();
+})();
 
-var EXPANDO_KEY = '$chartjs';
+var EXPANDO_KEY = "$chartjs";
 var EVENT_TYPES = {
-  touchstart: 'mousedown',
-  touchmove: 'mousemove',
-  touchend: 'mouseup',
-  pointerenter: 'mouseenter',
-  pointerdown: 'mousedown',
-  pointermove: 'mousemove',
-  pointerup: 'mouseup',
-  pointerleave: 'mouseout',
-  pointerout: 'mouseout'
+  touchstart: "mousedown",
+  touchmove: "mousemove",
+  touchend: "mouseup",
+  pointerenter: "mouseenter",
+  pointerdown: "mousedown",
+  pointermove: "mousemove",
+  pointerup: "mouseup",
+  pointerleave: "mouseout",
+  pointerout: "mouseout",
 };
 function readUsedSize(element, property) {
   var value = helpers.dom.getStyle(element, property);
@@ -6256,8 +6661,8 @@ function readUsedSize(element, property) {
 }
 function initCanvas(canvas, config) {
   var style = canvas.style;
-  var renderHeight = canvas.getAttribute('height');
-  var renderWidth = canvas.getAttribute('width');
+  var renderHeight = canvas.getAttribute("height");
+  var renderWidth = canvas.getAttribute("width");
   canvas[EXPANDO_KEY] = {
     initial: {
       height: renderHeight,
@@ -6265,23 +6670,23 @@ function initCanvas(canvas, config) {
       style: {
         display: style.display,
         height: style.height,
-        width: style.width
-      }
-    }
+        width: style.width,
+      },
+    },
   };
-  style.display = style.display || 'block';
-  style.boxSizing = style.boxSizing || 'border-box';
-  if (renderWidth === null || renderWidth === '') {
-    var displayWidth = readUsedSize(canvas, 'width');
+  style.display = style.display || "block";
+  style.boxSizing = style.boxSizing || "border-box";
+  if (renderWidth === null || renderWidth === "") {
+    var displayWidth = readUsedSize(canvas, "width");
     if (displayWidth !== undefined) {
       canvas.width = displayWidth;
     }
   }
-  if (renderHeight === null || renderHeight === '') {
-    if (canvas.style.height === '') {
+  if (renderHeight === null || renderHeight === "") {
+    if (canvas.style.height === "") {
       canvas.height = canvas.width / (config.options.aspectRatio || 2);
     } else {
-      var displayHeight = readUsedSize(canvas, 'height');
+      var displayHeight = readUsedSize(canvas, "height");
       if (displayHeight !== undefined) {
         canvas.height = displayHeight;
       }
@@ -6289,24 +6694,25 @@ function initCanvas(canvas, config) {
   }
   return canvas;
 }
-var supportsEventListenerOptions = function () {
+var supportsEventListenerOptions = (function () {
   var passiveSupported = false;
   try {
     var options = {
       get passive() {
         passiveSupported = true;
         return false;
-      }
+      },
     };
-    window.addEventListener('test', null, options);
-    window.removeEventListener('test', null, options);
-  } catch (e) {
-  }
+    window.addEventListener("test", null, options);
+    window.removeEventListener("test", null, options);
+  } catch (e) {}
   return passiveSupported;
-}();
-var eventListenerOptions = supportsEventListenerOptions ? {
-  passive: true
-} : false;
+})();
+var eventListenerOptions = supportsEventListenerOptions
+  ? {
+      passive: true,
+    }
+  : false;
 function addListener(node, type, listener) {
   node.addEventListener(type, listener, eventListenerOptions);
 }
@@ -6319,7 +6725,7 @@ function createEvent(type, chart, x, y, nativeEvent) {
     chart,
     native: nativeEvent || null,
     x: x !== undefined ? x : null,
-    y: y !== undefined ? y : null
+    y: y !== undefined ? y : null,
   };
 }
 function fromNativeEvent(event, chart) {
@@ -6331,7 +6737,11 @@ function throttled(fn, thisArg) {
   var ticking = false;
   var args = [];
   return function () {
-    for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
+    for (
+      var _len = arguments.length, rest = new Array(_len), _key = 0;
+      _key < _len;
+      _key++
+    ) {
       rest[_key] = arguments[_key];
     }
     args = Array.prototype.slice.call(rest);
@@ -6352,7 +6762,7 @@ function watchForResize(element, fn) {
       fn();
     }
   }, window);
-  var observer = new index$1(entries => {
+  var observer = new index$1((entries) => {
     var entry = entries[0];
     resize(entry.contentRect.width, entry.contentRect.height);
   });
@@ -6360,9 +6770,9 @@ function watchForResize(element, fn) {
   return observer;
 }
 function watchForAttachment(element, fn) {
-  var observer = new MutationObserver(entries => {
+  var observer = new MutationObserver((entries) => {
     var parent = _getParentNode(element);
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       for (var i = 0; i < entry.addedNodes.length; i++) {
         var added = entry.addedNodes[i];
         if (added === element || added === parent) {
@@ -6373,7 +6783,7 @@ function watchForAttachment(element, fn) {
   });
   observer.observe(document, {
     childList: true,
-    subtree: true
+    subtree: true,
   });
   return observer;
 }
@@ -6382,8 +6792,8 @@ function watchForDetachment(element, fn) {
   if (!parent) {
     return;
   }
-  var observer = new MutationObserver(entries => {
-    entries.forEach(entry => {
+  var observer = new MutationObserver((entries) => {
+    entries.forEach((entry) => {
       for (var i = 0; i < entry.removedNodes.length; i++) {
         if (entry.removedNodes[i] === element) {
           fn();
@@ -6393,7 +6803,7 @@ function watchForDetachment(element, fn) {
     });
   });
   observer.observe(parent, {
-    childList: true
+    childList: true,
   });
   return observer;
 }
@@ -6405,9 +6815,9 @@ function removeObserver(proxies, type) {
   }
 }
 function unlistenForResize(proxies) {
-  removeObserver(proxies, 'attach');
-  removeObserver(proxies, 'detach');
-  removeObserver(proxies, 'resize');
+  removeObserver(proxies, "attach");
+  removeObserver(proxies, "detach");
+  removeObserver(proxies, "resize");
 }
 function listenForResize(canvas, proxies, listener) {
   var detached = () => listenForResize(canvas, proxies, listener);
@@ -6418,7 +6828,7 @@ function listenForResize(canvas, proxies, listener) {
     proxies.detach = watchForDetachment(canvas, detached);
   } else {
     proxies.attach = watchForAttachment(canvas, () => {
-      removeObserver(proxies, 'attach');
+      removeObserver(proxies, "attach");
       var parent = _getParentNode(canvas);
       proxies.resize = watchForResize(parent, listener);
       proxies.detach = watchForDetachment(canvas, detached);
@@ -6427,7 +6837,7 @@ function listenForResize(canvas, proxies, listener) {
 }
 class DomPlatform extends BasePlatform {
   acquireContext(canvas, config) {
-    var context = canvas && canvas.getContext && canvas.getContext('2d');
+    var context = canvas && canvas.getContext && canvas.getContext("2d");
     if (context && context.canvas === canvas) {
       initCanvas(canvas, config);
       return context;
@@ -6440,7 +6850,7 @@ class DomPlatform extends BasePlatform {
       return false;
     }
     var initial = canvas[EXPANDO_KEY].initial;
-    ['height', 'width'].forEach(prop => {
+    ["height", "width"].forEach((prop) => {
       var value = initial[prop];
       if (helpers.isNullOrUndef(value)) {
         canvas.removeAttribute(prop);
@@ -6449,7 +6859,7 @@ class DomPlatform extends BasePlatform {
       }
     });
     var style = initial.style || {};
-    Object.keys(style).forEach(key => {
+    Object.keys(style).forEach((key) => {
       canvas.style[key] = style[key];
     });
     canvas.width = canvas.width;
@@ -6460,18 +6870,18 @@ class DomPlatform extends BasePlatform {
     this.removeEventListener(chart, type);
     var canvas = chart.canvas;
     var proxies = chart.$proxies || (chart.$proxies = {});
-    if (type === 'resize') {
+    if (type === "resize") {
       return listenForResize(canvas, proxies, listener);
     }
-    var proxy = proxies[type] = throttled(event => {
+    var proxy = (proxies[type] = throttled((event) => {
       listener(fromNativeEvent(event, chart));
-    }, chart);
+    }, chart));
     addListener(canvas, type, proxy);
   }
   removeEventListener(chart, type) {
     var canvas = chart.canvas;
     var proxies = chart.$proxies || (chart.$proxies = {});
-    if (type === 'resize') {
+    if (type === "resize") {
       return unlistenForResize(proxies);
     }
     var proxy = proxies[type];
@@ -6489,10 +6899,10 @@ class DomPlatform extends BasePlatform {
 var platforms = {
   BasicPlatform,
   DomPlatform,
-  BasePlatform
+  BasePlatform,
 };
 
-defaults.set('plugins', {});
+defaults.set("plugins", {});
 class PluginService {
   constructor() {
     this._plugins = [];
@@ -6500,7 +6910,7 @@ class PluginService {
   }
   register(plugins) {
     var p = this._plugins;
-    [].concat(plugins).forEach(plugin => {
+    [].concat(plugins).forEach((plugin) => {
       if (p.indexOf(plugin) === -1) {
         p.push(plugin);
       }
@@ -6509,7 +6919,7 @@ class PluginService {
   }
   unregister(plugins) {
     var p = this._plugins;
-    [].concat(plugins).forEach(plugin => {
+    [].concat(plugins).forEach((plugin) => {
       var idx = p.indexOf(plugin);
       if (idx !== -1) {
         p.splice(idx, 1);
@@ -6535,7 +6945,7 @@ class PluginService {
       descriptor = descriptors[i];
       plugin = descriptor.plugin;
       method = plugin[hook];
-      if (typeof method === 'function') {
+      if (typeof method === "function") {
         params = [chart].concat(args || []);
         params.push(descriptor.options);
         if (method.apply(plugin, params) === false) {
@@ -6552,9 +6962,9 @@ class PluginService {
     }
     var plugins = [];
     var descriptors = [];
-    var config = chart && chart.config || {};
-    var options = config.options && config.options.plugins || {};
-    this._plugins.concat(config.plugins || []).forEach(plugin => {
+    var config = (chart && chart.config) || {};
+    var options = (config.options && config.options.plugins) || {};
+    this._plugins.concat(config.plugins || []).forEach((plugin) => {
       var idx = plugins.indexOf(plugin);
       if (idx !== -1) {
         return;
@@ -6570,7 +6980,7 @@ class PluginService {
       plugins.push(plugin);
       descriptors.push({
         plugin,
-        options: opts || {}
+        options: opts || {},
       });
     });
     cache.descriptors = descriptors;
@@ -6593,10 +7003,14 @@ var scaleService = {
     me.defaults[type] = clone(scaleConstructor.defaults);
   },
   getScaleConstructor(type) {
-    return Object.prototype.hasOwnProperty.call(this.constructors, type) ? this.constructors[type] : undefined;
+    return Object.prototype.hasOwnProperty.call(this.constructors, type)
+      ? this.constructors[type]
+      : undefined;
   },
   getScaleDefaults(type) {
-    return Object.prototype.hasOwnProperty.call(this.defaults, type) ? merge({}, [defaults.scale, this.defaults[type]]) : {};
+    return Object.prototype.hasOwnProperty.call(this.defaults, type)
+      ? merge({}, [defaults.scale, this.defaults[type]])
+      : {};
   },
   updateScaleDefaults(type, additions) {
     var me = this;
@@ -6605,13 +7019,13 @@ var scaleService = {
     }
   },
   addScalesToLayout(chart) {
-    each(chart.scales, scale => {
+    each(chart.scales, (scale) => {
       scale.fullWidth = scale.options.fullWidth;
       scale.position = scale.options.position;
       scale.weight = scale.options.weight;
       layouts.addBox(chart, scale);
     });
-  }
+  },
 };
 
 var version = "3.0.0-alpha";
@@ -6620,60 +7034,77 @@ var valueOrDefault$1 = helpers.valueOrDefault;
 function mergeScaleConfig(config, options) {
   options = options || {};
   var chartDefaults = defaults[config.type] || {
-    scales: {}
+    scales: {},
   };
   var configScales = options.scales || {};
   var firstIDs = {};
   var scales = {};
-  Object.keys(configScales).forEach(id => {
+  Object.keys(configScales).forEach((id) => {
     var axis = id[0];
     firstIDs[axis] = firstIDs[axis] || id;
-    scales[id] = helpers.mergeIf({}, [configScales[id], chartDefaults.scales[axis]]);
+    scales[id] = helpers.mergeIf({}, [
+      configScales[id],
+      chartDefaults.scales[axis],
+    ]);
   });
   if (options.scale) {
-    scales[options.scale.id || 'r'] = helpers.mergeIf({}, [options.scale, chartDefaults.scales.r]);
-    firstIDs.r = firstIDs.r || options.scale.id || 'r';
+    scales[options.scale.id || "r"] = helpers.mergeIf({}, [
+      options.scale,
+      chartDefaults.scales.r,
+    ]);
+    firstIDs.r = firstIDs.r || options.scale.id || "r";
   }
-  config.data.datasets.forEach(dataset => {
+  config.data.datasets.forEach((dataset) => {
     var datasetDefaults = defaults[dataset.type || config.type] || {
-      scales: {}
+      scales: {},
     };
     var defaultScaleOptions = datasetDefaults.scales || {};
-    Object.keys(defaultScaleOptions).forEach(defaultID => {
-      var id = dataset[defaultID + 'AxisID'] || firstIDs[defaultID] || defaultID;
+    Object.keys(defaultScaleOptions).forEach((defaultID) => {
+      var id =
+        dataset[defaultID + "AxisID"] || firstIDs[defaultID] || defaultID;
       scales[id] = scales[id] || {};
-      helpers.mergeIf(scales[id], [configScales[id], defaultScaleOptions[defaultID]]);
+      helpers.mergeIf(scales[id], [
+        configScales[id],
+        defaultScaleOptions[defaultID],
+      ]);
     });
   });
-  Object.keys(scales).forEach(key => {
+  Object.keys(scales).forEach((key) => {
     var scale = scales[key];
     helpers.mergeIf(scale, scaleService.getScaleDefaults(scale.type));
   });
   return scales;
 }
-function mergeConfig()
-{
-  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+function mergeConfig() {
+  for (
+    var _len = arguments.length, args = new Array(_len), _key = 0;
+    _key < _len;
+    _key++
+  ) {
     args[_key] = arguments[_key];
   }
   return helpers.merge({}, args, {
     merger(key, target, source, options) {
-      if (key !== 'scales' && key !== 'scale') {
+      if (key !== "scales" && key !== "scale") {
         helpers._merger(key, target, source, options);
       }
-    }
+    },
   });
 }
 function initConfig(config) {
   config = config || {};
-  var data = config.data = config.data || {
+  var data = (config.data = config.data || {
     datasets: [],
-    labels: []
-  };
+    labels: [],
+  });
   data.datasets = data.datasets || [];
   data.labels = data.labels || [];
   var scaleConfig = mergeScaleConfig(config, config.options);
-  config.options = mergeConfig(defaults, defaults[config.type], config.options || {});
+  config.options = mergeConfig(
+    defaults,
+    defaults[config.type],
+    config.options || {}
+  );
   config.options.scales = scaleConfig;
   return config;
 }
@@ -6682,7 +7113,7 @@ function isAnimationDisabled(config) {
 }
 function updateConfig(chart) {
   var newOptions = chart.options;
-  helpers.each(chart.scales, scale => {
+  helpers.each(chart.scales, (scale) => {
     layouts.removeBox(chart, scale);
   });
   var scaleConfig = mergeScaleConfig(chart.config, newOptions);
@@ -6693,9 +7124,13 @@ function updateConfig(chart) {
   chart.ensureScalesHaveIDs();
   chart.buildOrUpdateScales();
 }
-var KNOWN_POSITIONS = new Set(['top', 'bottom', 'left', 'right', 'chartArea']);
+var KNOWN_POSITIONS = new Set(["top", "bottom", "left", "right", "chartArea"]);
 function positionIsHorizontal(position, axis) {
-  return position === 'top' || position === 'bottom' || !KNOWN_POSITIONS.has(position) && axis === 'x';
+  return (
+    position === "top" ||
+    position === "bottom" ||
+    (!KNOWN_POSITIONS.has(position) && axis === "x")
+  );
 }
 function compare2Level(l1, l2) {
   return function (a, b) {
@@ -6705,19 +7140,27 @@ function compare2Level(l1, l2) {
 function onAnimationsComplete(ctx) {
   var chart = ctx.chart;
   var animationOptions = chart.options.animation;
-  pluginsCore.notify(chart, 'afterRender');
-  helpers.callback(animationOptions && animationOptions.onComplete, [ctx], chart);
+  pluginsCore.notify(chart, "afterRender");
+  helpers.callback(
+    animationOptions && animationOptions.onComplete,
+    [ctx],
+    chart
+  );
 }
 function onAnimationProgress(ctx) {
   var chart = ctx.chart;
   var animationOptions = chart.options.animation;
-  helpers.callback(animationOptions && animationOptions.onProgress, [ctx], chart);
+  helpers.callback(
+    animationOptions && animationOptions.onProgress,
+    [ctx],
+    chart
+  );
 }
 function isDomSupported() {
-  return typeof window !== 'undefined' && typeof document !== 'undefined';
+  return typeof window !== "undefined" && typeof document !== "undefined";
 }
 function getCanvas(item) {
-  if (isDomSupported() && typeof item === 'string') {
+  if (isDomSupported() && typeof item === "string") {
     item = document.getElementById(item);
   } else if (item.length) {
     item = item[0];
@@ -6764,39 +7207,45 @@ class Chart {
     this.$proxies = {};
     this._hiddenIndices = {};
     Chart.instances[me.id] = me;
-    Object.defineProperty(me, 'data', {
+    Object.defineProperty(me, "data", {
       get() {
         return me.config.data;
       },
       set(value) {
         me.config.data = value;
-      }
+      },
     });
     if (!context || !canvas) {
-      console.error("Failed to create chart: can't acquire context from the given item");
+      console.error(
+        "Failed to create chart: can't acquire context from the given item"
+      );
       return;
     }
-    Animator$1.listen(me, 'complete', onAnimationsComplete);
-    Animator$1.listen(me, 'progress', onAnimationProgress);
+    Animator$1.listen(me, "complete", onAnimationsComplete);
+    Animator$1.listen(me, "progress", onAnimationProgress);
     me._initialize();
     me.update();
   }
   _initialize() {
     var me = this;
-    pluginsCore.notify(me, 'beforeInit');
+    pluginsCore.notify(me, "beforeInit");
     if (me.options.responsive) {
       me.resize(true);
     } else {
       helpers.dom.retinaScale(me, me.options.devicePixelRatio);
     }
     me.bindEvents();
-    pluginsCore.notify(me, 'afterInit');
+    pluginsCore.notify(me, "afterInit");
     return me;
   }
   _initializePlatform(canvas, config) {
     if (config.platform) {
       return new config.platform();
-    } else if (!isDomSupported() || typeof OffscreenCanvas !== 'undefined' && canvas instanceof OffscreenCanvas) {
+    } else if (
+      !isDomSupported() ||
+      (typeof OffscreenCanvas !== "undefined" &&
+        canvas instanceof OffscreenCanvas)
+    ) {
       return new BasicPlatform();
     }
     return new DomPlatform();
@@ -6819,30 +7268,38 @@ class Chart {
       height = getMaximumHeight(canvas);
     }
     var newWidth = Math.max(0, Math.floor(width));
-    var newHeight = Math.max(0, Math.floor(aspectRatio ? newWidth / aspectRatio : height));
+    var newHeight = Math.max(
+      0,
+      Math.floor(aspectRatio ? newWidth / aspectRatio : height)
+    );
     var oldRatio = me.currentDevicePixelRatio;
-    var newRatio = options.devicePixelRatio || me.platform.getDevicePixelRatio();
-    if (me.width === newWidth && me.height === newHeight && oldRatio === newRatio) {
+    var newRatio =
+      options.devicePixelRatio || me.platform.getDevicePixelRatio();
+    if (
+      me.width === newWidth &&
+      me.height === newHeight &&
+      oldRatio === newRatio
+    ) {
       return;
     }
     canvas.width = me.width = newWidth;
     canvas.height = me.height = newHeight;
     if (canvas.style) {
-      canvas.style.width = newWidth + 'px';
-      canvas.style.height = newHeight + 'px';
+      canvas.style.width = newWidth + "px";
+      canvas.style.height = newHeight + "px";
     }
     helpers.dom.retinaScale(me, newRatio);
     if (!silent) {
       var newSize = {
         width: newWidth,
-        height: newHeight
+        height: newHeight,
       };
-      pluginsCore.notify(me, 'resize', [newSize]);
+      pluginsCore.notify(me, "resize", [newSize]);
       if (options.onResize) {
         options.onResize(me, newSize);
       }
       me.stop();
-      me.update('resize');
+      me.update("resize");
     }
   }
   ensureScalesHaveIDs() {
@@ -6853,7 +7310,7 @@ class Chart {
       axisOptions.id = axisID;
     });
     if (scaleOptions) {
-      scaleOptions.id = scaleOptions.id || 'scale';
+      scaleOptions.id = scaleOptions.id || "scale";
     }
   }
   buildOrUpdateScales() {
@@ -6867,22 +7324,38 @@ class Chart {
     }, {});
     var items = [];
     if (scaleOpts) {
-      items = items.concat(Object.keys(scaleOpts).map(axisID => {
-        var axisOptions = scaleOpts[axisID];
-        var isRadial = axisID.charAt(0).toLowerCase() === 'r';
-        var isHorizontal = axisID.charAt(0).toLowerCase() === 'x';
-        return {
-          options: axisOptions,
-          dposition: isRadial ? 'chartArea' : isHorizontal ? 'bottom' : 'left',
-          dtype: isRadial ? 'radialLinear' : isHorizontal ? 'category' : 'linear'
-        };
-      }));
+      items = items.concat(
+        Object.keys(scaleOpts).map((axisID) => {
+          var axisOptions = scaleOpts[axisID];
+          var isRadial = axisID.charAt(0).toLowerCase() === "r";
+          var isHorizontal = axisID.charAt(0).toLowerCase() === "x";
+          return {
+            options: axisOptions,
+            dposition: isRadial
+              ? "chartArea"
+              : isHorizontal
+              ? "bottom"
+              : "left",
+            dtype: isRadial
+              ? "radialLinear"
+              : isHorizontal
+              ? "category"
+              : "linear",
+          };
+        })
+      );
     }
-    helpers.each(items, item => {
+    helpers.each(items, (item) => {
       var scaleOptions = item.options;
       var id = scaleOptions.id;
       var scaleType = valueOrDefault$1(scaleOptions.type, item.dtype);
-      if (scaleOptions.position === undefined || positionIsHorizontal(scaleOptions.position, scaleOptions.axis || id[0]) !== positionIsHorizontal(item.dposition)) {
+      if (
+        scaleOptions.position === undefined ||
+        positionIsHorizontal(
+          scaleOptions.position,
+          scaleOptions.axis || id[0]
+        ) !== positionIsHorizontal(item.dposition)
+      ) {
         scaleOptions.position = item.dposition;
       }
       updated[id] = true;
@@ -6902,11 +7375,16 @@ class Chart {
           type: scaleType,
           options: scaleOptions,
           ctx: me.ctx,
-          chart: me
+          chart: me,
         });
         scales[scale.id] = scale;
       }
-      scale.axis = scale.options.position === 'chartArea' ? 'r' : scale.isHorizontal() ? 'x' : 'y';
+      scale.axis =
+        scale.options.position === "chartArea"
+          ? "r"
+          : scale.isHorizontal()
+          ? "x"
+          : "y";
       scale._userMin = scale.parse(scale.options.min);
       scale._userMax = scale.parse(scale.options.max);
       if (item.isDefault) {
@@ -6941,7 +7419,9 @@ class Chart {
       }
       metasets.splice(numData, numMeta - numData);
     }
-    me._sortedMetasets = metasets.slice(0).sort(compare2Level('order', 'index'));
+    me._sortedMetasets = metasets
+      .slice(0)
+      .sort(compare2Level("order", "index"));
   }
   buildOrUpdateControllers() {
     var me = this;
@@ -6959,7 +7439,7 @@ class Chart {
       meta.type = type;
       meta.order = dataset.order || 0;
       me._updateMetasetIndex(meta, i);
-      meta.label = '' + dataset.label;
+      meta.label = "" + dataset.label;
       meta.visible = me.isDatasetVisible(i);
       if (meta.controller) {
         meta.controller.updateIndex(i);
@@ -6978,13 +7458,17 @@ class Chart {
   }
   _resetElements() {
     var me = this;
-    helpers.each(me.data.datasets, (dataset, datasetIndex) => {
-      me.getDatasetMeta(datasetIndex).controller.reset();
-    }, me);
+    helpers.each(
+      me.data.datasets,
+      (dataset, datasetIndex) => {
+        me.getDatasetMeta(datasetIndex).controller.reset();
+      },
+      me
+    );
   }
   reset() {
     this._resetElements();
-    pluginsCore.notify(this, 'reset');
+    pluginsCore.notify(this, "reset");
   }
   update(mode) {
     var me = this;
@@ -6992,7 +7476,7 @@ class Chart {
     me._updating = true;
     updateConfig(me);
     pluginsCore.invalidate(me);
-    if (pluginsCore.notify(me, 'beforeUpdate') === false) {
+    if (pluginsCore.notify(me, "beforeUpdate") === false) {
       return;
     }
     var newControllers = me.buildOrUpdateControllers();
@@ -7001,13 +7485,13 @@ class Chart {
     }
     me._updateLayout();
     if (me.options.animation) {
-      helpers.each(newControllers, controller => {
+      helpers.each(newControllers, (controller) => {
         controller.reset();
       });
     }
     me._updateDatasets(mode);
-    pluginsCore.notify(me, 'afterUpdate');
-    me._layers.sort(compare2Level('z', '_idx'));
+    pluginsCore.notify(me, "afterUpdate");
+    me._layers.sort(compare2Level("z", "_idx"));
     if (me._lastEvent) {
       me._eventHandler(me._lastEvent, true);
     }
@@ -7016,34 +7500,43 @@ class Chart {
   }
   _updateLayout() {
     var me = this;
-    if (pluginsCore.notify(me, 'beforeLayout') === false) {
+    if (pluginsCore.notify(me, "beforeLayout") === false) {
       return;
     }
     layouts.update(me, me.width, me.height);
     me._layers = [];
-    helpers.each(me.boxes, box => {
-      if (box.configure) {
-        box.configure();
-      }
-      me._layers.push(...box._layers());
-    }, me);
+    helpers.each(
+      me.boxes,
+      (box) => {
+        if (box.configure) {
+          box.configure();
+        }
+        me._layers.push(...box._layers());
+      },
+      me
+    );
     me._layers.forEach((item, index) => {
       item._idx = index;
     });
-    pluginsCore.notify(me, 'afterLayout');
+    pluginsCore.notify(me, "afterLayout");
   }
   _updateDatasets(mode) {
     var me = this;
-    var isFunction = typeof mode === 'function';
-    if (pluginsCore.notify(me, 'beforeDatasetsUpdate') === false) {
+    var isFunction = typeof mode === "function";
+    if (pluginsCore.notify(me, "beforeDatasetsUpdate") === false) {
       return;
     }
     for (var i = 0, ilen = me.data.datasets.length; i < ilen; ++i) {
-      me._updateDataset(i, isFunction ? mode({
-        datasetIndex: i
-      }) : mode);
+      me._updateDataset(
+        i,
+        isFunction
+          ? mode({
+              datasetIndex: i,
+            })
+          : mode
+      );
     }
-    pluginsCore.notify(me, 'afterDatasetsUpdate');
+    pluginsCore.notify(me, "afterDatasetsUpdate");
   }
   _updateDataset(index, mode) {
     var me = this;
@@ -7051,22 +7544,22 @@ class Chart {
     var args = {
       meta,
       index,
-      mode
+      mode,
     };
-    if (pluginsCore.notify(me, 'beforeDatasetUpdate', [args]) === false) {
+    if (pluginsCore.notify(me, "beforeDatasetUpdate", [args]) === false) {
       return;
     }
     meta.controller._update(mode);
-    pluginsCore.notify(me, 'afterDatasetUpdate', [args]);
+    pluginsCore.notify(me, "afterDatasetUpdate", [args]);
   }
   render() {
     var me = this;
     var animationOptions = me.options.animation;
-    if (pluginsCore.notify(me, 'beforeRender') === false) {
+    if (pluginsCore.notify(me, "beforeRender") === false) {
       return;
     }
     var onComplete = function onComplete() {
-      pluginsCore.notify(me, 'afterRender');
+      pluginsCore.notify(me, "afterRender");
       helpers.callback(animationOptions && animationOptions.onComplete, [], me);
     };
     if (Animator$1.has(me)) {
@@ -7085,7 +7578,7 @@ class Chart {
     if (me.width <= 0 || me.height <= 0) {
       return;
     }
-    if (pluginsCore.notify(me, 'beforeDraw') === false) {
+    if (pluginsCore.notify(me, "beforeDraw") === false) {
       return;
     }
     var layers = me._layers;
@@ -7096,7 +7589,7 @@ class Chart {
     for (; i < layers.length; ++i) {
       layers[i].draw(me.chartArea);
     }
-    pluginsCore.notify(me, 'afterDraw');
+    pluginsCore.notify(me, "afterDraw");
   }
   _getSortedDatasetMetas(filterVisible) {
     var me = this;
@@ -7116,14 +7609,14 @@ class Chart {
   }
   _drawDatasets() {
     var me = this;
-    if (pluginsCore.notify(me, 'beforeDatasetsDraw') === false) {
+    if (pluginsCore.notify(me, "beforeDatasetsDraw") === false) {
       return;
     }
     var metasets = me.getSortedVisibleDatasetMetas();
     for (var i = metasets.length - 1; i >= 0; --i) {
       me._drawDataset(metasets[i]);
     }
-    pluginsCore.notify(me, 'afterDatasetsDraw');
+    pluginsCore.notify(me, "afterDatasetsDraw");
   }
   _drawDataset(meta) {
     var me = this;
@@ -7132,53 +7625,53 @@ class Chart {
     var area = me.chartArea;
     var args = {
       meta,
-      index: meta.index
+      index: meta.index,
     };
-    if (pluginsCore.notify(me, 'beforeDatasetDraw', [args]) === false) {
+    if (pluginsCore.notify(me, "beforeDatasetDraw", [args]) === false) {
       return;
     }
     helpers.canvas.clipArea(ctx, {
       left: clip.left === false ? 0 : area.left - clip.left,
       right: clip.right === false ? me.width : area.right + clip.right,
       top: clip.top === false ? 0 : area.top - clip.top,
-      bottom: clip.bottom === false ? me.height : area.bottom + clip.bottom
+      bottom: clip.bottom === false ? me.height : area.bottom + clip.bottom,
     });
     meta.controller.draw();
     helpers.canvas.unclipArea(ctx);
-    pluginsCore.notify(me, 'afterDatasetDraw', [args]);
+    pluginsCore.notify(me, "afterDatasetDraw", [args]);
   }
   getElementAtEvent(e) {
     return Interaction.modes.nearest(this, e, {
-      intersect: true
+      intersect: true,
     });
   }
   getElementsAtEvent(e) {
     return Interaction.modes.index(this, e, {
-      intersect: true
+      intersect: true,
     });
   }
   getElementsAtXAxis(e) {
     return Interaction.modes.index(this, e, {
-      intersect: false
+      intersect: false,
     });
   }
   getElementsAtEventForMode(e, mode, options, useFinalPosition) {
     var method = Interaction.modes[mode];
-    if (typeof method === 'function') {
+    if (typeof method === "function") {
       return method(this, e, options, useFinalPosition);
     }
     return [];
   }
   getDatasetAtEvent(e) {
     return Interaction.modes.dataset(this, e, {
-      intersect: true
+      intersect: true,
     });
   }
   getDatasetMeta(datasetIndex) {
     var me = this;
     var dataset = me.data.datasets[datasetIndex];
     var metasets = me._metasets;
-    var meta = metasets.filter(x => x._dataset === dataset).pop();
+    var meta = metasets.filter((x) => x._dataset === dataset).pop();
     if (!meta) {
       meta = metasets[datasetIndex] = {
         type: null,
@@ -7192,7 +7685,7 @@ class Chart {
         index: datasetIndex,
         _dataset: dataset,
         _parsed: [],
-        _sorted: false
+        _sorted: false,
       };
     }
     return meta;
@@ -7202,7 +7695,9 @@ class Chart {
   }
   isDatasetVisible(datasetIndex) {
     var meta = this.getDatasetMeta(datasetIndex);
-    return typeof meta.hidden === 'boolean' ? !meta.hidden : !this.data.datasets[datasetIndex].hidden;
+    return typeof meta.hidden === "boolean"
+      ? !meta.hidden
+      : !this.data.datasets[datasetIndex].hidden;
   }
   setDatasetVisibility(datasetIndex, visible) {
     var meta = this.getDatasetMeta(datasetIndex);
@@ -7216,14 +7711,14 @@ class Chart {
   }
   _updateDatasetVisibility(datasetIndex, visible) {
     var me = this;
-    var mode = visible ? 'show' : 'hide';
+    var mode = visible ? "show" : "hide";
     var meta = me.getDatasetMeta(datasetIndex);
     var anims = meta.controller._resolveAnimations(undefined, mode);
     me.setDatasetVisibility(datasetIndex, visible);
     anims.update(meta, {
-      visible
+      visible,
     });
-    me.update(ctx => ctx.datasetIndex === datasetIndex ? mode : undefined);
+    me.update((ctx) => (ctx.datasetIndex === datasetIndex ? mode : undefined));
   }
   hide(datasetIndex) {
     this._updateDatasetVisibility(datasetIndex, false);
@@ -7255,7 +7750,7 @@ class Chart {
       me.canvas = null;
       me.ctx = null;
     }
-    pluginsCore.notify(me, 'destroy');
+    pluginsCore.notify(me, "destroy");
     delete Chart.instances[me.id];
   }
   toBase64Image() {
@@ -7267,7 +7762,7 @@ class Chart {
     var listener = function listener(e) {
       me._eventHandler(e);
     };
-    helpers.each(me.options.events, type => {
+    helpers.each(me.options.events, (type) => {
       me.platform.addEventListener(me, type, listener);
       listeners[type] = listener;
     });
@@ -7277,7 +7772,7 @@ class Chart {
           me.resize(false, width, height);
         }
       };
-      me.platform.addEventListener(me, 'resize', listener);
+      me.platform.addEventListener(me, "resize", listener);
       listeners.resize = listener;
     }
   }
@@ -7293,16 +7788,18 @@ class Chart {
     });
   }
   updateHoverStyle(items, mode, enabled) {
-    var prefix = enabled ? 'set' : 'remove';
+    var prefix = enabled ? "set" : "remove";
     var meta, item, i, ilen;
-    if (mode === 'dataset') {
+    if (mode === "dataset") {
       meta = this.getDatasetMeta(items[0].datasetIndex);
-      meta.controller['_' + prefix + 'DatasetHoverStyle']();
+      meta.controller["_" + prefix + "DatasetHoverStyle"]();
     }
     for (i = 0, ilen = items.length; i < ilen; ++i) {
       item = items[i];
       if (item) {
-        this.getDatasetMeta(item.datasetIndex).controller[prefix + 'HoverStyle'](item.element, item.datasetIndex, item.index);
+        this.getDatasetMeta(item.datasetIndex).controller[
+          prefix + "HoverStyle"
+        ](item.element, item.datasetIndex, item.index);
       }
     }
   }
@@ -7319,11 +7816,11 @@ class Chart {
   }
   _eventHandler(e, replay) {
     var me = this;
-    if (pluginsCore.notify(me, 'beforeEvent', [e, replay]) === false) {
+    if (pluginsCore.notify(me, "beforeEvent", [e, replay]) === false) {
       return;
     }
     me._handleEvent(e, replay);
-    pluginsCore.notify(me, 'afterEvent', [e, replay]);
+    pluginsCore.notify(me, "afterEvent", [e, replay]);
     me.render();
     return me;
   }
@@ -7333,15 +7830,24 @@ class Chart {
     var hoverOptions = options.hover;
     var useFinalPosition = replay;
     var changed = false;
-    if (e.type === 'mouseout') {
+    if (e.type === "mouseout") {
       me.active = [];
       me._lastEvent = null;
     } else {
-      me.active = me.getElementsAtEventForMode(e, hoverOptions.mode, hoverOptions, useFinalPosition);
-      me._lastEvent = e.type === 'click' ? me._lastEvent : e;
+      me.active = me.getElementsAtEventForMode(
+        e,
+        hoverOptions.mode,
+        hoverOptions,
+        useFinalPosition
+      );
+      me._lastEvent = e.type === "click" ? me._lastEvent : e;
     }
-    helpers.callback(options.onHover || options.hover.onHover, [e.native, me.active], me);
-    if (e.type === 'mouseup' || e.type === 'click') {
+    helpers.callback(
+      options.onHover || options.hover.onHover,
+      [e.native, me.active],
+      me
+    );
+    if (e.type === "mouseup" || e.type === "click") {
       if (options.onClick && helpers.canvas._isPointInArea(e, me.chartArea)) {
         options.onClick.call(me, e.native, me.active);
       }
@@ -7358,7 +7864,9 @@ _defineProperty(Chart, "version", version);
 _defineProperty(Chart, "instances", {});
 
 function abstract() {
-  throw new Error('This method is not implemented: either no adapter can be found or an incomplete integration was provided.');
+  throw new Error(
+    "This method is not implemented: either no adapter can be found or an incomplete integration was provided."
+  );
 }
 class DateAdapter {
   constructor(options) {
@@ -7390,27 +7898,36 @@ DateAdapter.override = function (members) {
   _extends(DateAdapter.prototype, members);
 };
 var _adapters = {
-  _date: DateAdapter
+  _date: DateAdapter,
 };
 
 var Ticks = {
   formatters: {
     values(value) {
-      return isArray(value) ? value : '' + value;
+      return isArray(value) ? value : "" + value;
     },
     numeric(tickValue, index, ticks) {
       if (tickValue === 0) {
-        return '0';
+        return "0";
       }
-      var delta = ticks.length > 3 ? ticks[2].value - ticks[1].value : ticks[1].value - ticks[0].value;
+      var delta =
+        ticks.length > 3
+          ? ticks[2].value - ticks[1].value
+          : ticks[1].value - ticks[0].value;
       if (Math.abs(delta) > 1 && tickValue !== Math.floor(tickValue)) {
         delta = tickValue - Math.floor(tickValue);
       }
       var logDelta = log10(Math.abs(delta));
-      var maxTick = Math.max(Math.abs(ticks[0].value), Math.abs(ticks[ticks.length - 1].value));
-      var minTick = Math.min(Math.abs(ticks[0].value), Math.abs(ticks[ticks.length - 1].value));
+      var maxTick = Math.max(
+        Math.abs(ticks[0].value),
+        Math.abs(ticks[ticks.length - 1].value)
+      );
+      var minTick = Math.min(
+        Math.abs(ticks[0].value),
+        Math.abs(ticks[ticks.length - 1].value)
+      );
       var locale = this.chart.options.locale;
-      if (maxTick < 1e-4 || minTick > 1e+7) {
+      if (maxTick < 1e-4 || minTick > 1e7) {
         var logTick = log10(Math.abs(tickValue));
         var numExponential = Math.floor(logTick) - Math.floor(logDelta);
         numExponential = Math.max(Math.min(numExponential, 20), 0);
@@ -7420,20 +7937,20 @@ var Ticks = {
       numDecimal = Math.max(Math.min(numDecimal, 20), 0);
       return new Intl.NumberFormat(locale, {
         minimumFractionDigits: numDecimal,
-        maximumFractionDigits: numDecimal
+        maximumFractionDigits: numDecimal,
       }).format(tickValue);
-    }
-  }
+    },
+  },
 };
 
-defaults.set('scale', {
+defaults.set("scale", {
   display: true,
   offset: false,
   reverse: false,
   beginAtZero: false,
   gridLines: {
     display: true,
-    color: 'rgba(0,0,0,0.1)',
+    color: "rgba(0,0,0,0.1)",
     lineWidth: 1,
     drawBorder: true,
     drawOnChartArea: true,
@@ -7441,22 +7958,22 @@ defaults.set('scale', {
     tickMarkLength: 10,
     offsetGridLines: false,
     borderDash: [],
-    borderDashOffset: 0.0
+    borderDashOffset: 0.0,
   },
   scaleLabel: {
     display: false,
-    labelString: '',
+    labelString: "",
     padding: {
       top: 4,
-      bottom: 4
-    }
+      bottom: 4,
+    },
   },
   ticks: {
     minRotation: 0,
     maxRotation: 50,
     mirror: false,
     lineWidth: 0,
-    strokeStyle: '',
+    strokeStyle: "",
     padding: 0,
     display: true,
     autoSkip: true,
@@ -7464,8 +7981,8 @@ defaults.set('scale', {
     labelOffset: 0,
     callback: Ticks.formatters.values,
     minor: {},
-    major: {}
-  }
+    major: {},
+  },
 });
 function sample(arr, numItems) {
   var result = [];
@@ -7501,7 +8018,7 @@ function getPixelForGridLine(scale, index, offsetGridLines) {
   return lineValue;
 }
 function garbageCollect(caches, length) {
-  each(caches, cache => {
+  each(caches, (cache) => {
     var gc = cache.gc;
     var gcLen = gc.length / 2;
     var i;
@@ -7616,7 +8133,7 @@ class Scale extends Element$1 {
       left: 0,
       right: 0,
       top: 0,
-      bottom: 0
+      bottom: 0,
     };
     this.maxWidth = undefined;
     this.maxHeight = undefined;
@@ -7664,22 +8181,17 @@ class Scale extends Element$1 {
       min,
       max,
       minDefined: isNumberFinite(min),
-      maxDefined: isNumberFinite(max)
+      maxDefined: isNumberFinite(max),
     };
   }
   getMinMax(canStack) {
     var me = this;
-    var {
-      min,
-      max,
-      minDefined,
-      maxDefined
-    } = me.getUserBounds();
+    var { min, max, minDefined, maxDefined } = me.getUserBounds();
     var minmax;
     if (minDefined && maxDefined) {
       return {
         min,
-        max
+        max,
       };
     }
     var metas = me.getMatchingVisibleMetas();
@@ -7694,7 +8206,7 @@ class Scale extends Element$1 {
     }
     return {
       min,
-      max
+      max,
     };
   }
   invalidateCaches() {}
@@ -7704,7 +8216,7 @@ class Scale extends Element$1 {
       left: me.paddingLeft || 0,
       top: me.paddingTop || 0,
       right: me.paddingRight || 0,
-      bottom: me.paddingBottom || 0
+      bottom: me.paddingBottom || 0,
     };
   }
   getTicks() {
@@ -7712,7 +8224,12 @@ class Scale extends Element$1 {
   }
   getLabels() {
     var data = this.chart.data;
-    return this.options.labels || (this.isHorizontal() ? data.xLabels : data.yLabels) || data.labels || [];
+    return (
+      this.options.labels ||
+      (this.isHorizontal() ? data.xLabels : data.yLabels) ||
+      data.labels ||
+      []
+    );
   }
   beforeUpdate() {
     callback(this.options.beforeUpdate, [this]);
@@ -7724,12 +8241,15 @@ class Scale extends Element$1 {
     me.beforeUpdate();
     me.maxWidth = maxWidth;
     me.maxHeight = maxHeight;
-    me._margins = _extends({
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0
-    }, margins);
+    me._margins = _extends(
+      {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      },
+      margins
+    );
     me.ticks = null;
     me._labelSizes = null;
     me._gridLineItems = null;
@@ -7744,7 +8264,9 @@ class Scale extends Element$1 {
     me.ticks = me.buildTicks() || [];
     me.afterBuildTicks();
     var samplingEnabled = sampleSize < me.ticks.length;
-    me._convertTicksToLabels(samplingEnabled ? sample(me.ticks, sampleSize) : me.ticks);
+    me._convertTicksToLabels(
+      samplingEnabled ? sample(me.ticks, sampleSize) : me.ticks
+    );
     me.configure();
     me.beforeCalculateLabelRotation();
     me.calculateLabelRotation();
@@ -7752,7 +8274,10 @@ class Scale extends Element$1 {
     me.beforeFit();
     me.fit();
     me.afterFit();
-    me.ticks = tickOpts.display && (tickOpts.autoSkip || tickOpts.source === 'auto') ? me._autoSkip(me.ticks) : me.ticks;
+    me.ticks =
+      tickOpts.display && (tickOpts.autoSkip || tickOpts.source === "auto")
+        ? me._autoSkip(me.ticks)
+        : me.ticks;
     if (samplingEnabled) {
       me._convertTicksToLabels(me.ticks);
     }
@@ -7843,7 +8368,13 @@ class Scale extends Element$1 {
     var maxRotation = tickOpts.maxRotation;
     var labelRotation = minRotation;
     var tickWidth, maxHeight, maxLabelDiagonal;
-    if (!me._isVisible() || !tickOpts.display || minRotation >= maxRotation || numTicks <= 1 || !me.isHorizontal()) {
+    if (
+      !me._isVisible() ||
+      !tickOpts.display ||
+      minRotation >= maxRotation ||
+      numTicks <= 1 ||
+      !me.isHorizontal()
+    ) {
       me.labelRotation = minRotation;
       return;
     }
@@ -7851,13 +8382,30 @@ class Scale extends Element$1 {
     var maxLabelWidth = labelSizes.widest.width;
     var maxLabelHeight = labelSizes.highest.height - labelSizes.highest.offset;
     var maxWidth = Math.min(me.maxWidth, me.chart.width - maxLabelWidth);
-    tickWidth = options.offset ? me.maxWidth / numTicks : maxWidth / (numTicks - 1);
+    tickWidth = options.offset
+      ? me.maxWidth / numTicks
+      : maxWidth / (numTicks - 1);
     if (maxLabelWidth + 6 > tickWidth) {
       tickWidth = maxWidth / (numTicks - (options.offset ? 0.5 : 1));
-      maxHeight = me.maxHeight - getTickMarkLength(options.gridLines) - tickOpts.padding - getScaleLabelHeight(options.scaleLabel);
-      maxLabelDiagonal = Math.sqrt(maxLabelWidth * maxLabelWidth + maxLabelHeight * maxLabelHeight);
-      labelRotation = toDegrees(Math.min(Math.asin(Math.min((labelSizes.highest.height + 6) / tickWidth, 1)), Math.asin(Math.min(maxHeight / maxLabelDiagonal, 1)) - Math.asin(maxLabelHeight / maxLabelDiagonal)));
-      labelRotation = Math.max(minRotation, Math.min(maxRotation, labelRotation));
+      maxHeight =
+        me.maxHeight -
+        getTickMarkLength(options.gridLines) -
+        tickOpts.padding -
+        getScaleLabelHeight(options.scaleLabel);
+      maxLabelDiagonal = Math.sqrt(
+        maxLabelWidth * maxLabelWidth + maxLabelHeight * maxLabelHeight
+      );
+      labelRotation = toDegrees(
+        Math.min(
+          Math.asin(Math.min((labelSizes.highest.height + 6) / tickWidth, 1)),
+          Math.asin(Math.min(maxHeight / maxLabelDiagonal, 1)) -
+            Math.asin(maxLabelHeight / maxLabelDiagonal)
+        )
+      );
+      labelRotation = Math.max(
+        minRotation,
+        Math.min(maxRotation, labelRotation)
+      );
     }
     me.labelRotation = labelRotation;
   }
@@ -7871,7 +8419,7 @@ class Scale extends Element$1 {
     var me = this;
     var minSize = {
       width: 0,
-      height: 0
+      height: 0,
     };
     var chart = me.chart;
     var opts = me.options;
@@ -7879,17 +8427,19 @@ class Scale extends Element$1 {
     var scaleLabelOpts = opts.scaleLabel;
     var gridLineOpts = opts.gridLines;
     var display = me._isVisible();
-    var labelsBelowTicks = opts.position !== 'top' && me.axis === 'x';
+    var labelsBelowTicks = opts.position !== "top" && me.axis === "x";
     var isHorizontal = me.isHorizontal();
     if (isHorizontal) {
       minSize.width = me.maxWidth;
     } else if (display) {
-      minSize.width = getTickMarkLength(gridLineOpts) + getScaleLabelHeight(scaleLabelOpts);
+      minSize.width =
+        getTickMarkLength(gridLineOpts) + getScaleLabelHeight(scaleLabelOpts);
     }
     if (!isHorizontal) {
       minSize.height = me.maxHeight;
     } else if (display) {
-      minSize.height = getTickMarkLength(gridLineOpts) + getScaleLabelHeight(scaleLabelOpts);
+      minSize.height =
+        getTickMarkLength(gridLineOpts) + getScaleLabelHeight(scaleLabelOpts);
     }
     if (tickOpts.display && display) {
       var labelSizes = me._getLabelSizes();
@@ -7904,23 +8454,47 @@ class Scale extends Element$1 {
         var angleRadians = toRadians(me.labelRotation);
         var cosRotation = Math.cos(angleRadians);
         var sinRotation = Math.sin(angleRadians);
-        var labelHeight = sinRotation * widestLabelSize.width + cosRotation * (highestLabelSize.height - (isRotated ? highestLabelSize.offset : 0)) + (isRotated ? 0 : lineSpace);
-        minSize.height = Math.min(me.maxHeight, minSize.height + labelHeight + tickPadding);
+        var labelHeight =
+          sinRotation * widestLabelSize.width +
+          cosRotation *
+            (highestLabelSize.height -
+              (isRotated ? highestLabelSize.offset : 0)) +
+          (isRotated ? 0 : lineSpace);
+        minSize.height = Math.min(
+          me.maxHeight,
+          minSize.height + labelHeight + tickPadding
+        );
         var offsetLeft = me.getPixelForTick(0) - me.left;
         var offsetRight = me.right - me.getPixelForTick(me.ticks.length - 1);
         var paddingLeft, paddingRight;
         if (isRotated) {
-          paddingLeft = labelsBelowTicks ? cosRotation * firstLabelSize.width + sinRotation * firstLabelSize.offset : sinRotation * (firstLabelSize.height - firstLabelSize.offset);
-          paddingRight = labelsBelowTicks ? sinRotation * (lastLabelSize.height - lastLabelSize.offset) : cosRotation * lastLabelSize.width + sinRotation * lastLabelSize.offset;
+          paddingLeft = labelsBelowTicks
+            ? cosRotation * firstLabelSize.width +
+              sinRotation * firstLabelSize.offset
+            : sinRotation * (firstLabelSize.height - firstLabelSize.offset);
+          paddingRight = labelsBelowTicks
+            ? sinRotation * (lastLabelSize.height - lastLabelSize.offset)
+            : cosRotation * lastLabelSize.width +
+              sinRotation * lastLabelSize.offset;
         } else {
           paddingLeft = firstLabelSize.width / 2;
           paddingRight = lastLabelSize.width / 2;
         }
-        me.paddingLeft = Math.max((paddingLeft - offsetLeft) * me.width / (me.width - offsetLeft), 0) + 3;
-        me.paddingRight = Math.max((paddingRight - offsetRight) * me.width / (me.width - offsetRight), 0) + 3;
+        me.paddingLeft =
+          Math.max(
+            ((paddingLeft - offsetLeft) * me.width) / (me.width - offsetLeft),
+            0
+          ) + 3;
+        me.paddingRight =
+          Math.max(
+            ((paddingRight - offsetRight) * me.width) /
+              (me.width - offsetRight),
+            0
+          ) + 3;
       } else {
-        var labelWidth = tickOpts.mirror ? 0 :
-        widestLabelSize.width + tickPadding + lineSpace;
+        var labelWidth = tickOpts.mirror
+          ? 0
+          : widestLabelSize.width + tickPadding + lineSpace;
         minSize.width = Math.min(me.maxWidth, minSize.width + labelWidth);
         me.paddingTop = firstLabelSize.height / 2;
         me.paddingBottom = lastLabelSize.height / 2;
@@ -7928,11 +8502,13 @@ class Scale extends Element$1 {
     }
     me._handleMargins();
     if (isHorizontal) {
-      me.width = me._length = chart.width - me._margins.left - me._margins.right;
+      me.width = me._length =
+        chart.width - me._margins.left - me._margins.right;
       me.height = minSize.height;
     } else {
       me.width = minSize.width;
-      me.height = me._length = chart.height - me._margins.top - me._margins.bottom;
+      me.height = me._length =
+        chart.height - me._margins.top - me._margins.bottom;
     }
   }
   _handleMargins() {
@@ -7948,11 +8524,8 @@ class Scale extends Element$1 {
     callback(this.options.afterFit, [this]);
   }
   isHorizontal() {
-    var {
-      axis,
-      position
-    } = this.options;
-    return position === 'top' || position === 'bottom' || axis === 'x';
+    var { axis, position } = this.options;
+    return position === "top" || position === "bottom" || axis === "x";
   }
   isFullWidth() {
     return this.options.fullWidth;
@@ -7984,14 +8557,24 @@ class Scale extends Element$1 {
       ticks = sample(ticks, sampleSize);
     }
     var length = ticks.length;
-    var i, j, jlen, label, tickFont, fontString, cache, lineHeight, width, height, nestedLabel;
+    var i,
+      j,
+      jlen,
+      label,
+      tickFont,
+      fontString,
+      cache,
+      lineHeight,
+      width,
+      height,
+      nestedLabel;
     for (i = 0; i < length; ++i) {
       label = ticks[i].label;
       tickFont = me._resolveTickFontOptions(i);
       ctx.font = fontString = tickFont.string;
       cache = caches[fontString] = caches[fontString] || {
         data: {},
-        gc: []
+        gc: [],
       };
       lineHeight = tickFont.lineHeight;
       width = height = 0;
@@ -8018,14 +8601,14 @@ class Scale extends Element$1 {
       return {
         width: widths[idx] || 0,
         height: heights[idx] || 0,
-        offset: offsets[idx] || 0
+        offset: offsets[idx] || 0,
       };
     }
     return {
       first: valueAt(0),
       last: valueAt(length - 1),
       widest: valueAt(widest),
-      highest: valueAt(highest)
+      highest: valueAt(highest),
     };
   }
   getLabelForValue(value) {
@@ -8040,7 +8623,9 @@ class Scale extends Element$1 {
     var offset = me.options.offset;
     var numTicks = me.ticks.length;
     var tickWidth = 1 / Math.max(numTicks - (offset ? 0 : 1), 1);
-    return index < 0 || index > numTicks - 1 ? null : me.getPixelForDecimal(index * tickWidth + (offset ? tickWidth / 2 : 0));
+    return index < 0 || index > numTicks - 1
+      ? null
+      : me.getPixelForDecimal(index * tickWidth + (offset ? tickWidth / 2 : 0));
   }
   getPixelForDecimal(decimal) {
     var me = this;
@@ -8057,10 +8642,7 @@ class Scale extends Element$1 {
     return this.getPixelForValue(this.getBaseValue());
   }
   getBaseValue() {
-    var {
-      min,
-      max
-    } = this;
+    var { min, max } = this;
     return min < 0 && max < 0 ? max : min > 0 && max > 0 ? min : 0;
   }
   _autoSkip(ticks) {
@@ -8080,12 +8662,27 @@ class Scale extends Element$1 {
     var spacing = calculateSpacing(majorIndices, ticks, axisLength, ticksLimit);
     if (numMajorIndices > 0) {
       var i, ilen;
-      var avgMajorSpacing = numMajorIndices > 1 ? Math.round((last - first) / (numMajorIndices - 1)) : null;
-      skip(ticks, newTicks, spacing, isNullOrUndef(avgMajorSpacing) ? 0 : first - avgMajorSpacing, first);
+      var avgMajorSpacing =
+        numMajorIndices > 1
+          ? Math.round((last - first) / (numMajorIndices - 1))
+          : null;
+      skip(
+        ticks,
+        newTicks,
+        spacing,
+        isNullOrUndef(avgMajorSpacing) ? 0 : first - avgMajorSpacing,
+        first
+      );
       for (i = 0, ilen = numMajorIndices - 1; i < ilen; i++) {
         skip(ticks, newTicks, spacing, majorIndices[i], majorIndices[i + 1]);
       }
-      skip(ticks, newTicks, spacing, last, isNullOrUndef(avgMajorSpacing) ? ticks.length : last + avgMajorSpacing);
+      skip(
+        ticks,
+        newTicks,
+        spacing,
+        last,
+        isNullOrUndef(avgMajorSpacing) ? ticks.length : last + avgMajorSpacing
+      );
       return newTicks;
     }
     skip(ticks, newTicks, spacing);
@@ -8101,11 +8698,17 @@ class Scale extends Element$1 {
     var padding = optionTicks.autoSkipPadding || 0;
     var w = labelSizes ? labelSizes.widest.width + padding : 0;
     var h = labelSizes ? labelSizes.highest.height + padding : 0;
-    return me.isHorizontal() ? h * cos > w * sin ? w / cos : h / sin : h * sin < w * cos ? h / cos : w / sin;
+    return me.isHorizontal()
+      ? h * cos > w * sin
+        ? w / cos
+        : h / sin
+      : h * sin < w * cos
+      ? h / cos
+      : w / sin;
   }
   _isVisible() {
     var display = this.options.display;
-    if (display !== 'auto') {
+    if (display !== "auto") {
       return !!display;
     }
     return this.getMatchingVisibleMetas().length > 0;
@@ -8115,10 +8718,7 @@ class Scale extends Element$1 {
     var axis = me.axis;
     var chart = me.chart;
     var options = me.options;
-    var {
-      gridLines,
-      position
-    } = options;
+    var { gridLines, position } = options;
     var offsetGridLines = gridLines.offsetGridLines;
     var isHorizontal = me.isHorizontal();
     var ticks = me.ticks;
@@ -8127,58 +8727,64 @@ class Scale extends Element$1 {
     var items = [];
     var context = {
       scale: me,
-      tick: ticks[0]
+      tick: ticks[0],
     };
-    var axisWidth = gridLines.drawBorder ? resolve([gridLines.borderWidth, gridLines.lineWidth, 0], context, 0) : 0;
+    var axisWidth = gridLines.drawBorder
+      ? resolve([gridLines.borderWidth, gridLines.lineWidth, 0], context, 0)
+      : 0;
     var axisHalfWidth = axisWidth / 2;
     var alignBorderValue = function alignBorderValue(pixel) {
       return _alignPixel(chart, pixel, axisWidth);
     };
     var borderValue, i, lineValue, alignedLineValue;
     var tx1, ty1, tx2, ty2, x1, y1, x2, y2;
-    if (position === 'top') {
+    if (position === "top") {
       borderValue = alignBorderValue(me.bottom);
       ty1 = me.bottom - tl;
       ty2 = borderValue - axisHalfWidth;
       y1 = alignBorderValue(chartArea.top) + axisHalfWidth;
       y2 = chartArea.bottom;
-    } else if (position === 'bottom') {
+    } else if (position === "bottom") {
       borderValue = alignBorderValue(me.top);
       y1 = chartArea.top;
       y2 = alignBorderValue(chartArea.bottom) - axisHalfWidth;
       ty1 = borderValue + axisHalfWidth;
       ty2 = me.top + tl;
-    } else if (position === 'left') {
+    } else if (position === "left") {
       borderValue = alignBorderValue(me.right);
       tx1 = me.right - tl;
       tx2 = borderValue - axisHalfWidth;
       x1 = alignBorderValue(chartArea.left) + axisHalfWidth;
       x2 = chartArea.right;
-    } else if (position === 'right') {
+    } else if (position === "right") {
       borderValue = alignBorderValue(me.left);
       x1 = chartArea.left;
       x2 = alignBorderValue(chartArea.right) - axisHalfWidth;
       tx1 = borderValue + axisHalfWidth;
       tx2 = me.left + tl;
-    } else if (axis === 'x') {
-      if (position === 'center') {
+    } else if (axis === "x") {
+      if (position === "center") {
         borderValue = alignBorderValue((chartArea.top + chartArea.bottom) / 2);
       } else if (isObject(position)) {
         var positionAxisID = Object.keys(position)[0];
         var value = position[positionAxisID];
-        borderValue = alignBorderValue(me.chart.scales[positionAxisID].getPixelForValue(value));
+        borderValue = alignBorderValue(
+          me.chart.scales[positionAxisID].getPixelForValue(value)
+        );
       }
       y1 = chartArea.top;
       y2 = chartArea.bottom;
       ty1 = borderValue + axisHalfWidth;
       ty2 = ty1 + tl;
-    } else if (axis === 'y') {
-      if (position === 'center') {
+    } else if (axis === "y") {
+      if (position === "center") {
         borderValue = alignBorderValue((chartArea.left + chartArea.right) / 2);
       } else if (isObject(position)) {
         var _positionAxisID = Object.keys(position)[0];
         var _value = position[_positionAxisID];
-        borderValue = alignBorderValue(me.chart.scales[_positionAxisID].getPixelForValue(_value));
+        borderValue = alignBorderValue(
+          me.chart.scales[_positionAxisID].getPixelForValue(_value)
+        );
       }
       tx1 = borderValue - axisHalfWidth;
       tx2 = tx1 - tl;
@@ -8189,7 +8795,7 @@ class Scale extends Element$1 {
       var tick = ticks[i] || {};
       context = {
         scale: me,
-        tick
+        tick,
       };
       var lineWidth = resolve([gridLines.lineWidth], context, i);
       var lineColor = resolve([gridLines.color], context, i);
@@ -8217,7 +8823,7 @@ class Scale extends Element$1 {
         width: lineWidth,
         color: lineColor,
         borderDash,
-        borderDashOffset
+        borderDashOffset,
       });
     }
     me._ticksLength = ticksLength;
@@ -8228,10 +8834,7 @@ class Scale extends Element$1 {
     var me = this;
     var axis = me.axis;
     var options = me.options;
-    var {
-      position,
-      ticks: optionTicks
-    } = options;
+    var { position, ticks: optionTicks } = options;
     var isMirrored = optionTicks.mirror;
     var isHorizontal = me.isHorizontal();
     var ticks = me.ticks;
@@ -8239,37 +8842,51 @@ class Scale extends Element$1 {
     var tl = getTickMarkLength(options.gridLines);
     var rotation = -toRadians(me.labelRotation);
     var items = [];
-    var i, ilen, tick, label, x, y, textAlign, pixel, font, lineHeight, lineCount, textOffset;
-    if (position === 'top') {
+    var i,
+      ilen,
+      tick,
+      label,
+      x,
+      y,
+      textAlign,
+      pixel,
+      font,
+      lineHeight,
+      lineCount,
+      textOffset;
+    if (position === "top") {
       y = me.bottom - tl - tickPadding;
-      textAlign = !rotation ? 'center' : 'left';
-    } else if (position === 'bottom') {
+      textAlign = !rotation ? "center" : "left";
+    } else if (position === "bottom") {
       y = me.top + tl + tickPadding;
-      textAlign = !rotation ? 'center' : 'right';
-    } else if (position === 'left') {
+      textAlign = !rotation ? "center" : "right";
+    } else if (position === "left") {
       x = me.right - (isMirrored ? 0 : tl) - tickPadding;
-      textAlign = isMirrored ? 'left' : 'right';
-    } else if (position === 'right') {
+      textAlign = isMirrored ? "left" : "right";
+    } else if (position === "right") {
       x = me.left + (isMirrored ? 0 : tl) + tickPadding;
-      textAlign = isMirrored ? 'right' : 'left';
-    } else if (axis === 'x') {
-      if (position === 'center') {
+      textAlign = isMirrored ? "right" : "left";
+    } else if (axis === "x") {
+      if (position === "center") {
         y = (chartArea.top + chartArea.bottom) / 2 + tl + tickPadding;
       } else if (isObject(position)) {
         var positionAxisID = Object.keys(position)[0];
         var value = position[positionAxisID];
-        y = me.chart.scales[positionAxisID].getPixelForValue(value) + tl + tickPadding;
+        y =
+          me.chart.scales[positionAxisID].getPixelForValue(value) +
+          tl +
+          tickPadding;
       }
-      textAlign = !rotation ? 'center' : 'right';
-    } else if (axis === 'y') {
-      if (position === 'center') {
+      textAlign = !rotation ? "center" : "right";
+    } else if (axis === "y") {
+      if (position === "center") {
         x = (chartArea.left + chartArea.right) / 2 - tl - tickPadding;
       } else if (isObject(position)) {
         var _positionAxisID2 = Object.keys(position)[0];
         var _value2 = position[_positionAxisID2];
         x = me.chart.scales[_positionAxisID2].getPixelForValue(_value2);
       }
-      textAlign = 'right';
+      textAlign = "right";
     }
     for (i = 0, ilen = ticks.length; i < ilen; ++i) {
       tick = ticks[i];
@@ -8280,16 +8897,22 @@ class Scale extends Element$1 {
       lineCount = isArray(label) ? label.length : 1;
       if (isHorizontal) {
         x = pixel;
-        if (position === 'top') {
-          textOffset = (Math.sin(rotation) * (lineCount / 2) + 0.5) * lineHeight;
-          textOffset -= (rotation === 0 ? lineCount - 0.5 : Math.cos(rotation) * (lineCount / 2)) * lineHeight;
+        if (position === "top") {
+          textOffset =
+            (Math.sin(rotation) * (lineCount / 2) + 0.5) * lineHeight;
+          textOffset -=
+            (rotation === 0
+              ? lineCount - 0.5
+              : Math.cos(rotation) * (lineCount / 2)) * lineHeight;
         } else {
           textOffset = Math.sin(rotation) * (lineCount / 2) * lineHeight;
-          textOffset += (rotation === 0 ? 0.5 : Math.cos(rotation) * (lineCount / 2)) * lineHeight;
+          textOffset +=
+            (rotation === 0 ? 0.5 : Math.cos(rotation) * (lineCount / 2)) *
+            lineHeight;
         }
       } else {
         y = pixel;
-        textOffset = (1 - lineCount) * lineHeight / 2;
+        textOffset = ((1 - lineCount) * lineHeight) / 2;
       }
       items.push({
         x,
@@ -8298,7 +8921,7 @@ class Scale extends Element$1 {
         label,
         font,
         textOffset,
-        textAlign
+        textAlign,
       });
     }
     return items;
@@ -8310,10 +8933,14 @@ class Scale extends Element$1 {
     var chart = me.chart;
     var context = {
       scale: me,
-      tick: me.ticks[0]
+      tick: me.ticks[0],
     };
-    var axisWidth = gridLines.drawBorder ? resolve([gridLines.borderWidth, gridLines.lineWidth, 0], context, 0) : 0;
-    var items = me._gridLineItems || (me._gridLineItems = me._computeGridLineItems(chartArea));
+    var axisWidth = gridLines.drawBorder
+      ? resolve([gridLines.borderWidth, gridLines.lineWidth, 0], context, 0)
+      : 0;
+    var items =
+      me._gridLineItems ||
+      (me._gridLineItems = me._computeGridLineItems(chartArea));
     var i, ilen;
     if (gridLines.display) {
       for (i = 0, ilen = items.length; i < ilen; ++i) {
@@ -8346,9 +8973,13 @@ class Scale extends Element$1 {
       var firstLineWidth = axisWidth;
       context = {
         scale: me,
-        tick: me.ticks[me._ticksLength - 1]
+        tick: me.ticks[me._ticksLength - 1],
       };
-      var lastLineWidth = resolve([gridLines.lineWidth, 1], context, me._ticksLength - 1);
+      var lastLineWidth = resolve(
+        [gridLines.lineWidth, 1],
+        context,
+        me._ticksLength - 1
+      );
       var borderValue = me._borderValue;
       var x1, x2, y1, y2;
       if (me.isHorizontal()) {
@@ -8361,7 +8992,11 @@ class Scale extends Element$1 {
         x1 = x2 = borderValue;
       }
       ctx.lineWidth = axisWidth;
-      ctx.strokeStyle = resolve([gridLines.borderColor, gridLines.color], context, 0);
+      ctx.strokeStyle = resolve(
+        [gridLines.borderColor, gridLines.color],
+        context,
+        0
+      );
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
@@ -8375,18 +9010,19 @@ class Scale extends Element$1 {
       return;
     }
     var ctx = me.ctx;
-    var items = me._labelItems || (me._labelItems = me._computeLabelItems(chartArea));
+    var items =
+      me._labelItems || (me._labelItems = me._computeLabelItems(chartArea));
     var i, j, ilen, jlen;
     for (i = 0, ilen = items.length; i < ilen; ++i) {
       var item = items[i];
       var tickFont = item.font;
-      var useStroke = tickFont.lineWidth > 0 && tickFont.strokeStyle !== '';
+      var useStroke = tickFont.lineWidth > 0 && tickFont.strokeStyle !== "";
       ctx.save();
       ctx.translate(item.x, item.y);
       ctx.rotate(item.rotation);
       ctx.font = tickFont.string;
       ctx.fillStyle = tickFont.color;
-      ctx.textBaseline = 'middle';
+      ctx.textBaseline = "middle";
       ctx.textAlign = item.textAlign;
       if (useStroke) {
         ctx.strokeStyle = tickFont.strokeStyle;
@@ -8397,9 +9033,9 @@ class Scale extends Element$1 {
       if (isArray(label)) {
         for (j = 0, jlen = label.length; j < jlen; ++j) {
           if (useStroke) {
-            ctx.strokeText('' + label[j], 0, y);
+            ctx.strokeText("" + label[j], 0, y);
           }
-          ctx.fillText('' + label[j], 0, y);
+          ctx.fillText("" + label[j], 0, y);
           y += tickFont.lineHeight;
         }
       } else {
@@ -8419,7 +9055,10 @@ class Scale extends Element$1 {
     if (!scaleLabel.display) {
       return;
     }
-    var scaleLabelFontColor = valueOrDefault(scaleLabel.fontColor, defaults.fontColor);
+    var scaleLabelFontColor = valueOrDefault(
+      scaleLabel.fontColor,
+      defaults.fontColor
+    );
     var scaleLabelFont = _parseFont(scaleLabel);
     var scaleLabelPadding = toPadding(scaleLabel.padding);
     var halfLineHeight = scaleLabelFont.lineHeight / 2;
@@ -8431,34 +9070,39 @@ class Scale extends Element$1 {
     var scaleLabelX, scaleLabelY;
     if (me.isHorizontal()) {
       switch (scaleLabelAlign) {
-        case 'start':
+        case "start":
           scaleLabelX = me.left + (isReverse ? me.width : 0);
-          textAlign = isReverse ? 'right' : 'left';
+          textAlign = isReverse ? "right" : "left";
           break;
-        case 'end':
+        case "end":
           scaleLabelX = me.left + (isReverse ? 0 : me.width);
-          textAlign = isReverse ? 'left' : 'right';
+          textAlign = isReverse ? "left" : "right";
           break;
         default:
           scaleLabelX = me.left + me.width / 2;
-          textAlign = 'center';
+          textAlign = "center";
       }
-      scaleLabelY = position === 'top' ? me.top + halfLineHeight + scaleLabelPadding.top : me.bottom - halfLineHeight - scaleLabelPadding.bottom;
+      scaleLabelY =
+        position === "top"
+          ? me.top + halfLineHeight + scaleLabelPadding.top
+          : me.bottom - halfLineHeight - scaleLabelPadding.bottom;
     } else {
-      var isLeft = position === 'left';
-      scaleLabelX = isLeft ? me.left + halfLineHeight + scaleLabelPadding.top : me.right - halfLineHeight - scaleLabelPadding.top;
+      var isLeft = position === "left";
+      scaleLabelX = isLeft
+        ? me.left + halfLineHeight + scaleLabelPadding.top
+        : me.right - halfLineHeight - scaleLabelPadding.top;
       switch (scaleLabelAlign) {
-        case 'start':
+        case "start":
           scaleLabelY = me.top + (isReverse ? 0 : me.height);
-          textAlign = isReverse === isLeft ? 'right' : 'left';
+          textAlign = isReverse === isLeft ? "right" : "left";
           break;
-        case 'end':
+        case "end":
           scaleLabelY = me.top + (isReverse ? me.height : 0);
-          textAlign = isReverse === isLeft ? 'left' : 'right';
+          textAlign = isReverse === isLeft ? "left" : "right";
           break;
         default:
           scaleLabelY = me.top + me.height / 2;
-          textAlign = 'center';
+          textAlign = "center";
       }
       rotation = isLeft ? -0.5 * Math.PI : 0.5 * Math.PI;
     }
@@ -8466,7 +9110,7 @@ class Scale extends Element$1 {
     ctx.translate(scaleLabelX, scaleLabelY);
     ctx.rotate(rotation);
     ctx.textAlign = textAlign;
-    ctx.textBaseline = 'middle';
+    ctx.textBaseline = "middle";
     ctx.fillStyle = scaleLabelFontColor;
     ctx.font = scaleLabelFont.string;
     ctx.fillText(scaleLabel.labelString, 0, 0);
@@ -8484,33 +9128,38 @@ class Scale extends Element$1 {
   _layers() {
     var me = this;
     var opts = me.options;
-    var tz = opts.ticks && opts.ticks.z || 0;
-    var gz = opts.gridLines && opts.gridLines.z || 0;
+    var tz = (opts.ticks && opts.ticks.z) || 0;
+    var gz = (opts.gridLines && opts.gridLines.z) || 0;
     if (!me._isVisible() || tz === gz || me.draw !== me._draw) {
-      return [{
+      return [
+        {
+          z: tz,
+          draw(chartArea) {
+            me.draw(chartArea);
+          },
+        },
+      ];
+    }
+    return [
+      {
+        z: gz,
+        draw(chartArea) {
+          me.drawGrid(chartArea);
+          me.drawTitle();
+        },
+      },
+      {
         z: tz,
         draw(chartArea) {
-          me.draw(chartArea);
-        }
-      }];
-    }
-    return [{
-      z: gz,
-      draw(chartArea) {
-        me.drawGrid(chartArea);
-        me.drawTitle();
-      }
-    }, {
-      z: tz,
-      draw(chartArea) {
-        me.drawLabels(chartArea);
-      }
-    }];
+          me.drawLabels(chartArea);
+        },
+      },
+    ];
   }
   getMatchingVisibleMetas(type) {
     var me = this;
     var metas = me.chart.getSortedVisibleDatasetMetas();
-    var axisID = me.axis + 'AxisID';
+    var axisID = me.axis + "AxisID";
     var result = [];
     var i, ilen;
     for (i = 0, ilen = metas.length; i < ilen; ++i) {
@@ -8528,18 +9177,21 @@ class Scale extends Element$1 {
       chart: me.chart,
       scale: me,
       tick: me.ticks[index],
-      index
+      index,
     };
-    return _extends(_parseFont({
-      fontFamily: resolve([options.fontFamily], context),
-      fontSize: resolve([options.fontSize], context),
-      fontStyle: resolve([options.fontStyle], context),
-      lineHeight: resolve([options.lineHeight], context)
-    }), {
-      color: resolve([options.fontColor, defaults.fontColor], context),
-      lineWidth: resolve([options.lineWidth], context),
-      strokeStyle: resolve([options.strokeStyle], context)
-    });
+    return _extends(
+      _parseFont({
+        fontFamily: resolve([options.fontFamily], context),
+        fontSize: resolve([options.fontSize], context),
+        fontStyle: resolve([options.fontStyle], context),
+        lineHeight: resolve([options.lineHeight], context),
+      }),
+      {
+        color: resolve([options.fontColor, defaults.fontColor], context),
+        lineWidth: resolve([options.lineWidth], context),
+        strokeStyle: resolve([options.strokeStyle], context),
+      }
+    );
   }
 }
 Scale.prototype._draw = Scale.prototype.draw;
@@ -8573,12 +9225,15 @@ class CategoryScale extends Scale {
     var max = me.max;
     var offset = me.options.offset;
     var labels = me.getLabels();
-    labels = min === 0 && max === labels.length - 1 ? labels : labels.slice(min, max + 1);
+    labels =
+      min === 0 && max === labels.length - 1
+        ? labels
+        : labels.slice(min, max + 1);
     me._numLabels = labels.length;
     me._valueRange = Math.max(labels.length - (offset ? 0 : 1), 1);
     me._startValue = me.min - (offset ? 0.5 : 0);
-    return labels.map(l => ({
-      value: l
+    return labels.map((l) => ({
+      value: l,
     }));
   }
   getLabelForValue(value) {
@@ -8598,7 +9253,7 @@ class CategoryScale extends Scale {
   }
   getPixelForValue(value) {
     var me = this;
-    if (typeof value !== 'number') {
+    if (typeof value !== "number") {
       value = me.parse(value);
     }
     return me.getPixelForDecimal((value - me._startValue) / me._valueRange);
@@ -8609,18 +9264,20 @@ class CategoryScale extends Scale {
     if (index < 0 || index > ticks.length - 1) {
       return null;
     }
-    return me.getPixelForValue(index * me._numLabels / ticks.length + me.min);
+    return me.getPixelForValue((index * me._numLabels) / ticks.length + me.min);
   }
   getValueForPixel(pixel) {
     var me = this;
-    var value = Math.round(me._startValue + me.getDecimalForPixel(pixel) * me._valueRange);
+    var value = Math.round(
+      me._startValue + me.getDecimalForPixel(pixel) * me._valueRange
+    );
     return Math.min(Math.max(value, 0), me.ticks.length - 1);
   }
   getBasePixel() {
     return this.bottom;
   }
 }
-_defineProperty(CategoryScale, "id", 'category');
+_defineProperty(CategoryScale, "id", "category");
 _defineProperty(CategoryScale, "defaults", defaultConfig);
 
 function niceNum(range, round) {
@@ -8651,30 +9308,25 @@ function niceNum(range, round) {
 function generateTicks(generationOptions, dataRange) {
   var ticks = [];
   var MIN_SPACING = 1e-14;
-  var {
-    stepSize,
-    min,
-    max,
-    precision
-  } = generationOptions;
+  var { stepSize, min, max, precision } = generationOptions;
   var unit = stepSize || 1;
   var maxNumSpaces = generationOptions.maxTicks - 1;
-  var {
-    min: rmin,
-    max: rmax
-  } = dataRange;
+  var { min: rmin, max: rmax } = dataRange;
   var spacing = niceNum((rmax - rmin) / maxNumSpaces / unit) * unit;
   var factor, niceMin, niceMax, numSpaces;
   if (spacing < MIN_SPACING && isNullOrUndef(min) && isNullOrUndef(max)) {
-    return [{
-      value: rmin
-    }, {
-      value: rmax
-    }];
+    return [
+      {
+        value: rmin,
+      },
+      {
+        value: rmax,
+      },
+    ];
   }
   numSpaces = Math.ceil(rmax / spacing) - Math.floor(rmin / spacing);
   if (numSpaces > maxNumSpaces) {
-    spacing = niceNum(numSpaces * spacing / maxNumSpaces / unit) * unit;
+    spacing = niceNum((numSpaces * spacing) / maxNumSpaces / unit) * unit;
   }
   if (stepSize || isNullOrUndef(precision)) {
     factor = Math.pow(10, _decimalPlaces(spacing));
@@ -8699,15 +9351,15 @@ function generateTicks(generationOptions, dataRange) {
   niceMin = Math.round(niceMin * factor) / factor;
   niceMax = Math.round(niceMax * factor) / factor;
   ticks.push({
-    value: isNullOrUndef(min) ? niceMin : min
+    value: isNullOrUndef(min) ? niceMin : min,
   });
   for (var j = 1; j < numSpaces; ++j) {
     ticks.push({
-      value: Math.round((niceMin + j * spacing) * factor) / factor
+      value: Math.round((niceMin + j * spacing) * factor) / factor,
     });
   }
   ticks.push({
-    value: isNullOrUndef(max) ? niceMax : max
+    value: isNullOrUndef(max) ? niceMax : max,
   });
   return ticks;
 }
@@ -8724,7 +9376,7 @@ class LinearScaleBase extends Scale {
     if (isNullOrUndef(raw)) {
       return NaN;
     }
-    if ((typeof raw === 'number' || raw instanceof Number) && !isFinite(+raw)) {
+    if ((typeof raw === "number" || raw instanceof Number) && !isFinite(+raw)) {
       return NaN;
     }
     return +raw;
@@ -8780,13 +9432,11 @@ class LinearScaleBase extends Scale {
   getTickLimit() {
     var me = this;
     var tickOpts = me.options.ticks;
-    var {
-      maxTicksLimit,
-      stepSize
-    } = tickOpts;
+    var { maxTicksLimit, stepSize } = tickOpts;
     var maxTicks;
     if (stepSize) {
-      maxTicks = Math.ceil(me.max / stepSize) - Math.floor(me.min / stepSize) + 1;
+      maxTicks =
+        Math.ceil(me.max / stepSize) - Math.floor(me.min / stepSize) + 1;
     } else {
       maxTicks = me.computeTickLimit();
       maxTicksLimit = maxTicksLimit || 11;
@@ -8813,11 +9463,11 @@ class LinearScaleBase extends Scale {
       min: opts.min,
       max: opts.max,
       precision: tickOpts.precision,
-      stepSize: valueOrDefault(tickOpts.fixedStepSize, tickOpts.stepSize)
+      stepSize: valueOrDefault(tickOpts.fixedStepSize, tickOpts.stepSize),
     };
     var ticks = generateTicks(numericGeneratorOptions, me);
     ticks = me.handleDirectionalChanges(ticks);
-    _setMinAndMaxByKey(ticks, me, 'value');
+    _setMinAndMaxByKey(ticks, me, "value");
     if (opts.reverse) {
       ticks.reverse();
       me.start = me.max;
@@ -8850,8 +9500,8 @@ class LinearScaleBase extends Scale {
 
 var defaultConfig$1 = {
   ticks: {
-    callback: Ticks.formatters.numeric
-  }
+    callback: Ticks.formatters.numeric,
+  },
 };
 class LinearScale extends LinearScaleBase {
   determineDataLimits() {
@@ -8860,8 +9510,12 @@ class LinearScale extends LinearScaleBase {
     var minmax = me.getMinMax(true);
     var min = minmax.min;
     var max = minmax.max;
-    me.min = isNumberFinite(min) ? min : valueOrDefault(options.suggestedMin, 0);
-    me.max = isNumberFinite(max) ? max : valueOrDefault(options.suggestedMax, 1);
+    me.min = isNumberFinite(min)
+      ? min
+      : valueOrDefault(options.suggestedMin, 0);
+    me.max = isNumberFinite(max)
+      ? max
+      : valueOrDefault(options.suggestedMax, 1);
     if (options.stacked && min > 0) {
       me.min = 0;
     }
@@ -8893,7 +9547,7 @@ class LinearScale extends LinearScaleBase {
     return this.getPixelForValue(ticks[index].value);
   }
 }
-_defineProperty(LinearScale, "id", 'linear');
+_defineProperty(LinearScale, "id", "linear");
 _defineProperty(LinearScale, "defaults", defaultConfig$1);
 
 function isMajor(tickVal) {
@@ -8907,14 +9561,17 @@ function generateTicks$1(generationOptions, dataRange) {
   var endExp = Math.floor(log10(dataRange.max));
   var endSignificand = Math.ceil(dataRange.max / Math.pow(10, endExp));
   var ticks = [];
-  var tickVal = finiteOrDefault(generationOptions.min, Math.pow(10, Math.floor(log10(dataRange.min))));
+  var tickVal = finiteOrDefault(
+    generationOptions.min,
+    Math.pow(10, Math.floor(log10(dataRange.min)))
+  );
   var exp = Math.floor(log10(tickVal));
   var significand = Math.floor(tickVal / Math.pow(10, exp));
   var precision = exp < 0 ? Math.pow(10, Math.abs(exp)) : 1;
   do {
     ticks.push({
       value: tickVal,
-      major: isMajor(tickVal)
+      major: isMajor(tickVal),
     });
     ++significand;
     if (significand === 10) {
@@ -8922,12 +9579,13 @@ function generateTicks$1(generationOptions, dataRange) {
       ++exp;
       precision = exp >= 0 ? 1 : precision;
     }
-    tickVal = Math.round(significand * Math.pow(10, exp) * precision) / precision;
-  } while (exp < endExp || exp === endExp && significand < endSignificand);
+    tickVal =
+      Math.round(significand * Math.pow(10, exp) * precision) / precision;
+  } while (exp < endExp || (exp === endExp && significand < endSignificand));
   var lastTick = finiteOrDefault(generationOptions.max, tickVal);
   ticks.push({
     value: lastTick,
-    major: isMajor(tickVal)
+    major: isMajor(tickVal),
   });
   return ticks;
 }
@@ -8935,9 +9593,9 @@ var defaultConfig$2 = {
   ticks: {
     callback: Ticks.formatters.numeric,
     major: {
-      enabled: true
-    }
-  }
+      enabled: true,
+    },
+  },
 };
 class LogarithmicScale extends Scale {
   constructor(cfg) {
@@ -8992,11 +9650,11 @@ class LogarithmicScale extends Scale {
     var opts = me.options;
     var generationOptions = {
       min: me._userMin,
-      max: me._userMax
+      max: me._userMax,
     };
     var ticks = generateTicks$1(generationOptions, me);
     var reverse = !me.isHorizontal();
-    _setMinAndMaxByKey(ticks, me, 'value');
+    _setMinAndMaxByKey(ticks, me, "value");
     if (opts.reverse) {
       reverse = !reverse;
       me.start = me.max;
@@ -9011,7 +9669,9 @@ class LogarithmicScale extends Scale {
     return ticks;
   }
   getLabelForValue(value) {
-    return value === undefined ? '0' : new Intl.NumberFormat(this.options.locale).format(value);
+    return value === undefined
+      ? "0"
+      : new Intl.NumberFormat(this.options.locale).format(value);
   }
   getPixelForTick(index) {
     var ticks = this.ticks;
@@ -9032,7 +9692,9 @@ class LogarithmicScale extends Scale {
     if (value === undefined || value === 0) {
       value = me.min;
     }
-    return me.getPixelForDecimal(value === me.min ? 0 : (log10(value) - me._startValue) / me._valueRange);
+    return me.getPixelForDecimal(
+      value === me.min ? 0 : (log10(value) - me._startValue) / me._valueRange
+    );
   }
   getValueForPixel(pixel) {
     var me = this;
@@ -9040,7 +9702,7 @@ class LogarithmicScale extends Scale {
     return Math.pow(10, me._startValue + decimal * me._valueRange);
   }
 }
-_defineProperty(LogarithmicScale, "id", 'logarithmic');
+_defineProperty(LogarithmicScale, "id", "logarithmic");
 _defineProperty(LogarithmicScale, "defaults", defaultConfig$2);
 
 var valueOrDefault$2 = helpers.valueOrDefault;
@@ -9049,36 +9711,39 @@ var resolve$2 = helpers.options.resolve;
 var defaultConfig$3 = {
   display: true,
   animate: true,
-  position: 'chartArea',
+  position: "chartArea",
   angleLines: {
     display: true,
-    color: 'rgba(0,0,0,0.1)',
+    color: "rgba(0,0,0,0.1)",
     lineWidth: 1,
     borderDash: [],
-    borderDashOffset: 0.0
+    borderDashOffset: 0.0,
   },
   gridLines: {
-    circular: false
+    circular: false,
   },
   ticks: {
     showLabelBackdrop: true,
-    backdropColor: 'rgba(255,255,255,0.75)',
+    backdropColor: "rgba(255,255,255,0.75)",
     backdropPaddingY: 2,
     backdropPaddingX: 2,
-    callback: Ticks.formatters.numeric
+    callback: Ticks.formatters.numeric,
   },
   pointLabels: {
     display: true,
     fontSize: 10,
     callback(label) {
       return label;
-    }
-  }
+    },
+  },
 };
 function getTickBackdropHeight(opts) {
   var tickOpts = opts.ticks;
   if (tickOpts.display && opts.display) {
-    return valueOrDefault$2(tickOpts.fontSize, defaults.fontSize) + tickOpts.backdropPaddingY * 2;
+    return (
+      valueOrDefault$2(tickOpts.fontSize, defaults.fontSize) +
+      tickOpts.backdropPaddingY * 2
+    );
   }
   return 0;
 }
@@ -9086,29 +9751,29 @@ function measureLabelSize(ctx, lineHeight, label) {
   if (helpers.isArray(label)) {
     return {
       w: _longestText(ctx, ctx.font, label),
-      h: label.length * lineHeight
+      h: label.length * lineHeight,
     };
   }
   return {
     w: ctx.measureText(label).width,
-    h: lineHeight
+    h: lineHeight,
   };
 }
 function determineLimits(angle, pos, size, min, max) {
   if (angle === min || angle === max) {
     return {
       start: pos - size / 2,
-      end: pos + size / 2
+      end: pos + size / 2,
     };
   } else if (angle < min || angle > max) {
     return {
       start: pos - size,
-      end: pos
+      end: pos,
     };
   }
   return {
     start: pos,
-    end: pos + size
+    end: pos + size,
   };
 }
 function fitWithPointLabels(scale) {
@@ -9117,7 +9782,7 @@ function fitWithPointLabels(scale) {
     l: 0,
     r: scale.width,
     t: 0,
-    b: scale.height - scale.paddingTop
+    b: scale.height - scale.paddingTop,
   };
   var furthestAngles = {};
   var i, textSize, pointPosition;
@@ -9126,7 +9791,11 @@ function fitWithPointLabels(scale) {
   var valueCount = scale.chart.data.labels.length;
   for (i = 0; i < valueCount; i++) {
     pointPosition = scale.getPointPosition(i, scale.drawingArea + 5);
-    textSize = measureLabelSize(scale.ctx, plFont.lineHeight, scale.pointLabels[i]);
+    textSize = measureLabelSize(
+      scale.ctx,
+      plFont.lineHeight,
+      scale.pointLabels[i]
+    );
     scale._pointLabelSizes[i] = textSize;
     var angleRadians = scale.getIndexAngle(i);
     var angle = toDegrees(angleRadians);
@@ -9153,11 +9822,11 @@ function fitWithPointLabels(scale) {
 }
 function getTextAlignForAngle(angle) {
   if (angle === 0 || angle === 180) {
-    return 'center';
+    return "center";
   } else if (angle < 180) {
-    return 'left';
+    return "left";
   }
-  return 'right';
+  return "right";
 }
 function fillText(ctx, text, position, lineHeight) {
   var y = position.y + lineHeight / 2;
@@ -9183,20 +9852,33 @@ function drawPointLabels(scale) {
   var opts = scale.options;
   var pointLabelOpts = opts.pointLabels;
   var tickBackdropHeight = getTickBackdropHeight(opts);
-  var outerDistance = scale.getDistanceFromCenterForValue(opts.ticks.reverse ? scale.min : scale.max);
+  var outerDistance = scale.getDistanceFromCenterForValue(
+    opts.ticks.reverse ? scale.min : scale.max
+  );
   var plFont = helpers.options._parseFont(pointLabelOpts);
   ctx.save();
   ctx.font = plFont.string;
-  ctx.textBaseline = 'middle';
+  ctx.textBaseline = "middle";
   for (var i = scale.chart.data.labels.length - 1; i >= 0; i--) {
     var extra = i === 0 ? tickBackdropHeight / 2 : 0;
-    var pointLabelPosition = scale.getPointPosition(i, outerDistance + extra + 5);
-    var pointLabelFontColor = valueAtIndexOrDefault$1(pointLabelOpts.fontColor, i, defaults.fontColor);
+    var pointLabelPosition = scale.getPointPosition(
+      i,
+      outerDistance + extra + 5
+    );
+    var pointLabelFontColor = valueAtIndexOrDefault$1(
+      pointLabelOpts.fontColor,
+      i,
+      defaults.fontColor
+    );
     ctx.fillStyle = pointLabelFontColor;
     var angleRadians = scale.getIndexAngle(i);
     var angle = toDegrees(angleRadians);
     ctx.textAlign = getTextAlignForAngle(angle);
-    adjustPointPositionForLabelHeight(angle, scale._pointLabelSizes[i], pointLabelPosition);
+    adjustPointPositionForLabelHeight(
+      angle,
+      scale._pointLabelSizes[i],
+      pointLabelPosition
+    );
     fillText(ctx, scale.pointLabels[i], pointLabelPosition, plFont.lineHeight);
   }
   ctx.restore();
@@ -9205,10 +9887,18 @@ function drawRadiusLine(scale, gridLineOpts, radius, index) {
   var ctx = scale.ctx;
   var circular = gridLineOpts.circular;
   var valueCount = scale.chart.data.labels.length;
-  var lineColor = valueAtIndexOrDefault$1(gridLineOpts.color, index - 1, undefined);
-  var lineWidth = valueAtIndexOrDefault$1(gridLineOpts.lineWidth, index - 1, undefined);
+  var lineColor = valueAtIndexOrDefault$1(
+    gridLineOpts.color,
+    index - 1,
+    undefined
+  );
+  var lineWidth = valueAtIndexOrDefault$1(
+    gridLineOpts.lineWidth,
+    index - 1,
+    undefined
+  );
   var pointPosition;
-  if (!circular && !valueCount || !lineColor || !lineWidth) {
+  if ((!circular && !valueCount) || !lineColor || !lineWidth) {
     return;
   }
   ctx.save();
@@ -9269,8 +9959,12 @@ class RadialLinearScale extends LinearScaleBase {
     var me = this;
     LinearScaleBase.prototype.generateTickLabels.call(me, ticks);
     me.pointLabels = me.chart.data.labels.map((value, index) => {
-      var label = helpers.callback(me.options.pointLabels.callback, [value, index], me);
-      return label || label === 0 ? label : '';
+      var label = helpers.callback(
+        me.options.pointLabels.callback,
+        [value, index],
+        me
+      );
+      return label || label === 0 ? label : "";
     });
   }
   fit() {
@@ -9285,15 +9979,30 @@ class RadialLinearScale extends LinearScaleBase {
   _setReductions(largestPossibleRadius, furthestLimits, furthestAngles) {
     var me = this;
     var radiusReductionLeft = furthestLimits.l / Math.sin(furthestAngles.l);
-    var radiusReductionRight = Math.max(furthestLimits.r - me.width, 0) / Math.sin(furthestAngles.r);
+    var radiusReductionRight =
+      Math.max(furthestLimits.r - me.width, 0) / Math.sin(furthestAngles.r);
     var radiusReductionTop = -furthestLimits.t / Math.cos(furthestAngles.t);
-    var radiusReductionBottom = -Math.max(furthestLimits.b - (me.height - me.paddingTop), 0) / Math.cos(furthestAngles.b);
+    var radiusReductionBottom =
+      -Math.max(furthestLimits.b - (me.height - me.paddingTop), 0) /
+      Math.cos(furthestAngles.b);
     radiusReductionLeft = numberOrZero(radiusReductionLeft);
     radiusReductionRight = numberOrZero(radiusReductionRight);
     radiusReductionTop = numberOrZero(radiusReductionTop);
     radiusReductionBottom = numberOrZero(radiusReductionBottom);
-    me.drawingArea = Math.min(Math.floor(largestPossibleRadius - (radiusReductionLeft + radiusReductionRight) / 2), Math.floor(largestPossibleRadius - (radiusReductionTop + radiusReductionBottom) / 2));
-    me.setCenterPoint(radiusReductionLeft, radiusReductionRight, radiusReductionTop, radiusReductionBottom);
+    me.drawingArea = Math.min(
+      Math.floor(
+        largestPossibleRadius - (radiusReductionLeft + radiusReductionRight) / 2
+      ),
+      Math.floor(
+        largestPossibleRadius - (radiusReductionTop + radiusReductionBottom) / 2
+      )
+    );
+    me.setCenterPoint(
+      radiusReductionLeft,
+      radiusReductionRight,
+      radiusReductionTop,
+      radiusReductionBottom
+    );
   }
   setCenterPoint(leftMovement, rightMovement, topMovement, bottomMovement) {
     var me = this;
@@ -9306,7 +10015,7 @@ class RadialLinearScale extends LinearScaleBase {
   }
   getIndexAngle(index) {
     var chart = this.chart;
-    var angleMultiplier = Math.PI * 2 / chart.data.labels.length;
+    var angleMultiplier = (Math.PI * 2) / chart.data.labels.length;
     var options = chart.options || {};
     var startAngle = options.startAngle || 0;
     return _normalizeAngle(index * angleMultiplier + toRadians(startAngle));
@@ -9328,11 +10037,14 @@ class RadialLinearScale extends LinearScaleBase {
     return {
       x: Math.cos(angle) * distanceFromCenter + me.xCenter,
       y: Math.sin(angle) * distanceFromCenter + me.yCenter,
-      angle
+      angle,
     };
   }
   getPointPositionForValue(index, value) {
-    return this.getPointPosition(index, this.getDistanceFromCenterForValue(value));
+    return this.getPointPosition(
+      index,
+      this.getDistanceFromCenterForValue(value)
+    );
   }
   getBasePosition(index) {
     return this.getPointPositionForValue(index || 0, this.getBaseValue());
@@ -9343,7 +10055,10 @@ class RadialLinearScale extends LinearScaleBase {
     var opts = me.options;
     var gridLineOpts = opts.gridLines;
     var angleLineOpts = opts.angleLines;
-    var lineWidth = valueOrDefault$2(angleLineOpts.lineWidth, gridLineOpts.lineWidth);
+    var lineWidth = valueOrDefault$2(
+      angleLineOpts.lineWidth,
+      gridLineOpts.lineWidth
+    );
     var lineColor = valueOrDefault$2(angleLineOpts.color, gridLineOpts.color);
     var i, offset, position;
     if (opts.pointLabels.display) {
@@ -9362,11 +10077,19 @@ class RadialLinearScale extends LinearScaleBase {
       ctx.lineWidth = lineWidth;
       ctx.strokeStyle = lineColor;
       if (ctx.setLineDash) {
-        ctx.setLineDash(resolve$2([angleLineOpts.borderDash, gridLineOpts.borderDash, []]));
-        ctx.lineDashOffset = resolve$2([angleLineOpts.borderDashOffset, gridLineOpts.borderDashOffset, 0.0]);
+        ctx.setLineDash(
+          resolve$2([angleLineOpts.borderDash, gridLineOpts.borderDash, []])
+        );
+        ctx.lineDashOffset = resolve$2([
+          angleLineOpts.borderDashOffset,
+          gridLineOpts.borderDashOffset,
+          0.0,
+        ]);
       }
       for (i = me.chart.data.labels.length - 1; i >= 0; i--) {
-        offset = me.getDistanceFromCenterForValue(opts.ticks.reverse ? me.min : me.max);
+        offset = me.getDistanceFromCenterForValue(
+          opts.ticks.reverse ? me.min : me.max
+        );
         position = me.getPointPosition(i, offset);
         ctx.beginPath();
         ctx.moveTo(me.xCenter, me.yCenter);
@@ -9386,14 +10109,17 @@ class RadialLinearScale extends LinearScaleBase {
     }
     var startAngle = me.getIndexAngle(0);
     var tickFont = helpers.options._parseFont(tickOpts);
-    var tickFontColor = valueOrDefault$2(tickOpts.fontColor, defaults.fontColor);
+    var tickFontColor = valueOrDefault$2(
+      tickOpts.fontColor,
+      defaults.fontColor
+    );
     var offset, width;
     ctx.save();
     ctx.font = tickFont.string;
     ctx.translate(me.xCenter, me.yCenter);
     ctx.rotate(startAngle);
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
     me.ticks.forEach((tick, index) => {
       if (index === 0 && !opts.reverse) {
         return;
@@ -9402,7 +10128,12 @@ class RadialLinearScale extends LinearScaleBase {
       if (tickOpts.showLabelBackdrop) {
         width = ctx.measureText(tick.label).width;
         ctx.fillStyle = tickOpts.backdropColor;
-        ctx.fillRect(-width / 2 - tickOpts.backdropPaddingX, -offset - tickFont.size / 2 - tickOpts.backdropPaddingY, width + tickOpts.backdropPaddingX * 2, tickFont.size + tickOpts.backdropPaddingY * 2);
+        ctx.fillRect(
+          -width / 2 - tickOpts.backdropPaddingX,
+          -offset - tickFont.size / 2 - tickOpts.backdropPaddingY,
+          width + tickOpts.backdropPaddingX * 2,
+          tickFont.size + tickOpts.backdropPaddingY * 2
+        );
       }
       ctx.fillStyle = tickFontColor;
       ctx.fillText(tick.label, 0, -offset);
@@ -9411,7 +10142,7 @@ class RadialLinearScale extends LinearScaleBase {
   }
   drawTitle() {}
 }
-_defineProperty(RadialLinearScale, "id", 'radialLinear');
+_defineProperty(RadialLinearScale, "id", "radialLinear");
 _defineProperty(RadialLinearScale, "defaults", defaultConfig$3);
 
 var MAX_INTEGER = Number.MAX_SAFE_INTEGER || 9007199254740991;
@@ -9419,50 +10150,49 @@ var INTERVALS = {
   millisecond: {
     common: true,
     size: 1,
-    steps: 1000
+    steps: 1000,
   },
   second: {
     common: true,
     size: 1000,
-    steps: 60
+    steps: 60,
   },
   minute: {
     common: true,
     size: 60000,
-    steps: 60
+    steps: 60,
   },
   hour: {
     common: true,
     size: 3600000,
-    steps: 24
+    steps: 24,
   },
   day: {
     common: true,
     size: 86400000,
-    steps: 30
+    steps: 30,
   },
   week: {
     common: false,
     size: 604800000,
-    steps: 4
+    steps: 4,
   },
   month: {
     common: true,
     size: 2.628e9,
-    steps: 12
+    steps: 12,
   },
   quarter: {
     common: false,
     size: 7.884e9,
-    steps: 4
+    steps: 4,
   },
   year: {
     common: true,
-    size: 3.154e10
-  }
+    size: 3.154e10,
+  },
 };
-var UNITS =
-Object.keys(INTERVALS);
+var UNITS = Object.keys(INTERVALS);
 function sorter(a, b) {
   return a - b;
 }
@@ -9485,11 +10215,14 @@ function parse(scale, input) {
   var options = scale.options.time;
   var parser = options.parser;
   var value = input;
-  if (typeof parser === 'function') {
+  if (typeof parser === "function") {
     value = parser(value);
   }
   if (!isNumberFinite(value)) {
-    value = typeof parser === 'string' ? adapter.parse(value, parser) : adapter.parse(value);
+    value =
+      typeof parser === "string"
+        ? adapter.parse(value, parser)
+        : adapter.parse(value);
   }
   if (value === null) {
     return value;
@@ -9500,7 +10233,7 @@ function parse(scale, input) {
   return +value;
 }
 function getDataTimestamps(scale) {
-  var isSeries = scale.options.distribution === 'series';
+  var isSeries = scale.options.distribution === "series";
   var timestamps = scale._cache.data || [];
   var i, ilen;
   if (timestamps.length) {
@@ -9511,12 +10244,14 @@ function getDataTimestamps(scale) {
     return metas[0].controller.getAllParsedValues(scale);
   }
   for (i = 0, ilen = metas.length; i < ilen; ++i) {
-    timestamps = timestamps.concat(metas[i].controller.getAllParsedValues(scale));
+    timestamps = timestamps.concat(
+      metas[i].controller.getAllParsedValues(scale)
+    );
   }
-  return scale._cache.data = arrayUnique(timestamps.sort(sorter));
+  return (scale._cache.data = arrayUnique(timestamps.sort(sorter)));
 }
 function getLabelTimestamps(scale) {
-  var isSeries = scale.options.distribution === 'series';
+  var isSeries = scale.options.distribution === "series";
   var timestamps = scale._cache.labels || [];
   var i, ilen;
   if (timestamps.length) {
@@ -9526,7 +10261,9 @@ function getLabelTimestamps(scale) {
   for (i = 0, ilen = labels.length; i < ilen; ++i) {
     timestamps.push(parse(scale, labels[i]));
   }
-  return scale._cache.labels = isSeries ? timestamps : arrayUnique(timestamps.sort(sorter));
+  return (scale._cache.labels = isSeries
+    ? timestamps
+    : arrayUnique(timestamps.sort(sorter)));
 }
 function getAllTimestamps(scale) {
   var timestamps = scale._cache.all || [];
@@ -9544,14 +10281,17 @@ function getAllTimestamps(scale) {
   return timestamps;
 }
 function buildLookupTable(timestamps, min, max, distribution) {
-  if (distribution === 'linear' || !timestamps.length) {
-    return [{
-      time: min,
-      pos: 0
-    }, {
-      time: max,
-      pos: 1
-    }];
+  if (distribution === "linear" || !timestamps.length) {
+    return [
+      {
+        time: min,
+        pos: 0,
+      },
+      {
+        time: max,
+        pos: 1,
+      },
+    ];
   }
   var table = [];
   var items = [min];
@@ -9567,20 +10307,21 @@ function buildLookupTable(timestamps, min, max, distribution) {
     next = items[i + 1];
     prev = items[i - 1];
     curr = items[i];
-    if (prev === undefined || next === undefined || Math.round((next + prev) / 2) !== curr) {
+    if (
+      prev === undefined ||
+      next === undefined ||
+      Math.round((next + prev) / 2) !== curr
+    ) {
       table.push({
         time: curr,
-        pos: i / (ilen - 1)
+        pos: i / (ilen - 1),
       });
     }
   }
   return table;
 }
 function interpolate(table, skey, sval, tkey) {
-  var {
-    lo,
-    hi
-  } = _lookupByKey(table, skey, sval);
+  var { lo, hi } = _lookupByKey(table, skey, sval);
   var prev = table[lo];
   var next = table[hi];
   var span = next[skey] - prev[skey];
@@ -9593,7 +10334,10 @@ function determineUnitForAutoTicks(minUnit, min, max, capacity) {
   for (var i = UNITS.indexOf(minUnit); i < ilen - 1; ++i) {
     var interval = INTERVALS[UNITS[i]];
     var factor = interval.steps ? interval.steps : MAX_INTEGER;
-    if (interval.common && Math.ceil((max - min) / (factor * interval.size)) <= capacity) {
+    if (
+      interval.common &&
+      Math.ceil((max - min) / (factor * interval.size)) <= capacity
+    ) {
       return UNITS[i];
     }
   }
@@ -9602,7 +10346,10 @@ function determineUnitForAutoTicks(minUnit, min, max, capacity) {
 function determineUnitForFormatting(scale, numTicks, minUnit, min, max) {
   for (var i = UNITS.length - 1; i >= UNITS.indexOf(minUnit); i--) {
     var unit = UNITS[i];
-    if (INTERVALS[unit].common && scale._adapter.diff(max, min, unit) >= numTicks - 1) {
+    if (
+      INTERVALS[unit].common &&
+      scale._adapter.diff(max, min, unit) >= numTicks - 1
+    ) {
       return unit;
     }
   }
@@ -9619,10 +10366,7 @@ function addTick(timestamps, ticks, time) {
   if (!timestamps.length) {
     return;
   }
-  var {
-    lo,
-    hi
-  } = _lookup(timestamps, time);
+  var { lo, hi } = _lookup(timestamps, time);
   var timestamp = timestamps[lo] >= time ? timestamps[lo] : timestamps[hi];
   ticks.add(timestamp);
 }
@@ -9632,32 +10376,47 @@ function generate(scale) {
   var max = scale.max;
   var options = scale.options;
   var timeOpts = options.time;
-  var minor = timeOpts.unit || determineUnitForAutoTicks(timeOpts.minUnit, min, max, scale._getLabelCapacity(min));
+  var minor =
+    timeOpts.unit ||
+    determineUnitForAutoTicks(
+      timeOpts.minUnit,
+      min,
+      max,
+      scale._getLabelCapacity(min)
+    );
   var stepSize = valueOrDefault(timeOpts.stepSize, 1);
-  var weekday = minor === 'week' ? timeOpts.isoWeekday : false;
+  var weekday = minor === "week" ? timeOpts.isoWeekday : false;
   var ticks = new Set();
   var first = min;
   var time;
   if (weekday) {
-    first = +adapter.startOf(first, 'isoWeek', weekday);
+    first = +adapter.startOf(first, "isoWeek", weekday);
   }
-  first = +adapter.startOf(first, weekday ? 'day' : minor);
+  first = +adapter.startOf(first, weekday ? "day" : minor);
   if (adapter.diff(max, min, minor) > 100000 * stepSize) {
-    throw new Error(min + ' and ' + max + ' are too far apart with stepSize of ' + stepSize + ' ' + minor);
+    throw new Error(
+      min +
+        " and " +
+        max +
+        " are too far apart with stepSize of " +
+        stepSize +
+        " " +
+        minor
+    );
   }
-  if (scale.options.ticks.source === 'data') {
+  if (scale.options.ticks.source === "data") {
     var timestamps = getDataTimestamps(scale);
     for (time = first; time < max; time = +adapter.add(time, stepSize, minor)) {
       addTick(timestamps, ticks, time);
     }
-    if (time === max || options.bounds === 'ticks') {
+    if (time === max || options.bounds === "ticks") {
       addTick(timestamps, ticks, time);
     }
   } else {
     for (time = first; time < max; time = +adapter.add(time, stepSize, minor)) {
       ticks.add(time);
     }
-    if (time === max || options.bounds === 'ticks') {
+    if (time === max || options.bounds === "ticks") {
       ticks.add(time);
     }
   }
@@ -9668,23 +10427,31 @@ function computeOffsets(table, timestamps, min, max, options) {
   var end = 0;
   var first, last;
   if (options.offset && timestamps.length) {
-    first = interpolate(table, 'time', timestamps[0], 'pos');
+    first = interpolate(table, "time", timestamps[0], "pos");
     if (timestamps.length === 1) {
       start = 1 - first;
     } else {
-      start = (interpolate(table, 'time', timestamps[1], 'pos') - first) / 2;
+      start = (interpolate(table, "time", timestamps[1], "pos") - first) / 2;
     }
-    last = interpolate(table, 'time', timestamps[timestamps.length - 1], 'pos');
+    last = interpolate(table, "time", timestamps[timestamps.length - 1], "pos");
     if (timestamps.length === 1) {
       end = last;
     } else {
-      end = (last - interpolate(table, 'time', timestamps[timestamps.length - 2], 'pos')) / 2;
+      end =
+        (last -
+          interpolate(
+            table,
+            "time",
+            timestamps[timestamps.length - 2],
+            "pos"
+          )) /
+        2;
     }
   }
   return {
     start,
     end,
-    factor: 1 / (start + 1 + end)
+    factor: 1 / (start + 1 + end),
   };
 }
 function setMajorTicks(scale, ticks, map, majorUnit) {
@@ -9692,7 +10459,11 @@ function setMajorTicks(scale, ticks, map, majorUnit) {
   var first = +adapter.startOf(ticks[0].value, majorUnit);
   var last = ticks[ticks.length - 1].value;
   var major, index;
-  for (major = first; major <= last; major = +adapter.add(major, 1, majorUnit)) {
+  for (
+    major = first;
+    major <= last;
+    major = +adapter.add(major, 1, majorUnit)
+  ) {
     index = map[major];
     if (index >= 0) {
       ticks[index].major = true;
@@ -9710,19 +10481,23 @@ function ticksFromTimestamps(scale, values, majorUnit) {
     map[value] = i;
     ticks.push({
       value,
-      major: false
+      major: false,
     });
   }
-  return ilen === 0 || !majorUnit ? ticks : setMajorTicks(scale, ticks, map, majorUnit);
+  return ilen === 0 || !majorUnit
+    ? ticks
+    : setMajorTicks(scale, ticks, map, majorUnit);
 }
 function getTimestampsForTicks(scale) {
-  if (scale.options.ticks.source === 'labels') {
+  if (scale.options.ticks.source === "labels") {
     return getLabelTimestamps(scale);
   }
   return generate(scale);
 }
 function getTimestampsForTable(scale) {
-  return scale.options.distribution === 'series' ? getAllTimestamps(scale) : [scale.min, scale.max];
+  return scale.options.distribution === "series"
+    ? getAllTimestamps(scale)
+    : [scale.min, scale.max];
 }
 function getLabelBounds(scale) {
   var arr = getLabelTimestamps(scale);
@@ -9734,7 +10509,7 @@ function getLabelBounds(scale) {
   }
   return {
     min,
-    max
+    max,
   };
 }
 function filterBetween(timestamps, min, max) {
@@ -9747,40 +10522,42 @@ function filterBetween(timestamps, min, max) {
     end--;
   }
   end++;
-  return start > 0 || end < timestamps.length ? timestamps.slice(start, end) : timestamps;
+  return start > 0 || end < timestamps.length
+    ? timestamps.slice(start, end)
+    : timestamps;
 }
 var defaultConfig$4 = {
-  distribution: 'linear',
-  bounds: 'data',
+  distribution: "linear",
+  bounds: "data",
   adapters: {},
   time: {
     parser: false,
     unit: false,
     round: false,
     isoWeekday: false,
-    minUnit: 'millisecond',
-    displayFormats: {}
+    minUnit: "millisecond",
+    displayFormats: {},
   },
   ticks: {
     autoSkip: false,
-    source: 'auto',
+    source: "auto",
     major: {
-      enabled: false
-    }
-  }
+      enabled: false,
+    },
+  },
 };
 class TimeScale extends Scale {
   constructor(props) {
     super(props);
     var options = this.options;
     var time = options.time || (options.time = {});
-    var adapter = this._adapter = new _adapters._date(options.adapters.date);
+    var adapter = (this._adapter = new _adapters._date(options.adapters.date));
     this._cache = {
       data: [],
       labels: [],
-      all: []
+      all: [],
     };
-    this._unit = 'day';
+    this._unit = "day";
     this._majorUnit = undefined;
     this._offsets = {};
     this._table = [];
@@ -9805,20 +10582,15 @@ class TimeScale extends Scale {
     this._cache = {
       data: [],
       labels: [],
-      all: []
+      all: [],
     };
   }
   determineDataLimits() {
     var me = this;
     var options = me.options;
     var adapter = me._adapter;
-    var unit = options.time.unit || 'day';
-    var {
-      min,
-      max,
-      minDefined,
-      maxDefined
-    } = me.getUserBounds();
+    var unit = options.time.unit || "day";
+    var { min, max, minDefined, maxDefined } = me.getUserBounds();
     function _applyBounds(bounds) {
       if (!minDefined && !isNaN(bounds.min)) {
         min = Math.min(min, bounds.min);
@@ -9829,12 +10601,18 @@ class TimeScale extends Scale {
     }
     if (!minDefined || !maxDefined) {
       _applyBounds(getLabelBounds(me));
-      if (options.bounds !== 'ticks' || options.ticks.source !== 'labels') {
+      if (options.bounds !== "ticks" || options.ticks.source !== "labels") {
         _applyBounds(me.getMinMax(false));
       }
     }
-    min = isNumberFinite(min) && !isNaN(min) ? min : +adapter.startOf(Date.now(), unit);
-    max = isNumberFinite(max) && !isNaN(max) ? max : +adapter.endOf(Date.now(), unit) + 1;
+    min =
+      isNumberFinite(min) && !isNaN(min)
+        ? min
+        : +adapter.startOf(Date.now(), unit);
+    max =
+      isNumberFinite(max) && !isNaN(max)
+        ? max
+        : +adapter.endOf(Date.now(), unit) + 1;
     me.min = Math.min(min, max);
     me.max = Math.max(min + 1, max);
   }
@@ -9845,17 +10623,46 @@ class TimeScale extends Scale {
     var tickOpts = options.ticks;
     var distribution = options.distribution;
     var timestamps = getTimestampsForTicks(me);
-    if (options.bounds === 'ticks' && timestamps.length) {
+    if (options.bounds === "ticks" && timestamps.length) {
       me.min = me._userMin || timestamps[0];
       me.max = me._userMax || timestamps[timestamps.length - 1];
     }
     var min = me.min;
     var max = me.max;
     var ticks = filterBetween(timestamps, min, max);
-    me._unit = timeOpts.unit || (tickOpts.autoSkip ? determineUnitForAutoTicks(timeOpts.minUnit, me.min, me.max, me._getLabelCapacity(min)) : determineUnitForFormatting(me, ticks.length, timeOpts.minUnit, me.min, me.max));
-    me._majorUnit = !tickOpts.major.enabled || me._unit === 'year' ? undefined : determineMajorUnit(me._unit);
-    me._table = buildLookupTable(getTimestampsForTable(me), min, max, distribution);
-    me._offsets = computeOffsets(me._table, getDataTimestamps(me), min, max, options);
+    me._unit =
+      timeOpts.unit ||
+      (tickOpts.autoSkip
+        ? determineUnitForAutoTicks(
+            timeOpts.minUnit,
+            me.min,
+            me.max,
+            me._getLabelCapacity(min)
+          )
+        : determineUnitForFormatting(
+            me,
+            ticks.length,
+            timeOpts.minUnit,
+            me.min,
+            me.max
+          ));
+    me._majorUnit =
+      !tickOpts.major.enabled || me._unit === "year"
+        ? undefined
+        : determineMajorUnit(me._unit);
+    me._table = buildLookupTable(
+      getTimestampsForTable(me),
+      min,
+      max,
+      distribution
+    );
+    me._offsets = computeOffsets(
+      me._table,
+      getDataTimestamps(me),
+      min,
+      max,
+      options
+    );
     if (options.reverse) {
       ticks.reverse();
     }
@@ -9880,7 +10687,10 @@ class TimeScale extends Scale {
     var majorFormat = majorUnit && formats[majorUnit];
     var tick = ticks[index];
     var major = majorUnit && majorFormat && tick && tick.major;
-    var label = me._adapter.format(time, format || (major ? majorFormat : minorFormat));
+    var label = me._adapter.format(
+      time,
+      format || (major ? majorFormat : minorFormat)
+    );
     var formatter = options.ticks.callback;
     return formatter ? formatter(label, index, ticks) : label;
   }
@@ -9894,7 +10704,7 @@ class TimeScale extends Scale {
   getPixelForValue(value) {
     var me = this;
     var offsets = me._offsets;
-    var pos = interpolate(me._table, 'time', value, 'pos');
+    var pos = interpolate(me._table, "time", value, "pos");
     return me.getPixelForDecimal((offsets.start + pos) * offsets.factor);
   }
   getPixelForTick(index) {
@@ -9908,19 +10718,21 @@ class TimeScale extends Scale {
     var me = this;
     var offsets = me._offsets;
     var pos = me.getDecimalForPixel(pixel) / offsets.factor - offsets.end;
-    return interpolate(me._table, 'pos', pos, 'time');
+    return interpolate(me._table, "pos", pos, "time");
   }
   _getLabelSize(label) {
     var me = this;
     var ticksOpts = me.options.ticks;
     var tickLabelWidth = me.ctx.measureText(label).width;
-    var angle = toRadians(me.isHorizontal() ? ticksOpts.maxRotation : ticksOpts.minRotation);
+    var angle = toRadians(
+      me.isHorizontal() ? ticksOpts.maxRotation : ticksOpts.minRotation
+    );
     var cosRotation = Math.cos(angle);
     var sinRotation = Math.sin(angle);
     var tickFontSize = valueOrDefault(ticksOpts.fontSize, defaults.fontSize);
     return {
       w: tickLabelWidth * cosRotation + tickFontSize * sinRotation,
-      h: tickLabelWidth * sinRotation + tickFontSize * cosRotation
+      h: tickLabelWidth * sinRotation + tickFontSize * cosRotation,
     };
   }
   _getLabelCapacity(exampleTime) {
@@ -9928,30 +10740,35 @@ class TimeScale extends Scale {
     var timeOpts = me.options.time;
     var displayFormats = timeOpts.displayFormats;
     var format = displayFormats[timeOpts.unit] || displayFormats.millisecond;
-    var exampleLabel = me._tickFormatFunction(exampleTime, 0, ticksFromTimestamps(me, [exampleTime], me._majorUnit), format);
+    var exampleLabel = me._tickFormatFunction(
+      exampleTime,
+      0,
+      ticksFromTimestamps(me, [exampleTime], me._majorUnit),
+      format
+    );
     var size = me._getLabelSize(exampleLabel);
-    var capacity = Math.floor(me.isHorizontal() ? me.width / size.w : me.height / size.h) - 1;
+    var capacity =
+      Math.floor(me.isHorizontal() ? me.width / size.w : me.height / size.h) -
+      1;
     return capacity > 0 ? capacity : 1;
   }
 }
-_defineProperty(TimeScale, "id", 'time');
+_defineProperty(TimeScale, "id", "time");
 _defineProperty(TimeScale, "defaults", defaultConfig$4);
 
-
-
-var scales = /*#__PURE__*/Object.freeze({
-__proto__: null,
-CategoryScale: CategoryScale,
-LinearScale: LinearScale,
-LogarithmicScale: LogarithmicScale,
-RadialLinearScale: RadialLinearScale,
-TimeScale: TimeScale
+var scales = /*#__PURE__*/ Object.freeze({
+  __proto__: null,
+  CategoryScale: CategoryScale,
+  LinearScale: LinearScale,
+  LogarithmicScale: LogarithmicScale,
+  RadialLinearScale: RadialLinearScale,
+  TimeScale: TimeScale,
 });
 
-defaults.set('plugins', {
+defaults.set("plugins", {
   filler: {
-    propagate: true
-  }
+    propagate: true,
+  },
 });
 function getLineByIndex(chart, index) {
   var meta = chart.getDatasetMeta(index);
@@ -9969,7 +10786,7 @@ function parseFillOption(line) {
     return false;
   }
   if (fill === true) {
-    return 'origin';
+    return "origin";
   }
   return fill;
 }
@@ -9977,7 +10794,7 @@ function decodeFill(line, index, count) {
   var fill = parseFillOption(line);
   var target = parseFloat(fill);
   if (isNumberFinite(target) && Math.floor(target) === target) {
-    if (fill[0] === '-' || fill[0] === '+') {
+    if (fill[0] === "-" || fill[0] === "+") {
       target = index + target;
     }
     if (target === index || target < 0 || target >= count) {
@@ -9985,18 +10802,15 @@ function decodeFill(line, index, count) {
     }
     return target;
   }
-  return ['origin', 'start', 'end'].indexOf(fill) >= 0 ? fill : false;
+  return ["origin", "start", "end"].indexOf(fill) >= 0 ? fill : false;
 }
 function computeLinearBoundary(source) {
-  var {
-    scale = {},
-    fill
-  } = source;
+  var { scale = {}, fill } = source;
   var target = null;
   var horizontal;
-  if (fill === 'start') {
+  if (fill === "start") {
     target = scale.bottom;
-  } else if (fill === 'end') {
+  } else if (fill === "end") {
     target = scale.top;
   } else if (scale.getBasePixel) {
     target = scale.getBasePixel();
@@ -10005,7 +10819,7 @@ function computeLinearBoundary(source) {
     horizontal = scale.isHorizontal();
     return {
       x: horizontal ? target : null,
-      y: horizontal ? null : target
+      y: horizontal ? null : target,
     };
   }
   return null;
@@ -10017,14 +10831,10 @@ class simpleArc {
     this.radius = opts.radius;
   }
   pathSegment(ctx, bounds, opts) {
-    var {
-      x,
-      y,
-      radius
-    } = this;
+    var { x, y, radius } = this;
     bounds = bounds || {
       start: 0,
-      end: Math.PI * 2
+      end: Math.PI * 2,
     };
     if (opts.reverse) {
       ctx.arc(x, y, radius, bounds.end, bounds.start, true);
@@ -10034,39 +10844,33 @@ class simpleArc {
     return !opts.bounds;
   }
   interpolate(point, property) {
-    var {
-      x,
-      y,
-      radius
-    } = this;
+    var { x, y, radius } = this;
     var angle = point.angle;
-    if (property === 'angle') {
+    if (property === "angle") {
       return {
         x: x + Math.cos(angle) * radius,
         y: y + Math.sin(angle) * radius,
-        angle
+        angle,
       };
     }
   }
 }
 function computeCircularBoundary(source) {
-  var {
-    scale,
-    fill
-  } = source;
+  var { scale, fill } = source;
   var options = scale.options;
   var length = scale.getLabels().length;
   var target = [];
   var start = options.reverse ? scale.max : scale.min;
   var end = options.reverse ? scale.min : scale.max;
-  var value = fill === 'start' ? start : fill === 'end' ? end : scale.getBaseValue();
+  var value =
+    fill === "start" ? start : fill === "end" ? end : scale.getBaseValue();
   var i, center;
   if (options.gridLines.circular) {
     center = scale.getPointPositionForValue(0, start);
     return new simpleArc({
       x: center.x,
       y: center.y,
-      radius: scale.getDistanceFromCenterForValue(value)
+      radius: scale.getDistanceFromCenterForValue(value),
     });
   }
   for (i = 0; i < length; ++i) {
@@ -10082,51 +10886,44 @@ function computeBoundary(source) {
   return computeLinearBoundary(source);
 }
 function pointsFromSegments(boundary, line) {
-  var {
-    x = null,
-    y = null
-  } = boundary || {};
+  var { x = null, y = null } = boundary || {};
   var linePoints = line.points;
   var points = [];
-  line.segments.forEach(segment => {
+  line.segments.forEach((segment) => {
     var first = linePoints[segment.start];
     var last = linePoints[segment.end];
     if (y !== null) {
       points.push({
         x: first.x,
         y,
-        _prop: 'x',
-        _ref: first
+        _prop: "x",
+        _ref: first,
       });
       points.push({
         x: last.x,
         y,
-        _prop: 'x',
-        _ref: last
+        _prop: "x",
+        _ref: last,
       });
     } else if (x !== null) {
       points.push({
         x,
         y: first.y,
-        _prop: 'y',
-        _ref: first
+        _prop: "y",
+        _ref: first,
       });
       points.push({
         x,
         y: last.y,
-        _prop: 'y',
-        _ref: last
+        _prop: "y",
+        _ref: last,
       });
     }
   });
   return points;
 }
 function getTarget(source) {
-  var {
-    chart,
-    fill,
-    line
-  } = source;
+  var { chart, fill, line } = source;
   if (isNumberFinite(fill)) {
     return getLineByIndex(chart, fill);
   }
@@ -10144,15 +10941,17 @@ function getTarget(source) {
     points = pointsFromSegments(boundary, line);
     _refPoints = true;
   }
-  return points.length ? new Line({
-    points,
-    options: {
-      tension: 0
-    },
-    _loop,
-    _fullLoop: _loop,
-    _refPoints
-  }) : null;
+  return points.length
+    ? new Line({
+        points,
+        options: {
+          tension: 0,
+        },
+        _loop,
+        _fullLoop: _loop,
+        _refPoints,
+      })
+    : null;
 }
 function resolveTarget(sources, index, propagate) {
   var source = sources[index];
@@ -10192,14 +10991,14 @@ function getBounds(property, first, last, loop) {
   }
   var start = first[property];
   var end = last[property];
-  if (property === 'angle') {
+  if (property === "angle") {
     start = _normalizeAngle(start);
     end = _normalizeAngle(end);
   }
   return {
     property,
     start,
-    end
+    end,
   };
 }
 function _getEdge(a, b, prop, fn) {
@@ -10224,31 +11023,41 @@ function _segments(line, target, property) {
   }
   for (var _i = 0; _i < segments.length; _i++) {
     var segment = segments[_i];
-    var bounds = getBounds(property, points[segment.start], points[segment.end], segment.loop);
+    var bounds = getBounds(
+      property,
+      points[segment.start],
+      points[segment.end],
+      segment.loop
+    );
     if (!target.segments) {
       parts.push({
         source: segment,
         target: bounds,
         start: points[segment.start],
-        end: points[segment.end]
+        end: points[segment.end],
       });
       continue;
     }
     var subs = _boundSegments(target, bounds);
     for (var j = 0; j < subs.length; ++j) {
       var sub = subs[j];
-      var subBounds = getBounds(property, tpoints[sub.start], tpoints[sub.end], sub.loop);
+      var subBounds = getBounds(
+        property,
+        tpoints[sub.start],
+        tpoints[sub.end],
+        sub.loop
+      );
       var fillSources = _boundSegment(segment, points, subBounds);
       for (var k = 0; k < fillSources.length; k++) {
         parts.push({
           source: fillSources[k],
           target: sub,
           start: {
-            [property]: _getEdge(bounds, subBounds, 'start', Math.max)
+            [property]: _getEdge(bounds, subBounds, "start", Math.max),
           },
           end: {
-            [property]: _getEdge(bounds, subBounds, 'end', Math.min)
-          }
+            [property]: _getEdge(bounds, subBounds, "end", Math.min),
+          },
         });
       }
     }
@@ -10256,16 +11065,9 @@ function _segments(line, target, property) {
   return parts;
 }
 function clipBounds(ctx, scale, bounds) {
-  var {
-    top,
-    bottom
-  } = scale.chart.chartArea;
-  var {
-    property,
-    start,
-    end
-  } = bounds || {};
-  if (property === 'x') {
+  var { top, bottom } = scale.chart.chartArea;
+  var { property, start, end } = bounds || {};
+  if (property === "x") {
     ctx.beginPath();
     ctx.rect(start, top, end - start, bottom - top);
     ctx.clip();
@@ -10278,22 +11080,11 @@ function interpolatedLineTo(ctx, target, point, property) {
   }
 }
 function _fill(ctx, cfg) {
-  var {
-    line,
-    target,
-    property,
-    color,
-    scale
-  } = cfg;
+  var { line, target, property, color, scale } = cfg;
   var segments = _segments(cfg.line, cfg.target, property);
   ctx.fillStyle = color;
   for (var i = 0, ilen = segments.length; i < ilen; ++i) {
-    var {
-      source: src,
-      target: tgt,
-      start,
-      end
-    } = segments[i];
+    var { source: src, target: tgt, start, end } = segments[i];
     ctx.save();
     clipBounds(ctx, scale, getBounds(property, start, end));
     ctx.beginPath();
@@ -10305,36 +11096,29 @@ function _fill(ctx, cfg) {
     }
     var targetLoop = !!target.pathSegment(ctx, tgt, {
       move: lineLoop,
-      reverse: true
+      reverse: true,
     });
     var loop = lineLoop && targetLoop;
     if (!loop) {
       interpolatedLineTo(ctx, target, start, property);
     }
     ctx.closePath();
-    ctx.fill(loop ? 'evenodd' : 'nonzero');
+    ctx.fill(loop ? "evenodd" : "nonzero");
     ctx.restore();
   }
 }
 function doFill(ctx, cfg) {
-  var {
-    line,
-    target,
-    above,
-    below,
-    area,
-    scale
-  } = cfg;
-  var property = line._loop ? 'angle' : 'x';
+  var { line, target, above, below, area, scale } = cfg;
+  var property = line._loop ? "angle" : "x";
   ctx.save();
-  if (property === 'x' && below !== above) {
+  if (property === "x" && below !== above) {
     _clip(ctx, target, area.top);
     _fill(ctx, {
       line,
       target,
       color: above,
       scale,
-      property
+      property,
     });
     ctx.restore();
     ctx.save();
@@ -10345,12 +11129,12 @@ function doFill(ctx, cfg) {
     target,
     color: below,
     scale,
-    property
+    property,
   });
   ctx.restore();
 }
 var filler = {
-  id: 'filler',
+  id: "filler",
   afterDatasetsUpdate(chart, options) {
     var count = (chart.data.datasets || []).length;
     var propagate = options.propagate;
@@ -10367,7 +11151,7 @@ var filler = {
           chart,
           scale: meta.vScale,
           line,
-          target: undefined
+          target: undefined,
         };
       }
       meta.$filler = source;
@@ -10400,18 +11184,11 @@ var filler = {
     if (!meta || meta.fill === false) {
       return;
     }
-    var {
-      line,
-      target,
-      scale
-    } = meta;
+    var { line, target, scale } = meta;
     var lineOpts = line.options;
     var fillOption = lineOpts.fill;
     var color = lineOpts.backgroundColor || defaults.color;
-    var {
-      above = color,
-      below = color
-    } = fillOption || {};
+    var { above = color, below = color } = fillOption || {};
     if (target && line.points.length) {
       clipArea(ctx, area);
       doFill(ctx, {
@@ -10420,17 +11197,17 @@ var filler = {
         above,
         below,
         area,
-        scale
+        scale,
       });
       unclipArea(ctx);
     }
-  }
+  },
 };
 
-defaults.set('legend', {
+defaults.set("legend", {
   display: true,
-  position: 'top',
-  align: 'center',
+  position: "top",
+  align: "center",
   fullWidth: true,
   reverse: false,
   weight: 1000,
@@ -10454,7 +11231,7 @@ defaults.set('legend', {
       var datasets = chart.data.datasets;
       var options = chart.options.legend || {};
       var usePointStyle = options.labels && options.labels.usePointStyle;
-      return chart._getSortedDatasetMetas().map(meta => {
+      return chart._getSortedDatasetMetas().map((meta) => {
         var style = meta.controller.getStyle(usePointStyle ? 0 : undefined);
         return {
           text: datasets[meta.index].label,
@@ -10468,19 +11245,21 @@ defaults.set('legend', {
           strokeStyle: style.borderColor,
           pointStyle: style.pointStyle,
           rotation: style.rotation,
-          datasetIndex: meta.index
+          datasetIndex: meta.index,
         };
       }, this);
-    }
+    },
   },
   title: {
     display: false,
-    position: 'center',
-    text: ''
-  }
+    position: "center",
+    text: "",
+  },
 });
 function getBoxWidth(labelOpts, fontSize) {
-  return labelOpts.usePointStyle && labelOpts.boxWidth > fontSize ? fontSize : labelOpts.boxWidth;
+  return labelOpts.usePointStyle && labelOpts.boxWidth > fontSize
+    ? fontSize
+    : labelOpts.boxWidth;
 }
 class Legend extends Element$1 {
   constructor(config) {
@@ -10551,7 +11330,7 @@ class Legend extends Element$1 {
     me.paddingBottom = 0;
     me._minSize = {
       width: 0,
-      height: 0
+      height: 0,
     };
   }
   afterSetDimensions() {}
@@ -10561,7 +11340,9 @@ class Legend extends Element$1 {
     var labelOpts = me.options.labels || {};
     var legendItems = callback(labelOpts.generateLabels, [me.chart], me) || [];
     if (labelOpts.filter) {
-      legendItems = legendItems.filter(item => labelOpts.filter(item, me.chart.data));
+      legendItems = legendItems.filter((item) =>
+        labelOpts.filter(item, me.chart.data)
+      );
     }
     if (me.options.reverse) {
       legendItems.reverse();
@@ -10578,7 +11359,7 @@ class Legend extends Element$1 {
     var ctx = me.ctx;
     var labelFont = _parseFont(labelOpts);
     var fontSize = labelFont.size;
-    var hitboxes = me.legendHitBoxes = [];
+    var hitboxes = (me.legendHitBoxes = []);
     var minSize = me._minSize;
     var isHorizontal = me.isHorizontal();
     var titleHeight = me._computeTitleHeight();
@@ -10595,14 +11376,19 @@ class Legend extends Element$1 {
     }
     ctx.font = labelFont.string;
     if (isHorizontal) {
-      var lineWidths = me.lineWidths = [0];
+      var lineWidths = (me.lineWidths = [0]);
       var totalHeight = titleHeight;
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
       me.legendItems.forEach((legendItem, i) => {
         var boxWidth = getBoxWidth(labelOpts, fontSize);
-        var width = boxWidth + fontSize / 2 + ctx.measureText(legendItem.text).width;
-        if (i === 0 || lineWidths[lineWidths.length - 1] + width + 2 * labelOpts.padding > minSize.width) {
+        var width =
+          boxWidth + fontSize / 2 + ctx.measureText(legendItem.text).width;
+        if (
+          i === 0 ||
+          lineWidths[lineWidths.length - 1] + width + 2 * labelOpts.padding >
+            minSize.width
+        ) {
           totalHeight += fontSize + labelOpts.padding;
           lineWidths[lineWidths.length - (i > 0 ? 0 : 1)] = 0;
         }
@@ -10610,22 +11396,23 @@ class Legend extends Element$1 {
           left: 0,
           top: 0,
           width,
-          height: fontSize
+          height: fontSize,
         };
         lineWidths[lineWidths.length - 1] += width + labelOpts.padding;
       });
       minSize.height += totalHeight;
     } else {
       var vPadding = labelOpts.padding;
-      var columnWidths = me.columnWidths = [];
-      var columnHeights = me.columnHeights = [];
+      var columnWidths = (me.columnWidths = []);
+      var columnHeights = (me.columnHeights = []);
       var totalWidth = labelOpts.padding;
       var currentColWidth = 0;
       var currentColHeight = 0;
       var heightLimit = minSize.height - titleHeight;
       me.legendItems.forEach((legendItem, i) => {
         var boxWidth = getBoxWidth(labelOpts, fontSize);
-        var itemWidth = boxWidth + fontSize / 2 + ctx.measureText(legendItem.text).width;
+        var itemWidth =
+          boxWidth + fontSize / 2 + ctx.measureText(legendItem.text).width;
         if (i > 0 && currentColHeight + fontSize + 2 * vPadding > heightLimit) {
           totalWidth += currentColWidth + labelOpts.padding;
           columnWidths.push(currentColWidth);
@@ -10639,7 +11426,7 @@ class Legend extends Element$1 {
           left: 0,
           top: 0,
           width: itemWidth,
-          height: fontSize
+          height: fontSize,
         };
       });
       totalWidth += currentColWidth;
@@ -10652,7 +11439,9 @@ class Legend extends Element$1 {
   }
   afterFit() {}
   isHorizontal() {
-    return this.options.position === 'top' || this.options.position === 'bottom';
+    return (
+      this.options.position === "top" || this.options.position === "bottom"
+    );
   }
   draw() {
     var me = this;
@@ -10674,8 +11463,8 @@ class Legend extends Element$1 {
     var labelFont = _parseFont(labelOpts);
     var fontSize = labelFont.size;
     var cursor;
-    ctx.textAlign = rtlHelper.textAlign('left');
-    ctx.textBaseline = 'middle';
+    ctx.textAlign = rtlHelper.textAlign("left");
+    ctx.textBaseline = "middle";
     ctx.lineWidth = 0.5;
     ctx.strokeStyle = fontColor;
     ctx.fillStyle = fontColor;
@@ -10687,22 +11476,36 @@ class Legend extends Element$1 {
         return;
       }
       ctx.save();
-      var lineWidth = valueOrDefault(legendItem.lineWidth, lineDefault.borderWidth);
+      var lineWidth = valueOrDefault(
+        legendItem.lineWidth,
+        lineDefault.borderWidth
+      );
       ctx.fillStyle = valueOrDefault(legendItem.fillStyle, defaultColor);
-      ctx.lineCap = valueOrDefault(legendItem.lineCap, lineDefault.borderCapStyle);
-      ctx.lineDashOffset = valueOrDefault(legendItem.lineDashOffset, lineDefault.borderDashOffset);
-      ctx.lineJoin = valueOrDefault(legendItem.lineJoin, lineDefault.borderJoinStyle);
+      ctx.lineCap = valueOrDefault(
+        legendItem.lineCap,
+        lineDefault.borderCapStyle
+      );
+      ctx.lineDashOffset = valueOrDefault(
+        legendItem.lineDashOffset,
+        lineDefault.borderDashOffset
+      );
+      ctx.lineJoin = valueOrDefault(
+        legendItem.lineJoin,
+        lineDefault.borderJoinStyle
+      );
       ctx.lineWidth = lineWidth;
       ctx.strokeStyle = valueOrDefault(legendItem.strokeStyle, defaultColor);
       if (ctx.setLineDash) {
-        ctx.setLineDash(valueOrDefault(legendItem.lineDash, lineDefault.borderDash));
+        ctx.setLineDash(
+          valueOrDefault(legendItem.lineDash, lineDefault.borderDash)
+        );
       }
       if (labelOpts && labelOpts.usePointStyle) {
         var drawOptions = {
-          radius: boxWidth * Math.SQRT2 / 2,
+          radius: (boxWidth * Math.SQRT2) / 2,
           pointStyle: legendItem.pointStyle,
           rotation: legendItem.rotation,
-          borderWidth: lineWidth
+          borderWidth: lineWidth,
         };
         var centerX = rtlHelper.xPlus(x, boxWidth / 2);
         var centerY = y + fontSize / 2;
@@ -10710,7 +11513,12 @@ class Legend extends Element$1 {
       } else {
         ctx.fillRect(rtlHelper.leftForLtr(x, boxWidth), y, boxWidth, fontSize);
         if (lineWidth !== 0) {
-          ctx.strokeRect(rtlHelper.leftForLtr(x, boxWidth), y, boxWidth, fontSize);
+          ctx.strokeRect(
+            rtlHelper.leftForLtr(x, boxWidth),
+            y,
+            boxWidth,
+            fontSize
+          );
         }
       }
       ctx.restore();
@@ -10730,9 +11538,9 @@ class Legend extends Element$1 {
     };
     var alignmentOffset = function alignmentOffset(dimension, blockSize) {
       switch (opts.align) {
-        case 'start':
+        case "start":
           return labelOpts.padding;
-        case 'end':
+        case "end":
           return dimension - blockSize;
         default:
           return (dimension - blockSize + labelOpts.padding) / 2;
@@ -10744,13 +11552,16 @@ class Legend extends Element$1 {
       cursor = {
         x: me.left + alignmentOffset(legendWidth, lineWidths[0]),
         y: me.top + labelOpts.padding + titleHeight,
-        line: 0
+        line: 0,
       };
     } else {
       cursor = {
         x: me.left + labelOpts.padding,
-        y: me.top + alignmentOffset(legendHeight, columnHeights[0]) + titleHeight,
-        line: 0
+        y:
+          me.top +
+          alignmentOffset(legendHeight, columnHeights[0]) +
+          titleHeight,
+        line: 0,
       };
     }
     overrideTextDirection(me.ctx, opts.textDirection);
@@ -10762,15 +11573,20 @@ class Legend extends Element$1 {
       var y = cursor.y;
       rtlHelper.setWidth(me._minSize.width);
       if (isHorizontal) {
-        if (i > 0 && x + width + labelOpts.padding > me.left + me._minSize.width) {
+        if (
+          i > 0 &&
+          x + width + labelOpts.padding > me.left + me._minSize.width
+        ) {
           y = cursor.y += itemHeight;
           cursor.line++;
-          x = cursor.x = me.left + alignmentOffset(legendWidth, lineWidths[cursor.line]);
+          x = cursor.x =
+            me.left + alignmentOffset(legendWidth, lineWidths[cursor.line]);
         }
       } else if (i > 0 && y + itemHeight > me.top + me._minSize.height) {
         x = cursor.x = x + me.columnWidths[cursor.line] + labelOpts.padding;
         cursor.line++;
-        y = cursor.y = me.top + alignmentOffset(legendHeight, columnHeights[cursor.line]);
+        y = cursor.y =
+          me.top + alignmentOffset(legendHeight, columnHeights[cursor.line]);
       }
       var realX = rtlHelper.x(x);
       drawLegendBox(realX, y, legendItem);
@@ -10806,9 +11622,9 @@ class Legend extends Element$1 {
     if (this.isHorizontal()) {
       maxWidth = Math.max(...me.lineWidths);
       switch (opts.align) {
-        case 'start':
+        case "start":
           break;
-        case 'end':
+        case "end":
           left = me.right - maxWidth;
           break;
         default:
@@ -10818,9 +11634,9 @@ class Legend extends Element$1 {
     } else {
       var maxHeight = Math.max(...me.columnHeights);
       switch (opts.align) {
-        case 'start':
+        case "start":
           break;
-        case 'end':
+        case "end":
           y += me.height - maxHeight;
           break;
         default:
@@ -10829,21 +11645,21 @@ class Legend extends Element$1 {
       }
     }
     switch (position) {
-      case 'start':
+      case "start":
         x = left;
-        textAlign = 'left';
+        textAlign = "left";
         break;
-      case 'end':
+      case "end":
         x = left + maxWidth;
-        textAlign = 'right';
+        textAlign = "right";
         break;
       default:
         x = left + maxWidth / 2;
-        textAlign = 'center';
+        textAlign = "center";
         break;
     }
     ctx.textAlign = rtlHelper.textAlign(textAlign);
-    ctx.textBaseline = 'middle';
+    ctx.textBaseline = "middle";
     ctx.strokeStyle = fontColor;
     ctx.fillStyle = fontColor;
     ctx.font = titleFont.string;
@@ -10862,7 +11678,12 @@ class Legend extends Element$1 {
       lh = me.legendHitBoxes;
       for (i = 0; i < lh.length; ++i) {
         hitBox = lh[i];
-        if (x >= hitBox.left && x <= hitBox.left + hitBox.width && y >= hitBox.top && y <= hitBox.top + hitBox.height) {
+        if (
+          x >= hitBox.left &&
+          x <= hitBox.left + hitBox.width &&
+          y >= hitBox.top &&
+          y <= hitBox.top + hitBox.height
+        ) {
           return me.legendItems[i];
         }
       }
@@ -10872,12 +11693,12 @@ class Legend extends Element$1 {
   handleEvent(e) {
     var me = this;
     var opts = me.options;
-    var type = e.type === 'mouseup' ? 'click' : e.type;
-    if (type === 'mousemove') {
+    var type = e.type === "mouseup" ? "click" : e.type;
+    if (type === "mousemove") {
       if (!opts.onHover && !opts.onLeave) {
         return;
       }
-    } else if (type === 'click') {
+    } else if (type === "click") {
       if (!opts.onClick) {
         return;
       }
@@ -10885,7 +11706,7 @@ class Legend extends Element$1 {
       return;
     }
     var hoveredItem = me._getLegendItemAt(e.x, e.y);
-    if (type === 'click') {
+    if (type === "click") {
       if (hoveredItem && opts.onClick) {
         opts.onClick.call(me, e.native, hoveredItem);
       }
@@ -10906,14 +11727,14 @@ function createNewLegendAndAttach(chart, legendOpts) {
   var legend = new Legend({
     ctx: chart.ctx,
     options: legendOpts,
-    chart
+    chart,
   });
   layouts.configure(chart, legend, legendOpts);
   layouts.addBox(chart, legend);
   chart.legend = legend;
 }
 var legend = {
-  id: 'legend',
+  id: "legend",
   _element: Legend,
   beforeInit(chart) {
     var legendOpts = chart.options.legend;
@@ -10943,18 +11764,18 @@ var legend = {
     if (legend) {
       legend.handleEvent(e);
     }
-  }
+  },
 };
 
-defaults.set('title', {
-  align: 'center',
+defaults.set("title", {
+  align: "center",
   display: false,
-  fontStyle: 'bold',
+  fontStyle: "bold",
   fullWidth: true,
   padding: 10,
-  position: 'top',
-  text: '',
-  weight: 2000
+  position: "top",
+  text: "",
+  weight: 2000,
 });
 class Title extends Element$1 {
   constructor(config) {
@@ -11026,14 +11847,16 @@ class Title extends Element$1 {
     }
     var lineCount = helpers.isArray(opts.text) ? opts.text.length : 1;
     me._padding = helpers.options.toPadding(opts.padding);
-    var textSize = lineCount * helpers.options._parseFont(opts).lineHeight + me._padding.height;
+    var textSize =
+      lineCount * helpers.options._parseFont(opts).lineHeight +
+      me._padding.height;
     me.width = minSize.width = isHorizontal ? me.maxWidth : textSize;
     me.height = minSize.height = isHorizontal ? textSize : me.maxHeight;
   }
   afterFit() {}
   isHorizontal() {
     var pos = this.options.position;
-    return pos === 'top' || pos === 'bottom';
+    return pos === "top" || pos === "bottom";
   }
   draw() {
     var me = this;
@@ -11054,39 +11877,39 @@ class Title extends Element$1 {
     var align;
     if (me.isHorizontal()) {
       switch (opts.align) {
-        case 'start':
+        case "start":
           titleX = left;
-          align = 'left';
+          align = "left";
           break;
-        case 'end':
+        case "end":
           titleX = right;
-          align = 'right';
+          align = "right";
           break;
         default:
           titleX = left + (right - left) / 2;
-          align = 'center';
+          align = "center";
           break;
       }
       titleY = top + offset;
       maxWidth = right - left;
     } else {
-      titleX = opts.position === 'left' ? left + offset : right - offset;
+      titleX = opts.position === "left" ? left + offset : right - offset;
       switch (opts.align) {
-        case 'start':
-          titleY = opts.position === 'left' ? bottom : top;
-          align = 'left';
+        case "start":
+          titleY = opts.position === "left" ? bottom : top;
+          align = "left";
           break;
-        case 'end':
-          titleY = opts.position === 'left' ? top : bottom;
-          align = 'right';
+        case "end":
+          titleY = opts.position === "left" ? top : bottom;
+          align = "right";
           break;
         default:
           titleY = top + (bottom - top) / 2;
-          align = 'center';
+          align = "center";
           break;
       }
       maxWidth = bottom - top;
-      rotation = Math.PI * (opts.position === 'left' ? -0.5 : 0.5);
+      rotation = Math.PI * (opts.position === "left" ? -0.5 : 0.5);
     }
     ctx.save();
     ctx.fillStyle = helpers.valueOrDefault(opts.fontColor, defaults.fontColor);
@@ -11094,7 +11917,7 @@ class Title extends Element$1 {
     ctx.translate(titleX, titleY);
     ctx.rotate(rotation);
     ctx.textAlign = align;
-    ctx.textBaseline = 'middle';
+    ctx.textBaseline = "middle";
     var text = opts.text;
     if (helpers.isArray(text)) {
       var y = 0;
@@ -11112,14 +11935,14 @@ function createNewTitleBlockAndAttach(chart, titleOpts) {
   var title = new Title({
     ctx: chart.ctx,
     options: titleOpts,
-    chart
+    chart,
   });
   layouts.configure(chart, title, titleOpts);
   layouts.addBox(chart, title);
   chart.titleBlock = title;
 }
 var title = {
-  id: 'title',
+  id: "title",
   _element: Title,
   beforeInit(chart) {
     var titleOpts = chart.options.title;
@@ -11142,56 +11965,56 @@ var title = {
       layouts.removeBox(chart, titleBlock);
       delete chart.titleBlock;
     }
-  }
+  },
 };
 
 var valueOrDefault$3 = helpers.valueOrDefault;
 var getRtlHelper = helpers.rtl.getRtlAdapter;
-defaults.set('tooltips', {
+defaults.set("tooltips", {
   enabled: true,
   custom: null,
-  mode: 'nearest',
-  position: 'average',
+  mode: "nearest",
+  position: "average",
   intersect: true,
-  backgroundColor: 'rgba(0,0,0,0.8)',
-  titleFontStyle: 'bold',
+  backgroundColor: "rgba(0,0,0,0.8)",
+  titleFontStyle: "bold",
   titleSpacing: 2,
   titleMarginBottom: 6,
-  titleFontColor: '#fff',
-  titleAlign: 'left',
+  titleFontColor: "#fff",
+  titleAlign: "left",
   bodySpacing: 2,
-  bodyFontColor: '#fff',
-  bodyAlign: 'left',
-  footerFontStyle: 'bold',
+  bodyFontColor: "#fff",
+  bodyAlign: "left",
+  footerFontStyle: "bold",
   footerSpacing: 2,
   footerMarginTop: 6,
-  footerFontColor: '#fff',
-  footerAlign: 'left',
+  footerFontColor: "#fff",
+  footerAlign: "left",
   yPadding: 6,
   xPadding: 6,
   caretPadding: 2,
   caretSize: 5,
   cornerRadius: 6,
-  multiKeyBackground: '#fff',
+  multiKeyBackground: "#fff",
   displayColors: true,
-  borderColor: 'rgba(0,0,0,0)',
+  borderColor: "rgba(0,0,0,0)",
   borderWidth: 0,
   animation: {
     duration: 400,
-    easing: 'easeOutQuart',
+    easing: "easeOutQuart",
     numbers: {
-      type: 'number',
-      properties: ['x', 'y', 'width', 'height']
+      type: "number",
+      properties: ["x", "y", "width", "height"],
     },
     opacity: {
-      easing: 'linear',
-      duration: 200
-    }
+      easing: "linear",
+      duration: 200,
+    },
   },
   callbacks: {
     beforeTitle: helpers.noop,
     title(tooltipItems, data) {
-      var title = '';
+      var title = "";
       var labels = data.labels;
       var labelCount = labels ? labels.length : 0;
       if (tooltipItems.length > 0) {
@@ -11208,9 +12031,9 @@ defaults.set('tooltips', {
     beforeBody: helpers.noop,
     beforeLabel: helpers.noop,
     label(tooltipItem, data) {
-      var label = data.datasets[tooltipItem.datasetIndex].label || '';
+      var label = data.datasets[tooltipItem.datasetIndex].label || "";
       if (label) {
-        label += ': ';
+        label += ": ";
       }
       var value = tooltipItem.value;
       if (!helpers.isNullOrUndef(value)) {
@@ -11223,7 +12046,7 @@ defaults.set('tooltips', {
       var options = meta.controller.getStyle(tooltipItem.index);
       return {
         borderColor: options.borderColor,
-        backgroundColor: options.backgroundColor
+        backgroundColor: options.backgroundColor,
       };
     },
     labelTextColor() {
@@ -11233,8 +12056,8 @@ defaults.set('tooltips', {
     afterBody: helpers.noop,
     beforeFooter: helpers.noop,
     footer: helpers.noop,
-    afterFooter: helpers.noop
-  }
+    afterFooter: helpers.noop,
+  },
 });
 var positioners = {
   average(items) {
@@ -11256,7 +12079,7 @@ var positioners = {
     }
     return {
       x: x / count,
-      y: y / count
+      y: y / count,
     };
   },
   nearest(items, eventPosition) {
@@ -11282,9 +12105,9 @@ var positioners = {
     }
     return {
       x,
-      y
+      y,
     };
-  }
+  },
 };
 function pushOrConcat(base, toPush) {
   if (toPush) {
@@ -11297,153 +12120,193 @@ function pushOrConcat(base, toPush) {
   return base;
 }
 function splitNewlines(str) {
-  if ((typeof str === 'string' || str instanceof String) && str.indexOf('\n') > -1) {
-    return str.split('\n');
+  if (
+    (typeof str === "string" || str instanceof String) &&
+    str.indexOf("\n") > -1
+  ) {
+    return str.split("\n");
   }
   return str;
 }
 function createTooltipItem(chart, item) {
-  var {
-    datasetIndex,
-    index
-  } = item;
-  var {
-    label,
-    value
-  } = chart.getDatasetMeta(datasetIndex).controller.getLabelAndValue(index);
+  var { datasetIndex, index } = item;
+  var { label, value } = chart
+    .getDatasetMeta(datasetIndex)
+    .controller.getLabelAndValue(index);
   return {
     label,
     value,
     index,
-    datasetIndex
+    datasetIndex,
   };
 }
 function resolveOptions(options) {
   options = _extends({}, defaults.tooltips, options);
-  options.bodyFontFamily = valueOrDefault$3(options.bodyFontFamily, defaults.fontFamily);
-  options.bodyFontStyle = valueOrDefault$3(options.bodyFontStyle, defaults.fontStyle);
-  options.bodyFontSize = valueOrDefault$3(options.bodyFontSize, defaults.fontSize);
+  options.bodyFontFamily = valueOrDefault$3(
+    options.bodyFontFamily,
+    defaults.fontFamily
+  );
+  options.bodyFontStyle = valueOrDefault$3(
+    options.bodyFontStyle,
+    defaults.fontStyle
+  );
+  options.bodyFontSize = valueOrDefault$3(
+    options.bodyFontSize,
+    defaults.fontSize
+  );
   options.boxHeight = valueOrDefault$3(options.boxHeight, options.bodyFontSize);
   options.boxWidth = valueOrDefault$3(options.boxWidth, options.bodyFontSize);
-  options.titleFontFamily = valueOrDefault$3(options.titleFontFamily, defaults.fontFamily);
-  options.titleFontStyle = valueOrDefault$3(options.titleFontStyle, defaults.fontStyle);
-  options.titleFontSize = valueOrDefault$3(options.titleFontSize, defaults.fontSize);
-  options.footerFontFamily = valueOrDefault$3(options.footerFontFamily, defaults.fontFamily);
-  options.footerFontStyle = valueOrDefault$3(options.footerFontStyle, defaults.fontStyle);
-  options.footerFontSize = valueOrDefault$3(options.footerFontSize, defaults.fontSize);
+  options.titleFontFamily = valueOrDefault$3(
+    options.titleFontFamily,
+    defaults.fontFamily
+  );
+  options.titleFontStyle = valueOrDefault$3(
+    options.titleFontStyle,
+    defaults.fontStyle
+  );
+  options.titleFontSize = valueOrDefault$3(
+    options.titleFontSize,
+    defaults.fontSize
+  );
+  options.footerFontFamily = valueOrDefault$3(
+    options.footerFontFamily,
+    defaults.fontFamily
+  );
+  options.footerFontStyle = valueOrDefault$3(
+    options.footerFontStyle,
+    defaults.fontStyle
+  );
+  options.footerFontSize = valueOrDefault$3(
+    options.footerFontSize,
+    defaults.fontSize
+  );
   return options;
 }
 function getTooltipSize(tooltip) {
   var ctx = tooltip._chart.ctx;
-  var {
-    body,
-    footer,
-    options,
-    title
-  } = tooltip;
-  var {
-    bodyFontSize,
-    footerFontSize,
-    titleFontSize,
-    boxWidth,
-    boxHeight
-  } = options;
+  var { body, footer, options, title } = tooltip;
+  var { bodyFontSize, footerFontSize, titleFontSize, boxWidth, boxHeight } =
+    options;
   var titleLineCount = title.length;
   var footerLineCount = footer.length;
   var bodyLineItemCount = body.length;
   var height = options.yPadding * 2;
   var width = 0;
-  var combinedBodyLength = body.reduce((count, bodyItem) => count + bodyItem.before.length + bodyItem.lines.length + bodyItem.after.length, 0);
+  var combinedBodyLength = body.reduce(
+    (count, bodyItem) =>
+      count +
+      bodyItem.before.length +
+      bodyItem.lines.length +
+      bodyItem.after.length,
+    0
+  );
   combinedBodyLength += tooltip.beforeBody.length + tooltip.afterBody.length;
   if (titleLineCount) {
-    height += titleLineCount * titleFontSize + (titleLineCount - 1) * options.titleSpacing + options.titleMarginBottom;
+    height +=
+      titleLineCount * titleFontSize +
+      (titleLineCount - 1) * options.titleSpacing +
+      options.titleMarginBottom;
   }
   if (combinedBodyLength) {
-    var bodyLineHeight = options.displayColors ? Math.max(boxHeight, bodyFontSize) : bodyFontSize;
-    height += bodyLineItemCount * bodyLineHeight + (combinedBodyLength - bodyLineItemCount) * bodyFontSize + (combinedBodyLength - 1) * options.bodySpacing;
+    var bodyLineHeight = options.displayColors
+      ? Math.max(boxHeight, bodyFontSize)
+      : bodyFontSize;
+    height +=
+      bodyLineItemCount * bodyLineHeight +
+      (combinedBodyLength - bodyLineItemCount) * bodyFontSize +
+      (combinedBodyLength - 1) * options.bodySpacing;
   }
   if (footerLineCount) {
-    height += options.footerMarginTop + footerLineCount * footerFontSize + (footerLineCount - 1) * options.footerSpacing;
+    height +=
+      options.footerMarginTop +
+      footerLineCount * footerFontSize +
+      (footerLineCount - 1) * options.footerSpacing;
   }
   var widthPadding = 0;
   var maxLineWidth = function maxLineWidth(line) {
     width = Math.max(width, ctx.measureText(line).width + widthPadding);
   };
   ctx.save();
-  ctx.font = helpers.fontString(titleFontSize, options.titleFontStyle, options.titleFontFamily);
+  ctx.font = helpers.fontString(
+    titleFontSize,
+    options.titleFontStyle,
+    options.titleFontFamily
+  );
   helpers.each(tooltip.title, maxLineWidth);
-  ctx.font = helpers.fontString(bodyFontSize, options.bodyFontStyle, options.bodyFontFamily);
+  ctx.font = helpers.fontString(
+    bodyFontSize,
+    options.bodyFontStyle,
+    options.bodyFontFamily
+  );
   helpers.each(tooltip.beforeBody.concat(tooltip.afterBody), maxLineWidth);
   widthPadding = options.displayColors ? boxWidth + 2 : 0;
-  helpers.each(body, bodyItem => {
+  helpers.each(body, (bodyItem) => {
     helpers.each(bodyItem.before, maxLineWidth);
     helpers.each(bodyItem.lines, maxLineWidth);
     helpers.each(bodyItem.after, maxLineWidth);
   });
   widthPadding = 0;
-  ctx.font = helpers.fontString(footerFontSize, options.footerFontStyle, options.footerFontFamily);
+  ctx.font = helpers.fontString(
+    footerFontSize,
+    options.footerFontStyle,
+    options.footerFontFamily
+  );
   helpers.each(tooltip.footer, maxLineWidth);
   ctx.restore();
   width += 2 * options.xPadding;
   return {
     width,
-    height
+    height,
   };
 }
 function determineAlignment(chart, options, size) {
-  var {
-    x,
-    y,
-    width,
-    height
-  } = size;
+  var { x, y, width, height } = size;
   var chartArea = chart.chartArea;
-  var xAlign = 'center';
-  var yAlign = 'center';
+  var xAlign = "center";
+  var yAlign = "center";
   if (y < height) {
-    yAlign = 'top';
+    yAlign = "top";
   } else if (y > chart.height - height) {
-    yAlign = 'bottom';
+    yAlign = "bottom";
   }
   var lf, rf;
   var midX = (chartArea.left + chartArea.right) / 2;
   var midY = (chartArea.top + chartArea.bottom) / 2;
-  if (yAlign === 'center') {
-    lf = value => value <= midX;
-    rf = value => value > midX;
+  if (yAlign === "center") {
+    lf = (value) => value <= midX;
+    rf = (value) => value > midX;
   } else {
-    lf = value => value <= width / 2;
-    rf = value => value >= chart.width - width / 2;
+    lf = (value) => value <= width / 2;
+    rf = (value) => value >= chart.width - width / 2;
   }
-  var olf = value => value + width + options.caretSize + options.caretPadding > chart.width;
-  var orf = value => value - width - options.caretSize - options.caretPadding < 0;
-  var yf = value => value <= midY ? 'top' : 'bottom';
+  var olf = (value) =>
+    value + width + options.caretSize + options.caretPadding > chart.width;
+  var orf = (value) =>
+    value - width - options.caretSize - options.caretPadding < 0;
+  var yf = (value) => (value <= midY ? "top" : "bottom");
   if (lf(x)) {
-    xAlign = 'left';
+    xAlign = "left";
     if (olf(x)) {
-      xAlign = 'center';
+      xAlign = "center";
       yAlign = yf(y);
     }
   } else if (rf(x)) {
-    xAlign = 'right';
+    xAlign = "right";
     if (orf(x)) {
-      xAlign = 'center';
+      xAlign = "center";
       yAlign = yf(y);
     }
   }
   return {
     xAlign: options.xAlign ? options.xAlign : xAlign,
-    yAlign: options.yAlign ? options.yAlign : yAlign
+    yAlign: options.yAlign ? options.yAlign : yAlign,
   };
 }
 function alignX(size, xAlign, chartWidth) {
-  var {
-    x,
-    width
-  } = size;
-  if (xAlign === 'right') {
+  var { x, width } = size;
+  if (xAlign === "right") {
     x -= width;
-  } else if (xAlign === 'center') {
+  } else if (xAlign === "center") {
     x -= width / 2;
     if (x + width > chartWidth) {
       x = chartWidth - width;
@@ -11455,13 +12318,10 @@ function alignX(size, xAlign, chartWidth) {
   return x;
 }
 function alignY(size, yAlign, paddingAndSize) {
-  var {
-    y,
-    height
-  } = size;
-  if (yAlign === 'top') {
+  var { y, height } = size;
+  if (yAlign === "top") {
     y += paddingAndSize;
-  } else if (yAlign === 'bottom') {
+  } else if (yAlign === "bottom") {
     y -= height + paddingAndSize;
   } else {
     y -= height / 2;
@@ -11469,38 +12329,35 @@ function alignY(size, yAlign, paddingAndSize) {
   return y;
 }
 function getBackgroundPoint(options, size, alignment, chart) {
-  var {
-    caretSize,
-    caretPadding,
-    cornerRadius
-  } = options;
-  var {
-    xAlign,
-    yAlign
-  } = alignment;
+  var { caretSize, caretPadding, cornerRadius } = options;
+  var { xAlign, yAlign } = alignment;
   var paddingAndSize = caretSize + caretPadding;
   var radiusAndPadding = cornerRadius + caretPadding;
   var x = alignX(size, xAlign, chart.width);
   var y = alignY(size, yAlign, paddingAndSize);
-  if (yAlign === 'center') {
-    if (xAlign === 'left') {
+  if (yAlign === "center") {
+    if (xAlign === "left") {
       x += paddingAndSize;
-    } else if (xAlign === 'right') {
+    } else if (xAlign === "right") {
       x -= paddingAndSize;
     }
-  } else if (xAlign === 'left') {
+  } else if (xAlign === "left") {
     x -= radiusAndPadding;
-  } else if (xAlign === 'right') {
+  } else if (xAlign === "right") {
     x += radiusAndPadding;
   }
   return {
     x,
-    y
+    y,
   };
 }
 function getAlignedX(tooltip, align) {
   var options = tooltip.options;
-  return align === 'center' ? tooltip.x + tooltip.width / 2 : align === 'right' ? tooltip.x + tooltip.width - options.xPadding : tooltip.x + options.xPadding;
+  return align === "center"
+    ? tooltip.x + tooltip.width / 2
+    : align === "right"
+    ? tooltip.x + tooltip.width - options.xPadding
+    : tooltip.x + options.xPadding;
 }
 function getBeforeAfterBodyLines(callback) {
   return pushOrConcat([], splitNewlines(callback));
@@ -11564,27 +12421,37 @@ class Tooltip extends Element$1 {
     return lines;
   }
   getBeforeBody(tooltipitem, data) {
-    return getBeforeAfterBodyLines(this.options.callbacks.beforeBody.apply(this, [tooltipitem, data]));
+    return getBeforeAfterBodyLines(
+      this.options.callbacks.beforeBody.apply(this, [tooltipitem, data])
+    );
   }
   getBody(tooltipItems, data) {
     var me = this;
     var callbacks = me.options.callbacks;
     var bodyItems = [];
-    helpers.each(tooltipItems, tooltipItem => {
+    helpers.each(tooltipItems, (tooltipItem) => {
       var bodyItem = {
         before: [],
         lines: [],
-        after: []
+        after: [],
       };
-      pushOrConcat(bodyItem.before, splitNewlines(callbacks.beforeLabel.call(me, tooltipItem, data)));
+      pushOrConcat(
+        bodyItem.before,
+        splitNewlines(callbacks.beforeLabel.call(me, tooltipItem, data))
+      );
       pushOrConcat(bodyItem.lines, callbacks.label.call(me, tooltipItem, data));
-      pushOrConcat(bodyItem.after, splitNewlines(callbacks.afterLabel.call(me, tooltipItem, data)));
+      pushOrConcat(
+        bodyItem.after,
+        splitNewlines(callbacks.afterLabel.call(me, tooltipItem, data))
+      );
       bodyItems.push(bodyItem);
     });
     return bodyItems;
   }
   getAfterBody(tooltipitem, data) {
-    return getBeforeAfterBodyLines(this.options.callbacks.afterBody.apply(this, [tooltipitem, data]));
+    return getBeforeAfterBodyLines(
+      this.options.callbacks.afterBody.apply(this, [tooltipitem, data])
+    );
   }
   getFooter(tooltipitem, data) {
     var me = this;
@@ -11611,14 +12478,18 @@ class Tooltip extends Element$1 {
       tooltipItems.push(createTooltipItem(me._chart, active[i]));
     }
     if (options.filter) {
-      tooltipItems = tooltipItems.filter(a => options.filter(a, data));
+      tooltipItems = tooltipItems.filter((a) => options.filter(a, data));
     }
     if (options.itemSort) {
       tooltipItems = tooltipItems.sort((a, b) => options.itemSort(a, b, data));
     }
-    helpers.each(tooltipItems, tooltipItem => {
-      labelColors.push(options.callbacks.labelColor.call(me, tooltipItem, me._chart));
-      labelTextColors.push(options.callbacks.labelTextColor.call(me, tooltipItem, me._chart));
+    helpers.each(tooltipItems, (tooltipItem) => {
+      labelColors.push(
+        options.callbacks.labelColor.call(me, tooltipItem, me._chart)
+      );
+      labelTextColors.push(
+        options.callbacks.labelTextColor.call(me, tooltipItem, me._chart)
+      );
     });
     me.labelColors = labelColors;
     me.labelTextColors = labelTextColors;
@@ -11633,22 +12504,31 @@ class Tooltip extends Element$1 {
     if (!active.length) {
       if (me.opacity !== 0) {
         properties = {
-          opacity: 0
+          opacity: 0,
         };
       }
     } else {
       var data = me._chart.data;
-      var position = positioners[options.position].call(me, active, me._eventPosition);
+      var position = positioners[options.position].call(
+        me,
+        active,
+        me._eventPosition
+      );
       var tooltipItems = me._createItems();
       me.title = me.getTitle(tooltipItems, data);
       me.beforeBody = me.getBeforeBody(tooltipItems, data);
       me.body = me.getBody(tooltipItems, data);
       me.afterBody = me.getAfterBody(tooltipItems, data);
       me.footer = me.getFooter(tooltipItems, data);
-      var size = me._size = getTooltipSize(me);
+      var size = (me._size = getTooltipSize(me));
       var positionAndSize = _extends({}, position, size);
       var alignment = determineAlignment(me._chart, options, positionAndSize);
-      var backgroundPoint = getBackgroundPoint(options, positionAndSize, alignment, me._chart);
+      var backgroundPoint = getBackgroundPoint(
+        options,
+        positionAndSize,
+        alignment,
+        me._chart
+      );
       me.xAlign = alignment.xAlign;
       me.yAlign = alignment.yAlign;
       properties = {
@@ -11658,7 +12538,7 @@ class Tooltip extends Element$1 {
         width: size.width,
         height: size.height,
         caretX: position.x,
-        caretY: position.y
+        caretY: position.y,
       };
     }
     if (properties) {
@@ -11675,27 +12555,14 @@ class Tooltip extends Element$1 {
     ctx.lineTo(caretPosition.x3, caretPosition.y3);
   }
   getCaretPosition(tooltipPoint, size) {
-    var {
-      xAlign,
-      yAlign,
-      options
-    } = this;
-    var {
-      cornerRadius,
-      caretSize
-    } = options;
-    var {
-      x: ptX,
-      y: ptY
-    } = tooltipPoint;
-    var {
-      width,
-      height
-    } = size;
+    var { xAlign, yAlign, options } = this;
+    var { cornerRadius, caretSize } = options;
+    var { x: ptX, y: ptY } = tooltipPoint;
+    var { width, height } = size;
     var x1, x2, x3, y1, y2, y3;
-    if (yAlign === 'center') {
+    if (yAlign === "center") {
       y2 = ptY + height / 2;
-      if (xAlign === 'left') {
+      if (xAlign === "left") {
         x1 = ptX;
         x2 = x1 - caretSize;
       } else {
@@ -11706,16 +12573,16 @@ class Tooltip extends Element$1 {
       y1 = y2 + caretSize;
       y3 = y2 - caretSize;
     } else {
-      if (xAlign === 'left') {
+      if (xAlign === "left") {
         x2 = ptX + cornerRadius + caretSize;
-      } else if (xAlign === 'right') {
+      } else if (xAlign === "right") {
         x2 = ptX + width - cornerRadius - caretSize;
       } else {
         x2 = this.caretX;
       }
       x1 = x2 - caretSize;
       x3 = x2 + caretSize;
-      if (yAlign === 'top') {
+      if (yAlign === "top") {
         y1 = ptY;
         y2 = y1 - caretSize;
       } else {
@@ -11730,7 +12597,7 @@ class Tooltip extends Element$1 {
       x3,
       y1,
       y2,
-      y3
+      y3,
     };
   }
   drawTitle(pt, ctx) {
@@ -11743,11 +12610,15 @@ class Tooltip extends Element$1 {
       var rtlHelper = getRtlHelper(options.rtl, me.x, me.width);
       pt.x = getAlignedX(me, options.titleAlign);
       ctx.textAlign = rtlHelper.textAlign(options.titleAlign);
-      ctx.textBaseline = 'middle';
+      ctx.textBaseline = "middle";
       titleFontSize = options.titleFontSize;
       titleSpacing = options.titleSpacing;
       ctx.fillStyle = options.titleFontColor;
-      ctx.font = helpers.fontString(titleFontSize, options.titleFontStyle, options.titleFontFamily);
+      ctx.font = helpers.fontString(
+        titleFontSize,
+        options.titleFontStyle,
+        options.titleFontFamily
+      );
       for (i = 0; i < length; ++i) {
         ctx.fillText(title[i], rtlHelper.x(pt.x), pt.y + titleFontSize / 2);
         pt.y += titleFontSize + titleSpacing;
@@ -11761,54 +12632,75 @@ class Tooltip extends Element$1 {
     var me = this;
     var options = me.options;
     var labelColors = me.labelColors[i];
-    var {
-      boxHeight,
-      boxWidth,
-      bodyFontSize
-    } = options;
-    var colorX = getAlignedX(me, 'left');
+    var { boxHeight, boxWidth, bodyFontSize } = options;
+    var colorX = getAlignedX(me, "left");
     var rtlColorX = rtlHelper.x(colorX);
     var yOffSet = boxHeight < bodyFontSize ? (bodyFontSize - boxHeight) / 2 : 0;
     var colorY = pt.y + yOffSet;
     ctx.fillStyle = options.multiKeyBackground;
-    ctx.fillRect(rtlHelper.leftForLtr(rtlColorX, boxWidth), colorY, boxWidth, boxHeight);
+    ctx.fillRect(
+      rtlHelper.leftForLtr(rtlColorX, boxWidth),
+      colorY,
+      boxWidth,
+      boxHeight
+    );
     ctx.lineWidth = 1;
     ctx.strokeStyle = labelColors.borderColor;
-    ctx.strokeRect(rtlHelper.leftForLtr(rtlColorX, boxWidth), colorY, boxWidth, boxHeight);
+    ctx.strokeRect(
+      rtlHelper.leftForLtr(rtlColorX, boxWidth),
+      colorY,
+      boxWidth,
+      boxHeight
+    );
     ctx.fillStyle = labelColors.backgroundColor;
-    ctx.fillRect(rtlHelper.leftForLtr(rtlHelper.xPlus(rtlColorX, 1), boxWidth - 2), colorY + 1, boxWidth - 2, boxHeight - 2);
+    ctx.fillRect(
+      rtlHelper.leftForLtr(rtlHelper.xPlus(rtlColorX, 1), boxWidth - 2),
+      colorY + 1,
+      boxWidth - 2,
+      boxHeight - 2
+    );
     ctx.fillStyle = me.labelTextColors[i];
   }
   drawBody(pt, ctx) {
     var me = this;
-    var {
-      body,
-      options
-    } = me;
+    var { body, options } = me;
     var {
       bodyFontSize,
       bodySpacing,
       bodyAlign,
       displayColors,
       boxHeight,
-      boxWidth
+      boxWidth,
     } = options;
     var bodyLineHeight = bodyFontSize;
     var xLinePadding = 0;
     var rtlHelper = getRtlHelper(options.rtl, me.x, me.width);
     var fillLineOfText = function fillLineOfText(line) {
-      ctx.fillText(line, rtlHelper.x(pt.x + xLinePadding), pt.y + bodyLineHeight / 2);
+      ctx.fillText(
+        line,
+        rtlHelper.x(pt.x + xLinePadding),
+        pt.y + bodyLineHeight / 2
+      );
       pt.y += bodyLineHeight + bodySpacing;
     };
     var bodyAlignForCalculation = rtlHelper.textAlign(bodyAlign);
     var bodyItem, textColor, lines, i, j, ilen, jlen;
     ctx.textAlign = bodyAlign;
-    ctx.textBaseline = 'middle';
-    ctx.font = helpers.fontString(bodyFontSize, options.bodyFontStyle, options.bodyFontFamily);
+    ctx.textBaseline = "middle";
+    ctx.font = helpers.fontString(
+      bodyFontSize,
+      options.bodyFontStyle,
+      options.bodyFontFamily
+    );
     pt.x = getAlignedX(me, bodyAlignForCalculation);
     ctx.fillStyle = options.bodyFontColor;
     helpers.each(me.beforeBody, fillLineOfText);
-    xLinePadding = displayColors && bodyAlignForCalculation !== 'right' ? bodyAlign === 'center' ? boxWidth / 2 + 1 : boxWidth + 2 : 0;
+    xLinePadding =
+      displayColors && bodyAlignForCalculation !== "right"
+        ? bodyAlign === "center"
+          ? boxWidth / 2 + 1
+          : boxWidth + 2
+        : 0;
     for (i = 0, ilen = body.length; i < ilen; ++i) {
       bodyItem = body[i];
       textColor = me.labelTextColors[i];
@@ -11841,10 +12733,14 @@ class Tooltip extends Element$1 {
       pt.x = getAlignedX(me, options.footerAlign);
       pt.y += options.footerMarginTop;
       ctx.textAlign = rtlHelper.textAlign(options.footerAlign);
-      ctx.textBaseline = 'middle';
+      ctx.textBaseline = "middle";
       footerFontSize = options.footerFontSize;
       ctx.fillStyle = options.footerFontColor;
-      ctx.font = helpers.fontString(footerFontSize, options.footerFontStyle, options.footerFontFamily);
+      ctx.font = helpers.fontString(
+        footerFontSize,
+        options.footerFontStyle,
+        options.footerFontFamily
+      );
       for (i = 0; i < length; ++i) {
         ctx.fillText(footer[i], rtlHelper.x(pt.x), pt.y + footerFontSize / 2);
         pt.y += footerFontSize + options.footerSpacing;
@@ -11852,41 +12748,31 @@ class Tooltip extends Element$1 {
     }
   }
   drawBackground(pt, ctx, tooltipSize) {
-    var {
-      xAlign,
-      yAlign,
-      options
-    } = this;
-    var {
-      x,
-      y
-    } = pt;
-    var {
-      width,
-      height
-    } = tooltipSize;
+    var { xAlign, yAlign, options } = this;
+    var { x, y } = pt;
+    var { width, height } = tooltipSize;
     var radius = options.cornerRadius;
     ctx.fillStyle = options.backgroundColor;
     ctx.strokeStyle = options.borderColor;
     ctx.lineWidth = options.borderWidth;
     ctx.beginPath();
     ctx.moveTo(x + radius, y);
-    if (yAlign === 'top') {
+    if (yAlign === "top") {
       this.drawCaret(pt, ctx, tooltipSize);
     }
     ctx.lineTo(x + width - radius, y);
     ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-    if (yAlign === 'center' && xAlign === 'right') {
+    if (yAlign === "center" && xAlign === "right") {
       this.drawCaret(pt, ctx, tooltipSize);
     }
     ctx.lineTo(x + width, y + height - radius);
     ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    if (yAlign === 'bottom') {
+    if (yAlign === "bottom") {
       this.drawCaret(pt, ctx, tooltipSize);
     }
     ctx.lineTo(x + radius, y + height);
     ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-    if (yAlign === 'center' && xAlign === 'left') {
+    if (yAlign === "center" && xAlign === "left") {
       this.drawCaret(pt, ctx, tooltipSize);
     }
     ctx.lineTo(x, y + radius);
@@ -11905,14 +12791,23 @@ class Tooltip extends Element$1 {
     var animX = anims && anims.x;
     var animY = anims && anims.y;
     if (animX || animY) {
-      var position = positioners[options.position].call(me, me._active, me._eventPosition);
+      var position = positioners[options.position].call(
+        me,
+        me._active,
+        me._eventPosition
+      );
       if (!position) {
         return;
       }
-      var size = me._size = getTooltipSize(me);
+      var size = (me._size = getTooltipSize(me));
       var positionAndSize = _extends({}, position, me._size);
       var alignment = determineAlignment(chart, options, positionAndSize);
-      var point = getBackgroundPoint(options, positionAndSize, alignment, chart);
+      var point = getBackgroundPoint(
+        options,
+        positionAndSize,
+        alignment,
+        chart
+      );
       if (animX._to !== point.x || animY._to !== point.y) {
         me.xAlign = alignment.xAlign;
         me.yAlign = alignment.yAlign;
@@ -11934,14 +12829,19 @@ class Tooltip extends Element$1 {
     me._updateAnimationTarget();
     var tooltipSize = {
       width: me.width,
-      height: me.height
+      height: me.height,
     };
     var pt = {
       x: me.x,
-      y: me.y
+      y: me.y,
     };
     opacity = Math.abs(opacity) < 1e-3 ? 0 : opacity;
-    var hasTooltipContent = me.title.length || me.beforeBody.length || me.body.length || me.afterBody.length || me.footer.length;
+    var hasTooltipContent =
+      me.title.length ||
+      me.beforeBody.length ||
+      me.body.length ||
+      me.afterBody.length ||
+      me.footer.length;
     if (options.enabled && hasTooltipContent) {
       ctx.save();
       ctx.globalAlpha = opacity;
@@ -11961,8 +12861,13 @@ class Tooltip extends Element$1 {
     var lastActive = me._active || [];
     var changed = false;
     var active = [];
-    if (e.type !== 'mouseout') {
-      active = me._chart.getElementsAtEventForMode(e, options.mode, options, replay);
+    if (e.type !== "mouseout") {
+      active = me._chart.getElementsAtEventForMode(
+        e,
+        options.mode,
+        options,
+        replay
+      );
       if (options.reverse) {
         active.reverse();
       }
@@ -11973,7 +12878,7 @@ class Tooltip extends Element$1 {
       if (options.enabled || options.custom) {
         me._eventPosition = {
           x: e.x,
-          y: e.y
+          y: e.y,
         };
         me.update(true);
       }
@@ -11983,14 +12888,14 @@ class Tooltip extends Element$1 {
 }
 Tooltip.positioners = positioners;
 var tooltip = {
-  id: 'tooltip',
+  id: "tooltip",
   _element: Tooltip,
   positioners,
   afterInit(chart) {
     var tooltipOpts = chart.options.tooltips;
     if (tooltipOpts) {
       chart.tooltip = new Tooltip({
-        _chart: chart
+        _chart: chart,
       });
     }
   },
@@ -12007,27 +12912,27 @@ var tooltip = {
   afterDraw(chart) {
     var tooltip = chart.tooltip;
     var args = {
-      tooltip
+      tooltip,
     };
-    if (pluginsCore.notify(chart, 'beforeTooltipDraw', [args]) === false) {
+    if (pluginsCore.notify(chart, "beforeTooltipDraw", [args]) === false) {
       return;
     }
     tooltip.draw(chart.ctx);
-    pluginsCore.notify(chart, 'afterTooltipDraw', [args]);
+    pluginsCore.notify(chart, "afterTooltipDraw", [args]);
   },
   afterEvent(chart, e, replay) {
     if (chart.tooltip) {
       var useFinalPosition = replay;
       chart.tooltip.handleEvent(e, useFinalPosition);
     }
-  }
+  },
 };
 
 var plugins = {
   filler,
   legend,
   title,
-  tooltip
+  tooltip,
 };
 
 Chart.helpers = helpers;
@@ -12047,13 +12952,15 @@ Chart.plugins = pluginsCore;
 Chart.Scale = Scale;
 Chart.scaleService = scaleService;
 Chart.Ticks = Ticks;
-Object.keys(scales).forEach(key => Chart.scaleService.registerScale(scales[key]));
+Object.keys(scales).forEach((key) =>
+  Chart.scaleService.registerScale(scales[key])
+);
 for (var k in plugins) {
   if (Object.prototype.hasOwnProperty.call(plugins, k)) {
     Chart.plugins.register(plugins[k]);
   }
 }
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   window.Chart = Chart;
 }
 

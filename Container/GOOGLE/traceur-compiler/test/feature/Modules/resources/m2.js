@@ -1,2 +1,2 @@
-var z = 'z';
-export {z as var};
+var z = "z";
+export { z as var };

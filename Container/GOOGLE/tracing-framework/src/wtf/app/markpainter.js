@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.MarkPainter');
+goog.provide("wtf.app.MarkPainter");
 
-goog.require('wtf.events');
-goog.require('wtf.math');
-goog.require('wtf.ui.ModifierKey');
-goog.require('wtf.ui.RangePainter');
-goog.require('wtf.ui.color.Palette');
-goog.require('wtf.util');
-
-
+goog.require("wtf.events");
+goog.require("wtf.math");
+goog.require("wtf.ui.ModifierKey");
+goog.require("wtf.ui.RangePainter");
+goog.require("wtf.ui.color.Palette");
+goog.require("wtf.util");
 
 /**
  * Paints a ruler into the view.
@@ -38,8 +36,7 @@ wtf.app.MarkPainter = function MarkPainter(canvas, markList) {
    * @type {!wtf.ui.color.Palette}
    * @private
    */
-  this.palette_ = new wtf.ui.color.Palette(
-      wtf.app.MarkPainter.MARK_COLORS_);
+  this.palette_ = new wtf.ui.color.Palette(wtf.app.MarkPainter.MARK_COLORS_);
 
   /**
    * Mark list.
@@ -50,7 +47,6 @@ wtf.app.MarkPainter = function MarkPainter(canvas, markList) {
 };
 goog.inherits(wtf.app.MarkPainter, wtf.ui.RangePainter);
 
-
 /**
  * Colors used for drawing marks.
  * @type {!Array.<string>}
@@ -58,15 +54,14 @@ goog.inherits(wtf.app.MarkPainter, wtf.ui.RangePainter);
  * @const
  */
 wtf.app.MarkPainter.MARK_COLORS_ = [
-  'rgb(200,200,200)',
-  'rgb(189,189,189)',
-  'rgb(150,150,150)',
-  'rgb(130,130,130)',
-  'rgb(115,115,115)',
-  'rgb(100,100,100)',
-  'rgb(82,82,82)'
+  "rgb(200,200,200)",
+  "rgb(189,189,189)",
+  "rgb(150,150,150)",
+  "rgb(130,130,130)",
+  "rgb(115,115,115)",
+  "rgb(100,100,100)",
+  "rgb(82,82,82)",
 ];
-
 
 /**
  * Height of the mark region, in pixels.
@@ -75,12 +70,10 @@ wtf.app.MarkPainter.MARK_COLORS_ = [
  */
 wtf.app.MarkPainter.HEIGHT = 16;
 
-
 /**
  * @override
  */
-wtf.app.MarkPainter.prototype.layoutInternal = function(
-    availableBounds) {
+wtf.app.MarkPainter.prototype.layoutInternal = function (availableBounds) {
   var newBounds = availableBounds.clone();
   if (this.markList_.getCount()) {
     newBounds.height = wtf.app.MarkPainter.HEIGHT;
@@ -90,12 +83,10 @@ wtf.app.MarkPainter.prototype.layoutInternal = function(
   return newBounds;
 };
 
-
 /**
  * @override
  */
-wtf.app.MarkPainter.prototype.repaintInternal = function(
-    ctx, bounds) {
+wtf.app.MarkPainter.prototype.repaintInternal = function (ctx, bounds) {
   if (!this.isTimeRangeValid()) {
     return;
   }
@@ -106,9 +97,9 @@ wtf.app.MarkPainter.prototype.repaintInternal = function(
   this.clip(bounds.left, bounds.top, bounds.width, bounds.height);
 
   // Clear gutter.
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, bounds.top, bounds.width, bounds.height);
-  ctx.fillStyle = '#000000';
+  ctx.fillStyle = "#000000";
   ctx.fillRect(0, bounds.top + bounds.height - 1, bounds.width, 1);
 
   this.beginRenderingRanges(bounds, 1);
@@ -117,48 +108,69 @@ wtf.app.MarkPainter.prototype.repaintInternal = function(
   var timeRight = this.timeRight;
 
   // Draw all visible marks.
-  this.markList_.forEachIntersecting(timeLeft, timeRight, function(mark) {
-    // Ignore empty marks.
-    var name = mark.getName();
-    if (!name || !name.length) {
-      return;
-    }
+  this.markList_.forEachIntersecting(
+    timeLeft,
+    timeRight,
+    function (mark) {
+      // Ignore empty marks.
+      var name = mark.getName();
+      if (!name || !name.length) {
+        return;
+      }
 
-    // Compute screen size.
-    var startTime = mark.getTime();
-    var endTime = mark.getEndTime();
-    var left = wtf.math.remap(startTime,
-        timeLeft, timeRight,
-        bounds.left, bounds.left + bounds.width);
-    var right = wtf.math.remap(endTime,
-        timeLeft, timeRight,
-        bounds.left, bounds.left + bounds.width);
-    var screenWidth = right - left;
+      // Compute screen size.
+      var startTime = mark.getTime();
+      var endTime = mark.getEndTime();
+      var left = wtf.math.remap(
+        startTime,
+        timeLeft,
+        timeRight,
+        bounds.left,
+        bounds.left + bounds.width
+      );
+      var right = wtf.math.remap(
+        endTime,
+        timeLeft,
+        timeRight,
+        bounds.left,
+        bounds.left + bounds.width
+      );
+      var screenWidth = right - left;
 
-    // Clip with the screen.
-    var screenLeft = Math.max(bounds.left, left);
-    var screenRight = Math.min((bounds.left + bounds.width) - 0.999, right);
-    if (screenLeft >= screenRight) {
-      return;
-    }
+      // Clip with the screen.
+      var screenLeft = Math.max(bounds.left, left);
+      var screenRight = Math.min(bounds.left + bounds.width - 0.999, right);
+      if (screenLeft >= screenRight) {
+        return;
+      }
 
-    // Pick a random color.
-    // We stash this on the mark so that we can ensure it's the same each draw.
-    var color =
-        /** @type {!wtf.ui.color.RgbColorValue} */ (mark.getRenderData());
-    if (!color) {
-      color = palette.getRandomColor().toValue();
-      mark.setRenderData(color);
-    }
+      // Pick a random color.
+      // We stash this on the mark so that we can ensure it's the same each draw.
+      var color = /** @type {!wtf.ui.color.RgbColorValue} */ (
+        mark.getRenderData()
+      );
+      if (!color) {
+        color = palette.getRandomColor().toValue();
+        mark.setRenderData(color);
+      }
 
-    // Draw bar.
-    this.drawRange(0, screenLeft, screenRight, color, 1);
+      // Draw bar.
+      this.drawRange(0, screenLeft, screenRight, color, 1);
 
-    if (screenWidth > 15) {
-      this.drawRangeLabel(
-          bounds, left, right, screenLeft, screenRight, 0, name);
-    }
-  }, this);
+      if (screenWidth > 15) {
+        this.drawRangeLabel(
+          bounds,
+          left,
+          right,
+          screenLeft,
+          screenRight,
+          0,
+          name
+        );
+      }
+    },
+    this
+  );
 
   // Now blit the nicely rendered ranges onto the screen.
   var y = 0;
@@ -166,46 +178,51 @@ wtf.app.MarkPainter.prototype.repaintInternal = function(
   this.endRenderingRanges(bounds, y, h);
 };
 
-
 /**
  * @override
  */
-wtf.app.MarkPainter.prototype.onClickInternal =
-    function(x, y, modifiers, bounds) {
+wtf.app.MarkPainter.prototype.onClickInternal = function (
+  x,
+  y,
+  modifiers,
+  bounds
+) {
   var mark = this.hitTest_(x, y, bounds);
   if (mark) {
     var commandManager = wtf.events.getCommandManager();
-    commandManager.execute('goto_mark', this, null, mark);
+    commandManager.execute("goto_mark", this, null, mark);
     if (modifiers & wtf.ui.ModifierKey.SHIFT) {
-      commandManager.execute('select_range', this, null,
-          mark.getTime(), mark.getEndTime());
+      commandManager.execute(
+        "select_range",
+        this,
+        null,
+        mark.getTime(),
+        mark.getEndTime()
+      );
     }
   }
   return true;
 };
 
-
 /**
  * @override
  */
-wtf.app.MarkPainter.prototype.getInfoStringInternal =
-    function(x, y, bounds) {
+wtf.app.MarkPainter.prototype.getInfoStringInternal = function (x, y, bounds) {
   var mark = this.hitTest_(x, y, bounds);
   if (mark) {
     var lines = [
-      wtf.util.formatTime(mark.getDuration()) + ': ' + mark.getName()
+      wtf.util.formatTime(mark.getDuration()) + ": " + mark.getName(),
     ];
     var value = mark.getValue();
     if (value) {
       wtf.util.addArgumentLines(lines, {
-        'value': value
+        value: value,
       });
     }
-    return lines.join('\n');
+    return lines.join("\n");
   }
   return undefined;
 };
-
 
 /**
  * Finds the mark at the given point.
@@ -215,10 +232,13 @@ wtf.app.MarkPainter.prototype.getInfoStringInternal =
  * @return {wtf.db.Mark} Mark or nothing.
  * @private
  */
-wtf.app.MarkPainter.prototype.hitTest_ = function(
-    x, y, bounds) {
-  var time = wtf.math.remap(x,
-      bounds.left, bounds.left + bounds.width,
-      this.timeLeft, this.timeRight);
+wtf.app.MarkPainter.prototype.hitTest_ = function (x, y, bounds) {
+  var time = wtf.math.remap(
+    x,
+    bounds.left,
+    bounds.left + bounds.width,
+    this.timeLeft,
+    this.timeRight
+  );
   return this.markList_.getMarkAtTime(time);
 };

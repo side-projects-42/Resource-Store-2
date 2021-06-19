@@ -18,20 +18,18 @@
  * because our mocha test load the traceur-runtime as part of traceur.
  */
 
-var fs = require('fs');
-var path = require('path');
+var fs = require("fs");
+var path = require("path");
 
-var filename = '../../../../bin/traceur-runtime.js';
+var filename = "../../../../bin/traceur-runtime.js";
 filename = path.join(path.dirname(module.filename), filename);
-var data = fs.readFileSync(filename, 'utf8');
-if (!data)
-  throw new Error('Failed to import ' + filename);
+var data = fs.readFileSync(filename, "utf8");
+if (!data) throw new Error("Failed to import " + filename);
 
-('global', eval)(data);
+("global", eval)(data);
 
-var setupGlobalsSrc = $traceurRuntime.setupGlobals + '';
-if (setupGlobalsSrc.indexOf('polyfillAll(global);') === -1)
-  throw new Error('bin/traceur-runtime.js does not contain the polyfill');
+var setupGlobalsSrc = $traceurRuntime.setupGlobals + "";
+if (setupGlobalsSrc.indexOf("polyfillAll(global);") === -1)
+  throw new Error("bin/traceur-runtime.js does not contain the polyfill");
 
-if (!Reflect.global)
-  throw new Error('Reflect.global should be defined');
+if (!Reflect.global) throw new Error("Reflect.global should be defined");

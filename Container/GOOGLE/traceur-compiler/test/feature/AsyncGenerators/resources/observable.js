@@ -31,7 +31,6 @@ class DecoratedGenerator {
   }
 }
 
-
 export class AsyncGeneratorFunction {
   constructor(_generatorFunction) {
     this[generatorFunction] = _generatorFunction;
@@ -66,6 +65,8 @@ export class AsyncGeneratorFunction {
       }
       generator.return();
     });
-    return new DecoratedGenerator(observer, () => { done = true });
+    return new DecoratedGenerator(observer, () => {
+      done = true;
+    });
   }
 }

@@ -12,18 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  APPLY,
-  BIND,
-  FUNCTION,
-  PROTOTYPE
-} from '../syntax/PredefinedName.js';
+import { APPLY, BIND, FUNCTION, PROTOTYPE } from "../syntax/PredefinedName.js";
 import {
   MEMBER_EXPRESSION,
   MEMBER_LOOKUP_EXPRESSION,
-  SPREAD_EXPRESSION
-} from  '../syntax/trees/ParseTreeType.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+  SPREAD_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   createArgumentList,
   createArrayLiteralExpression,
@@ -35,8 +30,8 @@ import {
   createMemberLookupExpression,
   createNewExpression,
   createNullLiteral,
-  createParenExpression
-} from './ParseTreeFactory.js';
+  createParenExpression,
+} from "./ParseTreeFactory.js";
 
 // Spreads the elements in the arguments into a single array.
 // @return {Array}
@@ -73,11 +68,11 @@ export class SpreadTransformer extends TempVarTransformer {
   }
 
   get spread_() {
-    return this.runtimeInliner_.get('spread', SPREAD_CODE);
+    return this.runtimeInliner_.get("spread", SPREAD_CODE);
   }
 
   get toObject_() {
-    return this.runtimeInliner_.get('toObject');
+    return this.runtimeInliner_.get("toObject");
   }
 
   /**
@@ -103,8 +98,9 @@ export class SpreadTransformer extends TempVarTransformer {
     // need to do is to ensure it is an object.
     if (length === 1 && !needsNewArray) {
       return createCallExpression(
-          this.toObject_,
-          createArgumentList(this.transformAny(elements[0].expression)));
+        this.toObject_,
+        createArgumentList(this.transformAny(elements[0].expression))
+      );
     }
 
     // Coalesce multiple non spread elements.
@@ -117,21 +113,16 @@ export class SpreadTransformer extends TempVarTransformer {
           args.push(createArrayLiteralExpression(lastArray));
           lastArray = null;
         }
-        args.push(
-            this.transformAny(elements[i].expression));
+        args.push(this.transformAny(elements[i].expression));
       } else {
-        if (!lastArray)
-          lastArray = [];
+        if (!lastArray) lastArray = [];
         lastArray.push(this.transformAny(elements[i]));
       }
     }
-    if (lastArray)
-      args.push(createArrayLiteralExpression(lastArray));
+    if (lastArray) args.push(createArrayLiteralExpression(lastArray));
 
     // _spread(args)
-    return createCallExpression(
-        this.spread_,
-        createArgumentList(args));
+    return createCallExpression(this.spread_, createArgumentList(args));
   }
 
   desugarCallSpread_(tree) {
@@ -145,12 +136,12 @@ export class SpreadTransformer extends TempVarTransformer {
 
       var tempIdent = createIdentifierExpression(this.addTempVar());
       var parenExpression = createParenExpression(
-          createAssignmentExpression(tempIdent, operand.operand));
+        createAssignmentExpression(tempIdent, operand.operand)
+      );
       var memberName = operand.memberName;
 
       contextObject = tempIdent;
       functionObject = createMemberExpression(parenExpression, memberName);
-
     } else if (tree.operand.type == MEMBER_LOOKUP_EXPRESSION) {
       // expr[fun](a, ...b, c)
       //
@@ -158,15 +149,16 @@ export class SpreadTransformer extends TempVarTransformer {
 
       var tempIdent = createIdentifierExpression(this.addTempVar());
       var parenExpression = createParenExpression(
-          createAssignmentExpression(tempIdent, operand.operand));
+        createAssignmentExpression(tempIdent, operand.operand)
+      );
       var memberExpression = this.transformAny(operand.memberExpression);
 
       contextObject = tempIdent;
-      functionObject = createMemberLookupExpression(parenExpression,
-                                                    memberExpression);
-
+      functionObject = createMemberLookupExpression(
+        parenExpression,
+        memberExpression
+      );
     } else {
-
       // f(a, ...b, c)
       //
       // f.apply(null, expandedArgs)
@@ -178,8 +170,9 @@ export class SpreadTransformer extends TempVarTransformer {
     // functionObject.apply(contextObject, expandedArgs)
     var arrayExpression = this.createArrayFromElements_(tree.args.args, false);
     return createCallExpression(
-        createMemberExpression(functionObject, APPLY),
-        createArgumentList(contextObject, arrayExpression));
+      createMemberExpression(functionObject, APPLY),
+      createArgumentList(contextObject, arrayExpression)
+    );
   }
 
   desugarNewSpread_(tree) {
@@ -191,13 +184,14 @@ export class SpreadTransformer extends TempVarTransformer {
     arrayExpression = this.createArrayFromElements_(arrayExpression, false);
 
     return createNewExpression(
-        createParenExpression(
-            createCallExpression(
-              createMemberExpression(FUNCTION, PROTOTYPE, BIND, APPLY),
-              createArgumentList(
-                  this.transformAny(tree.operand),
-                  arrayExpression))),
-        createEmptyArgumentList());
+      createParenExpression(
+        createCallExpression(
+          createMemberExpression(FUNCTION, PROTOTYPE, BIND, APPLY),
+          createArgumentList(this.transformAny(tree.operand), arrayExpression)
+        )
+      ),
+      createEmptyArgumentList()
+    );
   }
 
   transformArrayLiteralExpression(tree) {
@@ -222,7 +216,9 @@ export class SpreadTransformer extends TempVarTransformer {
   }
 
   static transformTree(identifierGenerator, runtimeInliner, tree) {
-    return new SpreadTransformer(identifierGenerator, runtimeInliner).
-        transformAny(tree);
+    return new SpreadTransformer(
+      identifierGenerator,
+      runtimeInliner
+    ).transformAny(tree);
   }
 }

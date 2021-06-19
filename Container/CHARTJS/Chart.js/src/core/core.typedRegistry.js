@@ -1,5 +1,5 @@
-import {merge} from '../helpers';
-import defaults, {overrides} from './core.defaults';
+import { merge } from "../helpers";
+import defaults, { overrides } from "./core.defaults";
 
 /**
  * @typedef {{id: string, defaults: any, overrides?: any, defaultRoutes: any}} IChartComponent
@@ -14,13 +14,16 @@ export default class TypedRegistry {
   }
 
   isForType(type) {
-    return Object.prototype.isPrototypeOf.call(this.type.prototype, type.prototype);
+    return Object.prototype.isPrototypeOf.call(
+      this.type.prototype,
+      type.prototype
+    );
   }
 
   /**
-	 * @param {IChartComponent} item
-	 * @returns {string} The scope where items defaults were registered to.
-	 */
+   * @param {IChartComponent} item
+   * @returns {string} The scope where items defaults were registered to.
+   */
   register(item) {
     const me = this;
     const proto = Object.getPrototypeOf(item);
@@ -33,10 +36,10 @@ export default class TypedRegistry {
 
     const items = me.items;
     const id = item.id;
-    const scope = me.scope + '.' + id;
+    const scope = me.scope + "." + id;
 
     if (!id) {
-      throw new Error('class does not have id: ' + item);
+      throw new Error("class does not have id: " + item);
     }
 
     if (id in items) {
@@ -54,16 +57,16 @@ export default class TypedRegistry {
   }
 
   /**
-	 * @param {string} id
-	 * @returns {object?}
-	 */
+   * @param {string} id
+   * @returns {object?}
+   */
   get(id) {
     return this.items[id];
   }
 
   /**
-	 * @param {IChartComponent} item
-	 */
+   * @param {IChartComponent} item
+   */
   unregister(item) {
     const items = this.items;
     const id = item.id;
@@ -87,7 +90,7 @@ function registerDefaults(item, scope, parentScope) {
   const itemDefaults = merge(Object.create(null), [
     parentScope ? defaults.get(parentScope) : {},
     defaults.get(scope),
-    item.defaults
+    item.defaults,
   ]);
 
   defaults.set(scope, itemDefaults);
@@ -102,17 +105,17 @@ function registerDefaults(item, scope, parentScope) {
 }
 
 function routeDefaults(scope, routes) {
-  Object.keys(routes).forEach(property => {
-    const propertyParts = property.split('.');
+  Object.keys(routes).forEach((property) => {
+    const propertyParts = property.split(".");
     const sourceName = propertyParts.pop();
-    const sourceScope = [scope].concat(propertyParts).join('.');
-    const parts = routes[property].split('.');
+    const sourceScope = [scope].concat(propertyParts).join(".");
+    const parts = routes[property].split(".");
     const targetName = parts.pop();
-    const targetScope = parts.join('.');
+    const targetScope = parts.join(".");
     defaults.route(sourceScope, sourceName, targetScope, targetName);
   });
 }
 
 function isIChartComponent(proto) {
-  return 'id' in proto && 'defaults' in proto;
+  return "id" in proto && "defaults" in proto;
 }

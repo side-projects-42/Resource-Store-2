@@ -1,0 +1,24 @@
+{
+  "name": "nr1-programmability-201-workshop",
+  "fullName": "newrelic-experimental/nr1-programmability-201-workshop",
+  "slug": "newrelic-experimental-nr1-programmability-201-workshop",
+  "owner": {
+    "login": "newrelic-experimental",
+    "type": "Organization"
+  },
+  "title": "New Relic One Programmability 201 Workshop",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic-experimental/nr1-programmability-201-workshop",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic-experimental/nr1-programmability-201-workshop",
+  "iconUrl": "https://github.com/newrelic-experimental/nr1-programmability-201-workshop/blob/master/icon.png?raw=true",
+  "shortDescription": "Hands-on training",
+  "description": "New Relic One Hands-on training",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["training"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic One Programmability 201 Workshop",
+    "url": "https://github.com/newrelic-experimental/nr1-programmability-201-workshop"
+  }
+}

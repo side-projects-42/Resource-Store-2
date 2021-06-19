@@ -3,8 +3,6 @@
 
 try {
   throw [0];
-} catch ([innerX]) {
-
-}
+} catch ([innerX]) {}
 
 innerX;

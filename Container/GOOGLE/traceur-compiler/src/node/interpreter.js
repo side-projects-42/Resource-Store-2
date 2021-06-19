@@ -12,26 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
-var traceur = require('./traceur.js');
-var nodeLoader = require('./nodeLoader.js');
+var fs = require("fs");
+var traceur = require("./traceur.js");
+var nodeLoader = require("./nodeLoader.js");
 
 function interpret(filename, options) {
   // Interpret the filename argument as a platform-independent,
   // normalized module name.
-  var moduleName = filename.replace(/\\/g, '/');
+  var moduleName = filename.replace(/\\/g, "/");
   var metadata = {
     traceurOptions: options,
-    outputName: filename
+    outputName: filename,
   };
 
-  System.import(moduleName, {metadata: metadata}).
-    catch(function(err) {
-      console.error(err.stack || err + '');
-      process.exit(1);
-    });
+  System.import(moduleName, { metadata: metadata }).catch(function (err) {
+    console.error(err.stack || err + "");
+    process.exit(1);
+  });
 }
 
 module.exports = interpret;

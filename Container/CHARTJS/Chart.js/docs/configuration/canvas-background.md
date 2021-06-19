@@ -12,42 +12,40 @@ For normal use you can set the background more easily with [CSS](https://www.w3s
 ```js chart-editor
 // <block:setup:1>
 const data = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
+  labels: ["Red", "Blue", "Yellow"],
+  datasets: [
+    {
+      label: "My First Dataset",
+      data: [300, 50, 100],
+      backgroundColor: [
+        "rgb(255, 99, 132)",
+        "rgb(54, 162, 235)",
+        "rgb(255, 205, 86)",
+      ],
+      hoverOffset: 4,
+    },
   ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
 };
 // </block:setup>
 
 // <block:plugin:2>
 // Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update().
 const plugin = {
-  id: 'custom_canvas_background_color',
+  id: "custom_canvas_background_color",
   beforeDraw: (chart) => {
-    const ctx = chart.canvas.getContext('2d');
+    const ctx = chart.canvas.getContext("2d");
     ctx.save();
-    ctx.globalCompositeOperation = 'destination-over';
-    ctx.fillStyle = 'lightGreen';
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.fillStyle = "lightGreen";
     ctx.fillRect(0, 0, chart.width, chart.height);
     ctx.restore();
-  }
+  },
 };
 // </block:plugin>
 
 // <block:config:0>
 const config = {
-  type: 'doughnut',
+  type: "doughnut",
   data: data,
   plugins: [plugin],
 };
@@ -66,48 +64,46 @@ module.exports = {
 ```js chart-editor
 // <block:setup:1>
 const data = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
+  labels: ["Red", "Blue", "Yellow"],
+  datasets: [
+    {
+      label: "My First Dataset",
+      data: [300, 50, 100],
+      backgroundColor: [
+        "rgb(255, 99, 132)",
+        "rgb(54, 162, 235)",
+        "rgb(255, 205, 86)",
+      ],
+      hoverOffset: 4,
+    },
   ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
 };
 // </block:setup>
 
 // <block:plugin:2>
 // Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update().
 const image = new Image();
-image.src = 'https://www.chartjs.org/img/chartjs-logo.svg';
+image.src = "https://www.chartjs.org/img/chartjs-logo.svg";
 
 const plugin = {
-  id: 'custom_canvas_background_image',
+  id: "custom_canvas_background_image",
   beforeDraw: (chart) => {
     if (image.complete) {
       const ctx = chart.ctx;
-      const {top, left, width, height} = chart.chartArea;
+      const { top, left, width, height } = chart.chartArea;
       const x = left + width / 2 - image.width / 2;
       const y = top + height / 2 - image.height / 2;
       ctx.drawImage(image, x, y);
     } else {
       image.onload = () => chart.draw();
     }
-  }
+  },
 };
 // </block:plugin>
 
 // <block:config:0>
 const config = {
-  type: 'doughnut',
+  type: "doughnut",
   data: data,
   plugins: [plugin],
 };

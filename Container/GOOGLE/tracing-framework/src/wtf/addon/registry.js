@@ -11,14 +11,12 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.addon.Registry');
+goog.provide("wtf.addon.Registry");
 
-goog.require('goog.Disposable');
-goog.require('wtf.addon.AppAddon');
-goog.require('wtf.addon.Manifest');
-goog.require('wtf.addon.TraceAddon');
-
-
+goog.require("goog.Disposable");
+goog.require("wtf.addon.AppAddon");
+goog.require("wtf.addon.Manifest");
+goog.require("wtf.addon.TraceAddon");
 
 /**
  * Addon registry.
@@ -26,7 +24,7 @@ goog.require('wtf.addon.TraceAddon');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.addon.Registry = function() {
+wtf.addon.Registry = function () {
   goog.base(this);
 
   /**
@@ -42,13 +40,12 @@ wtf.addon.Registry = function() {
 };
 goog.inherits(wtf.addon.Registry, goog.Disposable);
 
-
 /**
  * Registers an addon manifest and creates any required addon instances.
  * @param {string} url Manifest URL.
  * @param {!Object} json Manifest JSON.
  */
-wtf.addon.Registry.prototype.registerAddon = function(url, json) {
+wtf.addon.Registry.prototype.registerAddon = function (url, json) {
   // Create/parse manifest.
   var manifest = new wtf.addon.Manifest(url, json);
 
@@ -69,16 +66,15 @@ wtf.addon.Registry.prototype.registerAddon = function(url, json) {
   this.entries_.push({
     manifest: manifest,
     traceAddon: traceAddon,
-    appAddon: appAddon
+    appAddon: appAddon,
   });
 };
-
 
 /**
  * Gets a list of all registered trace addons.
  * @return {!Array.<!wtf.addon.TraceAddon>} A list of trace addons.
  */
-wtf.addon.Registry.prototype.getTraceAddons = function() {
+wtf.addon.Registry.prototype.getTraceAddons = function () {
   var result = [];
   for (var n = 0; n < this.entries_.length; n++) {
     var traceAddon = this.entries_[n].traceAddon;
@@ -89,12 +85,11 @@ wtf.addon.Registry.prototype.getTraceAddons = function() {
   return result;
 };
 
-
 /**
  * Gets a list of all registered app addons.
  * @return {!Array.<!wtf.addon.AppAddon>} A list of app addons.
  */
-wtf.addon.Registry.prototype.getAppAddons = function() {
+wtf.addon.Registry.prototype.getAppAddons = function () {
   var result = [];
   for (var n = 0; n < this.entries_.length; n++) {
     var appAddon = this.entries_[n].appAddon;

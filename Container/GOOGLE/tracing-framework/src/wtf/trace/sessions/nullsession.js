@@ -11,11 +11,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.sessions.NullSession');
+goog.provide("wtf.trace.sessions.NullSession");
 
-goog.require('wtf.trace.Session');
-
-
+goog.require("wtf.trace.Session");
 
 /**
  * Null session.
@@ -27,19 +25,17 @@ goog.require('wtf.trace.Session');
  * @constructor
  * @extends {wtf.trace.Session}
  */
-wtf.trace.sessions.NullSession = function(traceManager, options) {
+wtf.trace.sessions.NullSession = function (traceManager, options) {
   goog.base(this, traceManager, options, 0);
 };
 goog.inherits(wtf.trace.sessions.NullSession, wtf.trace.Session);
 
-
 /**
  * @override
  */
-wtf.trace.sessions.NullSession.prototype.nextChunk = function() {
+wtf.trace.sessions.NullSession.prototype.nextChunk = function () {
   return null;
 };
-
 
 /**
  * @override

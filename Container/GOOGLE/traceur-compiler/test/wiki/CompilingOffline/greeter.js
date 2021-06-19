@@ -1,6 +1,8 @@
 // greeter.js
 class Greeter {
-  sayHi() { console.log('Hi!'); }
+  sayHi() {
+    console.log("Hi!");
+  }
 }
 
 var greeter = new Greeter();

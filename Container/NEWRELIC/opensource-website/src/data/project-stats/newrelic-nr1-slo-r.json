@@ -1,0 +1,191 @@
+{
+  "projectFullName": "newrelic/nr1-slo-r",
+  "issues": {
+    "open": 49
+  },
+  "releases": 33,
+  "latestRelease": {
+    "name": "v1.7.9",
+    "date": "2021-05-07T17:21:06Z"
+  },
+  "commits": 517,
+  "lastSixMonthsCommitTotal": 24,
+  "contributors": 18,
+  "pullRequests": {
+    "open": 1
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU2NzExNzEyMzg=",
+      "title": "Replace appName with entityGuid in the queries and SLO definitions",
+      "url": "https://github.com/newrelic/nr1-slo-r/issues/98",
+      "createdAt": "2020-08-01T20:25:53Z",
+      "comments": {
+        "totalCount": 2
+      },
+      "author": {
+        "login": "tangollama",
+        "id": "MDQ6VXNlcjkyOTI2MQ==",
+        "email": "",
+        "name": "Joel Worrall"
+      },
+      "number": 98,
+      "createdBy": "Joel Worrall"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 3629903,
+      "login": "danifitz",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3629903?v=4",
+      "htmlUrl": "https://github.com/danifitz",
+      "contributions": 3
+    },
+    {
+      "id": 66321197,
+      "login": "nr-opensource-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66321197?v=4",
+      "htmlUrl": "https://github.com/nr-opensource-bot",
+      "contributions": 35
+    },
+    {
+      "id": 32961497,
+      "login": "artuone83",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/32961497?v=4",
+      "htmlUrl": "https://github.com/artuone83",
+      "contributions": 18
+    },
+    {
+      "id": 32174276,
+      "login": "semantic-release-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/32174276?v=4",
+      "htmlUrl": "https://github.com/semantic-release-bot",
+      "contributions": 1
+    },
+    {
+      "id": 9435570,
+      "login": "zuluecho9",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/9435570?v=4",
+      "htmlUrl": "https://github.com/zuluecho9",
+      "contributions": 1
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 1
+    },
+    {
+      "id": 3860745,
+      "login": "csandels",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3860745?v=4",
+      "htmlUrl": "https://github.com/csandels",
+      "contributions": 6
+    },
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 6
+    },
+    {
+      "id": 34886948,
+      "login": "RepTorz",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/34886948?v=4",
+      "htmlUrl": "https://github.com/RepTorz",
+      "contributions": 1
+    },
+    {
+      "id": 5214156,
+      "login": "norbertsuski",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/5214156?v=4",
+      "htmlUrl": "https://github.com/norbertsuski",
+      "contributions": 45
+    },
+    {
+      "id": 30607359,
+      "login": "peetk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/30607359?v=4",
+      "htmlUrl": "https://github.com/peetk",
+      "contributions": 9
+    },
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 96
+    },
+    {
+      "id": 8731013,
+      "login": "prototypicalpro",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8731013?v=4",
+      "htmlUrl": "https://github.com/prototypicalpro",
+      "contributions": 1
+    },
+    {
+      "id": 1987319,
+      "login": "idirouhab",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1987319?v=4",
+      "htmlUrl": "https://github.com/idirouhab",
+      "contributions": 1
+    },
+    {
+      "id": 19733683,
+      "login": "snyk-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19733683?v=4",
+      "htmlUrl": "https://github.com/snyk-bot",
+      "contributions": 2
+    },
+    {
+      "id": 4061375,
+      "login": "ricegi",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/4061375?v=4",
+      "htmlUrl": "https://github.com/ricegi",
+      "contributions": 75
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 52
+    },
+    {
+      "id": 854297,
+      "login": "seankcarpenter",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/854297?v=4",
+      "htmlUrl": "https://github.com/seankcarpenter",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U2MDU=",
+      "name": "SCSS",
+      "color": "#c6538c"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic/nr1-slo-r/master/catalog/screenshots/nr1-slo-r-01.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-slo-r/master/catalog/screenshots/nr1-slo-r-02.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-slo-r/master/catalog/screenshots/nr1-slo-r-03.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-slo-r/master/catalog/screenshots/nr1-slo-r_04.png"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

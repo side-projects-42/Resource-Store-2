@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Symbol} from './Symbol.js';
-import {SymbolType} from './SymbolType.js';
+import { Symbol } from "./Symbol.js";
+import { SymbolType } from "./SymbolType.js";
 
 export class ModuleSymbol extends Symbol {
   /**
@@ -29,7 +29,7 @@ export class ModuleSymbol extends Symbol {
     this.tree = tree;
     if (!url) {
       // TODO(arv): Find offensive callers.
-      console.error('Missing URL');
+      console.error("Missing URL");
     }
     this.url = url;
   }

@@ -22,16 +22,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-(function(global, exports) {
-
+(function (global, exports) {
   var Benchmark = global.Benchmark;
   var wtf = global.wtf;
-  var isNode = typeof require !== 'undefined';
-  var platform = isNode ? 'node' : 'browser';
+  var isNode = typeof require !== "undefined";
+  var platform = isNode ? "node" : "browser";
   if (isNode) {
-    Benchmark = require('benchmark');
-    wtf = require('../../../build-out/wtf_node_js_compiled');
+    Benchmark = require("benchmark");
+    wtf = require("../../../build-out/wtf_node_js_compiled");
   }
 
   /**
@@ -43,7 +41,6 @@
    */
   var registeredBenchmarks = {};
 
-
   /**
    * Defines a benchmark.
    * This should be called from the benchmark script files as loaded. The name
@@ -53,7 +50,7 @@
    * @param {Array.<string>=} opt_platforms A list of platform strings the test
    *     is valid for. 'node' and 'browser' are supported.
    */
-  exports.register = function(name, fn, opt_platforms) {
+  exports.register = function (name, fn, opt_platforms) {
     // Skip tests not supported.
     if (opt_platforms) {
       var supported = false;
@@ -70,24 +67,23 @@
 
     registeredBenchmarks[name] = {
       name: name,
-      fn: fn
+      fn: fn,
     };
   };
-
 
   /**
    * Runs a list of benchmarks.
    * @param {Array.<string>=} opt_names Benchmarks to run. Can include regex
    *     strings if formated as '/foo/i'. Omit to run all benchmarks.
    */
-  exports.run = function(opt_names) {
-    var suite = new Benchmark.Suite('WTF', {
-      'onCycle': function(e) {
+  exports.run = function (opt_names) {
+    var suite = new Benchmark.Suite("WTF", {
+      onCycle: function (e) {
         //console.log(e);
       },
-      'onError': function(e) {
+      onError: function (e) {
         console.log(e);
-      }
+      },
     });
 
     // TODO(benvanik): support regex names
@@ -116,40 +112,39 @@
         continue;
       }
 
-      (function(entry) {
+      (function (entry) {
         suite.add(entry.name, {
-          'fn': entry.fn,
-          'setup': function() {
+          fn: entry.fn,
+          setup: function () {
             wtf.trace.reset();
           },
-          'teardown': function() {
+          teardown: function () {
             wtf.trace.reset();
           },
-          'onComplete': function() {
+          onComplete: function () {
             reportBenchmarkResult(this.name, {
               runCount: this.count,
               totalTime: this.times.elapsed,
               userTime: this.times.elapsed,
-              meanTime: this.stats.mean
+              meanTime: this.stats.mean,
             });
-          }
+          },
         });
       })(entry);
     }
 
     var options = {
-      'wtf.trace.mode': 'snapshotting',
-      'wtf.trace.target': 'file://',
-      'wtf.trace.disableProviders': true
+      "wtf.trace.mode": "snapshotting",
+      "wtf.trace.target": "file://",
+      "wtf.trace.disableProviders": true,
     };
     wtf.trace.prepare(options);
     wtf.trace.start();
 
     suite.run({
-      'async': true,
-      'delay': 1,
-      'initCount': 10000
+      async: true,
+      delay: 1,
+      initCount: 10000,
     });
   };
-
-}(this, typeof exports === 'undefined' ? this.benchmark = {} : exports));
+})(this, typeof exports === "undefined" ? (this.benchmark = {}) : exports);

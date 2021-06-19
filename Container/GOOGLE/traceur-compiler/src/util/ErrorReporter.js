@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SourceRange} from './SourceRange.js';
+import { SourceRange } from "./SourceRange.js";
 
 /**
  * A conduit for reporting errors and warnings to the user using the Firebug
@@ -37,8 +37,7 @@ export class ErrorReporter {
    * @param {string} message
    */
   reportMessageInternal(location, message) {
-    if (location)
-      message = `${location.start}: ${message}`;
+    if (location) message = `${location.start}: ${message}`;
     console.error(message);
   }
 
@@ -64,18 +63,17 @@ export class ErrorReporter {
  */
 export function format(location, text, args = undefined) {
   let i = 0;
-  text = text.replace(/%./g, function(s) {
+  text = text.replace(/%./g, function (s) {
     switch (s) {
-      case '%s':
+      case "%s":
         return args && args[i++];
-      case '%%':
-        return '%';
+      case "%%":
+        return "%";
     }
     return s;
   });
-  if (location)
-    text = `${location}: ${text}`;
+  if (location) text = `${location}: ${text}`;
   return text;
-};
+}
 
 ErrorReporter.format = format;

@@ -11,11 +11,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.events.EventEmitter');
+goog.provide("wtf.events.EventEmitter");
 
-goog.require('goog.Disposable');
-
-
+goog.require("goog.Disposable");
 
 /**
  * Lightweight event emitter.
@@ -26,7 +24,7 @@ goog.require('goog.Disposable');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.events.EventEmitter = function() {
+wtf.events.EventEmitter = function () {
   goog.base(this);
 
   /**
@@ -38,16 +36,14 @@ wtf.events.EventEmitter = function() {
 };
 goog.inherits(wtf.events.EventEmitter, goog.Disposable);
 
-
 /**
  * @override
  */
-wtf.events.EventEmitter.prototype.disposeInternal = function() {
+wtf.events.EventEmitter.prototype.disposeInternal = function () {
   // Try to help the GC.
   this.eventTypes_ = {};
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Adds an event listener to the given event.
@@ -55,8 +51,11 @@ wtf.events.EventEmitter.prototype.disposeInternal = function() {
  * @param {!Function} callback Callback function.
  * @param {Object=} opt_scope Scope for the callback function.
  */
-wtf.events.EventEmitter.prototype.addListener = function(
-    eventType, callback, opt_scope) {
+wtf.events.EventEmitter.prototype.addListener = function (
+  eventType,
+  callback,
+  opt_scope
+) {
   // Add to list (creating it if needed).
   var list = this.eventTypes_[eventType];
   if (!list) {
@@ -66,29 +65,28 @@ wtf.events.EventEmitter.prototype.addListener = function(
   list.addListener(callback, opt_scope);
 };
 
-
 /**
  * Batch adds listeners for many events.
  * @param {!Object.<!Function>} eventMap A map of event names to callbacks.
  * @param {Object=} opt_scope Scope for the callback functions.
  */
-wtf.events.EventEmitter.prototype.addListeners = function(
-    eventMap, opt_scope) {
+wtf.events.EventEmitter.prototype.addListeners = function (
+  eventMap,
+  opt_scope
+) {
   for (var key in eventMap) {
     this.addListener(key, eventMap[key], opt_scope);
   }
 };
-
 
 /**
  * Gets a value indicating whether there are listeners for the given event.
  * @param {string} eventType Event type name.
  * @return {boolean} True if the event type has listeners.
  */
-wtf.events.EventEmitter.prototype.hasListeners = function(eventType) {
+wtf.events.EventEmitter.prototype.hasListeners = function (eventType) {
   return !!this.eventTypes_[eventType];
 };
-
 
 /**
  * Removes an event listener from the given event.
@@ -96,15 +94,17 @@ wtf.events.EventEmitter.prototype.hasListeners = function(eventType) {
  * @param {!Function} callback Callback function.
  * @param {Object=} opt_scope Scope for the callback function.
  */
-wtf.events.EventEmitter.prototype.removeListener = function(
-    eventType, callback, opt_scope) {
+wtf.events.EventEmitter.prototype.removeListener = function (
+  eventType,
+  callback,
+  opt_scope
+) {
   var list = this.eventTypes_[eventType];
   if (!list) {
     return;
   }
   list.removeListener(callback, opt_scope);
 };
-
 
 /**
  * Adds a listener to this event type. After the event fires, the event
@@ -113,10 +113,13 @@ wtf.events.EventEmitter.prototype.removeListener = function(
  * @param {!Function} callback Callback function.
  * @param {Object=} opt_scope Scope for the callback function.
  */
-wtf.events.EventEmitter.prototype.listenOnce = function(
-    eventType, callback, opt_scope) {
+wtf.events.EventEmitter.prototype.listenOnce = function (
+  eventType,
+  callback,
+  opt_scope
+) {
   var self = this;
-  var newCallback = function(var_args) {
+  var newCallback = function (var_args) {
     try {
       callback.apply(opt_scope, arguments);
     } finally {
@@ -126,13 +129,14 @@ wtf.events.EventEmitter.prototype.listenOnce = function(
   this.addListener(eventType, newCallback);
 };
 
-
 /**
  * Removes all listeners for all events or, if given, an individual event type.
  * @param {string=} opt_eventType Event type name, if removing for just one
  *     event.
  */
-wtf.events.EventEmitter.prototype.removeAllListeners = function(opt_eventType) {
+wtf.events.EventEmitter.prototype.removeAllListeners = function (
+  opt_eventType
+) {
   if (opt_eventType) {
     delete this.eventTypes_[opt_eventType];
   } else {
@@ -140,13 +144,12 @@ wtf.events.EventEmitter.prototype.removeAllListeners = function(opt_eventType) {
   }
 };
 
-
 /**
  * Emits an event.
  * @param {string} eventType Event type name.
  * @param {...*} var_args Arguments to pass to the listeners.
  */
-wtf.events.EventEmitter.prototype.emitEvent = function(eventType, var_args) {
+wtf.events.EventEmitter.prototype.emitEvent = function (eventType, var_args) {
   var list = this.eventTypes_[eventType];
   if (list) {
     var args = undefined;
@@ -160,8 +163,6 @@ wtf.events.EventEmitter.prototype.emitEvent = function(eventType, var_args) {
   }
 };
 
-
-
 /**
  * Event listener entry.
  * @param {string} eventType Event type name.
@@ -170,7 +171,7 @@ wtf.events.EventEmitter.prototype.emitEvent = function(eventType, var_args) {
  * @constructor
  * @private
  */
-wtf.events.EventListener_ = function(eventType, callback, opt_scope) {
+wtf.events.EventListener_ = function (eventType, callback, opt_scope) {
   /**
    * Event type name
    * @type {string}
@@ -193,15 +194,13 @@ wtf.events.EventListener_ = function(eventType, callback, opt_scope) {
   this.scope_ = opt_scope;
 };
 
-
-
 /**
  * Event listener list.
  * @param {string} eventType Event type name.
  * @constructor
  * @private
  */
-wtf.events.EventListenerList_ = function(eventType) {
+wtf.events.EventListenerList_ = function (eventType) {
   /**
    * Event type name.
    * @type {string}
@@ -217,26 +216,29 @@ wtf.events.EventListenerList_ = function(eventType) {
   this.listeners_ = [];
 };
 
-
 /**
  * Adds a listener to this event type.
  * @param {!Function} callback Callback.
  * @param {Object=} opt_scope Scope for the callback function.
  */
-wtf.events.EventListenerList_.prototype.addListener = function(
-    callback, opt_scope) {
-  this.listeners_.push(new wtf.events.EventListener_(
-      this.eventType_, callback, opt_scope));
+wtf.events.EventListenerList_.prototype.addListener = function (
+  callback,
+  opt_scope
+) {
+  this.listeners_.push(
+    new wtf.events.EventListener_(this.eventType_, callback, opt_scope)
+  );
 };
-
 
 /**
  * Removes a listener from this event type.
  * @param {!Function} callback Callback.
  * @param {Object=} opt_scope Scope for the callback function.
  */
-wtf.events.EventListenerList_.prototype.removeListener = function(
-    callback, opt_scope) {
+wtf.events.EventListenerList_.prototype.removeListener = function (
+  callback,
+  opt_scope
+) {
   for (var n = 0; n < this.listeners_.length; n++) {
     var listener = this.listeners_[n];
     if (listener.callback_ == callback && listener.scope_ === opt_scope) {
@@ -246,12 +248,11 @@ wtf.events.EventListenerList_.prototype.removeListener = function(
   }
 };
 
-
 /**
  * Emits the event.
  * @param {Array=} opt_args Arguments to pass to the listeners.
  */
-wtf.events.EventListenerList_.prototype.emitEvent = function(opt_args) {
+wtf.events.EventListenerList_.prototype.emitEvent = function (opt_args) {
   var listeners = this.listeners_;
   var listenersLength = listeners.length;
   for (var n = 0; n < listenersLength; n++) {

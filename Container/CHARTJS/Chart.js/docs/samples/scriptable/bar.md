@@ -7,13 +7,13 @@ Utils.srand(110);
 
 const actions = [
   {
-    name: 'Randomize',
+    name: "Randomize",
     handler(chart) {
-      chart.data.datasets.forEach(dataset => {
+      chart.data.datasets.forEach((dataset) => {
         dataset.data = generateData();
       });
       chart.update();
-    }
+    },
   },
 ];
 // </block:setup>
@@ -23,15 +23,17 @@ function generateData() {
   return Utils.numbers({
     count: DATA_COUNT,
     min: -100,
-    max: 100
+    max: 100,
   });
 }
 
 const data = {
-  labels: Utils.months({count: DATA_COUNT}),
-  datasets: [{
-    data: generateData(),
-  }]
+  labels: Utils.months({ count: DATA_COUNT }),
+  datasets: [
+    {
+      data: generateData(),
+    },
+  ],
 };
 // </block:data>
 
@@ -39,17 +41,15 @@ const data = {
 function colorize(opaque) {
   return (ctx) => {
     var v = ctx.parsed.y;
-    var c = v < -50 ? '#D60000'
-      : v < 0 ? '#F46300'
-      : v < 50 ? '#0358B6'
-      : '#44DE28';
+    var c =
+      v < -50 ? "#D60000" : v < 0 ? "#F46300" : v < 50 ? "#0358B6" : "#44DE28";
 
     return opaque ? c : Utils.transparentize(c, 1 - Math.abs(v / 150));
   };
 }
 
 const config = {
-  type: 'bar',
+  type: "bar",
   data: data,
   options: {
     plugins: {
@@ -59,10 +59,10 @@ const config = {
       bar: {
         backgroundColor: colorize(false),
         borderColor: colorize(true),
-        borderWidth: 2
-      }
-    }
-  }
+        borderWidth: 2,
+      },
+    },
+  },
 };
 // </block:options>
 

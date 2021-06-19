@@ -1,0 +1,24 @@
+{
+  "name": "el-dorado-ui",
+  "fullName": "newrelic/el-dorado-ui",
+  "slug": "newrelic-el-dorado-ui",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "El Dorado UI",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/el-dorado-ui",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/el-dorado-ui",
+  "iconUrl": null,
+  "shortDescription": "Sinatra UI and queries for El Dorado",
+  "description": "Graph db query and rendering suitable for visualization of complex process structures",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "Ruby",
+  "projectTags": [],
+  "acceptsContributions": true,
+  "website": {
+    "title": "El Dorado UI",
+    "url": "https://github.com/newrelic/el-dorado-ui"
+  }
+}

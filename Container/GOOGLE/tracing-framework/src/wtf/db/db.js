@@ -11,22 +11,21 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db');
+goog.provide("wtf.db");
 
-goog.require('goog.asserts');
-goog.require('goog.async.Deferred');
-goog.require('goog.string');
-goog.require('wtf.db.DataSourceInfo');
-goog.require('wtf.db.Database');
-goog.require('wtf.db.sources.ChunkedDataSource');
-goog.require('wtf.io');
-goog.require('wtf.io.cff.BinaryStreamSource');
-goog.require('wtf.io.cff.JsonStreamSource');
-goog.require('wtf.io.transports.MemoryReadTransport');
-goog.require('wtf.pal');
+goog.require("goog.asserts");
+goog.require("goog.async.Deferred");
+goog.require("goog.string");
+goog.require("wtf.db.DataSourceInfo");
+goog.require("wtf.db.Database");
+goog.require("wtf.db.sources.ChunkedDataSource");
+goog.require("wtf.io");
+goog.require("wtf.io.cff.BinaryStreamSource");
+goog.require("wtf.io.cff.JsonStreamSource");
+goog.require("wtf.io.transports.MemoryReadTransport");
+goog.require("wtf.pal");
 /** @suppress {extraRequire} */
-goog.require('wtf.pal.IPlatform');
-
+goog.require("wtf.pal.IPlatform");
 
 /**
  * Loads a database from the given input.
@@ -46,10 +45,10 @@ goog.require('wtf.pal.IPlatform');
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.db.load = function(input, callback, opt_scope) {
+wtf.db.load = function (input, callback, opt_scope) {
   // Because of the API change this will help people migrating scripts.
   if (!callback) {
-    throw new Error('wtf.db.load now requires a callback.');
+    throw new Error("wtf.db.load now requires a callback.");
   }
 
   var platform = wtf.pal.getPlatform();
@@ -59,10 +58,10 @@ wtf.db.load = function(input, callback, opt_scope) {
   // Initialize streams based on input type.
   var deferred = new goog.async.Deferred();
   if (goog.isString(input)) {
-    var sourceInfo = new wtf.db.DataSourceInfo(input, '');
+    var sourceInfo = new wtf.db.DataSourceInfo(input, "");
 
     // Filename.
-    if (goog.string.endsWith(input, '.wtf-trace')) {
+    if (goog.string.endsWith(input, ".wtf-trace")) {
       // TODO(benvanik): can stream this from disk - create a custom readstream
       var fileData = platform.readBinaryFile(input);
       if (!fileData) {
@@ -72,7 +71,7 @@ wtf.db.load = function(input, callback, opt_scope) {
       }
       goog.asserts.assert(fileData);
       deferred = wtf.db.loadBinarySource_(db, sourceInfo, fileData);
-    } else if (goog.string.endsWith(input, '.wtf-json')) {
+    } else if (goog.string.endsWith(input, ".wtf-json")) {
       var jsonSource = platform.readTextFile(input);
       if (!jsonSource) {
         goog.dispose(db);
@@ -85,26 +84,31 @@ wtf.db.load = function(input, callback, opt_scope) {
     }
   } else if (wtf.io.isByteArray(input)) {
     // Binary buffer.
-    var sourceInfo = new wtf.db.DataSourceInfo('', '');
+    var sourceInfo = new wtf.db.DataSourceInfo("", "");
     deferred = wtf.db.loadBinarySource_(
-        db, sourceInfo, /** @type {!wtf.io.ByteArray} */ (input));
+      db,
+      sourceInfo,
+      /** @type {!wtf.io.ByteArray} */ (input)
+    );
   } else if (goog.isObject(input)) {
     // JSON.
-    var sourceInfo = new wtf.db.DataSourceInfo('', '');
+    var sourceInfo = new wtf.db.DataSourceInfo("", "");
     deferred = wtf.db.loadJsonSource_(db, sourceInfo, input);
   }
 
   if (!deferred) {
-    callback.call(opt_scope, new Error('Unrecognized input data.'));
+    callback.call(opt_scope, new Error("Unrecognized input data."));
   }
 
-  deferred.addCallbacks(function() {
-    callback.call(opt_scope, db);
-  }, function(e) {
-    callback.call(opt_scope, e);
-  });
+  deferred.addCallbacks(
+    function () {
+      callback.call(opt_scope, db);
+    },
+    function (e) {
+      callback.call(opt_scope, e);
+    }
+  );
 };
-
 
 /**
  * Adds a binary data source as an immediately-available stream.
@@ -115,11 +119,14 @@ wtf.db.load = function(input, callback, opt_scope) {
  *     loading.
  * @private
  */
-wtf.db.loadBinarySource_ = function(db, sourceInfo, data) {
+wtf.db.loadBinarySource_ = function (db, sourceInfo, data) {
   var transport = new wtf.io.transports.MemoryReadTransport();
   var streamSource = new wtf.io.cff.BinaryStreamSource(transport);
   var dataSource = new wtf.db.sources.ChunkedDataSource(
-      db, sourceInfo, streamSource);
+    db,
+    sourceInfo,
+    streamSource
+  );
   var deferred = dataSource.start();
 
   transport.addData(data);
@@ -127,7 +134,6 @@ wtf.db.loadBinarySource_ = function(db, sourceInfo, data) {
 
   return deferred;
 };
-
 
 /**
  * Adds a JSON data source as an immediately-available stream.
@@ -138,16 +144,19 @@ wtf.db.loadBinarySource_ = function(db, sourceInfo, data) {
  *     loading.
  * @private
  */
-wtf.db.loadJsonSource_ = function(db, sourceInfo, data) {
+wtf.db.loadJsonSource_ = function (db, sourceInfo, data) {
   // Always convert the incoming data to JSON to ensure we don't have it
   // modified while we work with it.
-  if (typeof data != 'string') {
+  if (typeof data != "string") {
     data = goog.global.JSON.stringify(data);
   }
   var transport = new wtf.io.transports.MemoryReadTransport();
   var streamSource = new wtf.io.cff.JsonStreamSource(transport);
   var dataSource = new wtf.db.sources.ChunkedDataSource(
-      db, sourceInfo, streamSource);
+    db,
+    sourceInfo,
+    streamSource
+  );
   var deferred = dataSource.start();
 
   transport.addData(data);
@@ -156,7 +165,4 @@ wtf.db.loadJsonSource_ = function(db, sourceInfo, data) {
   return deferred;
 };
 
-
-goog.exportSymbol(
-    'wtf.db.load',
-    wtf.db.load);
+goog.exportSymbol("wtf.db.load", wtf.db.load);

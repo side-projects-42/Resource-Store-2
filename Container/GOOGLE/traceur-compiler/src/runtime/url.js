@@ -20,8 +20,7 @@
 //   split
 //   removeDotSegments
 
-(function() {
-
+(function () {
   /**
    * Builds a URI string from already-encoded parts.
    *
@@ -39,25 +38,32 @@
    * @param {?string=} opt_fragment The URI-encoded fragment identifier.
    * @return {string} The fully combined URI.
    */
-  function buildFromEncodedParts(opt_scheme, opt_userInfo,
-      opt_domain, opt_port, opt_path, opt_queryData, opt_fragment) {
+  function buildFromEncodedParts(
+    opt_scheme,
+    opt_userInfo,
+    opt_domain,
+    opt_port,
+    opt_path,
+    opt_queryData,
+    opt_fragment
+  ) {
     var out = [];
 
     if (opt_scheme) {
-      out.push(opt_scheme, ':');
+      out.push(opt_scheme, ":");
     }
 
     if (opt_domain) {
-      out.push('//');
+      out.push("//");
 
       if (opt_userInfo) {
-        out.push(opt_userInfo, '@');
+        out.push(opt_userInfo, "@");
       }
 
       out.push(opt_domain);
 
       if (opt_port) {
-        out.push(':', opt_port);
+        out.push(":", opt_port);
       }
     }
 
@@ -66,14 +72,14 @@
     }
 
     if (opt_queryData) {
-      out.push('?', opt_queryData);
+      out.push("?", opt_queryData);
     }
 
     if (opt_fragment) {
-      out.push('#', opt_fragment);
+      out.push("#", opt_fragment);
     }
 
-    return out.join('');
+    return out.join("");
   }
 
   /**
@@ -139,24 +145,24 @@
    * @private
    */
   var splitRe = new RegExp(
-      '^' +
-      '(?:' +
-        '([^:/?#.]+)' +                     // scheme - ignore special characters
-                                            // used by other URL parts such as :,
-                                            // ?, /, #, and .
-      ':)?' +
-      '(?://' +
-        '(?:([^/?#]*)@)?' +                 // userInfo
-        '([\\w\\d\\-\\u0100-\\uffff.%]*)' + // domain - restrict to letters,
-                                            // digits, dashes, dots, percent
-                                            // escapes, and unicode characters.
-        '(?::([0-9]+))?' +                  // port
-      ')?' +
-      '([^?#]+)?' +                         // path
-      '(?:\\?([^#]*))?' +                   // query
-      '(?:#(.*))?' +                        // fragment
-      '$');
-
+    "^" +
+      "(?:" +
+      "([^:/?#.]+)" + // scheme - ignore special characters
+      // used by other URL parts such as :,
+      // ?, /, #, and .
+      ":)?" +
+      "(?://" +
+      "(?:([^/?#]*)@)?" + // userInfo
+      "([\\w\\d\\-\\u0100-\\uffff.%]*)" + // domain - restrict to letters,
+      // digits, dashes, dots, percent
+      // escapes, and unicode characters.
+      "(?::([0-9]+))?" + // port
+      ")?" +
+      "([^?#]+)?" + // path
+      "(?:\\?([^#]*))?" + // query
+      "(?:#(.*))?" + // fragment
+      "$"
+  );
 
   /**
    * The index of each URI component in the return value of goog.uri.utils.split.
@@ -169,9 +175,8 @@
     PORT: 4,
     PATH: 5,
     QUERY_DATA: 6,
-    FRAGMENT: 7
+    FRAGMENT: 7,
   };
-
 
   /**
    * Splits a URI into its component parts.
@@ -190,10 +195,8 @@
    */
   function split(uri) {
     // See @return comment -- never null.
-    return /** @type {!Array.<string|undefined>} */ (
-        uri.match(splitRe));
+    return /** @type {!Array.<string|undefined>} */ (uri.match(splitRe));
   }
-
 
   /**
    * Removes dot segments in given path component, as described in
@@ -203,26 +206,23 @@
    * @return {string} Path component with removed dot segments.
    */
   function removeDotSegments(path) {
-    if (path === '/')
-      return '/';
+    if (path === "/") return "/";
 
-    var leadingSlash = path[0] === '/' ? '/' : '';
-    var trailingSlash = path.slice(-1) === '/' ? '/' : '';
-    var segments = path.split('/');
+    var leadingSlash = path[0] === "/" ? "/" : "";
+    var trailingSlash = path.slice(-1) === "/" ? "/" : "";
+    var segments = path.split("/");
 
     var out = [];
     var up = 0;
     for (var pos = 0; pos < segments.length; pos++) {
       var segment = segments[pos];
       switch (segment) {
-        case '':
-        case '.':
+        case "":
+        case ".":
           break;
-        case '..':
-          if (out.length)
-            out.pop();
-          else
-            up++;
+        case "..":
+          if (out.length) out.pop();
+          else up++;
           break;
         default:
           out.push(segment);
@@ -231,14 +231,13 @@
 
     if (!leadingSlash) {
       while (up-- > 0) {
-        out.unshift('..');
+        out.unshift("..");
       }
 
-      if (out.length === 0)
-        out.push('.');
+      if (out.length === 0) out.push(".");
     }
 
-    return leadingSlash + out.join('/') + trailingSlash;
+    return leadingSlash + out.join("/") + trailingSlash;
   }
 
   /**
@@ -248,18 +247,19 @@
    * @return {string}
    */
   function joinAndCanonicalizePath(parts) {
-    var path = parts[ComponentIndex.PATH] || '';
+    var path = parts[ComponentIndex.PATH] || "";
     path = removeDotSegments(path);
     parts[ComponentIndex.PATH] = path;
 
     return buildFromEncodedParts(
-        parts[ComponentIndex.SCHEME],
-        parts[ComponentIndex.USER_INFO],
-        parts[ComponentIndex.DOMAIN],
-        parts[ComponentIndex.PORT],
-        parts[ComponentIndex.PATH],
-        parts[ComponentIndex.QUERY_DATA],
-        parts[ComponentIndex.FRAGMENT]);
+      parts[ComponentIndex.SCHEME],
+      parts[ComponentIndex.USER_INFO],
+      parts[ComponentIndex.DOMAIN],
+      parts[ComponentIndex.PORT],
+      parts[ComponentIndex.PATH],
+      parts[ComponentIndex.QUERY_DATA],
+      parts[ComponentIndex.FRAGMENT]
+    );
   }
 
   /**
@@ -296,12 +296,12 @@
       }
     }
 
-    if (parts[ComponentIndex.PATH][0] == '/') {
+    if (parts[ComponentIndex.PATH][0] == "/") {
       return joinAndCanonicalizePath(parts);
     }
 
     var path = baseParts[ComponentIndex.PATH];
-    var index = path.lastIndexOf('/');
+    var index = path.lastIndexOf("/");
     path = path.slice(0, index + 1) + parts[ComponentIndex.PATH];
     parts[ComponentIndex.PATH] = path;
     return joinAndCanonicalizePath(parts);
@@ -311,15 +311,12 @@
    * True if the name looks like an absolute file name or URL
    * @param {string} candiate to be an address.
    * @return {boolean}
-  */
+   */
   function isAbsolute(name) {
-    if (!name)
-      return false;
-    if (name[0] === '/')
-      return true;
+    if (!name) return false;
+    if (name[0] === "/") return true;
     var parts = split(name);
-    if (parts[ComponentIndex.SCHEME])
-      return true;
+    if (parts[ComponentIndex.SCHEME]) return true;
     return false;
   }
 
@@ -327,5 +324,4 @@
   $traceurRuntime.isAbsolute = isAbsolute;
   $traceurRuntime.removeDotSegments = removeDotSegments;
   $traceurRuntime.resolveUrl = resolveUrl;
-
 })();

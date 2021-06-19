@@ -1,51 +1,51 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
       labels: [0, 1, 2, 3, 4, 5],
       datasets: [
         {
           // option in dataset
           data: [3, 1, 2, 0, 8, 1],
-          backgroundColor: '#ff0000',
-          order: 2
+          backgroundColor: "#ff0000",
+          order: 2,
         },
         {
           // option in element (fallback)
           data: [0, 4, 2, 6, 4, 8],
-          backgroundColor: '#00ff00',
-          order: 1
-        }
-      ]
+          backgroundColor: "#00ff00",
+          order: 1,
+        },
+      ],
     },
     options: {
       elements: {
         line: {
-          fill: true
+          fill: true,
         },
         point: {
-          radius: 0
-        }
+          radius: 0,
+        },
       },
       layout: {
-        padding: 32
+        padding: 32,
       },
       scales: {
-        x: {stacked: true, display: false},
-        y: {stacked: true, display: false}
+        x: { stacked: true, display: false },
+        y: { stacked: true, display: false },
       },
       plugins: {
         legend: false,
         title: false,
         tooltip: false,
-        filler: true
-      }
-    }
+        filler: true,
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

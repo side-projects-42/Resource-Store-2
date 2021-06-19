@@ -11,15 +11,13 @@
  * @author chizeng@google.com (Chi Zeng)
  */
 
-goog.provide('wtf.replay.graphics.ui.ContextBox');
+goog.provide("wtf.replay.graphics.ui.ContextBox");
 
-goog.require('goog.dom');
-goog.require('goog.soy');
-goog.require('goog.style');
-goog.require('wtf.replay.graphics.ui.contextBox');
-goog.require('wtf.ui.Control');
-
-
+goog.require("goog.dom");
+goog.require("goog.soy");
+goog.require("goog.style");
+goog.require("wtf.replay.graphics.ui.contextBox");
+goog.require("wtf.ui.Control");
 
 /**
  * Encapsulates a context and its canvas element.
@@ -31,8 +29,12 @@ goog.require('wtf.ui.Control');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.replay.graphics.ui.ContextBox = function(
-    context, contextHandle, parentElement, opt_domHelper) {
+wtf.replay.graphics.ui.ContextBox = function (
+  context,
+  contextHandle,
+  parentElement,
+  opt_domHelper
+) {
   goog.base(this, parentElement, opt_domHelper);
 
   /**
@@ -41,7 +43,8 @@ wtf.replay.graphics.ui.ContextBox = function(
    * @private
    */
   this.label_ = this.getChildElement(
-      goog.getCssName('replayGraphicsContextBoxHandleLabel'));
+    goog.getCssName("replayGraphicsContextBoxHandleLabel")
+  );
 
   /**
    * Message element.
@@ -49,7 +52,8 @@ wtf.replay.graphics.ui.ContextBox = function(
    * @private
    */
   this.messageArea_ = this.getChildElement(
-      goog.getCssName('replayGraphicsContextBoxMessage'));
+    goog.getCssName("replayGraphicsContextBoxMessage")
+  );
 
   /**
    * Context handle used to identify the context to the user.
@@ -94,7 +98,6 @@ wtf.replay.graphics.ui.ContextBox = function(
 };
 goog.inherits(wtf.replay.graphics.ui.ContextBox, wtf.ui.Control);
 
-
 /**
  * The minimum width of a canvas within a content box in pixels.
  * @type {number}
@@ -102,35 +105,39 @@ goog.inherits(wtf.replay.graphics.ui.ContextBox, wtf.ui.Control);
  */
 wtf.replay.graphics.ui.ContextBox.MIN_WIDTH = 210;
 
-
 /**
  * @override
  */
-wtf.replay.graphics.ui.ContextBox.prototype.createDom = function(dom) {
-  var el = /** @type {!Element} */ (goog.soy.renderAsFragment(
+wtf.replay.graphics.ui.ContextBox.prototype.createDom = function (dom) {
+  var el = /** @type {!Element} */ (
+    goog.soy.renderAsFragment(
       wtf.replay.graphics.ui.contextBox.controller,
-      undefined, undefined, dom));
+      undefined,
+      undefined,
+      dom
+    )
+  );
   return el;
 };
-
 
 /**
  * Appends the context to the canvas box.
  * @private
  */
-wtf.replay.graphics.ui.ContextBox.prototype.appendCanvas_ = function() {
+wtf.replay.graphics.ui.ContextBox.prototype.appendCanvas_ = function () {
   this.getDom().appendChild(
-      this.getChildElement(
-          goog.getCssName('replayGraphicsContextBoxCanvasContainer')),
-      this.context_.canvas);
+    this.getChildElement(
+      goog.getCssName("replayGraphicsContextBoxCanvasContainer")
+    ),
+    this.context_.canvas
+  );
 };
-
 
 /**
  * Handles context updates.
  * May indicate the canvas has been resized.
  */
-wtf.replay.graphics.ui.ContextBox.prototype.update = function() {
+wtf.replay.graphics.ui.ContextBox.prototype.update = function () {
   var width = this.context_.drawingBufferWidth;
   var height = this.context_.drawingBufferHeight;
   this.nativeWidth_ = width;
@@ -141,70 +148,70 @@ wtf.replay.graphics.ui.ContextBox.prototype.update = function() {
   this.updateLabel_();
 };
 
-
 /**
  * Updates the label of the context.
  * @private
  */
-wtf.replay.graphics.ui.ContextBox.prototype.updateLabel_ = function() {
+wtf.replay.graphics.ui.ContextBox.prototype.updateLabel_ = function () {
   var canvasDisplaySize = goog.style.getSize(this.context_.canvas);
-  var shrinkPercent =
-      Math.floor(canvasDisplaySize.width * 100 / this.nativeWidth_);
+  var shrinkPercent = Math.floor(
+    (canvasDisplaySize.width * 100) / this.nativeWidth_
+  );
 
   var label =
-      'Context ' + this.contextHandle_ + ' (' + this.nativeWidth_ + 'x' +
-          this.nativeHeight_ + '): ' + shrinkPercent + '%';
+    "Context " +
+    this.contextHandle_ +
+    " (" +
+    this.nativeWidth_ +
+    "x" +
+    this.nativeHeight_ +
+    "): " +
+    shrinkPercent +
+    "%";
   goog.dom.setTextContent(this.label_, label);
 };
-
 
 /**
  * Updates the message of the context.
  * @param {string} message The new message.
  */
-wtf.replay.graphics.ui.ContextBox.prototype.updateMessage = function(message) {
-  message = message || ' ';
+wtf.replay.graphics.ui.ContextBox.prototype.updateMessage = function (message) {
+  message = message || " ";
   goog.dom.setTextContent(this.messageArea_, message);
 };
-
 
 /**
  * Returns the total height of the canvas box.
  * @return {number} Total height of canvas box.
  */
-wtf.replay.graphics.ui.ContextBox.prototype.getHeight = function() {
+wtf.replay.graphics.ui.ContextBox.prototype.getHeight = function () {
   return this.getRootElement().clientHeight;
 };
-
 
 /**
  * Returns the total width of the canvas box.
  * @return {number} Total width of canvas box.
  */
-wtf.replay.graphics.ui.ContextBox.prototype.getWidth = function() {
+wtf.replay.graphics.ui.ContextBox.prototype.getWidth = function () {
   return this.getRootElement().clientWidth;
 };
-
 
 /**
  * Returns the native height of the canvas.
  * @return {number} Native height of canvas.
  */
 wtf.replay.graphics.ui.ContextBox.prototype.getNativeCanvasHeight =
-    function() {
-  return this.nativeHeight_;
-};
-
+  function () {
+    return this.nativeHeight_;
+  };
 
 /**
  * Returns the native width of the canvas.
  * @return {number} Native width of canvas.
  */
-wtf.replay.graphics.ui.ContextBox.prototype.getNativeCanvasWidth =
-    function() {
+wtf.replay.graphics.ui.ContextBox.prototype.getNativeCanvasWidth = function () {
   return this.nativeWidth_;
 };
-
 
 /**
  * Calculates the minimum display height that the canvas can take on without
@@ -213,28 +220,30 @@ wtf.replay.graphics.ui.ContextBox.prototype.getNativeCanvasWidth =
  * @private
  */
 wtf.replay.graphics.ui.ContextBox.prototype.calculateMinCanvasHeight_ =
-    function() {
-  return Math.ceil(wtf.replay.graphics.ui.ContextBox.MIN_WIDTH *
-      this.nativeHeight_ / this.nativeWidth_);
-};
-
+  function () {
+    return Math.ceil(
+      (wtf.replay.graphics.ui.ContextBox.MIN_WIDTH * this.nativeHeight_) /
+        this.nativeWidth_
+    );
+  };
 
 /**
  * Returns the minimum height that the canvas can take on.
  * @return {number} The minimum height that the canvas can take on.
  */
-wtf.replay.graphics.ui.ContextBox.prototype.getMinCanvasHeight = function() {
+wtf.replay.graphics.ui.ContextBox.prototype.getMinCanvasHeight = function () {
   return this.minimumHeight_;
 };
-
 
 /**
  * Sets the dimensions of the actual canvas element displayed.
  * @param {number} width The width of the canvas.
  * @param {number} height The height of the canvas.
  */
-wtf.replay.graphics.ui.ContextBox.prototype.setCanvasDimensions = function(
-    width, height) {
+wtf.replay.graphics.ui.ContextBox.prototype.setCanvasDimensions = function (
+  width,
+  height
+) {
   var context = this.context_;
   var canvas = context.canvas;
 
@@ -243,15 +252,15 @@ wtf.replay.graphics.ui.ContextBox.prototype.setCanvasDimensions = function(
   this.updateLabel_();
 };
 
-
 /**
  * Resets the CSS sizes of the canvases to their native sizes.
  */
-wtf.replay.graphics.ui.ContextBox.prototype.resetCanvasDimensions = function() {
-  var context = this.context_;
-  var canvas = context.canvas;
+wtf.replay.graphics.ui.ContextBox.prototype.resetCanvasDimensions =
+  function () {
+    var context = this.context_;
+    var canvas = context.canvas;
 
-  goog.style.setWidth(canvas, 'auto');
-  goog.style.setHeight(canvas, 'auto');
-  this.updateLabel_();
-};
+    goog.style.setWidth(canvas, "auto");
+    goog.style.setHeight(canvas, "auto");
+    this.updateLabel_();
+  };

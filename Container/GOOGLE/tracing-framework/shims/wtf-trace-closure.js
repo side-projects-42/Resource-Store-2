@@ -29,17 +29,15 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-goog.provide('WTF');
-goog.provide('WTF.data.EventFlag');
-goog.provide('WTF.io.ByteArray');
-goog.provide('WTF.trace');
-goog.provide('WTF.trace.Flow');
-goog.provide('WTF.trace.Scope');
-goog.provide('WTF.trace.TimeRange');
-goog.provide('WTF.trace.Zone');
-goog.provide('WTF.trace.events');
-
+goog.provide("WTF");
+goog.provide("WTF.data.EventFlag");
+goog.provide("WTF.io.ByteArray");
+goog.provide("WTF.trace");
+goog.provide("WTF.trace.Flow");
+goog.provide("WTF.trace.Scope");
+goog.provide("WTF.trace.TimeRange");
+goog.provide("WTF.trace.Zone");
+goog.provide("WTF.trace.events");
 
 /**
  * @define {boolean} True if WTF is enabled.
@@ -48,7 +46,6 @@ goog.provide('WTF.trace.events');
  * equivalent) and will allow the compiler to strip them out.
  */
 WTF.ENABLED = true;
-
 
 /**
  * The API version expected by the shim.
@@ -63,7 +60,6 @@ WTF.ENABLED = true;
  */
 WTF.EXPECTED_API_VERSION_ = 2;
 
-
 /**
  * Whether WTF is enabled and present in the current global context.
  * This will only be true if the master enabled flag is true, 'wtf' is in the
@@ -73,19 +69,19 @@ WTF.EXPECTED_API_VERSION_ = 2;
  * @type {boolean}
  * @const
  */
-WTF.PRESENT = WTF.ENABLED && !!goog.global['wtf'] &&
-    (goog.global['wtf']['trace']['API_VERSION'] ==
-        WTF.EXPECTED_API_VERSION_);
-
+WTF.PRESENT =
+  WTF.ENABLED &&
+  !!goog.global["wtf"] &&
+  goog.global["wtf"]["trace"]["API_VERSION"] == WTF.EXPECTED_API_VERSION_;
 
 /**
  * Whether the runtime can provide high-resolution times.
  * If this is false times are likely in milliseconds and largely useless.
  * @type {boolean}
  */
-WTF.hasHighResolutionTimes = WTF.PRESENT ?
-    goog.global['wtf']['hasHighResolutionTimes'] : false;
-
+WTF.hasHighResolutionTimes = WTF.PRESENT
+  ? goog.global["wtf"]["hasHighResolutionTimes"]
+  : false;
 
 /**
  * Returns the wall time that {@see wtf#now} is relative to.
@@ -93,9 +89,11 @@ WTF.hasHighResolutionTimes = WTF.PRESENT ?
  *
  * @return {number} A time, in ms.
  */
-WTF.timebase = WTF.PRESENT ?
-    goog.global['wtf']['timebase'] : function() { return 0; };
-
+WTF.timebase = WTF.PRESENT
+  ? goog.global["wtf"]["timebase"]
+  : function () {
+      return 0;
+    };
 
 /**
  * Returns a non-wall time timestamp in milliseconds.
@@ -108,39 +106,36 @@ WTF.timebase = WTF.PRESENT ?
  * @return {number} A monotonically increasing timer with sub-millisecond
  *      resolution (if supported).
  */
-WTF.now = WTF.PRESENT ?
-    goog.global['wtf']['now'] : function() { return 0; };
-
+WTF.now = WTF.PRESENT
+  ? goog.global["wtf"]["now"]
+  : function () {
+      return 0;
+    };
 
 /**
  * @typedef {Array.<number>|Uint8Array}
  */
 WTF.io.ByteArray;
 
-
 /**
  * @typedef {Object}
  */
 WTF.trace.Zone;
-
 
 /**
  * @typedef {Object}
  */
 WTF.trace.Scope;
 
-
 /**
  * @typedef {Object}
  */
 WTF.trace.Flow;
 
-
 /**
  * @typedef {Object}
  */
 WTF.trace.TimeRange;
-
 
 /**
  * Event behavior flag bitmask.
@@ -156,14 +151,14 @@ WTF.data.EventFlag = {
    * types. Event arguments may also receive more preprocessing when being
    * recorded, such as string interning/etc.
    */
-  HIGH_FREQUENCY: (1 << 1),
+  HIGH_FREQUENCY: 1 << 1,
 
   /**
    * Event represents some system event that should not be counted towards user
    * code. This can include things such as runtime events (GCs/etc) and tracing
    * framework time (buffer swaps/etc).
    */
-  SYSTEM_TIME: (1 << 2),
+  SYSTEM_TIME: 1 << 2,
 
   /**
    * Event represents some internal system event such as flow control events.
@@ -171,7 +166,7 @@ WTF.data.EventFlag = {
    * parts of the system will ignore it. For some special events they will be
    * handled at load-time and never even delivered to the database.
    */
-  INTERNAL: (1 << 3),
+  INTERNAL: 1 << 3,
 
   /**
    * Event arguments will be appended to the containing scope's arguments,
@@ -180,14 +175,14 @@ WTF.data.EventFlag = {
    * If this is combined with the INTERNAL flag then the event is assumed to
    * be a built-in system append event and will have special handling.
    */
-  APPEND_SCOPE_DATA: (1 << 4),
+  APPEND_SCOPE_DATA: 1 << 4,
 
   /**
    * Event is a builtin event.
    * Only events defined by the tracing framework should set this bit. User
    * events should not have this flag set and may be ignored if they do.
    */
-  BUILTIN: (1 << 5),
+  BUILTIN: 1 << 5,
 
   /**
    * Event arguments will be appended to the given flow's data, overwritting
@@ -197,9 +192,8 @@ WTF.data.EventFlag = {
    * If this is combined with the INTERNAL flag then the event is assumed to
    * be a built-in system append event and will have special handling.
    */
-  APPEND_FLOW_DATA: (1 << 6)
+  APPEND_FLOW_DATA: 1 << 6,
 };
-
 
 /**
  * Default zone types.
@@ -214,29 +208,28 @@ WTF.data.ZoneType = {
    * Usually just user JavaScript scopes. This is the default scope created for
    * all traces.
    */
-  SCRIPT: 'script',
+  SCRIPT: "script",
 
   /**
    * Native script context.
    * Native runtime scopes, such as the C++ calls above the JavaScript.
    */
-  NATIVE_SCRIPT: 'native_script',
+  NATIVE_SCRIPT: "native_script",
 
   /**
    * Native GPU thread context.
    * This is not the GPU itself but instead the thread calling GPU driver
    * methods.
    */
-  NATIVE_GPU: 'native_gpu',
+  NATIVE_GPU: "native_gpu",
 
   /**
    * Native browser context.
    * This is the browser thread that usually routes input events and other
    * global operations.
    */
-  NATIVE_BROWSER: 'native_browser'
+  NATIVE_BROWSER: "native_browser",
 };
-
 
 /**
  * Main entry point for the tracing API.
@@ -250,16 +243,16 @@ WTF.data.ZoneType = {
  * @param {Object=} opt_options Options overrides.
  * @return {*} Ignored.
  */
-WTF.trace.prepare = WTF.PRESENT ?
-    goog.global['wtf']['trace']['prepare'] : goog.nullFunction;
-
+WTF.trace.prepare = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["prepare"]
+  : goog.nullFunction;
 
 /**
  * Shuts down the tracing system.
  */
-WTF.trace.shutdown = WTF.PRESENT ?
-    goog.global['wtf']['trace']['shutdown'] : goog.nullFunction;
-
+WTF.trace.shutdown = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["shutdown"]
+  : goog.nullFunction;
 
 /**
  * Starts a new tracing session.
@@ -272,9 +265,9 @@ WTF.trace.shutdown = WTF.PRESENT ?
  *
  * @param {Object=} opt_options Options overrides.
  */
-WTF.trace.start = WTF.PRESENT ?
-    goog.global['wtf']['trace']['start'] : goog.nullFunction;
-
+WTF.trace.start = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["start"]
+  : goog.nullFunction;
 
 /**
  * Takes a snapshot of the current state.
@@ -282,9 +275,9 @@ WTF.trace.start = WTF.PRESENT ?
  * does not support snapshotting.
  * @param {*=} opt_targetValue Stream target value.
  */
-WTF.trace.snapshot = WTF.PRESENT ?
-    goog.global['wtf']['trace']['snapshot'] : goog.nullFunction;
-
+WTF.trace.snapshot = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["snapshot"]
+  : goog.nullFunction;
 
 /**
  * Asynchronously snapshots all contexts.
@@ -300,24 +293,24 @@ WTF.trace.snapshot = WTF.PRESENT ?
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-WTF.trace.snapshotAll = WTF.PRESENT ?
-    goog.global['wtf']['trace']['snapshotAll'] : goog.nullFunction;
-
+WTF.trace.snapshotAll = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["snapshotAll"]
+  : goog.nullFunction;
 
 /**
  * Clears all data in the current session by resetting all buffers.
  * This is only valid in snapshotting sessions.
  */
-WTF.trace.reset = WTF.PRESENT ?
-    goog.global['wtf']['trace']['reset'] : goog.nullFunction;
-
+WTF.trace.reset = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["reset"]
+  : goog.nullFunction;
 
 /**
  * Stops the current session and disposes it.
  */
-WTF.trace.stop = WTF.PRESENT ?
-    goog.global['wtf']['trace']['stop'] : goog.nullFunction;
-
+WTF.trace.stop = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["stop"]
+  : goog.nullFunction;
 
 /**
  * Creates a new execution zone.
@@ -330,33 +323,33 @@ WTF.trace.stop = WTF.PRESENT ?
  * @param {string} location Zone location (such as URI of the script).
  * @return {WTF.trace.Zone} Zone used for future calls.
  */
-WTF.trace.createZone = WTF.PRESENT ?
-    goog.global['wtf']['trace']['createZone'] : goog.nullFunction;
-
+WTF.trace.createZone = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["createZone"]
+  : goog.nullFunction;
 
 /**
  * Deletes an execution zone.
  * The zone ID may be reused.
  * @param {WTF.trace.Zone} zone Zone returned from {@see #createZone}.
  */
-WTF.trace.deleteZone = WTF.PRESENT ?
-    goog.global['wtf']['trace']['deleteZone'] : goog.nullFunction;
-
+WTF.trace.deleteZone = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["deleteZone"]
+  : goog.nullFunction;
 
 /**
  * Pushes a zone.
  * @param {WTF.trace.Zone} zone Zone returned from {@see #createZone}.
  */
-WTF.trace.pushZone = WTF.PRESENT ?
-    goog.global['wtf']['trace']['pushZone'] : goog.nullFunction;
-
+WTF.trace.pushZone = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["pushZone"]
+  : goog.nullFunction;
 
 /**
  * Pops the active zone.
  */
-WTF.trace.popZone = WTF.PRESENT ?
-    goog.global['wtf']['trace']['popZone'] : goog.nullFunction;
-
+WTF.trace.popZone = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["popZone"]
+  : goog.nullFunction;
 
 /**
  * This must be matched with a {@see #leaveScope} that takes the return value.
@@ -379,9 +372,9 @@ WTF.trace.popZone = WTF.PRESENT ?
  * @param {number=} opt_time Time for the enter; omit to use the current time.
  * @return {WTF.trace.Scope} An initialized scope object.
  */
-WTF.trace.enterScope = WTF.PRESENT ?
-    goog.global['wtf']['trace']['enterScope'] : goog.nullFunction;
-
+WTF.trace.enterScope = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["enterScope"]
+  : goog.nullFunction;
 
 /**
  * Enters a tracing implementation overhead scope.
@@ -390,9 +383,9 @@ WTF.trace.enterScope = WTF.PRESENT ?
  * @param {number=} opt_time Time for the enter; omit to use the current time.
  * @return {WTF.trace.Scope} An initialized scope object.
  */
-WTF.trace.enterTracingScope = WTF.PRESENT ?
-    goog.global['wtf']['trace']['enterTracingScope'] : goog.nullFunction;
-
+WTF.trace.enterTracingScope = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["enterTracingScope"]
+  : goog.nullFunction;
 
 /**
  * Leaves a scope.
@@ -403,12 +396,11 @@ WTF.trace.enterTracingScope = WTF.PRESENT ?
  * @return {T|undefined} The value of the {@code opt_result} parameter.
  * @template T
  */
-WTF.trace.leaveScope = WTF.PRESENT ?
-    goog.global['wtf']['trace']['leaveScope'] :
-    function(scope, opt_result, opt_time) {
+WTF.trace.leaveScope = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["leaveScope"]
+  : function (scope, opt_result, opt_time) {
       return opt_result;
     };
-
 
 /**
  * Appends a named argument of any type to the current scope.
@@ -444,9 +436,9 @@ WTF.trace.leaveScope = WTF.PRESENT ?
  *      will be converted to an int32.
  * @param {number=} opt_time Time for the enter; omit to use the current time.
  */
-WTF.trace.appendScopeData = WTF.PRESENT ?
-    goog.global['wtf']['trace']['appendScopeData'] : goog.nullFunction;
-
+WTF.trace.appendScopeData = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["appendScopeData"]
+  : goog.nullFunction;
 
 /**
  * Branches the flow.
@@ -457,9 +449,9 @@ WTF.trace.appendScopeData = WTF.PRESENT ?
  * @param {number=} opt_time Time for the branch; omit to use the current time.
  * @return {!WTF.trace.Flow} An initialized flow object.
  */
-WTF.trace.branchFlow = WTF.PRESENT ?
-    goog.global['wtf']['trace']['branchFlow'] : goog.nullFunction;
-
+WTF.trace.branchFlow = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["branchFlow"]
+  : goog.nullFunction;
 
 /**
  * Extends the flow into the current scope.
@@ -468,9 +460,9 @@ WTF.trace.branchFlow = WTF.PRESENT ?
  * @param {*=} opt_value Optional data value.
  * @param {number=} opt_time Time for the extend; omit to use the current time.
  */
-WTF.trace.extendFlow = WTF.PRESENT ?
-    goog.global['wtf']['trace']['extendFlow'] : goog.nullFunction;
-
+WTF.trace.extendFlow = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["extendFlow"]
+  : goog.nullFunction;
 
 /**
  * Terminates a flow.
@@ -479,9 +471,9 @@ WTF.trace.extendFlow = WTF.PRESENT ?
  * @param {number=} opt_time Time for the terminate; omit to use the current
  *     time.
  */
-WTF.trace.terminateFlow = WTF.PRESENT ?
-    goog.global['wtf']['trace']['terminateFlow'] : goog.nullFunction;
-
+WTF.trace.terminateFlow = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["terminateFlow"]
+  : goog.nullFunction;
 
 /**
  * Appends a named argument of any type to the given flow.
@@ -494,16 +486,16 @@ WTF.trace.terminateFlow = WTF.PRESENT ?
  * @param {*} value Value. Will be JSON stringified.
  * @param {number=} opt_time Time for the event; omit to use the current time.
  */
-WTF.trace.appendFlowData = WTF.PRESENT ?
-    goog.global['wtf']['trace']['appendFlowData'] : goog.nullFunction;
-
+WTF.trace.appendFlowData = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["appendFlowData"]
+  : goog.nullFunction;
 
 /**
  * Clears the current scope flow.
  */
-WTF.trace.clearFlow = WTF.PRESENT ?
-    goog.global['wtf']['trace']['clearFlow'] : goog.nullFunction;
-
+WTF.trace.clearFlow = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["clearFlow"]
+  : goog.nullFunction;
 
 /**
  * Spans the flow across processes.
@@ -511,9 +503,9 @@ WTF.trace.clearFlow = WTF.PRESENT ?
  * @param {number} flowId Flow ID.
  * @return {!WTF.trace.Flow} An initialized flow object.
  */
-WTF.trace.spanFlow = WTF.PRESENT ?
-    goog.global['wtf']['trace']['spanFlow'] : goog.nullFunction;
-
+WTF.trace.spanFlow = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["spanFlow"]
+  : goog.nullFunction;
 
 /**
  * Marks the stream with a named bookmark.
@@ -531,9 +523,9 @@ WTF.trace.spanFlow = WTF.PRESENT ?
  * @param {*=} opt_value Optional data value.
  * @param {number=} opt_time Time for the mark; omit to use the current time.
  */
-WTF.trace.mark = WTF.PRESENT ?
-    goog.global['wtf']['trace']['mark'] : goog.nullFunction;
-
+WTF.trace.mark = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["mark"]
+  : goog.nullFunction;
 
 /**
  * Adds a timestamped event to the stream.
@@ -544,9 +536,9 @@ WTF.trace.mark = WTF.PRESENT ?
  * @param {*=} opt_value Optional data value.
  * @param {number=} opt_time Time for the stamp; omit to use the current time.
  */
-WTF.trace.timeStamp = WTF.PRESENT ?
-    goog.global['wtf']['trace']['timeStamp'] : goog.nullFunction;
-
+WTF.trace.timeStamp = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["timeStamp"]
+  : goog.nullFunction;
 
 /**
  * Begins an async time range.
@@ -573,18 +565,18 @@ WTF.trace.timeStamp = WTF.PRESENT ?
  * @param {*=} opt_value Optional data value.
  * @return {WTF.trace.TimeRange} Time range handle.
  */
-WTF.trace.beginTimeRange = WTF.PRESENT ?
-    goog.global['wtf']['trace']['beginTimeRange'] : goog.nullFunction;
-
+WTF.trace.beginTimeRange = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["beginTimeRange"]
+  : goog.nullFunction;
 
 /**
  * Ends an async time range previously started with {@see #beginTimeRange}.
  * @param {WTF.trace.TimeRange} timeRange Time range handle.
  * @param {number=} opt_time Time for the stamp; omit to use the current time.
  */
-WTF.trace.endTimeRange = WTF.PRESENT ?
-    goog.global['wtf']['trace']['endTimeRange'] : goog.nullFunction;
-
+WTF.trace.endTimeRange = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["endTimeRange"]
+  : goog.nullFunction;
 
 /**
  * Marks an event listener as being ignored, meaning that it will not show up
@@ -604,18 +596,18 @@ WTF.trace.endTimeRange = WTF.PRESENT ?
  * @return {!T} The parameter, for chaining.
  * @template T
  */
-WTF.trace.ignoreListener = WTF.PRESENT ?
-    goog.global['wtf']['trace']['ignoreListener'] : goog.nullFunction;
-
+WTF.trace.ignoreListener = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["ignoreListener"]
+  : goog.nullFunction;
 
 /**
  * Marks an entire tree of DOM elements as being ignored, meaning that no
  * events from them will show up in traces.
  * @param {!Element} el Root DOM element.
  */
-WTF.trace.ignoreDomTree = WTF.PRESENT ?
-    goog.global['wtf']['trace']['ignoreDomTree'] : goog.nullFunction;
-
+WTF.trace.ignoreDomTree = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["ignoreDomTree"]
+  : goog.nullFunction;
 
 /**
  * Initializes on* event properties on the given DOM element and optionally
@@ -632,10 +624,9 @@ WTF.trace.ignoreDomTree = WTF.PRESENT ?
  * @param {!Element} target Target DOM element.
  * @param {boolean=} opt_recursive Also initialize for all children.
  */
-WTF.trace.initializeDomEventProperties = WTF.PRESENT ?
-    goog.global['wtf']['trace']['initializeDomEventProperties'] :
-    goog.nullFunction;
-
+WTF.trace.initializeDomEventProperties = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["initializeDomEventProperties"]
+  : goog.nullFunction;
 
 /**
  * Creates and registers a new event type, returning a function that can be used
@@ -668,12 +659,11 @@ WTF.trace.initializeDomEventProperties = WTF.PRESENT ?
  * @param {number=} opt_flags A bitmask of {@see WTF.data.EventFlag} values.
  * @return {Function} New event type.
  */
-WTF.trace.events.createInstance = WTF.PRESENT ?
-    goog.global['wtf']['trace']['events']['createInstance'] :
-    function(signature, opt_flags) {
+WTF.trace.events.createInstance = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["events"]["createInstance"]
+  : function (signature, opt_flags) {
       return goog.nullFunction;
     };
-
 
 /**
  * Creates and registers a new event type, returning a function that can be used
@@ -708,12 +698,11 @@ WTF.trace.events.createInstance = WTF.PRESENT ?
  * @param {number=} opt_flags A bitmask of {@see WTF.data.EventFlag} values.
  * @return {Function} New event type.
  */
-WTF.trace.events.createScope = WTF.PRESENT ?
-    goog.global['wtf']['trace']['events']['createScope'] :
-    function(signature, opt_flags) {
+WTF.trace.events.createScope = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["events"]["createScope"]
+  : function (signature, opt_flags) {
       return goog.nullFunction;
     };
-
 
 /**
  * Automatically instruments a method.
@@ -738,9 +727,9 @@ WTF.trace.events.createScope = WTF.PRESENT ?
  * @return {T} The instrumented input value.
  * @template T
  */
-WTF.trace.instrument = WTF.PRESENT ?
-    goog.global['wtf']['trace']['instrument'] : goog.identityFunction;
-
+WTF.trace.instrument = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["instrument"]
+  : goog.identityFunction;
 
 /**
  * Automatically instruments an entire type.
@@ -767,9 +756,9 @@ WTF.trace.instrument = WTF.PRESENT ?
  * @return {T} The instrumented input value.
  * @template T
  */
-WTF.trace.instrumentType = WTF.PRESENT ?
-    goog.global['wtf']['trace']['instrumentType'] : goog.identityFunction;
-
+WTF.trace.instrumentType = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["instrumentType"]
+  : goog.identityFunction;
 
 /**
  * Automatically instruments the given prototype methods.
@@ -781,9 +770,9 @@ WTF.trace.instrumentType = WTF.PRESENT ?
  * @param {!Object.<!Function>} methodMap A mapping between method names
  *     and the methods themselves.
  */
-WTF.trace.instrumentTypeSimple = WTF.PRESENT ?
-    goog.global['wtf']['trace']['instrumentTypeSimple'] : goog.nullFunction;
-
+WTF.trace.instrumentTypeSimple = WTF.PRESENT
+  ? goog.global["wtf"]["trace"]["instrumentTypeSimple"]
+  : goog.nullFunction;
 
 /**
  * @define {boolean} True to replace goog.base with a version that supports
@@ -797,12 +786,14 @@ WTF.trace.instrumentTypeSimple = WTF.PRESENT ?
  */
 WTF.REPLACE_GOOG_BASE = true;
 
-
 // Replace goog.base in debug mode.
-if (!COMPILED &&
-    WTF.REPLACE_GOOG_BASE &&
-    WTF.PRESENT &&
-    goog.global['goog'] && goog.global['goog']['base']) {
+if (
+  !COMPILED &&
+  WTF.REPLACE_GOOG_BASE &&
+  WTF.PRESENT &&
+  goog.global["goog"] &&
+  goog.global["goog"]["base"]
+) {
   /**
    * A variant of {@code goog.base} that supports our method rewriting.
    * This should only be used in uncompiled builds.
@@ -815,21 +806,29 @@ if (!COMPILED &&
    * @return {*} The return value of the superclass method.
    * @suppress {es5Strict}
    */
-  goog.global['goog']['base'] = function(me, opt_methodName, var_args) {
+  goog.global["goog"]["base"] = function (me, opt_methodName, var_args) {
     var caller = arguments.callee.caller;
     if (caller.superClass_) {
       // This is a constructor. Call the superclass constructor.
-      return (/** @type {!Function} */ (caller.superClass_)).constructor.apply(
-          me, Array.prototype.slice.call(arguments, 1));
+      return /** @type {!Function} */ (caller.superClass_).constructor.apply(
+        me,
+        Array.prototype.slice.call(arguments, 1)
+      );
     }
 
     var args = Array.prototype.slice.call(arguments, 2);
     var foundCaller = false;
-    for (var ctor = me.constructor;
-         ctor; ctor = ctor.superClass_ &&
-                   (/** @type {!Function} */ (ctor.superClass_)).constructor) {
-      if (ctor.prototype[opt_methodName] === caller ||
-          ctor.prototype[opt_methodName]['uninstrumented'] === caller) {
+    for (
+      var ctor = me.constructor;
+      ctor;
+      ctor =
+        ctor.superClass_ &&
+        /** @type {!Function} */ (ctor.superClass_).constructor
+    ) {
+      if (
+        ctor.prototype[opt_methodName] === caller ||
+        ctor.prototype[opt_methodName]["uninstrumented"] === caller
+      ) {
         foundCaller = true;
       } else if (foundCaller) {
         return ctor.prototype[opt_methodName].apply(me, args);
@@ -840,13 +839,16 @@ if (!COMPILED &&
     // then one of two things happened:
     // 1) The caller is an instance method.
     // 2) This method was not called by the right caller.
-    if (me[opt_methodName] === caller ||
-        me[opt_methodName]['uninstrumented'] === caller) {
+    if (
+      me[opt_methodName] === caller ||
+      me[opt_methodName]["uninstrumented"] === caller
+    ) {
       return me.constructor.prototype[opt_methodName].apply(me, args);
     } else {
       throw Error(
-          'goog.base called from a method of one name ' +
-          'to a method of a different name');
+        "goog.base called from a method of one name " +
+          "to a method of a different name"
+      );
     }
   };
 }

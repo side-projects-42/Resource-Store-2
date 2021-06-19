@@ -3,10 +3,10 @@ script that uses a feature and then validates its behavior. These scripts can
 be executed by running "/test/alltests.html" or "node testfeature.js"
 
 If any of the first lines of a feature script starts with "// Should not
-compile." then that script intentionally contains an error that should *not*
+compile." then that script intentionally contains an error that should _not_
 successfully compile. The test harness will validate that attempting to compile
 it generates an error. By convention, feature scripts like this are named
-starting with "Error_".
+starting with "Error\_".
 
 If any of the first lines of a feature script starts with "// Skip." we ignore
 the test.

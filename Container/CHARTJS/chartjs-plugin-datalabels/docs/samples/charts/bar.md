@@ -8,61 +8,65 @@ var labels = [];
 Utils.srand(2);
 
 for (var i = 0; i < DATA_COUNT; ++i) {
-  labels.push('' + i);
+  labels.push("" + i);
 }
 // </block:setup>
 
 var config = /* <block:config:0> */ {
-  type: 'bar',
+  type: "bar",
   data: {
     labels: labels,
-    datasets: [{
-      backgroundColor: Utils.color(0),
-      data: Utils.numbers({
-        count: DATA_COUNT,
-        min: 0,
-        max: 100
-      }),
-      datalabels: {
-        align: 'end',
-        anchor: 'start'
-      }
-    }, {
-      backgroundColor: Utils.color(1),
-      data: Utils.numbers({
-        count: DATA_COUNT,
-        min: 0,
-        max: 100
-      }),
-      datalabels: {
-        align: 'center',
-        anchor: 'center'
-      }
-    }, {
-      backgroundColor: Utils.color(2),
-      data: Utils.numbers({
-        count: DATA_COUNT,
-        min: 0,
-        max: 100
-      }),
-      datalabels: {
-        anchor: 'end',
-        align: 'start',
-      }
-    }]
+    datasets: [
+      {
+        backgroundColor: Utils.color(0),
+        data: Utils.numbers({
+          count: DATA_COUNT,
+          min: 0,
+          max: 100,
+        }),
+        datalabels: {
+          align: "end",
+          anchor: "start",
+        },
+      },
+      {
+        backgroundColor: Utils.color(1),
+        data: Utils.numbers({
+          count: DATA_COUNT,
+          min: 0,
+          max: 100,
+        }),
+        datalabels: {
+          align: "center",
+          anchor: "center",
+        },
+      },
+      {
+        backgroundColor: Utils.color(2),
+        data: Utils.numbers({
+          count: DATA_COUNT,
+          min: 0,
+          max: 100,
+        }),
+        datalabels: {
+          anchor: "end",
+          align: "start",
+        },
+      },
+    ],
   },
   options: {
     plugins: {
       datalabels: {
-        color: 'white',
-        display: function(context) {
+        color: "white",
+        display: function (context) {
           return context.dataset.data[context.dataIndex] > 15;
         },
         font: {
-          weight: 'bold'
+          weight: "bold",
         },
-        formatter: Math.round
-      }
+        formatter: Math.round,
+      },
     },
 
     // Core options
@@ -72,65 +76,69 @@ var config = /* <block:config:0> */ {
         top: 24,
         right: 16,
         bottom: 0,
-        left: 8
-      }
+        left: 8,
+      },
     },
     elements: {
       line: {
-        fill: false
+        fill: false,
       },
       point: {
         hoverRadius: 7,
-        radius: 5
-      }
+        radius: 5,
+      },
     },
     scales: {
-      xAxes: [{
-        stacked: true
-      }],
-      yAxes: [{
-        stacked: true
-      }]
-    }
-  }
-} /* </block:config> */;
+      xAxes: [
+        {
+          stacked: true,
+        },
+      ],
+      yAxes: [
+        {
+          stacked: true,
+        },
+      ],
+    },
+  },
+}; /* </block:config> */
 
 var actions = [
   {
-    name: 'Randomize',
-    handler: function(chart) {
-      chart.data.datasets.forEach(function(dataset, i) {
+    name: "Randomize",
+    handler: function (chart) {
+      chart.data.datasets.forEach(function (dataset, i) {
         dataset.backgroundColor = Utils.color();
-        dataset.data = dataset.data.map(function(value) {
+        dataset.data = dataset.data.map(function (value) {
           return Utils.rand(0, 100);
         });
       });
 
       chart.update();
-    }
+    },
   },
   {
-    name: 'Add data',
-    handler: function(chart) {
+    name: "Add data",
+    handler: function (chart) {
       chart.data.labels.push(chart.data.labels.length);
-      chart.data.datasets.forEach(function(dataset, i) {
+      chart.data.datasets.forEach(function (dataset, i) {
         dataset.data.push(Utils.rand(0, 100));
       });
 
       chart.update();
-    }
+    },
   },
   {
-    name: 'Remove data',
-    handler: function(chart) {
+    name: "Remove data",
+    handler: function (chart) {
       chart.data.labels.shift();
-      chart.data.datasets.forEach(function(dataset, i) {
+      chart.data.datasets.forEach(function (dataset, i) {
         dataset.data.shift();
       });
 
       chart.update();
-    }
-  }
+    },
+  },
 ];
 
 module.exports = {

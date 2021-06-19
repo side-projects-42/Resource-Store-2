@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeMapWriter} from './ParseTreeMapWriter.js';
-import {ParseTreeWriter} from './ParseTreeWriter.js';
-import {SourceMapGenerator} from './SourceMapIntegration.js';
+import { ParseTreeMapWriter } from "./ParseTreeMapWriter.js";
+import { ParseTreeWriter } from "./ParseTreeWriter.js";
+import { SourceMapGenerator } from "./SourceMapIntegration.js";
 
 /**
  * Create a ParseTreeWriter configured with options, apply it to tree
@@ -26,33 +26,37 @@ import {SourceMapGenerator} from './SourceMapIntegration.js';
  * @param {string} sourceRoot the sourcemap sourceroot.
  * @return source code; optional side-effect options.sourceMaps set
  */
-export function toSource(tree, options = undefined,
-    outputName = '<toSourceOutput>', sourceRoot = undefined) {
+export function toSource(
+  tree,
+  options = undefined,
+  outputName = "<toSourceOutput>",
+  sourceRoot = undefined
+) {
   let sourceMapGenerator = options && options.sourceMapGenerator;
   let sourcemaps = options && options.sourceMaps;
-  if (!sourceMapGenerator && sourcemaps)  {
+  if (!sourceMapGenerator && sourcemaps) {
     sourceMapGenerator = new SourceMapGenerator({
       file: outputName,
       sourceRoot: sourceRoot,
-      skipValidation: true
+      skipValidation: true,
     });
   }
 
   let sourceMapConfiguration = {
     sourceMapGenerator: sourceMapGenerator,
     sourceRoot: sourceRoot,
-    lowResolution: options && options.lowResolutionSourceMap
+    lowResolution: options && options.lowResolutionSourceMap,
   };
 
   let writer;
   if (sourceMapGenerator)
     writer = new ParseTreeMapWriter(sourceMapConfiguration, options);
-  else
-    writer = new ParseTreeWriter(options);
+  else writer = new ParseTreeWriter(options);
 
   writer.visitAny(tree);
 
-  return [writer.toString(),
-      sourceMapGenerator && sourceMapGenerator.toString()];
+  return [
+    writer.toString(),
+    sourceMapGenerator && sourceMapGenerator.toString(),
+  ];
 }
-

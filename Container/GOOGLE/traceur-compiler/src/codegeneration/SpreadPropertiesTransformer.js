@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SPREAD_EXPRESSION} from  '../syntax/trees/ParseTreeType.js';
-import {createObjectLiteral, createArgumentList} from './ParseTreeFactory.js';
-import {parseExpression} from './PlaceholderParser.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { SPREAD_EXPRESSION } from "../syntax/trees/ParseTreeType.js";
+import { createObjectLiteral, createArgumentList } from "./ParseTreeFactory.js";
+import { parseExpression } from "./PlaceholderParser.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 
 function hasSpread(trees) {
   return trees.some((tree) => tree && tree.type === SPREAD_EXPRESSION);
@@ -31,8 +31,9 @@ function hasSpread(trees) {
  * =>
  * $spreadProperties({a}, b, {c}, d)
  */
-export class SpreadPropertiesTransformer extends
-    ImportRuntimeTrait(ParseTreeTransformer) {
+export class SpreadPropertiesTransformer extends ImportRuntimeTrait(
+  ParseTreeTransformer
+) {
   constructor(identifierGenerator, reporter, options) {
     super(identifierGenerator, reporter, options);
     this.options = options;
@@ -70,6 +71,6 @@ export function spreadProperties(properties, self) {
   if (accummulatedProps) {
     args.push(createObjectLiteral(accummulatedProps));
   }
-  const runtime = self.getRuntimeExpression('spreadProperties');
-  return parseExpression `${runtime}(${createArgumentList(args)})`;
+  const runtime = self.getRuntimeExpression("spreadProperties");
+  return parseExpression`${runtime}(${createArgumentList(args)})`;
 }

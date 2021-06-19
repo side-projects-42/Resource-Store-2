@@ -1,0 +1,24 @@
+{
+  "navigation": [
+    {
+      "label": "External Projects",
+      "link": "/external-projects",
+      "order": 1
+    },
+    {
+      "label": "Highlighted Projects",
+      "link": "/collections",
+      "order": 2
+    },
+    {
+      "label": "New Relic Projects",
+      "link": "/explore-projects",
+      "order": 3
+    },
+    {
+      "label": "Standards",
+      "link": "/standards",
+      "order": 4
+    }
+  ]
+}

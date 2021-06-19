@@ -1,12 +1,13 @@
-(function() {
-  'use strict';
+(function () {
+  "use strict";
   var x = 1;
   {
     function f() {
       x = 2;
     }
 
-    if (false) {}
+    if (false) {
+    }
 
     f();
   }

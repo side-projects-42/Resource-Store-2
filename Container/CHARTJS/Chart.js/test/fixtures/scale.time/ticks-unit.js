@@ -2,26 +2,26 @@ module.exports = {
   threshold: 0.05,
   tolerance: 0.002,
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      labels: ['2015-01-01T20:00:00', '2015-01-02T21:00:00'],
+      labels: ["2015-01-01T20:00:00", "2015-01-02T21:00:00"],
     },
     options: {
       scales: {
         x: {
-          type: 'time',
+          type: "time",
           time: {
-            unit: 'hour',
-          }
+            unit: "hour",
+          },
         },
         y: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
-    canvas: {width: 1200, height: 200}
-  }
+    canvas: { width: 1200, height: 200 },
+  },
 };

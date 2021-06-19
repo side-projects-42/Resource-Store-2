@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {createPrivateSymbol, getPrivate, setPrivate} from '../private.js';
-import {deleteFrozen, getFrozen, setFrozen} from '../frozen-data.js';
-import {isObject, registerPolyfill} from './utils.js'
-import hasNativeSymbol from '../has-native-symbols.js';
+import { createPrivateSymbol, getPrivate, setPrivate } from "../private.js";
+import { deleteFrozen, getFrozen, setFrozen } from "../frozen-data.js";
+import { isObject, registerPolyfill } from "./utils.js";
+import hasNativeSymbol from "../has-native-symbols.js";
 
 const {
   defineProperty,
   getOwnPropertyDescriptor,
   hasOwnProperty,
-  isExtensible
+  isExtensible,
 } = Object;
 
 const deletedSentinel = {};
@@ -43,7 +43,7 @@ function getOrSetHashCodeForObject(obj) {
 }
 
 function lookupIndex(map, key) {
-  if (typeof key === 'string') {
+  if (typeof key === "string") {
     return map.stringIndex_[key];
   }
   if (isObject(key)) {
@@ -73,11 +73,10 @@ function initMap(map) {
 
 export class Map {
   constructor(iterable = undefined) {
-    if (!isObject(this))
-      throw new TypeError('Map called on incompatible type');
+    if (!isObject(this)) throw new TypeError("Map called on incompatible type");
 
-    if (hasOwnProperty.call(this, 'entries_')) {
-      throw new TypeError('Map can not be reentrantly initialised');
+    if (hasOwnProperty.call(this, "entries_")) {
+      throw new TypeError("Map can not be reentrantly initialised");
     }
 
     initMap(this);
@@ -118,7 +117,7 @@ export class Map {
           let hash = getOrSetHashCodeForObject(key);
           this.objectIndex_[hash] = index;
         }
-      } else if (typeof key === 'string') {
+      } else if (typeof key === "string") {
         this.stringIndex_[key] = index;
       } else {
         this.primitiveIndex_[key] = index;
@@ -149,10 +148,10 @@ export class Map {
         let hash = getHashCodeForObject(key);
         delete this.objectIndex_[hash];
       }
-    } else if (typeof key === 'string') {
+    } else if (typeof key === "string") {
       delete this.stringIndex_[key];
     } else {
-      delete this.primitiveIndex_[key]
+      delete this.primitiveIndex_[key];
     }
 
     return true;
@@ -167,8 +166,7 @@ export class Map {
       var key = this.entries_[i];
       var value = this.entries_[i + 1];
 
-      if (key === deletedSentinel)
-        continue;
+      if (key === deletedSentinel) continue;
 
       callbackFn.call(thisArg, value, key, this);
     }
@@ -179,8 +177,7 @@ export class Map {
       var key = this.entries_[i];
       var value = this.entries_[i + 1];
 
-      if (key === deletedSentinel)
-        continue;
+      if (key === deletedSentinel) continue;
 
       yield [key, value];
     }
@@ -191,8 +188,7 @@ export class Map {
       var key = this.entries_[i];
       var value = this.entries_[i + 1];
 
-      if (key === deletedSentinel)
-        continue;
+      if (key === deletedSentinel) continue;
 
       yield key;
     }
@@ -203,8 +199,7 @@ export class Map {
       var key = this.entries_[i];
       var value = this.entries_[i + 1];
 
-      if (key === deletedSentinel)
-        continue;
+      if (key === deletedSentinel) continue;
 
       yield value;
     }
@@ -214,13 +209,17 @@ export class Map {
 defineProperty(Map.prototype, Symbol.iterator, {
   configurable: true,
   writable: true,
-  value: Map.prototype.entries
+  value: Map.prototype.entries,
 });
 
 function needsPolyfill(global) {
-  var {Map, Symbol} = global;
-  if (!Map || !hasNativeSymbol() ||
-      !Map.prototype[Symbol.iterator] || !Map.prototype.entries) {
+  var { Map, Symbol } = global;
+  if (
+    !Map ||
+    !hasNativeSymbol() ||
+    !Map.prototype[Symbol.iterator] ||
+    !Map.prototype.entries
+  ) {
     return true;
   }
   try {

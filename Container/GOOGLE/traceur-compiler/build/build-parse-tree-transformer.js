@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
 /**
  * @fileoverview This file generates the code for ParseTreeTransformer.js
  * based on a JSON file, which gets passed in on the command line.
  */
 
-
-var fs = require('fs');
-var util = require('./util.js');
+var fs = require("fs");
+var util = require("./util.js");
 
 var trees = readTrees();
 
@@ -34,84 +33,92 @@ printEnd();
 
 function printImports(trees) {
   var names = Object.keys(trees);
-  util.print('import {');
-  names.forEach(function(name) {
-    util.print('  %s,', name);
+  util.print("import {");
+  names.forEach(function (name) {
+    util.print("  %s,", name);
   });
-  util.print("} from '../syntax/trees/ParseTrees.js';")
+  util.print("} from '../syntax/trees/ParseTrees.js';");
 }
 
 function printHeader() {
-  util.print(fs.readFileSync('build/parse-tree-transformer.header', 'utf8'));
+  util.print(fs.readFileSync("build/parse-tree-transformer.header", "utf8"));
 }
 
 function readTrees() {
-  var data = fs.readFileSync(process.argv[2], 'utf-8');
+  var data = fs.readFileSync(process.argv[2], "utf-8");
   return util.parseJSON(data);
 }
 
 function printTrees(trees) {
   var names = Object.keys(trees);
-  names.forEach(function(name) {
+  names.forEach(function (name) {
     printTransformTree(name, trees[name], trees);
   });
 }
 
 function printTransformTree(name, tree, trees) {
-  util.print('  transform' + name + '(tree) {');
+  util.print("  transform" + name + "(tree) {");
   printTransformBody(name, tree, trees);
-  util.print('  }');
+  util.print("  }");
 }
 
 function printTransformBody(name, tree, trees) {
   var test = null;
-  var args = 'tree.location';
+  var args = "tree.location";
   function addTest(fieldName) {
-    var nextTest = fieldName + ' === tree.' + fieldName;
+    var nextTest = fieldName + " === tree." + fieldName;
     if (test) {
-      test += ' && ' + nextTest;
+      test += " && " + nextTest;
     } else {
       test = nextTest;
     }
-    args += ', ' + fieldName;
+    args += ", " + fieldName;
   }
   var fieldNames = Object.keys(tree);
-  fieldNames.forEach(
-    function(fieldName) {
-      if (fieldName == 'location') {
-        return;
-      }
-      var fieldTypes = tree[fieldName];
-      var fieldType = fieldTypes[0];
-      if (util.isBlockOrStatementType(fieldTypes, trees)) {
-        util.print('    let ' + fieldName +
-                   ' = this.transformToBlockOrStatement(tree.' + fieldName +
-                   ');');
-        addTest(fieldName);
-      } else if (util.isParseTreeType(fieldType, trees)) {
-        util.print('    let ' + fieldName + ' = this.transformAny(tree.' +
-            fieldName + ');');
-        addTest(fieldName);
-      } else if (util.isParseTreeListType(fieldType, trees)) {
-        util.print('    let ' + fieldName + ' = this.transformList(tree.' +
-            fieldName + ');');
-        addTest(fieldName);
-      } else {
-        args += ', tree.' + fieldName;
-      }
+  fieldNames.forEach(function (fieldName) {
+    if (fieldName == "location") {
+      return;
     }
-  );
+    var fieldTypes = tree[fieldName];
+    var fieldType = fieldTypes[0];
+    if (util.isBlockOrStatementType(fieldTypes, trees)) {
+      util.print(
+        "    let " +
+          fieldName +
+          " = this.transformToBlockOrStatement(tree." +
+          fieldName +
+          ");"
+      );
+      addTest(fieldName);
+    } else if (util.isParseTreeType(fieldType, trees)) {
+      util.print(
+        "    let " + fieldName + " = this.transformAny(tree." + fieldName + ");"
+      );
+      addTest(fieldName);
+    } else if (util.isParseTreeListType(fieldType, trees)) {
+      util.print(
+        "    let " +
+          fieldName +
+          " = this.transformList(tree." +
+          fieldName +
+          ");"
+      );
+      addTest(fieldName);
+    } else {
+      args += ", tree." + fieldName;
+    }
+  });
 
   if (test) {
-    util.print('    if (' + test + ') {');
-    util.print('      return tree;');
-    util.print('    }');
-    util.print('    return new ' + name + '(' + args + ');');
+    util.print("    if (" + test + ") {");
+    util.print("      return tree;");
+    util.print("    }");
+    util.print("    return new " + name + "(" + args + ");");
   } else {
-    util.print('    return tree;');
+    util.print("    return tree;");
   }
 }
 
 function printEnd() {
-  util.print('}');
+  util.print("}");
 }

@@ -12,42 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ModuleTransformer} from './ModuleTransformer.js';
-import {NAMED_EXPORT} from '../syntax/trees/ParseTreeType.js';
-import {AnonBlock} from '../syntax/trees/ParseTrees.js';
+import { ModuleTransformer } from "./ModuleTransformer.js";
+import { NAMED_EXPORT } from "../syntax/trees/ParseTreeType.js";
+import { AnonBlock } from "../syntax/trees/ParseTrees.js";
 import {
   parseExpression,
   parsePropertyDefinition,
   parseStatement,
-} from './PlaceholderParser.js';
+} from "./PlaceholderParser.js";
 import {
   createExpressionStatement,
   createObjectLiteral,
   createObjectLiteralForDescriptor,
   createPropertyNameAssignment,
-} from './ParseTreeFactory.js';
-import {prependStatements} from './PrependStatements.js';
-import {FindVisitor} from './FindVisitor.js';
+} from "./ParseTreeFactory.js";
+import { prependStatements } from "./PrependStatements.js";
+import { FindVisitor } from "./FindVisitor.js";
 
 export class CommonJsModuleTransformer extends ModuleTransformer {
   constructor(identifierGenerator, reporter, options = undefined) {
     super(identifierGenerator, reporter, options);
     this.anonymousModule =
-        options && !options.bundle && options.moduleName !== true;
+      options && !options.bundle && options.moduleName !== true;
     this.namedExportsWithModuleSpecifiers_ = [];
     this.isImportingDefault_ = false;
     this.needsInteropRequire_ = false;
   }
 
   getModuleName(tree) {
-    if (this.anonymousModule)
-      return null;
+    if (this.anonymousModule) return null;
     return tree.moduleName;
   }
 
   wrapModule(statements) {
     if (this.needsInteropRequire_) {
-      const req = parseStatement `function $__interopRequire(id) {
+      const req = parseStatement`function $__interopRequire(id) {
         id = require(id);
         return id && id.__esModule && id || {default: id};
       }`;
@@ -62,8 +61,7 @@ export class CommonJsModuleTransformer extends ModuleTransformer {
     }
 
     const descr = this.getExportDescriptors();
-    let exportObject = parseExpression
-        `Object.defineProperties(module.exports, ${descr})`;
+    let exportObject = parseExpression`Object.defineProperties(module.exports, ${descr})`;
     if (this.hasStarExports()) {
       exportObject = this.getExportStar(exportObject);
     }
@@ -71,9 +69,11 @@ export class CommonJsModuleTransformer extends ModuleTransformer {
     // Mutate module.exports immediately after all the export star are
     // imported, before any module code is executed, to allow some cyclic
     // dependencies to work.
-    return prependStatements(statements,
-        ...this.namedExportsWithModuleSpecifiers_,
-        createExpressionStatement(exportObject));
+    return prependStatements(
+      statements,
+      ...this.namedExportsWithModuleSpecifiers_,
+      createExpressionStatement(exportObject)
+    );
   }
 
   getExportDescriptors() {
@@ -85,14 +85,18 @@ export class CommonJsModuleTransformer extends ModuleTransformer {
     //   ...
     // }
 
-    const properties = this.exportVisitor.getNonTypeNamedExports().map(exp => {
-      const f = parseExpression `function() { return ${
-        this.getGetterExportReturnExpression(exp)
-      }; }`;
-      return createPropertyNameAssignment(exp.name,
-          createObjectLiteralForDescriptor({enumerable: true, get: f}));
-    });
-    properties.unshift(parsePropertyDefinition `__esModule: {value: true}`);
+    const properties = this.exportVisitor
+      .getNonTypeNamedExports()
+      .map((exp) => {
+        const f = parseExpression`function() { return ${this.getGetterExportReturnExpression(
+          exp
+        )}; }`;
+        return createPropertyNameAssignment(
+          exp.name,
+          createObjectLiteralForDescriptor({ enumerable: true, get: f })
+        );
+      });
+    properties.unshift(parsePropertyDefinition`__esModule: {value: true}`);
     return createObjectLiteral(properties);
   }
 
@@ -103,8 +107,10 @@ export class CommonJsModuleTransformer extends ModuleTransformer {
 
     // Need to output the require for export ? from moduleSpecifier before
     // the call to exportStar.
-    if (tree.declaration.type == NAMED_EXPORT &&
-        tree.declaration.moduleSpecifier !== null) {
+    if (
+      tree.declaration.type == NAMED_EXPORT &&
+      tree.declaration.moduleSpecifier !== null
+    ) {
       this.namedExportsWithModuleSpecifiers_.push(transformed);
       return new AnonBlock(null, []);
     }
@@ -127,15 +133,15 @@ export class CommonJsModuleTransformer extends ModuleTransformer {
     let moduleName = tree.token.processedValue;
     if (this.isImportingDefault_) {
       this.needsInteropRequire_ = true;
-      return parseExpression `$__interopRequire(${moduleName})`;
+      return parseExpression`$__interopRequire(${moduleName})`;
     }
-    return parseExpression `require(${moduleName})`;
+    return parseExpression`require(${moduleName})`;
   }
 }
 
 class FindDefault extends FindVisitor {
   visitImportSpecifier(tree) {
-    this.found = tree.name !== null && tree.name.value === 'default';
+    this.found = tree.name !== null && tree.name.value === "default";
   }
   visitNameSpaceImport(tree) {
     this.found = true;
@@ -144,6 +150,6 @@ class FindDefault extends FindVisitor {
     this.found = true;
   }
   visitExportSpecifier(tree) {
-    this.found = tree.lhs !== null && tree.lhs.value === 'default';
+    this.found = tree.lhs !== null && tree.lhs.value === "default";
   }
 }

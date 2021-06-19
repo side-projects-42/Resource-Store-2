@@ -11,17 +11,15 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.tracks.TimeRangePainter');
+goog.provide("wtf.app.tracks.TimeRangePainter");
 
-goog.require('wtf.events');
-goog.require('wtf.events.EventType');
-goog.require('wtf.math');
-goog.require('wtf.ui.ModifierKey');
-goog.require('wtf.ui.RangePainter');
-goog.require('wtf.ui.color.Palette');
-goog.require('wtf.util');
-
-
+goog.require("wtf.events");
+goog.require("wtf.events.EventType");
+goog.require("wtf.math");
+goog.require("wtf.ui.ModifierKey");
+goog.require("wtf.ui.RangePainter");
+goog.require("wtf.ui.color.Palette");
+goog.require("wtf.util");
 
 /**
  * Paints a time range region into the view.
@@ -31,7 +29,9 @@ goog.require('wtf.util');
  * @extends {wtf.ui.RangePainter}
  */
 wtf.app.tracks.TimeRangePainter = function TimeRangePainter(
-    canvas, timeRangeList) {
+  canvas,
+  timeRangeList
+) {
   goog.base(this, canvas);
 
   /**
@@ -46,14 +46,15 @@ wtf.app.tracks.TimeRangePainter = function TimeRangePainter(
    * @type {!wtf.ui.color.Palette}
    * @private
    */
-  this.palette_ = new wtf.ui.color.Palette(
-      wtf.ui.color.Palette.D3_10);
+  this.palette_ = new wtf.ui.color.Palette(wtf.ui.color.Palette.D3_10);
 
-  this.timeRangeList_.addListener(wtf.events.EventType.INVALIDATED,
-      this.requestRepaint, this);
+  this.timeRangeList_.addListener(
+    wtf.events.EventType.INVALIDATED,
+    this.requestRepaint,
+    this
+  );
 };
 goog.inherits(wtf.app.tracks.TimeRangePainter, wtf.ui.RangePainter);
-
 
 /**
  * Height of a time range, in pixels.
@@ -62,7 +63,6 @@ goog.inherits(wtf.app.tracks.TimeRangePainter, wtf.ui.RangePainter);
  * @private
  */
 wtf.app.tracks.TimeRangePainter.TIME_RANGE_HEIGHT_ = 16;
-
 
 /**
  * Don't draw more levels than this.
@@ -73,27 +73,29 @@ wtf.app.tracks.TimeRangePainter.TIME_RANGE_HEIGHT_ = 16;
  */
 wtf.app.tracks.TimeRangePainter.MAX_LEVELS_ = 5;
 
-
 /**
  * @override
  */
-wtf.app.tracks.TimeRangePainter.prototype.layoutInternal = function(
-    availableBounds) {
+wtf.app.tracks.TimeRangePainter.prototype.layoutInternal = function (
+  availableBounds
+) {
   var newBounds = availableBounds.clone();
   var maxLevel = Math.min(
-      this.timeRangeList_.getMaximumLevel(),
-      wtf.app.tracks.TimeRangePainter.MAX_LEVELS_);
+    this.timeRangeList_.getMaximumLevel(),
+    wtf.app.tracks.TimeRangePainter.MAX_LEVELS_
+  );
   var levelHeight = wtf.app.tracks.TimeRangePainter.TIME_RANGE_HEIGHT_;
   newBounds.height = maxLevel * levelHeight;
   return newBounds;
 };
 
-
 /**
  * @override
  */
-wtf.app.tracks.TimeRangePainter.prototype.repaintInternal = function(
-    ctx, bounds) {
+wtf.app.tracks.TimeRangePainter.prototype.repaintInternal = function (
+  ctx,
+  bounds
+) {
   if (!this.isTimeRangeValid()) {
     return;
   }
@@ -103,75 +105,102 @@ wtf.app.tracks.TimeRangePainter.prototype.repaintInternal = function(
   var timeRangeHeight = wtf.app.tracks.TimeRangePainter.TIME_RANGE_HEIGHT_;
 
   var maxLevel = Math.min(
-      this.timeRangeList_.getMaximumLevel(),
-      wtf.app.tracks.TimeRangePainter.MAX_LEVELS_);
-  this.beginRenderingRanges(bounds, maxLevel + 1,
-      wtf.ui.RangePainter.DrawStyle.TIME_SPAN);
+    this.timeRangeList_.getMaximumLevel(),
+    wtf.app.tracks.TimeRangePainter.MAX_LEVELS_
+  );
+  this.beginRenderingRanges(
+    bounds,
+    maxLevel + 1,
+    wtf.ui.RangePainter.DrawStyle.TIME_SPAN
+  );
 
   var timeLeft = this.timeLeft;
   var timeRight = this.timeRight;
-  this.timeRangeList_.forEachIntersecting(timeLeft, timeRight,
-      function(timeRange) {
-        // Skip if excluded.
-        var level = timeRange.getLevel();
-        if (level >= wtf.app.tracks.TimeRangePainter.MAX_LEVELS_) {
-          return;
-        }
+  this.timeRangeList_.forEachIntersecting(
+    timeLeft,
+    timeRight,
+    function (timeRange) {
+      // Skip if excluded.
+      var level = timeRange.getLevel();
+      if (level >= wtf.app.tracks.TimeRangePainter.MAX_LEVELS_) {
+        return;
+      }
 
-        // Compute screen size.
-        var startTime = timeRange.getTime();
-        var endTime = timeRange.getEndTime();
-        var left = wtf.math.remap(startTime,
-            timeLeft, timeRight,
-            bounds.left, bounds.left + bounds.width);
-        var right = wtf.math.remap(endTime,
-            timeLeft, timeRight,
-            bounds.left, bounds.left + bounds.width);
-        var screenWidth = right - left;
+      // Compute screen size.
+      var startTime = timeRange.getTime();
+      var endTime = timeRange.getEndTime();
+      var left = wtf.math.remap(
+        startTime,
+        timeLeft,
+        timeRight,
+        bounds.left,
+        bounds.left + bounds.width
+      );
+      var right = wtf.math.remap(
+        endTime,
+        timeLeft,
+        timeRight,
+        bounds.left,
+        bounds.left + bounds.width
+      );
+      var screenWidth = right - left;
 
-        // Clip with the screen.
-        var screenLeft = Math.max(bounds.left, left);
-        var screenRight = Math.min((bounds.left + bounds.width) - 0.999, right);
-        if (screenLeft >= screenRight) {
-          return;
-        }
+      // Clip with the screen.
+      var screenLeft = Math.max(bounds.left, left);
+      var screenRight = Math.min(bounds.left + bounds.width - 0.999, right);
+      if (screenLeft >= screenRight) {
+        return;
+      }
 
-        // Compute color by name.
-        var label = timeRange.getName();
-        if (!label || !label.length) {
-          return;
-        }
-        var color = /** @type {!wtf.ui.color.RgbColorValue} */ (
-            timeRange.getRenderData());
-        if (!color) {
-          color = palette.getColorForString(label).toValue();
-          timeRange.setRenderData(color);
-        }
+      // Compute color by name.
+      var label = timeRange.getName();
+      if (!label || !label.length) {
+        return;
+      }
+      var color = /** @type {!wtf.ui.color.RgbColorValue} */ (
+        timeRange.getRenderData()
+      );
+      if (!color) {
+        color = palette.getColorForString(label).toValue();
+        timeRange.setRenderData(color);
+      }
 
-        // Draw bar.
-        this.drawRange(level, screenLeft, screenRight, color, 1);
+      // Draw bar.
+      this.drawRange(level, screenLeft, screenRight, color, 1);
 
-        if (screenWidth > 15) {
-          var y = level * timeRangeHeight;
-          this.drawRangeLabel(
-              bounds, left, right, screenLeft, screenRight, y + 1, label);
-        }
-      }, this);
+      if (screenWidth > 15) {
+        var y = level * timeRangeHeight;
+        this.drawRangeLabel(
+          bounds,
+          left,
+          right,
+          screenLeft,
+          screenRight,
+          y + 1,
+          label
+        );
+      }
+    },
+    this
+  );
 
   // Now blit the nicely rendered ranges onto the screen.
   var y = 0;
   this.endRenderingRanges(bounds, y, timeRangeHeight);
 
   // Draw label on the left.
-  this.drawLabel('time ranges');
+  this.drawLabel("time ranges");
 };
-
 
 /**
  * @override
  */
-wtf.app.tracks.TimeRangePainter.prototype.onClickInternal =
-    function(x, y, modifiers, bounds) {
+wtf.app.tracks.TimeRangePainter.prototype.onClickInternal = function (
+  x,
+  y,
+  modifiers,
+  bounds
+) {
   var timeRange = this.hitTest_(x, y, bounds);
   if (!timeRange) {
     return false;
@@ -181,38 +210,37 @@ wtf.app.tracks.TimeRangePainter.prototype.onClickInternal =
   var timeEnd = timeRange.getEndTime();
 
   var commandManager = wtf.events.getCommandManager();
-  commandManager.execute('goto_range', this, null, timeStart, timeEnd);
+  commandManager.execute("goto_range", this, null, timeStart, timeEnd);
   if (modifiers & wtf.ui.ModifierKey.SHIFT) {
-    commandManager.execute('select_range', this, null, timeStart, timeEnd);
+    commandManager.execute("select_range", this, null, timeStart, timeEnd);
   }
 
   return true;
 };
 
-
 /**
  * @override
  */
-wtf.app.tracks.TimeRangePainter.prototype.getInfoStringInternal =
-    function(x, y, bounds) {
+wtf.app.tracks.TimeRangePainter.prototype.getInfoStringInternal = function (
+  x,
+  y,
+  bounds
+) {
   var timeRange = this.hitTest_(x, y, bounds);
   if (!timeRange) {
     return undefined;
   }
 
   var duration = timeRange.getDuration();
-  var lines = [
-    wtf.util.formatTime(duration) + ': ' + timeRange.getName()
-  ];
+  var lines = [wtf.util.formatTime(duration) + ": " + timeRange.getName()];
   var value = timeRange.getValue();
   if (value) {
     wtf.util.addArgumentLines(lines, {
-      'value': value
+      value: value,
     });
   }
-  return lines.join('\n');
+  return lines.join("\n");
 };
-
 
 /**
  * Finds the time range at the given point.
@@ -222,13 +250,16 @@ wtf.app.tracks.TimeRangePainter.prototype.getInfoStringInternal =
  * @return {wtf.db.TimeRange} Time range or nothing.
  * @private
  */
-wtf.app.tracks.TimeRangePainter.prototype.hitTest_ = function(
-    x, y, bounds) {
+wtf.app.tracks.TimeRangePainter.prototype.hitTest_ = function (x, y, bounds) {
   var h = wtf.app.tracks.TimeRangePainter.TIME_RANGE_HEIGHT_;
   var level = ((y - bounds.top) / h) | 0;
-  var time = wtf.math.remap(x,
-      bounds.left, bounds.left + bounds.width,
-      this.timeLeft, this.timeRight);
+  var time = wtf.math.remap(
+    x,
+    bounds.left,
+    bounds.left + bounds.width,
+    this.timeLeft,
+    this.timeRight
+  );
   var matches = this.timeRangeList_.getTimeRangesAtTime(time);
   for (var n = 0; n < matches.length; n++) {
     if (matches[n].getLevel() == level) {

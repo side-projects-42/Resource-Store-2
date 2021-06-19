@@ -6,10 +6,10 @@ In a radial chart, such as a radar chart or a polar area chart, there is a singl
 
 Scales in Chart.js >v2.0 are significantly more powerful, but also different than those of v1.0.
 
-* Multiple X & Y axes are supported.
-* A built-in label auto-skip feature detects would-be overlapping ticks and labels and removes every nth label to keep things displaying normally.
-* Scale titles are supported.
-* New scale types can be extended without writing an entirely new chart type.
+- Multiple X & Y axes are supported.
+- A built-in label auto-skip feature detects would-be overlapping ticks and labels and removes every nth label to keep things displaying normally.
+- Scale titles are supported.
+- New scale types can be extended without writing an entirely new chart type.
 
 ## Default scales
 
@@ -23,7 +23,7 @@ The following chart will have `'x'` and `'y'` scales:
 
 ```js
 let chart = new Chart(ctx, {
-  type: 'line'
+  type: "line",
 });
 ```
 
@@ -31,20 +31,22 @@ The following chart will have scales `'x'` and `'myScale'`:
 
 ```js
 let chart = new Chart(ctx, {
-  type: 'bar',
+  type: "bar",
   data: {
-    datasets: [{
-      data: [1, 2, 3]
-    }]
+    datasets: [
+      {
+        data: [1, 2, 3],
+      },
+    ],
   },
   options: {
     scales: {
       myScale: {
-        type: 'logarithmic',
-        position: 'right', // `axis` is determined by the position as `'y'`
-      }
-    }
-  }
+        type: "logarithmic",
+        position: "right", // `axis` is determined by the position as `'y'`
+      },
+    },
+  },
 });
 ```
 
@@ -52,21 +54,23 @@ The following chart will have scales `'xAxis'` and `'yAxis'`:
 
 ```js
 let chart = new Chart(ctx, {
-  type: 'bar',
+  type: "bar",
   data: {
-    datasets: [{
-      yAxisID: 'yAxis'
-    }]
+    datasets: [
+      {
+        yAxisID: "yAxis",
+      },
+    ],
   },
   options: {
     scales: {
       xAxis: {
         // The axis for this scale is determined from the first letter of the id as `'x'`
         // It is recommended to specify `position` and / or `axis` explicitly.
-        type: 'time',
-      }
-    }
-  }
+        type: "time",
+      },
+    },
+  },
 });
 ```
 
@@ -74,7 +78,7 @@ The following chart will have `'r'` scale:
 
 ```js
 let chart = new Chart(ctx, {
-  type: 'radar'
+  type: "radar",
 });
 ```
 
@@ -82,22 +86,22 @@ The following chart will have `'myScale'` scale:
 
 ```js
 let chart = new Chart(ctx, {
-  type: 'radar',
+  type: "radar",
   scales: {
     myScale: {
-      axis: 'r'
-    }
-  }
+      axis: "r",
+    },
+  },
 });
 ```
 
 ## Common Configuration
 
-!!!include(axes/_common.md)!!!
+!!!include(axes/\_common.md)!!!
 
 ## Tick Configuration
 
-!!!include(axes/_common_ticks.md)!!!
+!!!include(axes/\_common_ticks.md)!!!
 
 ## Axis Range Settings
 
@@ -114,22 +118,24 @@ In this example, the largest positive value is 50, but the data maximum is expan
 
 ```javascript
 let chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        datasets: [{
-            label: 'First dataset',
-            data: [0, 20, 40, 50]
-        }],
-        labels: ['January', 'February', 'March', 'April']
+  type: "line",
+  data: {
+    datasets: [
+      {
+        label: "First dataset",
+        data: [0, 20, 40, 50],
+      },
+    ],
+    labels: ["January", "February", "March", "April"],
+  },
+  options: {
+    scales: {
+      y: {
+        suggestedMin: 50,
+        suggestedMax: 100,
+      },
     },
-    options: {
-        scales: {
-            y: {
-                suggestedMin: 50,
-                suggestedMax: 100
-            }
-        }
-    }
+  },
 });
 ```
 
@@ -146,22 +152,22 @@ There are a number of config callbacks that can be used to change parameters in 
 
 Namespace: `options.scales[scaleId]`
 
-| Name | Arguments | Description
-| ---- | --------- | -----------
-| `beforeUpdate` | `axis` | Callback called before the update process starts.
-| `beforeSetDimensions` | `axis` | Callback that runs before dimensions are set.
-| `afterSetDimensions` | `axis` | Callback that runs after dimensions are set.
-| `beforeDataLimits` | `axis` | Callback that runs before data limits are determined.
-| `afterDataLimits` | `axis` | Callback that runs after data limits are determined.
-| `beforeBuildTicks` | `axis` | Callback that runs before ticks are created.
-| `afterBuildTicks` | `axis` | Callback that runs after ticks are created. Useful for filtering ticks.
-| `beforeTickToLabelConversion` | `axis` | Callback that runs before ticks are converted into strings.
-| `afterTickToLabelConversion` | `axis` | Callback that runs after ticks are converted into strings.
-| `beforeCalculateTickRotation` | `axis` | Callback that runs before tick rotation is determined.
-| `afterCalculateTickRotation` | `axis` | Callback that runs after tick rotation is determined.
-| `beforeFit` | `axis` | Callback that runs before the scale fits to the canvas.
-| `afterFit` | `axis` | Callback that runs after the scale fits to the canvas.
-| `afterUpdate` | `axis` | Callback that runs at the end of the update process.
+| Name                          | Arguments | Description                                                             |
+| ----------------------------- | --------- | ----------------------------------------------------------------------- |
+| `beforeUpdate`                | `axis`    | Callback called before the update process starts.                       |
+| `beforeSetDimensions`         | `axis`    | Callback that runs before dimensions are set.                           |
+| `afterSetDimensions`          | `axis`    | Callback that runs after dimensions are set.                            |
+| `beforeDataLimits`            | `axis`    | Callback that runs before data limits are determined.                   |
+| `afterDataLimits`             | `axis`    | Callback that runs after data limits are determined.                    |
+| `beforeBuildTicks`            | `axis`    | Callback that runs before ticks are created.                            |
+| `afterBuildTicks`             | `axis`    | Callback that runs after ticks are created. Useful for filtering ticks. |
+| `beforeTickToLabelConversion` | `axis`    | Callback that runs before ticks are converted into strings.             |
+| `afterTickToLabelConversion`  | `axis`    | Callback that runs after ticks are converted into strings.              |
+| `beforeCalculateTickRotation` | `axis`    | Callback that runs before tick rotation is determined.                  |
+| `afterCalculateTickRotation`  | `axis`    | Callback that runs after tick rotation is determined.                   |
+| `beforeFit`                   | `axis`    | Callback that runs before the scale fits to the canvas.                 |
+| `afterFit`                    | `axis`    | Callback that runs after the scale fits to the canvas.                  |
+| `afterUpdate`                 | `axis`    | Callback that runs at the end of the update process.                    |
 
 ### Updating Axis Defaults
 

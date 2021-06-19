@@ -11,8 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-benchmark.register('simple', function() {
+benchmark.register("simple", function () {
   var scope = wtf.trace.enterScope();
   //
   wtf.trace.leaveScope(scope);

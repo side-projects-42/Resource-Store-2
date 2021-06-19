@@ -1,31 +1,31 @@
 module.exports = {
   config: {
-    type: 'scatter',
+    type: "scatter",
     options: {
       scales: {
         x: {
           display: false,
           min: -10,
-          max: 10
+          max: 10,
         },
         y: {
           display: false,
           min: -10,
-          max: 10
-        }
+          max: 10,
+        },
       },
       plugins: {
         legend: false,
         annotation: {
-          drawTime: 'afterDraw',
+          drawTime: "afterDraw",
           annotations: {
             point: {
-              type: 'point',
+              type: "point",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xValue() {
                 return 1;
@@ -34,10 +34,10 @@ module.exports = {
                 return 1;
               },
               backgroundColor() {
-                return 'rgba(101, 33, 171, 0.5)';
+                return "rgba(101, 33, 171, 0.5)";
               },
               borderColor() {
-                return 'rgb(101, 33, 171)';
+                return "rgb(101, 33, 171)";
               },
               borderWidth() {
                 return 15;
@@ -47,11 +47,11 @@ module.exports = {
               },
               radius() {
                 return 50;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 };

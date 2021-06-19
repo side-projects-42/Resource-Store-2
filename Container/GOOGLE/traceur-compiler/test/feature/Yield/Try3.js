@@ -1,5 +1,5 @@
 function assertClosed(g) {
-  assert.deepEqual({value: undefined, done: true}, g.next());
+  assert.deepEqual({ value: undefined, done: true }, g.next());
 }
 
 var x;
@@ -19,38 +19,38 @@ function* f() {
 }
 
 var g = f();
-assert.deepEqual(g.next(), {value: 1, done: false});
-assert.deepEqual(g.next(), {value: 2, done: false});
-assert.deepEqual(g.next(), {value: 3, done: false});
-assert.deepEqual(g.next(), {value: 4, done: false});
-assert.deepEqual(g.next(), {value: undefined, done: true});
+assert.deepEqual(g.next(), { value: 1, done: false });
+assert.deepEqual(g.next(), { value: 2, done: false });
+assert.deepEqual(g.next(), { value: 3, done: false });
+assert.deepEqual(g.next(), { value: 4, done: false });
+assert.deepEqual(g.next(), { value: undefined, done: true });
 assertClosed(g);
 assert.equal(x, 4);
 
 g = f();
-assert.deepEqual(g.next(), {value: 1, done: false});
-assert.deepEqual(g.next(), {value: 2, done: false});
-assert.deepEqual(g.throw('ex'), {value: 'ex', done: false});
-assert.deepEqual(g.next(), {value: 4, done: false});
-assert.deepEqual(g.next(), {value: undefined, done: true});
+assert.deepEqual(g.next(), { value: 1, done: false });
+assert.deepEqual(g.next(), { value: 2, done: false });
+assert.deepEqual(g.throw("ex"), { value: "ex", done: false });
+assert.deepEqual(g.next(), { value: 4, done: false });
+assert.deepEqual(g.next(), { value: undefined, done: true });
 assertClosed(g);
 assert.equal(x, 4);
 
 g = f();
-assert.deepEqual(g.next(), {value: 1, done: false});
-assert.deepEqual(g.next(), {value: 2, done: false});
-assert.deepEqual(g.next(), {value: 3, done: false});
-assert.deepEqual(g.throw('ex'), {value: 'ex', done: false});
-assert.deepEqual(g.next(), {value: 4, done: false});
-assert.deepEqual(g.next(), {value: undefined, done: true});
+assert.deepEqual(g.next(), { value: 1, done: false });
+assert.deepEqual(g.next(), { value: 2, done: false });
+assert.deepEqual(g.next(), { value: 3, done: false });
+assert.deepEqual(g.throw("ex"), { value: "ex", done: false });
+assert.deepEqual(g.next(), { value: 4, done: false });
+assert.deepEqual(g.next(), { value: undefined, done: true });
 assertClosed(g);
 assert.equal(x, 4);
 
 g = f();
-assert.deepEqual(g.next(), {value: 1, done: false});
-assert.deepEqual(g.next(), {value: 2, done: false});
-assert.deepEqual(g.next(), {value: 3, done: false});
-assert.deepEqual(g.next(), {value: 4, done: false});
-assert.throws(() => g.throw('ex'));
+assert.deepEqual(g.next(), { value: 1, done: false });
+assert.deepEqual(g.next(), { value: 2, done: false });
+assert.deepEqual(g.next(), { value: 3, done: false });
+assert.deepEqual(g.next(), { value: 4, done: false });
+assert.throws(() => g.throw("ex"));
 assertClosed(g);
 assert.equal(x, 4);

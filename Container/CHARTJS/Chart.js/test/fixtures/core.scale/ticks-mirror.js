@@ -1,27 +1,29 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      datasets: [{
-        data: [1, -1, 3],
-      }],
-      labels: ['Label1', 'Label2', 'Label3']
+      datasets: [
+        {
+          data: [1, -1, 3],
+        },
+      ],
+      labels: ["Label1", "Label2", "Label3"],
     },
     options: {
       scales: {
         y: {
           ticks: {
-            mirror: true
-          }
-        }
-      }
-    }
+            mirror: true,
+          },
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

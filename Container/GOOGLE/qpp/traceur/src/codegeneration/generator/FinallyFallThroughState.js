@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {State} from './State.js';
+import { State } from "./State.js";
 
 /**
  * These are a placeholder for the fallthrough off the end of a finally block.
@@ -23,7 +23,6 @@ import {State} from './State.js';
  * The code for them is generated in addFinallyFallThroughDispatches.
  */
 export class FinallyFallThroughState extends State {
-
   /**
    * @param {number} oldState
    * @param {number} newState
@@ -31,7 +30,8 @@ export class FinallyFallThroughState extends State {
    */
   replaceState(oldState, newState) {
     return new FinallyFallThroughState(
-        State.replaceStateId(this.id, oldState, newState));
+      State.replaceStateId(this.id, oldState, newState)
+    );
   }
 
   /**
@@ -52,6 +52,6 @@ export class FinallyFallThroughState extends State {
    * @return {Array.<ParseTree>}
    */
   transform(enclosingFinally, machineEndState, reporter) {
-    throw new Error('these are generated in addFinallyFallThroughDispatches');
+    throw new Error("these are generated in addFinallyFallThroughDispatches");
   }
 }

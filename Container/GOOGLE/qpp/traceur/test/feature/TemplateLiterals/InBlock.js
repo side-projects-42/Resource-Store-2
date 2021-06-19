@@ -1,9 +1,9 @@
 // This just tests that we do not get any compile errors.
 
 {
-  `abc`
+  `abc`;
 }
 
-(function() {
-  `def`
+(function () {
+  `def`;
 });

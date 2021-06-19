@@ -4,7 +4,7 @@ function* forInGenerator3() {
     b: {
       c: 1,
     },
-    d: 2
+    d: 2,
   };
   for (var key in object) {
     yield key;
@@ -15,7 +15,7 @@ function* forInGenerator3() {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -24,4 +24,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('abcd',accumulate(forInGenerator3()));
+assert.equal("abcd", accumulate(forInGenerator3()));

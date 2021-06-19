@@ -13,11 +13,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-var toolRunner = require('./tool-runner');
-var optimist = require('optimist').boolean(['allzones']);
+var toolRunner = require("./tool-runner");
+var optimist = require("optimist").boolean(["allzones"]);
 var util = toolRunner.util;
 toolRunner.launch(runTool);
-
 
 /**
  * Dump tool.
@@ -27,27 +26,26 @@ toolRunner.launch(runTool);
  */
 function runTool(platform, args_, done) {
   var args = optimist.argv;
-  var allzones = args['allzones'];
+  var allzones = args["allzones"];
 
-  var inputFile = args['_'][0];
+  var inputFile = args["_"][0];
   if (!inputFile) {
-    console.log('usage: dump.js [--allzones] file.wtf-trace');
+    console.log("usage: dump.js [--allzones] file.wtf-trace");
     done(1);
     return;
   }
-  console.log('Dumping ' + inputFile + '...');
-  console.log('');
+  console.log("Dumping " + inputFile + "...");
+  console.log("");
 
-  wtf.db.load(inputFile, function(db) {
+  wtf.db.load(inputFile, function (db) {
     if (db instanceof Error) {
-      console.log('ERROR: unable to open ' + inputFile, db, db.stack);
+      console.log("ERROR: unable to open " + inputFile, db, db.stack);
       done(1);
     } else {
       done(dumpDatabase(db, allzones));
     }
   });
-};
-
+}
 
 /**
  * Dump the database.
@@ -63,7 +61,7 @@ function dumpDatabase(db, allzones) {
 
   var zones = db.getZones();
   if (!zones.length) {
-    console.log('No zones');
+    console.log("No zones");
     return 0;
   }
 
@@ -75,7 +73,6 @@ function dumpDatabase(db, allzones) {
     for (; !it.done(); it.next()) {
       util.logEvent(it, zone);
     }
-
   }
   return 0;
-};
+}

@@ -11,18 +11,18 @@ npm install --save-dev @types/chart.js
 The declaration of the [option context](options.md#option-context) is exported as `Context`:
 
 ```ts
-import {Context} from 'chartjs-plugin-datalabels';
+import { Context } from "chartjs-plugin-datalabels";
 
-const chart = new Chart('foo', {
+const chart = new Chart("foo", {
   options: {
     plugins: {
       datalabels: {
         rotation: (ctx: Context) => {
           return ctx.dataIndex % 2 ? 180 : 0;
         },
-      }
-    }
-  }
+      },
+    },
+  },
 });
 ```
 
@@ -31,13 +31,13 @@ Extending this context can be done using one of the following methods:
 ### Custom Interface
 
 ```ts
-import {Context} from 'chartjs-plugin-datalabels';
+import { Context } from "chartjs-plugin-datalabels";
 
 interface FooContext extends Context {
   foo?: number;
 }
 
-const chart = new Chart('foo', {
+const chart = new Chart("foo", {
   options: {
     plugins: {
       datalabels: {
@@ -46,11 +46,11 @@ const chart = new Chart('foo', {
           click: (ctx: FooContext) => {
             ctx.foo += (ctx.foo || 0) + 10;
             return true;
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 });
 ```
 
@@ -62,9 +62,9 @@ This method allows to declare different context interfaces to use in different c
 
 ```ts
 // shims-chartjs-plugin-datalabels.d.ts
-import {Context} from 'chartjs-plugin-datalabels';
+import { Context } from "chartjs-plugin-datalabels";
 
-declare module 'chartjs-plugin-datalabels' {
+declare module "chartjs-plugin-datalabels" {
   interface Context {
     foo?: number;
   }
@@ -73,7 +73,7 @@ declare module 'chartjs-plugin-datalabels' {
 
 ```ts
 // index.ts
-const chart = new Chart('foo', {
+const chart = new Chart("foo", {
   options: {
     plugins: {
       datalabels: {
@@ -82,13 +82,14 @@ const chart = new Chart('foo', {
           click: (ctx: Context) => {
             ctx.foo += (ctx.foo || 0) + 10;
             return true;
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 });
 ```
+
 ::: warning
 The augmented `Context` declaration will be the same for all charts. This method should be considered only if all charts should share the same context declaration. Read more about [module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation).
 :::

@@ -1,9 +1,8 @@
-
 var ClassExpr = class {
   m() {
     return ClassExpr;
   }
-}
+};
 
 var TempClass = ClassExpr;
 ClassExpr = 42;
@@ -16,7 +15,7 @@ var ClassExpr2 = class ClassExprInner {
   m() {
     return ClassExprInner;
   }
-}
+};
 
 TempClass = ClassExpr2;
 ClassExpr2 = 42;

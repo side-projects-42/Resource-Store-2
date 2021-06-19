@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-(function() {
-  
-  'use strict';
+(function () {
+  "use strict";
 
   var FreeVariableChecker = traceur.semantics.FreeVariableChecker;
   var IdentifierToken = traceur.syntax.IdentifierToken;
@@ -40,9 +39,9 @@
    * @extends {ParseTreeVisitor}
    * @constructor
    */
-  Querypoint.ScopeAttacher = function(reporter) {
+  Querypoint.ScopeAttacher = function (reporter) {
     FreeVariableChecker.call(this, reporter);
-  }
+  };
 
   /**
    * Gets the name of an identifier expression or token
@@ -63,19 +62,18 @@
 
   /**
    * Build scopes and attach them to variables in the tree.
-   * 
+   *
    * @param {ErrorReporter} reporter
    * @param {Program} tree
    */
-  Querypoint.ScopeAttacher.attachScopes = function(reporter, tree, global) {
+  Querypoint.ScopeAttacher.attachScopes = function (reporter, tree, global) {
     new Querypoint.ScopeAttacher(reporter).visitProgram(tree, global);
-  }
+  };
 
   function Scope(parent, tree) {
     this.parent = parent;
     this.children = [];
-    if (parent) 
-      parent.children.push(this);
+    if (parent) parent.children.push(this);
     this.tree = tree;
     this.references = Object.create(null);
     this.declarations = Object.create(null);
@@ -84,7 +82,7 @@
   Querypoint.ScopeAttacher.prototype = {
     __proto__: FreeVariableChecker.prototype,
 
-    declareVariable_: function(tree) {
+    declareVariable_: function (tree) {
       var name = getVariableName(tree);
       if (name) {
         var scope = this.scope_;
@@ -95,17 +93,17 @@
       }
     },
 
-    pushScope_: function(tree) {
-      return this.scope_ = new Scope(this.scope_, tree);
+    pushScope_: function (tree) {
+      return (this.scope_ = new Scope(this.scope_, tree));
     },
 
-    visitIdentifierExpression: function(tree) {
+    visitIdentifierExpression: function (tree) {
       var name = getVariableName(tree);
       var scope = this.scope_;
       while (scope) {
-        if (Object.hasOwnProperty.call(scope.declarations,name)) {
+        if (Object.hasOwnProperty.call(scope.declarations, name)) {
           var decl = scope.declarations[name];
-          if (typeof decl === 'object') {
+          if (typeof decl === "object") {
             decl.references = decl.references || [];
             decl.references.push(tree);
             tree.declaration = decl;
@@ -116,7 +114,7 @@
       }
     },
 
-    visitProgram: function(tree, global) {
+    visitProgram: function (tree, global) {
       var scope = this.pushScope_(tree);
 
       // Declare variables from the global scope.
@@ -134,39 +132,42 @@
       this.pop_(scope);
     },
 
-    visitFunction_: function(name, formalParameterList, body) {
+    visitFunction_: function (name, formalParameterList, body) {
       // Declare the function name, 'arguments' and formal parameters inside the
       // function
-      if (name)
-        this.declareVariable_(name);
-      this.declareVariable_('arguments');
+      if (name) this.declareVariable_(name);
+      this.declareVariable_("arguments");
       this.visitAny(formalParameterList);
 
       this.visitAny(body);
     },
 
-    visitFunctionDeclaration: function(tree) {
+    visitFunctionDeclaration: function (tree) {
       this.declareVariable_(tree.name);
-      
+
       var scope = this.pushScope_(tree);
       // Function declaration does not bind the name inside the function body.
       this.visitFunction_(null, tree.formalParameterList, tree.functionBody);
       this.pop_(scope);
-      },
+    },
 
-    visitFunctionExpression: function(tree) {
+    visitFunctionExpression: function (tree) {
       var scope = this.pushScope_(tree);
-      this.visitFunction_(tree.name, tree.formalParameterList, tree.functionBody);
+      this.visitFunction_(
+        tree.name,
+        tree.formalParameterList,
+        tree.functionBody
+      );
       this.pop_(scope);
     },
 
-    visitArrowFunctionExpression: function(tree) {
+    visitArrowFunctionExpression: function (tree) {
       var scope = this.pushScope_(tree);
       this.visitFunction_(null, tree.formalParameters, tree.functionBody);
       this.pop_(scope);
     },
 
-    visitGetAccessor: function(tree) {
+    visitGetAccessor: function (tree) {
       var scope = this.pushScope_(tree);
 
       this.visitAny(tree.body);
@@ -174,7 +175,7 @@
       this.pop_(scope);
     },
 
-    visitSetAccessor: function(tree) {
+    visitSetAccessor: function (tree) {
       var scope = this.pushScope_(tree);
 
       this.declareVariable_(tree.parameter.binding);
@@ -183,7 +184,7 @@
       this.pop_(scope);
     },
 
-    visitCatch: function(tree) {
+    visitCatch: function (tree) {
       var scope = this.pushScope_(tree);
 
       this.visitAny(tree.binding);
@@ -191,10 +192,9 @@
 
       this.pop_(scope);
     },
-
   };
 
   return {
-    ScopeAttacher: Querypoint.ScopeAttacher
+    ScopeAttacher: Querypoint.ScopeAttacher,
   };
-}());
+})();

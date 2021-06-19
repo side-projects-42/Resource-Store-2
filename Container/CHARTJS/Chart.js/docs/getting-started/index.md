@@ -20,30 +20,25 @@ Now, we can create a chart. We add a script to our page:
 
 ```js chart-editor
 // <block:setup:1>
-const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-];
+const labels = ["January", "February", "March", "April", "May", "June"];
 const data = {
   labels: labels,
-  datasets: [{
-    label: 'My First dataset',
-    backgroundColor: 'rgb(255, 99, 132)',
-    borderColor: 'rgb(255, 99, 132)',
-    data: [0, 10, 5, 2, 20, 30, 45],
-  }]
+  datasets: [
+    {
+      label: "My First dataset",
+      backgroundColor: "rgb(255, 99, 132)",
+      borderColor: "rgb(255, 99, 132)",
+      data: [0, 10, 5, 2, 20, 30, 45],
+    },
+  ],
 };
 // </block:setup>
 
 // <block:config:0>
 const config = {
-  type: 'line',
+  type: "line",
   data,
-  options: {}
+  options: {},
 };
 // </block:config>
 
@@ -59,10 +54,7 @@ Finally, render the chart using our configuration:
 <script>
   // === include 'setup' then 'config' above ===
 
-  var myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
+  var myChart = new Chart(document.getElementById("myChart"), config);
 </script>
 ```
 

@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import alphaRenameThisAndArguments from './alphaRenameThisAndArguments.js';
-import {
-  parseStatement,
-  parseStatements
-} from './PlaceholderParser.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import alphaRenameThisAndArguments from "./alphaRenameThisAndArguments.js";
+import { parseStatement, parseStatements } from "./PlaceholderParser.js";
 import {
   AnonBlock,
   Block,
   ContinueStatement,
   LabelledStatement,
-  ReturnStatement
-} from '../syntax/trees/ParseTrees.js';
-import {StringSet} from '../util/StringSet.js';
+  ReturnStatement,
+} from "../syntax/trees/ParseTrees.js";
+import { StringSet } from "../util/StringSet.js";
 import {
   createAssignmentStatement,
   createCaseClause,
@@ -37,18 +34,19 @@ import {
   createVariableStatement,
   createVariableDeclaration,
   createVariableDeclarationList,
-  createVoid0
-} from './ParseTreeFactory.js';
-import SkipFunctionsTransformerTrait from './SkipFunctionsTransformerTrait.js';
-import {ARGUMENTS} from '../syntax/PredefinedName.js';
-import {VAR} from '../syntax/TokenType.js';
+  createVoid0,
+} from "./ParseTreeFactory.js";
+import SkipFunctionsTransformerTrait from "./SkipFunctionsTransformerTrait.js";
+import { ARGUMENTS } from "../syntax/PredefinedName.js";
+import { VAR } from "../syntax/TokenType.js";
 import {
   VARIABLE_DECLARATION_LIST,
-  BLOCK
-} from '../syntax/trees/ParseTreeType.js';
+  BLOCK,
+} from "../syntax/trees/ParseTreeType.js";
 
-export class InnerForOnTransformer extends
-    SkipFunctionsTransformerTrait(ParseTreeTransformer) {
+export class InnerForOnTransformer extends SkipFunctionsTransformerTrait(
+  ParseTreeTransformer
+) {
   // TODO: This class has considerable overlap with
   // FnExtractAbruptCompletions. The common code should really be refactored
   // into an abstract base class.
@@ -77,17 +75,21 @@ export class InnerForOnTransformer extends
     if (tree.initializer.type === VARIABLE_DECLARATION_LIST) {
       // {var,let,const} initializer = $value;
       assignment = createVariableStatement(
-          tree.initializer.declarationType,
-          tree.initializer.declarations[0].lvalue, value);
+        tree.initializer.declarationType,
+        tree.initializer.declarations[0].lvalue,
+        value
+      );
     } else {
-      assignment = parseStatement `
+      assignment = parseStatement`
           ${tree.initializer} = ${value};`;
     }
 
     let body;
     if (tree.body.type === BLOCK) {
-      body = new Block(tree.body.location,
-          [assignment, ...tree.body.statements]);
+      body = new Block(tree.body.location, [
+        assignment,
+        ...tree.body.statements,
+      ]);
     } else {
       body = new Block(null, [assignment, tree.body]);
     }
@@ -96,23 +98,28 @@ export class InnerForOnTransformer extends
 
     // var $result = undefined
     this.variableDeclarations_.push(
-        createVariableDeclaration(this.result_, createVoid0()));
+      createVariableDeclaration(this.result_, createVoid0())
+    );
 
-    let caseClauses = this.extractedStatements_.map(
-        (statement, index) => {
-          return createCaseClause(createNumberLiteral(index), [statement])
-        });
-    caseClauses.push(createCaseClause(createVoid0(), [
-        new ContinueStatement(null, null)]));
-    caseClauses.push(createDefaultClause(parseStatements `
-        return ${this.result_}.v;`));
+    let caseClauses = this.extractedStatements_.map((statement, index) => {
+      return createCaseClause(createNumberLiteral(index), [statement]);
+    });
+    caseClauses.push(
+      createCaseClause(createVoid0(), [new ContinueStatement(null, null)])
+    );
+    caseClauses.push(
+      createDefaultClause(parseStatements`
+        return ${this.result_}.v;`)
+    );
 
     let switchStatement = createSwitchStatement(this.result_, caseClauses);
-    let observeForEach = this.idGenerator_.getRuntimeExpression('observeForEach');
-    let statement = parseStatement `
+    let observeForEach =
+      this.idGenerator_.getRuntimeExpression("observeForEach");
+    let statement = parseStatement`
         do {
           ${createVariableStatement(
-            createVariableDeclarationList(VAR, this.variableDeclarations_))}
+            createVariableDeclarationList(VAR, this.variableDeclarations_)
+          )}
             await ${observeForEach}(
               ${tree.observable}[Symbol.observer].bind(${tree.observable}),
               async function (${value}) {
@@ -127,9 +134,12 @@ export class InnerForOnTransformer extends
         } while (false);`;
 
     let labelledStatement;
-    while (labelledStatement = this.labelSet_.pop()) {
-      statement = new LabelledStatement(labelledStatement.location,
-      labelledStatement.name, statement);
+    while ((labelledStatement = this.labelSet_.pop())) {
+      statement = new LabelledStatement(
+        labelledStatement.location,
+        labelledStatement.name,
+        statement
+      );
     }
 
     return statement;
@@ -138,15 +148,17 @@ export class InnerForOnTransformer extends
   // alphaRenameThisAndArguments
   addTempVarForArguments() {
     let tmpVarName = this.idGenerator_.generateUniqueIdentifier();
-    this.variableDeclarations_.push(createVariableDeclaration(
-        tmpVarName, id(ARGUMENTS)));
+    this.variableDeclarations_.push(
+      createVariableDeclaration(tmpVarName, id(ARGUMENTS))
+    );
     return tmpVarName;
   }
   // alphaRenameThisAndArguments
   addTempVarForThis() {
     let tmpVarName = this.idGenerator_.generateUniqueIdentifier();
-    this.variableDeclarations_.push(createVariableDeclaration(
-        tmpVarName, createThisExpression()));
+    this.variableDeclarations_.push(
+      createVariableDeclaration(tmpVarName, createThisExpression())
+    );
     return tmpVarName;
   }
 
@@ -162,20 +174,26 @@ export class InnerForOnTransformer extends
   }
 
   transformReturnStatement(tree) {
-    return new AnonBlock(tree.location, parseStatements `
+    return new AnonBlock(
+      tree.location,
+      parseStatements`
         ${this.observer_}.return();
         ${this.result_} = {v: ${tree.expression || createVoid0()}};
-        return;`);
+        return;`
+    );
   }
 
   transformAbruptCompletion_(tree) {
     this.extractedStatements_.push(tree);
 
     let index = this.extractedStatements_.length - 1;
-    return new AnonBlock(null, parseStatements `
+    return new AnonBlock(
+      null,
+      parseStatements`
         ${this.observer_}.return();
         ${this.result_} = ${index};
-        return;`);
+        return;`
+    );
   }
 
   transformBreakStatement(tree) {
@@ -184,7 +202,8 @@ export class InnerForOnTransformer extends
         return super.transformBreakStatement(tree);
       }
       return this.transformAbruptCompletion_(
-        new ContinueStatement(tree.location, null));
+        new ContinueStatement(tree.location, null)
+      );
     }
     if (this.labelledStatements_.has(tree.name.value)) {
       return super.transformBreakStatement(tree);
@@ -222,10 +241,12 @@ export class InnerForOnTransformer extends
         let initializer = super.transformAny(variableDeclaration.initializer);
 
         this.variableDeclarations_.push(
-            createVariableDeclaration(variableName, null));
+          createVariableDeclaration(variableName, null)
+        );
 
-        assignments.push(createAssignmentStatement(
-            id(variableName), initializer));
+        assignments.push(
+          createAssignmentStatement(id(variableName), initializer)
+        );
       });
 
       return new AnonBlock(null, assignments);

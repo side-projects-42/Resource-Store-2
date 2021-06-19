@@ -9,6 +9,6 @@ async function rethrow(x) {
 }
 
 rethrow(2).catch((err) => {
-  assert.equal(err, 2)
+  assert.equal(err, 2);
   done();
 });

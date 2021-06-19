@@ -7,4 +7,6 @@ function f() {
 }
 
 var g = () => super.y;
-var h = () => { super.z; }
+var h = () => {
+  super.z;
+};

@@ -13,12 +13,10 @@
  * @author scotttodd@google.com (Scott Todd)
  */
 
-goog.provide('wtf.replay.graphics.FrameOverdrawVisualizer');
+goog.provide("wtf.replay.graphics.FrameOverdrawVisualizer");
 
-goog.require('goog.webgl');
-goog.require('wtf.replay.graphics.OverdrawVisualizer');
-
-
+goog.require("goog.webgl");
+goog.require("wtf.replay.graphics.OverdrawVisualizer");
 
 /**
  * Visualizer for overdraw within an entire frame.
@@ -27,12 +25,13 @@ goog.require('wtf.replay.graphics.OverdrawVisualizer');
  * @constructor
  * @extends {wtf.replay.graphics.OverdrawVisualizer}
  */
-wtf.replay.graphics.FrameOverdrawVisualizer = function(playback) {
+wtf.replay.graphics.FrameOverdrawVisualizer = function (playback) {
   goog.base(this, playback);
 };
-goog.inherits(wtf.replay.graphics.FrameOverdrawVisualizer,
-    wtf.replay.graphics.OverdrawVisualizer);
-
+goog.inherits(
+  wtf.replay.graphics.FrameOverdrawVisualizer,
+  wtf.replay.graphics.OverdrawVisualizer
+);
 
 /**
  * Calls drawFunction onto the active visualizerSurface using custom GL state.
@@ -41,14 +40,16 @@ goog.inherits(wtf.replay.graphics.FrameOverdrawVisualizer,
  * @protected
  * @override
  */
-wtf.replay.graphics.FrameOverdrawVisualizer.prototype.drawToSurface = function(
-    drawFunction) {
+wtf.replay.graphics.FrameOverdrawVisualizer.prototype.drawToSurface = function (
+  drawFunction
+) {
   var contextHandle = this.latestContextHandle;
   var gl = this.contexts[contextHandle];
 
   // Do not edit calls where the target is not the visible framebuffer.
   var originalFramebuffer = /** @type {WebGLFramebuffer} */ (
-      gl.getParameter(goog.webgl.FRAMEBUFFER_BINDING));
+    gl.getParameter(goog.webgl.FRAMEBUFFER_BINDING)
+  );
   if (originalFramebuffer != null) {
     return;
   }
@@ -66,15 +67,15 @@ wtf.replay.graphics.FrameOverdrawVisualizer.prototype.drawToSurface = function(
   drawFunction();
 };
 
-
 /**
  * Runs visualization, manipulating playback and surfaces as needed.
  * @param {number} targetSubStepIndex Target subStep event index.
  * @protected
  * @override
  */
-wtf.replay.graphics.FrameOverdrawVisualizer.prototype.trigger = function(
-    targetSubStepIndex) {
+wtf.replay.graphics.FrameOverdrawVisualizer.prototype.trigger = function (
+  targetSubStepIndex
+) {
   this.setupVisualization();
 
   var contextHandle = this.latestContextHandle;
@@ -91,7 +92,8 @@ wtf.replay.graphics.FrameOverdrawVisualizer.prototype.trigger = function(
   for (contextHandle in this.contexts) {
     var gl = this.contexts[contextHandle];
     var originalFramebuffer = /** @type {WebGLFramebuffer} */ (
-        gl.getParameter(goog.webgl.FRAMEBUFFER_BINDING));
+      gl.getParameter(goog.webgl.FRAMEBUFFER_BINDING)
+    );
     gl.bindFramebuffer(goog.webgl.FRAMEBUFFER, null);
 
     this.playbackSurfaces[contextHandle].captureTexture();
@@ -109,7 +111,7 @@ wtf.replay.graphics.FrameOverdrawVisualizer.prototype.trigger = function(
       var overdrawAmount = stats.numOverdraw / stats.numPixels;
       overdrawAmount = overdrawAmount.toFixed(2);
 
-      var message = 'Overdraw: ' + overdrawAmount;
+      var message = "Overdraw: " + overdrawAmount;
       this.playback.changeContextMessage(contextHandle, message);
       this.latestMessages[contextHandle] = message;
     }

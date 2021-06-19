@@ -11,27 +11,25 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.VirtualTable');
+goog.provide("wtf.ui.VirtualTable");
 
-goog.require('goog.events');
-goog.require('goog.events.EventType');
-goog.require('goog.fx.Dragger');
-goog.require('goog.math');
-goog.require('goog.soy');
-goog.require('goog.style');
-goog.require('goog.userAgent');
-goog.require('wtf.events');
-goog.require('wtf.events.EventType');
-goog.require('wtf.math');
-goog.require('wtf.timing');
-goog.require('wtf.timing.RunMode');
-goog.require('wtf.ui.Control');
-goog.require('wtf.ui.Painter');
-goog.require('wtf.ui.Tooltip');
-goog.require('wtf.ui.VirtualTableSource');
-goog.require('wtf.ui.virtualtable');
-
-
+goog.require("goog.events");
+goog.require("goog.events.EventType");
+goog.require("goog.fx.Dragger");
+goog.require("goog.math");
+goog.require("goog.soy");
+goog.require("goog.style");
+goog.require("goog.userAgent");
+goog.require("wtf.events");
+goog.require("wtf.events.EventType");
+goog.require("wtf.math");
+goog.require("wtf.timing");
+goog.require("wtf.timing.RunMode");
+goog.require("wtf.ui.Control");
+goog.require("wtf.ui.Painter");
+goog.require("wtf.ui.Tooltip");
+goog.require("wtf.ui.VirtualTableSource");
+goog.require("wtf.ui.virtualtable");
 
 /**
  * Virtualized table control.
@@ -41,7 +39,7 @@ goog.require('wtf.ui.virtualtable');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.ui.VirtualTable = function(parentElement, opt_dom) {
+wtf.ui.VirtualTable = function (parentElement, opt_dom) {
   goog.base(this, parentElement, opt_dom);
 
   /**
@@ -57,21 +55,22 @@ wtf.ui.VirtualTable = function(parentElement, opt_dom) {
    * @private
    */
   this.canvas_ = /** @type {!HTMLCanvasElement} */ (
-      this.getChildElement(goog.getCssName('canvas')));
+    this.getChildElement(goog.getCssName("canvas"))
+  );
 
   /**
    * Scrollbar thumb.
    * @type {!Element}
    * @private
    */
-  this.scrollThumbEl_ = this.getChildElement(goog.getCssName('scrollThumb'));
+  this.scrollThumbEl_ = this.getChildElement(goog.getCssName("scrollThumb"));
 
   /**
    * Scrollbar track.
    * @type {!Element}
    * @private
    */
-  this.scrollTrackEl_ = this.getChildElement(goog.getCssName('scrollTrack'));
+  this.scrollTrackEl_ = this.getChildElement(goog.getCssName("scrollTrack"));
 
   /**
    * Current scroll top Y (out of {@see scrollHeight_}), in CSS pixels.
@@ -134,22 +133,31 @@ wtf.ui.VirtualTable = function(parentElement, opt_dom) {
   // Manage keyboard bindings.
   var keyboard = wtf.events.getWindowKeyboard(dom);
   var keyboardSuspended = false;
-  eh.listen(el, goog.events.EventType.FOCUS, function() {
-    if (keyboardSuspended) {
-      return;
-    }
-    keyboardSuspended = true;
-    keyboard.suspend();
-  }, false);
-  eh.listen(el, goog.events.EventType.BLUR, function() {
-    if (keyboardSuspended) {
-      keyboard.resume();
-      keyboardSuspended = false;
-    }
-  }, false);
+  eh.listen(
+    el,
+    goog.events.EventType.FOCUS,
+    function () {
+      if (keyboardSuspended) {
+        return;
+      }
+      keyboardSuspended = true;
+      keyboard.suspend();
+    },
+    false
+  );
+  eh.listen(
+    el,
+    goog.events.EventType.BLUR,
+    function () {
+      if (keyboardSuspended) {
+        keyboard.resume();
+        keyboardSuspended = false;
+      }
+    },
+    false
+  );
 };
 goog.inherits(wtf.ui.VirtualTable, wtf.ui.Control);
-
 
 /**
  * Repeat interval for scrolling, in ms.
@@ -159,7 +167,6 @@ goog.inherits(wtf.ui.VirtualTable, wtf.ui.Control);
  */
 wtf.ui.VirtualTable.SCROLL_REPEAT_DELAY_ = 200;
 
-
 /**
  * Constants denoting how the target row should be aligned after scrolling.
  * @enum {number}
@@ -167,44 +174,40 @@ wtf.ui.VirtualTable.SCROLL_REPEAT_DELAY_ = 200;
 wtf.ui.VirtualTable.Alignment = {
   BOTTOM: 1,
   MIDDLE: 2,
-  TOP: 3
+  TOP: 3,
 };
-
 
 /**
  * @override
  */
-wtf.ui.VirtualTable.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
-      wtf.ui.virtualtable.control, {
-      }, undefined, dom));
+wtf.ui.VirtualTable.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(wtf.ui.virtualtable.control, {}, undefined, dom)
+  );
 };
-
 
 /**
  * Focuses the virtual table.
  */
-wtf.ui.VirtualTable.prototype.focus = function() {
+wtf.ui.VirtualTable.prototype.focus = function () {
   var el = this.getRootElement();
   el.focus();
   el.select();
 };
 
-
 /**
  * Gets the current data source, if any.
  * @return {wtf.ui.VirtualTableSource} Source, if any.
  */
-wtf.ui.VirtualTable.prototype.getSource = function() {
+wtf.ui.VirtualTable.prototype.getSource = function () {
   return this.source_;
 };
-
 
 /**
  * Sets the data source.
  * @param {wtf.ui.VirtualTableSource} source New source, if any.
  */
-wtf.ui.VirtualTable.prototype.setSource = function(source) {
+wtf.ui.VirtualTable.prototype.setSource = function (source) {
   if (this.source_ == source) {
     return;
   }
@@ -212,42 +215,50 @@ wtf.ui.VirtualTable.prototype.setSource = function(source) {
   if (this.source_) {
     // Unlisten events.
     this.source_.removeListener(
-        wtf.events.EventType.INVALIDATED, this.requestRepaint, this);
+      wtf.events.EventType.INVALIDATED,
+      this.requestRepaint,
+      this
+    );
     this.source_.removeListener(
-        wtf.ui.VirtualTableSource.EventType.INVALIDATE_ROW_COUNT,
-        this.updateScrollBounds_, this);
+      wtf.ui.VirtualTableSource.EventType.INVALIDATE_ROW_COUNT,
+      this.updateScrollBounds_,
+      this
+    );
   }
 
   this.source_ = source;
   if (this.source_) {
     // Listen events.
     this.source_.addListener(
-        wtf.events.EventType.INVALIDATED, this.requestRepaint, this);
+      wtf.events.EventType.INVALIDATED,
+      this.requestRepaint,
+      this
+    );
     this.source_.addListener(
-        wtf.ui.VirtualTableSource.EventType.INVALIDATE_ROW_COUNT,
-        this.updateScrollBounds_, this);
+      wtf.ui.VirtualTableSource.EventType.INVALIDATE_ROW_COUNT,
+      this.updateScrollBounds_,
+      this
+    );
   }
   this.updateScrollBounds_();
 };
 
-
 /**
  * @override
  */
-wtf.ui.VirtualTable.prototype.layoutInternal = function() {
+wtf.ui.VirtualTable.prototype.layoutInternal = function () {
   this.updateScrollBounds_();
 };
-
 
 /**
  * Sets up the scrollbar.
  * @private
  */
-wtf.ui.VirtualTable.prototype.setupScrolling_ = function() {
+wtf.ui.VirtualTable.prototype.setupScrolling_ = function () {
   var eh = this.getHandler();
 
   // Scroll thumb dragging.
-  eh.listen(this.scrollThumbEl_, goog.events.EventType.MOUSEDOWN, function(e) {
+  eh.listen(this.scrollThumbEl_, goog.events.EventType.MOUSEDOWN, function (e) {
     e.stopPropagation();
     e.preventDefault();
 
@@ -262,25 +273,34 @@ wtf.ui.VirtualTable.prototype.setupScrolling_ = function() {
 
     // Scroll with the dragging.
     goog.events.listen(
-        dragger, goog.fx.Dragger.EventType.DRAG, function(e) {
-          // Calculate new scroll top.
-          var deltaY = e.clientY - startClientY;
-          var deltaPx = deltaY * this.scrollHeight_ / this.canvasHeight_;
-          this.updateScrollThumb_(scrollStart + deltaPx);
-        }, false, this);
+      dragger,
+      goog.fx.Dragger.EventType.DRAG,
+      function (e) {
+        // Calculate new scroll top.
+        var deltaY = e.clientY - startClientY;
+        var deltaPx = (deltaY * this.scrollHeight_) / this.canvasHeight_;
+        this.updateScrollThumb_(scrollStart + deltaPx);
+      },
+      false,
+      this
+    );
 
     // Cleanup dragger when dragging ends.
     goog.events.listenOnce(
-        dragger, goog.fx.Dragger.EventType.END, function(e) {
-          this.scrolling_ = false;
-          goog.dispose(dragger);
-        }, false, this);
+      dragger,
+      goog.fx.Dragger.EventType.END,
+      function (e) {
+        this.scrolling_ = false;
+        goog.dispose(dragger);
+      },
+      false,
+      this
+    );
   });
 
   // Scrollbar track scrolling by page.
-  eh.listen(this.scrollTrackEl_, goog.events.EventType.MOUSEDOWN, function(e) {
-    if (e.target != this.scrollTrackEl_ ||
-        e.button != 0) {
+  eh.listen(this.scrollTrackEl_, goog.events.EventType.MOUSEDOWN, function (e) {
+    if (e.target != this.scrollTrackEl_ || e.button != 0) {
       return;
     }
     e.stopPropagation();
@@ -293,23 +313,25 @@ wtf.ui.VirtualTable.prototype.setupScrolling_ = function() {
 
     // Start repeat interval.
     this.repeatInterval_ = wtf.timing.setInterval(
-        wtf.timing.RunMode.DEFAULT,
-        wtf.ui.VirtualTable.SCROLL_REPEAT_DELAY_,
-        function() {
-          this.scrollByPages_(direction * 3 / 4);
-        }, this);
+      wtf.timing.RunMode.DEFAULT,
+      wtf.ui.VirtualTable.SCROLL_REPEAT_DELAY_,
+      function () {
+        this.scrollByPages_((direction * 3) / 4);
+      },
+      this
+    );
   });
-  eh.listen(this.scrollTrackEl_, goog.events.EventType.MOUSEUP, function(e) {
+  eh.listen(this.scrollTrackEl_, goog.events.EventType.MOUSEUP, function (e) {
     wtf.timing.clearInterval(this.repeatInterval_);
   });
-  eh.listen(this.scrollTrackEl_, goog.events.EventType.MOUSEOUT, function(e) {
+  eh.listen(this.scrollTrackEl_, goog.events.EventType.MOUSEOUT, function (e) {
     wtf.timing.clearInterval(this.repeatInterval_);
   });
 
   // Mouse wheel support. This could use tweaking on OSX where scroll
   // direction is reversed.
-  var wheelEventType = goog.userAgent.GECKO ? 'DOMMouseScroll' : 'mousewheel';
-  eh.listen(this.canvas_, wheelEventType, function(e) {
+  var wheelEventType = goog.userAgent.GECKO ? "DOMMouseScroll" : "mousewheel";
+  eh.listen(this.canvas_, wheelEventType, function (e) {
     e.stopPropagation();
     e.preventDefault();
 
@@ -331,31 +353,35 @@ wtf.ui.VirtualTable.prototype.setupScrolling_ = function() {
   // Prevent selection on the thumb and track.
   // Even with the CSS disable Chrome will still change the mouse cursor while
   // dragging.
-  eh.listen(this.scrollThumbEl_, goog.events.EventType.SELECTSTART,
-      function(e) {
-        e.preventDefault();
-      });
-  eh.listen(this.scrollTrackEl_, goog.events.EventType.SELECTSTART,
-      function(e) {
-        e.preventDefault();
-      });
+  eh.listen(
+    this.scrollThumbEl_,
+    goog.events.EventType.SELECTSTART,
+    function (e) {
+      e.preventDefault();
+    }
+  );
+  eh.listen(
+    this.scrollTrackEl_,
+    goog.events.EventType.SELECTSTART,
+    function (e) {
+      e.preventDefault();
+    }
+  );
 };
-
 
 /**
  * Gets the scroll top of the control.
  * @return {number} Current scroll top.
  */
-wtf.ui.VirtualTable.prototype.getScrollTop = function() {
+wtf.ui.VirtualTable.prototype.getScrollTop = function () {
   return this.scrollTop_;
 };
-
 
 /**
  * Updates the scrollbar and repaints the display.
  * @private
  */
-wtf.ui.VirtualTable.prototype.updateScrollBounds_ = function() {
+wtf.ui.VirtualTable.prototype.updateScrollBounds_ = function () {
   this.scrollThumbHeight_ = goog.style.getSize(this.scrollThumbEl_).height;
   this.canvasHeight_ = goog.style.getSize(this.canvas_).height;
 
@@ -365,12 +391,11 @@ wtf.ui.VirtualTable.prototype.updateScrollBounds_ = function() {
   }
   this.scrollHeight_ = height;
   this.scrollTop_ = 0;
-  goog.style.setStyle(this.scrollThumbEl_, 'marginTop', '0px');
+  goog.style.setStyle(this.scrollThumbEl_, "marginTop", "0px");
 
   this.requestRepaint();
   this.updateTooltip();
 };
-
 
 /**
  * Scrolls the virtual table to a certain row.
@@ -378,9 +403,9 @@ wtf.ui.VirtualTable.prototype.updateScrollBounds_ = function() {
  * @param {!wtf.ui.VirtualTable.Alignment} alignment How the target row is
  *     aligned after scrolling.
  */
-wtf.ui.VirtualTable.prototype.scrollToRow = function(rowTarget, alignment) {
+wtf.ui.VirtualTable.prototype.scrollToRow = function (rowTarget, alignment) {
   if (!this.source_) {
-    throw new Error('Attempted to scroll to a row with no table source set.');
+    throw new Error("Attempted to scroll to a row with no table source set.");
   }
 
   var rowHeight = this.source_.getRowHeight();
@@ -402,53 +427,51 @@ wtf.ui.VirtualTable.prototype.scrollToRow = function(rowTarget, alignment) {
   this.updateScrollThumb_(scrollAmount);
 };
 
-
 /**
  * Updates the scrollbar thumb position.
  * @param {number} scrollTop New scroll top.
  * @private
  */
-wtf.ui.VirtualTable.prototype.updateScrollThumb_ = function(scrollTop) {
+wtf.ui.VirtualTable.prototype.updateScrollThumb_ = function (scrollTop) {
   this.scrollTop_ = goog.math.clamp(scrollTop, 0, this.scrollHeight_);
 
   // Offset the thumb to the new position.
   var y = wtf.math.remap(
-      this.scrollTop_,
-      0, this.scrollHeight_,
-      0, this.canvasHeight_ - this.scrollThumbHeight_);
-  goog.style.setStyle(this.scrollThumbEl_, 'marginTop', y + 'px');
+    this.scrollTop_,
+    0,
+    this.scrollHeight_,
+    0,
+    this.canvasHeight_ - this.scrollThumbHeight_
+  );
+  goog.style.setStyle(this.scrollThumbEl_, "marginTop", y + "px");
 
   // We do the repaint async - it's possible for the thumb to move out of sync.
   this.requestRepaint();
   this.updateTooltip();
 };
 
-
 /**
  * Scrolls by pages.
  * @param {number} delta Number of pages to scroll. May be fractional.
  * @private
  */
-wtf.ui.VirtualTable.prototype.scrollByPages_ = function(delta) {
+wtf.ui.VirtualTable.prototype.scrollByPages_ = function (delta) {
   var pageScrollDy = delta * this.canvasHeight_;
   this.updateScrollThumb_(this.scrollTop_ + pageScrollDy);
 };
-
 
 /**
  * Scrolls by rows.
  * @param {number} delta Number of rows to scroll. May be fractional.
  * @private
  */
-wtf.ui.VirtualTable.prototype.scrollByRows_ = function(delta) {
+wtf.ui.VirtualTable.prototype.scrollByRows_ = function (delta) {
   var rowScrollDy = delta;
   if (this.source_) {
     rowScrollDy *= this.source_.getRowHeight();
   }
   this.updateScrollThumb_(this.scrollTop_ + rowScrollDy);
 };
-
-
 
 /**
  * Table painter.
@@ -462,7 +485,7 @@ wtf.ui.VirtualTable.prototype.scrollByRows_ = function(delta) {
  * @extends {wtf.ui.Painter}
  * @private
  */
-wtf.ui.VirtualTable.Painter_ = function(canvas, table) {
+wtf.ui.VirtualTable.Painter_ = function (canvas, table) {
   goog.base(this, canvas);
 
   /**
@@ -474,11 +497,13 @@ wtf.ui.VirtualTable.Painter_ = function(canvas, table) {
 };
 goog.inherits(wtf.ui.VirtualTable.Painter_, wtf.ui.Painter);
 
-
 /**
  * @override
  */
-wtf.ui.VirtualTable.Painter_.prototype.repaintInternal = function(ctx, bounds) {
+wtf.ui.VirtualTable.Painter_.prototype.repaintInternal = function (
+  ctx,
+  bounds
+) {
   var source = this.table_.getSource();
   if (!source) {
     return false;
@@ -494,28 +519,40 @@ wtf.ui.VirtualTable.Painter_.prototype.repaintInternal = function(ctx, bounds) {
 
   // Clamp bounds to height of the control.
   scrollBounds.height = Math.min(
-      scrollHeight - scrollBounds.top, scrollBounds.height);
+    scrollHeight - scrollBounds.top,
+    scrollBounds.height
+  );
 
   // Calculate visible rows.
   var first = scrollBounds.top / rowHeight;
   var last = (scrollBounds.top + scrollBounds.height) / rowHeight;
   first = Math.floor(first);
   last = Math.min(rowCount - 1, Math.floor(last));
-  var rowOffset = (first * rowHeight) - scrollBounds.top;
+  var rowOffset = first * rowHeight - scrollBounds.top;
 
   // Paint using the source.
   source.paintRowRange(
-      ctx, bounds, scrollBounds, rowOffset, rowHeight, first, last);
+    ctx,
+    bounds,
+    scrollBounds,
+    rowOffset,
+    rowHeight,
+    first,
+    last
+  );
 
   return false;
 };
 
-
 /**
  * @override
  */
-wtf.ui.VirtualTable.Painter_.prototype.onClickInternal = function(
-    x, y, modifiers, bounds) {
+wtf.ui.VirtualTable.Painter_.prototype.onClickInternal = function (
+  x,
+  y,
+  modifiers,
+  bounds
+) {
   if (this.table_.scrolling_) {
     return false;
   }
@@ -534,12 +571,14 @@ wtf.ui.VirtualTable.Painter_.prototype.onClickInternal = function(
   return source.onClick(row, x, modifiers, bounds);
 };
 
-
 /**
  * @override
  */
-wtf.ui.VirtualTable.Painter_.prototype.getInfoStringInternal = function(
-    x, y, bounds) {
+wtf.ui.VirtualTable.Painter_.prototype.getInfoStringInternal = function (
+  x,
+  y,
+  bounds
+) {
   if (this.table_.scrolling_) {
     return undefined;
   }
@@ -557,7 +596,6 @@ wtf.ui.VirtualTable.Painter_.prototype.getInfoStringInternal = function(
   return source.getInfoString(row, x, bounds);
 };
 
-
 /**
  * Gets the row at the given point on the table canvas.
  * @param {number} x X coordinate, relative to canvas.
@@ -566,7 +604,7 @@ wtf.ui.VirtualTable.Painter_.prototype.getInfoStringInternal = function(
  * @return {number|undefined} Row index or undefined if invalid.
  * @private
  */
-wtf.ui.VirtualTable.Painter_.prototype.hitTest_ = function(x, y, bounds) {
+wtf.ui.VirtualTable.Painter_.prototype.hitTest_ = function (x, y, bounds) {
   var source = this.table_.getSource();
   if (!source) {
     return undefined;

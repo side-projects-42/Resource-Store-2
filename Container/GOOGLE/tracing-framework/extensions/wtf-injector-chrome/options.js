@@ -11,18 +11,15 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
 /**
  * @enum {string}
  */
 var PageStatus = {
-  UNKNOWN: 'unknown',
-  WHITELISTED: 'whitelisted',
-  BLACKLISTED: 'blacklisted',
-  INSTRUMENTED: 'instrumented'
+  UNKNOWN: "unknown",
+  WHITELISTED: "whitelisted",
+  BLACKLISTED: "blacklisted",
+  INSTRUMENTED: "instrumented",
 };
-
-
 
 /**
  * Options wrapper.
@@ -31,7 +28,7 @@ var PageStatus = {
  *
  * @constructor
  */
-var Options = function() {
+var Options = function () {
   /**
    * Whether to show the page-action 'inject' icon.
    * @type {boolean}
@@ -93,114 +90,107 @@ var Options = function() {
    * @private
    */
   this.defaultEndpoint_ = {
-    mode: 'page',
-    endpoint: chrome.extension.getURL('app/maindisplay.html')
+    mode: "page",
+    endpoint: chrome.extension.getURL("app/maindisplay.html"),
   };
 };
-
 
 /**
  * Sets the default endpoint.
  * @param {string} mode Mode.
  * @param {string} endpoint Endpoint.
  */
-Options.prototype.setDefaultEndpoint = function(mode, endpoint) {
+Options.prototype.setDefaultEndpoint = function (mode, endpoint) {
   this.defaultEndpoint_ = {
     mode: mode,
-    endpoint: endpoint
+    endpoint: endpoint,
   };
 };
-
 
 /**
  * Loads the options.
  * @param {Function=} opt_callback Callback when loaded.
  * @param {Object=} opt_scope Callback scope.
  */
-Options.prototype.load = function(opt_callback, opt_scope) {
-  chrome.storage.local.get([
-    'options'
-  ], (function(items) {
-    var values = items['options'];
-    if (values) {
-      this.showPageAction = values['showPageAction'] || true;
-      this.showContextMenu = values['showContextMenu'] || false;
-      this.showDevPanel = values['showDevPanel'] || false;
-      this.addons_ = values['extensions'] || {};
-      this.pageWhitelist_ = values['pageWhitelist'] || [];
-      this.pageBlacklist_ = values['pageBlacklist'] || [];
-      this.pageOptions_ = values['pageOptions'] || {};
-    }
-    if (opt_callback) {
-      opt_callback.call(opt_scope, this);
-    }
-  }).bind(this));
+Options.prototype.load = function (opt_callback, opt_scope) {
+  chrome.storage.local.get(
+    ["options"],
+    function (items) {
+      var values = items["options"];
+      if (values) {
+        this.showPageAction = values["showPageAction"] || true;
+        this.showContextMenu = values["showContextMenu"] || false;
+        this.showDevPanel = values["showDevPanel"] || false;
+        this.addons_ = values["extensions"] || {};
+        this.pageWhitelist_ = values["pageWhitelist"] || [];
+        this.pageBlacklist_ = values["pageBlacklist"] || [];
+        this.pageOptions_ = values["pageOptions"] || {};
+      }
+      if (opt_callback) {
+        opt_callback.call(opt_scope, this);
+      }
+    }.bind(this)
+  );
 };
-
 
 /**
  * Saves the options, overwriting all previous values.
  */
-Options.prototype.save = function() {
+Options.prototype.save = function () {
   chrome.storage.local.set({
-    'options': {
-      'showPageAction': this.showPageAction,
-      'showContextMenu': this.showContextMenu,
-      'showDevPanel': this.showDevPanel,
-      'extensions': this.addons_,
-      'pageWhitelist': this.pageWhitelist_,
-      'pageBlacklist': this.pageBlacklist_,
-      'pageOptions': this.pageOptions_
-    }
+    options: {
+      showPageAction: this.showPageAction,
+      showContextMenu: this.showContextMenu,
+      showDevPanel: this.showDevPanel,
+      extensions: this.addons_,
+      pageWhitelist: this.pageWhitelist_,
+      pageBlacklist: this.pageBlacklist_,
+      pageOptions: this.pageOptions_,
+    },
   });
 };
-
 
 /**
  * Adds an addon.
  * @param {string} url Addon URL.
  * @param {!Object} manifest Addon manifest.
  */
-Options.prototype.addAddon = function(url, manifest) {
+Options.prototype.addAddon = function (url, manifest) {
   this.addons_[url] = manifest;
   this.save();
 };
-
 
 /**
  * Removes an addon.
  * @param {string} url Addon URL.
  */
-Options.prototype.removeAddon = function(url) {
+Options.prototype.removeAddon = function (url) {
   delete this.addons_[url];
   this.save();
 };
-
 
 /**
  * Gets a list of all addons.
  * @return {!Array.<{url: string, manifest: !Object}} A list of addons.
  */
-Options.prototype.getAddons = function() {
+Options.prototype.getAddons = function () {
   var result = [];
   for (var url in this.addons_) {
     result.push({
       url: url,
-      manifest: this.addons_[url]
+      manifest: this.addons_[url],
     });
   }
   return result;
 };
 
-
 /**
  * Gets a list of all pages that are whitelisted.
  * @return {!Array.<string>} Whitelist.
  */
-Options.prototype.getWhitelistedPages = function() {
+Options.prototype.getWhitelistedPages = function () {
   return this.pageWhitelist_;
 };
-
 
 /**
  * Matches a URL against a pattern.
@@ -208,11 +198,10 @@ Options.prototype.getWhitelistedPages = function() {
  * @param {string} url URL to test.
  * @return {boolean} True if the pattern matches.
  */
-Options.prototype.matchPagePattern_ = function(pattern, url) {
+Options.prototype.matchPagePattern_ = function (pattern, url) {
   // TODO(benvanik): real pattern matching
   return pattern == url;
 };
-
 
 /**
  * Checks to see if a page is enabled based on the blacklist/whitelist.
@@ -220,7 +209,7 @@ Options.prototype.matchPagePattern_ = function(pattern, url) {
  * @param {number=} opt_tabId Tab ID.
  * @return {PageStatus} Page blacklist/whitelist status.
  */
-Options.prototype.getPageStatus = function(url, opt_tabId) {
+Options.prototype.getPageStatus = function (url, opt_tabId) {
   // Check instrumentation for the tab first, if given.
   if (opt_tabId !== undefined) {
     if (this.instrumentedTabs_[opt_tabId]) {
@@ -245,12 +234,11 @@ Options.prototype.getPageStatus = function(url, opt_tabId) {
   return PageStatus.NONE;
 };
 
-
 /**
  * Adds a page to the whitelist.
  * @param {string} url Canonicalized page URL.
  */
-Options.prototype.whitelistPage = function(url) {
+Options.prototype.whitelistPage = function (url) {
   // If explicit URL is in the blacklist, remove.
   for (var n = 0; n < this.pageBlacklist_.length; n++) {
     if (this.pageBlacklist_[n] == url) {
@@ -271,12 +259,11 @@ Options.prototype.whitelistPage = function(url) {
   this.save();
 };
 
-
 /**
  * Adds a page to the blacklist.
  * @param {string} url Canonicalized page URL.
  */
-Options.prototype.blacklistPage = function(url) {
+Options.prototype.blacklistPage = function (url) {
   // If explicit URL is in the whitelist, remove.
   for (var n = 0; n < this.pageWhitelist_.length; n++) {
     if (this.pageWhitelist_[n] == url) {
@@ -297,42 +284,38 @@ Options.prototype.blacklistPage = function(url) {
   this.save();
 };
 
-
 /**
  * Instruments a tab.
  * @param {number} tabId Tab ID.
  * @param {!Object} options Instrumentation options.
  */
-Options.prototype.instrumentTab = function(tabId, options) {
+Options.prototype.instrumentTab = function (tabId, options) {
   this.instrumentedTabs_[tabId] = options;
 };
-
 
 /**
  * Gets the instrumentation options for the given tab.
  * @param {number} tabId Tab ID.
  * @return {Object} Options for the tab or null if not instrumented.
  */
-Options.prototype.getInstrumentationOptions = function(tabId) {
+Options.prototype.getInstrumentationOptions = function (tabId) {
   return this.instrumentedTabs_[tabId] || null;
 };
-
 
 /**
  * Uninstruments a tab.
  * @param {number} tabId Tab ID.
  */
-Options.prototype.uninstrumentTab = function(tabId) {
+Options.prototype.uninstrumentTab = function (tabId) {
   delete this.instrumentedTabs_[tabId];
 };
-
 
 /**
  * Gets the default page options for the given URL.
  * @param {string} url Canonicalized page URL.
  * @return {!Object} Default options object.
  */
-Options.prototype.getDefaultPageOptions = function(url) {
+Options.prototype.getDefaultPageOptions = function (url) {
   // TODO(benvanik): pull from global options?
   var addons = [
     // 'http://localhost:8080/addons/test/extension.json',
@@ -340,31 +323,31 @@ Options.prototype.getDefaultPageOptions = function(url) {
 
   var options = {
     // The presence of this indicates that the options come from the injector.
-    'wtf.injector': true,
+    "wtf.injector": true,
 
     // Larger buffers mean less waste when doing recordings with a large amount
     // of data (like WebGL captures).
-    'wtf.trace.session.bufferSize': 6 * 1024 * 1024,
+    "wtf.trace.session.bufferSize": 6 * 1024 * 1024,
 
     // This is pretty excessive, but keeps us from truncating WebGL traces.
     // After this limit the file likely won't load due to v8 memory limits
     // anyway.
-    'wtf.trace.session.maximumMemoryUsage': 512 * 1024 * 1024,
+    "wtf.trace.session.maximumMemoryUsage": 512 * 1024 * 1024,
 
-    'wtf.hud.app.mode': this.defaultEndpoint_.mode,
-    'wtf.hud.app.endpoint': this.defaultEndpoint_.endpoint,
+    "wtf.hud.app.mode": this.defaultEndpoint_.mode,
+    "wtf.hud.app.endpoint": this.defaultEndpoint_.endpoint,
 
-    'wtf.addons': addons,
+    "wtf.addons": addons,
 
-    'wtf.trace.provider.chromeDebug.present': true,
-    'wtf.trace.provider.chromeDebug.tracing': false
+    "wtf.trace.provider.chromeDebug.present": true,
+    "wtf.trace.provider.chromeDebug.tracing": false,
   };
 
   // TODO(benvanik): make a different page action setting?
   // Snapshotting:
-  options['wtf.trace.mode'] = 'snapshotting';
+  options["wtf.trace.mode"] = "snapshotting";
   // TODO(benvanik): make something up based on page title/domain/etc?
-  options['wtf.trace.target'] = 'file://';
+  options["wtf.trace.target"] = "file://";
   // Streaming:
   // options['wtf.trace.mode'] = 'streaming';
   // options['wtf.trace.target'] = 'http://' + appEndpoint;
@@ -372,13 +355,12 @@ Options.prototype.getDefaultPageOptions = function(url) {
   return options;
 };
 
-
 /**
  * Gets the page options for the given URL.
  * @param {string} url Canonicalized page URL.
  * @return {!Object} Options object, or defaults.
  */
-Options.prototype.getPageOptions = function(url) {
+Options.prototype.getPageOptions = function (url) {
   // Get default options. This will be used as a base.
   var options = this.getDefaultPageOptions(url);
 
@@ -389,12 +371,12 @@ Options.prototype.getPageOptions = function(url) {
     // Except for a few that we don't want to track across session.
     for (var key in storedOptions) {
       switch (key) {
-        case 'wtf.injector':
-        case 'wtf.hud.app.mode':
-        case 'wtf.hud.app.endpoint':
-        case 'wtf.addons':
-        case 'wtf.trace.provider.chromeDebug.present':
-        case 'wtf.trace.provider.chromeDebug.tracing':
+        case "wtf.injector":
+        case "wtf.hud.app.mode":
+        case "wtf.hud.app.endpoint":
+        case "wtf.addons":
+        case "wtf.trace.provider.chromeDebug.present":
+        case "wtf.trace.provider.chromeDebug.tracing":
           continue;
       }
       options[key] = storedOptions[key];
@@ -404,17 +386,16 @@ Options.prototype.getPageOptions = function(url) {
   return options;
 };
 
-
 /**
  * Sets the page options for the given URL.
  * @param {string} url Canonicalized page URL.
  * @param {!Object} options Options object.
  */
-Options.prototype.setPageOptions = function(url, options) {
+Options.prototype.setPageOptions = function (url, options) {
   // If the options from the page don't have the sentinel, ignore.
   // This prevents pages that override the options from manual embedding
   // from overwritting injector settings.
-  if (!options['wtf.injector']) {
+  if (!options["wtf.injector"]) {
     return;
   }
 
@@ -453,12 +434,11 @@ Options.prototype.setPageOptions = function(url, options) {
   this.save();
 };
 
-
 /**
  * Resets all options for the given URL.
  * @param {string} url Canonicalized page URL.
  */
-Options.prototype.resetPageOptions = function(url) {
+Options.prototype.resetPageOptions = function (url) {
   // Delete options.
   delete this.pageOptions_[url];
 

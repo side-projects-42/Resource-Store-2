@@ -16,19 +16,24 @@ assertTrue(Object.is(false, false));
 assertTrue(Object.is(null, null));
 assertTrue(Object.is(undefined, undefined));
 
-assertTrue(Object.is('', ''));
-assertTrue(Object.is('a', 'a'));
+assertTrue(Object.is("", ""));
+assertTrue(Object.is("a", "a"));
 
 {
   var object = {};
   assertTrue(Object.is(object, object));
 }
 
-assertFalse(Object.is(new String('a'), new String('a')));
-assertFalse(Object.is(new Boolean, new Boolean));
-assertFalse(Object.is(new Number, new Number));
+assertFalse(Object.is(new String("a"), new String("a")));
+assertFalse(Object.is(new Boolean(), new Boolean()));
+assertFalse(Object.is(new Number(), new Number()));
 assertFalse(Object.is(new Date(0), new Date(0)));
 assertFalse(Object.is(/re/, /re/));
 assertFalse(Object.is({}, {}));
 assertFalse(Object.is([], []));
-assertFalse(Object.is(function() {}, function() {}));
+assertFalse(
+  Object.is(
+    function () {},
+    function () {}
+  )
+);

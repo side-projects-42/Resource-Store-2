@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   ArgumentList,
   ClassDeclaration,
@@ -22,17 +22,13 @@ import {
   MemberExpression,
   Method,
   SetAccessor,
-} from '../syntax/trees/ParseTrees.js';
+} from "../syntax/trees/ParseTrees.js";
 import {
   MEMBER_EXPRESSION,
   MEMBER_LOOKUP_EXPRESSION,
-  SUPER_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
-import {
-  EQUAL,
-  MINUS_MINUS,
-  PLUS_PLUS
-} from '../syntax/TokenType.js';
+  SUPER_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
+import { EQUAL, MINUS_MINUS, PLUS_PLUS } from "../syntax/TokenType.js";
 import {
   createAssignmentExpression,
   createBindingIdentifier,
@@ -41,14 +37,16 @@ import {
   createParenExpression,
   createStringLiteral,
   createThisExpression,
-} from './ParseTreeFactory.js';
-import {parseExpression} from './PlaceholderParser.js';
-import {ExplodeExpressionTransformer} from './ExplodeExpressionTransformer.js';
+} from "./ParseTreeFactory.js";
+import { parseExpression } from "./PlaceholderParser.js";
+import { ExplodeExpressionTransformer } from "./ExplodeExpressionTransformer.js";
 
 function hasSuperMemberExpression(tree) {
-  return (tree.type === MEMBER_EXPRESSION ||
-          tree.type === MEMBER_LOOKUP_EXPRESSION) &&
-         tree.operand.type === SUPER_EXPRESSION;
+  return (
+    (tree.type === MEMBER_EXPRESSION ||
+      tree.type === MEMBER_LOOKUP_EXPRESSION) &&
+    tree.operand.type === SUPER_EXPRESSION
+  );
 }
 
 /**
@@ -65,8 +63,9 @@ class State {
   get home() {
     this.hasSuper = true;
     if (this.home_ === null) {
-      this.home_ =
-          createIdentifierExpression(createIdentifierToken(this.tempName));
+      this.home_ = createIdentifierExpression(
+        createIdentifierToken(this.tempName)
+      );
     }
     return this.home_;
   }
@@ -107,8 +106,11 @@ class PrototypeState extends State {
 
   get home() {
     let ident = this.classState.home;
-    return new MemberExpression(null, ident,
-                                createIdentifierToken('prototype'));
+    return new MemberExpression(
+      null,
+      ident,
+      createIdentifierToken("prototype")
+    );
   }
 }
 
@@ -194,13 +196,22 @@ export class SuperTransformer extends ImportRuntimeTrait(TempVarTransformer) {
       // In case the class expression has no constructor and it has an extends
       // clause call the home accessor for its side effect.
       classState.home;
-    } else if (tree.superClass === superClass && tree.elements === elements &&
-               tree.annotations === annotations) {
+    } else if (
+      tree.superClass === superClass &&
+      tree.elements === elements &&
+      tree.annotations === annotations
+    ) {
       return tree;
     }
 
-    return new ClassExpression(tree.location, classState.name, superClass,
-                               elements, tree.annotations, tree.typeParameters);
+    return new ClassExpression(
+      tree.location,
+      classState.name,
+      superClass,
+      elements,
+      tree.annotations,
+      tree.typeParameters
+    );
   }
 
   transformClassDeclaration(tree) {
@@ -216,13 +227,22 @@ export class SuperTransformer extends ImportRuntimeTrait(TempVarTransformer) {
     this.popState();
     this.popState();
 
-    if (tree.superClass === superClass && tree.elements === elements &&
-        tree.annotations === annotations) {
+    if (
+      tree.superClass === superClass &&
+      tree.elements === elements &&
+      tree.annotations === annotations
+    ) {
       return tree;
     }
 
-    return new ClassDeclaration(tree.location, tree.name, superClass, elements,
-                                tree.annotations, tree.typeParameters);
+    return new ClassDeclaration(
+      tree.location,
+      tree.name,
+      superClass,
+      elements,
+      tree.annotations,
+      tree.typeParameters
+    );
   }
 
   transformMethod(tree) {
@@ -239,14 +259,25 @@ export class SuperTransformer extends ImportRuntimeTrait(TempVarTransformer) {
       this.pushState(prototypeState);
     }
 
-    if (tree.name === name && tree.parameterList === parameterList &&
-        tree.body === body) {
+    if (
+      tree.name === name &&
+      tree.parameterList === parameterList &&
+      tree.body === body
+    ) {
       return tree;
     }
 
-    return new Method(tree.location, tree.isStatic,
-        tree.functionKind, name, parameterList, tree.typeAnnotation,
-        tree.annotations, body, tree.debugName);
+    return new Method(
+      tree.location,
+      tree.isStatic,
+      tree.functionKind,
+      name,
+      parameterList,
+      tree.typeAnnotation,
+      tree.annotations,
+      body,
+      tree.debugName
+    );
   }
 
   transformGetAccessor(tree) {
@@ -266,9 +297,14 @@ export class SuperTransformer extends ImportRuntimeTrait(TempVarTransformer) {
       return tree;
     }
 
-    return new GetAccessor(tree.location, tree.isStatic, name,
-        tree.typeAnnotation,
-        tree.annotations, body);
+    return new GetAccessor(
+      tree.location,
+      tree.isStatic,
+      name,
+      tree.typeAnnotation,
+      tree.annotations,
+      body
+    );
   }
 
   transformSetAccessor(tree) {
@@ -285,13 +321,22 @@ export class SuperTransformer extends ImportRuntimeTrait(TempVarTransformer) {
       this.pushState(prototypeState);
     }
 
-    if (tree.name === name && tree.parameterList === parameterList &&
-        tree.body === body) {
+    if (
+      tree.name === name &&
+      tree.parameterList === parameterList &&
+      tree.body === body
+    ) {
       return tree;
     }
 
-    return new SetAccessor(tree.location, tree.isStatic, name, parameterList,
-        tree.annotations, body);
+    return new SetAccessor(
+      tree.location,
+      tree.isStatic,
+      name,
+      parameterList,
+      tree.annotations,
+      body
+    );
   }
 
   transformComputedPropertyName(tree) {
@@ -304,13 +349,13 @@ export class SuperTransformer extends ImportRuntimeTrait(TempVarTransformer) {
   }
 
   transformSuperExpression(tree) {
-    throw new Error('unreachable');
+    throw new Error("unreachable");
   }
 
   transformMemberShared_(name) {
-    let {home} = this.peekState();
-    let superGet = this.getRuntimeExpression('superGet');
-    return parseExpression `${superGet}(this, ${home}, ${name})`;
+    let { home } = this.peekState();
+    let superGet = this.getRuntimeExpression("superGet");
+    return parseExpression`${superGet}(this, ${home}, ${name})`;
   }
 
   /**
@@ -336,43 +381,48 @@ export class SuperTransformer extends ImportRuntimeTrait(TempVarTransformer) {
       // super(args)
       args = this.transformAny(tree.args);
       args = new ArgumentList(tree.location, [
-        createThisExpression(), ...args.args
+        createThisExpression(),
+        ...args.args,
       ]);
-      let {home} = this.stateStack_[this.stateStack_.length - 2];
-      let superConstructor = this.getRuntimeExpression('superConstructor');
-      operand = parseExpression `${superConstructor}(${home})`;
+      let { home } = this.stateStack_[this.stateStack_.length - 2];
+      let superConstructor = this.getRuntimeExpression("superConstructor");
+      operand = parseExpression`${superConstructor}(${home})`;
     } else if (hasSuperMemberExpression(tree.operand)) {
       // super.x(args)
       operand = this.transformAny(tree.operand);
       args = this.transformAny(tree.args);
       args = new ArgumentList(args.location, [
-        createThisExpression(), ...args.args
+        createThisExpression(),
+        ...args.args,
       ]);
     } else {
       return super.transformCallExpression(tree);
     }
 
-    return parseExpression `${operand}.call(${args})`;
+    return parseExpression`${operand}.call(${args})`;
   }
 
   transformBinaryExpression(tree) {
-    if (tree.operator.isAssignmentOperator() &&
-        hasSuperMemberExpression(tree.left)) {
+    if (
+      tree.operator.isAssignmentOperator() &&
+      hasSuperMemberExpression(tree.left)
+    ) {
       if (tree.operator.type !== EQUAL) {
-        let exploded =
-            new ExplodeExpressionTransformer(this).transformAny(tree);
+        let exploded = new ExplodeExpressionTransformer(this).transformAny(
+          tree
+        );
         return this.transformAny(createParenExpression(exploded));
       }
 
-      let name = tree.left.type === MEMBER_LOOKUP_EXPRESSION ?
-          tree.left.memberExpression :
-          createStringLiteral(tree.left.memberName.value);
+      let name =
+        tree.left.type === MEMBER_LOOKUP_EXPRESSION
+          ? tree.left.memberExpression
+          : createStringLiteral(tree.left.memberName.value);
 
       let right = this.transformAny(tree.right);
-      let {home} = this.peekState();
-      let superSet = this.getRuntimeExpression('superSet');
-      return parseExpression
-          `${superSet}(this, ${home}, ${name}, ${right})`;
+      let { home } = this.peekState();
+      let superSet = this.getRuntimeExpression("superSet");
+      return parseExpression`${superSet}(this, ${home}, ${name}, ${right})`;
     }
 
     return super.transformBinaryExpression(tree);
@@ -380,26 +430,25 @@ export class SuperTransformer extends ImportRuntimeTrait(TempVarTransformer) {
 
   transformUnaryExpression(tree) {
     let transformed = this.transformIncrementDecrement_(tree);
-    if (transformed)
-      return transformed;
+    if (transformed) return transformed;
     return super.transformUnaryExpression(tree);
   }
 
   transformPostfixExpression(tree) {
     let transformed = this.transformIncrementDecrement_(tree);
-    if (transformed)
-      return transformed;
+    if (transformed) return transformed;
     return super.transformPostfixExpression(tree);
   }
 
   transformIncrementDecrement_(tree) {
     let operator = tree.operator;
     let operand = tree.operand;
-    if ((operator.type === PLUS_PLUS || operator.type === MINUS_MINUS) &&
-        hasSuperMemberExpression(operand)) {
+    if (
+      (operator.type === PLUS_PLUS || operator.type === MINUS_MINUS) &&
+      hasSuperMemberExpression(operand)
+    ) {
       let exploded = new ExplodeExpressionTransformer(this).transformAny(tree);
-      if (exploded !== tree)
-        exploded = createParenExpression(exploded);
+      if (exploded !== tree) exploded = createParenExpression(exploded);
       return this.transformAny(exploded);
     }
 

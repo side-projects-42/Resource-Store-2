@@ -1,8 +1,8 @@
-var x = 'B.getter';
+var x = "B.getter";
 
 class B {
   static method() {
-    return [this, 'B.method'];
+    return [this, "B.method"];
   }
 
   static get getter() {
@@ -28,8 +28,8 @@ class C extends B {
   }
 }
 
-assert.deepEqual([C, 'B.method'], C.method());
-assert.deepEqual([C, 'B.getter'], C.getter);
+assert.deepEqual([C, "B.method"], C.method());
+assert.deepEqual([C, "B.getter"], C.getter);
 
-C.setter = 'B.setter';
-assert.deepEqual([C, 'B.setter'], x);
+C.setter = "B.setter";
+assert.deepEqual([C, "B.setter"], x);

@@ -1,6 +1,6 @@
 var o = {
   unicorns: 42,
-  fairyGodmothers: 3
+  fairyGodmothers: 3,
 };
 
 with (o) {

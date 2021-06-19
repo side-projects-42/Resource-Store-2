@@ -1,0 +1,53 @@
+{
+  "projectFullName": "newrelic-experimental/nri-thousandeyes",
+  "issues": {
+    "open": 0
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 2,
+  "lastSixMonthsCommitTotal": 1,
+  "contributors": 2,
+  "pullRequests": {
+    "open": 1
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 3536684,
+      "login": "sschwartzman",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3536684?v=4",
+      "htmlUrl": "https://github.com/sschwartzman",
+      "contributions": 1
+    },
+    {
+      "id": 17014899,
+      "login": "psomareddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/17014899?v=4",
+      "htmlUrl": "https://github.com/psomareddy",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxMzk=",
+      "name": "Shell",
+      "color": "#89e051"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNTg=",
+      "name": "Java",
+      "color": "#b07219"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTEz",
+    "name": "MIT License",
+    "spdxId": "MIT",
+    "url": "http://choosealicense.com/licenses/mit/",
+    "featured": true,
+    "key": "mit"
+  }
+}

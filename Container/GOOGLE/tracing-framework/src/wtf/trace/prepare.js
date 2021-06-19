@@ -14,11 +14,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.prepare');
+goog.provide("wtf.trace.prepare");
 
-goog.require('wtf.trace.TraceManager');
-goog.require('wtf.trace.providers');
-
+goog.require("wtf.trace.TraceManager");
+goog.require("wtf.trace.providers");
 
 /**
  * Main entry point for the tracing API.
@@ -32,7 +31,7 @@ goog.require('wtf.trace.providers');
  * @param {Object=} opt_options Options overrides.
  * @return {*} Ignored.
  */
-wtf.trace.prepare = function(opt_options) {
+wtf.trace.prepare = function (opt_options) {
   var existingInstance = wtf.trace.TraceManager.getSharedInstance();
   if (existingInstance) {
     // TODO(benvanik): make sure options haven't changed?
@@ -44,7 +43,7 @@ wtf.trace.prepare = function(opt_options) {
   var options = traceManager.getOptions();
 
   // Add providers.
-  if (!options.getBoolean('wtf.trace.disableProviders', false)) {
+  if (!options.getBoolean("wtf.trace.disableProviders", false)) {
     wtf.trace.providers.setup(traceManager);
   }
 

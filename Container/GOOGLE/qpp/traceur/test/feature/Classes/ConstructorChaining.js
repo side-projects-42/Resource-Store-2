@@ -13,10 +13,10 @@ class ConstructorB extends ConstructorA {
 
 // ----------------------------------------------------------------------------
 
-var a = new ConstructorA('ax');
-assertEquals('ax', a.x);
-assertFalse(a.hasOwnProperty('y'));
+var a = new ConstructorA("ax");
+assertEquals("ax", a.x);
+assertFalse(a.hasOwnProperty("y"));
 
-var b = new ConstructorB('bx', 'by');
-assertEquals('bx', b.x);
-assertEquals('by', b.y);
+var b = new ConstructorB("bx", "by");
+assertEquals("bx", b.x);
+assertEquals("by", b.y);

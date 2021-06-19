@@ -1,1 +1,1 @@
-export var x = 'X';
+export var x = "X";

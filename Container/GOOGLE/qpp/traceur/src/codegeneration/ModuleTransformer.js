@@ -18,13 +18,13 @@ import {
   LiteralExpression,
   ObjectPattern,
   ObjectPatternField,
-  Program
-} from '../syntax/trees/ParseTrees.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+  Program,
+} from "../syntax/trees/ParseTrees.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 import {
   GET_MODULE_INSTANCE_BY_URL,
-  TRACEUR_MODULES
-} from '../syntax/PredefinedName.js';
+  TRACEUR_MODULES,
+} from "../syntax/PredefinedName.js";
 import {
   CLASS_DECLARATION,
   EXPORT_DECLARATION,
@@ -37,12 +37,9 @@ import {
   MODULE_DECLARATION,
   MODULE_DEFINITION,
   MODULE_REQUIRE,
-  VARIABLE_STATEMENT
-} from '../syntax/trees/ParseTreeType.js';
-import {
-  STAR,
-  VAR
-} from '../syntax/TokenType.js';
+  VARIABLE_STATEMENT,
+} from "../syntax/trees/ParseTreeType.js";
+import { STAR, VAR } from "../syntax/TokenType.js";
 import {
   createArgumentList,
   createBindingIdentifier,
@@ -66,9 +63,9 @@ import {
   createUseStrictDirective,
   createVariableDeclaration,
   createVariableDeclarationList,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {hasUseStrict} from '../semantics/util.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { hasUseStrict } from "../semantics/util.js";
 
 function toBindingIdentifier(tree) {
   return new BindingIdentifier(tree.location, tree.identifierToken);
@@ -87,20 +84,29 @@ function getGetterExport(project, symbol) {
   var returnExpression;
   switch (tree.type) {
     case EXPORT_SPECIFIER:
-      returnExpression = transformSpecifier(project, tree.lhs,
-                                            symbol.relatedTree);
+      returnExpression = transformSpecifier(
+        project,
+        tree.lhs,
+        symbol.relatedTree
+      );
       break;
     case EXPORT_STAR:
       traceur.assert(symbol.relatedTree);
-      returnExpression = transformSpecifier(project,
-          createIdentifierToken(symbol.name), symbol.relatedTree);
+      returnExpression = transformSpecifier(
+        project,
+        createIdentifierToken(symbol.name),
+        symbol.relatedTree
+      );
       break;
     case IDENTIFIER_EXPRESSION:
       if (!symbol.relatedTree) {
         returnExpression = tree;
       } else {
-        returnExpression = transformSpecifier(project, tree.identifierToken,
-            symbol.relatedTree);
+        returnExpression = transformSpecifier(
+          project,
+          tree.identifierToken,
+          symbol.relatedTree
+        );
       }
       break;
     default:
@@ -110,14 +116,14 @@ function getGetterExport(project, symbol) {
 
   // function() { return <returnExpression>; }
   var fun = createFunctionExpression(
-      createEmptyParameterList(),
-      createBlock(
-          createReturnStatement(returnExpression)));
+    createEmptyParameterList(),
+    createBlock(createReturnStatement(returnExpression))
+  );
 
   // NAME: { get: ... }
   var descriptor = createPropertyDescriptor({
     get: fun,
-    enumerable: true
+    enumerable: true,
   });
   return createPropertyNameAssignment(name, descriptor);
 }
@@ -157,13 +163,12 @@ export class ModuleTransformer extends ParseTreeTransformer {
     if (reference.type == MODULE_REQUIRE) {
       // traceur.modules.getModuleInstanceByUrl(url)
       return createCallExpression(
-          createMemberExpression(TRACEUR_MODULES, GET_MODULE_INSTANCE_BY_URL),
-          createArgumentList(
-              new LiteralExpression(null, reference.url)));
+        createMemberExpression(TRACEUR_MODULES, GET_MODULE_INSTANCE_BY_URL),
+        createArgumentList(new LiteralExpression(null, reference.url))
+      );
     }
 
-    if (tree.identifiers.length == 0)
-      return reference;
+    if (tree.identifiers.length == 0) return reference;
 
     return createMemberExpression(reference, tree.identifiers);
   }
@@ -182,17 +187,20 @@ export class ModuleTransformer extends ParseTreeTransformer {
     //  =>
     // var {id} = moduleInstance
     var declarations = this.transformList(tree.importPathList);
-    return createVariableStatement(createVariableDeclarationList(
-        VAR, declarations));
+    return createVariableStatement(
+      createVariableDeclarationList(VAR, declarations)
+    );
   }
 
   transformImportBinding(tree) {
     var importSpecifierSet;
     // If identifier we need to output the object pattern {id}.
     if (tree.importSpecifierSet.type == IDENTIFIER_EXPRESSION) {
-      var field = new BindingElement(tree.location,
-          createBindingIdentifier(tree.importSpecifierSet.identifierToken),
-          null);
+      var field = new BindingElement(
+        tree.location,
+        createBindingIdentifier(tree.importSpecifierSet.identifierToken),
+        null
+      );
       importSpecifierSet = new ObjectPattern(tree.location, [field]);
     } else {
       importSpecifierSet = this.transformAny(tree.importSpecifierSet);
@@ -207,8 +215,11 @@ export class ModuleTransformer extends ParseTreeTransformer {
     if (tree.specifiers.type === STAR) {
       var module = this.project_.getModuleForStarTree(tree);
       var fields = module.getExports().map((exportSymbol) => {
-        return new BindingElement(tree.location,
-            createBindingIdentifier(exportSymbol.name), null);
+        return new BindingElement(
+          tree.location,
+          createBindingIdentifier(exportSymbol.name),
+          null
+        );
       });
     } else {
       fields = this.transformList(tree.specifiers);
@@ -222,8 +233,11 @@ export class ModuleTransformer extends ParseTreeTransformer {
       var bindingElement = new BindingElement(tree.location, binding, null);
       return new ObjectPatternField(tree.location, tree.lhs, bindingElement);
     }
-    return new BindingElement(tree.location,
-        createBindingIdentifier(tree.lhs), null);
+    return new BindingElement(
+      tree.location,
+      createBindingIdentifier(tree.lhs),
+      null
+    );
   }
 }
 
@@ -232,7 +246,7 @@ export class ModuleTransformer extends ParseTreeTransformer {
  * @param {Program} tree
  * @return {Program}
  */
-ModuleTransformer.transform = function(project, tree) {
+ModuleTransformer.transform = function (project, tree) {
   var module = project.getRootModule();
   var useStrictCount = hasUseStrict(tree.programElements) ? 1 : 0;
   var elements = tree.programElements.map((element) => {
@@ -256,9 +270,12 @@ ModuleTransformer.transform = function(project, tree) {
  * @param {Program} tree
  * @return {Program}
  */
-ModuleTransformer.transformAsModule = function(project, module, tree) {
-  var callExpression = transformModuleElements(project, module,
-                                               tree.programElements);
+ModuleTransformer.transformAsModule = function (project, module, tree) {
+  var callExpression = transformModuleElements(
+    project,
+    module,
+    tree.programElements
+  );
   return createProgram([createExpressionStatement(callExpression)]);
 };
 
@@ -274,8 +291,7 @@ function transformModuleElements(project, module, elements, useStrictCount) {
 
   useStrictCount = useStrictCount || 0;
   // use strict
-  if (!useStrictCount)
-    statements.push(createUseStrictDirective());
+  if (!useStrictCount) statements.push(createUseStrictDirective());
 
   // Add original body statements
   elements.forEach((element) => {
@@ -284,19 +300,25 @@ function transformModuleElements(project, module, elements, useStrictCount) {
         statements.push(transformDeclaration(project, module, element));
         break;
       case MODULE_DEFINITION:
-        statements.push(transformDefinition(project, module, element,
-                                            useStrictCount + 1));
+        statements.push(
+          transformDefinition(project, module, element, useStrictCount + 1)
+        );
         break;
       case EXPORT_DECLARATION:
         var declaration = element.declaration;
         switch (declaration.type) {
           case MODULE_DEFINITION:
-            statements.push(transformDefinition(project, module, declaration,
-                                                useStrictCount + 1));
+            statements.push(
+              transformDefinition(
+                project,
+                module,
+                declaration,
+                useStrictCount + 1
+              )
+            );
             break;
           case MODULE_DECLARATION:
-            statements.push(transformDeclaration(project, module,
-                                                 declaration));
+            statements.push(transformDeclaration(project, module, declaration));
             break;
           case EXPORT_MAPPING_LIST:
             // These do not generate any statement here. It is all taken
@@ -308,7 +330,7 @@ function transformModuleElements(project, module, elements, useStrictCount) {
             statements.push(declaration);
             break;
           default:
-            throw new Error('unreachable');
+            throw new Error("unreachable");
         }
         break;
       case IMPORT_DECLARATION:
@@ -330,9 +352,12 @@ function transformModuleElements(project, module, elements, useStrictCount) {
 
   // return Object.preventExtensions(Object.create(null, descriptors))
   statements.push(
-      createReturnStatement(
-          createObjectPreventExtensions(
-              createObjectCreate(createNullLiteral(), descriptors))));
+    createReturnStatement(
+      createObjectPreventExtensions(
+        createObjectCreate(createNullLiteral(), descriptors)
+      )
+    )
+  );
 
   // const M = (function() { statements }).call(this);
   // TODO(arv): const is not allowed in ES5 strict
@@ -364,8 +389,12 @@ function transformModuleElements(project, module, elements, useStrictCount) {
 function transformDefinition(project, parent, tree, useStrictCount) {
   var module = parent.getModule(tree.name.value);
 
-  var callExpression = transformModuleElements(project, module,
-                                               tree.elements, useStrictCount);
+  var callExpression = transformModuleElements(
+    project,
+    module,
+    tree.elements,
+    useStrictCount
+  );
 
   // const M = (function() { statements }).call(thisObject);
   // TODO(arv): const is not allowed in ES5 strict

@@ -1,4 +1,4 @@
-import {cosh} from '../../../src/runtime/polyfills/Math.js';
+import { cosh } from "../../../src/runtime/polyfills/Math.js";
 
 function testCosh(cosh) {
   assert.equal(Infinity, cosh(-Infinity));

@@ -16,10 +16,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.data.webidl');
+goog.provide("wtf.data.webidl");
 
-goog.require('goog.asserts');
-
+goog.require("goog.asserts");
 
 /**
  * Event types structures.
@@ -28,143 +27,141 @@ goog.require('goog.asserts');
  */
 wtf.data.webidl.EVENT_TYPES = {
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/Event.idl
-  'Event': {
+  Event: {
     attributes: {
-      'target': 'dompath',
+      target: "dompath",
       // Ignore current path, as it's set by the dispatcher.
       // 'currentTarget': 'dompath',
-      'timeStamp': 'uint32'
+      timeStamp: "uint32",
 
       // clipboardData
-    }
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/modules/websockets/CloseEvent.idl
-  'CloseEvent': {
-    inherits: 'Event',
+  CloseEvent: {
+    inherits: "Event",
     attributes: {
-      'wasClean': 'bool',
-      'code': 'int16',
-      'reason' : 'utf8'
-    }
+      wasClean: "bool",
+      code: "int16",
+      reason: "utf8",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/ErrorEvent.idl
-  'ErrorEvent': {
-    inherits: 'Event',
+  ErrorEvent: {
+    inherits: "Event",
     attributes: {
-      'message': 'utf8',
-      'filename': 'utf8',
-      'lineno': 'uint32'
-    }
+      message: "utf8",
+      filename: "utf8",
+      lineno: "uint32",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/ProgressEvent.idl
-  'ProgressEvent': {
-    inherits: 'Event',
+  ProgressEvent: {
+    inherits: "Event",
     attributes: {
-      'lengthComputable': 'bool',
+      lengthComputable: "bool",
       // TODO(benvanik): uint64
-      'loaded': 'uint32',
-      'total': 'uint32'
-    }
+      loaded: "uint32",
+      total: "uint32",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/UIEvent.idl
-  'UIEvent': {
-    inherits: 'Event',
+  UIEvent: {
+    inherits: "Event",
     attributes: {
-      'detail': 'any',
-      'keyCode': 'int32',
-      'charCode': 'int32',
-      'layerX': 'int32',
-      'layerY': 'int32',
-      'pageX': 'int32',
-      'pageY': 'int32',
-      'which': 'int32'
-    }
+      detail: "any",
+      keyCode: "int32",
+      charCode: "int32",
+      layerX: "int32",
+      layerY: "int32",
+      pageX: "int32",
+      pageY: "int32",
+      which: "int32",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/FocusEvent.idl
-  'FocusEvent': {
-    inherits: 'UIEvent',
+  FocusEvent: {
+    inherits: "UIEvent",
     attributes: {
-      'relatedTarget': 'dompath'
-    }
+      relatedTarget: "dompath",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/KeyboardEvent.idl
-  'KeyboardEvent': {
-    inherits: 'UIEvent',
+  KeyboardEvent: {
+    inherits: "UIEvent",
     attributes: {
-      'keyIdentifier': 'utf8',
-      'keyLocation': 'uint32',
-      'ctrlKey': 'bool',
-      'shiftKey': 'bool',
-      'altKey': 'bool',
-      'metaKey': 'bool',
-      'altGraphKey': 'bool'
-    }
+      keyIdentifier: "utf8",
+      keyLocation: "uint32",
+      ctrlKey: "bool",
+      shiftKey: "bool",
+      altKey: "bool",
+      metaKey: "bool",
+      altGraphKey: "bool",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/MouseEvent.idl
-  'MouseEvent': {
-    inherits: 'UIEvent',
+  MouseEvent: {
+    inherits: "UIEvent",
     attributes: {
-      'screenX': 'int32',
-      'screenY': 'int32',
-      'clientX': 'int32',
-      'clientY': 'int32',
-      'ctrlKey': 'bool',
-      'shiftKey': 'bool',
-      'altKey': 'bool',
-      'metaKey': 'bool',
-      'button': 'uint16',
-      'relatedTarget': 'dompath',
-      'webkitMovementX': 'int32',
-      'webkitMovementY': 'int32',
+      screenX: "int32",
+      screenY: "int32",
+      clientX: "int32",
+      clientY: "int32",
+      ctrlKey: "bool",
+      shiftKey: "bool",
+      altKey: "bool",
+      metaKey: "bool",
+      button: "uint16",
+      relatedTarget: "dompath",
+      webkitMovementX: "int32",
+      webkitMovementY: "int32",
 
-      'offsetX': 'int32',
-      'offsetY': 'int32',
-      'x': 'int32',
-      'y': 'int32'
+      offsetX: "int32",
+      offsetY: "int32",
+      x: "int32",
+      y: "int32",
       // fromElement, toElement
       // dataTransfer
-    }
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/WheelEvent.idl
-  'WheelEvent': {
-    inherits: 'MouseEvent',
+  WheelEvent: {
+    inherits: "MouseEvent",
     attributes: {
-      'deltaX': 'float32',
-      'deltaY': 'float32',
-      'deltaZ': 'float32',
-      'deltaMode': 'uint32',
-      'wheelDelta': 'int32',
+      deltaX: "float32",
+      deltaY: "float32",
+      deltaZ: "float32",
+      deltaMode: "uint32",
+      wheelDelta: "int32",
 
-      'webkitDirectionInvertedFromDevice': 'bool'
-    }
+      webkitDirectionInvertedFromDevice: "bool",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/xml/XMLHttpRequestProgressEvent.idl
-  'XMLHttpRequestProgressEvent': {
-    inherits: 'ProgressEvent',
+  XMLHttpRequestProgressEvent: {
+    inherits: "ProgressEvent",
     attributes: {
       // TODO(benvanik): uint64
-      'position': 'uint32',
-      'totalSize': 'uint32'
-    }
+      position: "uint32",
+      totalSize: "uint32",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/MessageEvent.idl
-  'MessageEvent': {
-    inherits: 'Event',
-    attributes: {
-    }
-  }
+  MessageEvent: {
+    inherits: "Event",
+    attributes: {},
+  },
 };
-
 
 /**
  * Object structures.
@@ -173,143 +170,142 @@ wtf.data.webidl.EVENT_TYPES = {
  */
 wtf.data.webidl.OBJECTS = {
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/Element.idl
-  'Element': {
+  Element: {
     events: {
-      'abort': null,
-      'blur': 'FocusEvent',
-      'change': null,
-      'click': 'MouseEvent',
-      'contextmenu': null,
-      'dblclick': 'MouseEvent',
-      'drag': null,
-      'dragend': null,
-      'dragenter': null,
-      'dragleave': null,
-      'dragover': null,
-      'dragstart': null,
-      'drop': null,
-      'error': 'ErrorEvent',
-      'focus': 'FocusEvent',
-      'input': null,
-      'invalid': null,
-      'keydown': 'KeyboardEvent',
-      'keypress': 'KeyboardEvent',
-      'keyup': 'KeyboardEvent',
-      'load': null,
-      'mousedown': 'MouseEvent',
-      'mousemove': 'MouseEvent',
-      'mouseout': 'MouseEvent',
-      'mouseover': 'MouseEvent',
-      'mouseup': 'MouseEvent',
-      'mousewheel': 'WheelEvent',
-      'wheel': 'WheelEvent',
-      'readystatechange': null,
-      'scroll': null,
-      'select': null,
-      'submit': null,
+      abort: null,
+      blur: "FocusEvent",
+      change: null,
+      click: "MouseEvent",
+      contextmenu: null,
+      dblclick: "MouseEvent",
+      drag: null,
+      dragend: null,
+      dragenter: null,
+      dragleave: null,
+      dragover: null,
+      dragstart: null,
+      drop: null,
+      error: "ErrorEvent",
+      focus: "FocusEvent",
+      input: null,
+      invalid: null,
+      keydown: "KeyboardEvent",
+      keypress: "KeyboardEvent",
+      keyup: "KeyboardEvent",
+      load: null,
+      mousedown: "MouseEvent",
+      mousemove: "MouseEvent",
+      mouseout: "MouseEvent",
+      mouseover: "MouseEvent",
+      mouseup: "MouseEvent",
+      mousewheel: "WheelEvent",
+      wheel: "WheelEvent",
+      readystatechange: null,
+      scroll: null,
+      select: null,
+      submit: null,
 
-      'animationstart': null,
-      'animationend': null,
-      'animationiteration': null,
-      'transitionend': null,
+      animationstart: null,
+      animationend: null,
+      animationiteration: null,
+      transitionend: null,
 
-      'selectstart': null,
-      'touchstart': null,
-      'touchmove': null,
-      'touchend': null,
-      'touchcancel': null,
-      'webkitfullscreenchange': null,
-      'webkitfullscreenerror': null,
+      selectstart: null,
+      touchstart: null,
+      touchmove: null,
+      touchend: null,
+      touchcancel: null,
+      webkitfullscreenchange: null,
+      webkitfullscreenerror: null,
 
-      'DOMMouseScroll': 'UIEvent'     // Non-standard Firefox
-    }
+      DOMMouseScroll: "UIEvent", // Non-standard Firefox
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/page/DOMWindow.idl
-  'Window': {
+  Window: {
     // Not really, but it does get its events.
-    inherits: 'Element',
+    inherits: "Element",
     events: {
-      'beforeunload': null,
-      'change': null,
-      'hashchange': null,
-      'message': null,
-      'offline': null,
-      'online': null,
-      'pagehide': null,
-      'pageshow': null,
-      'popstate': null,
-      'resize': null,
-      'unload': null
-    }
+      beforeunload: null,
+      change: null,
+      hashchange: null,
+      message: null,
+      offline: null,
+      online: null,
+      pagehide: null,
+      pageshow: null,
+      popstate: null,
+      resize: null,
+      unload: null,
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/Document.idl
-  'Document': {
+  Document: {
     // Not really, but it does get its events.
-    inherits: 'Element',
+    inherits: "Element",
     events: {
-      'DOMContentLoaded': null,
-      'webkitpointerlockchange': null,
-      'webkitpointerlockerror': null
-    }
+      DOMContentLoaded: null,
+      webkitpointerlockchange: null,
+      webkitpointerlockerror: null,
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/html/HTMLElement.idl
-  'HTMLElement': {
-    inherits: 'Element'
+  HTMLElement: {
+    inherits: "Element",
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/html/HTMLAnchorElement.idl
-  'HTMLAnchorElement': {
-    tagName: 'a',
-    inherits: 'HTMLElement'
+  HTMLAnchorElement: {
+    tagName: "a",
+    inherits: "HTMLElement",
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/html/HTMLCanvasElement.idl
-  'HTMLCanvasElement': {
-    tagName: 'canvas',
-    inherits: 'HTMLElement'
+  HTMLCanvasElement: {
+    tagName: "canvas",
+    inherits: "HTMLElement",
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/html/HTMLDivElement.idl
-  'HTMLDivElement': {
-    tagName: 'div',
-    inherits: 'HTMLElement'
+  HTMLDivElement: {
+    tagName: "div",
+    inherits: "HTMLElement",
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/xml/XMLHttpRequest.idl
-  'XMLHttpRequest': {
+  XMLHttpRequest: {
     events: {
-      'abort': 'XMLHttpRequestProgressEvent',
-      'error': 'XMLHttpRequestProgressEvent',
-      'load': 'XMLHttpRequestProgressEvent',
-      'loadend': 'XMLHttpRequestProgressEvent',
-      'loadstart': 'XMLHttpRequestProgressEvent',
-      'progress': 'XMLHttpRequestProgressEvent',
-      'timeout': 'XMLHttpRequestProgressEvent',
-      'readystatechange': 'XMLHttpRequestProgressEvent'
-    }
+      abort: "XMLHttpRequestProgressEvent",
+      error: "XMLHttpRequestProgressEvent",
+      load: "XMLHttpRequestProgressEvent",
+      loadend: "XMLHttpRequestProgressEvent",
+      loadstart: "XMLHttpRequestProgressEvent",
+      progress: "XMLHttpRequestProgressEvent",
+      timeout: "XMLHttpRequestProgressEvent",
+      readystatechange: "XMLHttpRequestProgressEvent",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/core/dom/MessagePort.idl
-  'MessagePort': {
+  MessagePort: {
     events: {
-      'message': 'MessageEvent'
-    }
+      message: "MessageEvent",
+    },
   },
 
   // https://chromium.googlesource.com/chromium/blink/+/master/Source/modules/websockets/WebSocket.idl
-  'WebSocket': {
+  WebSocket: {
     events: {
-      'open': 'Event',
-      'error': 'Event',
-      'close': 'CloseEvent',
-      'message': 'Event'
-    }
-  }
+      open: "Event",
+      error: "Event",
+      close: "CloseEvent",
+      message: "Event",
+    },
+  },
 };
-
 
 /**
  * The names of all DOM-like objects.
@@ -317,75 +313,74 @@ wtf.data.webidl.OBJECTS = {
  * @const
  */
 wtf.data.webidl.DOM_OBJECTS = [
-  'HTMLAnchorElement',
-  'HTMLAppletElement',
-  'HTMLAreaElement',
-  'HTMLAudioElement',
-  'HTMLBRElement',
-  'HTMLBaseElement',
-  'HTMLBaseFontElement',
-  'HTMLBodyElement',
-  'HTMLButtonElement',
-  'HTMLCanvasElement',
-  'HTMLContentElement',
-  'HTMLDListElement',
-  'HTMLDirectoryElement',
-  'HTMLDivElement',
-  'HTMLDocument',
-  'HTMLElement',
-  'HTMLEmbedElement',
-  'HTMLFieldSetElement',
-  'HTMLFontElement',
-  'HTMLFormElement',
-  'HTMLFrameElement',
-  'HTMLFrameSetElement',
-  'HTMLHRElement',
-  'HTMLHeadElement',
-  'HTMLHeadingElement',
-  'HTMLHtmlElement',
-  'HTMLIFrameElement',
-  'HTMLImageElement',
-  'HTMLInputElement',
-  'HTMLKeygenElement',
-  'HTMLLIElement',
-  'HTMLLabelElement',
-  'HTMLLegendElement',
-  'HTMLLinkElement',
-  'HTMLMapElement',
-  'HTMLMarqueeElement',
-  'HTMLMediaElement',
-  'HTMLMenuElement',
-  'HTMLMetaElement',
-  'HTMLMeterElement',
-  'HTMLModElement',
-  'HTMLOListElement',
-  'HTMLObjectElement',
-  'HTMLOptGroupElement',
-  'HTMLOptionElement',
-  'HTMLOutputElement',
-  'HTMLParagraphElement',
-  'HTMLPreElement',
-  'HTMLProgressElement',
-  'HTMLQuoteElement',
-  'HTMLScriptElement',
-  'HTMLSelectElement',
-  'HTMLSourceElement',
-  'HTMLSpanElement',
-  'HTMLStyleElement',
-  'HTMLTableCaptionElement',
-  'HTMLTableCellElement',
-  'HTMLTableColElement',
-  'HTMLTableElement',
-  'HTMLTableRowElement',
-  'HTMLTableSectionElement',
-  'HTMLTextAreaElement',
-  'HTMLTitleElement',
-  'HTMLTrackElement',
-  'HTMLUListElement',
-  'HTMLUnknownElement',
-  'HTMLVideoElement'
+  "HTMLAnchorElement",
+  "HTMLAppletElement",
+  "HTMLAreaElement",
+  "HTMLAudioElement",
+  "HTMLBRElement",
+  "HTMLBaseElement",
+  "HTMLBaseFontElement",
+  "HTMLBodyElement",
+  "HTMLButtonElement",
+  "HTMLCanvasElement",
+  "HTMLContentElement",
+  "HTMLDListElement",
+  "HTMLDirectoryElement",
+  "HTMLDivElement",
+  "HTMLDocument",
+  "HTMLElement",
+  "HTMLEmbedElement",
+  "HTMLFieldSetElement",
+  "HTMLFontElement",
+  "HTMLFormElement",
+  "HTMLFrameElement",
+  "HTMLFrameSetElement",
+  "HTMLHRElement",
+  "HTMLHeadElement",
+  "HTMLHeadingElement",
+  "HTMLHtmlElement",
+  "HTMLIFrameElement",
+  "HTMLImageElement",
+  "HTMLInputElement",
+  "HTMLKeygenElement",
+  "HTMLLIElement",
+  "HTMLLabelElement",
+  "HTMLLegendElement",
+  "HTMLLinkElement",
+  "HTMLMapElement",
+  "HTMLMarqueeElement",
+  "HTMLMediaElement",
+  "HTMLMenuElement",
+  "HTMLMetaElement",
+  "HTMLMeterElement",
+  "HTMLModElement",
+  "HTMLOListElement",
+  "HTMLObjectElement",
+  "HTMLOptGroupElement",
+  "HTMLOptionElement",
+  "HTMLOutputElement",
+  "HTMLParagraphElement",
+  "HTMLPreElement",
+  "HTMLProgressElement",
+  "HTMLQuoteElement",
+  "HTMLScriptElement",
+  "HTMLSelectElement",
+  "HTMLSourceElement",
+  "HTMLSpanElement",
+  "HTMLStyleElement",
+  "HTMLTableCaptionElement",
+  "HTMLTableCellElement",
+  "HTMLTableColElement",
+  "HTMLTableElement",
+  "HTMLTableRowElement",
+  "HTMLTableSectionElement",
+  "HTMLTextAreaElement",
+  "HTMLTitleElement",
+  "HTMLTrackElement",
+  "HTMLUListElement",
+  "HTMLUnknownElement",
+  "HTMLVideoElement",
 ];
-
 
 /**
  * Gets a unioned set of all event types for all of the given objects.
@@ -393,7 +388,7 @@ wtf.data.webidl.DOM_OBJECTS = [
  *     {@code OBJECTS}.
  * @return {!Object.<!Object>} All events mapped by name to their type object.
  */
-wtf.data.webidl.getAllEventTypes = function(objectNames) {
+wtf.data.webidl.getAllEventTypes = function (objectNames) {
   var result = {};
   for (var n = 0; n < objectNames.length; n++) {
     var eventTypes = wtf.data.webidl.getAllEvents(objectNames[n]);
@@ -402,7 +397,7 @@ wtf.data.webidl.getAllEventTypes = function(objectNames) {
       if (existingType && existingType != eventTypes[eventName]) {
         // This is bad - we have two events with the same name but different
         // types.
-        goog.asserts.fail('Redefined event type/duplicate keys');
+        goog.asserts.fail("Redefined event type/duplicate keys");
         continue;
       }
       result[eventName] = eventTypes[eventName];
@@ -411,7 +406,6 @@ wtf.data.webidl.getAllEventTypes = function(objectNames) {
   return result;
 };
 
-
 /**
  * Gets a combined list of events and types for the given object.
  * @param {string} objectName Object name, as a key into {@code OBJECTS}.
@@ -419,8 +413,8 @@ wtf.data.webidl.getAllEventTypes = function(objectNames) {
  *     included if they are not in the IDL. They will default to the Event type.
  * @return {!Object.<!Object>} All events mapped by name to their type object.
  */
-wtf.data.webidl.getAllEvents = function(objectName, opt_extraNames) {
-  var defaultEventType = wtf.data.webidl.EVENT_TYPES['Event'];
+wtf.data.webidl.getAllEvents = function (objectName, opt_extraNames) {
+  var defaultEventType = wtf.data.webidl.EVENT_TYPES["Event"];
   var result = {};
 
   var targetName = objectName;
@@ -450,13 +444,12 @@ wtf.data.webidl.getAllEvents = function(objectName, opt_extraNames) {
   return result;
 };
 
-
 /**
  * Gets a list of all attributes for the given event type, in order.
  * @param {!Object} eventType Event type info from {@code EVENT_TYPES}.
  * @return {!Array.<{name: string, type: string}>} A list of name/type infos.
  */
-wtf.data.webidl.getEventAttributes = function(eventType) {
+wtf.data.webidl.getEventAttributes = function (eventType) {
   // Grab all of the inherited event types.
   // This way we can write the attributes in order.
   // Note that this list is reversed, and we should walk it backward.
@@ -480,13 +473,12 @@ wtf.data.webidl.getEventAttributes = function(eventType) {
       foundNames[attributeName] = true;
       result.push({
         name: attributeName,
-        type: attributeType
+        type: attributeType,
       });
     }
   }
   return result;
 };
-
 
 /**
  * Gets a full signature for an event type on an object.
@@ -496,9 +488,13 @@ wtf.data.webidl.getEventAttributes = function(eventType) {
  * @param {string=} opt_suffix Event name suffix. For example, ':callback'.
  * @return {string} An event signature like 'HTMLAnchorElement#onclick(...)'.
  */
-wtf.data.webidl.getEventSignature = function(objectName, eventName, eventType,
-    opt_suffix) {
-  var s = objectName + '#' + eventName + (opt_suffix ? opt_suffix : '') + '(';
+wtf.data.webidl.getEventSignature = function (
+  objectName,
+  eventName,
+  eventType,
+  opt_suffix
+) {
+  var s = objectName + "#" + eventName + (opt_suffix ? opt_suffix : "") + "(";
 
   if (eventType) {
     // Grab all attributes, in order.
@@ -507,16 +503,16 @@ wtf.data.webidl.getEventSignature = function(objectName, eventName, eventType,
       var attribute = attributes[n];
       var attributeType = attribute.type;
       switch (attributeType) {
-        case 'dompath':
-          attributeType = 'ascii';
+        case "dompath":
+          attributeType = "ascii";
           break;
       }
       if (n) {
-        s += ', ';
+        s += ", ";
       }
-      s += attributeType + ' ' + attribute.name;
+      s += attributeType + " " + attribute.name;
     }
   }
 
-  return s + ')';
+  return s + ")";
 };

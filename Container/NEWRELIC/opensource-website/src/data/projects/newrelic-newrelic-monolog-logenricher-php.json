@@ -1,0 +1,26 @@
+{
+  "name": "newrelic-monolog-logenricher-php",
+  "fullName": "newrelic/newrelic-monolog-logenricher-php",
+  "slug": "newrelic-newrelic-monolog-logenricher-php",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Monolog for New Relic Logs",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-monolog-logenricher-php",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-monolog-logenricher-php",
+  "iconUrl": null,
+  "shortDescription": "Integrate PHP Monolog to New Relic Logs",
+  "description": "Monolog components to enable New Relic Logs",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "PHP",
+  "projectTags": [
+    "logging"
+  ],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Monolog for New Relic Logs",
+    "url": "https://github.com/newrelic/newrelic-monolog-logenricher-php"
+  }
+}

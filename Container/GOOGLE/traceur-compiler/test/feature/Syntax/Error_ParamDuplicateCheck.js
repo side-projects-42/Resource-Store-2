@@ -8,20 +8,16 @@
 // Error: :24:22: Duplicate parameter name a
 
 function f(x, y, x, z, x) {
-  'use strict';
+  "use strict";
 }
 
 var f2 = (x, y, x, z, x) => {
-  'use strict';
+  "use strict";
 };
 
 function g() {
-  'use strict';
-  function h(a, b, a, a) {
+  "use strict";
+  function h(a, b, a, a) {}
 
-  }
-
-  var g2 = (a, b, a, a) => {
-
-  };
+  var g2 = (a, b, a, a) => {};
 }

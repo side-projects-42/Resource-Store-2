@@ -3,7 +3,7 @@
 class Base {
   base: boolean;
   baseInitValue: boolean = true;
-  initIn: string = 'Base';
+  initIn: string = "Base";
 
   constructor() {
     this.base = this.baseInitValue;
@@ -11,15 +11,15 @@ class Base {
 }
 
 class DerivedImplicitCtor extends Base {
-  initIn: string = 'DerivedImplicitCtor';
+  initIn: string = "DerivedImplicitCtor";
 }
 
 var derivedImplicitCtor = new DerivedImplicitCtor();
-assert.equal(derivedImplicitCtor.initIn, 'DerivedImplicitCtor');
+assert.equal(derivedImplicitCtor.initIn, "DerivedImplicitCtor");
 assert.equal(derivedImplicitCtor.base, true);
 
 class DerivedWithCtor extends Base {
-  initIn: string = 'DerivedWithCtor';
+  initIn: string = "DerivedWithCtor";
 
   constructor() {
     super();
@@ -27,5 +27,5 @@ class DerivedWithCtor extends Base {
 }
 
 var derivedWithCtor = new DerivedWithCtor();
-assert.equal(derivedWithCtor.initIn, 'DerivedWithCtor');
+assert.equal(derivedWithCtor.initIn, "DerivedWithCtor");
 assert.equal(derivedWithCtor.base, true);

@@ -1,20 +1,24 @@
-const analyze = require('rollup-plugin-analyzer');
-const cleanup = require('rollup-plugin-cleanup');
-const json = require('@rollup/plugin-json');
-const resolve = require('@rollup/plugin-node-resolve').default;
-const terser = require('rollup-plugin-terser').terser;
-const pkg = require('./package.json');
+const analyze = require("rollup-plugin-analyzer");
+const cleanup = require("rollup-plugin-cleanup");
+const json = require("@rollup/plugin-json");
+const resolve = require("@rollup/plugin-node-resolve").default;
+const terser = require("rollup-plugin-terser").terser;
+const pkg = require("./package.json");
 
-const input = 'src/index.js';
+const input = "src/index.js";
 const inputESM = {
-  'dist/chart.esm': 'src/index.esm.js',
-  'dist/helpers.esm': 'src/helpers/index.js'
+  "dist/chart.esm": "src/index.esm.js",
+  "dist/helpers.esm": "src/helpers/index.js",
 };
 
 const banner = `/*!
  * Chart.js v${pkg.version}
  * ${pkg.homepage}
- * (c) ${(new Date(process.env.SOURCE_DATE_EPOCH ? (process.env.SOURCE_DATE_EPOCH * 1000) : new Date().getTime())).getFullYear()} Chart.js Contributors
+ * (c) ${new Date(
+   process.env.SOURCE_DATE_EPOCH
+     ? process.env.SOURCE_DATE_EPOCH * 1000
+     : new Date().getTime()
+ ).getFullYear()} Chart.js Contributors
  * Released under the MIT License
  */`;
 
@@ -28,15 +32,15 @@ module.exports = [
       json(),
       resolve(),
       cleanup({
-        sourcemap: true
+        sourcemap: true,
       }),
-      analyze({summaryOnly: true})
+      analyze({ summaryOnly: true }),
     ],
     output: {
-      name: 'Chart',
-      file: 'dist/chart.js',
+      name: "Chart",
+      file: "dist/chart.js",
       banner,
-      format: 'umd',
+      format: "umd",
       indent: false,
     },
   },
@@ -47,14 +51,14 @@ module.exports = [
       resolve(),
       terser({
         output: {
-          preamble: banner
-        }
+          preamble: banner,
+        },
       }),
     ],
     output: {
-      name: 'Chart',
-      file: 'dist/chart.min.js',
-      format: 'umd',
+      name: "Chart",
+      file: "dist/chart.min.js",
+      format: "umd",
       indent: false,
     },
   },
@@ -68,14 +72,14 @@ module.exports = [
       json(),
       resolve(),
       cleanup({
-        sourcemap: true
+        sourcemap: true,
       }),
     ],
     output: {
-      dir: './',
-      chunkFileNames: 'dist/chunks/[name].js',
+      dir: "./",
+      chunkFileNames: "dist/chunks/[name].js",
       banner,
-      format: 'esm',
+      format: "esm",
       indent: false,
     },
   },

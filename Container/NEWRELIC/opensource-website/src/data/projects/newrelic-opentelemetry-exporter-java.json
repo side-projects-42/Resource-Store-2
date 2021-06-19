@@ -1,0 +1,24 @@
+{
+  "name": "opentelemetry-exporter-java",
+  "fullName": "newrelic/opentelemetry-exporter-java",
+  "slug": "newrelic-opentelemetry-exporter-java",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "OpenTelemetry Exporter (Java)",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/opentelemetry-exporter-java",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/opentelemetry-exporter-java",
+  "iconUrl": null,
+  "shortDescription": "Java OpenTelemetry exporter",
+  "description": "An OpenTelemetry exporter that sends data to New Relic",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Java",
+  "projectTags": ["exporter", "opentelemetry"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "opentelemetry exporter-java",
+    "url": "https://github.com/newrelic/opentelemetry-exporter-java"
+  }
+}

@@ -1,12 +1,12 @@
-import { ChartOptions } from '../../index.esm';
+import { ChartOptions } from "../../index.esm";
 
-const chartOptions: ChartOptions<'line'> = {
+const chartOptions: ChartOptions<"line"> = {
   scales: {
     x: {
-      type: 'time',
+      type: "time",
       time: {
-        unit: 'year'
-      }
+        unit: "year",
+      },
     },
-  }
+  },
 };

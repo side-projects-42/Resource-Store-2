@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
 /**
  * Wrap a single async function to make the callback optional and hook it to
@@ -25,29 +25,24 @@
  * @return {Function}
  */
 function wrapFunction(fn, firstArg) {
-  return function() {
-    var deferred = new Deferred;
+  return function () {
+    var deferred = new Deferred();
 
     var args = [].slice.call(arguments);
     var originalCallback = args[firstArg ? 0 : args.length - 1];
 
     function callback(err, value) {
-      if (originalCallback)
-        originalCallback.apply(this, arguments);
+      if (originalCallback) originalCallback.apply(this, arguments);
 
-      if (err)
-        deferred.errback(err);
-      else
-        deferred.callback(value);
+      if (err) deferred.errback(err);
+      else deferred.callback(value);
     }
 
-    if (typeof originalCallback !== 'function') {
+    if (typeof originalCallback !== "function") {
       // Callback wasn't provided to the async function, add the custom one.
       originalCallback = null;
-      if (firstArg)
-        args.unshift(callback);
-      else
-        args.push(callback);
+      if (firstArg) args.unshift(callback);
+      else args.push(callback);
     } else {
       // Callback was provided to the async function, replace it.
       args[firstArg ? 0 : args.length - 1] = callback;
@@ -70,14 +65,15 @@ function wrapFunction(fn, firstArg) {
  * @return {object} The module.
  */
 function wrapModule(module, functions) {
-  if (typeof module === 'string')
-    module = require(module);
+  if (typeof module === "string") module = require(module);
 
   if (!functions) {
     for (var k in module) {
       // HACK: wrap all functions with a fnSync variant.
-      if (typeof module[k] === 'function' &&
-          typeof module[k + 'Sync'] === 'function')
+      if (
+        typeof module[k] === "function" &&
+        typeof module[k + "Sync"] === "function"
+      )
         module[k] = wrapFunction(module[k]);
     }
   } else {
@@ -97,7 +93,7 @@ function wrapModule(module, functions) {
  */
 function wrap() {
   // TODO: find and wrap everything that needs to be wrapped.
-  wrapModule('fs');
+  wrapModule("fs");
   process.nextTick = wrapFunction(process.nextTick, true);
   // FIXME: this would ignore the return value, making it impossible to cancel
   // the timeout without implementing a cancel method and using it everywhere.

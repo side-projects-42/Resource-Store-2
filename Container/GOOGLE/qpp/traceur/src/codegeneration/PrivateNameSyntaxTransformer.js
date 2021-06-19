@@ -16,22 +16,22 @@ import {
   ASSERT_NAME,
   CREATE_NAME,
   RUNTIME,
-  TRACEUR_RUNTIME
-} from '../syntax/PredefinedName.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {CONST} from '../syntax/TokenType.js';
+  TRACEUR_RUNTIME,
+} from "../syntax/PredefinedName.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { CONST } from "../syntax/TokenType.js";
 import {
   VariableDeclarationList,
-  VariableStatement
-} from '../syntax/trees/ParseTrees.js';
+  VariableStatement,
+} from "../syntax/trees/ParseTrees.js";
 import {
   createArgumentList,
   createCallExpression,
   createEmptyArgumentList,
   createIdentifierExpression,
   createMemberExpression,
-  createVariableDeclaration
-} from './ParseTreeFactory.js';
+  createVariableDeclaration,
+} from "./ParseTreeFactory.js";
 
 /**
  * Desugars the private name syntax, @name.
@@ -39,7 +39,6 @@ import {
  * @see http://wiki.ecmascript.org/doku.php?id=strawman:syntactic_support_for_private_names
  */
 export class PrivateNameSyntaxTransformer extends TempVarTransformer {
-
   getTransformedName_(token) {
     return this.identifierGenerator.getUniqueIdentifier(token.value);
   }
@@ -55,8 +54,10 @@ export class PrivateNameSyntaxTransformer extends TempVarTransformer {
     // const __a = traceurRuntime.createName(),
     //       __b = traceurRuntime.assertName(expr)
     var declarations = this.transformList(tree.declarations);
-    return new VariableStatement(tree.location,
-        new VariableDeclarationList(tree.location, CONST, declarations));
+    return new VariableStatement(
+      tree.location,
+      new VariableDeclarationList(tree.location, CONST, declarations)
+    );
   }
 
   transformAtNameDeclaration(tree) {
@@ -71,10 +72,10 @@ export class PrivateNameSyntaxTransformer extends TempVarTransformer {
       name = CREATE_NAME;
     }
 
-    return createVariableDeclaration(transformedName,
-      createCallExpression(
-        createMemberExpression(TRACEUR_RUNTIME, name),
-        args));
+    return createVariableDeclaration(
+      transformedName,
+      createCallExpression(createMemberExpression(TRACEUR_RUNTIME, name), args)
+    );
   }
 
   /**
@@ -82,7 +83,8 @@ export class PrivateNameSyntaxTransformer extends TempVarTransformer {
    * @param {ParseTree} tree
    */
   static transformTree(identifierGenerator, tree) {
-    return new PrivateNameSyntaxTransformer(identifierGenerator).
-        transformAny(tree);
+    return new PrivateNameSyntaxTransformer(identifierGenerator).transformAny(
+      tree
+    );
   }
 }

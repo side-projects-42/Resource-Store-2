@@ -1,46 +1,46 @@
 var datasets = [];
 
-['start', 'center', 'end'].forEach(function(anchor, i) {
+["start", "center", "end"].forEach(function (anchor, i) {
   datasets.push({
-    data: [{x: i, y: i}],
+    data: [{ x: i, y: i }],
     datalabels: {
-      anchor: anchor
-    }
+      anchor: anchor,
+    },
   });
 });
 
 export default {
   config: {
-    type: 'bubble',
+    type: "bubble",
     data: {
-      datasets: datasets
+      datasets: datasets,
     },
     options: {
       layout: {
-        padding: 64
+        padding: 64,
       },
       elements: {
         point: {
-          radius: 24
-        }
+          radius: 24,
+        },
       },
       plugins: {
         datalabels: {
-          backgroundColor: '#00ff77',
-          borderColor: 'black',
+          backgroundColor: "#00ff77",
+          borderColor: "black",
           borderWidth: 2,
           font: {
-            size: 0
+            size: 0,
           },
-          padding: 8
-        }
-      }
-    }
+          padding: 8,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 256
-    }
-  }
+      width: 256,
+    },
+  },
 };

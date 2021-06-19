@@ -12,23 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {
-  Module,
-  Script
-} from '../syntax/trees/ParseTrees.js';
-import {ARGUMENTS} from '../syntax/PredefinedName.js';
-import {StringSet} from '../util/StringSet.js';
-import {LET, VAR} from '../syntax/TokenType.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { Module, Script } from "../syntax/trees/ParseTrees.js";
+import { ARGUMENTS } from "../syntax/PredefinedName.js";
+import { StringSet } from "../util/StringSet.js";
+import { LET, VAR } from "../syntax/TokenType.js";
 import {
   createFunctionBody,
   createThisExpression,
   createIdentifierExpression,
   createVariableDeclaration,
   createVariableDeclarationList,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {prependStatements} from './PrependStatements.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { prependStatements } from "./PrependStatements.js";
 
 class TempVarStatement {
   constructor(name, initializer) {
@@ -63,8 +60,9 @@ class VarScope {
     this.argumentName = null;
     this.tempVarStatements = [];
     this.declarationType_ =
-        options.blockBinding && !options.transformOptions.blockBinding ?
-            LET : VAR;
+      options.blockBinding && !options.transformOptions.blockBinding
+        ? LET
+        : VAR;
   }
 
   push(tempVarStatement) {
@@ -89,10 +87,9 @@ class VarScope {
     let declarations = [];
     let seenNames = new StringSet();
     for (let i = 0; i < this.tempVarStatements.length; i++) {
-      let {name, initializer} = this.tempVarStatements[i];
+      let { name, initializer } = this.tempVarStatements[i];
       if (seenNames.has(name)) {
-        if (initializer)
-          throw new Error('Invalid use of TempVarTransformer');
+        if (initializer) throw new Error("Invalid use of TempVarTransformer");
         continue;
       }
       seenNames.add(name);
@@ -100,7 +97,8 @@ class VarScope {
     }
 
     return createVariableStatement(
-        createVariableDeclarationList(this.declarationType_, declarations));
+      createVariableDeclarationList(this.declarationType_, declarations)
+    );
   }
 }
 
@@ -144,8 +142,7 @@ export class TempVarTransformer extends ParseTreeTransformer {
     let transformedStatements = this.transformList(statements);
 
     let vars = this.tempVarStack_.pop();
-    if (vars.isEmpty())
-      return transformedStatements;
+    if (vars.isEmpty()) return transformedStatements;
 
     let variableStatement = vars.createVariableStatement();
     vars.release(this);
@@ -173,8 +170,7 @@ export class TempVarTransformer extends ParseTreeTransformer {
     this.pushTempScope();
     let statements = this.transformStatements_(tree.statements);
     this.popTempScope();
-    if (statements === tree.statements)
-      return tree;
+    if (statements === tree.statements) return tree;
     return createFunctionBody(statements);
   }
 
@@ -190,8 +186,9 @@ export class TempVarTransformer extends ParseTreeTransformer {
   }
 
   getName_() {
-    return this.namePool_.length ? this.namePool_.pop() :
-        this.identifierGenerator.generateUniqueIdentifier();
+    return this.namePool_.length
+      ? this.namePool_.pop()
+      : this.identifierGenerator.generateUniqueIdentifier();
   }
 
   /**
@@ -230,14 +227,20 @@ export class TempVarTransformer extends ParseTreeTransformer {
 
   addTempVarForThis() {
     let varScope = this.tempVarStack_[this.tempVarStack_.length - 1];
-    return varScope.thisName ||
-        (varScope.thisName = this.addTempVar(createThisExpression()));
+    return (
+      varScope.thisName ||
+      (varScope.thisName = this.addTempVar(createThisExpression()))
+    );
   }
 
   addTempVarForArguments() {
     let varScope = this.tempVarStack_[this.tempVarStack_.length - 1];
-    return varScope.argumentName || (varScope.argumentName =
-        this.addTempVar(createIdentifierExpression(ARGUMENTS)));
+    return (
+      varScope.argumentName ||
+      (varScope.argumentName = this.addTempVar(
+        createIdentifierExpression(ARGUMENTS)
+      ))
+    );
   }
 
   /**

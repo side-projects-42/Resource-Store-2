@@ -12,7 +12,7 @@ function asyncTimeout(ms) {
   });
 }
 
-(async function() {
+(async function () {
   await asyncYield();
   done();
 })();

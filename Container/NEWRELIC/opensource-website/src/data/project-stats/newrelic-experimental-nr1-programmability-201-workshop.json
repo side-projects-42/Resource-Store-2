@@ -1,0 +1,46 @@
+{
+  "projectFullName": "newrelic-experimental/nr1-programmability-201-workshop",
+  "issues": {
+    "open": 0
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 16,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 2,
+  "pullRequests": {
+    "open": 2
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 13562672,
+      "login": "jaesius",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13562672?v=4",
+      "htmlUrl": "https://github.com/jaesius",
+      "contributions": 10
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic-experimental/nr1-programmability-201-workshop/master/screenshots/complete-application.png",
+    "https://raw.githubusercontent.com/newrelic-experimental/nr1-programmability-201-workshop/master/screenshots/step-0-complete.png",
+    "https://raw.githubusercontent.com/newrelic-experimental/nr1-programmability-201-workshop/master/screenshots/step-1-complete.png",
+    "https://raw.githubusercontent.com/newrelic-experimental/nr1-programmability-201-workshop/master/screenshots/step-2-complete.png"
+  ],
+  "license": null
+}

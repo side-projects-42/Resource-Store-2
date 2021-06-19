@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.HelpDialog');
+goog.provide("wtf.app.HelpDialog");
 
-goog.require('goog.soy');
-goog.require('wtf');
-goog.require('wtf.app.helpdialog');
-goog.require('wtf.events.Keyboard');
-goog.require('wtf.ui.Dialog');
-goog.require('wtf.version');
-
-
+goog.require("goog.soy");
+goog.require("wtf");
+goog.require("wtf.app.helpdialog");
+goog.require("wtf.events.Keyboard");
+goog.require("wtf.ui.Dialog");
+goog.require("wtf.version");
 
 /**
  * Help overlay screen.
@@ -30,23 +28,33 @@ goog.require('wtf.version');
  * @constructor
  * @extends {wtf.ui.Dialog}
  */
-wtf.app.HelpDialog = function(parentElement, opt_dom) {
-  goog.base(this, {
-    modal: true
-  }, parentElement, opt_dom);
+wtf.app.HelpDialog = function (parentElement, opt_dom) {
+  goog.base(
+    this,
+    {
+      modal: true,
+    },
+    parentElement,
+    opt_dom
+  );
 };
 goog.inherits(wtf.app.HelpDialog, wtf.ui.Dialog);
-
 
 /**
  * @override
  */
-wtf.app.HelpDialog.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
-      wtf.app.helpdialog.control, {
+wtf.app.HelpDialog.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(
+      wtf.app.helpdialog.control,
+      {
         version: wtf.version.toString(),
         version_commit: wtf.version.getCommit(),
         system_key: wtf.events.Keyboard.SYSTEM_KEY,
-        is_chrome_extension: wtf.CHROME_EXTENSION
-      }, undefined, dom));
+        is_chrome_extension: wtf.CHROME_EXTENSION,
+      },
+      undefined,
+      dom
+    )
+  );
 };

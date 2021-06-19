@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SourcePosition} from '../util/SourcePosition.js';
-import {SourceRange} from '../util/SourceRange.js';
-import {isLineTerminator} from './Scanner.js';
+import { SourcePosition } from "../util/SourcePosition.js";
+import { SourceRange } from "../util/SourceRange.js";
+import { isLineTerminator } from "./Scanner.js";
 
 // Largest int that can be distinguished
 // assert(n + 1 === n)
@@ -27,8 +27,11 @@ function computeLineStartOffsets(source) {
   for (let index = 0; index < source.length; index++) {
     let code = source.charCodeAt(index);
     if (isLineTerminator(code)) {
-      if (code === 13 &&  // \r
-          source.charCodeAt(index + 1) === 10) {  // \n
+      if (
+        code === 13 && // \r
+        source.charCodeAt(index + 1) === 10
+      ) {
+        // \n
         index++;
       }
       lineStartOffsets[k++] = index + 1;
@@ -56,8 +59,9 @@ export class LineNumberTable {
 
   ensureLineStartOffsets_() {
     if (!this.lineStartOffsets_) {
-      this.lineStartOffsets_ =
-          computeLineStartOffsets(this.sourceFile_.contents);
+      this.lineStartOffsets_ = computeLineStartOffsets(
+        this.sourceFile_.contents
+      );
     }
   }
 
@@ -72,13 +76,11 @@ export class LineNumberTable {
     // It turns out that almost all calls to this function are done in an
     // incremental order, usually very close to the last offset. We therefore
     // just iterate from the last position.
-    if (offset === this.lastOffset_)
-      return this.lastLine_;
+    if (offset === this.lastOffset_) return this.lastLine_;
 
     this.ensureLineStartOffsets_();
 
-    if (offset < 0)
-      return 0;
+    if (offset < 0) return 0;
 
     let line;
     if (offset < this.lastOffset_) {
@@ -114,7 +116,9 @@ export class LineNumberTable {
 
   /** @return {SourceRange} */
   getSourceRange(startOffset, endOffset) {
-    return new SourceRange(this.getSourcePosition(startOffset),
-                           this.getSourcePosition(endOffset));
+    return new SourceRange(
+      this.getSourcePosition(startOffset),
+      this.getSourcePosition(endOffset)
+    );
   }
 }

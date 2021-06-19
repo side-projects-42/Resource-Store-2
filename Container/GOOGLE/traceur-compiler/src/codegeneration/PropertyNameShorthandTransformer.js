@@ -15,9 +15,9 @@
 import {
   IdentifierExpression,
   LiteralPropertyName,
-  PropertyNameAssignment
-} from '../syntax/trees/ParseTrees.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+  PropertyNameAssignment,
+} from "../syntax/trees/ParseTrees.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 
 /**
  * Desugars property name shorthands.
@@ -26,8 +26,10 @@ import {ParseTreeTransformer} from './ParseTreeTransformer.js';
  */
 export class PropertyNameShorthandTransformer extends ParseTreeTransformer {
   transformPropertyNameShorthand(tree) {
-    return new PropertyNameAssignment(tree.location,
-        new LiteralPropertyName(tree.location, tree.name),
-        new IdentifierExpression(tree.location, tree.name));
+    return new PropertyNameAssignment(
+      tree.location,
+      new LiteralPropertyName(tree.location, tree.name),
+      new IdentifierExpression(tree.location, tree.name)
+    );
   }
 }

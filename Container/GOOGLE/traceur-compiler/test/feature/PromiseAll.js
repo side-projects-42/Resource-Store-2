@@ -12,6 +12,6 @@ function* gen() {
 var p2 = Promise.all(gen());
 
 p2.then((v) => {
-  assert.deepEqual(v, [1,2]);
+  assert.deepEqual(v, [1, 2]);
   done();
 });

@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import spreadProperties from './modules/spreadProperties.js';
+import spreadProperties from "./modules/spreadProperties.js";
 $traceurRuntime.spreadProperties = spreadProperties;

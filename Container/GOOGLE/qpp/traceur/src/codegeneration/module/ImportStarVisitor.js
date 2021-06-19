@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {IMPORT_SPECIFIER_SET} from '../../syntax/trees/ParseTreeType.js';
-import {ModuleVisitor} from './ModuleVisitor.js';
-import {STAR} from '../../syntax/TokenType.js';
+import { IMPORT_SPECIFIER_SET } from "../../syntax/trees/ParseTreeType.js";
+import { ModuleVisitor } from "./ModuleVisitor.js";
+import { STAR } from "../../syntax/TokenType.js";
 
 /**
  * Finds all 'import * from moduleExpression' and associates the tree with
@@ -34,9 +34,10 @@ export class ImportStarVisitor extends ModuleVisitor {
     // If we find an 'import * from m' we associate the tree with the module
     // so that we can have access to it during the transformation phase.
     var importSpecifierSet = tree.importSpecifierSet;
-    if (importSpecifierSet.type === IMPORT_SPECIFIER_SET &&
-        importSpecifierSet.specifiers.type === STAR) {
-
+    if (
+      importSpecifierSet.type === IMPORT_SPECIFIER_SET &&
+      importSpecifierSet.specifiers.type === STAR
+    ) {
       var module = this.getModuleForModuleExpression(tree.moduleExpression);
       this.project.setModuleForStarTree(importSpecifierSet, module);
     }

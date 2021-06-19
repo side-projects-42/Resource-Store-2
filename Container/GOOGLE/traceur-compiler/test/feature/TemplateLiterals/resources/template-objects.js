@@ -9,5 +9,5 @@ function setRaw(obj) {
   raw = obj;
 }
 
-setCooked `a${1}b`;
-setRaw `c${3}d\n`;
+setCooked`a${1}b`;
+setRaw`c${3}d\n`;

@@ -3,7 +3,7 @@
  * @see https://github.com/chartjs/Chart.js/pull/4591#issuecomment-319575939
  */
 
-import BasePlatform from './platform.base';
+import BasePlatform from "./platform.base";
 
 /**
  * Platform class for charts without access to the DOM or to many element properties
@@ -15,6 +15,6 @@ export default class BasicPlatform extends BasePlatform {
     // To prevent canvas fingerprinting, some add-ons undefine the getContext
     // method, for example: https://github.com/kkapsner/CanvasBlocker
     // https://github.com/chartjs/Chart.js/issues/2807
-    return item && item.getContext && item.getContext('2d') || null;
+    return (item && item.getContext && item.getContext("2d")) || null;
   }
 }

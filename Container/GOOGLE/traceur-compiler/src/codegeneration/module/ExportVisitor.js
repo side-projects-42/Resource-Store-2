@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ModuleVisitor} from './ModuleVisitor.js';
-import {assert} from '../../util/assert.js';
+import { ModuleVisitor } from "./ModuleVisitor.js";
+import { assert } from "../../util/assert.js";
 
 /**
  * Visits a parse tree and adds all the export definitions, including export *.
@@ -31,17 +31,19 @@ export class ExportVisitor extends ModuleVisitor {
   }
 
   addExport_(name, tree) {
-    assert(typeof name === 'string');
-    if (this.inExport_)
-      this.addExport(name, tree);
+    assert(typeof name === "string");
+    if (this.inExport_) this.addExport(name, tree);
   }
 
   addExport(name, tree) {
     let moduleSymbol = this.moduleSymbol;
     let existingExport = moduleSymbol.getExport(name);
     if (existingExport) {
-      this.reportError(tree, `Duplicate export. '${name}' was previously ` +
-          `exported at ${existingExport.location.start}`);
+      this.reportError(
+        tree,
+        `Duplicate export. '${name}' was previously ` +
+          `exported at ${existingExport.location.start}`
+      );
     } else {
       moduleSymbol.addExport(name, tree);
     }
@@ -64,7 +66,7 @@ export class ExportVisitor extends ModuleVisitor {
   }
 
   visitExportDefault(tree) {
-    this.addExport_('default', tree);
+    this.addExport_("default", tree);
   }
 
   visitExportSpecifier(tree) {
@@ -73,11 +75,10 @@ export class ExportVisitor extends ModuleVisitor {
 
   visitExportStar(tree) {
     let name = this.moduleSpecifier.token.processedValue;
-    let exportList =
-        this.getExportsListForModuleSpecifier(name);
+    let exportList = this.getExportsListForModuleSpecifier(name);
     if (exportList) {
       exportList.getExports().forEach((name) => this.addExport(name, tree));
-    }  // Else: we already reported an error.
+    } // Else: we already reported an error.
   }
 
   visitNameSpaceExport(tree) {

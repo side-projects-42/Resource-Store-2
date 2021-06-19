@@ -17,8 +17,8 @@ import {
   maybeAddConsts,
   maybeAddFunctions,
   registerPolyfill,
-  toInteger
-} from './utils.js';
+  toInteger,
+} from "./utils.js";
 
 var $abs = Math.abs;
 var $isFinite = isFinite;
@@ -31,7 +31,7 @@ export var EPSILON = Math.pow(2, -52);
 function NumberIsFinite(number) {
   return isNumber(number) && $isFinite(number);
 }
-export {NumberIsFinite as isFinite};
+export { NumberIsFinite as isFinite };
 
 export function isInteger(number) {
   return NumberIsFinite(number) && toInteger(number) === number;
@@ -40,29 +40,35 @@ export function isInteger(number) {
 function NumberIsNaN(number) {
   return isNumber(number) && $isNaN(number);
 }
-export {NumberIsNaN as isNaN};
+export { NumberIsNaN as isNaN };
 
 export function isSafeInteger(number) {
   if (NumberIsFinite(number)) {
     var integral = toInteger(number);
-    if (integral === number)
-      return $abs(integral) <= MAX_SAFE_INTEGER;
+    if (integral === number) return $abs(integral) <= MAX_SAFE_INTEGER;
   }
   return false;
 }
 
 export function polyfillNumber(global) {
-  var {Number} = global;
+  var { Number } = global;
   maybeAddConsts(Number, [
-    'MAX_SAFE_INTEGER', MAX_SAFE_INTEGER,
-    'MIN_SAFE_INTEGER', MIN_SAFE_INTEGER,
-    'EPSILON', EPSILON,
+    "MAX_SAFE_INTEGER",
+    MAX_SAFE_INTEGER,
+    "MIN_SAFE_INTEGER",
+    MIN_SAFE_INTEGER,
+    "EPSILON",
+    EPSILON,
   ]);
   maybeAddFunctions(Number, [
-    'isFinite', NumberIsFinite,
-    'isInteger', isInteger,
-    'isNaN', NumberIsNaN,
-    'isSafeInteger', isSafeInteger,
+    "isFinite",
+    NumberIsFinite,
+    "isInteger",
+    isInteger,
+    "isNaN",
+    NumberIsNaN,
+    "isSafeInteger",
+    isSafeInteger,
   ]);
 }
 

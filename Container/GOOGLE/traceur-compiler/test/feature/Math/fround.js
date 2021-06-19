@@ -1,5 +1,5 @@
-import {fround} from '../../../src/runtime/polyfills/Math.js';
-import {fround as jsFround} from '../../../src/runtime/polyfills/fround.js';
+import { fround } from "../../../src/runtime/polyfills/Math.js";
+import { fround as jsFround } from "../../../src/runtime/polyfills/fround.js";
 
 function testFround(x, expected) {
   assert.strictEqual(expected, Math.fround(x));

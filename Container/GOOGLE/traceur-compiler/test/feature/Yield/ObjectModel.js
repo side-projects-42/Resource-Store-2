@@ -3,10 +3,12 @@
 var GeneratorFunctionPrototype = f.__proto__;
 var GeneratorFunction = GeneratorFunctionPrototype.constructor;
 
-assert.equal(GeneratorFunction.name, 'GeneratorFunction');
+assert.equal(GeneratorFunction.name, "GeneratorFunction");
 assert.equal(GeneratorFunction.prototype, GeneratorFunctionPrototype);
-assert.equal(GeneratorFunctionPrototype.prototype.constructor,
-    GeneratorFunctionPrototype);
+assert.equal(
+  GeneratorFunctionPrototype.prototype.constructor,
+  GeneratorFunctionPrototype
+);
 assert.equal(GeneratorFunctionPrototype.prototype, f.prototype.__proto__);
 assert.equal(GeneratorFunctionPrototype.__proto__, Function.prototype);
 
@@ -35,8 +37,8 @@ function* f2() {
 
 assert.equal(f.__proto__, f2.__proto__);
 
-assert.isFalse(f.hasOwnProperty('constructor'));
-assert.equal(f.__proto__.constructor.name, 'GeneratorFunction');
+assert.isFalse(f.hasOwnProperty("constructor"));
+assert.equal(f.__proto__.constructor.name, "GeneratorFunction");
 
 // Intentionally at the end to test hoisting.
 function* f() {

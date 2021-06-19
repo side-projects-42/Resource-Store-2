@@ -1,7 +1,7 @@
 // Test the rectangle element
 
-describe('Arc element tests', function() {
-  it ('should determine if in range', function() {
+describe("Arc element tests", function () {
+  it("should determine if in range", function () {
     // Mock out the arc as if the controller put it there
     var arc = new Chart.elements.ArcElement({
       startAngle: 0,
@@ -13,7 +13,7 @@ describe('Arc element tests', function() {
       options: {
         spacing: 0,
         offset: 0,
-      }
+      },
     });
 
     expect(arc.inRange(2, 2)).toBe(false);
@@ -23,7 +23,7 @@ describe('Arc element tests', function() {
     expect(arc.inRange(-1.0 * Math.sqrt(7), Math.sqrt(7))).toBe(false);
   });
 
-  it ('should include spacing for in range check', function() {
+  it("should include spacing for in range check", function () {
     // Mock out the arc as if the controller put it there
     var arc = new Chart.elements.ArcElement({
       startAngle: 0,
@@ -35,14 +35,14 @@ describe('Arc element tests', function() {
       options: {
         spacing: 10,
         offset: 0,
-      }
+      },
     });
 
     expect(arc.inRange(7, 0)).toBe(false);
     expect(arc.inRange(15, 0)).toBe(true);
   });
 
-  it ('should determine if in range, when full circle', function() {
+  it("should determine if in range, when full circle", function () {
     // Mock out the arc as if the controller put it there
     var arc = new Chart.elements.ArcElement({
       startAngle: -Math.PI,
@@ -55,13 +55,13 @@ describe('Arc element tests', function() {
       options: {
         spacing: 0,
         offset: 0,
-      }
+      },
     });
 
     expect(arc.inRange(7, 7)).toBe(true);
   });
 
-  it ('should get the tooltip position', function() {
+  it("should get the tooltip position", function () {
     // Mock out the arc as if the controller put it there
     var arc = new Chart.elements.ArcElement({
       startAngle: 0,
@@ -73,7 +73,7 @@ describe('Arc element tests', function() {
       options: {
         spacing: 0,
         offset: 0,
-      }
+      },
     });
 
     var pos = arc.tooltipPosition();
@@ -81,7 +81,7 @@ describe('Arc element tests', function() {
     expect(pos.y).toBeCloseTo(0.5);
   });
 
-  it ('should get the center', function() {
+  it("should get the center", function () {
     // Mock out the arc as if the controller put it there
     var arc = new Chart.elements.ArcElement({
       startAngle: 0,
@@ -93,7 +93,7 @@ describe('Arc element tests', function() {
       options: {
         spacing: 0,
         offset: 0,
-      }
+      },
     });
 
     var center = arc.getCenterPoint();
@@ -101,7 +101,7 @@ describe('Arc element tests', function() {
     expect(center.y).toBeCloseTo(0.5, 6);
   });
 
-  it ('should get the center with offset and spacing', function() {
+  it("should get the center with offset and spacing", function () {
     // Mock out the arc as if the controller put it there
     var arc = new Chart.elements.ArcElement({
       startAngle: 0,
@@ -113,7 +113,7 @@ describe('Arc element tests', function() {
       options: {
         spacing: 10,
         offset: 10,
-      }
+      },
     });
 
     var center = arc.getCenterPoint();
@@ -121,7 +121,7 @@ describe('Arc element tests', function() {
     expect(center.y).toBeCloseTo(7.57, 1);
   });
 
-  it ('should get the center of full circle before and after draw', function() {
+  it("should get the center of full circle before and after draw", function () {
     // Mock out the arc as if the controller put it there
     var arc = new Chart.elements.ArcElement({
       startAngle: 0,
@@ -133,7 +133,7 @@ describe('Arc element tests', function() {
       options: {
         spacing: 0,
         offset: 0,
-      }
+      },
     });
 
     var center = arc.getCenterPoint();
@@ -148,7 +148,7 @@ describe('Arc element tests', function() {
     expect(center.y).toBeCloseTo(2, 6);
   });
 
-  it('should not draw when radius < 0', function() {
+  it("should not draw when radius < 0", function () {
     var ctx = window.createMockContext();
 
     var arc = new Chart.elements.ArcElement({
@@ -161,7 +161,7 @@ describe('Arc element tests', function() {
       options: {
         spacing: 0,
         offset: 0,
-      }
+      },
     });
 
     arc.draw(ctx);
@@ -178,7 +178,7 @@ describe('Arc element tests', function() {
       options: {
         spacing: 0,
         offset: 0,
-      }
+      },
     });
 
     arc.draw(ctx);

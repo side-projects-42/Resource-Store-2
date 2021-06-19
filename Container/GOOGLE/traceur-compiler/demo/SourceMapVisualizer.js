@@ -14,19 +14,17 @@
 
 import {
   GeneratedSourceMapMapping,
-  OriginalSourceMapMapping
-} from './SourceMapMapping.js';
-import {SourceMapConsumer}
-    from 'traceur@0.0/src/outputgeneration/SourceMapIntegration.js';
+  OriginalSourceMapMapping,
+} from "./SourceMapMapping.js";
+import { SourceMapConsumer } from "traceur@0.0/src/outputgeneration/SourceMapIntegration.js";
 
 let markingOptions = {
-  className: 'sourceMapRange',
-  startStyle: 'sourceMapRangeLeft',
-  endStyle: 'sourceMapRangeRight',
+  className: "sourceMapRange",
+  startStyle: "sourceMapRangeLeft",
+  endStyle: "sourceMapRangeRight",
 };
 
 export class SourceMapVisualizer {
-
   constructor(input, output) {
     this.input = input;
     this.output = output;
@@ -41,8 +39,14 @@ export class SourceMapVisualizer {
       return;
     }
     let consumer = new SourceMapConsumer(sourceMapInfo.map);
-    this.originalMap = new OriginalSourceMapMapping(consumer, this.sourceMapUrl);
-    this.generatedMap = new GeneratedSourceMapMapping(consumer, this.sourceMapUrl);
+    this.originalMap = new OriginalSourceMapMapping(
+      consumer,
+      this.sourceMapUrl
+    );
+    this.generatedMap = new GeneratedSourceMapMapping(
+      consumer,
+      this.sourceMapUrl
+    );
 
     this.updateUI();
   }
@@ -56,29 +60,30 @@ export class SourceMapVisualizer {
     let originalPosition = {
       line: codeMirrorPosition.line + 1,
       column: codeMirrorPosition.ch,
-      source: this.sourceMapUrl
-    }
+      source: this.sourceMapUrl,
+    };
 
     let originalRange = this.originalMap.rangeFrom(originalPosition);
-    let generatedRange =
-        this.generatedMap.rangeFrom(this.originalMap.mapPositionFor(originalPosition));
+    let generatedRange = this.generatedMap.rangeFrom(
+      this.originalMap.mapPositionFor(originalPosition)
+    );
 
     let generatedBeginCM = {
       line: generatedRange[0].line - 1,
-      ch: generatedRange[0].column
+      ch: generatedRange[0].column,
     };
 
     let generatedEndCM = {
       line: generatedRange[1].line - 1,
-      ch: generatedRange[1].column
-    }
+      ch: generatedRange[1].column,
+    };
 
-    if (this.generatedMarker)
-      this.generatedMarker.clear();
+    if (this.generatedMarker) this.generatedMarker.clear();
 
-    this.generatedMarker =
-        this.output.markText(generatedBeginCM, generatedEndCM, markingOptions);
+    this.generatedMarker = this.output.markText(
+      generatedBeginCM,
+      generatedEndCM,
+      markingOptions
+    );
   }
 }
-
-

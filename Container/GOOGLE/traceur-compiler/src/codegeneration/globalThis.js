@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {parseExpression} from './PlaceholderParser.js'
+import { parseExpression } from "./PlaceholderParser.js";
 
 let expr;
 
 function globalThis() {
-  if (!expr)
-    expr = parseExpression `Reflect.global`;
+  if (!expr) expr = parseExpression`Reflect.global`;
   return expr;
 }
 

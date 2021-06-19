@@ -1,7 +1,7 @@
-import {spritingOn, spritingOff} from './spriting';
+import { spritingOn, spritingOff } from "./spriting";
 
 export function createCanvas(w, h) {
-  var canvas = document.createElement('canvas');
+  var canvas = document.createElement("canvas");
   canvas.width = w;
   canvas.height = h;
   return canvas;
@@ -10,11 +10,11 @@ export function createCanvas(w, h) {
 export function readImageData(url, callback) {
   var image = new Image();
 
-  image.onload = function() {
+  image.onload = function () {
     var h = image.height;
     var w = image.width;
     var canvas = createCanvas(w, h);
-    var ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext("2d");
     ctx.drawImage(image, 0, 0, w, h);
     callback(ctx.getImageData(0, 0, w, h));
   };
@@ -34,14 +34,14 @@ export function readImageData(url, callback) {
  * @param {boolean} options.persistent - If true, the chart will not be released after the spec.
  */
 export function _acquireChart(config, options) {
-  var wrapper = document.createElement('div');
-  var canvas = document.createElement('canvas');
+  var wrapper = document.createElement("div");
+  var canvas = document.createElement("canvas");
   var chart, key;
 
   config = config || {};
   options = options || {};
-  options.canvas = options.canvas || {height: 512, width: 512};
-  options.wrapper = options.wrapper || {class: 'chartjs-wrapper'};
+  options.canvas = options.canvas || { height: 512, width: 512 };
+  options.wrapper = options.wrapper || { class: "chartjs-wrapper" };
 
   for (key in options.canvas) {
     if (Object.prototype.hasOwnProperty.call(options.canvas, key)) {
@@ -57,16 +57,18 @@ export function _acquireChart(config, options) {
 
   // by default, remove chart animation and auto resize
   config.options = config.options || {};
-  config.options.animation = config.options.animation === undefined ? false : config.options.animation;
-  config.options.responsive = config.options.responsive === undefined ? false : config.options.responsive;
-  config.options.locale = config.options.locale || 'en-US';
+  config.options.animation =
+    config.options.animation === undefined ? false : config.options.animation;
+  config.options.responsive =
+    config.options.responsive === undefined ? false : config.options.responsive;
+  config.options.locale = config.options.locale || "en-US";
 
   if (options.useShadowDOM) {
     if (!wrapper.attachShadow) {
       // If shadowDOM is not supported by the browsers, mark test as 'pending'.
       return pending();
     }
-    wrapper.attachShadow({mode: 'open'}).appendChild(canvas);
+    wrapper.attachShadow({ mode: "open" }).appendChild(canvas);
   } else {
     wrapper.appendChild(canvas);
   }
@@ -83,9 +85,9 @@ export function _acquireChart(config, options) {
         return pending();
       }
       var offscreenCanvas = canvas.transferControlToOffscreen();
-      ctx = offscreenCanvas.getContext('2d');
+      ctx = offscreenCanvas.getContext("2d");
     } else {
-      ctx = canvas.getContext('2d');
+      ctx = canvas.getContext("2d");
     }
     if (options.spriteText) {
       spritingOn(ctx);
@@ -98,7 +100,7 @@ export function _acquireChart(config, options) {
 
   chart.$test = {
     persistent: options.persistent,
-    wrapper: wrapper
+    wrapper: wrapper,
   };
 
   return chart;
@@ -116,10 +118,11 @@ export function _releaseChart(chart) {
 
 export function injectCSS(css) {
   // https://stackoverflow.com/q/3922139
-  var head = document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.setAttribute('type', 'text/css');
-  if (style.styleSheet) { // IE
+  var head = document.getElementsByTagName("head")[0];
+  var style = document.createElement("style");
+  style.setAttribute("type", "text/css");
+  if (style.styleSheet) {
+    // IE
     style.styleSheet.cssText = css;
   } else {
     style.appendChild(document.createTextNode(css));
@@ -129,7 +132,7 @@ export function injectCSS(css) {
 
 export function waitForResize(chart, callback) {
   var override = chart.resize;
-  chart.resize = function() {
+  chart.resize = function () {
     chart.resize = override;
     override.apply(this, arguments);
     callback();
@@ -138,7 +141,7 @@ export function waitForResize(chart, callback) {
 
 export function afterEvent(chart, type, callback) {
   var override = chart._eventHandler;
-  chart._eventHandler = function(event) {
+  chart._eventHandler = function (event) {
     override.call(this, event);
     if (event.type === type) {
       chart._eventHandler = override;
@@ -149,9 +152,9 @@ export function afterEvent(chart, type, callback) {
 }
 
 function _resolveElementPoint(el) {
-  var point = {x: 0, y: 0};
+  var point = { x: 0, y: 0 };
   if (el) {
-    if (typeof el.getCenterPoint === 'function') {
+    if (typeof el.getCenterPoint === "function") {
       point = el.getCenterPoint();
     } else if (el.x !== undefined && el.y !== undefined) {
       point = el;
@@ -169,7 +172,7 @@ export async function triggerMouseEvent(chart, type, el) {
     clientY: rect.top + point.y,
     cancelable: true,
     bubbles: true,
-    view: window
+    view: window,
   });
 
   var promise = new Promise((resolve) => {

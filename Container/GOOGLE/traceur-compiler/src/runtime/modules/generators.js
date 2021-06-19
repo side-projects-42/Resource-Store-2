@@ -12,21 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {createPrivateSymbol, getPrivate, setPrivate} from '../private.js';
+import { createPrivateSymbol, getPrivate, setPrivate } from "../private.js";
 
 var $TypeError = TypeError;
-var {
-  create,
-  defineProperties,
-  defineProperty,
-} = Object;
+var { create, defineProperties, defineProperty } = Object;
 
 function nonEnum(value) {
   return {
     configurable: true,
     enumerable: false,
     value: value,
-    writable: true
+    writable: true,
   };
 }
 
@@ -42,10 +38,10 @@ var ST_CLOSED = 3;
 var END_STATE = -2;
 var RETHROW_STATE = -3;
 
-
 function getInternalError(state) {
-  return new Error('Traceur compiler bug: invalid state in state machine: ' +
-                    state);
+  return new Error(
+    "Traceur compiler bug: invalid state in state machine: " + state
+  );
 }
 
 // The following unique object serves as a non-catchable exception raised by
@@ -63,7 +59,7 @@ function GeneratorContext() {
   this.tryStack_ = [];
 }
 GeneratorContext.prototype = {
-  pushTry: function(catchState, finallyState) {
+  pushTry: function (catchState, finallyState) {
     if (finallyState !== null) {
       var finallyFallThrough = null;
       for (var i = this.tryStack_.length - 1; i >= 0; i--) {
@@ -72,20 +68,19 @@ GeneratorContext.prototype = {
           break;
         }
       }
-      if (finallyFallThrough === null)
-        finallyFallThrough = RETHROW_STATE;
+      if (finallyFallThrough === null) finallyFallThrough = RETHROW_STATE;
 
       this.tryStack_.push({
         finally: finallyState,
-        finallyFallThrough: finallyFallThrough
+        finallyFallThrough: finallyFallThrough,
       });
     }
 
     if (catchState !== null) {
-      this.tryStack_.push({catch: catchState});
+      this.tryStack_.push({ catch: catchState });
     }
   },
-  popTry: function() {
+  popTry: function () {
     this.tryStack_.pop();
   },
   maybeUncatchable: function () {
@@ -103,13 +98,13 @@ GeneratorContext.prototype = {
   get sentIgnoreThrow() {
     return this.sent_;
   },
-  maybeThrow: function() {
-    if (this.action === 'throw') {
-      this.action = 'next';
+  maybeThrow: function () {
+    if (this.action === "throw") {
+      this.action = "next";
       throw this.sent_;
     }
   },
-  end: function() {
+  end: function () {
     switch (this.state) {
       case END_STATE:
         return this;
@@ -119,12 +114,12 @@ GeneratorContext.prototype = {
         throw getInternalError(this.state);
     }
   },
-  handleException: function(ex) {
+  handleException: function (ex) {
     this.GState = ST_CLOSED;
     this.state = END_STATE;
     throw ex;
   },
-  wrapYieldStar: function(iterator) {
+  wrapYieldStar: function (iterator) {
     var ctx = this;
     return {
       next: function (v) {
@@ -148,10 +143,10 @@ GeneratorContext.prototype = {
         }
         // 14.4 "YieldExpression: yield * AssignmentExpression" 1.6.b.iv
         iterator.return && iterator.return();
-        throw $TypeError('Inner iterator does not have a throw method');
-      }
+        throw $TypeError("Inner iterator does not have a throw method");
+      },
     };
-  }
+  },
 };
 
 function nextOrThrow(ctx, moveNext, action, x) {
@@ -160,31 +155,30 @@ function nextOrThrow(ctx, moveNext, action, x) {
       throw new Error(`"${action}" on executing generator`);
 
     case ST_CLOSED:
-      if (action == 'next') {
+      if (action == "next") {
         return {
           value: undefined,
-          done: true
+          done: true,
         };
       }
       if (x === RETURN_SENTINEL) {
         return {
           value: ctx.returnValue,
-          done: true
+          done: true,
         };
       }
       throw x;
 
     case ST_NEWBORN:
-      if (action === 'throw') {
+      if (action === "throw") {
         ctx.GState = ST_CLOSED;
         if (x === RETURN_SENTINEL) {
-          return {value: ctx.returnValue, done: true};
+          return { value: ctx.returnValue, done: true };
         }
         throw x;
       }
-      if (x !== undefined)
-        throw $TypeError('Sent value to newborn generator');
-      // fall through
+      if (x !== undefined) throw $TypeError("Sent value to newborn generator");
+    // fall through
 
     case ST_SUSPENDED:
       ctx.GState = ST_EXECUTING;
@@ -201,10 +195,9 @@ function nextOrThrow(ctx, moveNext, action, x) {
         }
       }
       var done = value === ctx;
-      if (done)
-        value = ctx.returnValue;
+      if (done) value = ctx.returnValue;
       ctx.GState = done ? ST_CLOSED : ST_SUSPENDED;
-      return {value: value, done: done};
+      return { value: value, done: done };
   }
 }
 
@@ -217,36 +210,57 @@ function GeneratorFunctionPrototype() {}
 
 GeneratorFunction.prototype = GeneratorFunctionPrototype;
 
-defineProperty(GeneratorFunctionPrototype, 'constructor',
-    nonEnum(GeneratorFunction));
+defineProperty(
+  GeneratorFunctionPrototype,
+  "constructor",
+  nonEnum(GeneratorFunction)
+);
 
 GeneratorFunctionPrototype.prototype = {
   constructor: GeneratorFunctionPrototype,
-  next: function(v) {
-    return nextOrThrow(getPrivate(this, ctxName), getPrivate(this, moveNextName), 'next', v);
+  next: function (v) {
+    return nextOrThrow(
+      getPrivate(this, ctxName),
+      getPrivate(this, moveNextName),
+      "next",
+      v
+    );
   },
-  throw: function(v) {
-    return nextOrThrow(getPrivate(this, ctxName), getPrivate(this, moveNextName), 'throw', v);
+  throw: function (v) {
+    return nextOrThrow(
+      getPrivate(this, ctxName),
+      getPrivate(this, moveNextName),
+      "throw",
+      v
+    );
   },
   return: function (v) {
     let ctx = getPrivate(this, ctxName);
     ctx.oldReturnValue = ctx.returnValue;
     ctx.returnValue = v;
-    return nextOrThrow(ctx, getPrivate(this, moveNextName), 'throw', RETURN_SENTINEL);
-  }
+    return nextOrThrow(
+      ctx,
+      getPrivate(this, moveNextName),
+      "throw",
+      RETURN_SENTINEL
+    );
+  },
 };
 
 defineProperties(GeneratorFunctionPrototype.prototype, {
-  constructor: {enumerable: false},
-  next: {enumerable: false},
-  throw: {enumerable: false},
-  return: {enumerable: false}
+  constructor: { enumerable: false },
+  next: { enumerable: false },
+  throw: { enumerable: false },
+  return: { enumerable: false },
 });
 
-Object.defineProperty(GeneratorFunctionPrototype.prototype, Symbol.iterator,
-    nonEnum(function() {
-      return this;
-    }));
+Object.defineProperty(
+  GeneratorFunctionPrototype.prototype,
+  Symbol.iterator,
+  nonEnum(function () {
+    return this;
+  })
+);
 
 export function createGeneratorInstance(innerFunction, functionObject, self) {
   // TODO(arv): Use [[GeneratorState]]
@@ -269,13 +283,13 @@ function AsyncFunctionContext() {
   GeneratorContext.call(this);
   this.err = undefined;
   var ctx = this;
-  ctx.result = new Promise(function(resolve, reject) {
+  ctx.result = new Promise(function (resolve, reject) {
     ctx.resolve = resolve;
     ctx.reject = reject;
   });
 }
 AsyncFunctionContext.prototype = create(GeneratorContext.prototype);
-AsyncFunctionContext.prototype.end = function() {
+AsyncFunctionContext.prototype.end = function () {
   switch (this.state) {
     case END_STATE:
       this.resolve(this.returnValue);
@@ -287,22 +301,22 @@ AsyncFunctionContext.prototype.end = function() {
       this.reject(getInternalError(this.state));
   }
 };
-AsyncFunctionContext.prototype.handleException = function() {
+AsyncFunctionContext.prototype.handleException = function () {
   this.state = RETHROW_STATE;
 };
 
 export function asyncWrap(innerFunction, self) {
   var moveNext = getMoveNext(innerFunction, self);
   var ctx = new AsyncFunctionContext();
-  ctx.createCallback = function(newState) {
+  ctx.createCallback = function (newState) {
     return function (value) {
       ctx.state = newState;
       ctx.value = value;
       moveNext(ctx);
     };
-  }
+  };
 
-  ctx.errback = function(err) {
+  ctx.errback = function (err) {
     handleCatch(ctx, err);
     moveNext(ctx);
   };
@@ -312,7 +326,7 @@ export function asyncWrap(innerFunction, self) {
 }
 
 function getMoveNext(innerFunction, self) {
-  return function(ctx) {
+  return function (ctx) {
     while (true) {
       try {
         return innerFunction.call(self, ctx);

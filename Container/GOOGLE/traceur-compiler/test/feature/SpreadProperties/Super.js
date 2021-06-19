@@ -2,15 +2,15 @@
 
 var p = {
   m() {
-    return 'm';
+    return "m";
   },
   n() {
-    return 'n';
+    return "n";
   },
 };
 
-var a = {a: 'a'};
-var b = {b: 'b'};
+var a = { a: "a" };
+var b = { b: "b" };
 
 var o = {
   __proto__: p,
@@ -24,7 +24,7 @@ var o = {
   },
 };
 
-assert.equal(o.a, 'a');
-assert.equal(o.b, 'b');
-assert.equal(o.m(), 'm');
-assert.equal(o.n(), 'n');
+assert.equal(o.a, "a");
+assert.equal(o.b, "b");
+assert.equal(o.m(), "m");
+assert.equal(o.n(), "n");

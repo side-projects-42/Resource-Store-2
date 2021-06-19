@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTree} from './ParseTree.js';
-import {STATE_MACHINE} from './ParseTreeType.js';
-import {TryState} from '../../codegeneration/generator/TryState.js';
+import { ParseTree } from "./ParseTree.js";
+import { STATE_MACHINE } from "./ParseTreeType.js";
+import { TryState } from "../../codegeneration/generator/TryState.js";
 
 /**
  * @param {TryState.Kind} kind
@@ -131,8 +131,11 @@ export class StateMachine extends ParseTree {
    */
   getEnclosingFinallyMap() {
     var enclosingMap = Object.create(null);
-    addCatchOrFinallyStates(TryState.Kind.FINALLY, enclosingMap,
-                            this.exceptionBlocks);
+    addCatchOrFinallyStates(
+      TryState.Kind.FINALLY,
+      enclosingMap,
+      this.exceptionBlocks
+    );
     return enclosingMap;
   }
 
@@ -143,8 +146,11 @@ export class StateMachine extends ParseTree {
    */
   getEnclosingCatchMap() {
     var enclosingMap = Object.create(null);
-    addCatchOrFinallyStates(TryState.Kind.CATCH, enclosingMap,
-                            this.exceptionBlocks);
+    addCatchOrFinallyStates(
+      TryState.Kind.CATCH,
+      enclosingMap,
+      this.exceptionBlocks
+    );
     return enclosingMap;
   }
 

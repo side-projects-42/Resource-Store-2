@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.MemoryWriteTransport');
+goog.provide("wtf.io.transports.MemoryWriteTransport");
 
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.WriteTransport');
-
-
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.WriteTransport");
 
 /**
  * Write-only memory transport base type.
@@ -24,7 +22,7 @@ goog.require('wtf.io.WriteTransport');
  * @constructor
  * @extends {wtf.io.WriteTransport}
  */
-wtf.io.transports.MemoryWriteTransport = function() {
+wtf.io.transports.MemoryWriteTransport = function () {
   goog.base(this);
 
   // TODO(benvanik): use the Blob create/append loop to allow very large sizes?
@@ -47,17 +45,15 @@ wtf.io.transports.MemoryWriteTransport = function() {
 };
 goog.inherits(wtf.io.transports.MemoryWriteTransport, wtf.io.WriteTransport);
 
-
 /**
  * @override
  */
-wtf.io.transports.MemoryWriteTransport.prototype.disposeInternal = function() {
+wtf.io.transports.MemoryWriteTransport.prototype.disposeInternal = function () {
   if (this.targetArray_) {
     this.targetArray_.push(this.getBlob());
   }
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Sets an array target that will be automatically populated with the blob data
@@ -65,32 +61,30 @@ wtf.io.transports.MemoryWriteTransport.prototype.disposeInternal = function() {
  * The blob will be pushed on.
  * @param {!Array} value Target array.
  */
-wtf.io.transports.MemoryWriteTransport.prototype.setTargetArray =
-    function(value) {
+wtf.io.transports.MemoryWriteTransport.prototype.setTargetArray = function (
+  value
+) {
   this.targetArray_ = value;
 };
 
-
 /**
  * @override
  */
-wtf.io.transports.MemoryWriteTransport.prototype.write = function(data) {
+wtf.io.transports.MemoryWriteTransport.prototype.write = function (data) {
   this.data_.push(data);
 };
 
-
 /**
  * @override
  */
-wtf.io.transports.MemoryWriteTransport.prototype.flush = function() {
+wtf.io.transports.MemoryWriteTransport.prototype.flush = function () {
   // No-op.
 };
-
 
 /**
  * Gets a blob containing all data that has been written to the transport.
  * @return {!wtf.io.Blob} Data blob.
  */
-wtf.io.transports.MemoryWriteTransport.prototype.getBlob = function() {
+wtf.io.transports.MemoryWriteTransport.prototype.getBlob = function () {
   return wtf.io.Blob.create(this.data_);
 };

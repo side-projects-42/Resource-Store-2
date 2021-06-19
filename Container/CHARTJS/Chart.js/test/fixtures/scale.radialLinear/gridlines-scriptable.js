@@ -1,8 +1,8 @@
 module.exports = {
   config: {
-    type: 'radar',
+    type: "radar",
     data: {
-      labels: ['A', 'B', 'C', 'D', 'E']
+      labels: ["A", "B", "C", "D", "E"],
     },
     options: {
       responsive: false,
@@ -10,25 +10,25 @@ module.exports = {
         r: {
           grid: {
             display: true,
-            color: function(context) {
-              return context.index % 2 === 0 ? 'green' : 'red';
+            color: function (context) {
+              return context.index % 2 === 0 ? "green" : "red";
             },
-            lineWidth: function(context) {
+            lineWidth: function (context) {
               return context.index % 2 === 0 ? 5 : 1;
             },
           },
           angleLines: {
-            color: 'rgba(255, 255, 255, 0.5)',
-            lineWidth: 2
+            color: "rgba(255, 255, 255, 0.5)",
+            lineWidth: 2,
           },
           pointLabels: {
-            display: false
+            display: false,
           },
           ticks: {
-            display: false
-          }
-        }
-      }
-    }
-  }
+            display: false,
+          },
+        },
+      },
+    },
+  },
 };

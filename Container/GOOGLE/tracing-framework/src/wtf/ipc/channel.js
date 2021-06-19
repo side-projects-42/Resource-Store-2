@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ipc.Channel');
+goog.provide("wtf.ipc.Channel");
 
-goog.require('goog.events');
-goog.require('wtf.events.EventEmitter');
-
-
+goog.require("goog.events");
+goog.require("wtf.events.EventEmitter");
 
 /**
  * Abstract IPC channel.
@@ -24,11 +22,10 @@ goog.require('wtf.events.EventEmitter');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.ipc.Channel = function() {
+wtf.ipc.Channel = function () {
   goog.base(this);
 };
 goog.inherits(wtf.ipc.Channel, wtf.events.EventEmitter);
-
 
 /**
  * Event types for channels.
@@ -38,16 +35,14 @@ wtf.ipc.Channel.EventType = {
   /**
    * Incoming message. Handlers receive the data as their only argument.
    */
-  MESSAGE: goog.events.getUniqueId('message')
+  MESSAGE: goog.events.getUniqueId("message"),
 };
-
 
 /**
  * Gets a value indicating whether the channel is currently connected.
  * @return {boolean} True if the channel is connected.
  */
 wtf.ipc.Channel.prototype.isConnected = goog.abstractMethod;
-
 
 /**
  * Sends a message.

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {isStrictKeyword} from '../syntax/Keywords.js';
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
+import { isStrictKeyword } from "../syntax/Keywords.js";
 
 /**
  * This matches the "Static Semantics: BoundNames" in the ES6 spec.
  */
 export class StrictParams extends ParseTreeVisitor {
-
   /**
    * @param {ErrorReporter} errorReporter
    */
@@ -31,8 +30,10 @@ export class StrictParams extends ParseTreeVisitor {
   visitBindingIdentifier(tree) {
     var name = tree.identifierToken.value;
     if (isStrictKeyword(name)) {
-      this.errorReporter.reportError(tree.location.start,
-                                     `${name} is a reserved identifier`);
+      this.errorReporter.reportError(
+        tree.location.start,
+        `${name} is a reserved identifier`
+      );
     }
   }
 
@@ -40,4 +41,3 @@ export class StrictParams extends ParseTreeVisitor {
     new StrictParams(errorReporter).visitAny(tree);
   }
 }
-

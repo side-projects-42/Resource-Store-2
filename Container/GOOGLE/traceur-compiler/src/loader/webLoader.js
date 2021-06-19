@@ -23,10 +23,8 @@ export var webLoader = {
         callback(xhr.responseText);
       } else {
         var err;
-        if (xhr.status === 404)
-          err = 'File not found \'' + url + '\'';
-        else
-          err = xhr.status + xhr.statusText;
+        if (xhr.status === 404) err = "File not found '" + url + "'";
+        else err = xhr.status + xhr.statusText;
         errback(err);
       }
       xhr = null;
@@ -34,10 +32,10 @@ export var webLoader = {
     xhr.onerror = (err) => {
       errback(err);
     };
-    xhr.open('GET', url, true);
+    xhr.open("GET", url, true);
     xhr.send();
     return () => {
       xhr && xhr.abort();
     };
-  }
+  },
 };

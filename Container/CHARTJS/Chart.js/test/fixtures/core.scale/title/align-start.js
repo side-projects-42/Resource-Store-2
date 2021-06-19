@@ -1,77 +1,77 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     options: {
       events: [],
       scales: {
         top: {
-          type: 'linear',
-          position: 'top',
+          type: "linear",
+          position: "top",
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
-            align: 'start',
-            text: 'top'
-          }
+            align: "start",
+            text: "top",
+          },
         },
         left: {
-          type: 'linear',
-          position: 'left',
+          type: "linear",
+          position: "left",
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
-            align: 'start',
-            text: 'left'
-          }
+            align: "start",
+            text: "left",
+          },
         },
         bottom: {
-          type: 'linear',
-          position: 'bottom',
+          type: "linear",
+          position: "bottom",
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
-            align: 'start',
-            text: 'bottom'
-          }
+            align: "start",
+            text: "bottom",
+          },
         },
         right: {
-          type: 'linear',
-          position: 'right',
+          type: "linear",
+          position: "right",
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
-            align: 'start',
-            text: 'right'
-          }
+            align: "start",
+            text: "right",
+          },
         },
-      }
-    }
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 256,
-      width: 256
+      width: 256,
     },
-  }
+  },
 };

@@ -1,12 +1,12 @@
 // Test the bar element
 
-describe('Bar element tests', function() {
-  it('Should correctly identify as in range', function() {
+describe("Bar element tests", function () {
+  it("Should correctly identify as in range", function () {
     var bar = new Chart.elements.BarElement({
       base: 0,
       width: 4,
       x: 10,
-      y: 15
+      y: 15,
     });
 
     expect(bar.inRange(10, 15)).toBe(true);
@@ -19,7 +19,7 @@ describe('Bar element tests', function() {
       base: 0,
       width: 4,
       x: 10,
-      y: -15
+      y: -15,
     });
 
     expect(negativeBar.inRange(10, -16)).toBe(false);
@@ -27,12 +27,12 @@ describe('Bar element tests', function() {
     expect(negativeBar.inRange(10, -5)).toBe(true);
   });
 
-  it('should get the correct tooltip position', function() {
+  it("should get the correct tooltip position", function () {
     var bar = new Chart.elements.BarElement({
       base: 0,
       width: 4,
       x: 10,
-      y: 15
+      y: 15,
     });
 
     expect(bar.tooltipPosition()).toEqual({
@@ -45,7 +45,7 @@ describe('Bar element tests', function() {
       base: -10,
       width: 4,
       x: 10,
-      y: -15
+      y: -15,
     });
 
     expect(negativeBar.tooltipPosition()).toEqual({
@@ -54,14 +54,14 @@ describe('Bar element tests', function() {
     });
   });
 
-  it('should get the center', function() {
+  it("should get the center", function () {
     var bar = new Chart.elements.BarElement({
       base: 0,
       width: 4,
       x: 10,
-      y: 15
+      y: 15,
     });
 
-    expect(bar.getCenterPoint()).toEqual({x: 10, y: 7.5});
+    expect(bar.getCenterPoint()).toEqual({ x: 10, y: 7.5 });
   });
 });

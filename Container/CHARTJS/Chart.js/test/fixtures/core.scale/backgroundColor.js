@@ -1,58 +1,58 @@
 const ticks = {
-  display: false
+  display: false,
 };
 const grid = {
-  display: false
+  display: false,
 };
 const title = {
   display: true,
-  test: ''
+  test: "",
 };
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     options: {
       events: [],
       scales: {
         top: {
-          type: 'linear',
-          backgroundColor: 'red',
-          position: 'top',
+          type: "linear",
+          backgroundColor: "red",
+          position: "top",
           ticks,
           grid,
-          title
+          title,
         },
         left: {
-          type: 'linear',
-          backgroundColor: 'green',
-          position: 'left',
+          type: "linear",
+          backgroundColor: "green",
+          position: "left",
           ticks,
           grid,
-          title
+          title,
         },
         bottom: {
-          type: 'linear',
-          backgroundColor: 'blue',
-          position: 'bottom',
+          type: "linear",
+          backgroundColor: "blue",
+          position: "bottom",
           ticks,
           grid,
-          title
+          title,
         },
         right: {
-          type: 'linear',
-          backgroundColor: 'gray',
-          position: 'right',
+          type: "linear",
+          backgroundColor: "gray",
+          position: "right",
           ticks,
           grid,
-          title
+          title,
         },
-      }
-    }
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 256
+      width: 256,
     },
-  }
+  },
 };

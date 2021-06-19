@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AnnotationsTransformer} from './AnnotationsTransformer.js';
-import {AsyncToGeneratorTransformer} from './AsyncToGeneratorTransformer.js';
-import {InlineES6ModuleTransformer} from './InlineES6ModuleTransformer.js';
-import {JsxTransformer} from './JsxTransformer.js';
-import {MemberVariableTransformer} from './MemberVariableTransformer.js';
-import {MultiTransformer} from './MultiTransformer.js';
-import {SpreadPropertiesTransformer} from './SpreadPropertiesTransformer.js';
-import {TypeTransformer} from './TypeTransformer.js';
-import {UniqueIdentifierGenerator} from './UniqueIdentifierGenerator.js';
-import {validate as validateFreeVariables} from
-    '../semantics/FreeVariableChecker.js';
+import { AnnotationsTransformer } from "./AnnotationsTransformer.js";
+import { AsyncToGeneratorTransformer } from "./AsyncToGeneratorTransformer.js";
+import { InlineES6ModuleTransformer } from "./InlineES6ModuleTransformer.js";
+import { JsxTransformer } from "./JsxTransformer.js";
+import { MemberVariableTransformer } from "./MemberVariableTransformer.js";
+import { MultiTransformer } from "./MultiTransformer.js";
+import { SpreadPropertiesTransformer } from "./SpreadPropertiesTransformer.js";
+import { TypeTransformer } from "./TypeTransformer.js";
+import { UniqueIdentifierGenerator } from "./UniqueIdentifierGenerator.js";
+import { validate as validateFreeVariables } from "../semantics/FreeVariableChecker.js";
 
 /**
  * MultiTransformer that only transforms non ES6 features, such as:
@@ -44,8 +43,12 @@ export class PureES6Transformer extends MultiTransformer {
 
     let append = (transformer) => {
       this.append((tree) => {
-        return new transformer(idGenerator, reporter, options, metadata).
-            transformAny(tree);
+        return new transformer(
+          idGenerator,
+          reporter,
+          options,
+          metadata
+        ).transformAny(tree);
       });
     };
 
@@ -72,7 +75,7 @@ export class PureES6Transformer extends MultiTransformer {
     append(TypeTransformer);
     append(AsyncToGeneratorTransformer);
 
-    if (options.modules === 'inline') {
+    if (options.modules === "inline") {
       append(InlineES6ModuleTransformer);
     }
   }

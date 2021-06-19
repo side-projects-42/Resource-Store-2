@@ -1,4 +1,4 @@
-import {hypot} from '../../../src/runtime/polyfills/Math.js';
+import { hypot } from "../../../src/runtime/polyfills/Math.js";
 
 function testHypot(hypot) {
   assert.equal(1, hypot(1));

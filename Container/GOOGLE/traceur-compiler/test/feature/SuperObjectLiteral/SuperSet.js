@@ -1,5 +1,5 @@
 var p = {
-  _y: {v: 321},
+  _y: { v: 321 },
   _z: 1,
 
   set x(value) {
@@ -25,17 +25,17 @@ var p = {
 var o = {
   __proto__: p,
   set x(value) {
-    assert.equal(super.x = value, value);
+    assert.equal((super.x = value), value);
   },
   set v(value) {
-    return super.x.v = value;
+    return (super.x.v = value);
   },
   inc(val) {
-    assert.equal(super.z += val, 4);
+    assert.equal((super.z += val), 4);
   },
   incLookup(val) {
-    assert.equal(super['z'] += val, 9);
-  }
+    assert.equal((super["z"] += val), 9);
+  },
 };
 
 o.x = 42;

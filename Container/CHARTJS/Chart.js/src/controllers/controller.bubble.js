@@ -1,5 +1,5 @@
-import DatasetController from '../core/core.datasetController';
-import {resolveObjectKey, valueOrDefault} from '../helpers/helpers.core';
+import DatasetController from "../core/core.datasetController";
+import { resolveObjectKey, valueOrDefault } from "../helpers/helpers.core";
 
 export default class BubbleController extends DatasetController {
   initialize() {
@@ -8,12 +8,12 @@ export default class BubbleController extends DatasetController {
   }
 
   /**
-	 * Parse array of objects
-	 * @protected
-	 */
+   * Parse array of objects
+   * @protected
+   */
   parseObjectData(meta, data, start, count) {
-    const {xScale, yScale} = meta;
-    const {xAxisKey = 'x', yAxisKey = 'y'} = this._parsing;
+    const { xScale, yScale } = meta;
+    const { xAxisKey = "x", yAxisKey = "y" } = this._parsing;
     const parsed = [];
     let i, ilen, item;
     for (i = start, ilen = start + count; i < ilen; ++i) {
@@ -21,17 +21,17 @@ export default class BubbleController extends DatasetController {
       parsed.push({
         x: xScale.parse(resolveObjectKey(item, xAxisKey), i),
         y: yScale.parse(resolveObjectKey(item, yAxisKey), i),
-        _custom: item && item.r && +item.r
+        _custom: item && item.r && +item.r,
       });
     }
     return parsed;
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getMaxOverflow() {
-    const {data, _parsed} = this._cachedMeta;
+    const { data, _parsed } = this._cachedMeta;
 
     let max = 0;
     for (let i = data.length - 1; i >= 0; --i) {
@@ -41,12 +41,12 @@ export default class BubbleController extends DatasetController {
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getLabelAndValue(index) {
     const me = this;
     const meta = me._cachedMeta;
-    const {xScale, yScale} = meta;
+    const { xScale, yScale } = meta;
     const parsed = me.getParsed(index);
     const x = xScale.getLabelForValue(parsed.x);
     const y = yScale.getLabelForValue(parsed.y);
@@ -54,7 +54,7 @@ export default class BubbleController extends DatasetController {
 
     return {
       label: meta.label,
-      value: '(' + x + ', ' + y + (r ? ', ' + r : '') + ')'
+      value: "(" + x + ", " + y + (r ? ", " + r : "") + ")",
     };
   }
 
@@ -68,8 +68,8 @@ export default class BubbleController extends DatasetController {
 
   updateElements(points, start, count, mode) {
     const me = this;
-    const reset = mode === 'reset';
-    const {iScale, vScale} = me._cachedMeta;
+    const reset = mode === "reset";
+    const { iScale, vScale } = me._cachedMeta;
     const firstOpts = me.resolveDataElementOptions(start, mode);
     const sharedOptions = me.getSharedOptions(firstOpts);
     const includeOptions = me.includeOptions(mode, sharedOptions);
@@ -80,13 +80,20 @@ export default class BubbleController extends DatasetController {
       const point = points[i];
       const parsed = !reset && me.getParsed(i);
       const properties = {};
-      const iPixel = properties[iAxis] = reset ? iScale.getPixelForDecimal(0.5) : iScale.getPixelForValue(parsed[iAxis]);
-      const vPixel = properties[vAxis] = reset ? vScale.getBasePixel() : vScale.getPixelForValue(parsed[vAxis]);
+      const iPixel = (properties[iAxis] = reset
+        ? iScale.getPixelForDecimal(0.5)
+        : iScale.getPixelForValue(parsed[iAxis]));
+      const vPixel = (properties[vAxis] = reset
+        ? vScale.getBasePixel()
+        : vScale.getPixelForValue(parsed[vAxis]));
 
       properties.skip = isNaN(iPixel) || isNaN(vPixel);
 
       if (includeOptions) {
-        properties.options = me.resolveDataElementOptions(i, point.active ? 'active' : mode);
+        properties.options = me.resolveDataElementOptions(
+          i,
+          point.active ? "active" : mode
+        );
 
         if (reset) {
           properties.options.radius = 0;
@@ -100,22 +107,22 @@ export default class BubbleController extends DatasetController {
   }
 
   /**
-	 * @param {number} index
-	 * @param {string} [mode]
-	 * @protected
-	 */
+   * @param {number} index
+   * @param {string} [mode]
+   * @protected
+   */
   resolveDataElementOptions(index, mode) {
     const parsed = this.getParsed(index);
     let values = super.resolveDataElementOptions(index, mode);
 
     // In case values were cached (and thus frozen), we need to clone the values
     if (values.$shared) {
-      values = Object.assign({}, values, {$shared: false});
+      values = Object.assign({}, values, { $shared: false });
     }
 
     // Custom radius resolution
     const radius = values.radius;
-    if (mode !== 'active') {
+    if (mode !== "active") {
       values.radius = 0;
     }
     values.radius += valueOrDefault(parsed && parsed._custom, radius);
@@ -124,21 +131,21 @@ export default class BubbleController extends DatasetController {
   }
 }
 
-BubbleController.id = 'bubble';
+BubbleController.id = "bubble";
 
 /**
  * @type {any}
  */
 BubbleController.defaults = {
   datasetElementType: false,
-  dataElementType: 'point',
+  dataElementType: "point",
 
   animations: {
     numbers: {
-      type: 'number',
-      properties: ['x', 'y', 'borderWidth', 'radius']
-    }
-  }
+      type: "number",
+      properties: ["x", "y", "borderWidth", "radius"],
+    },
+  },
 };
 
 /**
@@ -147,20 +154,20 @@ BubbleController.defaults = {
 BubbleController.overrides = {
   scales: {
     x: {
-      type: 'linear'
+      type: "linear",
     },
     y: {
-      type: 'linear'
-    }
+      type: "linear",
+    },
   },
   plugins: {
     tooltip: {
       callbacks: {
         title() {
           // Title doesn't make sense for scatter since we format the data as a point
-          return '';
-        }
-      }
-    }
-  }
+          return "";
+        },
+      },
+    },
+  },
 };

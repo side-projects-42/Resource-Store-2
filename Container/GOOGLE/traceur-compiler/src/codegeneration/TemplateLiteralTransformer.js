@@ -17,23 +17,17 @@ import {
   COMMA_EXPRESSION,
   CONDITIONAL_EXPRESSION,
   TEMPLATE_LITERAL_PORTION,
-  TEMPLATE_LITERAL_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
+  TEMPLATE_LITERAL_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
 import {
   LiteralExpression,
-  NewExpression
-} from '../syntax/trees/ParseTrees.js';
-import {LiteralToken} from '../syntax/LiteralToken.js';
-import {ParenTrait} from './ParenTrait.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
-import {
-  PERCENT,
-  PLUS,
-  SLASH,
-  STAR,
-  STRING
-} from '../syntax/TokenType.js';
+  NewExpression,
+} from "../syntax/trees/ParseTrees.js";
+import { LiteralToken } from "../syntax/LiteralToken.js";
+import { ParenTrait } from "./ParenTrait.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
+import { PERCENT, PLUS, SLASH, STAR, STRING } from "../syntax/TokenType.js";
 import {
   createArgumentList,
   createArrayLiteral,
@@ -41,8 +35,8 @@ import {
   createCallExpression,
   createMemberExpression,
   createOperatorToken,
-  createParenExpression
-} from './ParseTreeFactory.js';
+  createParenExpression,
+} from "./ParseTreeFactory.js";
 
 function createStringLiteralExpression(loc, str) {
   return new LiteralExpression(loc, new LiteralToken(STRING, str, loc));
@@ -93,9 +87,7 @@ function createGetTemplateObject(elements, getTemplateObject) {
     args.unshift(rawLiteral);
   }
 
-  return createCallExpression(
-      getTemplateObject,
-      createArgumentList(args));
+  return createCallExpression(getTemplateObject, createArgumentList(args));
 }
 
 /**
@@ -113,17 +105,17 @@ function maybeAddEmptyStringAtEnd(elements, items) {
 
 function toRawString(str) {
   // Normalize line endings before using JSON for the rest.
-  str = str.replace(/\r\n?/g, '\n');
+  str = str.replace(/\r\n?/g, "\n");
   str = JSON.stringify(str);
   // JSON does not handle Unicode line terminators \u2028 and \u2029.
-  return str.replace(/\u2028|\u2029/g, function(c) {
+  return str.replace(/\u2028|\u2029/g, function (c) {
     switch (c) {
-      case '\u2028':
-        return '\\u2028';
-      case '\u2029':
-        return '\\u2029';
+      case "\u2028":
+        return "\\u2028";
+      case "\u2029":
+        return "\\u2029";
       default:
-        throw Error('Not reachable');
+        throw Error("Not reachable");
     }
   });
 }
@@ -137,21 +129,24 @@ function toRawString(str) {
  */
 function toCookedString(s) {
   let sb = ['"'];
-  let i = 0, k = 1, c, c2;
+  let i = 0,
+    k = 1,
+    c,
+    c2;
   while (i < s.length) {
     c = s[i++];
     switch (c) {
-      case '\\':
+      case "\\":
         c2 = s[i++];
         switch (c2) {
           // Strip line continuation.
-          case '\n':
-          case '\u2028':
-          case '\u2029':
+          case "\n":
+          case "\u2028":
+          case "\u2029":
             break;
-          case '\r':
+          case "\r":
             // \ \r \n should be stripped as one
-            if (s[i + 1] === '\n') {
+            if (s[i + 1] === "\n") {
               i++;
             }
             break;
@@ -168,30 +163,29 @@ function toCookedString(s) {
         break;
 
       // Whitespace
-      case '\n':
-        sb[k++] = '\\n';
+      case "\n":
+        sb[k++] = "\\n";
         break;
       // <CR><LF> and <CR> LineTerminatorSequences are normalized to <LF>
       // for both TV and TRV.
-      case '\r':
-        if (s[i] === '\n')
-          i++;
-        sb[k++] = '\\n';
+      case "\r":
+        if (s[i] === "\n") i++;
+        sb[k++] = "\\n";
         break;
-      case '\t':
-        sb[k++] = '\\t';
+      case "\t":
+        sb[k++] = "\\t";
         break;
-      case '\f':
-        sb[k++] = '\\f';
+      case "\f":
+        sb[k++] = "\\f";
         break;
-      case '\b':
-        sb[k++] = '\\b';
+      case "\b":
+        sb[k++] = "\\b";
         break;
-      case '\u2028':
-        sb[k++] = '\\u2028';
+      case "\u2028":
+        sb[k++] = "\\u2028";
         break;
-      case '\u2029':
-        sb[k++] = '\\u2029';
+      case "\u2029":
+        sb[k++] = "\\u2029";
         break;
 
       default:
@@ -200,12 +194,12 @@ function toCookedString(s) {
   }
 
   sb[k++] = '"';
-  return sb.join('');
+  return sb.join("");
 }
 
-export class TemplateLiteralTransformer extends
-    ImportRuntimeTrait(ParenTrait(ParseTreeTransformer)) {
-
+export class TemplateLiteralTransformer extends ImportRuntimeTrait(
+  ParenTrait(ParseTreeTransformer)
+) {
   constructor(identifierGenerator, reporter, options) {
     super();
     this.options = options;
@@ -218,7 +212,7 @@ export class TemplateLiteralTransformer extends
 
     let operand = this.transformAny(tree.operand);
     let elements = tree.elements;
-    let getTemplateObject = this.getRuntimeExpression('getTemplateObject');
+    let getTemplateObject = this.getRuntimeExpression("getTemplateObject");
     let args = [createGetTemplateObject(tree.elements, getTemplateObject)];
     for (let i = 1; i < elements.length; i += 2) {
       args.push(this.transformAny(elements[i]));
@@ -262,16 +256,15 @@ export class TemplateLiteralTransformer extends
       return createStringLiteralExpression(tree.location, '""');
     }
 
-    let firstNonEmpty = elements[0].value.value === '';
+    let firstNonEmpty = elements[0].value.value === "";
     let binaryExpression = this.transformAny(elements[0]);
-    if (length === 1)
-      return binaryExpression;
+    if (length === 1) return binaryExpression;
 
     let plusToken = createOperatorToken(PLUS);
     for (let i = 1; i < length; i++) {
       let element = elements[i];
       if (element.type === TEMPLATE_LITERAL_PORTION) {
-        if (element.value.value === '') {
+        if (element.value.value === "") {
           continue;
         }
         if (firstNonEmpty && i === 2) {
@@ -279,8 +272,11 @@ export class TemplateLiteralTransformer extends
         }
       }
       let transformedTree = this.transformAny(elements[i]);
-      binaryExpression = createBinaryExpression(binaryExpression, plusToken,
-                                                transformedTree);
+      binaryExpression = createBinaryExpression(
+        binaryExpression,
+        plusToken,
+        transformedTree
+      );
     }
 
     return new createParenExpression(binaryExpression);

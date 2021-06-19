@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ExplodeExpressionTransformer} from './ExplodeExpressionTransformer.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {ParenTrait} from './ParenTrait.js';
-import {
-  STAR_STAR,
-  STAR_STAR_EQUAL
-} from '../syntax/TokenType.js';
-import {parseExpression} from './PlaceholderParser.js';
+import { ExplodeExpressionTransformer } from "./ExplodeExpressionTransformer.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { ParenTrait } from "./ParenTrait.js";
+import { STAR_STAR, STAR_STAR_EQUAL } from "../syntax/TokenType.js";
+import { parseExpression } from "./PlaceholderParser.js";
 
 export class ExponentiationTransformer extends ParenTrait(TempVarTransformer) {
   transformBinaryExpression(tree) {
@@ -27,12 +24,13 @@ export class ExponentiationTransformer extends ParenTrait(TempVarTransformer) {
       case STAR_STAR: {
         let left = this.transformAny(tree.left);
         let right = this.transformAny(tree.right);
-        return parseExpression `Math.pow(${left}, ${right})`;
+        return parseExpression`Math.pow(${left}, ${right})`;
       }
 
       case STAR_STAR_EQUAL: {
-        let exploded =
-            new ExplodeExpressionTransformer(this).transformAny(tree);
+        let exploded = new ExplodeExpressionTransformer(this).transformAny(
+          tree
+        );
         return this.transformAny(exploded);
       }
     }

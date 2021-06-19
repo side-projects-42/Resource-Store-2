@@ -11,17 +11,15 @@
  * @author rsturgell@google.com (Ryan Sturgell)
  */
 
-goog.provide('wtf.ui.Tooltip');
+goog.provide("wtf.ui.Tooltip");
 
-goog.require('goog.Disposable');
-goog.require('goog.array');
-goog.require('goog.asserts');
-goog.require('goog.dom');
-goog.require('goog.dom.TagName');
-goog.require('goog.dom.classes');
-goog.require('goog.style');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.array");
+goog.require("goog.asserts");
+goog.require("goog.dom");
+goog.require("goog.dom.TagName");
+goog.require("goog.dom.classes");
+goog.require("goog.style");
 
 /**
  * Tooltip control.
@@ -30,7 +28,7 @@ goog.require('goog.style');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.ui.Tooltip = function(dom) {
+wtf.ui.Tooltip = function (dom) {
   goog.base(this);
 
   /**
@@ -61,10 +59,10 @@ wtf.ui.Tooltip = function(dom) {
    * @type {string}
    * @private
    */
-  this.currentContent_ = '';
+  this.currentContent_ = "";
 
   // Force into a layer.
-  goog.style.setStyle(this.rootElement_, 'transform', 'perspective(0)');
+  goog.style.setStyle(this.rootElement_, "transform", "perspective(0)");
 
   var body = dom.getDocument().body;
   goog.asserts.assert(body);
@@ -72,18 +70,16 @@ wtf.ui.Tooltip = function(dom) {
 };
 goog.inherits(wtf.ui.Tooltip, goog.Disposable);
 
-
 /**
  * @override
  */
-wtf.ui.Tooltip.prototype.disposeInternal = function() {
+wtf.ui.Tooltip.prototype.disposeInternal = function () {
   if (this.visible_) {
     goog.array.remove(wtf.ui.Tooltip.allVisibleTooltips_, this);
   }
   this.dom_.removeNode(this.rootElement_);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Creates the control UI DOM.
@@ -91,22 +87,20 @@ wtf.ui.Tooltip.prototype.disposeInternal = function() {
  * @return {!Element} Control UI.
  * @protected
  */
-wtf.ui.Tooltip.prototype.createDom = function(dom) {
+wtf.ui.Tooltip.prototype.createDom = function (dom) {
   var el = dom.createElement(goog.dom.TagName.DIV);
   goog.style.setElementShown(el, false);
-  goog.dom.classes.add(el, goog.getCssName('uiTooltip'));
+  goog.dom.classes.add(el, goog.getCssName("uiTooltip"));
   return el;
 };
-
 
 /**
  * Gets a value indicating whether the tooltip is currently visible.
  * @return {boolean} True if the tooltip is visible.
  */
-wtf.ui.Tooltip.prototype.isVisible = function() {
+wtf.ui.Tooltip.prototype.isVisible = function () {
   return this.visible_;
 };
-
 
 /**
  * Show the tooltip at the given location.
@@ -114,7 +108,7 @@ wtf.ui.Tooltip.prototype.isVisible = function() {
  * @param {number} y Parent-relative Y, in DOM units.
  * @param {string} content Tooltip content.
  */
-wtf.ui.Tooltip.prototype.show = function(x, y, content) {
+wtf.ui.Tooltip.prototype.show = function (x, y, content) {
   var el = this.rootElement_;
   if (this.currentContent_ != content) {
     goog.dom.setTextContent(el, content);
@@ -136,8 +130,11 @@ wtf.ui.Tooltip.prototype.show = function(x, y, content) {
   left = Math.max(0, left);
   top = Math.max(0, top);
 
-  goog.style.setStyle(el, 'transform', 'perspective(0) translateX(' +
-      left + 'px) translateY(' + top + 'px)');
+  goog.style.setStyle(
+    el,
+    "transform",
+    "perspective(0) translateX(" + left + "px) translateY(" + top + "px)"
+  );
 
   if (!this.visible_) {
     goog.style.setElementShown(el, true);
@@ -146,12 +143,11 @@ wtf.ui.Tooltip.prototype.show = function(x, y, content) {
   this.visible_ = true;
 };
 
-
 /**
  * Updates the tooltip content if visible.
  * @param {string} content Tooltip content.
  */
-wtf.ui.Tooltip.prototype.update = function(content) {
+wtf.ui.Tooltip.prototype.update = function (content) {
   if (!this.visible_) {
     return;
   }
@@ -159,11 +155,10 @@ wtf.ui.Tooltip.prototype.update = function(content) {
   goog.dom.setTextContent(el, content);
 };
 
-
 /**
  * Hides the tooltip.
  */
-wtf.ui.Tooltip.prototype.hide = function() {
+wtf.ui.Tooltip.prototype.hide = function () {
   if (!this.visible_) {
     return;
   }
@@ -172,7 +167,6 @@ wtf.ui.Tooltip.prototype.hide = function() {
   goog.style.setElementShown(this.rootElement_, false);
 };
 
-
 /**
  * All tooltips that are currently visible.
  * @type {!Array.<!wtf.ui.Tooltip>}
@@ -180,11 +174,10 @@ wtf.ui.Tooltip.prototype.hide = function() {
  */
 wtf.ui.Tooltip.allVisibleTooltips_ = [];
 
-
 /**
  * Hide all tooltips.
  */
-wtf.ui.Tooltip.hideAll = function() {
+wtf.ui.Tooltip.hideAll = function () {
   var allVisible = wtf.ui.Tooltip.allVisibleTooltips_;
   wtf.ui.Tooltip.allVisibleTooltips_ = [];
   for (var n = 0; n < allVisible.length; n++) {

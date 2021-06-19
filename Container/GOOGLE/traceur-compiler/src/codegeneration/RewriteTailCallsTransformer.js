@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {RewriteTailExpressionsTransformer} from
-    './RewriteTailExpressionsTransformer.js';
-import {
-  ReturnStatement,
-  TryStatement
-} from '../syntax/trees/ParseTrees.js';
-import SkipFunctionsTransformerTrait from './SkipFunctionsTransformerTrait.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { RewriteTailExpressionsTransformer } from "./RewriteTailExpressionsTransformer.js";
+import { ReturnStatement, TryStatement } from "../syntax/trees/ParseTrees.js";
+import SkipFunctionsTransformerTrait from "./SkipFunctionsTransformerTrait.js";
 
-export class RewriteTailCallsTransformer extends
-    SkipFunctionsTransformerTrait(ParseTreeTransformer) {
+export class RewriteTailCallsTransformer extends SkipFunctionsTransformerTrait(
+  ParseTreeTransformer
+) {
   constructor(bodyTransformer) {
     super();
     this.bodyTransformer_ = bodyTransformer;
@@ -32,7 +29,9 @@ export class RewriteTailCallsTransformer extends
     let expression = tree.expression;
     if (expression !== null) {
       expression = RewriteTailExpressionsTransformer.transform(
-          this.bodyTransformer_, expression);
+        this.bodyTransformer_,
+        expression
+      );
       if (expression !== tree.expression) {
         return new ReturnStatement(tree.location, expression);
       }
@@ -45,27 +44,51 @@ export class RewriteTailCallsTransformer extends
     if (tree.finallyBlock !== null) {
       block = this.transformAny(tree.finallyBlock);
       if (block !== tree.finallyBlock) {
-        return new TryStatement(tree.location, tree.body, tree.catchBlock,
-            block);
+        return new TryStatement(
+          tree.location,
+          tree.body,
+          tree.catchBlock,
+          block
+        );
       }
     } else {
       block = this.transformAny(tree.catchBlock);
       if (block !== tree.catchBlock) {
-        return new TryStatement(tree.location, tree.body, block,
-            tree.finallyBlock);
+        return new TryStatement(
+          tree.location,
+          tree.body,
+          block,
+          tree.finallyBlock
+        );
       }
     }
     return tree;
   }
 
-  transformForInStatement(tree) {return tree;}
-  transformForOfStatement(tree) {return tree;}
-  transformForOnStatement(tree) {return tree;}
-  transformClassDeclaration(tree) {return tree;}
-  transformClassExpression(tree) {return tree;}
-  transformExpressionStatement(tree) {return tree;}
-  transformComprehensionFor(tree) {return tree;}
-  transformVariableStatement(tree) {return tree;}
+  transformForInStatement(tree) {
+    return tree;
+  }
+  transformForOfStatement(tree) {
+    return tree;
+  }
+  transformForOnStatement(tree) {
+    return tree;
+  }
+  transformClassDeclaration(tree) {
+    return tree;
+  }
+  transformClassExpression(tree) {
+    return tree;
+  }
+  transformExpressionStatement(tree) {
+    return tree;
+  }
+  transformComprehensionFor(tree) {
+    return tree;
+  }
+  transformVariableStatement(tree) {
+    return tree;
+  }
 
   static transform(bodyTransformer, tree) {
     return new RewriteTailCallsTransformer(bodyTransformer).transformAny(tree);

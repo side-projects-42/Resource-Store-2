@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export {typeof as default} from './symbols.js';
+export { typeof as default } from "./symbols.js";

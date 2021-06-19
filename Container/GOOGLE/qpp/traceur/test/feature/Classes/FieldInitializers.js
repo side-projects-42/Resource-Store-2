@@ -19,5 +19,5 @@ assertEquals(0, p2.y);
 assertEquals(1, p.x);
 
 for (var element in Point) {
-  fail('Point contains static member : ' + element);
+  fail("Point contains static member : " + element);
 }

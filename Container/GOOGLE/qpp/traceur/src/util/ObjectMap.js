@@ -48,7 +48,7 @@ export class ObjectMap {
   }
 
   values() {
-    return Object.keys(this.values_).map((uid) =>this.values_[uid]);
+    return Object.keys(this.values_).map((uid) => this.values_[uid]);
   }
 
   remove(key) {

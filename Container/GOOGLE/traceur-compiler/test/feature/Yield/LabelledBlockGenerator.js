@@ -1,20 +1,20 @@
 var i = 0;
-var s = '';
+var s = "";
 
 function* f() {
-  s += 'a';
-  while(i++ < 3) {
-    s += 'b';
+  s += "a";
+  while (i++ < 3) {
+    s += "b";
     label1: {
-      s += 'c';
+      s += "c";
       break label1;
-      s += 'd';
+      s += "d";
     }
-    s += 'e';
+    s += "e";
   }
-  s += 'f';
+  s += "f";
 }
 
 var g = f();
 g.next();
-assert.equal(s, 'abcebcebcef');
+assert.equal(s, "abcebcebcef");

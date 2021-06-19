@@ -9,7 +9,7 @@ function* tryCatchYieldGenerator() {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -18,4 +18,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('15', accumulate(tryCatchYieldGenerator()));
+assert.equal("15", accumulate(tryCatchYieldGenerator()));

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CONST, VAR} from '../syntax/TokenType.js';
+import { CONST, VAR } from "../syntax/TokenType.js";
 import {
   ImportDeclaration,
   ImportedBinding,
@@ -21,8 +21,8 @@ import {
   Module,
   ModuleSpecifier,
   Script,
-} from '../syntax/trees/ParseTrees.js';
-import {StringSet} from '../util/StringSet.js';
+} from "../syntax/trees/ParseTrees.js";
+import { StringSet } from "../util/StringSet.js";
 import {
   createBindingIdentifier,
   createIdentifierToken,
@@ -31,9 +31,9 @@ import {
   createStringLiteral,
   createStringLiteralToken,
   createVariableStatement,
-} from './ParseTreeFactory.js';
-import {parseExpression} from './PlaceholderParser.js';
-import {prependStatements} from './PrependStatements.js';
+} from "./ParseTreeFactory.js";
+import { parseExpression } from "./PlaceholderParser.js";
+import { prependStatements } from "./PrependStatements.js";
 
 function toTempName(name) {
   return `$__${name}`;
@@ -41,7 +41,9 @@ function toTempName(name) {
 
 function getDeclarationType(options) {
   return options.parseOptions.blockBinding &&
-      !options.transformOptions.blockBinding ? CONST : VAR;
+    !options.transformOptions.blockBinding
+    ? CONST
+    : VAR;
 }
 
 export default function ImportRuntimeTrait(ParseTreeTransformerClass) {
@@ -57,7 +59,7 @@ export default function ImportRuntimeTrait(ParseTreeTransformerClass) {
         this.addImportedName(name);
         return createIdentifierExpression(toTempName(name));
       }
-      return createMemberExpression('$traceurRuntime', name);
+      return createMemberExpression("$traceurRuntime", name);
     }
 
     get requiredNames() {
@@ -103,32 +105,39 @@ export default function ImportRuntimeTrait(ParseTreeTransformerClass) {
     }
 
     _getModuleSpecifier(name) {
-      let base = 'traceur/dist/commonjs';
-      if (this.options.modules === 'parse') {
-        base = 'traceur/src';
+      let base = "traceur/dist/commonjs";
+      if (this.options.modules === "parse") {
+        base = "traceur/src";
       }
       const moduleId = createStringLiteralToken(
-          `${base}/runtime/modules/${name}.js`);
+        `${base}/runtime/modules/${name}.js`
+      );
       return new ModuleSpecifier(null, moduleId);
     }
 
     getRuntimeImports() {
-      return this.importedNames.valuesAsArray().filter(
-          name => !this._existingImports.has(toTempName(name))).map(name => {
-        // import {default as $__name} from '.../name.js'
-        const def = createIdentifierToken('default');
-        const binding = new ImportedBinding(null,
-            createBindingIdentifier(toTempName(name)));
-        const specifier = new ImportSpecifier(null, binding, def);
-        return new ImportDeclaration(null,
+      return this.importedNames
+        .valuesAsArray()
+        .filter((name) => !this._existingImports.has(toTempName(name)))
+        .map((name) => {
+          // import {default as $__name} from '.../name.js'
+          const def = createIdentifierToken("default");
+          const binding = new ImportedBinding(
+            null,
+            createBindingIdentifier(toTempName(name))
+          );
+          const specifier = new ImportSpecifier(null, binding, def);
+          return new ImportDeclaration(
+            null,
             new ImportSpecifierSet(null, [specifier]),
-            this._getModuleSpecifier(name));
-      });
+            this._getModuleSpecifier(name)
+          );
+        });
     }
 
     addRuntimeImports(scriptItemList) {
       let runtimeImports = this.getRuntimeImports();
       return prependStatements(scriptItemList, ...runtimeImports);
     }
-  }
+  };
 }

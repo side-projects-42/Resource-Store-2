@@ -71,21 +71,23 @@ To modify a label for a specific dataset, create an entry in the `labels` datase
 }
 ```
 
-This example creates for each data element in the *first* dataset:
+This example creates for each data element in the _first_ dataset:
+
 - a `value` label with text in yellow
 - a `title` label with text in blue
 
-and for each data element in the *second* dataset:
+and for each data element in the _second_ dataset:
+
 - a `value` label with text in pink
 - a `title` label with text in green
 
 ::: warning IMPORTANT
-Options defined under each `labels.<key>` always override options defined at the chart **and** dataset level (in the previous example, the `title` label text of the *first* dataset is blue, not yellow).
+Options defined under each `labels.<key>` always override options defined at the chart **and** dataset level (in the previous example, the `title` label text of the _first_ dataset is blue, not yellow).
 :::
 
 ### Adding Label
 
-To add a new label to a specific dataset, create an entry under the `labels` dataset options using a *inexistent* label key. The following example creates one label (`title`) for each data element in the *first* dataset and two labels (`title` and `value`) for each data element in the *second* dataset:
+To add a new label to a specific dataset, create an entry under the `labels` dataset options using a _inexistent_ label key. The following example creates one label (`title`) for each data element in the _first_ dataset and two labels (`title` and `value`) for each data element in the _second_ dataset:
 
 ```js
 {
@@ -119,7 +121,7 @@ To add a new label to a specific dataset, create an entry under the `labels` dat
 
 ### Removing Label
 
-To remove a label for a specific dataset, create an `null` entry under the `labels` dataset options for the key of the label to remove. The following example removes the `title` label in the *second* dataset:
+To remove a label for a specific dataset, create an `null` entry under the `labels` dataset options for the key of the label to remove. The following example removes the `title` label in the _second_ dataset:
 
 ```js
 {

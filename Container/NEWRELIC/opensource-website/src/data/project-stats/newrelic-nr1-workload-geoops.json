@@ -1,0 +1,206 @@
+{
+  "projectFullName": "newrelic/nr1-workload-geoops",
+  "issues": {
+    "open": 11
+  },
+  "releases": 36,
+  "latestRelease": {
+    "name": "v1.5.10",
+    "date": "2021-05-07T18:13:12Z"
+  },
+  "commits": 589,
+  "lastSixMonthsCommitTotal": 50,
+  "contributors": 16,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU1NDUyMjgwODE=",
+      "title": "List locations that are either favorited or visible on the map",
+      "url": "https://github.com/newrelic/nr1-workload-geoops/issues/9",
+      "createdAt": "2020-01-04T02:04:01Z",
+      "comments": {
+        "totalCount": 1
+      },
+      "author": {
+        "login": "tangollama",
+        "id": "MDQ6VXNlcjkyOTI2MQ==",
+        "email": "",
+        "name": "Joel Worrall"
+      },
+      "number": 9,
+      "createdBy": "Joel Worrall"
+    },
+    {
+      "id": "MDU6SXNzdWU1NDUyMzUzNjQ=",
+      "title": "On a zoom out, display regions and rollup statuses w/in those regions",
+      "url": "https://github.com/newrelic/nr1-workload-geoops/issues/13",
+      "createdAt": "2020-01-04T03:32:20Z",
+      "comments": {
+        "totalCount": 1
+      },
+      "author": {
+        "login": "tangollama",
+        "id": "MDQ6VXNlcjkyOTI2MQ==",
+        "email": "",
+        "name": "Joel Worrall"
+      },
+      "number": 13,
+      "createdBy": "Joel Worrall"
+    },
+    {
+      "id": "MDU6SXNzdWU1NDUyMzYzMjQ=",
+      "title": "Branded markers on the map",
+      "url": "https://github.com/newrelic/nr1-workload-geoops/issues/19",
+      "createdAt": "2020-01-04T03:45:03Z",
+      "comments": {
+        "totalCount": 1
+      },
+      "author": {
+        "login": "tangollama",
+        "id": "MDQ6VXNlcjkyOTI2MQ==",
+        "email": "",
+        "name": "Joel Worrall"
+      },
+      "number": 19,
+      "createdBy": "Joel Worrall"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 138513,
+      "login": "bthemad",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/138513?v=4",
+      "htmlUrl": "https://github.com/bthemad",
+      "contributions": 1
+    },
+    {
+      "id": 1395158,
+      "login": "jpvajda",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1395158?v=4",
+      "htmlUrl": "https://github.com/jpvajda",
+      "contributions": 1
+    },
+    {
+      "id": 66321197,
+      "login": "nr-opensource-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66321197?v=4",
+      "htmlUrl": "https://github.com/nr-opensource-bot",
+      "contributions": 52
+    },
+    {
+      "id": 1663955,
+      "login": "mbazhlekova",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1663955?v=4",
+      "htmlUrl": "https://github.com/mbazhlekova",
+      "contributions": 1
+    },
+    {
+      "id": 58010132,
+      "login": "mmfred",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/58010132?v=4",
+      "htmlUrl": "https://github.com/mmfred",
+      "contributions": 1
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 5
+    },
+    {
+      "id": 17122543,
+      "login": "rudouglas",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/17122543?v=4",
+      "htmlUrl": "https://github.com/rudouglas",
+      "contributions": 4
+    },
+    {
+      "id": 8731013,
+      "login": "prototypicalpro",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8731013?v=4",
+      "htmlUrl": "https://github.com/prototypicalpro",
+      "contributions": 1
+    },
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 8
+    },
+    {
+      "id": 5214156,
+      "login": "norbertsuski",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/5214156?v=4",
+      "htmlUrl": "https://github.com/norbertsuski",
+      "contributions": 18
+    },
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 127
+    },
+    {
+      "id": 24775098,
+      "login": "madecki",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/24775098?v=4",
+      "htmlUrl": "https://github.com/madecki",
+      "contributions": 15
+    },
+    {
+      "id": 32174276,
+      "login": "semantic-release-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/32174276?v=4",
+      "htmlUrl": "https://github.com/semantic-release-bot",
+      "contributions": 10
+    },
+    {
+      "id": 70179303,
+      "login": "aswanson-nr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/70179303?v=4",
+      "htmlUrl": "https://github.com/aswanson-nr",
+      "contributions": 2
+    },
+    {
+      "id": 19733683,
+      "login": "snyk-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19733683?v=4",
+      "htmlUrl": "https://github.com/snyk-bot",
+      "contributions": 10
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 134
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U2MDU=",
+      "name": "SCSS",
+      "color": "#c6538c"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

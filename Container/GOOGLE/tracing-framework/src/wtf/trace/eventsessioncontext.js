@@ -11,9 +11,8 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.EventSessionContext');
-goog.provide('wtf.trace.EventSessionContextType');
-
+goog.provide("wtf.trace.EventSessionContext");
+goog.provide("wtf.trace.EventSessionContextType");
 
 /**
  * Shared session context.
@@ -25,8 +24,7 @@ goog.provide('wtf.trace.EventSessionContextType');
  * array with the elements inside of it. Use the static accessor methods to
  * manipulate it.
  */
-wtf.trace.EventSessionContext = function() {};
-
+wtf.trace.EventSessionContext = function () {};
 
 /**
  * The event session context type.
@@ -34,31 +32,28 @@ wtf.trace.EventSessionContext = function() {};
  */
 wtf.trace.EventSessionContextType;
 
-
 /**
  * Creates a new context.
  * @return {!wtf.trace.EventSessionContextType} New context.
  */
-wtf.trace.EventSessionContext.create = function() {
+wtf.trace.EventSessionContext.create = function () {
   return new Array(2);
 };
-
 
 /**
  * Initializes a context for the given session.
  * @param {!wtf.trace.EventSessionContextType} context Context.
  * @param {wtf.trace.Session} session Trace session, if any.
  */
-wtf.trace.EventSessionContext.init = function(context, session) {
+wtf.trace.EventSessionContext.init = function (context, session) {
   context[0] = session;
 };
-
 
 /**
  * Sets the buffer on the context.
  * @param {!wtf.trace.EventSessionContextType} context Context.
  * @param {!wtf.io.BufferView.Type} bufferView New buffer.
  */
-wtf.trace.EventSessionContext.setBuffer = function(context, bufferView) {
+wtf.trace.EventSessionContext.setBuffer = function (context, bufferView) {
   context[1] = bufferView;
 };

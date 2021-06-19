@@ -12,21 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {IdentifierToken} from '../syntax/IdentifierToken.js';
-import {LiteralToken} from '../syntax/LiteralToken.js';
-import {
-  ParseTree,
-  ParseTreeType
-} from '../syntax/trees/ParseTree.js';
+import { IdentifierToken } from "../syntax/IdentifierToken.js";
+import { LiteralToken } from "../syntax/LiteralToken.js";
+import { ParseTree, ParseTreeType } from "../syntax/trees/ParseTree.js";
 import {
   CALL,
   CREATE,
   DEFINE_PROPERTY,
   FREEZE,
   OBJECT,
-  UNDEFINED
-} from '../syntax/PredefinedName.js';
-import {Token} from '../syntax/Token.js';
+  UNDEFINED,
+} from "../syntax/PredefinedName.js";
+import { Token } from "../syntax/Token.js";
 import {
   EQUAL,
   FALSE,
@@ -34,9 +31,9 @@ import {
   NUMBER,
   STRING,
   TRUE,
-  VOID
-} from '../syntax/TokenType.js';
-import {assert} from '../util/assert.js';
+  VOID,
+} from "../syntax/TokenType.js";
+import { assert } from "../util/assert.js";
 
 import {
   ArgumentList,
@@ -90,8 +87,8 @@ import {
   VariableDeclarationList,
   VariableStatement,
   WhileStatement,
-  WithStatement
-} from '../syntax/trees/ParseTrees.js';
+  WithStatement,
+} from "../syntax/trees/ParseTrees.js";
 
 // Helpers so we can use these on Arguments objects.
 let slice = Array.prototype.slice.call.bind(Array.prototype.slice);
@@ -124,7 +121,7 @@ export function createBooleanLiteralToken(value) {
 }
 
 export function createNullLiteralToken() {
-  return new LiteralToken(NULL, 'null', null);
+  return new LiteralToken(NULL, "null", null);
 }
 
 export function createNumberLiteralToken(value) {
@@ -143,10 +140,11 @@ export function createEmptyParameterList() {
 export function createFormalParameter(name) {
   let bindingIdentifier = createBindingIdentifier(name);
   return new FormalParameter(
-      null,
-      new BindingElement(null, bindingIdentifier, null),
-      null,
-      []);
+    null,
+    new BindingElement(null, bindingIdentifier, null),
+    null,
+    []
+  );
 }
 
 /**
@@ -185,8 +183,7 @@ export function createEmptyArrayLiteral() {
  * @return {BinaryExpression}
  */
 export function createAssignmentExpression(lhs, rhs) {
-  return new BinaryExpression(null, lhs,
-      createOperatorToken(EQUAL), rhs);
+  return new BinaryExpression(null, lhs, createOperatorToken(EQUAL), rhs);
 }
 
 /**
@@ -202,13 +199,15 @@ export function createBinaryExpression(left, operator, right) {
  * @return {BindingIdentifier}
  */
 export function createBindingIdentifier(identifier) {
-  if (typeof identifier === 'string')
+  if (typeof identifier === "string")
     identifier = createIdentifierToken(identifier);
   else if (identifier.type === ParseTreeType.BINDING_IDENTIFIER)
     return identifier;
   else if (identifier.type === ParseTreeType.IDENTIFIER_EXPRESSION)
-    return new BindingIdentifier(identifier.location,
-                                 identifier.identifierToken);
+    return new BindingIdentifier(
+      identifier.location,
+      identifier.identifierToken
+    );
   return new BindingIdentifier(null, identifier);
 }
 
@@ -252,11 +251,13 @@ export function createFunctionBody(statements) {
  * @return {CallExpression}
  */
 export function createScopedExpression(body, scope) {
-  assert(body.type === 'FUNCTION_BODY');
+  assert(body.type === "FUNCTION_BODY");
   return createCallCall(
-      createParenExpression(
-          createFunctionExpression(createEmptyParameterList(), body)),
-      scope);
+    createParenExpression(
+      createFunctionExpression(createEmptyParameterList(), body)
+    ),
+    scope
+  );
 }
 
 /**
@@ -264,9 +265,12 @@ export function createScopedExpression(body, scope) {
  * @return {CallExpression}
  */
 export function createImmediatelyInvokedFunctionExpression(body) {
-  assert(body.type === 'FUNCTION_BODY');
-  return createCallExpression(createParenExpression(
-          createFunctionExpression(createEmptyParameterList(), body)));
+  assert(body.type === "FUNCTION_BODY");
+  return createCallExpression(
+    createParenExpression(
+      createFunctionExpression(createEmptyParameterList(), body)
+    )
+  );
 }
 
 /**
@@ -274,8 +278,10 @@ export function createImmediatelyInvokedFunctionExpression(body) {
  * @param {ArgumentList=} args
  * @return {CallExpression}
  */
-export function createCallExpression(operand,
-                                     args = createEmptyArgumentList()) {
+export function createCallExpression(
+  operand,
+  args = createEmptyArgumentList()
+) {
   return new CallExpression(null, operand, args);
 }
 
@@ -293,8 +299,9 @@ export function createBreakStatement(name = null) {
  */
 function createCallCall(func, thisExpression) {
   return createCallExpression(
-      createMemberExpression(func, CALL),
-      createArgumentList([thisExpression]));
+    createMemberExpression(func, CALL),
+    createArgumentList([thisExpression])
+  );
 }
 
 /**
@@ -439,18 +446,24 @@ export function createForStatement(variables, condition, increment, body) {
  * @return {FunctionExpression}
  */
 export function createFunctionExpression(parameterList, body) {
-  assert(body.type === 'FUNCTION_BODY');
-  return new FunctionExpression(null, null, false,
-                                parameterList, null, [], body);
+  assert(body.type === "FUNCTION_BODY");
+  return new FunctionExpression(
+    null,
+    null,
+    false,
+    parameterList,
+    null,
+    [],
+    body
+  );
 }
-
 
 /**
  * @param {string|IdentifierToken} identifier
  * @return {IdentifierExpression}
  */
 export function createIdentifierExpression(identifier) {
-  if (typeof identifier === 'string')
+  if (typeof identifier === "string")
     identifier = createIdentifierToken(identifier);
   else if (identifier instanceof BindingIdentifier)
     identifier = identifier.identifierToken;
@@ -529,16 +542,17 @@ export function createNumberLiteral(value) {
  * @return {MemberExpression|MemberLookupExpression}
  */
 export function createMemberExpression(operand, memberName, ...memberNames) {
-  if (typeof operand === 'string' || operand instanceof IdentifierToken)
+  if (typeof operand === "string" || operand instanceof IdentifierToken)
     operand = createIdentifierExpression(operand);
-  if (typeof memberName === 'string')
+  if (typeof memberName === "string")
     memberName = createIdentifierToken(memberName);
   if (memberName instanceof LiteralToken)
     memberName = new LiteralExpression(null, memberName);
 
-  let tree = memberName instanceof LiteralExpression ?
-      new MemberLookupExpression(null, operand, memberName) :
-      new MemberExpression(null, operand, memberName);
+  let tree =
+    memberName instanceof LiteralExpression
+      ? new MemberLookupExpression(null, operand, memberName)
+      : new MemberExpression(null, operand, memberName);
   for (let i = 0; i < memberNames.length; i++) {
     tree = createMemberExpression(tree, memberNames[i]);
   }
@@ -548,7 +562,7 @@ export function createMemberExpression(operand, memberName, ...memberNames) {
 /**
  * @return {MemberLookupExpression}
  */
-export function createMemberLookupExpression(operand,  memberExpression) {
+export function createMemberLookupExpression(operand, memberExpression) {
   return new MemberLookupExpression(null, operand, memberExpression);
 }
 
@@ -575,10 +589,10 @@ export function createNewExpression(operand, args) {
 export function createObjectFreeze(value) {
   // Object.freeze(value)
   return createCallExpression(
-      createMemberExpression(OBJECT, FREEZE),
-      createArgumentList([value]));
+    createMemberExpression(OBJECT, FREEZE),
+    createArgumentList([value])
+  );
 }
-
 
 /**
  * @param {ParseTree} protoExpression
@@ -587,13 +601,12 @@ export function createObjectFreeze(value) {
  */
 export function createObjectCreate(protoExpression, descriptors = undefined) {
   let argumentList = [protoExpression];
-  if (descriptors)
-    argumentList.push(descriptors);
+  if (descriptors) argumentList.push(descriptors);
 
   return createCallExpression(
-      createMemberExpression(OBJECT,
-                             CREATE),
-      createArgumentList(argumentList));
+    createMemberExpression(OBJECT, CREATE),
+    createArgumentList(argumentList)
+  );
 }
 
 /**
@@ -603,10 +616,9 @@ export function createObjectCreate(protoExpression, descriptors = undefined) {
  * @return {ObjectLiteral}
  */
 export function createObjectLiteralForDescriptor(descr) {
-  let propertyNameAndValues = Object.keys(descr).map(function(name) {
+  let propertyNameAndValues = Object.keys(descr).map(function (name) {
     let value = descr[name];
-    if (!(value instanceof ParseTree))
-      value = createBooleanLiteral(!!value);
+    if (!(value instanceof ParseTree)) value = createBooleanLiteral(!!value);
     return createPropertyNameAssignment(name, value);
   });
   return createObjectLiteral(propertyNameAndValues);
@@ -622,16 +634,12 @@ export function createObjectLiteralForDescriptor(descr) {
  * @return {ParseTree}
  */
 export function createDefineProperty(tree, name, descr) {
-  if (typeof name === 'string')
-    name = createStringLiteral(name);
+  if (typeof name === "string") name = createStringLiteral(name);
 
   return createCallExpression(
-      createMemberExpression(OBJECT, DEFINE_PROPERTY),
-      createArgumentList([
-        tree,
-        name,
-        createObjectLiteralForDescriptor(descr)
-      ]));
+    createMemberExpression(OBJECT, DEFINE_PROPERTY),
+    createArgumentList([tree, name, createObjectLiteralForDescriptor(descr)])
+  );
 }
 
 /**
@@ -673,7 +681,7 @@ export function createScript(scriptItemList) {
  * @return {PropertyNameAssignment}
  */
 export function createPropertyNameAssignment(identifier, value) {
-  if (typeof identifier === 'string')
+  if (typeof identifier === "string")
     identifier = createLiteralPropertyName(identifier);
   return new PropertyNameAssignment(null, identifier, value);
 }
@@ -751,7 +759,7 @@ export function createUnaryExpression(operator, operand) {
  * @return {ParseTree}
  */
 export function createUseStrictDirective() {
-  return createExpressionStatement(createStringLiteral('use strict'));
+  return createExpressionStatement(createStringLiteral("use strict"));
 }
 
 /**
@@ -760,17 +768,20 @@ export function createUseStrictDirective() {
  * @param {ParseTree=} initializer
  * @return {VariableDeclarationList}
  */
-export function createVariableDeclarationList(binding,
-                                              identifierOrDeclarations,
-                                              initializer = undefined) {
+export function createVariableDeclarationList(
+  binding,
+  identifierOrDeclarations,
+  initializer = undefined
+) {
   if (identifierOrDeclarations instanceof Array) {
     let declarations = identifierOrDeclarations;
     return new VariableDeclarationList(null, binding, declarations);
   }
 
   let identifier = identifierOrDeclarations;
-  return createVariableDeclarationList(
-      binding, [createVariableDeclaration(identifier, initializer)]);
+  return createVariableDeclarationList(binding, [
+    createVariableDeclaration(identifier, initializer),
+  ]);
 }
 
 /**
@@ -779,10 +790,12 @@ export function createVariableDeclarationList(binding,
  * @return {VariableDeclaration}
  */
 export function createVariableDeclaration(identifier, initializer) {
-  if (!(identifier instanceof ParseTree) ||
-      identifier.type !== ParseTreeType.BINDING_IDENTIFIER &&
+  if (
+    !(identifier instanceof ParseTree) ||
+    (identifier.type !== ParseTreeType.BINDING_IDENTIFIER &&
       identifier.type !== ParseTreeType.OBJECT_PATTERN &&
-      identifier.type !== ParseTreeType.ARRAY_PATTERN) {
+      identifier.type !== ParseTreeType.ARRAY_PATTERN)
+  ) {
     identifier = createBindingIdentifier(identifier);
   }
 
@@ -795,9 +808,11 @@ export function createVariableDeclaration(identifier, initializer) {
  * @param {ParseTree=} initializer
  * @return {VariableStatement}
  */
-export function createVariableStatement(listOrBinding,
-                                        identifier = undefined,
-                                        initializer = undefined) {
+export function createVariableStatement(
+  listOrBinding,
+  identifier = undefined,
+  initializer = undefined
+) {
   if (listOrBinding instanceof VariableDeclarationList)
     return new VariableStatement(null, listOrBinding);
   let binding = listOrBinding;
@@ -811,9 +826,8 @@ export function createVariableStatement(listOrBinding,
  */
 export function createVoid0() {
   return createParenExpression(
-    createUnaryExpression(
-      createOperatorToken(VOID),
-      createNumberLiteral(0)));
+    createUnaryExpression(createOperatorToken(VOID), createNumberLiteral(0))
+  );
 }
 
 /**
@@ -840,6 +854,7 @@ export function createWithStatement(expression, body) {
  */
 export function createAssignStateStatement(state) {
   return createAssignmentStatement(
-      createMemberExpression('$ctx', 'state'),
-      createNumberLiteral(state));
+    createMemberExpression("$ctx", "state"),
+    createNumberLiteral(state)
+  );
 }

@@ -24,8 +24,8 @@ import {
   RIGHT_SHIFT_EQUAL,
   SLASH_EQUAL,
   STAR_EQUAL,
-  UNSIGNED_RIGHT_SHIFT_EQUAL
-} from './TokenType.js';
+  UNSIGNED_RIGHT_SHIFT_EQUAL,
+} from "./TokenType.js";
 
 /**
  * A Token in a javascript file.

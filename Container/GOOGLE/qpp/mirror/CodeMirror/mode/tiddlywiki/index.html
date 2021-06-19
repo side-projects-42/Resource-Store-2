@@ -1,20 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CodeMirror: TiddlyWiki mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="../../addon/edit/matchbrackets.js"></script>
     <script src="tiddlywiki.js"></script>
-    <link rel="stylesheet" href="tiddlywiki.css">
-    <link rel="stylesheet" href="../../doc/docs.css">
-    <style type="text/css">.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
+    <link rel="stylesheet" href="tiddlywiki.css" />
+    <link rel="stylesheet" href="../../doc/docs.css" />
+    <style type="text/css">
+      .CodeMirror {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+    </style>
   </head>
   <body>
     <h1>CodeMirror: TiddlyWiki mode</h1>
 
-<div><textarea id="code" name="code">
+    <div>
+      <textarea id="code" name="code">
 !TiddlyWiki Formatting
 * Rendered versions can be found at: http://www.tiddlywiki.com/#Reference
 
@@ -124,14 +130,16 @@ cf. [[TiddlyWiki.com|http://www.tiddlywiki.com/#EmbeddedImages]]
 * {{{<<macroName>>}}} calls the respective [[macro|Macros]]
 * To hide text within a tiddler so that it is not displayed, it can be wrapped in {{{/%}}} and {{{%/}}}.<br/>This can be a useful trick for hiding drafts or annotating complex markup.
 * To prevent wiki markup from taking effect for a particular section, that section can be enclosed in three double quotes: e.g. {{{"""WikiWord"""}}}.
-</textarea></div>
+</textarea
+      >
+    </div>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        mode: 'tiddlywiki',      
+        mode: "tiddlywiki",
         lineNumbers: true,
-        enterMode: 'keep',
-        matchBrackets: true
+        enterMode: "keep",
+        matchBrackets: true,
       });
     </script>
 

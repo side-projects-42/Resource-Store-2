@@ -1,0 +1,24 @@
+{
+  "name": "nr1-customer-journey",
+  "fullName": "newrelic/nr1-customer-journey",
+  "slug": "newrelic-nr1-customer-journey",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic One Customer Journey",
+  "supportUrl": "https://discuss.newrelic.com/t/customer-journey-nerdpack/83270",
+  "githubUrl": "https://github.com/newrelic/nr1-customer-journey",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/nr1-customer-journey",
+  "iconUrl": null,
+  "shortDescription": "Cohort and stepped analysis of customer workflows",
+  "description": "Align multiple cohorts of data and metrics to build an interactive funnel depicting your customer workflows",
+  "ossCategory": "community-project",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic One Customer Journey",
+    "url": "https://github.com/newrelic/nr1-customer-journey"
+  }
+}

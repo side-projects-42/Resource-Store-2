@@ -1,12 +1,14 @@
-import { Chart } from '../../../index.esm';
+import { Chart } from "../../../index.esm";
 
-const chart = new Chart('id', {
-  type: 'bar',
+const chart = new Chart("id", {
+  type: "bar",
   data: {
     labels: [],
-    datasets: [{
-      data: []
-    }]
+    datasets: [
+      {
+        data: [],
+      },
+    ],
   },
   options: {
     plugins: {
@@ -14,9 +16,9 @@ const chart = new Chart('id', {
         callbacks: {
           label: (item) => {
             return `Foo data ${item.parsed.y}`;
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
   },
 });

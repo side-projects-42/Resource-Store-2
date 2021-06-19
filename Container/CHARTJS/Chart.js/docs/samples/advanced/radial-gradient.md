@@ -6,7 +6,13 @@ const DATA_COUNT = 5;
 Utils.srand(110);
 
 const chartColors = Utils.CHART_COLORS;
-const colors = [chartColors.red, chartColors.orange, chartColors.yellow, chartColors.green, chartColors.blue];
+const colors = [
+  chartColors.red,
+  chartColors.orange,
+  chartColors.yellow,
+  chartColors.green,
+  chartColors.blue,
+];
 
 const cache = new Map();
 let width = null;
@@ -14,13 +20,13 @@ let height = null;
 
 const actions = [
   {
-    name: 'Randomize',
+    name: "Randomize",
     handler(chart) {
-      chart.data.datasets.forEach(dataset => {
+      chart.data.datasets.forEach((dataset) => {
         dataset.data = generateData();
       });
       chart.update();
-    }
+    },
   },
 ];
 // </block:setup>
@@ -51,7 +57,14 @@ function createRadialGradient3(context, c1, c2, c3) {
       (chartArea.bottom - chartArea.top) / 2
     );
     var ctx = context.chart.ctx;
-    gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r);
+    gradient = ctx.createRadialGradient(
+      centerX,
+      centerY,
+      0,
+      centerX,
+      centerY,
+      r
+    );
     gradient.addColorStop(0, c1);
     gradient.addColorStop(0.5, c2);
     gradient.addColorStop(1, c3);
@@ -67,21 +80,23 @@ function generateData() {
   return Utils.numbers({
     count: DATA_COUNT,
     min: 0,
-    max: 100
+    max: 100,
   });
 }
 
 const data = {
-  labels: Utils.months({count: DATA_COUNT}),
-  datasets: [{
-    data: generateData()
-  }]
+  labels: Utils.months({ count: DATA_COUNT }),
+  datasets: [
+    {
+      data: generateData(),
+    },
+  ],
 };
 // </block:data>
 
 // <block:config:1>
 const config = {
-  type: 'polarArea',
+  type: "polarArea",
   data: data,
   options: {
     plugins: {
@@ -90,7 +105,7 @@ const config = {
     },
     elements: {
       arc: {
-        backgroundColor: function(context) {
+        backgroundColor: function (context) {
           let c = colors[context.dataIndex];
           if (!c) {
             return;
@@ -103,9 +118,9 @@ const config = {
           const end = helpers.color(c).lighten(0.1).rgbString();
           return createRadialGradient3(context, start, mid, end);
         },
-      }
-    }
-  }
+      },
+    },
+  },
 };
 // </block:config>
 

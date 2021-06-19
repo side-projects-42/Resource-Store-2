@@ -11,15 +11,13 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.EventRegistry');
+goog.provide("wtf.trace.EventRegistry");
 
-goog.require('goog.asserts');
-goog.require('goog.events');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.trace.EventSessionContext');
-goog.require('wtf.trace.EventTypeBuilder');
-
-
+goog.require("goog.asserts");
+goog.require("goog.events");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.trace.EventSessionContext");
+goog.require("wtf.trace.EventTypeBuilder");
 
 /**
  * Event registry.
@@ -28,7 +26,7 @@ goog.require('wtf.trace.EventTypeBuilder');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.trace.EventRegistry = function() {
+wtf.trace.EventRegistry = function () {
   goog.base(this);
 
   /**
@@ -57,21 +55,19 @@ wtf.trace.EventRegistry = function() {
 };
 goog.inherits(wtf.trace.EventRegistry, wtf.events.EventEmitter);
 
-
 /**
  * Gets the event session context.
  * @return {!wtf.trace.EventSessionContextType} Event session context.
  */
-wtf.trace.EventRegistry.prototype.getEventSessionContext = function() {
+wtf.trace.EventRegistry.prototype.getEventSessionContext = function () {
   return this.eventSessionContext_;
 };
-
 
 /**
  * Registers a new event type.
  * @param {!wtf.trace.EventType} eventType Event type to register.
  */
-wtf.trace.EventRegistry.prototype.registerEventType = function(eventType) {
+wtf.trace.EventRegistry.prototype.registerEventType = function (eventType) {
   goog.asserts.assert(!this.eventTypesByName_[eventType.name]);
   if (this.eventTypesByName_[eventType.name]) {
     return;
@@ -83,29 +79,28 @@ wtf.trace.EventRegistry.prototype.registerEventType = function(eventType) {
   this.eventTypeBuilder_ = new wtf.trace.EventTypeBuilder();
   eventType.generateCode(this.eventTypeBuilder_, this.eventSessionContext_);
 
-  this.emitEvent(wtf.trace.EventRegistry.EventType.EVENT_TYPE_REGISTERED,
-      eventType);
+  this.emitEvent(
+    wtf.trace.EventRegistry.EventType.EVENT_TYPE_REGISTERED,
+    eventType
+  );
 };
-
 
 /**
  * Event types.
  * @enum {string}
  */
 wtf.trace.EventRegistry.EventType = {
-  EVENT_TYPE_REGISTERED: goog.events.getUniqueId('etr')
+  EVENT_TYPE_REGISTERED: goog.events.getUniqueId("etr"),
 };
-
 
 /**
  * Gets a list of all currently registered event types.
  * @return {!Array.<!wtf.trace.EventType>} A list of currently registered
  *     events. Do not modified.
  */
-wtf.trace.EventRegistry.prototype.getEventTypes = function() {
+wtf.trace.EventRegistry.prototype.getEventTypes = function () {
   return this.eventTypesList_;
 };
-
 
 /**
  * Gets the event type with the given name.
@@ -113,10 +108,9 @@ wtf.trace.EventRegistry.prototype.getEventTypes = function() {
  * @return {wtf.trace.EventType} The event type with the given name, if it
  *     exists.
  */
-wtf.trace.EventRegistry.prototype.getEventType = function(name) {
+wtf.trace.EventRegistry.prototype.getEventType = function (name) {
   return this.eventTypesByName_[name] || null;
 };
-
 
 /**
  * A shared event registry singleton.
@@ -126,12 +120,11 @@ wtf.trace.EventRegistry.prototype.getEventType = function(name) {
  */
 wtf.trace.EventRegistry.sharedInstance_ = null;
 
-
 /**
  * Gets the shared event registry.
  * @return {!wtf.trace.EventRegistry} Event registry.
  */
-wtf.trace.EventRegistry.getShared = function() {
+wtf.trace.EventRegistry.getShared = function () {
   if (!wtf.trace.EventRegistry.sharedInstance_) {
     wtf.trace.EventRegistry.sharedInstance_ = new wtf.trace.EventRegistry();
   }

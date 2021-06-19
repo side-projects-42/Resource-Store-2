@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import spread from './modules/spread.js';
+import spread from "./modules/spread.js";
 $traceurRuntime.spread = spread;

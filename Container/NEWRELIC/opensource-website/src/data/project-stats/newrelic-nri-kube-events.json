@@ -1,0 +1,114 @@
+{
+  "projectFullName": "newrelic/nri-kube-events",
+  "issues": {
+    "open": 7
+  },
+  "releases": 5,
+  "latestRelease": {
+    "name": "v1.5.1",
+    "date": "2021-06-01T11:12:03Z"
+  },
+  "commits": 27,
+  "lastSixMonthsCommitTotal": 15,
+  "contributors": 7,
+  "pullRequests": {
+    "open": 6
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU4NTQ2MjQ2NDg=",
+      "title": "[CI/CD] Integration Version is no set automatically",
+      "url": "https://github.com/newrelic/nri-kube-events/issues/26",
+      "createdAt": "2021-04-09T15:24:02Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "paologallinaharbur",
+        "id": "MDQ6VXNlcjQzMzM1NzUw",
+        "email": "",
+        "name": "PaoloGallina"
+      },
+      "number": 26,
+      "createdBy": "PaoloGallina"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 59606623,
+      "login": "mfuentes-newrelic",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/59606623?v=4",
+      "htmlUrl": "https://github.com/mfuentes-newrelic",
+      "contributions": 1
+    },
+    {
+      "id": 43244625,
+      "login": "melissaklein24",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43244625?v=4",
+      "htmlUrl": "https://github.com/melissaklein24",
+      "contributions": 1
+    },
+    {
+      "id": 43335750,
+      "login": "paologallinaharbur",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43335750?v=4",
+      "htmlUrl": "https://github.com/paologallinaharbur",
+      "contributions": 4
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 1
+    },
+    {
+      "id": 3638421,
+      "login": "alvarocabanas",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3638421?v=4",
+      "htmlUrl": "https://github.com/alvarocabanas",
+      "contributions": 2
+    },
+    {
+      "id": 969721,
+      "login": "roobre",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/969721?v=4",
+      "htmlUrl": "https://github.com/roobre",
+      "contributions": 13
+    },
+    {
+      "id": 73652669,
+      "login": "arvdias",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/73652669?v=4",
+      "htmlUrl": "https://github.com/arvdias",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U1MzU=",
+      "name": "Dockerfile",
+      "color": "#384d54"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U0MDM=",
+      "name": "Makefile",
+      "color": "#427819"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxOTA=",
+      "name": "Go",
+      "color": "#00ADD8"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

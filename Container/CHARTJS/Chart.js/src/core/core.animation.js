@@ -1,8 +1,8 @@
-import effects from '../helpers/helpers.easing';
-import {resolve} from '../helpers/helpers.options';
-import {color as helpersColor} from '../helpers/helpers.color';
+import effects from "../helpers/helpers.easing";
+import { resolve } from "../helpers/helpers.options";
+import { color as helpersColor } from "../helpers/helpers.color";
 
-const transparent = 'transparent';
+const transparent = "transparent";
 const interpolators = {
   boolean(from, to, factor) {
     return factor > 0.5 ? to : from;
@@ -10,13 +10,11 @@ const interpolators = {
   color(from, to, factor) {
     const c0 = helpersColor(from || transparent);
     const c1 = c0.valid && helpersColor(to || transparent);
-    return c1 && c1.valid
-      ? c1.mix(c0, factor).hexString()
-      : to;
+    return c1 && c1.valid ? c1.mix(c0, factor).hexString() : to;
   },
   number(from, to, factor) {
     return from + (to - from) * factor;
-  }
+  },
 };
 
 export default class Animation {
@@ -80,7 +78,7 @@ export default class Animation {
     const to = me._to;
     let factor;
 
-    me._active = from !== to && (loop || (elapsed < duration));
+    me._active = from !== to && (loop || elapsed < duration);
 
     if (!me._active) {
       me._target[prop] = to;
@@ -103,12 +101,12 @@ export default class Animation {
   wait() {
     const promises = this._promises || (this._promises = []);
     return new Promise((res, rej) => {
-      promises.push({res, rej});
+      promises.push({ res, rej });
     });
   }
 
   _notify(resolved) {
-    const method = resolved ? 'res' : 'rej';
+    const method = resolved ? "res" : "rej";
     const promises = this._promises || [];
     for (let i = 0; i < promises.length; i++) {
       promises[i][method]();

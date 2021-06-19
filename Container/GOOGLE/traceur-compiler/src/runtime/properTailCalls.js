@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import initTailRecursiveFunction from './modules/initTailRecursiveFunction.js';
-import call from './modules/call.js';
-import continuation from './modules/continuation.js';
-import construct from './modules/construct.js';
+import initTailRecursiveFunction from "./modules/initTailRecursiveFunction.js";
+import call from "./modules/call.js";
+import continuation from "./modules/continuation.js";
+import construct from "./modules/construct.js";
 
 $traceurRuntime.initTailRecursiveFunction = initTailRecursiveFunction;
 $traceurRuntime.call = call;

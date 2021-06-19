@@ -2,16 +2,22 @@
  * Chart.Platform implementation for targeting a web browser
  */
 
-import BasePlatform from './platform.base';
-import {_getParentNode, getRelativePosition, supportsEventListenerOptions, readUsedSize, getMaximumSize} from '../helpers/helpers.dom';
-import {throttled} from '../helpers/helpers.extras';
-import {isNullOrUndef} from '../helpers/helpers.core';
+import BasePlatform from "./platform.base";
+import {
+  _getParentNode,
+  getRelativePosition,
+  supportsEventListenerOptions,
+  readUsedSize,
+  getMaximumSize,
+} from "../helpers/helpers.dom";
+import { throttled } from "../helpers/helpers.extras";
+import { isNullOrUndef } from "../helpers/helpers.core";
 
 /**
  * @typedef { import("../core/core.controller").default } Chart
  */
 
-const EXPANDO_KEY = '$chartjs';
+const EXPANDO_KEY = "$chartjs";
 
 /**
  * DOM event types -> Chart.js event types.
@@ -19,18 +25,18 @@ const EXPANDO_KEY = '$chartjs';
  * @see https://developer.mozilla.org/en-US/docs/Web/Events
  */
 const EVENT_TYPES = {
-  touchstart: 'mousedown',
-  touchmove: 'mousemove',
-  touchend: 'mouseup',
-  pointerenter: 'mouseenter',
-  pointerdown: 'mousedown',
-  pointermove: 'mousemove',
-  pointerup: 'mouseup',
-  pointerleave: 'mouseout',
-  pointerout: 'mouseout'
+  touchstart: "mousedown",
+  touchmove: "mousemove",
+  touchend: "mouseup",
+  pointerenter: "mouseenter",
+  pointerdown: "mousedown",
+  pointermove: "mousemove",
+  pointerup: "mouseup",
+  pointerleave: "mouseout",
+  pointerout: "mouseout",
 };
 
-const isNullOrEmpty = value => value === null || value === '';
+const isNullOrEmpty = (value) => value === null || value === "";
 /**
  * Initializes the canvas style and render size without modifying the canvas display size,
  * since responsiveness is handled by the controller.resize() method. The config is used
@@ -43,8 +49,8 @@ function initCanvas(canvas, aspectRatio) {
 
   // NOTE(SB) canvas.getAttribute('width') !== canvas.width: in the first case it
   // returns null or '' if no explicit value has been set to the canvas attribute.
-  const renderHeight = canvas.getAttribute('height');
-  const renderWidth = canvas.getAttribute('width');
+  const renderHeight = canvas.getAttribute("height");
+  const renderWidth = canvas.getAttribute("width");
 
   // Chart.js modifies some canvas values that we want to restore on destroy
   canvas[EXPANDO_KEY] = {
@@ -54,33 +60,33 @@ function initCanvas(canvas, aspectRatio) {
       style: {
         display: style.display,
         height: style.height,
-        width: style.width
-      }
-    }
+        width: style.width,
+      },
+    },
   };
 
   // Force canvas to display as block to avoid extra space caused by inline
   // elements, which would interfere with the responsive resize process.
   // https://github.com/chartjs/Chart.js/issues/2538
-  style.display = style.display || 'block';
+  style.display = style.display || "block";
   // Include possible borders in the size
-  style.boxSizing = style.boxSizing || 'border-box';
+  style.boxSizing = style.boxSizing || "border-box";
 
   if (isNullOrEmpty(renderWidth)) {
-    const displayWidth = readUsedSize(canvas, 'width');
+    const displayWidth = readUsedSize(canvas, "width");
     if (displayWidth !== undefined) {
       canvas.width = displayWidth;
     }
   }
 
   if (isNullOrEmpty(renderHeight)) {
-    if (canvas.style.height === '') {
+    if (canvas.style.height === "") {
       // If no explicit render height and style height, let's apply the aspect ratio,
       // which one can be specified by the user but also by charts as default option
       // (i.e. options.aspectRatio). If not specified, use canvas aspect ratio of 2.
       canvas.height = canvas.width / (aspectRatio || 2);
     } else {
-      const displayHeight = readUsedSize(canvas, 'height');
+      const displayHeight = readUsedSize(canvas, "height");
       if (displayHeight !== undefined) {
         canvas.height = displayHeight;
       }
@@ -92,7 +98,9 @@ function initCanvas(canvas, aspectRatio) {
 
 // Default passive to true as expected by Chrome for 'touchstart' and 'touchend' events.
 // https://github.com/chartjs/Chart.js/issues/4287
-const eventListenerOptions = supportsEventListenerOptions ? {passive: true} : false;
+const eventListenerOptions = supportsEventListenerOptions
+  ? { passive: true }
+  : false;
 
 function addListener(node, type, listener) {
   node.addEventListener(type, listener, eventListenerOptions);
@@ -104,7 +112,7 @@ function removeListener(chart, type, listener) {
 
 function fromNativeEvent(event, chart) {
   const type = EVENT_TYPES[event.type] || event.type;
-  const {x, y} = getRelativePosition(event, chart);
+  const { x, y } = getRelativePosition(event, chart);
   return {
     type,
     chart,
@@ -118,9 +126,9 @@ function createAttachObserver(chart, type, listener) {
   const canvas = chart.canvas;
   const container = canvas && _getParentNode(canvas);
   const element = container || canvas;
-  const observer = new MutationObserver(entries => {
+  const observer = new MutationObserver((entries) => {
     const parent = _getParentNode(element);
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       for (let i = 0; i < entry.addedNodes.length; i++) {
         const added = entry.addedNodes[i];
         if (added === element || added === parent) {
@@ -129,7 +137,7 @@ function createAttachObserver(chart, type, listener) {
       }
     });
   });
-  observer.observe(document, {childList: true, subtree: true});
+  observer.observe(document, { childList: true, subtree: true });
   return observer;
 }
 
@@ -139,8 +147,8 @@ function createDetachObserver(chart, type, listener) {
   if (!container) {
     return;
   }
-  const observer = new MutationObserver(entries => {
-    entries.forEach(entry => {
+  const observer = new MutationObserver((entries) => {
+    entries.forEach((entry) => {
       for (let i = 0; i < entry.removedNodes.length; i++) {
         if (entry.removedNodes[i] === canvas) {
           listener();
@@ -149,7 +157,7 @@ function createDetachObserver(chart, type, listener) {
       }
     });
   });
-  observer.observe(container, {childList: true});
+  observer.observe(container, { childList: true });
   return observer;
 }
 
@@ -171,7 +179,7 @@ function onWindowResize() {
 
 function listenDevicePixelRatioChanges(chart, resize) {
   if (!drpListeningCharts.size) {
-    window.addEventListener('resize', onWindowResize);
+    window.addEventListener("resize", onWindowResize);
   }
   drpListeningCharts.set(chart, resize);
 }
@@ -179,7 +187,7 @@ function listenDevicePixelRatioChanges(chart, resize) {
 function unlistenDevicePixelRatioChanges(chart) {
   drpListeningCharts.delete(chart);
   if (!drpListeningCharts.size) {
-    window.removeEventListener('resize', onWindowResize);
+    window.removeEventListener("resize", onWindowResize);
   }
 }
 
@@ -205,7 +213,7 @@ function createResizeObserver(chart, type, listener) {
   }, window);
 
   // @ts-ignore until https://github.com/microsoft/TypeScript/issues/37861 implemented
-  const observer = new ResizeObserver(entries => {
+  const observer = new ResizeObserver((entries) => {
     const entry = entries[0];
     const width = entry.contentRect.width;
     const height = entry.contentRect.height;
@@ -227,24 +235,28 @@ function releaseObserver(chart, type, observer) {
   if (observer) {
     observer.disconnect();
   }
-  if (type === 'resize') {
+  if (type === "resize") {
     unlistenDevicePixelRatioChanges(chart);
   }
 }
 
 function createProxyAndListen(chart, type, listener) {
   const canvas = chart.canvas;
-  const proxy = throttled((event) => {
-    // This case can occur if the chart is destroyed while waiting
-    // for the throttled function to occur. We prevent crashes by checking
-    // for a destroyed chart
-    if (chart.ctx !== null) {
-      listener(fromNativeEvent(event, chart));
+  const proxy = throttled(
+    (event) => {
+      // This case can occur if the chart is destroyed while waiting
+      // for the throttled function to occur. We prevent crashes by checking
+      // for a destroyed chart
+      if (chart.ctx !== null) {
+        listener(fromNativeEvent(event, chart));
+      }
+    },
+    chart,
+    (args) => {
+      const event = args[0];
+      return [event, event.offsetX, event.offsetY];
     }
-  }, chart, (args) => {
-    const event = args[0];
-    return [event, event.offsetX, event.offsetY];
-  });
+  );
 
   addListener(canvas, type, proxy);
 
@@ -256,17 +268,16 @@ function createProxyAndListen(chart, type, listener) {
  * @extends BasePlatform
  */
 export default class DomPlatform extends BasePlatform {
-
   /**
-	 * @param {HTMLCanvasElement} canvas
-	 * @param {number} [aspectRatio]
-	 * @return {CanvasRenderingContext2D|null}
-	 */
+   * @param {HTMLCanvasElement} canvas
+   * @param {number} [aspectRatio]
+   * @return {CanvasRenderingContext2D|null}
+   */
   acquireContext(canvas, aspectRatio) {
     // To prevent canvas fingerprinting, some add-ons undefine the getContext
     // method, for example: https://github.com/kkapsner/CanvasBlocker
     // https://github.com/chartjs/Chart.js/issues/2807
-    const context = canvas && canvas.getContext && canvas.getContext('2d');
+    const context = canvas && canvas.getContext && canvas.getContext("2d");
 
     // `instanceof HTMLCanvasElement/CanvasRenderingContext2D` fails when the canvas is
     // inside an iframe or when running in a protected environment. We could guess the
@@ -286,8 +297,8 @@ export default class DomPlatform extends BasePlatform {
   }
 
   /**
-	 * @param {CanvasRenderingContext2D} context
-	 */
+   * @param {CanvasRenderingContext2D} context
+   */
   releaseContext(context) {
     const canvas = context.canvas;
     if (!canvas[EXPANDO_KEY]) {
@@ -295,7 +306,7 @@ export default class DomPlatform extends BasePlatform {
     }
 
     const initial = canvas[EXPANDO_KEY].initial;
-    ['height', 'width'].forEach((prop) => {
+    ["height", "width"].forEach((prop) => {
       const value = initial[prop];
       if (isNullOrUndef(value)) {
         canvas.removeAttribute(prop);
@@ -321,11 +332,11 @@ export default class DomPlatform extends BasePlatform {
   }
 
   /**
-	 *
-	 * @param {Chart} chart
-	 * @param {string} type
-	 * @param {function} listener
-	 */
+   *
+   * @param {Chart} chart
+   * @param {string} type
+   * @param {function} listener
+   */
   addEventListener(chart, type, listener) {
     // Can have only one listener per type, so make sure previous is removed
     this.removeEventListener(chart, type);
@@ -334,17 +345,16 @@ export default class DomPlatform extends BasePlatform {
     const handlers = {
       attach: createAttachObserver,
       detach: createDetachObserver,
-      resize: createResizeObserver
+      resize: createResizeObserver,
     };
     const handler = handlers[type] || createProxyAndListen;
     proxies[type] = handler(chart, type, listener);
   }
 
-
   /**
-	 * @param {Chart} chart
-	 * @param {string} type
-	 */
+   * @param {Chart} chart
+   * @param {string} type
+   */
   removeEventListener(chart, type) {
     const proxies = chart.$proxies || (chart.$proxies = {});
     const proxy = proxies[type];
@@ -356,7 +366,7 @@ export default class DomPlatform extends BasePlatform {
     const handlers = {
       attach: releaseObserver,
       detach: releaseObserver,
-      resize: releaseObserver
+      resize: releaseObserver,
     };
     const handler = handlers[type] || removeListener;
     handler(chart, type, proxy);
@@ -368,18 +378,18 @@ export default class DomPlatform extends BasePlatform {
   }
 
   /**
-	 * @param {HTMLCanvasElement} canvas
-	 * @param {number} [width] - content width of parent element
-	 * @param {number} [height] - content height of parent element
-	 * @param {number} [aspectRatio] - aspect ratio to maintain
-	 */
+   * @param {HTMLCanvasElement} canvas
+   * @param {number} [width] - content width of parent element
+   * @param {number} [height] - content height of parent element
+   * @param {number} [aspectRatio] - aspect ratio to maintain
+   */
   getMaximumSize(canvas, width, height, aspectRatio) {
     return getMaximumSize(canvas, width, height, aspectRatio);
   }
 
   /**
-	 * @param {HTMLCanvasElement} canvas
-	 */
+   * @param {HTMLCanvasElement} canvas
+   */
   isAttached(canvas) {
     const container = _getParentNode(canvas);
     return !!(container && _getParentNode(container));

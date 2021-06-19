@@ -1,30 +1,28 @@
-var head = 'head';
-var tail = 'tail';
-var name = 'name';
+var head = "head";
+var tail = "tail";
+var name = "name";
 
 function MyError(s) {
   this.message = new String(s);
-  this.name = 'Error';
+  this.name = "Error";
 }
 
 try {
-  throw new MyError('abc');
-} catch ({message: [head, ...tail], name}) {
-  assert.equal('a', head);
-  assert.deepEqual(['b', 'c'], tail);
-  assert.equal('Error', name);
+  throw new MyError("abc");
+} catch ({ message: [head, ...tail], name }) {
+  assert.equal("a", head);
+  assert.deepEqual(["b", "c"], tail);
+  assert.equal("Error", name);
 }
 
-assert.equal('head', head);
-assert.equal('tail', tail);
-assert.equal('name', name);
+assert.equal("head", head);
+assert.equal("tail", tail);
+assert.equal("name", name);
 
 assert.throws(() => {
   try {
     throw [0];
-  } catch ([innerX]) {
-
-  }
+  } catch ([innerX]) {}
 
   innerX;
 }, ReferenceError);

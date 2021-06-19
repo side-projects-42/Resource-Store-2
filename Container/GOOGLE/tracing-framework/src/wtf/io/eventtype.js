@@ -11,15 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.EventType');
+goog.provide("wtf.io.EventType");
 
-goog.require('goog.events');
-
+goog.require("goog.events");
 
 /**
  * Event type names.
  * @enum {string}
  */
 wtf.io.EventType = {
-  READ: goog.events.getUniqueId('read')
+  READ: goog.events.getUniqueId("read"),
 };

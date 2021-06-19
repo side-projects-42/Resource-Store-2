@@ -1,8 +1,7 @@
 // Options: --member-variables --types
 // Error: :10:5: 'this' is not allowed before super()
 
-class A {
-}
+class A {}
 
 class C extends A {
   shouldFail: boolean = true;

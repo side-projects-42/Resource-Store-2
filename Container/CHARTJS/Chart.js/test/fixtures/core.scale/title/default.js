@@ -1,73 +1,73 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     options: {
       events: [],
       scales: {
         top: {
-          type: 'linear',
-          position: 'top',
+          type: "linear",
+          position: "top",
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
-            text: 'top'
-          }
+            text: "top",
+          },
         },
         left: {
-          type: 'linear',
-          position: 'left',
+          type: "linear",
+          position: "left",
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
-            text: 'left'
-          }
+            text: "left",
+          },
         },
         bottom: {
-          type: 'linear',
-          position: 'bottom',
+          type: "linear",
+          position: "bottom",
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
-            text: 'bottom'
-          }
+            text: "bottom",
+          },
         },
         right: {
-          type: 'linear',
-          position: 'right',
+          type: "linear",
+          position: "right",
           ticks: {
-            display: false
+            display: false,
           },
           grid: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
-            text: 'right'
-          }
+            text: "right",
+          },
         },
-      }
-    }
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 256,
-      width: 256
+      width: 256,
     },
-  }
+  },
 };

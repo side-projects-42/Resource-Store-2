@@ -1,0 +1,328 @@
+@import './nord-prism-theme.css';
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+/*-- CSS Variables --*/
+:root {
+  --color-background: #ffffff;
+
+  --color-neutrals-850: #161f1f;
+
+  --footer-text-color: #7da5a8;
+
+  /*-- Easing --*/
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  /*-- Dark mode --*/
+  .dark-mode {
+    --color-background: #1c2a2f;
+
+    --color-neutrals-050: #131f23;
+    --color-neutrals-100: #22353c;
+    --color-neutrals-200: #233940;
+    --color-neutrals-300: #2a4249;
+    --color-neutrals-400: #37484e;
+    --color-neutrals-500: #495b5c;
+    --color-neutrals-600: #7c9799;
+    --color-neutrals-700: #a5bbbd;
+    --color-neutrals-800: #cedede;
+    --color-neutrals-900: #e8eaea;
+
+    --color-brand-800: #70ccd3;
+    --color-brand-900: #edffff;
+  }
+}
+
+/*-------------------------*/
+/*-- CSS Reset stuff --*/
+/*-------------------------*/
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#___gatsby {
+  height: 100%;
+}
+
+#gatsby-focus-wrapper {
+  height: 100%;
+}
+
+p {
+  color: var(--color-neutrals-700);
+  font-size: 14px;
+  line-height: 23px;
+  margin: 12px 0;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+ul {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p,
+h5 + p,
+h6 + p {
+  margin-top: 8px;
+}
+
+select {
+  padding: 4px 10px;
+  padding-right: 20px;
+  -webkit-appearance: none;
+  font-size: 12px !important;
+  line-height: initial !important;
+  background: var(--color-background);
+  border: 1px solid var(--color-neutrals-400);
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: var(--color-neutrals-600);
+  font-family: var(--primary-font-family);
+  background-image: url('../images/icon-chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: center right 6px;
+
+  &:hover {
+    cursor: pointer;
+    border: 1px solid var(--color-neutrals-500);
+  }
+
+  &:focus {
+    border: 1px solid rgba(#007e8a, 0.6);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(#007e8a, 0.1);
+  }
+}
+
+/*-- Base styles --*/
+
+.primary-content {
+  display: flex;
+  justify-content: space-between;
+  max-width: 980px;
+  margin: 0 auto;
+
+  main {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+  p img {
+    max-width: 100%;
+  }
+  blockquote {
+    box-sizing: border-box;
+    width: calc(100% - 15px);
+    margin: 15px 0;
+    padding: 14px 30px;
+    position: relative;
+    background-color: var(--color-neutrals-100);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--color-neutrals-700);
+    opacity: 0.8;
+    line-height: 23px;
+
+    &:before,
+    &:after {
+      content: '"';
+      display: block;
+      width: 17.79px;
+      height: 14.59px;
+      position: absolute;
+      left: -9px;
+      top: 50%;
+      margin-top: -7px;
+      background-image: url('../images/quote-left.svg');
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    &:after {
+      left: auto;
+      right: -9px;
+      transform: rotate(180deg);
+    }
+
+    cite {
+      display: block;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-weight: 600;
+      font-size: 11px;
+      font-style: normal;
+
+      &:before {
+        content: '— ';
+      }
+    }
+  }
+}
+
+.primary-content-main {
+  width: 69.38775510204081%;
+
+  hr {
+    margin: 16px 0 16px;
+    border: none;
+    height: 1px;
+    background-color: var(--color-neutrals-200);
+  }
+
+  :first-child {
+    margin-top: 0;
+  }
+}
+
+.primary-content-aside {
+  width: 28.57142857142857%;
+
+  :first-child {
+    margin-top: 0;
+  }
+
+  & > p {
+    font-size: 13px;
+    color: var(--color-neutrals-600);
+    line-height: 21px;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+}
+
+.aside-header-item {
+  &:not(:first-child) {
+    margin-top: 21px;
+  }
+
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  h4 {
+    margin-bottom: 12px;
+  }
+}
+
+.aside-header-item-button {
+  font-size: 12px;
+}
+
+.prism-code {
+  border-radius: 4px;
+}
+
+.prism-code .line-number {
+  display: inline-block;
+  width: 3ch;
+  opacity: 0.7;
+  margin-left: -14px;
+  margin-right: 15px;
+  position: relative;
+  text-align: right;
+  -webkit-user-select: none;
+  color: #606e87;
+}
+
+.responsive-video {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+  border-radius: 5px;
+  box-shadow: 0px 1.49432px 2.21381px rgba(15, 65, 88, 0.0253031),
+    0px 3.59106px 5.32008px rgba(15, 65, 88, 0.0363503),
+    0px 6.76164px 10.0172px rgba(15, 65, 88, 0.045),
+    0px 12.0616px 17.869px rgba(15, 65, 88, 0.0536497),
+    0px 22.5599px 33.4221px rgba(15, 65, 88, 0.0646969),
+    0px 54px 80px rgba(15, 65, 88, 0.09), 0px 30px 30px -40px #011b1d65;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}
+
+.responsive-video iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+// ==============================================================
+// Responsive styles
+// ==============================================================
+
+@media screen and (max-width: 1024px) {
+  .primary-content {
+    max-width: 100%;
+    padding: 0 28px;
+  }
+}
+
+@media screen and (max-width: 724px) {
+  .primary-content {
+    flex-direction: column;
+
+    .primary-content-main {
+      width: 100%;
+    }
+
+    .primary-content-aside {
+      width: 100%;
+    }
+  }
+}
+
+// ==============================================================
+// Dark mode
+// ==============================================================
+.dark-mode {
+  .button {
+    background-color: var(--color-neutrals-800);
+  }
+
+  .button-secondary {
+    color: var(--color-neutrals-800);
+    box-shadow: inset 0 0 0 2px var(--color-neutrals-800);
+    background-color: transparent;
+  }
+
+  .button-tertiary {
+    background-color: inherit;
+    color: inherit;
+
+    &:hover {
+      background-color: var(--color-neutrals-100);
+    }
+  }
+}

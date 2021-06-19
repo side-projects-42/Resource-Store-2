@@ -18,18 +18,18 @@ import {
   ClassExpression,
   CommaExpression,
   ExpressionStatement,
-  VariableDeclaration
-} from '../syntax/trees/ParseTrees.js';
+  VariableDeclaration,
+} from "../syntax/trees/ParseTrees.js";
 import {
   ANON_BLOCK,
   CLASS_DECLARATION,
   FUNCTION_DECLARATION,
   IDENTIFIER_EXPRESSION,
   IMPORT_SPECIFIER_SET,
-  NAME_SPACE_IMPORT
-} from '../syntax/trees/ParseTreeType.js';
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {ScopeTransformer} from './ScopeTransformer.js';
+  NAME_SPACE_IMPORT,
+} from "../syntax/trees/ParseTreeType.js";
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
+import { ScopeTransformer } from "./ScopeTransformer.js";
 import {
   createEmptyParameterList,
   createFunctionBody,
@@ -38,20 +38,16 @@ import {
   createObjectLiteralForDescriptor,
   createUseStrictDirective,
   createVariableDeclarationList,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {ModuleTransformer} from './ModuleTransformer.js';
-import {
-  MINUS_MINUS,
-  PLUS_PLUS,
-  VAR
-} from '../syntax/TokenType.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { ModuleTransformer } from "./ModuleTransformer.js";
+import { MINUS_MINUS, PLUS_PLUS, VAR } from "../syntax/TokenType.js";
 import {
   parseExpression,
   parseStatement,
-  parseStatements
-} from './PlaceholderParser.js';
-import HoistVariablesTransformer from './HoistVariablesTransformer.js';
+  parseStatements,
+} from "./PlaceholderParser.js";
+import HoistVariablesTransformer from "./HoistVariablesTransformer.js";
 
 function flattenAnonBlocks(statements) {
   let result = [];
@@ -97,8 +93,10 @@ class DeclarationExtractionTransformer extends HoistVariablesTransformer {
     this.declarations_ = [];
   }
   getDeclarationStatements() {
-    return flattenAnonBlocks(
-        [this.getVariableStatement(), ...this.declarations_]);
+    return flattenAnonBlocks([
+      this.getVariableStatement(),
+      ...this.declarations_,
+    ]);
   }
   addDeclaration(tree) {
     this.declarations_.push(tree);
@@ -111,35 +109,40 @@ class DeclarationExtractionTransformer extends HoistVariablesTransformer {
     this.addVariable(tree.name.identifierToken.value);
 
     // Convert a class declaration into a class expression.
-    tree = new ClassExpression(tree.location, tree.name, tree.superClass,
-        tree.elements, tree.annotations, tree.typeParameters);
+    tree = new ClassExpression(
+      tree.location,
+      tree.name,
+      tree.superClass,
+      tree.elements,
+      tree.annotations,
+      tree.typeParameters
+    );
 
-    return parseStatement `${tree.name.identifierToken} = ${tree}`;
+    return parseStatement`${tree.name.identifierToken} = ${tree}`;
   }
 }
 
 /**
  * Replaces __moduleName with $__moduleContext.id
  *
- * This allows code to use the __moduleName temporary syntax to reference 
+ * This allows code to use the __moduleName temporary syntax to reference
  * the current module name for relative importing via System.import('./x', __moduleName)
  * In the future this will be deprecated and $__moduleContext extended in the implementation
  * to support any contextual metadata and loading features determined in the spec.
  */
 class ModuleNameIdentifierTransformer extends ScopeTransformer {
   constructor() {
-    super('__moduleName');
+    super("__moduleName");
     this.usesModuleName = false;
   }
 
   transformIdentifierExpression(tree) {
-    if (tree.identifierToken.value === '__moduleName') {
+    if (tree.identifierToken.value === "__moduleName") {
       this.usesModuleName = true;
-      return parseExpression `$__moduleContext.id`;
+      return parseExpression`$__moduleContext.id`;
     }
     return super.transformIdentifierExpression(tree);
   }
-
 }
 
 /**
@@ -166,8 +169,10 @@ class InsertBindingAssignmentTransformer extends ScopeTransformer {
   }
 
   matchesBindingName_(binding) {
-    return binding.type === IDENTIFIER_EXPRESSION &&
-        binding.identifierToken.value === this.bindingName_;
+    return (
+      binding.type === IDENTIFIER_EXPRESSION &&
+      binding.identifierToken.value === this.bindingName_
+    );
   }
 
   // ++x
@@ -186,7 +191,7 @@ class InsertBindingAssignmentTransformer extends ScopeTransformer {
     if (operand !== tree.operand)
       tree = new UnaryExpression(tree.location, tree.operator, operand);
 
-    return parseExpression `$__export(${this.exportName_}, ${tree})`;
+    return parseExpression`$__export(${this.exportName_}, ${tree})`;
   }
 
   // x++
@@ -195,16 +200,13 @@ class InsertBindingAssignmentTransformer extends ScopeTransformer {
   transformPostfixExpression(tree) {
     tree = super.transformPostfixExpression(tree);
 
-    if (!this.matchesBindingName_(tree.operand))
-      return tree;
+    if (!this.matchesBindingName_(tree.operand)) return tree;
 
     switch (tree.operator.type) {
       case PLUS_PLUS:
-        return parseExpression
-            `($__export(${this.exportName_}, ${tree.operand} + 1), ${tree})`;
+        return parseExpression`($__export(${this.exportName_}, ${tree.operand} + 1), ${tree})`;
       case MINUS_MINUS:
-        return parseExpression
-            `($__export(${this.exportName_}, ${tree.operand} - 1), ${tree})`;
+        return parseExpression`($__export(${this.exportName_}, ${tree.operand} - 1), ${tree})`;
     }
     return tree;
   }
@@ -215,13 +217,11 @@ class InsertBindingAssignmentTransformer extends ScopeTransformer {
   transformBinaryExpression(tree) {
     tree = super.transformBinaryExpression(tree);
 
-    if (!tree.operator.isAssignmentOperator())
-      return tree;
+    if (!tree.operator.isAssignmentOperator()) return tree;
 
-    if (!this.matchesBindingName_(tree.left))
-      return tree;
+    if (!this.matchesBindingName_(tree.left)) return tree;
 
-    return parseExpression `$__export(${this.exportName_}, ${tree})}`;
+    return parseExpression`$__export(${this.exportName_}, ${tree})}`;
   }
 }
 
@@ -232,12 +232,11 @@ class InsertBindingAssignmentTransformer extends ScopeTransformer {
  * and $__export is the dynamic export binding setter function.
  */
 export class InstantiateModuleTransformer extends ModuleTransformer {
-
   constructor(identifierGenerator, reporter, options = undefined) {
     super(identifierGenerator, reporter, options);
 
     this.anonymousModule =
-        options && !options.bundle && options.moduleName !== true;
+      options && !options.bundle && options.moduleName !== true;
 
     // does the module reference __moduleName
     this.usesModuleName = false;
@@ -279,8 +278,7 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
   }
 
   getModuleName(tree) {
-    if (this.anonymousModule)
-      return null;
+    if (this.anonymousModule) return null;
     return tree.moduleName;
   }
 
@@ -296,27 +294,25 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
 
     if (this.usesModuleName) {
       if (this.moduleName) {
-        return parseStatements `System.register(${this.moduleName},
+        return parseStatements`System.register(${this.moduleName},
             ${this.dependencies}, function($__export, $__moduleContext) {
               ${statements}
             });`;
       }
 
-      return parseStatements
-          `System.register(${this.dependencies}, function($__export, $__moduleContext) {
+      return parseStatements`System.register(${this.dependencies}, function($__export, $__moduleContext) {
             ${statements}
           });`;
     }
 
     if (this.moduleName) {
-      return parseStatements `System.register(${this.moduleName},
+      return parseStatements`System.register(${this.moduleName},
           ${this.dependencies}, function($__export) {
             ${statements}
           });`;
     }
 
-    return parseStatements
-        `System.register(${this.dependencies}, function($__export) {
+    return parseStatements`System.register(${this.dependencies}, function($__export) {
           ${statements}
         });`;
   }
@@ -363,7 +359,8 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
    *
    */
   addExportStatement(statements) {
-    let declarationExtractionTransformer = new DeclarationExtractionTransformer();
+    let declarationExtractionTransformer =
+      new DeclarationExtractionTransformer();
 
     // convert __moduleName identifiers into $__moduleContext.id
     let moduleNameIdentifierTransformer = new ModuleNameIdentifierTransformer();
@@ -375,22 +372,25 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
     // using InsertBindingAssignmentTransformer
     this.localExportBindings.forEach((binding) => {
       statements = new InsertBindingAssignmentTransformer(
-          binding.exportName, binding.localName).transformList(statements);
+        binding.exportName,
+        binding.localName
+      ).transformList(statements);
     });
 
     // Transform statements into execution statements only, with declarations
     // removed.
     let executionStatements =
-        declarationExtractionTransformer.transformList(statements);
+      declarationExtractionTransformer.transformList(statements);
 
     let executionFunction = createFunctionExpression(
-        createEmptyParameterList(),
-        createFunctionBody(executionStatements));
+      createEmptyParameterList(),
+      createFunctionBody(executionStatements)
+    );
 
     // Extract the declaration statements for hoisting from the previous
     // transform.
     let declarationStatements =
-        declarationExtractionTransformer.getDeclarationStatements();
+      declarationExtractionTransformer.getDeclarationStatements();
 
     // create the setter bindings
     let setterFunctions = this.dependencies.map((dep, index) => {
@@ -404,32 +404,39 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
       // first set local import bindings for the current dependency
       if (importBindings) {
         importBindings.forEach((binding) => {
-          setterStatements.push(parseStatement
-              `${id(binding.variableName)} = $__m.${binding.exportName};`);
+          setterStatements.push(
+            parseStatement`${id(binding.variableName)} = $__m.${
+              binding.exportName
+            };`
+          );
         });
       }
 
       // then do export bindings of re-exported dependencies
       if (externalExportBindings) {
         let reexports = Object.create(null);
-        externalExportBindings.forEach(({exportName, importName}) => {
-          reexports[exportName] = importName === null ?
-              parseExpression `$__m` : parseExpression `$__m.${importName}`;
+        externalExportBindings.forEach(({ exportName, importName }) => {
+          reexports[exportName] =
+            importName === null
+              ? parseExpression`$__m`
+              : parseExpression`$__m.${importName}`;
         });
         setterStatements.push(
-            parseStatement `$__export(${createObjectLiteralForDescriptor(reexports)})`);
+          parseStatement`$__export(${createObjectLiteralForDescriptor(
+            reexports
+          )})`
+        );
       }
 
       // create local module bindings
       if (moduleBinding) {
-        setterStatements.push(
-            parseStatement `${id(moduleBinding)} = $__m;`);
+        setterStatements.push(parseStatement`${id(moduleBinding)} = $__m;`);
       }
 
       // finally run export * if applying to this dependency, for not-already
       // exported dependencies
       if (exportStarBinding) {
-        setterStatements = setterStatements.concat(parseStatements `
+        setterStatements = setterStatements.concat(parseStatements`
           var exportObj = Object.create(null);
           Object.keys($__m).forEach(function(p) {
             if (p !== 'default' && !$__exportNames[p])
@@ -439,33 +446,36 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
         `);
 
         let exportNames = {};
-        this.localExportBindings.concat(this.externalExportBindings).
-            forEach(function(binding) {
-              exportNames[binding.exportName] = true;
-            });
+        this.localExportBindings
+          .concat(this.externalExportBindings)
+          .forEach(function (binding) {
+            exportNames[binding.exportName] = true;
+          });
 
-        declarationStatements.push(parseStatement `
+        declarationStatements.push(parseStatement`
           var $__exportNames = ${createObjectLiteralForDescriptor(exportNames)};
         `);
       }
 
       if (setterStatements.length) {
-        return parseExpression `function($__m) {
+        return parseExpression`function($__m) {
           ${setterStatements}
         }`;
       }
 
-      return parseExpression `function($__m) {}`;
+      return parseExpression`function($__m) {}`;
     });
 
     // add function declaration assignments for hoisted function exports
     declarationStatements = declarationStatements.concat(
-        this.functionDeclarations.map((binding) => {
-          return parseStatement
-              `$__export(${binding.exportName}, ${id(binding.functionName)})`;
-        }));
+      this.functionDeclarations.map((binding) => {
+        return parseStatement`$__export(${binding.exportName}, ${id(
+          binding.functionName
+        )})`;
+      })
+    );
 
-    declarationStatements.push(parseStatement `return {
+    declarationStatements.push(parseStatement`return {
       setters: ${new ArrayLiteral(null, setterFunctions)},
       execute: ${executionFunction}
     }`);
@@ -473,15 +483,13 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
     return declarationStatements;
   }
 
-
   // Add a new local binding
   addLocalExportBinding(exportName, localName = exportName) {
     this.localExportBindings.push({
       exportName: exportName,
-      localName: localName
+      localName: localName,
     });
   }
-
 
   // Add a new local binding for a given dependency index
   // import {p as q} from 't';
@@ -489,15 +497,15 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
     this.importBindings[depIndex] = this.importBindings[depIndex] || [];
     this.importBindings[depIndex].push({
       variableName: variableName,
-      exportName: exportName
+      exportName: exportName,
     });
   }
   // Add a new export binding for a given dependency index
   // export {a as p} from 'q';
   addExternalExportBinding(depIndex, exportName, importName) {
     this.externalExportBindings[depIndex] =
-        this.externalExportBindings[depIndex] || [];
-    this.externalExportBindings[depIndex].push({exportName, importName});
+      this.externalExportBindings[depIndex] || [];
+    this.externalExportBindings[depIndex].push({ exportName, importName });
   }
   // Note that we have an export * for a dep index
   addExportStarBinding(depIndex) {
@@ -515,7 +523,7 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
   addExportFunction(exportName, functionName = exportName) {
     this.functionDeclarations.push({
       exportName: exportName,
-      functionName: functionName
+      functionName: functionName,
     });
   }
 
@@ -535,8 +543,9 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
     this.inExport_ = true;
 
     if (tree.declaration.moduleSpecifier) {
-      this.curDepIndex_ =
-          this.getOrCreateDependencyIndex(tree.declaration.moduleSpecifier);
+      this.curDepIndex_ = this.getOrCreateDependencyIndex(
+        tree.declaration.moduleSpecifier
+      );
     } else {
       this.curDepIndex_ = null;
     }
@@ -552,8 +561,7 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
   // $__export('p', p);
   // $__export('q', q);
   transformVariableStatement(tree) {
-    if (!this.inExport_)
-      return super.transformVariableStatement(tree);
+    if (!this.inExport_) return super.transformVariableStatement(tree);
 
     this.inExport_ = false;
 
@@ -561,11 +569,12 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
     bindingVisitor.visitAny(tree);
     let statements = [];
     for (let i = 0; i < bindingVisitor.bindings.length; i++) {
-      let {identifierToken} = bindingVisitor.bindings[i];
+      let { identifierToken } = bindingVisitor.bindings[i];
       let name = identifierToken.value;
       this.addLocalExportBinding(name);
       statements.push(
-          parseStatement `$__export(${name}, ${id(identifierToken)})`);
+        parseStatement`$__export(${name}, ${id(identifierToken)})`
+      );
     }
 
     // Transform the tree after the export bindings have been registered.
@@ -585,18 +594,17 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
   // class q {}
   // $__export('q', q)
   transformClassDeclaration(tree) {
-    if (!this.inExport_)
-      return super.transformClassDeclaration(tree);
+    if (!this.inExport_) return super.transformClassDeclaration(tree);
 
     this.inExport_ = false;
 
-    let {identifierToken} = tree.name;
+    let { identifierToken } = tree.name;
     let name = identifierToken.value;
     this.addLocalExportBinding(name);
 
     let statements = [
       super.transformClassDeclaration(tree),
-      parseStatement `$__export(${name}, ${id(identifierToken)})`
+      parseStatement`$__export(${name}, ${id(identifierToken)})`,
     ];
     return new AnonBlock(null, statements);
   }
@@ -664,7 +672,7 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
       let bindingIdentifier = tree.importClause.binding.binding;
       let name = bindingIdentifier.getStringValue();
       this.addModuleBinding(this.curDepIndex_, name);
-      return parseStatement `var ${bindingIdentifier};`;
+      return parseStatement`var ${bindingIdentifier};`;
     }
 
     if (tree.importClause.type === IMPORT_SPECIFIER_SET) {
@@ -674,13 +682,14 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
 
     // import default form
     let bindingName = tree.importClause.binding.getStringValue();
-    this.addImportBinding(this.curDepIndex_, bindingName, 'default');
-    return parseStatement `var ${bindingName};`;
+    this.addImportBinding(this.curDepIndex_, bindingName, "default");
+    return parseStatement`var ${bindingName};`;
   }
 
   transformImportSpecifierSet(tree) {
     return createVariableStatement(
-        createVariableDeclarationList(VAR, this.transformList(tree.specifiers)));
+      createVariableDeclarationList(VAR, this.transformList(tree.specifiers))
+    );
   }
 
   transformExportDefault(tree) {
@@ -700,20 +709,25 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
     //
     this.inExport_ = false;
     let expression = this.transformAny(tree.expression);
-    this.addLocalExportBinding('default');
+    this.addLocalExportBinding("default");
 
     // convert class into a class expression
     if (expression.type === CLASS_DECLARATION) {
-      expression = new ClassExpression(expression.location, expression.name,
-          expression.superClass, expression.elements, expression.annotations,
-          expression.typeParameters);
+      expression = new ClassExpression(
+        expression.location,
+        expression.name,
+        expression.superClass,
+        expression.elements,
+        expression.annotations,
+        expression.typeParameters
+      );
     }
 
     if (expression.type === FUNCTION_DECLARATION) {
-      this.addExportFunction('default', expression.name.identifierToken.value);
+      this.addExportFunction("default", expression.name.identifierToken.value);
       return expression;
     } else {
-      return parseStatement `$__export('default', ${expression});`;
+      return parseStatement`$__export('default', ${expression});`;
     }
   }
 
@@ -733,7 +747,7 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
       this.addExternalExportBinding(this.curDepIndex_, exportName, bindingName);
     } else {
       this.addLocalExportBinding(exportName, bindingName);
-      return parseExpression `$__export(${exportName}, ${id(bindingName)});`;
+      return parseExpression`$__export(${exportName}, ${id(bindingName)});`;
     }
   }
 
@@ -742,9 +756,13 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
   // $__export('a', a), $__export('c', b);
   transformExportSpecifierSet(tree) {
     let specifiers = this.transformList(tree.specifiers);
-    return new ExpressionStatement(tree.location,
-        new CommaExpression(tree.location,
-                            specifiers.filter((specifier) => specifier)));
+    return new ExpressionStatement(
+      tree.location,
+      new CommaExpression(
+        tree.location,
+        specifiers.filter((specifier) => specifier)
+      )
+    );
   }
 
   transformNameSpaceExport(tree) {
@@ -753,7 +771,11 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
   }
 
   transformForwardDefaultExport(tree) {
-    this.addExternalExportBinding(this.curDepIndex_, tree.name.value, 'default');
+    this.addExternalExportBinding(
+      this.curDepIndex_,
+      tree.name.value,
+      "default"
+    );
     return tree;
   }
 
@@ -761,8 +783,11 @@ export class InstantiateModuleTransformer extends ModuleTransformer {
     let localBinding = tree.binding.binding;
     let localBindingToken = localBinding.identifierToken;
     let importName = (tree.name || localBindingToken).value;
-    this.addImportBinding(this.curDepIndex_, localBindingToken.value,
-                          importName);
+    this.addImportBinding(
+      this.curDepIndex_,
+      localBindingToken.value,
+      importName
+    );
     return new VariableDeclaration(tree.location, localBinding, null, null);
   }
 

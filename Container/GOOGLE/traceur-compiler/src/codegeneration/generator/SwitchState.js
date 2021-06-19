@@ -15,12 +15,10 @@
 import {
   CaseClause,
   DefaultClause,
-  SwitchStatement
-} from '../../syntax/trees/ParseTrees.js';
-import {State} from './State.js';
-import {
-  createBreakStatement
-} from '../ParseTreeFactory.js';
+  SwitchStatement,
+} from "../../syntax/trees/ParseTrees.js";
+import { State } from "./State.js";
+import { createBreakStatement } from "../ParseTreeFactory.js";
 
 /**
  * Represents a pair of ParseTree and integer.
@@ -67,13 +65,16 @@ export class SwitchState extends State {
    */
   replaceState(oldState, newState) {
     let clauses = this.clauses.map((clause) => {
-      return new SwitchClause(clause.first,
-          State.replaceStateId(clause.second, oldState, newState));
+      return new SwitchClause(
+        clause.first,
+        State.replaceStateId(clause.second, oldState, newState)
+      );
     });
     return new SwitchState(
-        State.replaceStateId(this.id, oldState, newState),
-        this.expression,
-        clauses);
+      State.replaceStateId(this.id, oldState, newState),
+      this.expression,
+      clauses
+    );
   }
 
   /**
@@ -87,16 +88,25 @@ export class SwitchState extends State {
     for (let i = 0; i < this.clauses.length; i++) {
       let clause = this.clauses[i];
       if (clause.first === null) {
-        clauses.push(new DefaultClause(null,
-            State.generateJump(enclosingFinally, clause.second)));
+        clauses.push(
+          new DefaultClause(
+            null,
+            State.generateJump(enclosingFinally, clause.second)
+          )
+        );
       } else {
-        clauses.push(new CaseClause(null, clause.first,
-            State.generateJump(enclosingFinally, clause.second)));
+        clauses.push(
+          new CaseClause(
+            null,
+            clause.first,
+            State.generateJump(enclosingFinally, clause.second)
+          )
+        );
       }
     }
     return [
       new SwitchStatement(null, this.expression, clauses),
-      createBreakStatement()
+      createBreakStatement(),
     ];
   }
 }

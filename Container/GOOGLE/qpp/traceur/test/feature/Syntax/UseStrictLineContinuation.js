@@ -1,6 +1,6 @@
 function testUseStrictLineContinuation() {
-  'use \
-strict';
+  "use \
+strict";
   return this;
 }
 

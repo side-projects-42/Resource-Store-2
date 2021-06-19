@@ -56,16 +56,14 @@
   email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 */
 
-goog.provide('wtf.math.MersenneTwister');
-
-
+goog.provide("wtf.math.MersenneTwister");
 
 /**
  * Mersenne Twister (MT19937) implementation.
  * @param {number} seed Initial seed value.
  * @constructor
  */
-wtf.math.MersenneTwister = function(seed) {
+wtf.math.MersenneTwister = function (seed) {
   /**
    * The array for the state vector.
    * @type {!Int32Array}
@@ -83,7 +81,6 @@ wtf.math.MersenneTwister = function(seed) {
   this.initialize_(seed);
 };
 
-
 /**
  * @type {number}
  * @const
@@ -91,14 +88,12 @@ wtf.math.MersenneTwister = function(seed) {
  */
 wtf.math.MersenneTwister.N_ = 624;
 
-
 /**
  * @type {number}
  * @const
  * @private
  */
 wtf.math.MersenneTwister.M_ = 397;
-
 
 /**
  * Constant vector a.
@@ -109,7 +104,6 @@ wtf.math.MersenneTwister.M_ = 397;
  */
 wtf.math.MersenneTwister.MAG01_ = new Int32Array([0, 0x9908b0df]);
 
-
 /**
  * Most significant w-r bits.
  * @type {number}
@@ -118,30 +112,29 @@ wtf.math.MersenneTwister.MAG01_ = new Int32Array([0, 0x9908b0df]);
  */
 wtf.math.MersenneTwister.UPPER_MASK_ = 0x80000000;
 
-
 /**
  * Least significant r bits.
  * @type {number}
  * @const
  * @private
  */
-wtf.math.MersenneTwister.LOWER_MASK_ = 0x7FFFFFFF;
-
+wtf.math.MersenneTwister.LOWER_MASK_ = 0x7fffffff;
 
 /**
  * Initializes mt[N] with a seed.
  * @param {number} seed Seed value.
  * @private
  */
-wtf.math.MersenneTwister.prototype.initialize_ = function(seed) {
+wtf.math.MersenneTwister.prototype.initialize_ = function (seed) {
   var mt = this.mt_;
 
   mt[0] = seed >>> 0;
   for (this.mti_ = 1; this.mti_ < wtf.math.MersenneTwister.N_; this.mti_++) {
     var s = mt[this.mti_ - 1] ^ (mt[this.mti_ - 1] >>> 30);
     mt[this.mti_] =
-        (((((s & 0xffff0000) >>> 16) * 1812433253) << 16) +
-            (s & 0x0000ffff) * 1812433253) + this.mti_;
+      ((((s & 0xffff0000) >>> 16) * 1812433253) << 16) +
+      (s & 0x0000ffff) * 1812433253 +
+      this.mti_;
     /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
     /* In the previous versions, MSBs of the seed affect   */
     /* only MSBs of the array mt[].                        */
@@ -151,12 +144,11 @@ wtf.math.MersenneTwister.prototype.initialize_ = function(seed) {
   }
 };
 
-
 /**
  * Generates a random number on [0,0xffffffff]-interval.
  * @return {number} Random number.
  */
-wtf.math.MersenneTwister.prototype.randomInt32 = function() {
+wtf.math.MersenneTwister.prototype.randomInt32 = function () {
   var mt = this.mt_;
 
   var N = wtf.math.MersenneTwister.N_;
@@ -171,17 +163,20 @@ wtf.math.MersenneTwister.prototype.randomInt32 = function() {
     }
 
     for (var kk = 0; kk < N - M; kk++) {
-      var y = (mt[kk] & wtf.math.MersenneTwister.UPPER_MASK_) |
-          (mt[kk + 1] & wtf.math.MersenneTwister.LOWER_MASK_);
+      var y =
+        (mt[kk] & wtf.math.MersenneTwister.UPPER_MASK_) |
+        (mt[kk + 1] & wtf.math.MersenneTwister.LOWER_MASK_);
       mt[kk] = mt[kk + M] ^ (y >>> 1) ^ MAG01[y & 0x1];
     }
     for (; kk < N - 1; kk++) {
-      var y = (mt[kk] & wtf.math.MersenneTwister.UPPER_MASK_) |
-          (mt[kk + 1] & wtf.math.MersenneTwister.LOWER_MASK_);
+      var y =
+        (mt[kk] & wtf.math.MersenneTwister.UPPER_MASK_) |
+        (mt[kk + 1] & wtf.math.MersenneTwister.LOWER_MASK_);
       mt[kk] = mt[kk + (M - N)] ^ (y >>> 1) ^ MAG01[y & 0x1];
     }
-    var y = (mt[N - 1] & wtf.math.MersenneTwister.UPPER_MASK_) |
-        (mt[0] & wtf.math.MersenneTwister.LOWER_MASK_);
+    var y =
+      (mt[N - 1] & wtf.math.MersenneTwister.UPPER_MASK_) |
+      (mt[0] & wtf.math.MersenneTwister.LOWER_MASK_);
     mt[N - 1] = mt[M - 1] ^ (y >>> 1) ^ MAG01[y & 0x1];
 
     this.mti_ = 0;
@@ -190,20 +185,19 @@ wtf.math.MersenneTwister.prototype.randomInt32 = function() {
   var y = mt[this.mti_++];
 
   // Tempering.
-  y ^= (y >>> 11);
+  y ^= y >>> 11;
   y ^= (y << 7) & 0x9d2c5680;
   y ^= (y << 15) & 0xefc60000;
-  y ^= (y >>> 18);
+  y ^= y >>> 18;
 
   return y >>> 0;
 };
-
 
 /**
  * Generates a random value from [0-1].
  * @return {number} Random number.
  */
-wtf.math.MersenneTwister.prototype.random = function() {
+wtf.math.MersenneTwister.prototype.random = function () {
   // Divided by 2^32.
   return this.randomInt32() * (1 / 4294967296.0);
 };

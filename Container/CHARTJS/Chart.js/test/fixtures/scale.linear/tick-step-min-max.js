@@ -1,7 +1,7 @@
 module.exports = {
-  description: 'https://github.com/chartjs/Chart.js/issues/4234',
+  description: "https://github.com/chartjs/Chart.js/issues/4234",
   config: {
-    type: 'line',
+    type: "line",
     options: {
       scales: {
         y: {
@@ -9,15 +9,15 @@ module.exports = {
           min: -3,
           ticks: {
             stepSize: 3,
-          }
+          },
         },
         x: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {resolveUrl} from '../util/url.js';
+import { resolveUrl } from "../util/url.js";
 
 /**
  * This is the current code unit object being evaluated.

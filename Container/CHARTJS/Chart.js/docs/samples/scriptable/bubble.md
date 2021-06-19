@@ -9,13 +9,13 @@ Utils.srand(110);
 
 const actions = [
   {
-    name: 'Randomize',
+    name: "Randomize",
     handler(chart) {
-      chart.data.datasets.forEach(dataset => {
+      chart.data.datasets.forEach((dataset) => {
         dataset.data = generateData();
       });
       chart.update();
-    }
+    },
   },
 ];
 // </block:setup>
@@ -29,7 +29,7 @@ function generateData() {
     data.push({
       x: Utils.rand(MIN_XY, MAX_XY),
       y: Utils.rand(MIN_XY, MAX_XY),
-      v: Utils.rand(0, 1000)
+      v: Utils.rand(0, 1000),
     });
   }
 
@@ -37,17 +37,26 @@ function generateData() {
 }
 
 const data = {
-  datasets: [{
-    data: generateData()
-  }, {
-    data: generateData()
-  }]
+  datasets: [
+    {
+      data: generateData(),
+    },
+    {
+      data: generateData(),
+    },
+  ],
 };
 // </block:data>
 
 // <block:options:0>
 function channelValue(x, y, values) {
-  return x < 0 && y < 0 ? values[0] : x < 0 ? values[1] : y < 0 ? values[2] : values[3];
+  return x < 0 && y < 0
+    ? values[0]
+    : x < 0
+    ? values[1]
+    : y < 0
+    ? values[2]
+    : values[3];
 }
 
 function colorize(opaque, context) {
@@ -57,13 +66,13 @@ function colorize(opaque, context) {
   var r = channelValue(x, y, [250, 150, 50, 0]);
   var g = channelValue(x, y, [0, 50, 150, 250]);
   var b = channelValue(x, y, [0, 150, 150, 250]);
-  var a = opaque ? 1 : 0.5 * value.v / 1000;
+  var a = opaque ? 1 : (0.5 * value.v) / 1000;
 
-  return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+  return "rgba(" + r + "," + g + "," + b + "," + a + ")";
 }
 
 const config = {
-  type: 'bubble',
+  type: "bubble",
   data: data,
   options: {
     aspectRatio: 1,
@@ -77,28 +86,28 @@ const config = {
 
         borderColor: colorize.bind(null, true),
 
-        borderWidth: function(context) {
+        borderWidth: function (context) {
           return Math.min(Math.max(1, context.datasetIndex + 1), 8);
         },
 
-        hoverBackgroundColor: 'transparent',
+        hoverBackgroundColor: "transparent",
 
-        hoverBorderColor: function(context) {
+        hoverBorderColor: function (context) {
           return Utils.color(context.datasetIndex);
         },
 
-        hoverBorderWidth: function(context) {
-          return Math.round(8 * context.raw.v / 1000);
+        hoverBorderWidth: function (context) {
+          return Math.round((8 * context.raw.v) / 1000);
         },
 
-        radius: function(context) {
+        radius: function (context) {
           var size = context.chart.width;
           var base = Math.abs(context.raw.v) / 1000;
           return (size / 24) * base;
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };
 // </block:options>
 

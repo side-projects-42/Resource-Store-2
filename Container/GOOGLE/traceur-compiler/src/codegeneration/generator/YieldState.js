@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {State} from './State.js';
-import {createReturnStatement} from '../ParseTreeFactory.js';
+import { State } from "./State.js";
+import { createReturnStatement } from "../ParseTreeFactory.js";
 
 /**
  * Represents a simple yield expression that has been added to a StateMachine.
@@ -37,9 +37,10 @@ export class YieldState extends State {
    */
   replaceState(oldState, newState) {
     return new this.constructor(
-        State.replaceStateId(this.id, oldState, newState),
-        State.replaceStateId(this.fallThroughState, oldState, newState),
-        this.expression);
+      State.replaceStateId(this.id, oldState, newState),
+      State.replaceStateId(this.fallThroughState, oldState, newState),
+      this.expression
+    );
   }
 
   /**
@@ -56,7 +57,7 @@ export class YieldState extends State {
       //      $ctx.state = enclosingFinally.finallyState;
       //      $fallThrough = this.fallThroughState;
       ...State.generateAssignState(enclosingFinally, this.fallThroughState),
-      createReturnStatement(this.expression)
+      createReturnStatement(this.expression),
     ];
   }
 }

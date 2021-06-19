@@ -1,0 +1,24 @@
+{
+  "name": "nr1-command-center",
+  "fullName": "newrelic-experimental/nr1-command-center",
+  "slug": "newrelic-experimental-nr1-command-center",
+  "owner": {
+    "login": "newrelic-experimental",
+    "type": "Organization"
+  },
+  "title": "Violation Command Center",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic-experimental/nr1-command-center",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic-experimental/nr1-command-center",
+  "iconUrl": null,
+  "shortDescription": "Alert violation application",
+  "description": "Consolidated Violation Event View",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Violation Command Center",
+    "url": "https://github.com/newrelic-experimental/nr1-command-center"
+  }
+}

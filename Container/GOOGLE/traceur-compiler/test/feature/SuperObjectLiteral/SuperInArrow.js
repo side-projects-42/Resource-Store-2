@@ -3,7 +3,7 @@ var x;
 var p = {
   m(v) {
     x = v;
-  }
+  },
 };
 
 var o = {
@@ -13,7 +13,7 @@ var o = {
       super.m(x);
     };
     f(x);
-  }
+  },
 };
 
 o.n(42);

@@ -1,0 +1,21 @@
+%h3 Abstract
+.markdown{ data: { 'field-id' => 'proposal_abstract' } }
+  = proposal.abstract
+
+%h3 Details
+.markdown{ data: { 'field-id' => 'proposal_details' } }
+  = proposal.details
+
+%h3 Pitch
+.markdown{ data: { 'field-id' => 'proposal_pitch' } }
+  =proposal.pitch
+
+- unless preview
+  %h3 <span class="ballot">#{proposal.new_talk ? '☑︎' : '☐'}</span> New Talk
+
+  - if proposal.custom_fields.any?
+    - proposal.proposal_data[:custom_fields].select do |key,value|
+      %h3= key.capitalize
+      %div
+      = value.capitalize
+      %div

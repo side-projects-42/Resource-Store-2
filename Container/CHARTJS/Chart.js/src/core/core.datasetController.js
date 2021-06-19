@@ -1,8 +1,18 @@
-import Animations from './core.animations';
-import defaults from './core.defaults';
-import {isArray, isFinite, isObject, valueOrDefault, resolveObjectKey, defined} from '../helpers/helpers.core';
-import {listenArrayEvents, unlistenArrayEvents} from '../helpers/helpers.collection';
-import {sign} from '../helpers/helpers.math';
+import Animations from "./core.animations";
+import defaults from "./core.defaults";
+import {
+  isArray,
+  isFinite,
+  isObject,
+  valueOrDefault,
+  resolveObjectKey,
+  defined,
+} from "../helpers/helpers.core";
+import {
+  listenArrayEvents,
+  unlistenArrayEvents,
+} from "../helpers/helpers.collection";
+import { sign } from "../helpers/helpers.math";
 
 /**
  * @typedef { import("./core.controller").default } Chart
@@ -10,13 +20,13 @@ import {sign} from '../helpers/helpers.math';
  */
 
 function scaleClip(scale, allowedOverflow) {
-  const opts = scale && scale.options || {};
+  const opts = (scale && scale.options) || {};
   const reverse = opts.reverse;
   const min = opts.min === undefined ? allowedOverflow : 0;
   const max = opts.max === undefined ? allowedOverflow : 0;
   return {
     start: reverse ? max : min,
-    end: reverse ? min : max
+    end: reverse ? min : max,
   };
 }
 
@@ -31,7 +41,7 @@ function defaultClip(xScale, yScale, allowedOverflow) {
     top: y.end,
     right: x.end,
     bottom: y.start,
-    left: x.start
+    left: x.start,
   };
 }
 
@@ -52,7 +62,7 @@ function toClip(value) {
     right: r,
     bottom: b,
     left: l,
-    disabled: value === false
+    disabled: value === false,
   };
 }
 
@@ -69,7 +79,7 @@ function getSortedDatasetIndices(chart, filterVisible) {
 
 function applyStack(stack, value, dsIndex, options) {
   const keys = stack.keys;
-  const singleMode = options.mode === 'single';
+  const singleMode = options.mode === "single";
   let i, ilen, datasetIndex, otherValue;
 
   if (value === null) {
@@ -85,7 +95,10 @@ function applyStack(stack, value, dsIndex, options) {
       break;
     }
     otherValue = stack.values[datasetIndex];
-    if (isFinite(otherValue) && (singleMode || (value === 0 || sign(value) === sign(otherValue)))) {
+    if (
+      isFinite(otherValue) &&
+      (singleMode || value === 0 || sign(value) === sign(otherValue))
+    ) {
       value += otherValue;
     }
   }
@@ -100,7 +113,7 @@ function convertObjectDataToArray(data) {
     key = keys[i];
     adata[i] = {
       x: key,
-      y: data[key]
+      y: data[key],
     };
   }
   return adata;
@@ -116,10 +129,10 @@ function getStackKey(indexScale, valueScale, meta) {
 }
 
 function getUserBounds(scale) {
-  const {min, max, minDefined, maxDefined} = scale.getUserBounds();
+  const { min, max, minDefined, maxDefined } = scale.getUserBounds();
   return {
     min: minDefined ? min : Number.NEGATIVE_INFINITY,
-    max: maxDefined ? max : Number.POSITIVE_INFINITY
+    max: maxDefined ? max : Number.POSITIVE_INFINITY,
   };
 }
 
@@ -129,7 +142,7 @@ function getOrCreateStack(stacks, stackKey, indexValue) {
 }
 
 function getLastIndexInStack(stack, vScale, positive) {
-  for (const meta of vScale.getMatchingVisibleMetas('bar').reverse()) {
+  for (const meta of vScale.getMatchingVisibleMetas("bar").reverse()) {
     const value = stack[meta.index];
     if ((positive && value > 0) || (!positive && value < 0)) {
       return meta.index;
@@ -140,9 +153,9 @@ function getLastIndexInStack(stack, vScale, positive) {
 }
 
 function updateStacks(controller, parsed) {
-  const {chart, _cachedMeta: meta} = controller;
+  const { chart, _cachedMeta: meta } = controller;
   const stacks = chart._stacks || (chart._stacks = {}); // map structure is {stackKey: {datasetIndex: value}}
-  const {iScale, vScale, index: datasetIndex} = meta;
+  const { iScale, vScale, index: datasetIndex } = meta;
   const iAxis = iScale.axis;
   const vAxis = vScale.axis;
   const key = getStackKey(iScale, vScale, meta);
@@ -151,7 +164,7 @@ function updateStacks(controller, parsed) {
 
   for (let i = 0; i < ilen; ++i) {
     const item = parsed[i];
-    const {[iAxis]: index, [vAxis]: value} = item;
+    const { [iAxis]: index, [vAxis]: value } = item;
     const itemStacks = item._stacks || (item._stacks = {});
     stack = itemStacks[vAxis] = getOrCreateStack(stacks, key, index);
     stack[datasetIndex] = value;
@@ -163,20 +176,20 @@ function updateStacks(controller, parsed) {
 
 function getFirstScaleId(chart, axis) {
   const scales = chart.scales;
-  return Object.keys(scales).filter(key => scales[key].axis === axis).shift();
+  return Object.keys(scales)
+    .filter((key) => scales[key].axis === axis)
+    .shift();
 }
 
 function createDatasetContext(parent, index) {
-  return Object.assign(Object.create(parent),
-    {
-      active: false,
-      dataset: undefined,
-      datasetIndex: index,
-      index,
-      mode: 'default',
-      type: 'dataset'
-    }
-  );
+  return Object.assign(Object.create(parent), {
+    active: false,
+    dataset: undefined,
+    datasetIndex: index,
+    index,
+    mode: "default",
+    type: "dataset",
+  });
 }
 
 function createDataContext(parent, index, element) {
@@ -187,8 +200,8 @@ function createDataContext(parent, index, element) {
     raw: undefined,
     element,
     index,
-    mode: 'default',
-    type: 'data'
+    mode: "default",
+    type: "data",
   });
 }
 
@@ -201,22 +214,26 @@ function clearStacks(meta, items) {
   items = items || meta._parsed;
   for (const parsed of items) {
     const stacks = parsed._stacks;
-    if (!stacks || stacks[axis] === undefined || stacks[axis][meta.index] === undefined) {
+    if (
+      !stacks ||
+      stacks[axis] === undefined ||
+      stacks[axis][meta.index] === undefined
+    ) {
       return;
     }
     delete stacks[axis][meta.index];
   }
 }
 
-const isDirectUpdateMode = (mode) => mode === 'reset' || mode === 'none';
-const cloneIfNotShared = (cached, shared) => shared ? cached : Object.assign({}, cached);
+const isDirectUpdateMode = (mode) => mode === "reset" || mode === "none";
+const cloneIfNotShared = (cached, shared) =>
+  shared ? cached : Object.assign({}, cached);
 
 export default class DatasetController {
-
   /**
-	 * @param {Chart} chart
-	 * @param {number} datasetIndex
-	 */
+   * @param {Chart} chart
+   * @param {number} datasetIndex
+   */
   constructor(chart, datasetIndex) {
     this.chart = chart;
     this._ctx = chart.ctx;
@@ -261,14 +278,24 @@ export default class DatasetController {
     const meta = me._cachedMeta;
     const dataset = me.getDataset();
 
-    const chooseId = (axis, x, y, r) => axis === 'x' ? x : axis === 'r' ? r : y;
+    const chooseId = (axis, x, y, r) =>
+      axis === "x" ? x : axis === "r" ? r : y;
 
-    const xid = meta.xAxisID = valueOrDefault(dataset.xAxisID, getFirstScaleId(chart, 'x'));
-    const yid = meta.yAxisID = valueOrDefault(dataset.yAxisID, getFirstScaleId(chart, 'y'));
-    const rid = meta.rAxisID = valueOrDefault(dataset.rAxisID, getFirstScaleId(chart, 'r'));
+    const xid = (meta.xAxisID = valueOrDefault(
+      dataset.xAxisID,
+      getFirstScaleId(chart, "x")
+    ));
+    const yid = (meta.yAxisID = valueOrDefault(
+      dataset.yAxisID,
+      getFirstScaleId(chart, "y")
+    ));
+    const rid = (meta.rAxisID = valueOrDefault(
+      dataset.rAxisID,
+      getFirstScaleId(chart, "r")
+    ));
     const indexAxis = meta.indexAxis;
-    const iid = meta.iAxisID = chooseId(indexAxis, xid, yid, rid);
-    const vid = meta.vAxisID = chooseId(indexAxis, yid, xid, rid);
+    const iid = (meta.iAxisID = chooseId(indexAxis, xid, yid, rid));
+    const vid = (meta.vAxisID = chooseId(indexAxis, yid, xid, rid));
     meta.xScale = me.getScaleForId(xid);
     meta.yScale = me.getScaleForId(yid);
     meta.rScale = me.getScaleForId(rid);
@@ -285,30 +312,28 @@ export default class DatasetController {
   }
 
   /**
-	 * @param {string} scaleID
-	 * @return {Scale}
-	 */
+   * @param {string} scaleID
+   * @return {Scale}
+   */
   getScaleForId(scaleID) {
     return this.chart.scales[scaleID];
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _getOtherScale(scale) {
     const meta = this._cachedMeta;
-    return scale === meta.iScale
-      ? meta.vScale
-      : meta.iScale;
+    return scale === meta.iScale ? meta.vScale : meta.iScale;
   }
 
   reset() {
-    this._update('reset');
+    this._update("reset");
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _destroy() {
     const meta = this._cachedMeta;
     if (this._data) {
@@ -320,8 +345,8 @@ export default class DatasetController {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _dataCheck() {
     const me = this;
     const dataset = me.getDataset();
@@ -393,9 +418,9 @@ export default class DatasetController {
   }
 
   /**
-	 * Merges user-supplied and default dataset-level options
-	 * @private
-	 */
+   * Merges user-supplied and default dataset-level options
+   * @private
+   */
   configure() {
     const me = this;
     const config = me.chart.config;
@@ -406,13 +431,13 @@ export default class DatasetController {
   }
 
   /**
-	 * @param {number} start
-	 * @param {number} count
-	 */
+   * @param {number} start
+   * @param {number} count
+   */
   parse(start, count) {
     const me = this;
-    const {_cachedMeta: meta, _data: data} = me;
-    const {iScale, _stacked} = meta;
+    const { _cachedMeta: meta, _data: data } = me;
+    const { iScale, _stacked } = meta;
     const iAxis = iScale.axis;
 
     let sorted = start === 0 && count === data.length ? true : meta._sorted;
@@ -432,7 +457,8 @@ export default class DatasetController {
         parsed = me.parsePrimitiveData(meta, data, start, count);
       }
 
-      const isNotInOrderComparedToPrev = () => cur[iAxis] === null || (prev && cur[iAxis] < prev[iAxis]);
+      const isNotInOrderComparedToPrev = () =>
+        cur[iAxis] === null || (prev && cur[iAxis] < prev[iAxis]);
       for (i = 0; i < count; ++i) {
         meta._parsed[i + start] = cur = parsed[i];
         if (sorted) {
@@ -451,18 +477,18 @@ export default class DatasetController {
   }
 
   /**
-	 * Parse array of primitive values
-	 * @param {object} meta - dataset meta
-	 * @param {array} data - data array. Example [1,3,4]
-	 * @param {number} start - start index
-	 * @param {number} count - number of items to parse
-	 * @returns {object} parsed item - item containing index and a parsed value
-	 * for each scale id.
-	 * Example: {xScale0: 0, yScale0: 1}
-	 * @protected
-	 */
+   * Parse array of primitive values
+   * @param {object} meta - dataset meta
+   * @param {array} data - data array. Example [1,3,4]
+   * @param {number} start - start index
+   * @param {number} count - number of items to parse
+   * @returns {object} parsed item - item containing index and a parsed value
+   * for each scale id.
+   * Example: {xScale0: 0, yScale0: 1}
+   * @protected
+   */
   parsePrimitiveData(meta, data, start, count) {
-    const {iScale, vScale} = meta;
+    const { iScale, vScale } = meta;
     const iAxis = iScale.axis;
     const vAxis = vScale.axis;
     const labels = iScale.getLabels();
@@ -474,25 +500,25 @@ export default class DatasetController {
       index = i + start;
       parsed[i] = {
         [iAxis]: singleScale || iScale.parse(labels[index], index),
-        [vAxis]: vScale.parse(data[index], index)
+        [vAxis]: vScale.parse(data[index], index),
       };
     }
     return parsed;
   }
 
   /**
-	 * Parse array of arrays
-	 * @param {object} meta - dataset meta
-	 * @param {array} data - data array. Example [[1,2],[3,4]]
-	 * @param {number} start - start index
-	 * @param {number} count - number of items to parse
-	 * @returns {object} parsed item - item containing index and a parsed value
-	 * for each scale id.
-	 * Example: {x: 0, y: 1}
-	 * @protected
-	 */
+   * Parse array of arrays
+   * @param {object} meta - dataset meta
+   * @param {array} data - data array. Example [[1,2],[3,4]]
+   * @param {number} start - start index
+   * @param {number} count - number of items to parse
+   * @returns {object} parsed item - item containing index and a parsed value
+   * for each scale id.
+   * Example: {x: 0, y: 1}
+   * @protected
+   */
   parseArrayData(meta, data, start, count) {
-    const {xScale, yScale} = meta;
+    const { xScale, yScale } = meta;
     const parsed = new Array(count);
     let i, ilen, index, item;
 
@@ -501,26 +527,26 @@ export default class DatasetController {
       item = data[index];
       parsed[i] = {
         x: xScale.parse(item[0], index),
-        y: yScale.parse(item[1], index)
+        y: yScale.parse(item[1], index),
       };
     }
     return parsed;
   }
 
   /**
-	 * Parse array of objects
-	 * @param {object} meta - dataset meta
-	 * @param {array} data - data array. Example [{x:1, y:5}, {x:2, y:10}]
-	 * @param {number} start - start index
-	 * @param {number} count - number of items to parse
-	 * @returns {object} parsed item - item containing index and a parsed value
-	 * for each scale id. _custom is optional
-	 * Example: {xScale0: 0, yScale0: 1, _custom: {r: 10, foo: 'bar'}}
-	 * @protected
-	 */
+   * Parse array of objects
+   * @param {object} meta - dataset meta
+   * @param {array} data - data array. Example [{x:1, y:5}, {x:2, y:10}]
+   * @param {number} start - start index
+   * @param {number} count - number of items to parse
+   * @returns {object} parsed item - item containing index and a parsed value
+   * for each scale id. _custom is optional
+   * Example: {xScale0: 0, yScale0: 1, _custom: {r: 10, foo: 'bar'}}
+   * @protected
+   */
   parseObjectData(meta, data, start, count) {
-    const {xScale, yScale} = meta;
-    const {xAxisKey = 'x', yAxisKey = 'y'} = this._parsing;
+    const { xScale, yScale } = meta;
+    const { xAxisKey = "x", yAxisKey = "y" } = this._parsing;
     const parsed = new Array(count);
     let i, ilen, index, item;
 
@@ -529,43 +555,43 @@ export default class DatasetController {
       item = data[index];
       parsed[i] = {
         x: xScale.parse(resolveObjectKey(item, xAxisKey), index),
-        y: yScale.parse(resolveObjectKey(item, yAxisKey), index)
+        y: yScale.parse(resolveObjectKey(item, yAxisKey), index),
       };
     }
     return parsed;
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getParsed(index) {
     return this._cachedMeta._parsed[index];
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getDataElement(index) {
     return this._cachedMeta.data[index];
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   applyStack(scale, parsed, mode) {
     const chart = this.chart;
     const meta = this._cachedMeta;
     const value = parsed[scale.axis];
     const stack = {
       keys: getSortedDatasetIndices(chart, true),
-      values: parsed._stacks[scale.axis]
+      values: parsed._stacks[scale.axis],
     };
-    return applyStack(stack, value, meta.index, {mode});
+    return applyStack(stack, value, meta.index, { mode });
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   updateRangeFromParsed(range, scale, parsed, stack) {
     const parsedValue = parsed[scale.axis];
     let value = parsedValue === null ? NaN : parsedValue;
@@ -576,15 +602,17 @@ export default class DatasetController {
       // in addition to the stacked value
       range.min = Math.min(range.min, value);
       range.max = Math.max(range.max, value);
-      value = applyStack(stack, parsedValue, this._cachedMeta.index, {all: true});
+      value = applyStack(stack, parsedValue, this._cachedMeta.index, {
+        all: true,
+      });
     }
     range.min = Math.min(range.min, value);
     range.max = Math.max(range.max, value);
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getMinMax(scale, canStack) {
     const me = this;
     const meta = me._cachedMeta;
@@ -592,9 +620,16 @@ export default class DatasetController {
     const sorted = meta._sorted && scale === meta.iScale;
     const ilen = _parsed.length;
     const otherScale = me._getOtherScale(scale);
-    const stack = canStack && meta._stacked && {keys: getSortedDatasetIndices(me.chart, true), values: null};
-    const range = {min: Number.POSITIVE_INFINITY, max: Number.NEGATIVE_INFINITY};
-    const {min: otherMin, max: otherMax} = getUserBounds(otherScale);
+    const stack = canStack &&
+      meta._stacked && {
+        keys: getSortedDatasetIndices(me.chart, true),
+        values: null,
+      };
+    const range = {
+      min: Number.POSITIVE_INFINITY,
+      max: Number.NEGATIVE_INFINITY,
+    };
+    const { min: otherMin, max: otherMax } = getUserBounds(otherScale);
     let i, value, parsed, otherValue;
 
     function _skip() {
@@ -642,16 +677,16 @@ export default class DatasetController {
   }
 
   /**
-	 * @return {number|boolean}
-	 * @protected
-	 */
+   * @return {number|boolean}
+   * @protected
+   */
   getMaxOverflow() {
     return false;
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getLabelAndValue(index) {
     const me = this;
     const meta = me._cachedMeta;
@@ -659,26 +694,31 @@ export default class DatasetController {
     const vScale = meta.vScale;
     const parsed = me.getParsed(index);
     return {
-      label: iScale ? '' + iScale.getLabelForValue(parsed[iScale.axis]) : '',
-      value: vScale ? '' + vScale.getLabelForValue(parsed[vScale.axis]) : ''
+      label: iScale ? "" + iScale.getLabelForValue(parsed[iScale.axis]) : "",
+      value: vScale ? "" + vScale.getLabelForValue(parsed[vScale.axis]) : "",
     };
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _update(mode) {
     const me = this;
     const meta = me._cachedMeta;
     me.configure();
     me._cachedDataOpts = {};
-    me.update(mode || 'default');
-    meta._clip = toClip(valueOrDefault(me.options.clip, defaultClip(meta.xScale, meta.yScale, me.getMaxOverflow())));
+    me.update(mode || "default");
+    meta._clip = toClip(
+      valueOrDefault(
+        me.options.clip,
+        defaultClip(meta.xScale, meta.yScale, me.getMaxOverflow())
+      )
+    );
   }
 
   /**
-	 * @param {string} mode
-	 */
+   * @param {string} mode
+   */
   update(mode) {} // eslint-disable-line no-unused-vars
 
   draw() {
@@ -690,7 +730,7 @@ export default class DatasetController {
     const area = chart.chartArea;
     const active = [];
     const start = me._drawStart || 0;
-    const count = me._drawCount || (elements.length - start);
+    const count = me._drawCount || elements.length - start;
     let i;
 
     if (meta.dataset) {
@@ -712,35 +752,37 @@ export default class DatasetController {
   }
 
   /**
-	 * Returns a set of predefined style properties that should be used to represent the dataset
-	 * or the data if the index is specified
-	 * @param {number} index - data index
-	 * @param {boolean} [active] - true if hover
-	 * @return {object} style object
-	 */
+   * Returns a set of predefined style properties that should be used to represent the dataset
+   * or the data if the index is specified
+   * @param {number} index - data index
+   * @param {boolean} [active] - true if hover
+   * @return {object} style object
+   */
   getStyle(index, active) {
-    const mode = active ? 'active' : 'default';
+    const mode = active ? "active" : "default";
     return index === undefined && this._cachedMeta.dataset
       ? this.resolveDatasetElementOptions(mode)
       : this.resolveDataElementOptions(index || 0, mode);
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   getContext(index, active, mode) {
     const me = this;
     const dataset = me.getDataset();
     let context;
     if (index >= 0 && index < me._cachedMeta.data.length) {
       const element = me._cachedMeta.data[index];
-      context = element.$context ||
+      context =
+        element.$context ||
         (element.$context = createDataContext(me.getContext(), index, element));
       context.parsed = me.getParsed(index);
       context.raw = dataset.data[index];
       context.index = context.dataIndex = index;
     } else {
-      context = me.$context ||
+      context =
+        me.$context ||
         (me.$context = createDatasetContext(me.chart.getContext(), me.index));
       context.dataset = dataset;
       context.index = context.datasetIndex = me.index;
@@ -752,30 +794,30 @@ export default class DatasetController {
   }
 
   /**
-	 * @param {string} [mode]
-	 * @protected
-	 */
+   * @param {string} [mode]
+   * @protected
+   */
   resolveDatasetElementOptions(mode) {
     return this._resolveElementOptions(this.datasetElementType.id, mode);
   }
 
   /**
-	 * @param {number} index
-	 * @param {string} [mode]
-	 * @protected
-	 */
+   * @param {number} index
+   * @param {string} [mode]
+   * @protected
+   */
   resolveDataElementOptions(index, mode) {
     return this._resolveElementOptions(this.dataElementType.id, mode, index);
   }
 
   /**
-	 * @private
-	 */
-  _resolveElementOptions(elementType, mode = 'default', index) {
+   * @private
+   */
+  _resolveElementOptions(elementType, mode = "default", index) {
     const me = this;
-    const active = mode === 'active';
+    const active = mode === "active";
     const cache = me._cachedDataOpts;
-    const cacheKey = elementType + '-' + mode;
+    const cacheKey = elementType + "-" + mode;
     const cached = cache[cacheKey];
     const sharing = me.enableOptionSharing && defined(index);
     if (cached) {
@@ -783,7 +825,9 @@ export default class DatasetController {
     }
     const config = me.chart.config;
     const scopeKeys = config.datasetElementScopeKeys(me._type, elementType);
-    const prefixes = active ? [`${elementType}Hover`, 'hover', elementType, ''] : [elementType, ''];
+    const prefixes = active
+      ? [`${elementType}Hover`, "hover", elementType, ""]
+      : [elementType, ""];
     const scopes = config.getOptionScopes(me.getDataset(), scopeKeys);
     const names = Object.keys(defaults.elements[elementType]);
     // context is provided as a function, and is called only if needed,
@@ -805,10 +849,9 @@ export default class DatasetController {
     return values;
   }
 
-
   /**
-	 * @private
-	 */
+   * @private
+   */
   _resolveAnimations(index, transition, active) {
     const me = this;
     const chart = me.chart;
@@ -823,7 +866,10 @@ export default class DatasetController {
       const config = me.chart.config;
       const scopeKeys = config.datasetAnimationScopeKeys(me._type, transition);
       const scopes = config.getOptionScopes(me.getDataset(), scopeKeys);
-      options = config.createResolver(scopes, me.getContext(index, active, transition));
+      options = config.createResolver(
+        scopes,
+        me.getContext(index, active, transition)
+      );
     }
     const animations = new Animations(chart, options && options.animations);
     if (options && options._cacheable) {
@@ -833,28 +879,34 @@ export default class DatasetController {
   }
 
   /**
-	 * Utility for getting the options object shared between elements
-	 * @protected
-	 */
+   * Utility for getting the options object shared between elements
+   * @protected
+   */
   getSharedOptions(options) {
     if (!options.$shared) {
       return;
     }
-    return this._sharedOptions || (this._sharedOptions = Object.assign({}, options));
+    return (
+      this._sharedOptions || (this._sharedOptions = Object.assign({}, options))
+    );
   }
 
   /**
-	 * Utility for determining if `options` should be included in the updated properties
-	 * @protected
-	 */
+   * Utility for determining if `options` should be included in the updated properties
+   * @protected
+   */
   includeOptions(mode, sharedOptions) {
-    return !sharedOptions || isDirectUpdateMode(mode) || this.chart._animationsDisabled;
+    return (
+      !sharedOptions ||
+      isDirectUpdateMode(mode) ||
+      this.chart._animationsDisabled
+    );
   }
 
   /**
-	 * Utility for updating an element with new properties, using animations when appropriate.
-	 * @protected
-	 */
+   * Utility for updating an element with new properties, using animations when appropriate.
+   * @protected
+   */
   updateElement(element, index, properties, mode) {
     if (isDirectUpdateMode(mode)) {
       Object.assign(element, properties);
@@ -864,61 +916,64 @@ export default class DatasetController {
   }
 
   /**
-	 * Utility to animate the shared options, that are potentially affecting multiple elements.
-	 * @protected
-	 */
+   * Utility to animate the shared options, that are potentially affecting multiple elements.
+   * @protected
+   */
   updateSharedOptions(sharedOptions, mode, newOptions) {
     if (sharedOptions && !isDirectUpdateMode(mode)) {
-      this._resolveAnimations(undefined, mode).update(sharedOptions, newOptions);
+      this._resolveAnimations(undefined, mode).update(
+        sharedOptions,
+        newOptions
+      );
     }
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _setStyle(element, index, mode, active) {
     element.active = active;
     const options = this.getStyle(index, active);
     this._resolveAnimations(index, mode, active).update(element, {
       // When going from active to inactive, we need to update to the shared options.
       // This way the once hovered element will end up with the same original shared options instance, after animation.
-      options: (!active && this.getSharedOptions(options)) || options
+      options: (!active && this.getSharedOptions(options)) || options,
     });
   }
 
   removeHoverStyle(element, datasetIndex, index) {
-    this._setStyle(element, index, 'active', false);
+    this._setStyle(element, index, "active", false);
   }
 
   setHoverStyle(element, datasetIndex, index) {
-    this._setStyle(element, index, 'active', true);
+    this._setStyle(element, index, "active", true);
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _removeDatasetHoverStyle() {
     const element = this._cachedMeta.dataset;
 
     if (element) {
-      this._setStyle(element, undefined, 'active', false);
+      this._setStyle(element, undefined, "active", false);
     }
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _setDatasetHoverStyle() {
     const element = this._cachedMeta.dataset;
 
     if (element) {
-      this._setStyle(element, undefined, 'active', true);
+      this._setStyle(element, undefined, "active", true);
     }
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _resyncElements(resetNewElements) {
     const me = this;
     const data = me._data;
@@ -950,8 +1005,8 @@ export default class DatasetController {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _insertElements(start, count, resetNewElements = true) {
     const me = this;
     const meta = me._cachedMeta;
@@ -977,15 +1032,15 @@ export default class DatasetController {
     me.parse(start, count);
 
     if (resetNewElements) {
-      me.updateElements(data, start, count, 'reset');
+      me.updateElements(data, start, count, "reset");
     }
   }
 
   updateElements(element, start, count, mode) {} // eslint-disable-line no-unused-vars
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _removeElements(start, count) {
     const me = this;
     const meta = me._cachedMeta;
@@ -998,42 +1053,49 @@ export default class DatasetController {
     meta.data.splice(start, count);
   }
 
-
   /**
-	 * @private
-	 */
+   * @private
+   */
   _onDataPush() {
     const count = arguments.length;
-    this._syncList.push(['_insertElements', this.getDataset().data.length - count, count]);
+    this._syncList.push([
+      "_insertElements",
+      this.getDataset().data.length - count,
+      count,
+    ]);
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _onDataPop() {
-    this._syncList.push(['_removeElements', this._cachedMeta.data.length - 1, 1]);
+    this._syncList.push([
+      "_removeElements",
+      this._cachedMeta.data.length - 1,
+      1,
+    ]);
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _onDataShift() {
-    this._syncList.push(['_removeElements', 0, 1]);
+    this._syncList.push(["_removeElements", 0, 1]);
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _onDataSplice(start, count) {
-    this._syncList.push(['_removeElements', start, count]);
-    this._syncList.push(['_insertElements', start, arguments.length - 2]);
+    this._syncList.push(["_removeElements", start, count]);
+    this._syncList.push(["_insertElements", start, arguments.length - 2]);
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _onDataUnshift() {
-    this._syncList.push(['_insertElements', 0, arguments.length]);
+    this._syncList.push(["_insertElements", 0, arguments.length]);
   }
 }
 

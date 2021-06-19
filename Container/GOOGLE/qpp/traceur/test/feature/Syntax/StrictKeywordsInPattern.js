@@ -1,39 +1,39 @@
-function testImplementsInPattern({implements}) {
+function testImplementsInPattern({ implements }) {
   return implements;
 }
-assertEquals(testImplementsInPattern({implements: 1}), 1);
+assertEquals(testImplementsInPattern({ implements: 1 }), 1);
 
-function testInterfaceInPattern({interface}) {
+function testInterfaceInPattern({ interface }) {
   return interface;
 }
-assertEquals(testInterfaceInPattern({interface: 1}), 1);
+assertEquals(testInterfaceInPattern({ interface: 1 }), 1);
 
-function testPackageInPattern({package}) {
+function testPackageInPattern({ package }) {
   return package;
 }
-assertEquals(testPackageInPattern({package: 1}), 1);
+assertEquals(testPackageInPattern({ package: 1 }), 1);
 
-function testPrivateInPattern({private}) {
+function testPrivateInPattern({ private }) {
   return private;
 }
-assertEquals(testPrivateInPattern({private: 1}), 1);
+assertEquals(testPrivateInPattern({ private: 1 }), 1);
 
-function testProtectedInPattern({protected}) {
+function testProtectedInPattern({ protected }) {
   return protected;
 }
-assertEquals(testProtectedInPattern({protected: 1}), 1);
+assertEquals(testProtectedInPattern({ protected: 1 }), 1);
 
-function testPublicInPattern({public}) {
+function testPublicInPattern({ public }) {
   return public;
 }
-assertEquals(testPublicInPattern({public: 1}), 1);
+assertEquals(testPublicInPattern({ public: 1 }), 1);
 
-function testStaticInPattern({static}) {
+function testStaticInPattern({ static }) {
   return static;
 }
-assertEquals(testStaticInPattern({static: 1}), 1);
+assertEquals(testStaticInPattern({ static: 1 }), 1);
 
-function testYieldInPattern({yield}) {
+function testYieldInPattern({ yield }) {
   return yield;
 }
-assertEquals(testYieldInPattern({yield: 1}), 1);
+assertEquals(testYieldInPattern({ yield: 1 }), 1);

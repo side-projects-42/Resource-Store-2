@@ -15,65 +15,64 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.exports');
+goog.provide("wtf.db.exports");
 
 /** @suppress {extraRequire} */
-goog.require('wtf.data.EventClass');
+goog.require("wtf.data.EventClass");
 /** @suppress {extraRequire} */
-goog.require('wtf.data.EventFlag');
+goog.require("wtf.data.EventFlag");
 /** @suppress {extraRequire} */
-goog.require('wtf.data.ZoneType');
+goog.require("wtf.data.ZoneType");
 /** @suppress {extraRequire} */
-goog.require('wtf.db');
+goog.require("wtf.db");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.ArgumentData');
+goog.require("wtf.db.ArgumentData");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.DataSource');
+goog.require("wtf.db.DataSource");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.Database');
+goog.require("wtf.db.Database");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.EventDataEntry');
+goog.require("wtf.db.EventDataEntry");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.EventIndex');
+goog.require("wtf.db.EventIndex");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.EventIterator');
+goog.require("wtf.db.EventIterator");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.EventList');
+goog.require("wtf.db.EventList");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.EventStatistics');
+goog.require("wtf.db.EventStatistics");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.EventType');
+goog.require("wtf.db.EventType");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.EventTypeTable');
+goog.require("wtf.db.EventTypeTable");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.Filter');
+goog.require("wtf.db.Filter");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.Frame');
+goog.require("wtf.db.Frame");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.FrameList');
+goog.require("wtf.db.FrameList");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.HealthInfo');
+goog.require("wtf.db.HealthInfo");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.InstanceEventDataEntry');
+goog.require("wtf.db.InstanceEventDataEntry");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.Mark');
+goog.require("wtf.db.Mark");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.MarkList');
+goog.require("wtf.db.MarkList");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.QueryResult');
+goog.require("wtf.db.QueryResult");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.ScopeEventDataEntry');
+goog.require("wtf.db.ScopeEventDataEntry");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.SortMode');
+goog.require("wtf.db.SortMode");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.TimeRange');
+goog.require("wtf.db.TimeRange");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.TimeRangeList');
+goog.require("wtf.db.TimeRangeList");
 /** @suppress {extraRequire} */
-goog.require('wtf.db.Zone');
+goog.require("wtf.db.Zone");
 /** @suppress {extraRequire} */
-goog.require('wtf.util');
-
+goog.require("wtf.util");
 
 /**
  * @define {boolean} Whether to enable exporting of the wtf.db

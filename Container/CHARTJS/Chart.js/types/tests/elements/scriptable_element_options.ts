@@ -1,10 +1,10 @@
-import { Chart } from '../../index.esm';
+import { Chart } from "../../index.esm";
 
-const chart = new Chart('id', {
-  type: 'line',
+const chart = new Chart("id", {
+  type: "line",
   data: {
     labels: [],
-    datasets: []
+    datasets: [],
   },
   options: {
     elements: {
@@ -12,38 +12,38 @@ const chart = new Chart('id', {
         borderWidth: () => 2,
       },
       point: {
-        pointStyle: (ctx) => 'star',
-      }
-    }
-  }
+        pointStyle: (ctx) => "star",
+      },
+    },
+  },
 });
 
-const chart2 = new Chart('id', {
-  type: 'bar',
+const chart2 = new Chart("id", {
+  type: "bar",
   data: {
     labels: [],
-    datasets: []
+    datasets: [],
   },
   options: {
     elements: {
       bar: {
         borderWidth: (ctx) => 2,
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
-const chart3 = new Chart('id', {
-  type: 'doughnut',
+const chart3 = new Chart("id", {
+  type: "doughnut",
   data: {
     labels: [],
-    datasets: []
+    datasets: [],
   },
   options: {
     elements: {
       arc: {
         borderWidth: (ctx) => 3,
-      }
-    }
-  }
+      },
+    },
+  },
 });

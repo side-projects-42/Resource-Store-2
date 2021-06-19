@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
-import {ParseTreeValidator} from '../../../src/syntax/ParseTreeValidator.js';
-suite('ParseTreeValidator.js', function() {
-
-  test('Validate null', function() {
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
+import { ParseTreeValidator } from "../../../src/syntax/ParseTreeValidator.js";
+suite("ParseTreeValidator.js", function () {
+  test("Validate null", function () {
     ParseTreeValidator.validate(null);
   });
-
 });

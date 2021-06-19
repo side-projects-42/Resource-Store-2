@@ -1,5 +1,5 @@
 export default class F {
   foo() {
-    return 'foo';
+    return "foo";
   }
 }

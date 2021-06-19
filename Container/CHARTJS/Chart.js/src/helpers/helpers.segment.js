@@ -1,4 +1,4 @@
-import {_angleBetween, _angleDiff, _normalizeAngle} from './helpers.math';
+import { _angleBetween, _angleDiff, _normalizeAngle } from "./helpers.math";
 
 /**
  * @typedef { import("../elements/element.line").default } LineElement
@@ -7,7 +7,7 @@ import {_angleBetween, _angleDiff, _normalizeAngle} from './helpers.math';
  */
 
 function propertyFn(property) {
-  if (property === 'angle') {
+  if (property === "angle") {
     return {
       between: _angleBetween,
       compare: _angleDiff,
@@ -17,32 +17,38 @@ function propertyFn(property) {
   return {
     between: (n, s, e) => n >= Math.min(s, e) && n <= Math.max(e, s),
     compare: (a, b) => a - b,
-    normalize: x => x
+    normalize: (x) => x,
   };
 }
 
-function normalizeSegment({start, end, count, loop, style}) {
+function normalizeSegment({ start, end, count, loop, style }) {
   return {
     start: start % count,
     end: end % count,
     loop: loop && (end - start + 1) % count === 0,
-    style
+    style,
   };
 }
 
 function getSegment(segment, points, bounds) {
-  const {property, start: startBound, end: endBound} = bounds;
-  const {between, normalize} = propertyFn(property);
+  const { property, start: startBound, end: endBound } = bounds;
+  const { between, normalize } = propertyFn(property);
   const count = points.length;
   // eslint-disable-next-line prefer-const
-  let {start, end, loop} = segment;
+  let { start, end, loop } = segment;
   let i, ilen;
 
   if (loop) {
     start += count;
     end += count;
     for (i = 0, ilen = count; i < ilen; ++i) {
-      if (!between(normalize(points[start % count][property]), startBound, endBound)) {
+      if (
+        !between(
+          normalize(points[start % count][property]),
+          startBound,
+          endBound
+        )
+      ) {
         break;
       }
       start--;
@@ -55,7 +61,7 @@ function getSegment(segment, points, bounds) {
   if (end < start) {
     end += count;
   }
-  return {start, end, loop, style: segment.style};
+  return { start, end, loop, style: segment.style };
 }
 
 /**
@@ -77,18 +83,21 @@ export function _boundSegment(segment, points, bounds) {
     return [segment];
   }
 
-  const {property, start: startBound, end: endBound} = bounds;
+  const { property, start: startBound, end: endBound } = bounds;
   const count = points.length;
-  const {compare, between, normalize} = propertyFn(property);
-  const {start, end, loop, style} = getSegment(segment, points, bounds);
+  const { compare, between, normalize } = propertyFn(property);
+  const { start, end, loop, style } = getSegment(segment, points, bounds);
 
   const result = [];
   let inside = false;
   let subStart = null;
   let value, point, prevValue;
 
-  const startIsBefore = () => between(startBound, prevValue, value) && compare(startBound, prevValue) !== 0;
-  const endIsBefore = () => compare(endBound, value) === 0 || between(endBound, prevValue, value);
+  const startIsBefore = () =>
+    between(startBound, prevValue, value) &&
+    compare(startBound, prevValue) !== 0;
+  const endIsBefore = () =>
+    compare(endBound, value) === 0 || between(endBound, prevValue, value);
   const shouldStart = () => inside || startIsBefore();
   const shouldStop = () => !inside || endIsBefore();
 
@@ -112,7 +121,9 @@ export function _boundSegment(segment, points, bounds) {
     }
 
     if (subStart !== null && shouldStop()) {
-      result.push(normalizeSegment({start: subStart, end: i, loop, count, style}));
+      result.push(
+        normalizeSegment({ start: subStart, end: i, loop, count, style })
+      );
       subStart = null;
     }
     prev = i;
@@ -120,12 +131,11 @@ export function _boundSegment(segment, points, bounds) {
   }
 
   if (subStart !== null) {
-    result.push(normalizeSegment({start: subStart, end, loop, count, style}));
+    result.push(normalizeSegment({ start: subStart, end, loop, count, style }));
   }
 
   return result;
 }
-
 
 /**
  * Returns the segments of the line that are inside given bounds
@@ -183,7 +193,7 @@ function findStartAndEnd(points, count, loop, spanGaps) {
   // end could be more than count, normalize
   end %= count;
 
-  return {start, end};
+  return { start, end };
 }
 
 /**
@@ -205,7 +215,7 @@ function solidSegments(points, start, max, loop) {
     if (cur.skip || cur.stop) {
       if (!prev.skip) {
         loop = false;
-        result.push({start: start % count, end: (end - 1) % count, loop});
+        result.push({ start: start % count, end: (end - 1) % count, loop });
         // @ts-ignore
         start = last = cur.stop ? end : null;
       }
@@ -219,7 +229,7 @@ function solidSegments(points, start, max, loop) {
   }
 
   if (last !== null) {
-    result.push({start: start % count, end: last % count, loop});
+    result.push({ start: start % count, end: last % count, loop });
   }
 
   return result;
@@ -243,15 +253,19 @@ export function _computeSegments(line, segmentOptions) {
   }
 
   const loop = !!line._loop;
-  const {start, end} = findStartAndEnd(points, count, loop, spanGaps);
+  const { start, end } = findStartAndEnd(points, count, loop, spanGaps);
 
   if (spanGaps === true) {
-    return splitByStyles([{start, end, loop}], points, segmentOptions);
+    return splitByStyles([{ start, end, loop }], points, segmentOptions);
   }
 
   const max = end < start ? end + count : end;
   const completeLoop = !!line._fullLoop && start === 0 && end === count - 1;
-  return splitByStyles(solidSegments(points, start, max, completeLoop), points, segmentOptions);
+  return splitByStyles(
+    solidSegments(points, start, max, completeLoop),
+    points,
+    segmentOptions
+  );
 }
 
 /**
@@ -283,9 +297,16 @@ function doSplitByStyles(segments, points, segmentOptions) {
     let prev = points[start % count];
     for (i = start + 1; i <= segment.end; i++) {
       const pt = points[i % count];
-      style = readStyle(segmentOptions.setContext({type: 'segment', p0: prev, p1: pt}));
+      style = readStyle(
+        segmentOptions.setContext({ type: "segment", p0: prev, p1: pt })
+      );
       if (styleChanged(style, prevStyle)) {
-        result.push({start: start, end: i - 1, loop: segment.loop, style: prevStyle});
+        result.push({
+          start: start,
+          end: i - 1,
+          loop: segment.loop,
+          style: prevStyle,
+        });
         prevStyle = style;
         start = i - 1;
       }
@@ -293,7 +314,7 @@ function doSplitByStyles(segments, points, segmentOptions) {
       prevStyle = style;
     }
     if (start < i - 1) {
-      result.push({start, end: i - 1, loop: segment.loop, style});
+      result.push({ start, end: i - 1, loop: segment.loop, style });
       start = i - 1;
     }
   }
@@ -309,7 +330,7 @@ function readStyle(options) {
     borderDashOffset: options.borderDashOffset,
     borderJoinStyle: options.borderJoinStyle,
     borderWidth: options.borderWidth,
-    borderColor: options.borderColor
+    borderColor: options.borderColor,
   };
 }
 

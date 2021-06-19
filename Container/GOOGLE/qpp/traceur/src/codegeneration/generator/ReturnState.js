@@ -12,27 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  isUndefined,
-  isVoidExpression,
-} from '../../semantics/util.js';
+import { isUndefined, isVoidExpression } from "../../semantics/util.js";
 import {
   CURRENT,
   RESULT,
   UNDEFINED,
-  YIELD_RETURN
-} from '../../syntax/PredefinedName.js';
-import {IDENTIFIER_EXPRESSION} from '../../syntax/trees/ParseTreeType.js';
-import {YieldState} from './YieldState.js';
-import {State} from './State.js';
+  YIELD_RETURN,
+} from "../../syntax/PredefinedName.js";
+import { IDENTIFIER_EXPRESSION } from "../../syntax/trees/ParseTreeType.js";
+import { YieldState } from "./YieldState.js";
+import { State } from "./State.js";
 import {
   createAssignmentStatement,
   createIdentifierExpression,
   createMemberExpression,
   createReturnStatement,
   createThisExpression,
-  createTrueLiteral
-} from '../ParseTreeFactory.js';
+  createTrueLiteral,
+} from "../ParseTreeFactory.js";
 
 /**
  * Represents a return statement that has been added to a StateMachine.
@@ -53,9 +50,10 @@ export class ReturnState extends YieldState {
         //
         // this.$yieldReturn = expression;
         createAssignmentStatement(
-            createMemberExpression(createThisExpression(), YIELD_RETURN),
-            this.expression),
-        ...State.generateJump(enclosingFinally, machineEndState)
+          createMemberExpression(createThisExpression(), YIELD_RETURN),
+          this.expression
+        ),
+        ...State.generateJump(enclosingFinally, machineEndState),
       ];
     } else {
       return State.generateJump(enclosingFinally, machineEndState);

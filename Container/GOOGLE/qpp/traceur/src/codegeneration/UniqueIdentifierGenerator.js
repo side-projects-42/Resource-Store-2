@@ -30,8 +30,7 @@ export class UniqueIdentifierGenerator {
    * @return {string}
    */
   getUniqueIdentifier(name) {
-    if (name[0] === '@')
-      return `$___${name.slice(1)}`;
+    if (name[0] === "@") return `$___${name.slice(1)}`;
     return `$__${name}`;
   }
 }

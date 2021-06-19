@@ -11,25 +11,22 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.EventList');
-goog.provide('wtf.db.EventListStatistics');
-goog.provide('wtf.db.IAncillaryList');
+goog.provide("wtf.db.EventList");
+goog.provide("wtf.db.EventListStatistics");
+goog.provide("wtf.db.IAncillaryList");
 
-goog.require('goog.array');
-goog.require('wtf.data.EventClass');
-goog.require('wtf.data.EventFlag');
-goog.require('wtf.db.EventIterator');
-goog.require('wtf.db.EventStruct');
-goog.require('wtf.db.EventType');
-goog.require('wtf.util');
-
-
+goog.require("goog.array");
+goog.require("wtf.data.EventClass");
+goog.require("wtf.data.EventFlag");
+goog.require("wtf.db.EventIterator");
+goog.require("wtf.db.EventStruct");
+goog.require("wtf.db.EventType");
+goog.require("wtf.util");
 
 /**
  * @interface
  */
-wtf.db.IAncillaryList = function() {};
-
+wtf.db.IAncillaryList = function () {};
 
 /**
  * Begins a rebuild operation.
@@ -40,7 +37,6 @@ wtf.db.IAncillaryList = function() {};
  */
 wtf.db.IAncillaryList.prototype.beginRebuild = goog.nullFunction;
 
-
 /**
  * Handles an event that had its type registered.
  * @param {number} eventTypeIndex Index into the event type list returned from
@@ -50,12 +46,10 @@ wtf.db.IAncillaryList.prototype.beginRebuild = goog.nullFunction;
  */
 wtf.db.IAncillaryList.prototype.handleEvent = goog.nullFunction;
 
-
 /**
  * Ends the current rebuild operation.
  */
 wtf.db.IAncillaryList.prototype.endRebuild = goog.nullFunction;
-
 
 /**
  * Simple event counts as processed on the wire.
@@ -68,15 +62,13 @@ wtf.db.IAncillaryList.prototype.endRebuild = goog.nullFunction;
  */
 wtf.db.EventListStatistics;
 
-
-
 /**
  * Event data list.
  *
  * @param {!wtf.db.EventTypeTable} eventTypeTable Event type table.
  * @constructor
  */
-wtf.db.EventList = function(eventTypeTable) {
+wtf.db.EventList = function (eventTypeTable) {
   /**
    * Event type table.
    * @type {!wtf.db.EventTypeTable}
@@ -99,7 +91,7 @@ wtf.db.EventList = function(eventTypeTable) {
     totalCount: 0,
     genericEnterScope: 0,
     genericTimeStamp: 0,
-    appendScopeData: 0
+    appendScopeData: 0,
   };
 
   /**
@@ -192,13 +184,12 @@ wtf.db.EventList = function(eventTypeTable) {
   this.resortNeeded_ = false;
 };
 
-
 /**
  * Registers an ancillary list that will be updated after event batches.
  * This does not take ownership of the list and it must be disposed elsewhere.
  * @param {!wtf.db.IAncillaryList} value Ancillary list.
  */
-wtf.db.EventList.prototype.registerAncillaryList = function(value) {
+wtf.db.EventList.prototype.registerAncillaryList = function (value) {
   this.ancillaryLists_.push(value);
   if (this.count) {
     // NOTE: this is inefficient but will only trigger if there's already data
@@ -207,70 +198,62 @@ wtf.db.EventList.prototype.registerAncillaryList = function(value) {
   }
 };
 
-
 /**
  * Unregisters an ancillary list that will be updated after event batches.
  * @param {!wtf.db.IAncillaryList} value Ancillary list.
  */
-wtf.db.EventList.prototype.unregisterAncillaryList = function(value) {
+wtf.db.EventList.prototype.unregisterAncillaryList = function (value) {
   goog.array.remove(this.ancillaryLists_, value);
 };
-
 
 /**
  * Gets some statistics about the events seen by the list so far.
  * @return {!wtf.db.EventListStatistics} Statistics.
  */
-wtf.db.EventList.prototype.getStatistics = function() {
+wtf.db.EventList.prototype.getStatistics = function () {
   return this.statistics_;
 };
-
 
 /**
  * Gets the total number of events in the list.
  * @return {number} Event count.
  */
-wtf.db.EventList.prototype.getCount = function() {
+wtf.db.EventList.prototype.getCount = function () {
   return this.count;
 };
-
 
 /**
  * Gets the time of the first event in the list.
  * @return {number} Time of the first event or 0 if no events.
  */
-wtf.db.EventList.prototype.getFirstEventTime = function() {
+wtf.db.EventList.prototype.getFirstEventTime = function () {
   return this.firstEventTime_;
 };
-
 
 /**
  * Gets the time of the last event in the list.
  * @return {number} Time of the last event or 0 if no events.
  */
-wtf.db.EventList.prototype.getLastEventTime = function() {
+wtf.db.EventList.prototype.getLastEventTime = function () {
   return this.lastEventTime_;
 };
-
 
 /**
  * Gets the total number of 'real' events in the list.
  * This excludes scope leaves and other misc events hidden in the UI.
  * @return {number} Event count.
  */
-wtf.db.EventList.prototype.getTotalEventCount = function() {
+wtf.db.EventList.prototype.getTotalEventCount = function () {
   return this.count - this.hiddenCount_;
 };
-
 
 /**
  * Gets the maximum depth of any scope in the list.
  * @return {number} Scope depth.
  */
-wtf.db.EventList.prototype.getMaximumScopeDepth = function() {
+wtf.db.EventList.prototype.getMaximumScopeDepth = function () {
   return this.maximumScopeDepth_;
 };
-
 
 /**
  * Ensures that the event list has at least the given capacity, expanding if it
@@ -278,7 +261,7 @@ wtf.db.EventList.prototype.getMaximumScopeDepth = function() {
  * @param {number=} opt_minimum New minimum capacity. If omitted, the buffer is
  *     increased by some heuristic.
  */
-wtf.db.EventList.prototype.expandCapacity = function(opt_minimum) {
+wtf.db.EventList.prototype.expandCapacity = function (opt_minimum) {
   var newCapacity;
   if (opt_minimum !== undefined) {
     // User specified capacity.
@@ -302,14 +285,13 @@ wtf.db.EventList.prototype.expandCapacity = function(opt_minimum) {
   this.eventData = newData;
 };
 
-
 /**
  * Inserts an event into the list.
  * @param {!wtf.db.EventType} eventType Event type.
  * @param {number} time Time, in microseconds.
  * @param {wtf.db.ArgumentData=} opt_argData Argument data.
  */
-wtf.db.EventList.prototype.insert = function(eventType, time, opt_argData) {
+wtf.db.EventList.prototype.insert = function (eventType, time, opt_argData) {
   // Grow the event data store, if required.
   if (this.count + 1 > this.capacity_) {
     this.expandCapacity();
@@ -320,7 +302,7 @@ wtf.db.EventList.prototype.insert = function(eventType, time, opt_argData) {
   var o = this.count * wtf.db.EventStruct.STRUCT_SIZE;
   eventData[o + wtf.db.EventStruct.ID] = this.count;
   eventData[o + wtf.db.EventStruct.TYPE] =
-      eventType.id | (eventType.flags << 16);
+    eventType.id | (eventType.flags << 16);
   eventData[o + wtf.db.EventStruct.PARENT] = -1;
   eventData[o + wtf.db.EventStruct.TIME] = time;
 
@@ -341,11 +323,10 @@ wtf.db.EventList.prototype.insert = function(eventType, time, opt_argData) {
   this.lastInsertTime_ = time;
 };
 
-
 /**
  * Rebuilds the internal event list data after a batch insertion.
  */
-wtf.db.EventList.prototype.rebuild = function() {
+wtf.db.EventList.prototype.rebuild = function () {
   // Sort all events by time|id.
   if (this.resortNeeded_) {
     this.resortEvents_();
@@ -357,7 +338,7 @@ wtf.db.EventList.prototype.rebuild = function() {
     totalCount: this.count,
     genericEnterScope: 0,
     genericTimeStamp: 0,
-    appendScopeData: 0
+    appendScopeData: 0,
   };
   this.firstEventTime_ = 0;
   this.lastEventTime_ = 0;
@@ -377,12 +358,11 @@ wtf.db.EventList.prototype.rebuild = function() {
   this.rebuildAncillaryLists_(this.ancillaryLists_);
 };
 
-
 /**
  * Resorts all event data in the backing buffer to be in time|id order.
  * @private
  */
-wtf.db.EventList.prototype.resortEvents_ = function() {
+wtf.db.EventList.prototype.resortEvents_ = function () {
   var eventData = this.eventData;
 
   // Build the sort index, used for sorting.
@@ -394,14 +374,16 @@ wtf.db.EventList.prototype.resortEvents_ = function() {
   }
 
   // Sort.
-  sortIndex.sort(function(ai, bi) {
+  sortIndex.sort(function (ai, bi) {
     var ao = ai * wtf.db.EventStruct.STRUCT_SIZE;
     var bo = bi * wtf.db.EventStruct.STRUCT_SIZE;
     var atime = eventData[ao + wtf.db.EventStruct.TIME];
     var btime = eventData[bo + wtf.db.EventStruct.TIME];
     if (atime == btime) {
-      return eventData[ao + wtf.db.EventStruct.ID] -
-          eventData[bo + wtf.db.EventStruct.ID];
+      return (
+        eventData[ao + wtf.db.EventStruct.ID] -
+        eventData[bo + wtf.db.EventStruct.ID]
+      );
     }
     return atime - btime;
   });
@@ -412,8 +394,11 @@ wtf.db.EventList.prototype.resortEvents_ = function() {
   for (var n = 0; n < sortIndex.length; n++) {
     var oldOffset = sortIndex[n] * wtf.db.EventStruct.STRUCT_SIZE;
     var newOffset = n * wtf.db.EventStruct.STRUCT_SIZE;
-    for (var si = oldOffset, di = newOffset;
-        si < oldOffset + wtf.db.EventStruct.STRUCT_SIZE; si++, di++) {
+    for (
+      var si = oldOffset, di = newOffset;
+      si < oldOffset + wtf.db.EventStruct.STRUCT_SIZE;
+      si++, di++
+    ) {
       newData[di] = eventData[si];
     }
   }
@@ -427,20 +412,19 @@ wtf.db.EventList.prototype.resortEvents_ = function() {
   this.eventData = newData;
 };
 
-
 /**
  * Rebuilds the scoping data of events.
  * @private
  */
-wtf.db.EventList.prototype.rescopeEvents_ = function() {
+wtf.db.EventList.prototype.rescopeEvents_ = function () {
   // All events used are already declared.
-  var scopeEnter = this.eventTypeTable.getByName('wtf.scope#enter');
+  var scopeEnter = this.eventTypeTable.getByName("wtf.scope#enter");
   var scopeEnterId = scopeEnter ? scopeEnter.id : -1;
-  var scopeLeave = this.eventTypeTable.getByName('wtf.scope#leave');
+  var scopeLeave = this.eventTypeTable.getByName("wtf.scope#leave");
   var scopeLeaveId = scopeLeave ? scopeLeave.id : -1;
-  var appendScopeData = this.eventTypeTable.getByName('wtf.scope#appendData');
+  var appendScopeData = this.eventTypeTable.getByName("wtf.scope#appendData");
   var appendScopeDataId = appendScopeData ? appendScopeData.id : -1;
-  var timeStamp = this.eventTypeTable.getByName('wtf.trace#timeStamp');
+  var timeStamp = this.eventTypeTable.getByName("wtf.trace#timeStamp");
   var timeStampId = timeStamp ? timeStamp.id : -1;
 
   // This stack is used to track the currently active scopes while scanning
@@ -461,8 +445,11 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
   // Directly poke into the event data array for speed.
   var statistics = this.statistics_;
   var eventData = this.eventData;
-  for (var n = 0, o = 0; n < this.count;
-      n++, o += wtf.db.EventStruct.STRUCT_SIZE) {
+  for (
+    var n = 0, o = 0;
+    n < this.count;
+    n++, o += wtf.db.EventStruct.STRUCT_SIZE
+  ) {
     var parentId = stack[stackTop];
     eventData[o + wtf.db.EventStruct.PARENT] = parentId;
     eventData[o + wtf.db.EventStruct.DEPTH] = stackTop | (stackTop << 16);
@@ -472,26 +459,27 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
     var nextEventId = 0;
     if (n < this.count - 1) {
       nextEventId =
-          eventData[o + wtf.db.EventStruct.STRUCT_SIZE + wtf.db.EventStruct.ID];
+        eventData[o + wtf.db.EventStruct.STRUCT_SIZE + wtf.db.EventStruct.ID];
     }
     eventData[o + wtf.db.EventStruct.NEXT_SIBLING] = nextEventId;
 
-    var typeId = eventData[o + wtf.db.EventStruct.TYPE] & 0xFFFF;
+    var typeId = eventData[o + wtf.db.EventStruct.TYPE] & 0xffff;
     var deleteArgs = false;
     if (typeId == scopeEnterId) {
       // Generic scope enter.
       // We replace this with an on-demand event type.
       var args =
-          this.argumentData_[eventData[o + wtf.db.EventStruct.ARGUMENTS]];
-      var name = /** @type {string} */ (args['name']) || 'unnamed.scope';
+        this.argumentData_[eventData[o + wtf.db.EventStruct.ARGUMENTS]];
+      var name = /** @type {string} */ (args["name"]) || "unnamed.scope";
       var newEventType = this.eventTypeTable.getByName(name);
       if (!newEventType) {
         newEventType = this.eventTypeTable.defineType(
-            wtf.db.EventType.createScope(name));
+          wtf.db.EventType.createScope(name)
+        );
       }
       typeId = newEventType.id;
       eventData[o + wtf.db.EventStruct.TYPE] =
-          newEventType.id | (newEventType.flags << 16);
+        newEventType.id | (newEventType.flags << 16);
       stack[++stackTop] = eventData[o + wtf.db.EventStruct.ID];
       typeStack[stackTop] = newEventType;
       maxDepthStack[stackTop] = stackTop - 1;
@@ -517,7 +505,7 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
         }
         var scopeDepth = eventData[scopeOffset + wtf.db.EventStruct.DEPTH];
         eventData[scopeOffset + wtf.db.EventStruct.DEPTH] =
-            (scopeDepth & 0xFFFF) | (maxDepthStack[stackTop + 1] << 16);
+          (scopeDepth & 0xffff) | (maxDepthStack[stackTop + 1] << 16);
 
         // Accumulate timing data.
         // Computed on the stack so we don't have to rewalk events.
@@ -540,9 +528,11 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
     } else if (typeId == appendScopeDataId) {
       // appendScopeData.
       this.appendScopeData_(
-          typeStack[stackTop], stack[stackTop],
-          eventData[o + wtf.db.EventStruct.ARGUMENTS],
-          true);
+        typeStack[stackTop],
+        stack[stackTop],
+        eventData[o + wtf.db.EventStruct.ARGUMENTS],
+        true
+      );
       hiddenCount++;
       deleteArgs = true;
       statistics.appendScopeData++;
@@ -550,16 +540,17 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
       // Generic timestamp.
       // Replace with an on-demand event type.
       var args =
-          this.argumentData_[eventData[o + wtf.db.EventStruct.ARGUMENTS]];
-      var name = /** @type {string} */ (args['name']) || 'unnamed.instance';
+        this.argumentData_[eventData[o + wtf.db.EventStruct.ARGUMENTS]];
+      var name = /** @type {string} */ (args["name"]) || "unnamed.instance";
       var newEventType = this.eventTypeTable.getByName(name);
       if (!newEventType) {
         newEventType = this.eventTypeTable.defineType(
-            wtf.db.EventType.createInstance(name));
+          wtf.db.EventType.createInstance(name)
+        );
       }
       typeId = newEventType.id;
       eventData[o + wtf.db.EventStruct.TYPE] =
-          newEventType.id | (newEventType.flags << 16);
+        newEventType.id | (newEventType.flags << 16);
       deleteArgs = true;
       statistics.genericTimeStamp++;
     } else {
@@ -574,16 +565,20 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
           stackMax = stackTop;
         }
       }
-      if (type.flags &
-          (wtf.data.EventFlag.INTERNAL | wtf.data.EventFlag.BUILTIN)) {
+      if (
+        type.flags &
+        (wtf.data.EventFlag.INTERNAL | wtf.data.EventFlag.BUILTIN)
+      ) {
         hiddenCount++;
       }
       if (type.flags & wtf.data.EventFlag.APPEND_SCOPE_DATA) {
         // An appendScopeData-alike.
         this.appendScopeData_(
-            typeStack[stackTop], stack[stackTop],
-            eventData[o + wtf.db.EventStruct.ARGUMENTS],
-            false);
+          typeStack[stackTop],
+          stack[stackTop],
+          eventData[o + wtf.db.EventStruct.ARGUMENTS],
+          false
+        );
         hiddenCount++;
         deleteArgs = true;
         statistics.appendScopeData++;
@@ -597,7 +592,7 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
     }
 
     if (stackTop >= MAX_CALLSTACK_SIZE) {
-      goog.global.console.log('Max scope depth exceeded, aborting!');
+      goog.global.console.log("Max scope depth exceeded, aborting!");
       break;
     }
   }
@@ -605,7 +600,6 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
   this.hiddenCount_ = hiddenCount;
   this.maximumScopeDepth_ = stackMax;
 };
-
 
 /**
  * Handles an append scope data event by merging the arguments into the given
@@ -616,12 +610,16 @@ wtf.db.EventList.prototype.rescopeEvents_ = function() {
  * @param {boolean} isBuiltin Whether this is a builtin appendScopeData call.
  * @private
  */
-wtf.db.EventList.prototype.appendScopeData_ = function(
-    scopeType, scopeId, argsId, isBuiltin) {
+wtf.db.EventList.prototype.appendScopeData_ = function (
+  scopeType,
+  scopeId,
+  argsId,
+  isBuiltin
+) {
   // TODO(benvanik): optimize this to add data with no mixin.
 
   if (!scopeType) {
-    goog.global.console.log('appendScopeData on root?');
+    goog.global.console.log("appendScopeData on root?");
     return;
   }
 
@@ -647,7 +645,7 @@ wtf.db.EventList.prototype.appendScopeData_ = function(
   }
   if (isBuiltin) {
     // name=value
-    scopeArgs[srcArgs['name']] = srcArgs['value'];
+    scopeArgs[srcArgs["name"]] = srcArgs["value"];
   } else {
     // Many possible args, need to enumerate.
     goog.mixin(scopeArgs, srcArgs);
@@ -658,13 +656,12 @@ wtf.db.EventList.prototype.appendScopeData_ = function(
   scopeType.mayHaveAppendedArgs = true;
 };
 
-
 /**
  * Rebuilds dependent ancillary lists.
  * @param {!Array.<!wtf.db.IAncillaryList>} lists Lists.
  * @private
  */
-wtf.db.EventList.prototype.rebuildAncillaryLists_ = function(lists) {
+wtf.db.EventList.prototype.rebuildAncillaryLists_ = function (lists) {
   if (!lists.length) {
     return;
   }
@@ -688,7 +685,7 @@ wtf.db.EventList.prototype.rebuildAncillaryLists_ = function(lists) {
       handlers.push({
         list: list,
         eventTypeIndex: m,
-        eventType: desiredType
+        eventType: desiredType,
       });
     }
   }
@@ -697,7 +694,7 @@ wtf.db.EventList.prototype.rebuildAncillaryLists_ = function(lists) {
   var eventData = this.eventData;
   var it = new wtf.db.EventIterator(this, 0, this.count - 1, 0);
   for (var n = 0, o = 0; n < this.count; n++) {
-    var typeId = eventData[o + wtf.db.EventStruct.TYPE] & 0xFFFF;
+    var typeId = eventData[o + wtf.db.EventStruct.TYPE] & 0xffff;
     var handlers = typeMap[typeId];
     if (handlers) {
       for (var m = 0; m < handlers.length; m++) {
@@ -717,16 +714,14 @@ wtf.db.EventList.prototype.rebuildAncillaryLists_ = function(lists) {
   }
 };
 
-
 /**
  * Gets the argument data with the given ID.
  * @param {number} argsId Key into the argument data table.
  * @return {wtf.db.ArgumentData} Argument data, if any.
  */
-wtf.db.EventList.prototype.getArgumentData = function(argsId) {
+wtf.db.EventList.prototype.getArgumentData = function (argsId) {
   return this.argumentData_[argsId] || null;
 };
-
 
 /**
  * Sets the argument data for the given arguments ID.
@@ -736,7 +731,7 @@ wtf.db.EventList.prototype.getArgumentData = function(argsId) {
  * @param {Object} values New argument values.
  * @return {number} Arguments ID passed in or a new value if the param was 0.
  */
-wtf.db.EventList.prototype.setArgumentData = function(argsId, values) {
+wtf.db.EventList.prototype.setArgumentData = function (argsId, values) {
   if (!argsId) {
     // Allocate new argument data.
     argsId = this.nextArgumentDataId_++;
@@ -754,13 +749,12 @@ wtf.db.EventList.prototype.setArgumentData = function(argsId, values) {
   return argsId;
 };
 
-
 /**
  * Restores argument data to its original value if it had been overridden with
  * {@see #setArgumentData}.
  * @param {number} argsId Key into the argument data table.
  */
-wtf.db.EventList.prototype.resetArgumentData = function(argsId) {
+wtf.db.EventList.prototype.resetArgumentData = function (argsId) {
   var originalArgs = this.originalArgumentData_[argsId];
   if (originalArgs !== undefined) {
     this.argumentData_[argsId] = originalArgs;
@@ -768,35 +762,31 @@ wtf.db.EventList.prototype.resetArgumentData = function(argsId) {
   }
 };
 
-
 /**
  * Dumps the event list to the console for debugging.
  */
-wtf.db.EventList.prototype.dump = function() {
+wtf.db.EventList.prototype.dump = function () {
   var it = new wtf.db.EventIterator(this, 0, this.count - 1, 0);
   for (; !it.done(); it.next()) {
-    var s = '';
+    var s = "";
     var d = it.getDepth();
     while (d--) {
-      s += '  ';
+      s += "  ";
     }
     s += wtf.util.formatTime(it.getTime() / 1000);
-    s += ' ';
+    s += " ";
     s += it.getType().getName();
     goog.global.console.log(s);
   }
 };
 
-
 /**
  * Begins iterating the entire event list.
  * @return {!wtf.db.EventIterator} Iterator.
  */
-wtf.db.EventList.prototype.begin = function() {
-  return new wtf.db.EventIterator(
-      this, 0, this.count - 1, 0);
+wtf.db.EventList.prototype.begin = function () {
+  return new wtf.db.EventIterator(this, 0, this.count - 1, 0);
 };
-
 
 /**
  * Begins iterating the given time-based subset of the event list.
@@ -806,15 +796,17 @@ wtf.db.EventList.prototype.begin = function() {
  *     scope.
  * @return {!wtf.db.EventIterator} Iterator.
  */
-wtf.db.EventList.prototype.beginTimeRange = function(
-    startTime, endTime, opt_startAtRoot) {
+wtf.db.EventList.prototype.beginTimeRange = function (
+  startTime,
+  endTime,
+  opt_startAtRoot
+) {
   if (!this.count) {
-    return new wtf.db.EventIterator(
-        this, 0, -1, 0);
+    return new wtf.db.EventIterator(this, 0, -1, 0);
   }
-  var startIndex = opt_startAtRoot ?
-      this.getIndexOfRootScopeIncludingTime(startTime) :
-      this.getIndexOfEventNearTime(startTime);
+  var startIndex = opt_startAtRoot
+    ? this.getIndexOfRootScopeIncludingTime(startTime)
+    : this.getIndexOfEventNearTime(startTime);
   var endIndex = this.getIndexOfEventNearTime(endTime);
   if (endIndex < startIndex) {
     endIndex = startIndex;
@@ -822,18 +814,15 @@ wtf.db.EventList.prototype.beginTimeRange = function(
   return this.beginEventRange(startIndex, endIndex);
 };
 
-
 /**
  * Begins iterating the given event index-based subset of the event list.
  * @param {number} startIndex Start index.
  * @param {number} endIndex End index.
  * @return {!wtf.db.EventIterator} Iterator.
  */
-wtf.db.EventList.prototype.beginEventRange = function(startIndex, endIndex) {
-  return new wtf.db.EventIterator(
-      this, startIndex, endIndex, startIndex);
+wtf.db.EventList.prototype.beginEventRange = function (startIndex, endIndex) {
+  return new wtf.db.EventIterator(this, startIndex, endIndex, startIndex);
 };
-
 
 /**
  * Gets the index of the event near the given time.
@@ -841,7 +830,7 @@ wtf.db.EventList.prototype.beginEventRange = function(startIndex, endIndex) {
  * @param {number} time Time.
  * @return {number} Event index.
  */
-wtf.db.EventList.prototype.getIndexOfEventNearTime = function(time) {
+wtf.db.EventList.prototype.getIndexOfEventNearTime = function (time) {
   time *= 1000;
   var eventData = this.eventData;
   var low = 0;
@@ -859,17 +848,15 @@ wtf.db.EventList.prototype.getIndexOfEventNearTime = function(time) {
   return low ? low - 1 : 0;
 };
 
-
 /**
  * Gets an iterator on the event near the given time.
  * @param {number} time Time.
  * @return {!wtf.db.EventIterator} Iterator.
  */
-wtf.db.EventList.prototype.getEventNearTime = function(time) {
+wtf.db.EventList.prototype.getEventNearTime = function (time) {
   var id = this.getIndexOfEventNearTime(time);
   return this.getEvent(id);
 };
-
 
 /**
  * Gets the index of the first root scope including the given time.
@@ -879,7 +866,7 @@ wtf.db.EventList.prototype.getEventNearTime = function(time) {
  * @param {number} time Time to ensure is included.
  * @return {number} Event ID or 0 if not found.
  */
-wtf.db.EventList.prototype.getIndexOfRootScopeIncludingTime = function(time) {
+wtf.db.EventList.prototype.getIndexOfRootScopeIncludingTime = function (time) {
   var nearId = this.getIndexOfEventNearTime(time);
   if (!nearId) {
     return 0;
@@ -891,7 +878,7 @@ wtf.db.EventList.prototype.getIndexOfRootScopeIncludingTime = function(time) {
   while (i >= 0) {
     // Move to the root scope.
     var o = i * wtf.db.EventStruct.STRUCT_SIZE;
-    var depth = eventData[o + wtf.db.EventStruct.DEPTH] & 0xFFFF;
+    var depth = eventData[o + wtf.db.EventStruct.DEPTH] & 0xffff;
     while (depth-- > 0) {
       o = i * wtf.db.EventStruct.STRUCT_SIZE;
       i = eventData[o + wtf.db.EventStruct.PARENT];
@@ -917,16 +904,14 @@ wtf.db.EventList.prototype.getIndexOfRootScopeIncludingTime = function(time) {
   return nearId;
 };
 
-
 /**
  * Gets an iterator for the given event.
  * @param {number} id Event ID.
  * @return {!wtf.db.EventIterator} Iterator.
  */
-wtf.db.EventList.prototype.getEvent = function(id) {
+wtf.db.EventList.prototype.getEvent = function (id) {
   return new wtf.db.EventIterator(this, id, id, id);
 };
-
 
 /**
  * Returns the ID of an event type or -1 if the event type never appears in
@@ -934,51 +919,74 @@ wtf.db.EventList.prototype.getEvent = function(id) {
  * @param {string} eventName The name of the event type.
  * @return {number} The ID of the event type or -1 if the event never appears.
  */
-wtf.db.EventList.prototype.getEventTypeId = function(eventName) {
+wtf.db.EventList.prototype.getEventTypeId = function (eventName) {
   var eventType = this.eventTypeTable.getByName(eventName);
   return eventType ? eventType.id : -1;
 };
 
-
-goog.exportSymbol(
-    'wtf.db.EventList',
-    wtf.db.EventList);
+goog.exportSymbol("wtf.db.EventList", wtf.db.EventList);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getCount',
-    wtf.db.EventList.prototype.getCount);
+  wtf.db.EventList.prototype,
+  "getCount",
+  wtf.db.EventList.prototype.getCount
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getFirstEventTime',
-    wtf.db.EventList.prototype.getFirstEventTime);
+  wtf.db.EventList.prototype,
+  "getFirstEventTime",
+  wtf.db.EventList.prototype.getFirstEventTime
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getLastEventTime',
-    wtf.db.EventList.prototype.getLastEventTime);
+  wtf.db.EventList.prototype,
+  "getLastEventTime",
+  wtf.db.EventList.prototype.getLastEventTime
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getTotalEventCount',
-    wtf.db.EventList.prototype.getTotalEventCount);
+  wtf.db.EventList.prototype,
+  "getTotalEventCount",
+  wtf.db.EventList.prototype.getTotalEventCount
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getMaximumScopeDepth',
-    wtf.db.EventList.prototype.getMaximumScopeDepth);
+  wtf.db.EventList.prototype,
+  "getMaximumScopeDepth",
+  wtf.db.EventList.prototype.getMaximumScopeDepth
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'dump',
-    wtf.db.EventList.prototype.dump);
+  wtf.db.EventList.prototype,
+  "dump",
+  wtf.db.EventList.prototype.dump
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'begin',
-    wtf.db.EventList.prototype.begin);
+  wtf.db.EventList.prototype,
+  "begin",
+  wtf.db.EventList.prototype.begin
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'beginTimeRange',
-    wtf.db.EventList.prototype.beginTimeRange);
+  wtf.db.EventList.prototype,
+  "beginTimeRange",
+  wtf.db.EventList.prototype.beginTimeRange
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'beginEventRange',
-    wtf.db.EventList.prototype.beginEventRange);
+  wtf.db.EventList.prototype,
+  "beginEventRange",
+  wtf.db.EventList.prototype.beginEventRange
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getIndexOfEventNearTime',
-    wtf.db.EventList.prototype.getIndexOfEventNearTime);
+  wtf.db.EventList.prototype,
+  "getIndexOfEventNearTime",
+  wtf.db.EventList.prototype.getIndexOfEventNearTime
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getEventNearTime',
-    wtf.db.EventList.prototype.getEventNearTime);
+  wtf.db.EventList.prototype,
+  "getEventNearTime",
+  wtf.db.EventList.prototype.getEventNearTime
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getIndexOfRootScopeIncludingTime',
-    wtf.db.EventList.prototype.getIndexOfRootScopeIncludingTime);
+  wtf.db.EventList.prototype,
+  "getIndexOfRootScopeIncludingTime",
+  wtf.db.EventList.prototype.getIndexOfRootScopeIncludingTime
+);
 goog.exportProperty(
-    wtf.db.EventList.prototype, 'getEvent',
-    wtf.db.EventList.prototype.getEvent);
+  wtf.db.EventList.prototype,
+  "getEvent",
+  wtf.db.EventList.prototype.getEvent
+);

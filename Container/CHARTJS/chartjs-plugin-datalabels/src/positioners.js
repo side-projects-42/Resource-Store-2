@@ -3,10 +3,10 @@ function orient(point, origin) {
   var y0 = origin.y;
 
   if (x0 === null) {
-    return {x: 0, y: -1};
+    return { x: 0, y: -1 };
   }
   if (y0 === null) {
-    return {x: 1, y: 0};
+    return { x: 1, y: 0 };
   }
 
   var dx = point.x - x0;
@@ -15,51 +15,51 @@ function orient(point, origin) {
 
   return {
     x: ln ? dx / ln : 0,
-    y: ln ? dy / ln : -1
+    y: ln ? dy / ln : -1,
   };
 }
 
 function aligned(x, y, vx, vy, align) {
   switch (align) {
-  case 'center':
-    vx = vy = 0;
-    break;
-  case 'bottom':
-    vx = 0;
-    vy = 1;
-    break;
-  case 'right':
-    vx = 1;
-    vy = 0;
-    break;
-  case 'left':
-    vx = -1;
-    vy = 0;
-    break;
-  case 'top':
-    vx = 0;
-    vy = -1;
-    break;
-  case 'start':
-    vx = -vx;
-    vy = -vy;
-    break;
-  case 'end':
-    // keep natural orientation
-    break;
-  default:
-    // clockwise rotation (in degree)
-    align *= (Math.PI / 180);
-    vx = Math.cos(align);
-    vy = Math.sin(align);
-    break;
+    case "center":
+      vx = vy = 0;
+      break;
+    case "bottom":
+      vx = 0;
+      vy = 1;
+      break;
+    case "right":
+      vx = 1;
+      vy = 0;
+      break;
+    case "left":
+      vx = -1;
+      vy = 0;
+      break;
+    case "top":
+      vx = 0;
+      vy = -1;
+      break;
+    case "start":
+      vx = -vx;
+      vy = -vy;
+      break;
+    case "end":
+      // keep natural orientation
+      break;
+    default:
+      // clockwise rotation (in degree)
+      align *= Math.PI / 180;
+      vx = Math.cos(align);
+      vy = Math.sin(align);
+      break;
   }
 
   return {
     x: x,
     y: y,
     vx: vx,
-    vy: vy
+    vy: vy,
   };
 }
 
@@ -100,7 +100,7 @@ function clipped(segment, area) {
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    if (!(r0 | r1) || (r0 & r1)) {
+    if (!(r0 | r1) || r0 & r1) {
       // both points inside or on the same side: no clipping
       break;
     }
@@ -109,16 +109,16 @@ function clipped(segment, area) {
     r = r0 || r1;
 
     if (r & R_TOP) {
-      x = x0 + (x1 - x0) * (area.top - y0) / (y1 - y0);
+      x = x0 + ((x1 - x0) * (area.top - y0)) / (y1 - y0);
       y = area.top;
     } else if (r & R_BOTTOM) {
-      x = x0 + (x1 - x0) * (area.bottom - y0) / (y1 - y0);
+      x = x0 + ((x1 - x0) * (area.bottom - y0)) / (y1 - y0);
       y = area.bottom;
     } else if (r & R_RIGHT) {
-      y = y0 + (y1 - y0) * (area.right - x0) / (x1 - x0);
+      y = y0 + ((y1 - y0) * (area.right - x0)) / (x1 - x0);
       x = area.right;
     } else if (r & R_LEFT) {
-      y = y0 + (y1 - y0) * (area.left - x0) / (x1 - x0);
+      y = y0 + ((y1 - y0) * (area.left - x0)) / (x1 - x0);
       x = area.left;
     }
 
@@ -137,7 +137,7 @@ function clipped(segment, area) {
     x0: x0,
     x1: x1,
     y0: y0,
-    y1: y1
+    y1: y1,
   };
 }
 
@@ -150,10 +150,10 @@ function compute(range, config) {
     segment = clipped(segment, config.area);
   }
 
-  if (anchor === 'start') {
+  if (anchor === "start") {
     x = segment.x0;
     y = segment.y0;
-  } else if (anchor === 'end') {
+  } else if (anchor === "end") {
     x = segment.x1;
     y = segment.y1;
   } else {
@@ -165,39 +165,45 @@ function compute(range, config) {
 }
 
 export default {
-  arc: function(vm, config) {
+  arc: function (vm, config) {
     var angle = (vm.startAngle + vm.endAngle) / 2;
     var vx = Math.cos(angle);
     var vy = Math.sin(angle);
     var r0 = vm.innerRadius;
     var r1 = vm.outerRadius;
 
-    return compute({
-      x0: vm.x + vx * r0,
-      y0: vm.y + vy * r0,
-      x1: vm.x + vx * r1,
-      y1: vm.y + vy * r1,
-      vx: vx,
-      vy: vy
-    }, config);
+    return compute(
+      {
+        x0: vm.x + vx * r0,
+        y0: vm.y + vy * r0,
+        x1: vm.x + vx * r1,
+        y1: vm.y + vy * r1,
+        vx: vx,
+        vy: vy,
+      },
+      config
+    );
   },
 
-  point: function(vm, config) {
+  point: function (vm, config) {
     var v = orient(vm, config.origin);
     var rx = v.x * vm.radius;
     var ry = v.y * vm.radius;
 
-    return compute({
-      x0: vm.x - rx,
-      y0: vm.y - ry,
-      x1: vm.x + rx,
-      y1: vm.y + ry,
-      vx: v.x,
-      vy: v.y
-    }, config);
+    return compute(
+      {
+        x0: vm.x - rx,
+        y0: vm.y - ry,
+        x1: vm.x + rx,
+        y1: vm.y + ry,
+        vx: v.x,
+        vy: v.y,
+      },
+      config
+    );
   },
 
-  rect: function(vm, config) {
+  rect: function (vm, config) {
     var v = orient(vm, config.origin);
     var x = vm.x;
     var y = vm.y;
@@ -212,26 +218,32 @@ export default {
       sy = Math.abs(vm.base - vm.y);
     }
 
-    return compute({
-      x0: x,
-      y0: y + sy,
-      x1: x + sx,
-      y1: y,
-      vx: v.x,
-      vy: v.y
-    }, config);
+    return compute(
+      {
+        x0: x,
+        y0: y + sy,
+        x1: x + sx,
+        y1: y,
+        vx: v.x,
+        vy: v.y,
+      },
+      config
+    );
   },
 
-  fallback: function(vm, config) {
+  fallback: function (vm, config) {
     var v = orient(vm, config.origin);
 
-    return compute({
-      x0: vm.x,
-      y0: vm.y,
-      x1: vm.x,
-      y1: vm.y,
-      vx: v.x,
-      vy: v.y
-    }, config);
-  }
+    return compute(
+      {
+        x0: vm.x,
+        y0: vm.y,
+        x1: vm.x,
+        y1: vm.y,
+        vx: v.x,
+        vy: v.y,
+      },
+      config
+    );
+  },
 };

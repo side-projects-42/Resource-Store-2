@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
-var traceurAPI = require('./api.js');
+var traceurAPI = require("./api.js");
 
 if (process.argv.length < 4) {
-  console.log('Not enough arguments!\n' +
-              '  Usage node src/node/to-amd-compiler.js <inputDirectory> <outputDirectory>');
+  console.log(
+    "Not enough arguments!\n" +
+      "  Usage node src/node/to-amd-compiler.js <inputDirectory> <outputDirectory>"
+  );
   process.exit(1);
 }
 

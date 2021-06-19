@@ -1,36 +1,41 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      datasets: [
-        {data: [10, 5, 0, 25, 78, -10]}
+      datasets: [{ data: [10, 5, 0, 25, 78, -10] }],
+      labels: [
+        "tick1 is very long one",
+        "tick2",
+        "tick3",
+        "tick4",
+        "tick5",
+        "tick6 is very long one",
       ],
-      labels: ['tick1 is very long one', 'tick2', 'tick3', 'tick4', 'tick5', 'tick6 is very long one']
     },
     options: {
       plugins: {
-        legend: false
+        legend: false,
       },
       scales: {
         x: {
-          type: 'category',
+          type: "category",
           ticks: {
             maxRotation: 0,
-            autoSkip: false
-          }
+            autoSkip: false,
+          },
         },
         y: {
-          type: 'linear',
-          position: 'right'
-        }
-      }
-    }
+          type: "linear",
+          position: "right",
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 150,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

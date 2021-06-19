@@ -11,21 +11,19 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.chunks.EventDataChunk');
+goog.provide("wtf.io.cff.chunks.EventDataChunk");
 
-goog.require('goog.asserts');
-goog.require('wtf.io.BufferView');
-goog.require('wtf.io.cff.Chunk');
-goog.require('wtf.io.cff.ChunkType');
-goog.require('wtf.io.cff.PartType');
-goog.require('wtf.io.cff.parts.BinaryEventBufferPart');
-goog.require('wtf.io.cff.parts.BinaryResourcePart');
-goog.require('wtf.io.cff.parts.JsonEventBufferPart');
-goog.require('wtf.io.cff.parts.LegacyEventBufferPart');
-goog.require('wtf.io.cff.parts.StringResourcePart');
-goog.require('wtf.io.cff.parts.StringTablePart');
-
-
+goog.require("goog.asserts");
+goog.require("wtf.io.BufferView");
+goog.require("wtf.io.cff.Chunk");
+goog.require("wtf.io.cff.ChunkType");
+goog.require("wtf.io.cff.PartType");
+goog.require("wtf.io.cff.parts.BinaryEventBufferPart");
+goog.require("wtf.io.cff.parts.BinaryResourcePart");
+goog.require("wtf.io.cff.parts.JsonEventBufferPart");
+goog.require("wtf.io.cff.parts.LegacyEventBufferPart");
+goog.require("wtf.io.cff.parts.StringResourcePart");
+goog.require("wtf.io.cff.parts.StringTablePart");
 
 /**
  * A chunk containing event data and associated bits such as string tables and
@@ -34,7 +32,7 @@ goog.require('wtf.io.cff.parts.StringTablePart');
  * @constructor
  * @extends {wtf.io.cff.Chunk}
  */
-wtf.io.cff.chunks.EventDataChunk = function(opt_chunkId) {
+wtf.io.cff.chunks.EventDataChunk = function (opt_chunkId) {
   goog.base(this, opt_chunkId, wtf.io.cff.ChunkType.EVENT_DATA);
 
   /**
@@ -62,11 +60,10 @@ wtf.io.cff.chunks.EventDataChunk = function(opt_chunkId) {
 };
 goog.inherits(wtf.io.cff.chunks.EventDataChunk, wtf.io.cff.Chunk);
 
-
 /**
  * @override
  */
-wtf.io.cff.chunks.EventDataChunk.prototype.load = function(parts) {
+wtf.io.cff.chunks.EventDataChunk.prototype.load = function (parts) {
   goog.asserts.assert(!this.eventBufferPart_);
 
   // Add all parts.
@@ -76,42 +73,46 @@ wtf.io.cff.chunks.EventDataChunk.prototype.load = function(parts) {
     switch (part.getType()) {
       case wtf.io.cff.PartType.STRING_TABLE:
         this.stringTablePart_ =
-            /** @type {!wtf.io.cff.parts.StringTablePart} */ (part);
+          /** @type {!wtf.io.cff.parts.StringTablePart} */ (part);
         break;
       case wtf.io.cff.PartType.JSON_EVENT_BUFFER:
         this.eventBufferPart_ =
-            /** @type {!wtf.io.cff.parts.JsonEventBufferPart} */ (part);
+          /** @type {!wtf.io.cff.parts.JsonEventBufferPart} */ (part);
         break;
       case wtf.io.cff.PartType.LEGACY_EVENT_BUFFER:
         this.eventBufferPart_ =
-            /** @type {!wtf.io.cff.parts.LegacyEventBufferPart} */ (part);
+          /** @type {!wtf.io.cff.parts.LegacyEventBufferPart} */ (part);
         break;
       case wtf.io.cff.PartType.BINARY_EVENT_BUFFER:
         this.eventBufferPart_ =
-            /** @type {!wtf.io.cff.parts.BinaryEventBufferPart} */ (part);
+          /** @type {!wtf.io.cff.parts.BinaryEventBufferPart} */ (part);
         break;
       case wtf.io.cff.PartType.STRING_RESOURCE:
         this.resourceParts_.push(
-            /** @type {!wtf.io.cff.parts.StringResourcePart} */ (part));
+          /** @type {!wtf.io.cff.parts.StringResourcePart} */ (part)
+        );
         break;
       case wtf.io.cff.PartType.BINARY_RESOURCE:
         this.resourceParts_.push(
-            /** @type {!wtf.io.cff.parts.BinaryResourcePart} */ (part));
+          /** @type {!wtf.io.cff.parts.BinaryResourcePart} */ (part)
+        );
         break;
       default:
-        goog.asserts.fail('Unknown part type: ' + part.getType());
-        throw new Error('Unknown part type ' + part.getType() + ' in chunk.');
+        goog.asserts.fail("Unknown part type: " + part.getType());
+        throw new Error("Unknown part type " + part.getType() + " in chunk.");
     }
   }
 
   goog.asserts.assert(this.eventBufferPart_);
   if (!this.eventBufferPart_) {
-    throw new Error('No event buffer data found in event data chunk.');
+    throw new Error("No event buffer data found in event data chunk.");
   }
 
   // Wire up string table, if needed.
-  if (this.stringTablePart_ &&
-      this.eventBufferPart_ instanceof wtf.io.cff.parts.BinaryEventBufferPart) {
+  if (
+    this.stringTablePart_ &&
+    this.eventBufferPart_ instanceof wtf.io.cff.parts.BinaryEventBufferPart
+  ) {
     var bufferView = this.eventBufferPart_.getValue();
     goog.asserts.assert(bufferView);
     var stringTable = this.stringTablePart_.getValue();
@@ -120,18 +121,17 @@ wtf.io.cff.chunks.EventDataChunk.prototype.load = function(parts) {
   }
 };
 
-
 /**
  * Initializes an event data chunk to empty.
  * If the chunk is currently initialized it will be reused (if options match).
  * @param {number} bufferSize Buffer size, in bytes.
  */
-wtf.io.cff.chunks.EventDataChunk.prototype.init = function(bufferSize) {
+wtf.io.cff.chunks.EventDataChunk.prototype.init = function (bufferSize) {
   var needsBuffer = true;
   if (this.eventBufferPart_) {
     goog.asserts.assert(
-        this.eventBufferPart_ instanceof
-            wtf.io.cff.parts.BinaryEventBufferPart);
+      this.eventBufferPart_ instanceof wtf.io.cff.parts.BinaryEventBufferPart
+    );
 
     // Buffer exists - verify size.
     var bufferView = this.eventBufferPart_.getValue();
@@ -145,8 +145,9 @@ wtf.io.cff.chunks.EventDataChunk.prototype.init = function(bufferSize) {
 
   if (needsBuffer) {
     var bufferView = wtf.io.BufferView.createEmpty(bufferSize);
-    this.eventBufferPart_ =
-        new wtf.io.cff.parts.BinaryEventBufferPart(bufferView);
+    this.eventBufferPart_ = new wtf.io.cff.parts.BinaryEventBufferPart(
+      bufferView
+    );
     var stringTable = wtf.io.BufferView.getStringTable(bufferView);
     this.stringTablePart_ = new wtf.io.cff.parts.StringTablePart(stringTable);
   }
@@ -158,7 +159,6 @@ wtf.io.cff.chunks.EventDataChunk.prototype.init = function(bufferSize) {
   this.addPart(this.eventBufferPart_);
 };
 
-
 /**
  * Gets the event data buffer part.
  * The buffer must have been initialized prior to calling this function,
@@ -166,11 +166,10 @@ wtf.io.cff.chunks.EventDataChunk.prototype.init = function(bufferSize) {
  * should check and handle the value.
  * @return {!wtf.io.cff.Part} Event data buffer part.
  */
-wtf.io.cff.chunks.EventDataChunk.prototype.getEventData = function() {
+wtf.io.cff.chunks.EventDataChunk.prototype.getEventData = function () {
   goog.asserts.assert(this.eventBufferPart_);
   return this.eventBufferPart_;
 };
-
 
 /**
  * Gets the event data buffer, assuming it's a binary buffer.
@@ -178,15 +177,15 @@ wtf.io.cff.chunks.EventDataChunk.prototype.getEventData = function() {
  * part is in binary format.
  * @return {!wtf.io.BufferView.Type} Buffer.
  */
-wtf.io.cff.chunks.EventDataChunk.prototype.getBinaryBuffer = function() {
+wtf.io.cff.chunks.EventDataChunk.prototype.getBinaryBuffer = function () {
   goog.asserts.assert(this.eventBufferPart_);
   goog.asserts.assert(
-      this.eventBufferPart_ instanceof wtf.io.cff.parts.BinaryEventBufferPart);
+    this.eventBufferPart_ instanceof wtf.io.cff.parts.BinaryEventBufferPart
+  );
   var bufferView = this.eventBufferPart_.getValue();
   goog.asserts.assert(bufferView);
   return bufferView;
 };
-
 
 /**
  * Adds an embedded resource to the chunk.
@@ -195,9 +194,9 @@ wtf.io.cff.chunks.EventDataChunk.prototype.getBinaryBuffer = function() {
  * @param {!wtf.io.BlobData} data Resource data.
  * @return {number} Chunk-unique resource ID.
  */
-wtf.io.cff.chunks.EventDataChunk.prototype.addResource = function(data) {
+wtf.io.cff.chunks.EventDataChunk.prototype.addResource = function (data) {
   var part;
-  if (typeof data == 'string') {
+  if (typeof data == "string") {
     part = new wtf.io.cff.parts.StringResourcePart(data);
   } else {
     part = new wtf.io.cff.parts.BinaryResourcePart(data);
@@ -207,22 +206,20 @@ wtf.io.cff.chunks.EventDataChunk.prototype.addResource = function(data) {
   return this.resourceParts_.length;
 };
 
-
 /**
  * Gets an embedded resource by its ID.
  * @param {number} id ID as returned by {@see #addResource}.
  * @return {wtf.io.BlobData} Resource, if found.
  */
-wtf.io.cff.chunks.EventDataChunk.prototype.getResource = function(id) {
+wtf.io.cff.chunks.EventDataChunk.prototype.getResource = function (id) {
   var part = this.resourceParts_[id];
   return part ? part.getValue() : null;
 };
 
-
 /**
  * Resets all data stored in the chunk.
  */
-wtf.io.cff.chunks.EventDataChunk.prototype.reset = function() {
+wtf.io.cff.chunks.EventDataChunk.prototype.reset = function () {
   // Remove all unneeded parts.
   this.removeAllParts();
   this.resourceParts_ = [];

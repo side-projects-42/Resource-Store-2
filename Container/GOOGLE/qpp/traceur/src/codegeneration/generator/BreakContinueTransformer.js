@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {BreakState} from './BreakState.js';
-import {ContinueState} from './ContinueState.js';
-import {ParseTreeTransformer} from '../ParseTreeTransformer.js';
-import {StateMachine} from '../../syntax/trees/StateMachine.js';
+import { BreakState } from "./BreakState.js";
+import { ContinueState } from "./ContinueState.js";
+import { ParseTreeTransformer } from "../ParseTreeTransformer.js";
+import { StateMachine } from "../../syntax/trees/StateMachine.js";
 
 /**
  * @param {BreakStatement|ContinueStatement} tree
@@ -67,10 +67,11 @@ export class BreakContinueTransformer extends ParseTreeTransformer {
    * @return {ParseTree}
    */
   transformBreakStatement(tree) {
-    return this.transformBreaks_ || tree.name ?
-        this.stateToStateMachine_(
-            new BreakState(this.allocateState_(), safeGetLabel(tree))) :
-        tree;
+    return this.transformBreaks_ || tree.name
+      ? this.stateToStateMachine_(
+          new BreakState(this.allocateState_(), safeGetLabel(tree))
+        )
+      : tree;
   }
 
   /**
@@ -79,7 +80,8 @@ export class BreakContinueTransformer extends ParseTreeTransformer {
    */
   transformContinueStatement(tree) {
     return this.stateToStateMachine_(
-        new ContinueState(this.allocateState_(), safeGetLabel(tree)));
+      new ContinueState(this.allocateState_(), safeGetLabel(tree))
+    );
   }
 
   /**

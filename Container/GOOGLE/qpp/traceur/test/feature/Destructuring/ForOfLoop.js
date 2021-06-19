@@ -1,12 +1,15 @@
 // Options: --block-binding
 
 function* gen() {
-  yield 'abc';
-  yield 'def';
+  yield "abc";
+  yield "def";
 }
 
-var expectedHeads = ['a', 'd'];
-var expectedTails = [['b', 'c'], ['e','f']];
+var expectedHeads = ["a", "d"];
+var expectedTails = [
+  ["b", "c"],
+  ["e", "f"],
+];
 var i = 0;
 for (var [head, ...tail] of gen()) {
   assertEquals(expectedHeads[i], head);
@@ -17,12 +20,12 @@ assertEquals(2, i);
 
 {
   let x = 42;
-  for (let {length: x} of gen()) {
+  for (let { length: x } of gen()) {
     assertEquals(3, x);
   }
   assertEquals(42, x);
 }
 
 var k;
-for ({length: k} of ['abc'])  // No block
+for ({ length: k } of ["abc"]) // No block
   assertEquals(3, k);

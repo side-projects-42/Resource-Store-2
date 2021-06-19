@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ModuleVisitor} from './ModuleVisitor.js';
+import { ModuleVisitor } from "./ModuleVisitor.js";
 
 function getFriendlyName(module) {
   return module.name || "'" + module.url + "'";
@@ -24,11 +24,14 @@ function getFriendlyName(module) {
  *   module m from n, o from p.q.r
  */
 export class ValidationVisitor extends ModuleVisitor {
-
   checkExport_(tree, name) {
     if (this.validatingModule_ && !this.validatingModule_.hasExport(name)) {
-      this.reportError_(tree, '\'%s\' is not exported by %s', name,
-          getFriendlyName(this.validatingModule_));
+      this.reportError_(
+        tree,
+        "'%s' is not exported by %s",
+        name,
+        getFriendlyName(this.validatingModule_)
+      );
     }
   }
 
@@ -71,8 +74,10 @@ export class ValidationVisitor extends ModuleVisitor {
   }
 
   visitImportBinding(tree) {
-    var module = this.getModuleForModuleExpression(tree.moduleExpression,
-        true /* reportErrors */);
+    var module = this.getModuleForModuleExpression(
+      tree.moduleExpression,
+      true /* reportErrors */
+    );
     this.visitAndValidate_(module, tree.importSpecifierSet);
   }
 

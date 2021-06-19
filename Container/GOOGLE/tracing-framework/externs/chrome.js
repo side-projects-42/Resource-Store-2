@@ -12,7 +12,6 @@
  * @externs
  */
 
-
 /**
  * @typedef {{
  *   addListener: function(!Function),
@@ -21,36 +20,27 @@
  */
 var ChromeEvent;
 
-
 // var chrome;
 
-
 chrome.runtime;
-
 
 /** @type {string} */
 chrome.runtime.id;
 
-
 /** @type {!ChromeEvent} */
 chrome.runtime.onStartup;
-
 
 /** @type {!ChromeEvent} */
 chrome.runtime.onInstalled;
 
-
 /** @type {!ChromeEvent} */
 chrome.runtime.onSuspend;
-
 
 chrome.app;
 chrome.app.runtime;
 
-
 /** @type {!ChromeEvent} */
 chrome.app.runtime.onLaunched;
-
 
 /**
  * @typedef {{
@@ -60,38 +50,31 @@ chrome.app.runtime.onLaunched;
  */
 var ChromeAppWindow;
 
-
 /**
  * @param {string} url
  * @param {!Object} options
  * @param {!function(!ChromeAppWindow)} callback
  */
-chrome.app.window.create = function(url, options, callback) {};
-
-
+chrome.app.window.create = function (url, options, callback) {};
 
 chrome.socket;
-
 
 /**
  * @param {!function(!Array.<{name: string, address: string}>)} callback
  */
-chrome.socket.getNetworkList = function(callback) {};
-
+chrome.socket.getNetworkList = function (callback) {};
 
 /**
  * @param {string} type
  * @param {!Object} options
  * @param {!function(!{socketId: number})} callback
  */
-chrome.socket.create = function(type, options, callback) {};
-
+chrome.socket.create = function (type, options, callback) {};
 
 /**
  * @param {number} socketId
  */
-chrome.socket.destroy = function(socketId) {};
-
+chrome.socket.destroy = function (socketId) {};
 
 /**
  * @param {number} socketId
@@ -99,32 +82,27 @@ chrome.socket.destroy = function(socketId) {};
  * @param {number} port
  * @param {!function(number)} callback
  */
-chrome.socket.listen = function(socketId, hostname, port, callback) {};
-
+chrome.socket.listen = function (socketId, hostname, port, callback) {};
 
 /**
  * @param {number} socketId
  * @param {!function(!{socketId: number, result: number})} callback
  */
-chrome.socket.accept = function(socketId, callback) {};
-
+chrome.socket.accept = function (socketId, callback) {};
 
 /**
  * @param {number} socketId
  * @param {number|undefined} bufferSize
  * @param {!function({resultCode: number, data: ArrayBuffer})} callback
  */
-chrome.socket.read = function(socketId, bufferSize, callback) {};
-
+chrome.socket.read = function (socketId, bufferSize, callback) {};
 
 /**
  * @param {number} socketId
  * @param {!ArrayBuffer} buffer
  * @param {!function(!{bytesWritten: number})} callback
  */
-chrome.socket.write = function(socketId, buffer, callback) {};
-
-
+chrome.socket.write = function (socketId, buffer, callback) {};
 
 /**
  * @noalias
@@ -132,41 +110,33 @@ chrome.socket.write = function(socketId, buffer, callback) {};
  */
 var ChromePort;
 
-
 /**
  * @type {string}
  */
 ChromePort.prototype.name;
 
-
 /**
  * @param {!Object} msg
  */
-ChromePort.prototype.postMessage = function(msg) {};
-
+ChromePort.prototype.postMessage = function (msg) {};
 
 /**
  * @type {!ChromeEvent}
  */
 ChromePort.prototype.onMessage;
 
-
 /**
  * @type {!ChromeEvent}
  */
 ChromePort.prototype.onDisconnect;
 
-
-
 chrome.extension;
-
 
 /**
  * @param {string} extensionId
  * @param {Object=} opt_connectInfo
  */
-chrome.extension.connect = function(extensionId, opt_connectInfo) {};
-
+chrome.extension.connect = function (extensionId, opt_connectInfo) {};
 
 /**
  * @type {!ChromeEvent}

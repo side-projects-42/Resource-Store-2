@@ -3,53 +3,60 @@
 
 // One item of trace data
 
-(function() {
+(function () {
   "use strict";
-  
-  QuerypointPanel.TraceViewModel = function(traceData, project) {
+
+  QuerypointPanel.TraceViewModel = function (traceData, project) {
     this.project = project;
     this.traceData_ = {};
-    Object.keys(traceData).forEach(function(prop) {
+    Object.keys(traceData).forEach(
+      function (prop) {
         this.traceData_[prop] = traceData[prop];
-      }.bind(this));
-  }
-  
+      }.bind(this)
+    );
+  };
+
   var valueViewModel = new QuerypointPanel.ValueViewModel();
 
   QuerypointPanel.TraceViewModel.prototype = {
-    query: function() {
+    query: function () {
       return this.traceData_.query;
     },
-    
-    tooltip: function() {
-      return this.query().title() + ' found in ' + this.traceData_.file;
+
+    tooltip: function () {
+      return this.query().title() + " found in " + this.traceData_.file;
     },
-    
-    url: function() {
-      if (this.traceData_.isPrompt)
-        return '';
-      return  this.project.createFileURL(this.traceData_.file, this.traceData_.startOffset, this.traceData_.endOffset);
+
+    url: function () {
+      if (this.traceData_.isPrompt) return "";
+      return this.project.createFileURL(
+        this.traceData_.file,
+        this.traceData_.startOffset,
+        this.traceData_.endOffset
+      );
     },
-    
-    iconText: function() {
+
+    iconText: function () {
       return this.query().iconText();
     },
 
-    loadNumber: function() {
+    loadNumber: function () {
       return this.traceData_.loadNumber;
     },
 
-    turnNumber: function() {
+    turnNumber: function () {
       return this.traceData_.turn;
     },
 
-    activationNumber: function() {
+    activationNumber: function () {
       return this.traceData_.activation;
     },
 
-    value: function() {
-      return valueViewModel.inlineView(this.traceData_.value.stringRep, this.traceData_.value.valueType);
+    value: function () {
+      return valueViewModel.inlineView(
+        this.traceData_.value.stringRep,
+        this.traceData_.value.valueType
+      );
     },
   };
-
-}());
+})();

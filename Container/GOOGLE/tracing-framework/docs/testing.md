@@ -34,8 +34,8 @@ by test namespace name (for example `?tests=wtf.io` will run the
 ## Authoring Tests
 
 Each piece of testable functionality (namespace, types, etc) should have a
-corresponding _test.js file. The test file should provide a namespace that
-is the name of the namespace or type being tested with a '_test' suffix.
+corresponding \_test.js file. The test file should provide a namespace that
+is the name of the namespace or type being tested with a '\_test' suffix.
 
 ### Example
 

@@ -1,6 +1,6 @@
 /* MIT license */
-var convert = require('color-convert');
-var string = require('chartjs-color-string');
+var convert = require("color-convert");
+var string = require("chartjs-color-string");
 
 var Color = function (obj) {
 	if (obj instanceof Color) {
@@ -17,32 +17,32 @@ var Color = function (obj) {
 		hsv: [0, 0, 0],
 		hwb: [0, 0, 0],
 		cmyk: [0, 0, 0, 0],
-		alpha: 1
+		alpha: 1,
 	};
 
 	// parse Color() argument
 	var vals;
-	if (typeof obj === 'string') {
+	if (typeof obj === "string") {
 		vals = string.getRgba(obj);
 		if (vals) {
-			this.setValues('rgb', vals);
-		} else if (vals = string.getHsla(obj)) {
-			this.setValues('hsl', vals);
-		} else if (vals = string.getHwb(obj)) {
-			this.setValues('hwb', vals);
+			this.setValues("rgb", vals);
+		} else if ((vals = string.getHsla(obj))) {
+			this.setValues("hsl", vals);
+		} else if ((vals = string.getHwb(obj))) {
+			this.setValues("hwb", vals);
 		}
-	} else if (typeof obj === 'object') {
+	} else if (typeof obj === "object") {
 		vals = obj;
 		if (vals.r !== undefined || vals.red !== undefined) {
-			this.setValues('rgb', vals);
+			this.setValues("rgb", vals);
 		} else if (vals.l !== undefined || vals.lightness !== undefined) {
-			this.setValues('hsl', vals);
+			this.setValues("hsl", vals);
 		} else if (vals.v !== undefined || vals.value !== undefined) {
-			this.setValues('hsv', vals);
+			this.setValues("hsv", vals);
 		} else if (vals.w !== undefined || vals.whiteness !== undefined) {
-			this.setValues('hwb', vals);
+			this.setValues("hwb", vals);
 		} else if (vals.c !== undefined || vals.cyan !== undefined) {
-			this.setValues('cmyk', vals);
+			this.setValues("cmyk", vals);
 		}
 	}
 };
@@ -52,19 +52,19 @@ Color.prototype = {
 		return this.valid;
 	},
 	rgb: function () {
-		return this.setSpace('rgb', arguments);
+		return this.setSpace("rgb", arguments);
 	},
 	hsl: function () {
-		return this.setSpace('hsl', arguments);
+		return this.setSpace("hsl", arguments);
 	},
 	hsv: function () {
-		return this.setSpace('hsv', arguments);
+		return this.setSpace("hsv", arguments);
 	},
 	hwb: function () {
-		return this.setSpace('hwb', arguments);
+		return this.setSpace("hwb", arguments);
 	},
 	cmyk: function () {
-		return this.setSpace('cmyk', arguments);
+		return this.setSpace("cmyk", arguments);
 	},
 
 	rgbArray: function () {
@@ -98,55 +98,55 @@ Color.prototype = {
 		if (val === undefined) {
 			return this.values.alpha;
 		}
-		this.setValues('alpha', val);
+		this.setValues("alpha", val);
 		return this;
 	},
 
 	red: function (val) {
-		return this.setChannel('rgb', 0, val);
+		return this.setChannel("rgb", 0, val);
 	},
 	green: function (val) {
-		return this.setChannel('rgb', 1, val);
+		return this.setChannel("rgb", 1, val);
 	},
 	blue: function (val) {
-		return this.setChannel('rgb', 2, val);
+		return this.setChannel("rgb", 2, val);
 	},
 	hue: function (val) {
 		if (val) {
 			val %= 360;
 			val = val < 0 ? 360 + val : val;
 		}
-		return this.setChannel('hsl', 0, val);
+		return this.setChannel("hsl", 0, val);
 	},
 	saturation: function (val) {
-		return this.setChannel('hsl', 1, val);
+		return this.setChannel("hsl", 1, val);
 	},
 	lightness: function (val) {
-		return this.setChannel('hsl', 2, val);
+		return this.setChannel("hsl", 2, val);
 	},
 	saturationv: function (val) {
-		return this.setChannel('hsv', 1, val);
+		return this.setChannel("hsv", 1, val);
 	},
 	whiteness: function (val) {
-		return this.setChannel('hwb', 1, val);
+		return this.setChannel("hwb", 1, val);
 	},
 	blackness: function (val) {
-		return this.setChannel('hwb', 2, val);
+		return this.setChannel("hwb", 2, val);
 	},
 	value: function (val) {
-		return this.setChannel('hsv', 2, val);
+		return this.setChannel("hsv", 2, val);
 	},
 	cyan: function (val) {
-		return this.setChannel('cmyk', 0, val);
+		return this.setChannel("cmyk", 0, val);
 	},
 	magenta: function (val) {
-		return this.setChannel('cmyk', 1, val);
+		return this.setChannel("cmyk", 1, val);
 	},
 	yellow: function (val) {
-		return this.setChannel('cmyk', 2, val);
+		return this.setChannel("cmyk", 2, val);
 	},
 	black: function (val) {
-		return this.setChannel('cmyk', 3, val);
+		return this.setChannel("cmyk", 3, val);
 	},
 
 	hexString: function () {
@@ -185,7 +185,8 @@ Color.prototype = {
 		var lum = [];
 		for (var i = 0; i < rgb.length; i++) {
 			var chan = rgb[i] / 255;
-			lum[i] = (chan <= 0.03928) ? chan / 12.92 : Math.pow(((chan + 0.055) / 1.055), 2.4);
+			lum[i] =
+				chan <= 0.03928 ? chan / 12.92 : Math.pow((chan + 0.055) / 1.055, 2.4);
 		}
 		return 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
 	},
@@ -203,10 +204,10 @@ Color.prototype = {
 	level: function (color2) {
 		var contrastRatio = this.contrast(color2);
 		if (contrastRatio >= 7.1) {
-			return 'AAA';
+			return "AAA";
 		}
 
-		return (contrastRatio >= 4.5) ? 'AA' : '';
+		return contrastRatio >= 4.5 ? "AA" : "";
 	},
 
 	dark: function () {
@@ -225,49 +226,49 @@ Color.prototype = {
 		for (var i = 0; i < 3; i++) {
 			rgb[i] = 255 - this.values.rgb[i];
 		}
-		this.setValues('rgb', rgb);
+		this.setValues("rgb", rgb);
 		return this;
 	},
 
 	lighten: function (ratio) {
 		var hsl = this.values.hsl;
 		hsl[2] += hsl[2] * ratio;
-		this.setValues('hsl', hsl);
+		this.setValues("hsl", hsl);
 		return this;
 	},
 
 	darken: function (ratio) {
 		var hsl = this.values.hsl;
 		hsl[2] -= hsl[2] * ratio;
-		this.setValues('hsl', hsl);
+		this.setValues("hsl", hsl);
 		return this;
 	},
 
 	saturate: function (ratio) {
 		var hsl = this.values.hsl;
 		hsl[1] += hsl[1] * ratio;
-		this.setValues('hsl', hsl);
+		this.setValues("hsl", hsl);
 		return this;
 	},
 
 	desaturate: function (ratio) {
 		var hsl = this.values.hsl;
 		hsl[1] -= hsl[1] * ratio;
-		this.setValues('hsl', hsl);
+		this.setValues("hsl", hsl);
 		return this;
 	},
 
 	whiten: function (ratio) {
 		var hwb = this.values.hwb;
 		hwb[1] += hwb[1] * ratio;
-		this.setValues('hwb', hwb);
+		this.setValues("hwb", hwb);
 		return this;
 	},
 
 	blacken: function (ratio) {
 		var hwb = this.values.hwb;
 		hwb[2] += hwb[2] * ratio;
-		this.setValues('hwb', hwb);
+		this.setValues("hwb", hwb);
 		return this;
 	},
 
@@ -275,19 +276,19 @@ Color.prototype = {
 		var rgb = this.values.rgb;
 		// http://en.wikipedia.org/wiki/Grayscale#Converting_color_to_grayscale
 		var val = rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11;
-		this.setValues('rgb', [val, val, val]);
+		this.setValues("rgb", [val, val, val]);
 		return this;
 	},
 
 	clearer: function (ratio) {
 		var alpha = this.values.alpha;
-		this.setValues('alpha', alpha - (alpha * ratio));
+		this.setValues("alpha", alpha - alpha * ratio);
 		return this;
 	},
 
 	opaquer: function (ratio) {
 		var alpha = this.values.alpha;
-		this.setValues('alpha', alpha + (alpha * ratio));
+		this.setValues("alpha", alpha + alpha * ratio);
 		return this;
 	},
 
@@ -295,7 +296,7 @@ Color.prototype = {
 		var hsl = this.values.hsl;
 		var hue = (hsl[0] + degrees) % 360;
 		hsl[0] = hue < 0 ? 360 + hue : hue;
-		this.setValues('hsl', hsl);
+		this.setValues("hsl", hsl);
 		return this;
 	},
 
@@ -311,16 +312,14 @@ Color.prototype = {
 		var w = 2 * p - 1;
 		var a = color1.alpha() - color2.alpha();
 
-		var w1 = (((w * a === -1) ? w : (w + a) / (1 + w * a)) + 1) / 2.0;
+		var w1 = ((w * a === -1 ? w : (w + a) / (1 + w * a)) + 1) / 2.0;
 		var w2 = 1 - w1;
 
-		return this
-			.rgb(
-				w1 * color1.red() + w2 * color2.red(),
-				w1 * color1.green() + w2 * color2.green(),
-				w1 * color1.blue() + w2 * color2.blue()
-			)
-			.alpha(color1.alpha() * p + color2.alpha() * (1 - p));
+		return this.rgb(
+			w1 * color1.red() + w2 * color2.red(),
+			w1 * color1.green() + w2 * color2.green(),
+			w1 * color1.blue() + w2 * color2.blue()
+		).alpha(color1.alpha() * p + color2.alpha() * (1 - p));
 	},
 
 	toJSON: function () {
@@ -340,27 +339,27 @@ Color.prototype = {
 		for (var prop in source) {
 			if (source.hasOwnProperty(prop)) {
 				value = source[prop];
-				type = ({}).toString.call(value);
-				if (type === '[object Array]') {
+				type = {}.toString.call(value);
+				if (type === "[object Array]") {
 					target[prop] = value.slice(0);
-				} else if (type === '[object Number]') {
+				} else if (type === "[object Number]") {
 					target[prop] = value;
 				} else {
-					console.error('unexpected color value:', value);
+					console.error("unexpected color value:", value);
 				}
 			}
 		}
 
 		return result;
-	}
+	},
 };
 
 Color.prototype.spaces = {
-	rgb: ['red', 'green', 'blue'],
-	hsl: ['hue', 'saturation', 'lightness'],
-	hsv: ['hue', 'saturation', 'value'],
-	hwb: ['hue', 'whiteness', 'blackness'],
-	cmyk: ['cyan', 'magenta', 'yellow', 'black']
+	rgb: ["red", "green", "blue"],
+	hsl: ["hue", "saturation", "lightness"],
+	hsv: ["hue", "saturation", "value"],
+	hwb: ["hue", "whiteness", "blackness"],
+	cmyk: ["cyan", "magenta", "yellow", "black"],
 };
 
 Color.prototype.maxes = {
@@ -368,7 +367,7 @@ Color.prototype.maxes = {
 	hsl: [360, 100, 100],
 	hsv: [360, 100, 100],
 	hwb: [360, 100, 100],
-	cmyk: [100, 100, 100, 100]
+	cmyk: [100, 100, 100, 100],
 };
 
 Color.prototype.getValues = function (space) {
@@ -396,7 +395,7 @@ Color.prototype.setValues = function (space, vals) {
 
 	this.valid = true;
 
-	if (space === 'alpha') {
+	if (space === "alpha") {
 		alpha = vals;
 	} else if (vals.length) {
 		// [10, 10, 10]
@@ -420,9 +419,12 @@ Color.prototype.setValues = function (space, vals) {
 		alpha = vals.alpha;
 	}
 
-	values.alpha = Math.max(0, Math.min(1, (alpha === undefined ? values.alpha : alpha)));
+	values.alpha = Math.max(
+		0,
+		Math.min(1, alpha === undefined ? values.alpha : alpha)
+	);
 
-	if (space === 'alpha') {
+	if (space === "alpha") {
 		return false;
 	}
 
@@ -453,7 +455,7 @@ Color.prototype.setSpace = function (space, args) {
 	}
 
 	// color.rgb(10, 10, 10)
-	if (typeof vals === 'number') {
+	if (typeof vals === "number") {
 		vals = Array.prototype.slice.call(args);
 	}
 
@@ -478,7 +480,7 @@ Color.prototype.setChannel = function (space, index, val) {
 	return this;
 };
 
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
 	window.Color = Color;
 }
 

@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.TimeRangeList');
+goog.provide("wtf.db.TimeRangeList");
 
-goog.require('goog.array');
-goog.require('goog.math');
-goog.require('wtf.db.IAncillaryList');
-goog.require('wtf.db.TimeRange');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.events.EventType');
-
-
+goog.require("goog.array");
+goog.require("goog.math");
+goog.require("wtf.db.IAncillaryList");
+goog.require("wtf.db.TimeRange");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.events.EventType");
 
 /**
  * Time range list.
@@ -30,7 +28,7 @@ goog.require('wtf.events.EventType');
  * @extends {wtf.events.EventEmitter}
  * @implements {wtf.db.IAncillaryList}
  */
-wtf.db.TimeRangeList = function(eventList) {
+wtf.db.TimeRangeList = function (eventList) {
   goog.base(this);
 
   /**
@@ -68,77 +66,70 @@ wtf.db.TimeRangeList = function(eventList) {
    */
   this.rebuildState_ = {
     levels: [],
-    overlap: 0
+    overlap: 0,
   };
 
   this.eventList_.registerAncillaryList(this);
 };
 goog.inherits(wtf.db.TimeRangeList, wtf.events.EventEmitter);
 
-
 /**
  * @override
  */
-wtf.db.TimeRangeList.prototype.disposeInternal = function() {
+wtf.db.TimeRangeList.prototype.disposeInternal = function () {
   this.eventList_.unregisterAncillaryList(this);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Gets the maximum level of any time range in the list.
  * @return {number} Maximum level.
  */
-wtf.db.TimeRangeList.prototype.getMaximumLevel = function() {
+wtf.db.TimeRangeList.prototype.getMaximumLevel = function () {
   return this.maximumLevel_;
 };
-
 
 /**
  * Gets the total number of time ranges.
  * @return {number} Time range count.
  */
-wtf.db.TimeRangeList.prototype.getCount = function() {
+wtf.db.TimeRangeList.prototype.getCount = function () {
   return this.timeRangeList_.length;
 };
-
 
 /**
  * Gets a list of all time ranges.
  * @return {!Array.<!wtf.db.TimeRange>} Time range list.
  */
-wtf.db.TimeRangeList.prototype.getAllTimeRanges = function() {
+wtf.db.TimeRangeList.prototype.getAllTimeRanges = function () {
   return this.timeRangeList_;
 };
-
 
 /**
  * Gets a time range by ID.
  * @param {number} id Time range ID.
  * @return {wtf.db.TimeRange} Time range, if it exists.
  */
-wtf.db.TimeRangeList.prototype.getTimeRange = function(id) {
+wtf.db.TimeRangeList.prototype.getTimeRange = function (id) {
   return this.timeRanges_[id] || null;
 };
-
 
 /**
  * Gets the time ranges that contains the given time.
  * @param {number} time Time.
  * @return {!Array.<!wtf.db.TimeRange>} Time ranges, if any.
  */
-wtf.db.TimeRangeList.prototype.getTimeRangesAtTime = function(time) {
+wtf.db.TimeRangeList.prototype.getTimeRangesAtTime = function (time) {
   if (!this.timeRangeList_.length) {
     return [];
   }
 
   var matches = [];
-  this.forEachIntersecting(time, time, function(timeRange) {
+  this.forEachIntersecting(time, time, function (timeRange) {
     matches.push(timeRange);
   });
   return matches;
 };
-
 
 /**
  * Iterates over the list of time ranges, returning each one that intersects the
@@ -151,14 +142,21 @@ wtf.db.TimeRangeList.prototype.getTimeRangesAtTime = function(time) {
  * @param {T=} opt_scope Scope to call the function in.
  * @template T
  */
-wtf.db.TimeRangeList.prototype.forEachIntersecting = function(
-    timeStart, timeEnd, callback, opt_scope) {
+wtf.db.TimeRangeList.prototype.forEachIntersecting = function (
+  timeStart,
+  timeEnd,
+  callback,
+  opt_scope
+) {
   if (!this.timeRangeList_.length) {
     return;
   }
 
   var index = goog.array.binarySelect(
-      this.timeRangeList_, wtf.db.TimeRange.selector, { time: timeStart });
+    this.timeRangeList_,
+    wtf.db.TimeRange.selector,
+    { time: timeStart }
+  );
   if (index < 0) {
     index = -index - 1;
     // Select the previous frame.
@@ -180,34 +178,34 @@ wtf.db.TimeRangeList.prototype.forEachIntersecting = function(
     if (timeRange.getTime() > timeEnd) {
       break;
     }
-    if (timeRange.getTime() <= timeEnd &&
-        timeRange.getEndTime() >= timeStart) {
+    if (timeRange.getTime() <= timeEnd && timeRange.getEndTime() >= timeStart) {
       callback.call(opt_scope, timeRange);
     }
   }
 };
 
-
 /**
  * @override
  */
-wtf.db.TimeRangeList.prototype.beginRebuild = function(eventTypeTable) {
+wtf.db.TimeRangeList.prototype.beginRebuild = function (eventTypeTable) {
   this.rebuildState_.levels.length = 0;
   this.rebuildState_.overlap = 0;
   this.rebuildState_.maximumLevel = 0;
   return [
-    eventTypeTable.getByName('wtf.timeRange#begin'),
-    eventTypeTable.getByName('wtf.timeRange#end')
+    eventTypeTable.getByName("wtf.timeRange#begin"),
+    eventTypeTable.getByName("wtf.timeRange#end"),
   ];
 };
-
 
 /**
  * @override
  */
-wtf.db.TimeRangeList.prototype.handleEvent = function(
-    eventTypeIndex, eventType, it) {
-  var id = /** @type {number} */ (it.getArgument('id'));
+wtf.db.TimeRangeList.prototype.handleEvent = function (
+  eventTypeIndex,
+  eventType,
+  it
+) {
+  var id = /** @type {number} */ (it.getArgument("id"));
   var timeRange = this.timeRanges_[id];
   if (!timeRange) {
     timeRange = new wtf.db.TimeRange();
@@ -233,29 +231,37 @@ wtf.db.TimeRangeList.prototype.handleEvent = function(
   }
 };
 
-
 /**
  * @override
  */
-wtf.db.TimeRangeList.prototype.endRebuild = function() {
+wtf.db.TimeRangeList.prototype.endRebuild = function () {
   this.maximumLevel_ = this.rebuildState_.levels.length;
 
   this.emitEvent(wtf.events.EventType.INVALIDATED);
 };
 
-
 goog.exportProperty(
-    wtf.db.TimeRangeList.prototype, 'getMaximumLevel',
-    wtf.db.TimeRangeList.prototype.getMaximumLevel);
+  wtf.db.TimeRangeList.prototype,
+  "getMaximumLevel",
+  wtf.db.TimeRangeList.prototype.getMaximumLevel
+);
 goog.exportProperty(
-    wtf.db.TimeRangeList.prototype, 'getCount',
-    wtf.db.TimeRangeList.prototype.getCount);
+  wtf.db.TimeRangeList.prototype,
+  "getCount",
+  wtf.db.TimeRangeList.prototype.getCount
+);
 goog.exportProperty(
-    wtf.db.TimeRangeList.prototype, 'getAllTimeRanges',
-    wtf.db.TimeRangeList.prototype.getAllTimeRanges);
+  wtf.db.TimeRangeList.prototype,
+  "getAllTimeRanges",
+  wtf.db.TimeRangeList.prototype.getAllTimeRanges
+);
 goog.exportProperty(
-    wtf.db.TimeRangeList.prototype, 'getTimeRangesAtTime',
-    wtf.db.TimeRangeList.prototype.getTimeRangesAtTime);
+  wtf.db.TimeRangeList.prototype,
+  "getTimeRangesAtTime",
+  wtf.db.TimeRangeList.prototype.getTimeRangesAtTime
+);
 goog.exportProperty(
-    wtf.db.TimeRangeList.prototype, 'forEachIntersecting',
-    wtf.db.TimeRangeList.prototype.forEachIntersecting);
+  wtf.db.TimeRangeList.prototype,
+  "forEachIntersecting",
+  wtf.db.TimeRangeList.prototype.forEachIntersecting
+);

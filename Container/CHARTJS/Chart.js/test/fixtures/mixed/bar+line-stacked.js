@@ -3,38 +3,38 @@ module.exports = {
     data: {
       datasets: [
         {
-          type: 'bar',
-          stack: 'mixed',
+          type: "bar",
+          stack: "mixed",
           data: [5, 20, 1, 10],
-          backgroundColor: '#00ff00',
-          borderColor: '#ff0000'
+          backgroundColor: "#00ff00",
+          borderColor: "#ff0000",
         },
         {
-          type: 'line',
-          stack: 'mixed',
+          type: "line",
+          stack: "mixed",
           data: [6, 16, 3, 19],
-          borderColor: '#0000ff',
-          fill: false
+          borderColor: "#0000ff",
+          fill: false,
         },
-      ]
+      ],
     },
     options: {
       scales: {
         x: {
-          axis: 'y',
-          labels: ['a', 'b', 'c', 'd']
+          axis: "y",
+          labels: ["a", "b", "c", "d"],
         },
         y: {
-          stacked: true
-        }
-      }
-    }
+          stacked: true,
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

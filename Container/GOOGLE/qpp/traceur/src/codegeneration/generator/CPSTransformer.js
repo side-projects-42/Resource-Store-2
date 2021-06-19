@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {BreakContinueTransformer} from './BreakContinueTransformer.js';
+import { BreakContinueTransformer } from "./BreakContinueTransformer.js";
 import {
   CASE_CLAUSE,
   STATE_MACHINE,
   VARIABLE_DECLARATION_LIST,
-  VARIABLE_STATEMENT
-} from '../../syntax/trees/ParseTreeType.js';
+  VARIABLE_STATEMENT,
+} from "../../syntax/trees/ParseTreeType.js";
 import {
   CaseClause,
   IdentifierExpression,
-  SwitchStatement
-} from '../../syntax/trees/ParseTrees.js';
-import {CatchState} from './CatchState.js';
-import {ConditionalState} from './ConditionalState.js';
-import {FallThroughState} from './FallThroughState.js';
-import {FinallyFallThroughState} from './FinallyFallThroughState.js';
-import {FinallyState} from './FinallyState.js';
-import {IdentifierToken} from '../../syntax/IdentifierToken.js';
-import {ParseTreeTransformer} from '../ParseTreeTransformer.js';
-import {parseStatement} from '../PlaceholderParser.js';
+  SwitchStatement,
+} from "../../syntax/trees/ParseTrees.js";
+import { CatchState } from "./CatchState.js";
+import { ConditionalState } from "./ConditionalState.js";
+import { FallThroughState } from "./FallThroughState.js";
+import { FinallyFallThroughState } from "./FinallyFallThroughState.js";
+import { FinallyState } from "./FinallyState.js";
+import { IdentifierToken } from "../../syntax/IdentifierToken.js";
+import { ParseTreeTransformer } from "../ParseTreeTransformer.js";
+import { parseStatement } from "../PlaceholderParser.js";
 import {
   $ARGUMENTS,
   $THAT,
@@ -42,20 +42,14 @@ import {
   STATE,
   STORED_EXCEPTION,
   YIELD_ACTION,
-  YIELD_SENT
-} from '../../syntax/PredefinedName.js';
-import {State} from './State.js';
-import {StateAllocator} from './StateAllocator.js';
-import {StateMachine} from '../../syntax/trees/StateMachine.js';
-import {
-  SwitchClause,
-  SwitchState
-} from './SwitchState.js';
-import {
-  PLUS,
-  VAR
-} from '../../syntax/TokenType.js';
-import {TryState} from './TryState.js';
+  YIELD_SENT,
+} from "../../syntax/PredefinedName.js";
+import { State } from "./State.js";
+import { StateAllocator } from "./StateAllocator.js";
+import { StateMachine } from "../../syntax/trees/StateMachine.js";
+import { SwitchClause, SwitchState } from "./SwitchState.js";
+import { PLUS, VAR } from "../../syntax/TokenType.js";
+import { TryState } from "./TryState.js";
 import {
   createAssignStateStatement,
   createAssignmentExpression,
@@ -83,9 +77,9 @@ import {
   createTrueLiteral,
   createTryStatement,
   createVariableStatement,
-  createWhileStatement
-} from '../ParseTreeFactory.js';
-import {variablesInBlock} from '../../semantics/VariableBinder.js';
+  createWhileStatement,
+} from "../ParseTreeFactory.js";
+import { variablesInBlock } from "../../semantics/VariableBinder.js";
 
 /**
  * Performs a CPS transformation on a method body.
@@ -178,8 +172,10 @@ export class CPSTransformer extends ParseTreeTransformer {
     // StateMachines then sequence them together.
     var currentMachine = this.ensureTransformed_(someTransformed[0]);
     for (var index = 1; index < someTransformed.length; index++) {
-      currentMachine = this.createSequence_(currentMachine,
-          this.ensureTransformed_(someTransformed[index]));
+      currentMachine = this.createSequence_(
+        currentMachine,
+        this.ensureTransformed_(someTransformed[index])
+      );
     }
 
     return currentMachine;
@@ -222,9 +218,9 @@ export class CPSTransformer extends ParseTreeTransformer {
   transformCaseClause(tree) {
     var result = super.transformCaseClause(tree);
     var machine = this.transformStatementList_(result.statements);
-    return machine == null ?
-        result :
-        new CaseClause(null, result.expression, createStatementList(machine));
+    return machine == null
+      ? result
+      : new CaseClause(null, result.expression, createStatementList(machine));
   }
 
   /**
@@ -247,17 +243,28 @@ export class CPSTransformer extends ParseTreeTransformer {
 
     var states = [];
 
-    this.addLoopBodyStates_(loopBodyMachine, conditionState, fallThroughState,
-                            labels, states);
+    this.addLoopBodyStates_(
+      loopBodyMachine,
+      conditionState,
+      fallThroughState,
+      labels,
+      states
+    );
     states.push(
-        new ConditionalState(
-            conditionState,
-            startState,
-            fallThroughState,
-            result.condition));
+      new ConditionalState(
+        conditionState,
+        startState,
+        fallThroughState,
+        result.condition
+      )
+    );
 
-    return new StateMachine(startState, fallThroughState, states,
-                            loopBodyMachine.exceptionBlocks);
+    return new StateMachine(
+      startState,
+      fallThroughState,
+      states,
+      loopBodyMachine.exceptionBlocks
+    );
   }
 
   /**
@@ -267,12 +274,18 @@ export class CPSTransformer extends ParseTreeTransformer {
    * @param {Object} labels
    * @param {Array.<State>} states
    */
-  addLoopBodyStates_(loopBodyMachine, continueState, breakState,
-                     labels, states) {
+  addLoopBodyStates_(
+    loopBodyMachine,
+    continueState,
+    breakState,
+    labels,
+    states
+  ) {
     for (var i = 0; i < loopBodyMachine.states.length; i++) {
       var state = loopBodyMachine.states[i];
       states.push(
-          state.transformBreakOrContinue(labels, breakState, continueState));
+        state.transformBreakOrContinue(labels, breakState, continueState)
+      );
     }
   }
 
@@ -293,52 +306,65 @@ export class CPSTransformer extends ParseTreeTransformer {
 
     var incrementState = loopBodyMachine.fallThroughState;
     var conditionState =
-        result.increment == null && result.condition != null ?
-            incrementState :
-            this.allocateState();
+      result.increment == null && result.condition != null
+        ? incrementState
+        : this.allocateState();
     var startState =
-        result.initializer == null ?
-            conditionState :
-            this.allocateState();
+      result.initializer == null ? conditionState : this.allocateState();
     var fallThroughState = this.allocateState();
 
     var states = [];
     if (result.initializer != null) {
       states.push(
-          new FallThroughState(
-              startState,
-              conditionState,
-              createStatementList(
-                  createExpressionStatement(result.initializer))));
+        new FallThroughState(
+          startState,
+          conditionState,
+          createStatementList(createExpressionStatement(result.initializer))
+        )
+      );
     }
     if (result.condition != null) {
       states.push(
-          new ConditionalState(
-              conditionState,
-              loopBodyMachine.startState,
-              fallThroughState,
-              result.condition));
+        new ConditionalState(
+          conditionState,
+          loopBodyMachine.startState,
+          fallThroughState,
+          result.condition
+        )
+      );
     } else {
       // alternative is to renumber the loopbodyMachine.fallThrough to
       // loopbodyMachine.start
       states.push(
-          new FallThroughState(
-              conditionState,
-              loopBodyMachine.startState,
-              createStatementList()));
+        new FallThroughState(
+          conditionState,
+          loopBodyMachine.startState,
+          createStatementList()
+        )
+      );
     }
     if (result.increment != null) {
       states.push(
-          new FallThroughState(
-              incrementState,
-              conditionState,
-              createStatementList(
-                  createExpressionStatement(result.increment))));
+        new FallThroughState(
+          incrementState,
+          conditionState,
+          createStatementList(createExpressionStatement(result.increment))
+        )
+      );
     }
-    this.addLoopBodyStates_(loopBodyMachine, incrementState, fallThroughState,
-                            labels, states);
-    return new StateMachine(startState, fallThroughState, states,
-                            loopBodyMachine.exceptionBlocks);
+    this.addLoopBodyStates_(
+      loopBodyMachine,
+      incrementState,
+      fallThroughState,
+      labels,
+      states
+    );
+    return new StateMachine(
+      startState,
+      fallThroughState,
+      states,
+      loopBodyMachine.exceptionBlocks
+    );
   }
 
   /**
@@ -356,8 +382,7 @@ export class CPSTransformer extends ParseTreeTransformer {
    * @return {ParseTree}
    */
   transformForOfStatement(tree) {
-    throw new Error(
-        'for of statements should be transformed before this pass');
+    throw new Error("for of statements should be transformed before this pass");
   }
 
   /**
@@ -368,9 +393,10 @@ export class CPSTransformer extends ParseTreeTransformer {
     this.clearLabels_();
 
     var result = super.transformIfStatement(tree);
-    if (result.ifClause.type != STATE_MACHINE &&
-        (result.elseClause == null ||
-         result.elseClause.type != STATE_MACHINE)) {
+    if (
+      result.ifClause.type != STATE_MACHINE &&
+      (result.elseClause == null || result.elseClause.type != STATE_MACHINE)
+    ) {
       return result;
     }
 
@@ -382,35 +408,38 @@ export class CPSTransformer extends ParseTreeTransformer {
     var fallThroughState = ifClause.fallThroughState;
     var ifState = ifClause.startState;
     var elseState =
-        elseClause == null ?
-            fallThroughState :
-            elseClause.startState;
+      elseClause == null ? fallThroughState : elseClause.startState;
 
     var states = [];
     var exceptionBlocks = [];
 
     states.push(
-        new ConditionalState(
-            startState,
-            ifState,
-            elseState,
-            result.condition));
+      new ConditionalState(startState, ifState, elseState, result.condition)
+    );
     states.push(...ifClause.states);
     exceptionBlocks.push(...ifClause.exceptionBlocks);
     if (elseClause != null) {
       this.replaceAndAddStates_(
-          elseClause.states,
-          elseClause.fallThroughState,
-          fallThroughState,
-          states);
+        elseClause.states,
+        elseClause.fallThroughState,
+        fallThroughState,
+        states
+      );
       exceptionBlocks.push(
-          ...State.replaceAllStates(elseClause.exceptionBlocks,
-                                    elseClause.fallThroughState,
-                                    fallThroughState));
+        ...State.replaceAllStates(
+          elseClause.exceptionBlocks,
+          elseClause.fallThroughState,
+          fallThroughState
+        )
+      );
     }
 
-    return new StateMachine(startState, fallThroughState, states,
-                            exceptionBlocks);
+    return new StateMachine(
+      startState,
+      fallThroughState,
+      states,
+      exceptionBlocks
+    );
   }
 
   /**
@@ -418,11 +447,14 @@ export class CPSTransformer extends ParseTreeTransformer {
    * @return {Array.<State>} An array with empty states removed.
    */
   removeEmptyStates(oldStates) {
-    var emptyStates = [], newStates = [];
+    var emptyStates = [],
+      newStates = [];
     // Remove empty FallThroughState states.
     for (var i = 0; i < oldStates.length; i++) {
-      if (oldStates[i] instanceof FallThroughState &&
-          oldStates[i].statements.length === 0) {
+      if (
+        oldStates[i] instanceof FallThroughState &&
+        oldStates[i].statements.length === 0
+      ) {
         emptyStates.push(oldStates[i]);
       } else {
         newStates.push(oldStates[i]);
@@ -430,7 +462,7 @@ export class CPSTransformer extends ParseTreeTransformer {
     }
     // Fix up dangling state transitions.
     for (i = 0; i < newStates.length; i++) {
-      newStates[i] = emptyStates.reduce((state, {id, fallThroughState}) => {
+      newStates[i] = emptyStates.reduce((state, { id, fallThroughState }) => {
         return state.replaceState(id, fallThroughState);
       }, newStates[i]);
     }
@@ -516,18 +548,26 @@ export class CPSTransformer extends ParseTreeTransformer {
       var clause = result.caseClauses[index];
       if (clause.type == CASE_CLAUSE) {
         var caseClause = clause;
-        nextState =
-            this.addSwitchClauseStates_(nextState, fallThroughState, labels,
-                                        caseClause.statements, states,
-                                        tryStates);
+        nextState = this.addSwitchClauseStates_(
+          nextState,
+          fallThroughState,
+          labels,
+          caseClause.statements,
+          states,
+          tryStates
+        );
         clauses.push(new SwitchClause(caseClause.expression, nextState));
       } else {
         hasDefault = true;
         var defaultClause = clause;
-        nextState =
-            this.addSwitchClauseStates_(nextState, fallThroughState, labels,
-                                        defaultClause.statements, states,
-                                        tryStates);
+        nextState = this.addSwitchClauseStates_(
+          nextState,
+          fallThroughState,
+          labels,
+          defaultClause.statements,
+          states,
+          tryStates
+        );
         clauses.push(new SwitchClause(null, nextState));
       }
     }
@@ -535,10 +575,15 @@ export class CPSTransformer extends ParseTreeTransformer {
       clauses.push(new SwitchClause(null, fallThroughState));
     }
     states.push(
-        new SwitchState(startState, result.expression, clauses.reverse()));
+      new SwitchState(startState, result.expression, clauses.reverse())
+    );
 
-    return new StateMachine(startState, fallThroughState, states.reverse(),
-                            tryStates);
+    return new StateMachine(
+      startState,
+      fallThroughState,
+      states.reverse(),
+      tryStates
+    );
   }
 
   /**
@@ -550,14 +595,21 @@ export class CPSTransformer extends ParseTreeTransformer {
    * @param {Array.<TryState>} tryStates
    * @return {number}
    */
-  addSwitchClauseStates_(nextState, fallThroughState, labels,
-                         statements, states, tryStates) {
+  addSwitchClauseStates_(
+    nextState,
+    fallThroughState,
+    labels,
+    statements,
+    states,
+    tryStates
+  ) {
     var machine = this.ensureTransformedList_(statements);
     for (var i = 0; i < machine.states.length; i++) {
       var state = machine.states[i];
       var transformedState = state.transformBreak(labels, fallThroughState);
       states.push(
-          transformedState.replaceState(machine.fallThroughState, nextState));
+        transformedState.replaceState(machine.fallThroughState, nextState)
+      );
     }
     tryStates.push(...machine.exceptionBlocks);
     return machine.startState;
@@ -571,9 +623,11 @@ export class CPSTransformer extends ParseTreeTransformer {
     this.clearLabels_();
 
     var result = super.transformTryStatement(tree);
-    if (result.body.type != STATE_MACHINE &&
-        (result.catchBlock == null ||
-         result.catchBlock.catchBody.type != STATE_MACHINE)) {
+    if (
+      result.body.type != STATE_MACHINE &&
+      (result.catchBlock == null ||
+        result.catchBlock.catchBody.type != STATE_MACHINE)
+    ) {
       return result;
     }
     // NOTE: yield inside finally caught in FinallyBlock transform methods
@@ -590,30 +644,34 @@ export class CPSTransformer extends ParseTreeTransformer {
 
       var states = [...tryMachine.states];
       states.push(
-          new FallThroughState(
-              catchStart,
-              catchMachine.startState,
-              // exceptionName = $storedException;
-              createStatementList(
-                  createAssignmentStatement(
-                      createIdentifierExpression(exceptionName),
-                      createIdentifierExpression(STORED_EXCEPTION)))));
+        new FallThroughState(
+          catchStart,
+          catchMachine.startState,
+          // exceptionName = $storedException;
+          createStatementList(
+            createAssignmentStatement(
+              createIdentifierExpression(exceptionName),
+              createIdentifierExpression(STORED_EXCEPTION)
+            )
+          )
+        )
+      );
       this.replaceAndAddStates_(
-          catchMachine.states,
-          catchMachine.fallThroughState,
-          fallThroughState,
-          states);
+        catchMachine.states,
+        catchMachine.fallThroughState,
+        fallThroughState,
+        states
+      );
 
-      tryMachine = new StateMachine(
-          startState,
+      tryMachine = new StateMachine(startState, fallThroughState, states, [
+        new CatchState(
+          exceptionName,
+          catchStart,
           fallThroughState,
-          states,
-          [new CatchState(
-              exceptionName,
-              catchStart,
-              fallThroughState,
-              tryMachine.getAllStateIDs(),
-              tryMachine.exceptionBlocks)]);
+          tryMachine.getAllStateIDs(),
+          tryMachine.exceptionBlocks
+        ),
+      ]);
     }
     if (result.finallyBlock != null) {
       var finallyBlock = result.finallyBlock;
@@ -624,21 +682,20 @@ export class CPSTransformer extends ParseTreeTransformer {
       var states = [
         ...tryMachine.states,
         ...finallyMachine.states,
-        new FinallyFallThroughState(finallyMachine.fallThroughState)
+        new FinallyFallThroughState(finallyMachine.fallThroughState),
       ];
 
       // NOTE: finallyMachine.fallThroughState == FinallyState.fallThroughState
       // is code generated
       // NOTE: in addFinallyFallThroughDispatches
-      tryMachine = new StateMachine(
-          startState,
-          fallThroughState,
-          states,
-          [new FinallyState(
-              finallyMachine.startState,
-              finallyMachine.fallThroughState,
-              tryMachine.getAllStateIDs(),
-              tryMachine.exceptionBlocks)]);
+      tryMachine = new StateMachine(startState, fallThroughState, states, [
+        new FinallyState(
+          finallyMachine.startState,
+          finallyMachine.fallThroughState,
+          tryMachine.getAllStateIDs(),
+          tryMachine.exceptionBlocks
+        ),
+      ]);
     }
 
     return tryMachine;
@@ -682,10 +739,11 @@ export class CPSTransformer extends ParseTreeTransformer {
         var declaration = tree.declarations[i];
         if (declaration.initializer != null) {
           expressions.push(
-              createAssignmentExpression(
-                  createIdentifierExpression(
-                      this.transformAny(declaration.lvalue)),
-                  this.transformAny(declaration.initializer)));
+            createAssignmentExpression(
+              createIdentifierExpression(this.transformAny(declaration.lvalue)),
+              this.transformAny(declaration.initializer)
+            )
+          );
         }
       }
       var list = expressions;
@@ -721,16 +779,27 @@ export class CPSTransformer extends ParseTreeTransformer {
     var states = [];
 
     states.push(
-        new ConditionalState(
-            startState,
-            loopBodyMachine.startState,
-            fallThroughState,
-            result.condition));
-    this.addLoopBodyStates_(loopBodyMachine, startState, fallThroughState,
-                            labels, states);
+      new ConditionalState(
+        startState,
+        loopBodyMachine.startState,
+        fallThroughState,
+        result.condition
+      )
+    );
+    this.addLoopBodyStates_(
+      loopBodyMachine,
+      startState,
+      fallThroughState,
+      labels,
+      states
+    );
 
-    return new StateMachine(startState, fallThroughState, states,
-                            loopBodyMachine.exceptionBlocks);
+    return new StateMachine(
+      startState,
+      fallThroughState,
+      states,
+      loopBodyMachine.exceptionBlocks
+    );
   }
 
   /**
@@ -743,7 +812,8 @@ export class CPSTransformer extends ParseTreeTransformer {
       return result;
     }
     throw new Error(
-        'Unreachable - with statement not allowed in strict mode/harmony');
+      "Unreachable - with statement not allowed in strict mode/harmony"
+    );
   }
 
   /**
@@ -752,15 +822,17 @@ export class CPSTransformer extends ParseTreeTransformer {
    */
   transformThisExpression(tree) {
     return new IdentifierExpression(
-        tree.location,
-        new IdentifierToken(tree.location, $THAT));
+      tree.location,
+      new IdentifierToken(tree.location, $THAT)
+    );
   }
 
   transformIdentifierExpression(tree) {
     if (tree.identifierToken.value === ARGUMENTS) {
       return new IdentifierExpression(
-          tree.location,
-          new IdentifierToken(tree.location, $ARGUMENTS));
+        tree.location,
+        new IdentifierToken(tree.location, $ARGUMENTS)
+      );
     }
     return tree;
   }
@@ -797,27 +869,29 @@ export class CPSTransformer extends ParseTreeTransformer {
   generateMachineMethod(machine) {
     //  function($yieldSent, $yieldAction) {
     return createFunctionExpression(
-            createParameterList(YIELD_SENT, YIELD_ACTION),
-            //     while (true) {
-            createBlock(
-                createWhileStatement(
-                    createTrueLiteral(),
-                    this.generateMachine(machine))));
+      createParameterList(YIELD_SENT, YIELD_ACTION),
+      //     while (true) {
+      createBlock(
+        createWhileStatement(createTrueLiteral(), this.generateMachine(machine))
+      )
+    );
   }
 
   /** @return {VariableStatement} */
   generateHoistedThis() {
     // Hoist 'this' argument for later bind-ing.
     //   var $that = this;
-    return createVariableStatement(VAR, $THAT,
-                                   createThisExpression());
+    return createVariableStatement(VAR, $THAT, createThisExpression());
   }
 
   /** @return {VariableStatement} */
   generateHoistedArguments() {
     // var $arguments = argument;
-    return createVariableStatement(VAR, $ARGUMENTS,
-                                   createIdentifierExpression(ARGUMENTS));
+    return createVariableStatement(
+      VAR,
+      $ARGUMENTS,
+      createIdentifierExpression(ARGUMENTS)
+    );
   }
 
   generateMachineInnerFunction(machine) {
@@ -833,20 +907,23 @@ export class CPSTransformer extends ParseTreeTransformer {
     //     throw $storedException;
     //   }
     // }
-    var body =
-        createWhileStatement(
-            createTrueLiteral(),
-            createSwitchStatement(
-                createIdentifierExpression(STATE),
-                this.transformMachineStates(
-                    machine,
-                    State.END_STATE,
-                    State.RETHROW_STATE,
-                    enclosingFinallyState)));
+    var body = createWhileStatement(
+      createTrueLiteral(),
+      createSwitchStatement(
+        createIdentifierExpression(STATE),
+        this.transformMachineStates(
+          machine,
+          State.END_STATE,
+          State.RETHROW_STATE,
+          enclosingFinallyState
+        )
+      )
+    );
 
     return createFunctionExpression(
-        createParameterList(YIELD_SENT, YIELD_ACTION),
-        createBlock(body));
+      createParameterList(YIELD_SENT, YIELD_ACTION),
+      createBlock(body)
+    );
   }
 
   /**
@@ -859,7 +936,7 @@ export class CPSTransformer extends ParseTreeTransformer {
 
     // 'this' refers to the '$G' object from
     // GeneratorTransformer.transformGeneratorBody
-    var body = parseStatement `
+    var body = parseStatement`
         return this.innerFunction($yieldSent, $yieldAction);`;
     // try {
     //   return this.innerFunction($yieldSent, $yieldAction);
@@ -882,15 +959,23 @@ export class CPSTransformer extends ParseTreeTransformer {
     //   }
     // }
     var caseClauses = [];
-    this.addExceptionCases_(State.RETHROW_STATE, enclosingFinallyState,
-                            enclosingCatchState, machine.states,
-                            caseClauses);
+    this.addExceptionCases_(
+      State.RETHROW_STATE,
+      enclosingFinallyState,
+      enclosingCatchState,
+      machine.states,
+      caseClauses
+    );
     //   default:
     //     throw $storedException;
     caseClauses.push(
-        createDefaultClause(
-            this.machineUncaughtExceptionStatements(State.RETHROW_STATE,
-                                                    State.END_STATE)));
+      createDefaultClause(
+        this.machineUncaughtExceptionStatements(
+          State.RETHROW_STATE,
+          State.END_STATE
+        )
+      )
+    );
 
     // try {
     //   return this.innerFunction($yieldSent, $yieldAction);
@@ -898,17 +983,19 @@ export class CPSTransformer extends ParseTreeTransformer {
     //   $storedException = $caughtException;
     //   switch ($state) {
     body = createTryStatement(
-        createBlock(body),
-        createCatch(
-            createBindingIdentifier(CAUGHT_EXCEPTION),
-            createBlock(
-                createAssignmentStatement(
-                    createIdentifierExpression(STORED_EXCEPTION),
-                    createIdentifierExpression(CAUGHT_EXCEPTION)),
-                createSwitchStatement(
-                    createIdentifierExpression(STATE),
-                    caseClauses))),
-        null);
+      createBlock(body),
+      createCatch(
+        createBindingIdentifier(CAUGHT_EXCEPTION),
+        createBlock(
+          createAssignmentStatement(
+            createIdentifierExpression(STORED_EXCEPTION),
+            createIdentifierExpression(CAUGHT_EXCEPTION)
+          ),
+          createSwitchStatement(createIdentifierExpression(STATE), caseClauses)
+        )
+      ),
+      null
+    );
 
     return body;
   }
@@ -924,21 +1011,22 @@ export class CPSTransformer extends ParseTreeTransformer {
    * @return {Array.<ParseTree>}
    */
   getMachineVariables(tree, machine) {
-
     var statements = [];
 
     //   var $state = machine.startState;
     statements.push(
-        createVariableStatement(VAR, STATE,
-                                createNumberLiteral(machine.startState)));
+      createVariableStatement(
+        VAR,
+        STATE,
+        createNumberLiteral(machine.startState)
+      )
+    );
 
     // var $storedException;
-    statements.push(
-        createVariableStatement(VAR, STORED_EXCEPTION, null));
+    statements.push(createVariableStatement(VAR, STORED_EXCEPTION, null));
 
     // var $finallyFallThrough;
-    statements.push(
-        createVariableStatement(VAR, FINALLY_FALL_THROUGH, null));
+    statements.push(createVariableStatement(VAR, FINALLY_FALL_THROUGH, null));
 
     // Lift locals ...
     var liftedIdentifiers = variablesInBlock(tree, true);
@@ -955,8 +1043,7 @@ export class CPSTransformer extends ParseTreeTransformer {
     var liftedIdentifierList = Object.keys(liftedIdentifiers).sort();
     for (var i = 0; i < liftedIdentifierList.length; i++) {
       var liftedIdentifier = liftedIdentifierList[i];
-      statements.push(
-          createVariableStatement(VAR, liftedIdentifier, null));
+      statements.push(createVariableStatement(VAR, liftedIdentifier, null));
     }
 
     return statements;
@@ -969,8 +1056,13 @@ export class CPSTransformer extends ParseTreeTransformer {
    * @param {Array.<State>} allStates
    * @param {Array.<number>} caseClauses
    */
-  addExceptionCases_(rethrowState, enclosingFinallyState,
-                     enclosingCatchState, allStates, caseClauses) {
+  addExceptionCases_(
+    rethrowState,
+    enclosingFinallyState,
+    enclosingCatchState,
+    allStates,
+    caseClauses
+  ) {
     for (var i = 0; i < allStates.length; i++) {
       var state = allStates[i].id;
       var statements = allStates[i].statements;
@@ -981,11 +1073,13 @@ export class CPSTransformer extends ParseTreeTransformer {
       // contain any statements, since that definitely won't throw. Due to the
       // possibility of global getters and setters, however, just about
       // anything else has the potential to throw.
-      if (!statements || statements.length === 0)
-        continue;
+      if (!statements || statements.length === 0) continue;
 
-      if (catchState != null && finallyState != null &&
-          catchState.tryStates.indexOf(finallyState.finallyState) >= 0) {
+      if (
+        catchState != null &&
+        finallyState != null &&
+        catchState.tryStates.indexOf(finallyState.finallyState) >= 0
+      ) {
         // we have:
         //   try { try { ... } finally {} } catch (e) {}
         //
@@ -995,11 +1089,14 @@ export class CPSTransformer extends ParseTreeTransformer {
         //   $fallThrough = catchState.catchState;
         //   break;
         caseClauses.push(
-            createCaseClause(
-                createNumberLiteral(state),
-                State.generateJumpThroughFinally(
-                    finallyState.finallyState,
-                    catchState.catchState)));
+          createCaseClause(
+            createNumberLiteral(state),
+            State.generateJumpThroughFinally(
+              finallyState.finallyState,
+              catchState.catchState
+            )
+          )
+        );
       } else if (catchState != null) {
         // we have:
         //   try { ... } catch (e) {}
@@ -1008,11 +1105,14 @@ export class CPSTransformer extends ParseTreeTransformer {
         //   $state = catchState.catchState;
         //   break;
         caseClauses.push(
-            createCaseClause(
-                createNumberLiteral(state),
-                createStatementList(
-                    createAssignStateStatement(catchState.catchState),
-                    createBreakStatement())));
+          createCaseClause(
+            createNumberLiteral(state),
+            createStatementList(
+              createAssignStateStatement(catchState.catchState),
+              createBreakStatement()
+            )
+          )
+        );
       } else if (finallyState != null) {
         // we have:
         //   try { ... } finally {}
@@ -1022,11 +1122,14 @@ export class CPSTransformer extends ParseTreeTransformer {
         //   $fallThrough = rethrowState;
         //   break;
         caseClauses.push(
-            createCaseClause(
-                createNumberLiteral(state),
-                State.generateJumpThroughFinally(
-                    finallyState.finallyState,
-                    rethrowState)));
+          createCaseClause(
+            createNumberLiteral(state),
+            State.generateJumpThroughFinally(
+              finallyState.finallyState,
+              rethrowState
+            )
+          )
+        );
       } else {
         // Anything not contained inside a 'try' block.
         // The 'default' case handles this, so don't generate anything.
@@ -1100,11 +1203,9 @@ export class CPSTransformer extends ParseTreeTransformer {
     var startState = this.allocateState();
     var fallThroughState = this.allocateState();
     return this.stateToStateMachine_(
-        new FallThroughState(
-            startState,
-            fallThroughState,
-            statements),
-        fallThroughState);
+      new FallThroughState(startState, fallThroughState, statements),
+      fallThroughState
+    );
   }
 
   /**
@@ -1126,15 +1227,21 @@ export class CPSTransformer extends ParseTreeTransformer {
    * @param {Object} enclosingFinallyState
    * @return {Array.<ParseTree>}
    */
-  transformMachineStates(machine, machineEndState, rethrowState,
-                         enclosingFinallyState) {
+  transformMachineStates(
+    machine,
+    machineEndState,
+    rethrowState,
+    enclosingFinallyState
+  ) {
     var cases = [];
 
     for (var i = 0; i < machine.states.length; i++) {
       var state = machine.states[i];
       var stateCase = state.transformMachineState(
-          enclosingFinallyState[state.id],
-          machineEndState, this.reporter);
+        enclosingFinallyState[state.id],
+        machineEndState,
+        this.reporter
+      );
       if (stateCase != null) {
         cases.push(stateCase);
       }
@@ -1145,33 +1252,44 @@ export class CPSTransformer extends ParseTreeTransformer {
 
     // case machine.fallThroughState: return false;
     cases.push(
-        createCaseClause(
-            createNumberLiteral(machine.fallThroughState),
-            this.machineFallThroughStatements(machineEndState)));
+      createCaseClause(
+        createNumberLiteral(machine.fallThroughState),
+        this.machineFallThroughStatements(machineEndState)
+      )
+    );
 
     // case machineEndState: return false;
     cases.push(
-        createCaseClause(
-            createNumberLiteral(machineEndState),
-            this.machineEndStatements()));
+      createCaseClause(
+        createNumberLiteral(machineEndState),
+        this.machineEndStatements()
+      )
+    );
 
     // add top level rethrow exception state
     // case rethrow:
     //   throw $storedException;
     cases.push(
-        createCaseClause(
-            createNumberLiteral(rethrowState),
-            this.machineRethrowStatements(machineEndState)));
+      createCaseClause(
+        createNumberLiteral(rethrowState),
+        this.machineRethrowStatements(machineEndState)
+      )
+    );
 
     // default: throw "traceur compiler bug invalid state in state machine";
     cases.push(
-        createDefaultClause(
-            [createThrowStatement(
-                createBinaryOperator(
-                    createStringLiteral(
-                        'traceur compiler bug: invalid state in state machine'),
-                    createOperatorToken(PLUS),
-                    createIdentifierExpression(STATE)))]));
+      createDefaultClause([
+        createThrowStatement(
+          createBinaryOperator(
+            createStringLiteral(
+              "traceur compiler bug: invalid state in state machine"
+            ),
+            createOperatorToken(PLUS),
+            createIdentifierExpression(STATE)
+          )
+        ),
+      ])
+    );
     return cases;
   }
 
@@ -1201,28 +1319,34 @@ export class CPSTransformer extends ParseTreeTransformer {
               statements = createStatementList();
             } else {
               statements = createStatementList(
-                  // $state = $fallThrough;
-                  createAssignmentStatement(
-                      createIdentifierExpression(STATE),
-                      createIdentifierExpression(FINALLY_FALL_THROUGH)),
-                  // $fallThrough = INVALID_STATE;
-                  createAssignmentStatement(
-                      createIdentifierExpression(FINALLY_FALL_THROUGH),
-                      createNumberLiteral(State.INVALID_STATE)),
-                  // break;
-                  createBreakStatement());
+                // $state = $fallThrough;
+                createAssignmentStatement(
+                  createIdentifierExpression(STATE),
+                  createIdentifierExpression(FINALLY_FALL_THROUGH)
+                ),
+                // $fallThrough = INVALID_STATE;
+                createAssignmentStatement(
+                  createIdentifierExpression(FINALLY_FALL_THROUGH),
+                  createNumberLiteral(State.INVALID_STATE)
+                ),
+                // break;
+                createBreakStatement()
+              );
             }
             caseClauses.push(
-                createCaseClause(createNumberLiteral(destination), statements));
+              createCaseClause(createNumberLiteral(destination), statements)
+            );
           }
           caseClauses.push(
-              createDefaultClause(
-                  createStatementList(
-                      // $state = enclosingFinallyState.startState;
-                      createAssignStateStatement(
-                          enclosingFinallyState.finallyState),
-                      // break;
-                      createBreakStatement())));
+            createDefaultClause(
+              createStatementList(
+                // $state = enclosingFinallyState.startState;
+                createAssignStateStatement(enclosingFinallyState.finallyState),
+                // break;
+                createBreakStatement()
+              )
+            )
+          );
 
           // case finally.fallThroughState:
           //   switch ($fallThrough) {
@@ -1237,33 +1361,45 @@ export class CPSTransformer extends ParseTreeTransformer {
           //   }
           //   break;
           cases.push(
-              createCaseClause(
-                  createNumberLiteral(finallyState.fallThroughState),
-                  createStatementList(
-                      createSwitchStatement(
-                          createIdentifierExpression(FINALLY_FALL_THROUGH),
-                          caseClauses),
-                      createBreakStatement())));
+            createCaseClause(
+              createNumberLiteral(finallyState.fallThroughState),
+              createStatementList(
+                createSwitchStatement(
+                  createIdentifierExpression(FINALLY_FALL_THROUGH),
+                  caseClauses
+                ),
+                createBreakStatement()
+              )
+            )
+          );
         } else {
           // case finally.fallThroughState:
           //   $state = $fallThrough;
           //   break;
           cases.push(
-              createCaseClause(
-                  createNumberLiteral(finallyState.fallThroughState),
-                  createStatementList(
-                      createAssignmentStatement(
-                          createIdentifierExpression(STATE),
-                          createIdentifierExpression(FINALLY_FALL_THROUGH)),
-                      createBreakStatement())));
+            createCaseClause(
+              createNumberLiteral(finallyState.fallThroughState),
+              createStatementList(
+                createAssignmentStatement(
+                  createIdentifierExpression(STATE),
+                  createIdentifierExpression(FINALLY_FALL_THROUGH)
+                ),
+                createBreakStatement()
+              )
+            )
+          );
         }
-        this.addFinallyFallThroughDispatches(finallyState,
-                                             finallyState.nestedTrys,
-                                             cases);
+        this.addFinallyFallThroughDispatches(
+          finallyState,
+          finallyState.nestedTrys,
+          cases
+        );
       } else {
-        this.addFinallyFallThroughDispatches(enclosingFinallyState,
-                                             tryState.nestedTrys,
-                                             cases);
+        this.addFinallyFallThroughDispatches(
+          enclosingFinallyState,
+          tryState.nestedTrys,
+          cases
+        );
       }
     }
   }
@@ -1279,20 +1415,25 @@ export class CPSTransformer extends ParseTreeTransformer {
     for (var i = 0; i < tail.states.length; i++) {
       var tailState = tail.states[i];
       states.push(
-          tailState.replaceState(tail.startState, head.fallThroughState));
+        tailState.replaceState(tail.startState, head.fallThroughState)
+      );
     }
 
     var exceptionBlocks = [...head.exceptionBlocks];
     for (var i = 0; i < tail.exceptionBlocks.length; i++) {
       var tryState = tail.exceptionBlocks[i];
       exceptionBlocks.push(
-          tryState.replaceState(tail.startState, head.fallThroughState));
+        tryState.replaceState(tail.startState, head.fallThroughState)
+      );
     }
 
-    return new StateMachine(head.startState, tail.fallThroughState,
-                            states, exceptionBlocks);
+    return new StateMachine(
+      head.startState,
+      tail.fallThroughState,
+      states,
+      exceptionBlocks
+    );
   }
-
 
   /**
    * transforms break/continue statements and their parents to state machines
@@ -1303,21 +1444,23 @@ export class CPSTransformer extends ParseTreeTransformer {
     // Check for block scoped variables in a block containing a yield. There's
     // no way to codegen that with a precompiler but could be implemented
     // directly in a VM.
-    if (maybeTransformedStatement.type == VARIABLE_STATEMENT &&
-        maybeTransformedStatement.declarations.
-            declarationType != VAR) {
+    if (
+      maybeTransformedStatement.type == VARIABLE_STATEMENT &&
+      maybeTransformedStatement.declarations.declarationType != VAR
+    ) {
       this.reporter.reportError(
-          maybeTransformedStatement.location != null ?
-              maybeTransformedStatement.location.start :
-              null,
-          'traceur: const/let declaration may not be ' +
-          'in a block containing a yield.');
+        maybeTransformedStatement.location != null
+          ? maybeTransformedStatement.location.start
+          : null,
+        "traceur: const/let declaration may not be " +
+          "in a block containing a yield."
+      );
     }
 
     // transform break/continue statements and their parents to state machines
-    var breakContinueTransformed =
-        new BreakContinueTransformer(this.stateAllocator_).
-            transformAny(maybeTransformedStatement);
+    var breakContinueTransformed = new BreakContinueTransformer(
+      this.stateAllocator_
+    ).transformAny(maybeTransformedStatement);
     if (breakContinueTransformed != maybeTransformedStatement) {
       breakContinueTransformed = this.transformAny(breakContinueTransformed);
     }
@@ -1334,9 +1477,9 @@ export class CPSTransformer extends ParseTreeTransformer {
       return null;
     }
     var maybeTransformed = this.maybeTransformStatement_(statement);
-    return maybeTransformed.type == STATE_MACHINE ?
-        maybeTransformed :
-        this.statementToStateMachine_(maybeTransformed);
+    return maybeTransformed.type == STATE_MACHINE
+      ? maybeTransformed
+      : this.statementToStateMachine_(maybeTransformed);
   }
 
   /**

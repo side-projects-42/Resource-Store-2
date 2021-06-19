@@ -6,4 +6,4 @@
 
 function tag() {}
 
-tag `def`;
+tag`def`;

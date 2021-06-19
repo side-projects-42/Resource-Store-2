@@ -6,13 +6,12 @@
 const obj = {
   method: function () {
     return () => this;
-  }
+  },
 };
 assert.equal(obj.method()(), obj);
 
-let fake = {steal: obj.method()};
+let fake = { steal: obj.method() };
 assert.equal(fake.steal(), obj);
 
-let real = {borrow: obj.method};
+let real = { borrow: obj.method };
 assert.equal(real.borrow()(), real);
-

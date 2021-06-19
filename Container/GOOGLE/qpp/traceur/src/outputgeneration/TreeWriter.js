@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeMapWriter} from './ParseTreeMapWriter.js';
-import {ParseTreeWriter} from './ParseTreeWriter.js';
+import { ParseTreeMapWriter } from "./ParseTreeMapWriter.js";
+import { ParseTreeWriter } from "./ParseTreeWriter.js";
 
 // TODO(arv): This should just export the static function instead.
 
@@ -29,7 +29,7 @@ export class TreeWriter {}
  * @return source code; optional side-effect options.sourceMap set
  */
 
-TreeWriter.write = function(tree, options = undefined) {
+TreeWriter.write = function (tree, options = undefined) {
   var showLineNumbers;
   var highlighted = null;
   var sourceMapGenerator;
@@ -41,8 +41,11 @@ TreeWriter.write = function(tree, options = undefined) {
 
   var writer;
   if (sourceMapGenerator) {
-    writer = new ParseTreeMapWriter(highlighted, showLineNumbers,
-        sourceMapGenerator);
+    writer = new ParseTreeMapWriter(
+      highlighted,
+      showLineNumbers,
+      sourceMapGenerator
+    );
   } else {
     writer = new ParseTreeWriter(highlighted, showLineNumbers);
   }

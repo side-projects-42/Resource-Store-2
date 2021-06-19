@@ -8,7 +8,7 @@ function asyncTimeout(ms) {
   });
 }
 
-(async function() {
+(async function () {
   var x = 0;
   await asyncTimeout(1);
   assert.equal(1, ++x);

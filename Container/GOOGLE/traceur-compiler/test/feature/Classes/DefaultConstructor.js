@@ -14,18 +14,19 @@ assert.equal(1, c.x);
 assert.equal(2, c.y);
 
 assert.isFalse(
-    Object.getOwnPropertyDescriptor(B.prototype, 'constructor').enumerable);
+  Object.getOwnPropertyDescriptor(B.prototype, "constructor").enumerable
+);
 assert.isFalse(
-    Object.getOwnPropertyDescriptor(C.prototype, 'constructor').enumerable);
+  Object.getOwnPropertyDescriptor(C.prototype, "constructor").enumerable
+);
 
 // Ensure that we don't try to call super() in the default constructor.
 class D extends null {}
 var d = new D();
 
-
-class E extends function(x) {
+class E extends function (x) {
   this.x = x;
 } {}
 
-var e = new E(42)
+var e = new E(42);
 assert.equal(42, e.x);

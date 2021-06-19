@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CommandOptions} from '../Options.js';
+import { CommandOptions } from "../Options.js";
 
 function forEachPrologLine(s, f) {
   let inProlog = true;
   for (let i = 0; inProlog && i < s.length; ) {
-    let j = s.indexOf('\n', i);
-    if (j == -1)
-      break;
-    if (s[i] === '/' && s[i + 1] === '/') {
+    let j = s.indexOf("\n", i);
+    if (j == -1) break;
+    if (s[i] === "/" && s[i + 1] === "/") {
       let line = s.slice(i, j);
       f(line);
       i = j + 1;
@@ -38,26 +37,26 @@ export default function parseProlog(source) {
       return this.expectedErrors.length !== 0;
     },
     expectedErrors: [],
-    async: false
+    async: false,
   };
   forEachPrologLine(source, (line) => {
     let m;
-    if (line.indexOf('// Only in browser.') === 0) {
+    if (line.indexOf("// Only in browser.") === 0) {
       returnValue.onlyInBrowser = true;
-    } else if (line.indexOf('// Skip') === 0) {
-      if (line.indexOf('// Skip.') === 0) {
+    } else if (line.indexOf("// Skip") === 0) {
+      if (line.indexOf("// Skip.") === 0) {
         returnValue.skip = true;
       } else {
         // eval remainder of line.
         let skip = false;
         try {
-            skip = eval(line.slice('// Skip'.length));
+          skip = eval(line.slice("// Skip".length));
         } catch (ex) {
-            skip = true;
+          skip = true;
         }
         returnValue.skip = !!skip;
       }
-    } else if (line.indexOf('// Async.') === 0) {
+    } else if (line.indexOf("// Async.") === 0) {
       returnValue.async = true;
     } else if ((m = /\/\ Options:\s*(.+)/.exec(line))) {
       returnValue.traceurOptions = traceur.util.CommandOptions.fromString(m[1]);

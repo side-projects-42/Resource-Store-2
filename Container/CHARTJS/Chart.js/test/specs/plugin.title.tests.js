@@ -1,37 +1,37 @@
 // Test the rectangle element
 
-var Title = Chart.registry.getPlugin('title')._element;
+var Title = Chart.registry.getPlugin("title")._element;
 
-describe('Plugin.title', function() {
-  describe('auto', jasmine.fixture.specs('plugin.title'));
+describe("Plugin.title", function () {
+  describe("auto", jasmine.fixture.specs("plugin.title"));
 
-  it('Should have the correct default config', function() {
+  it("Should have the correct default config", function () {
     expect(Chart.defaults.plugins.title).toEqual({
-      align: 'center',
+      align: "center",
       color: Chart.defaults.color,
       display: false,
-      position: 'top',
+      position: "top",
       fullSize: true,
       weight: 2000,
       font: {
-        weight: 'bold'
+        weight: "bold",
       },
       padding: 10,
-      text: ''
+      text: "",
     });
   });
 
-  it('should update correctly', function() {
+  it("should update correctly", function () {
     var chart = {
-      options: Chart.helpers.clone(Chart.defaults)
+      options: Chart.helpers.clone(Chart.defaults),
     };
 
     var options = Chart.helpers.clone(Chart.defaults.plugins.title);
-    options.text = 'My title';
+    options.text = "My title";
 
     var title = new Title({
       chart: chart,
-      options: options
+      options: options,
     });
 
     title.update(400, 200);
@@ -48,18 +48,18 @@ describe('Plugin.title', function() {
     expect(title.height).toEqual(34.4);
   });
 
-  it('should update correctly when vertical', function() {
+  it("should update correctly when vertical", function () {
     var chart = {
-      options: Chart.helpers.clone(Chart.defaults)
+      options: Chart.helpers.clone(Chart.defaults),
     };
 
     var options = Chart.helpers.clone(Chart.defaults.plugins.title);
-    options.text = 'My title';
-    options.position = 'left';
+    options.text = "My title";
+    options.position = "left";
 
     var title = new Title({
       chart: chart,
-      options: options
+      options: options,
     });
 
     title.update(200, 400);
@@ -76,20 +76,20 @@ describe('Plugin.title', function() {
     expect(title.height).toEqual(400);
   });
 
-  it('should have the correct size when there are multiple lines of text', function() {
+  it("should have the correct size when there are multiple lines of text", function () {
     var chart = {
-      options: Chart.helpers.clone(Chart.defaults)
+      options: Chart.helpers.clone(Chart.defaults),
     };
 
     var options = Chart.helpers.clone(Chart.defaults.plugins.title);
-    options.text = ['line1', 'line2'];
-    options.position = 'left';
+    options.text = ["line1", "line2"];
+    options.position = "left";
     options.display = true;
     options.font.lineHeight = 1.5;
 
     var title = new Title({
       chart: chart,
-      options: options
+      options: options,
     });
 
     title.update(200, 400);
@@ -98,19 +98,19 @@ describe('Plugin.title', function() {
     expect(title.height).toEqual(400);
   });
 
-  it('should draw correctly horizontally', function() {
+  it("should draw correctly horizontally", function () {
     var chart = {
-      options: Chart.helpers.clone(Chart.defaults)
+      options: Chart.helpers.clone(Chart.defaults),
     };
     var context = window.createMockContext();
 
     var options = Chart.helpers.clone(Chart.defaults.plugins.title);
-    options.text = 'My title';
+    options.text = "My title";
 
     var title = new Title({
       chart: chart,
       options: options,
-      ctx: context
+      ctx: context,
     });
 
     title.update(400, 200);
@@ -128,50 +128,62 @@ describe('Plugin.title', function() {
     title.right = title.left + title.width;
     title.draw();
 
-    expect(context.getCalls()).toEqual([{
-      name: 'save',
-      args: []
-    }, {
-      name: 'setFont',
-      args: ["normal bold 12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"],
-    }, {
-      name: 'translate',
-      args: [300, 67.2]
-    }, {
-      name: 'rotate',
-      args: [0]
-    }, {
-      name: 'setFillStyle',
-      args: ['#666']
-    }, {
-      name: 'setTextAlign',
-      args: ['center'],
-    }, {
-      name: 'setTextBaseline',
-      args: ['middle'],
-    }, {
-      name: 'fillText',
-      args: ['My title', 0, 0, 400]
-    }, {
-      name: 'restore',
-      args: []
-    }]);
+    expect(context.getCalls()).toEqual([
+      {
+        name: "save",
+        args: [],
+      },
+      {
+        name: "setFont",
+        args: [
+          "normal bold 12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+        ],
+      },
+      {
+        name: "translate",
+        args: [300, 67.2],
+      },
+      {
+        name: "rotate",
+        args: [0],
+      },
+      {
+        name: "setFillStyle",
+        args: ["#666"],
+      },
+      {
+        name: "setTextAlign",
+        args: ["center"],
+      },
+      {
+        name: "setTextBaseline",
+        args: ["middle"],
+      },
+      {
+        name: "fillText",
+        args: ["My title", 0, 0, 400],
+      },
+      {
+        name: "restore",
+        args: [],
+      },
+    ]);
   });
 
-  it ('should draw correctly vertically', function() {
+  it("should draw correctly vertically", function () {
     var chart = {
-      options: Chart.helpers.clone(Chart.defaults)
+      options: Chart.helpers.clone(Chart.defaults),
     };
     var context = window.createMockContext();
 
     var options = Chart.helpers.clone(Chart.defaults.plugins.title);
-    options.text = 'My title';
-    options.position = 'left';
+    options.text = "My title";
+    options.position = "left";
 
     var title = new Title({
       chart: chart,
       options: options,
-      ctx: context
+      ctx: context,
     });
 
     title.update(200, 400);
@@ -189,37 +201,49 @@ describe('Plugin.title', function() {
     title.right = title.left + title.width;
     title.draw();
 
-    expect(context.getCalls()).toEqual([{
-      name: 'save',
-      args: []
-    }, {
-      name: 'setFont',
-      args: ["normal bold 12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"],
-    }, {
-      name: 'translate',
-      args: [117.2, 250]
-    }, {
-      name: 'rotate',
-      args: [-0.5 * Math.PI]
-    }, {
-      name: 'setFillStyle',
-      args: ['#666']
-    }, {
-      name: 'setTextAlign',
-      args: ['center'],
-    }, {
-      name: 'setTextBaseline',
-      args: ['middle'],
-    }, {
-      name: 'fillText',
-      args: ['My title', 0, 0, 400]
-    }, {
-      name: 'restore',
-      args: []
-    }]);
+    expect(context.getCalls()).toEqual([
+      {
+        name: "save",
+        args: [],
+      },
+      {
+        name: "setFont",
+        args: [
+          "normal bold 12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+        ],
+      },
+      {
+        name: "translate",
+        args: [117.2, 250],
+      },
+      {
+        name: "rotate",
+        args: [-0.5 * Math.PI],
+      },
+      {
+        name: "setFillStyle",
+        args: ["#666"],
+      },
+      {
+        name: "setTextAlign",
+        args: ["center"],
+      },
+      {
+        name: "setTextBaseline",
+        args: ["middle"],
+      },
+      {
+        name: "fillText",
+        args: ["My title", 0, 0, 400],
+      },
+      {
+        name: "restore",
+        args: [],
+      },
+    ]);
 
     // Rotation is other way on right side
-    title.options.position = 'right';
+    title.options.position = "right";
 
     // Reset call tracker
     context.resetCalls();
@@ -231,53 +255,67 @@ describe('Plugin.title', function() {
     title.right = title.left + title.width;
     title.draw();
 
-    expect(context.getCalls()).toEqual([{
-      name: 'save',
-      args: []
-    }, {
-      name: 'setFont',
-      args: ["normal bold 12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"],
-    }, {
-      name: 'translate',
-      args: [117.2, 250]
-    }, {
-      name: 'rotate',
-      args: [0.5 * Math.PI]
-    }, {
-      name: 'setFillStyle',
-      args: ['#666']
-    }, {
-      name: 'setTextAlign',
-      args: ['center'],
-    }, {
-      name: 'setTextBaseline',
-      args: ['middle'],
-    }, {
-      name: 'fillText',
-      args: ['My title', 0, 0, 400]
-    }, {
-      name: 'restore',
-      args: []
-    }]);
+    expect(context.getCalls()).toEqual([
+      {
+        name: "save",
+        args: [],
+      },
+      {
+        name: "setFont",
+        args: [
+          "normal bold 12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+        ],
+      },
+      {
+        name: "translate",
+        args: [117.2, 250],
+      },
+      {
+        name: "rotate",
+        args: [0.5 * Math.PI],
+      },
+      {
+        name: "setFillStyle",
+        args: ["#666"],
+      },
+      {
+        name: "setTextAlign",
+        args: ["center"],
+      },
+      {
+        name: "setTextBaseline",
+        args: ["middle"],
+      },
+      {
+        name: "fillText",
+        args: ["My title", 0, 0, 400],
+      },
+      {
+        name: "restore",
+        args: [],
+      },
+    ]);
   });
 
-  describe('config update', function() {
-    it ('should update the options', function() {
+  describe("config update", function () {
+    it("should update the options", function () {
       var chart = acquireChart({
-        type: 'line',
+        type: "line",
         data: {
-          labels: ['A', 'B', 'C', 'D'],
-          datasets: [{
-            data: [10, 20, 30, 100]
-          }]
+          labels: ["A", "B", "C", "D"],
+          datasets: [
+            {
+              data: [10, 20, 30, 100],
+            },
+          ],
         },
         options: {
           plugins: {
             title: {
-              display: true
-            }
-          }
-        }
+              display: true,
+            },
+          },
+        },
       });
       expect(chart.titleBlock.options.display).toBe(true);
 
@@ -286,44 +324,46 @@ describe('Plugin.title', function() {
       expect(chart.titleBlock.options.display).toBe(false);
     });
 
-    it ('should update the associated layout item', function() {
+    it("should update the associated layout item", function () {
       var chart = acquireChart({
-        type: 'line',
+        type: "line",
         data: {},
         options: {
           plugins: {
             title: {
               fullSize: true,
-              position: 'top',
-              weight: 150
-            }
-          }
-        }
+              position: "top",
+              weight: 150,
+            },
+          },
+        },
       });
 
       expect(chart.titleBlock.fullSize).toBe(true);
-      expect(chart.titleBlock.position).toBe('top');
+      expect(chart.titleBlock.position).toBe("top");
       expect(chart.titleBlock.weight).toBe(150);
 
       chart.options.plugins.title.fullSize = false;
-      chart.options.plugins.title.position = 'left';
+      chart.options.plugins.title.position = "left";
       chart.options.plugins.title.weight = 42;
       chart.update();
 
       expect(chart.titleBlock.fullSize).toBe(false);
-      expect(chart.titleBlock.position).toBe('left');
+      expect(chart.titleBlock.position).toBe("left");
       expect(chart.titleBlock.weight).toBe(42);
     });
 
-    it ('should remove the title if the new options are false', function() {
+    it("should remove the title if the new options are false", function () {
       var chart = acquireChart({
-        type: 'line',
+        type: "line",
         data: {
-          labels: ['A', 'B', 'C', 'D'],
-          datasets: [{
-            data: [10, 20, 30, 100]
-          }]
-        }
+          labels: ["A", "B", "C", "D"],
+          datasets: [
+            {
+              data: [10, 20, 30, 100],
+            },
+          ],
+        },
       });
       expect(chart.titleBlock).not.toBe(undefined);
 
@@ -332,27 +372,31 @@ describe('Plugin.title', function() {
       expect(chart.titleBlock).toBe(undefined);
     });
 
-    it ('should create the title if the title options are changed to exist', function() {
+    it("should create the title if the title options are changed to exist", function () {
       var chart = acquireChart({
-        type: 'line',
+        type: "line",
         data: {
-          labels: ['A', 'B', 'C', 'D'],
-          datasets: [{
-            data: [10, 20, 30, 100]
-          }]
+          labels: ["A", "B", "C", "D"],
+          datasets: [
+            {
+              data: [10, 20, 30, 100],
+            },
+          ],
         },
         options: {
           plugins: {
-            title: false
-          }
-        }
+            title: false,
+          },
+        },
       });
       expect(chart.titleBlock).toBe(undefined);
 
       chart.options.plugins.title = {};
       chart.update();
       expect(chart.titleBlock).not.toBe(undefined);
-      expect(chart.titleBlock.options).toEqualOptions(Chart.defaults.plugins.title);
+      expect(chart.titleBlock.options).toEqualOptions(
+        Chart.defaults.plugins.title
+      );
     });
   });
 });

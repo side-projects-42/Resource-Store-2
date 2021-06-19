@@ -11,16 +11,13 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.zoom.ITarget');
-
-
+goog.provide("wtf.ui.zoom.ITarget");
 
 /**
  * Interface for input event sinks.
  * @interface
  */
-wtf.ui.zoom.ITarget = function() {};
-
+wtf.ui.zoom.ITarget = function () {};
 
 /**
  * Mouse button going down.
@@ -31,7 +28,6 @@ wtf.ui.zoom.ITarget = function() {};
  */
 wtf.ui.zoom.ITarget.prototype.mouseDown = goog.nullFunction;
 
-
 /**
  * Mouse button going up.
  * @param {number} x Control-relative x.
@@ -41,7 +37,6 @@ wtf.ui.zoom.ITarget.prototype.mouseDown = goog.nullFunction;
  */
 wtf.ui.zoom.ITarget.prototype.mouseUp = goog.nullFunction;
 
-
 /**
  * Resets the mouse origin.
  * @param {number} x Control-relative x.
@@ -49,13 +44,11 @@ wtf.ui.zoom.ITarget.prototype.mouseUp = goog.nullFunction;
  */
 wtf.ui.zoom.ITarget.prototype.mouseReset = goog.nullFunction;
 
-
 /**
  * Mouse going out of the control.
  * @return {boolean} Whether the event was handled and should not be propagated.
  */
 wtf.ui.zoom.ITarget.prototype.mouseOut = goog.nullFunction;
-
 
 /**
  * Mouse moving inside the control.
@@ -64,7 +57,6 @@ wtf.ui.zoom.ITarget.prototype.mouseOut = goog.nullFunction;
  * @return {boolean} Whether the event was handled and should not be propagated.
  */
 wtf.ui.zoom.ITarget.prototype.mouseMove = goog.nullFunction;
-
 
 /**
  * Mouse wheel changing.

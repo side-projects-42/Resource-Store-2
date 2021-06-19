@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>wtf.ui.ResizableControl Demo</title>
@@ -6,9 +6,9 @@
     <script src="../../../third_party/closure-library/closure/goog/base.js"></script>
     <script src="../../../wtf_js-deps.js"></script>
     <script>
-      goog.require('goog.dom');
-      goog.require('goog.style');
-      goog.require('wtf.ui.ResizableControl');
+      goog.require("goog.dom");
+      goog.require("goog.style");
+      goog.require("wtf.ui.ResizableControl");
     </script>
 
     <style>
@@ -38,7 +38,8 @@
 
         background: green;
       }
-      .splitter {}
+      .splitter {
+      }
     </style>
   </head>
   <body>
@@ -46,26 +47,30 @@
       <div id="left">
         <div class="splitter"></div>
       </div>
-      <div id="right">
-      </div>
+      <div id="right"></div>
     </div>
 
     <script>
       var dom = goog.dom.getDomHelper();
       var control = new wtf.ui.ResizableControl(
-          wtf.ui.ResizableControl.Orientation.VERTICAL,
-          'splitter',
-          dom.getElement('left'),
-          dom);
+        wtf.ui.ResizableControl.Orientation.VERTICAL,
+        "splitter",
+        dom.getElement("left"),
+        dom
+      );
       control.setSplitterLimits(300, undefined);
 
-      var rightHandSide = dom.getElement('right');
+      var rightHandSide = dom.getElement("right");
       control.addListener(
-          wtf.ui.ResizableControl.EventType.SIZE_CHANGED,
-          function() {
-            goog.style.setStyle(
-                rightHandSide, 'left', control.getSplitterSize() + 'px');
-          });
+        wtf.ui.ResizableControl.EventType.SIZE_CHANGED,
+        function () {
+          goog.style.setStyle(
+            rightHandSide,
+            "left",
+            control.getSplitterSize() + "px"
+          );
+        }
+      );
     </script>
   </body>
 </html>

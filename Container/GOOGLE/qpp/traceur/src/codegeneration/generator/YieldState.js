@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  CURRENT,
-  RESULT
-} from '../../syntax/PredefinedName.js';
-import {State} from './State.js';
+import { CURRENT, RESULT } from "../../syntax/PredefinedName.js";
+import { State } from "./State.js";
 import {
   createAssignmentStatement,
   createIdentifierExpression,
   createMemberExpression,
   createReturnStatement,
   createThisExpression,
-  createTrueLiteral
-} from '../ParseTreeFactory.js';
+  createTrueLiteral,
+} from "../ParseTreeFactory.js";
 
 /**
  * Represents a simple yield expression that has been added to a StateMachine.
@@ -48,9 +45,10 @@ export class YieldState extends State {
    */
   replaceState(oldState, newState) {
     return new this.constructor(
-        State.replaceStateId(this.id, oldState, newState),
-        State.replaceStateId(this.fallThroughState, oldState, newState),
-        this.expression);
+      State.replaceStateId(this.id, oldState, newState),
+      State.replaceStateId(this.fallThroughState, oldState, newState),
+      this.expression
+    );
   }
 
   /**
@@ -66,8 +64,9 @@ export class YieldState extends State {
       //
       // this.$current = expression;
       createAssignmentStatement(
-          createMemberExpression(createThisExpression(), CURRENT),
-          this.expression),
+        createMemberExpression(createThisExpression(), CURRENT),
+        this.expression
+      ),
       // either:
       //      $state = this.fallThroughState;
       //      return true;
@@ -76,7 +75,7 @@ export class YieldState extends State {
       //      $fallThrough = this.fallThroughState;
       //      return true;
       ...State.generateAssignState(enclosingFinally, this.fallThroughState),
-      createReturnStatement(createTrueLiteral())
+      createReturnStatement(createTrueLiteral()),
     ];
   }
 }

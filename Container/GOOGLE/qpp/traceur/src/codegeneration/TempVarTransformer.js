@@ -12,25 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {
-  ModuleDefinition,
-  Program
-} from '../syntax/trees/ParseTrees.js';
-import {VAR} from '../syntax/TokenType.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { ModuleDefinition, Program } from "../syntax/trees/ParseTrees.js";
+import { VAR } from "../syntax/TokenType.js";
 import {
   createBlock,
   createVariableDeclaration,
   createVariableDeclarationList,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {prependStatements} from './PrependStatements.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { prependStatements } from "./PrependStatements.js";
 
 function getVars(self) {
-    var vars = self.tempVarStack_[self.tempVarStack_.length - 1];
-    if (!vars)
-      throw new Error('Invalid use of addTempVar');
-    return vars;
+  var vars = self.tempVarStack_[self.tempVarStack_.length - 1];
+  if (!vars) throw new Error("Invalid use of addTempVar");
+  return vars;
 }
 
 class TempVarStatement {
@@ -71,16 +67,15 @@ export class TempVarTransformer extends ParseTreeTransformer {
     var transformedStatements = this.transformList(statements);
 
     var vars = this.tempVarStack_.pop();
-    if (!vars.length)
-      return transformedStatements;
+    if (!vars.length) return transformedStatements;
 
     // Remove duplicates.
     var seenNames = Object.create(null);
     vars = vars.filter((tempVarStatement) => {
-      var {name, initializer} = tempVarStatement;
+      var { name, initializer } = tempVarStatement;
       if (name in seenNames) {
         if (seenNames[name].initializer || initializer)
-          throw new Error('Invalid use of TempVarTransformer');
+          throw new Error("Invalid use of TempVarTransformer");
         return false;
       }
       seenNames[name] = tempVarStatement;
@@ -88,11 +83,13 @@ export class TempVarTransformer extends ParseTreeTransformer {
     });
 
     var variableStatement = createVariableStatement(
-        createVariableDeclarationList(
-            VAR,
-            vars.map(({name, initializer}) => {
-              return createVariableDeclaration(name, initializer);
-            })));
+      createVariableDeclarationList(
+        VAR,
+        vars.map(({ name, initializer }) => {
+          return createVariableDeclaration(name, initializer);
+        })
+      )
+    );
 
     return prependStatements(transformedStatements, variableStatement);
   }
@@ -109,8 +106,7 @@ export class TempVarTransformer extends ParseTreeTransformer {
     this.pushTempVarState();
     var statements = this.transformStatements_(tree.statements);
     this.popTempVarState();
-    if (statements == tree.statements)
-      return tree;
+    if (statements == tree.statements) return tree;
     return createBlock(statements);
   }
 
@@ -118,8 +114,7 @@ export class TempVarTransformer extends ParseTreeTransformer {
     this.pushTempVarState();
     var elements = this.transformStatements_(tree.elements);
     this.popTempVarState();
-    if (elements == tree.elements)
-      return tree;
+    if (elements == tree.elements) return tree;
     return new ModuleDefinition(tree.location, tree.name, elements);
   }
 
@@ -128,9 +123,9 @@ export class TempVarTransformer extends ParseTreeTransformer {
    *     current scope has been exited.
    */
   getTempIdentifier() {
-    var name = this.pool_.length ?
-      this.pool_.pop() :
-      this.identifierGenerator.generateUniqueIdentifier();
+    var name = this.pool_.length
+      ? this.pool_.pop()
+      : this.identifierGenerator.generateUniqueIdentifier();
     this.tempIdentifierStack_[this.tempIdentifierStack_.length - 1].push(name);
     return name;
   }

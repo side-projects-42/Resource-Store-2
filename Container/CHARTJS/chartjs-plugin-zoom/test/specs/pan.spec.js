@@ -1,43 +1,49 @@
-describe('pan', function() {
-  describe('auto', jasmine.fixture.specs('pan'));
+describe("pan", function () {
+  describe("auto", jasmine.fixture.specs("pan"));
 
   const data = {
-    labels: ['a', 'b', 'c', 'd', 'e'],
-    datasets: [{
-      data: [{
-        x: 1,
-        y: 3
-      }, {
-        x: 2,
-        y: 2
-      }, {
-        x: 3,
-        y: 1
-      }]
-    }]
+    labels: ["a", "b", "c", "d", "e"],
+    datasets: [
+      {
+        data: [
+          {
+            x: 1,
+            y: 3,
+          },
+          {
+            x: 2,
+            y: 2,
+          },
+          {
+            x: 3,
+            y: 1,
+          },
+        ],
+      },
+    ],
   };
 
-  describe('delta', function() {
-    it('should be applied cumulatively', function() {
+  describe("delta", function () {
+    it("should be applied cumulatively", function () {
       const chart = window.acquireChart({
-        type: 'line',
+        type: "line",
         data,
         options: {
           plugins: {
             zoom: {
               pan: {
                 enabled: true,
-                mode: 'x',
-              }
-            }
+                mode: "x",
+              },
+            },
           },
           scales: {
             x: {
               min: 1,
-              max: 2
-            }
-          }
-        }
+              max: 2,
+            },
+          },
+        },
       });
       const scale = chart.scales.x;
       expect(scale.min).toBe(1);
@@ -53,31 +59,31 @@ describe('pan', function() {
       expect(scale.max).toBe(1);
     });
 
-    it('should not give credit', function() {
+    it("should not give credit", function () {
       const chart = window.acquireChart({
-        type: 'scatter',
+        type: "scatter",
         data,
         options: {
           plugins: {
             zoom: {
               limits: {
                 x: {
-                  max: 4
-                }
+                  max: 4,
+                },
               },
               pan: {
                 enabled: true,
-                mode: 'x',
-              }
-            }
+                mode: "x",
+              },
+            },
           },
           scales: {
             x: {
               min: 1,
-              max: 3
-            }
-          }
-        }
+              max: 3,
+            },
+          },
+        },
       });
       const scale = chart.scales.x;
       expect(scale.min).toBe(1);
@@ -94,78 +100,90 @@ describe('pan', function() {
     });
   });
 
-  describe('events', function() {
-    it('should call onPanStart', function(done) {
-      const startSpy = jasmine.createSpy('started');
+  describe("events", function () {
+    it("should call onPanStart", function (done) {
+      const startSpy = jasmine.createSpy("started");
       const chart = window.acquireChart({
-        type: 'scatter',
+        type: "scatter",
         data,
         options: {
           plugins: {
             zoom: {
               pan: {
                 enabled: true,
-                mode: 'xy',
-                onPanStart: startSpy
-              }
-            }
-          }
-        }
+                mode: "xy",
+                onPanStart: startSpy,
+              },
+            },
+          },
+        },
       });
 
-      Simulator.gestures.pan(chart.canvas, {deltaX: -350, deltaY: 0, duration: 50}, function() {
-        expect(startSpy).toHaveBeenCalled();
-        expect(chart.scales.x.min).not.toBe(1);
-        done();
-      });
+      Simulator.gestures.pan(
+        chart.canvas,
+        { deltaX: -350, deltaY: 0, duration: 50 },
+        function () {
+          expect(startSpy).toHaveBeenCalled();
+          expect(chart.scales.x.min).not.toBe(1);
+          done();
+        }
+      );
     });
 
-    it('should call onPanRejected when onStartPan returns false', function(done) {
-      const rejectSpy = jasmine.createSpy('rejected');
+    it("should call onPanRejected when onStartPan returns false", function (done) {
+      const rejectSpy = jasmine.createSpy("rejected");
       const chart = window.acquireChart({
-        type: 'scatter',
+        type: "scatter",
         data,
         options: {
           plugins: {
             zoom: {
               pan: {
                 enabled: true,
-                mode: 'xy',
+                mode: "xy",
                 onPanStart: () => false,
-                onPanRejected: rejectSpy
-              }
-            }
-          }
-        }
+                onPanRejected: rejectSpy,
+              },
+            },
+          },
+        },
       });
 
-      Simulator.gestures.pan(chart.canvas, {deltaX: -350, deltaY: 0, duration: 50}, function() {
-        expect(rejectSpy).toHaveBeenCalled();
-        expect(chart.scales.x.min).toBe(1);
-        done();
-      });
+      Simulator.gestures.pan(
+        chart.canvas,
+        { deltaX: -350, deltaY: 0, duration: 50 },
+        function () {
+          expect(rejectSpy).toHaveBeenCalled();
+          expect(chart.scales.x.min).toBe(1);
+          done();
+        }
+      );
     });
 
-    it('should call onPanComplete', function(done) {
+    it("should call onPanComplete", function (done) {
       const chart = window.acquireChart({
-        type: 'scatter',
+        type: "scatter",
         data,
         options: {
           plugins: {
             zoom: {
               pan: {
                 enabled: true,
-                mode: 'xy',
+                mode: "xy",
                 onPanComplete(ctx) {
                   expect(ctx.chart.scales.x.min).not.toBe(1);
                   done();
-                }
-              }
-            }
-          }
-        }
+                },
+              },
+            },
+          },
+        },
       });
-      Simulator.gestures.pan(chart.canvas, {deltaX: -350, deltaY: 0, duration: 50});
+      Simulator.gestures.pan(chart.canvas, {
+        deltaX: -350,
+        deltaY: 0,
+        duration: 50,
+      });
     });
   });
 });

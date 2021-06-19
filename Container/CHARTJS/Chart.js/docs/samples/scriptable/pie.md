@@ -7,25 +7,25 @@ Utils.srand(110);
 
 const actions = [
   {
-    name: 'Randomize',
+    name: "Randomize",
     handler(chart) {
-      chart.data.datasets.forEach(dataset => {
+      chart.data.datasets.forEach((dataset) => {
         dataset.data = generateData();
       });
       chart.update();
-    }
+    },
   },
   {
-    name: 'Toggle Doughnut View',
+    name: "Toggle Doughnut View",
     handler(chart) {
       if (chart.options.cutout) {
         chart.options.cutout = 0;
       } else {
-        chart.options.cutout = '50%';
+        chart.options.cutout = "50%";
       }
       chart.update();
-    }
-  }
+    },
+  },
 ];
 // </block:setup>
 
@@ -34,24 +34,24 @@ function generateData() {
   return Utils.numbers({
     count: DATA_COUNT,
     min: -100,
-    max: 100
+    max: 100,
   });
 }
 
 const data = {
-  datasets: [{
-    data: generateData()
-  }]
+  datasets: [
+    {
+      data: generateData(),
+    },
+  ],
 };
 // </block:data>
 
 // <block:options:0>
 function colorize(opaque, hover, ctx) {
   var v = ctx.parsed;
-  var c = v < -50 ? '#D60000'
-    : v < 0 ? '#F46300'
-    : v < 50 ? '#0358B6'
-    : '#44DE28';
+  var c =
+    v < -50 ? "#D60000" : v < 0 ? "#F46300" : v < 50 ? "#0358B6" : "#44DE28";
 
   var opacity = hover ? 1 - Math.abs(v / 150) - 0.2 : 1 - Math.abs(v / 150);
 
@@ -63,7 +63,7 @@ function hoverColorize(ctx) {
 }
 
 const config = {
-  type: 'pie',
+  type: "pie",
   data: data,
   options: {
     plugins: {
@@ -73,10 +73,10 @@ const config = {
     elements: {
       arc: {
         backgroundColor: colorize.bind(null, false, false),
-        hoverBackgroundColor: hoverColorize
-      }
-    }
-  }
+        hoverBackgroundColor: hoverColorize,
+      },
+    },
+  },
 };
 // </block:options>
 

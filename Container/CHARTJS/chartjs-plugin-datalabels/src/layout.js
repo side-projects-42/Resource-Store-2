@@ -1,4 +1,4 @@
-import HitBox from './hitbox';
+import HitBox from "./hitbox";
 
 function coordinates(view, model, geometry) {
   var point = model.positioner(view, model);
@@ -7,7 +7,7 @@ function coordinates(view, model, geometry) {
 
   if (!vx && !vy) {
     // if aligned center, we don't want to offset the center point
-    return {x: point.x, y: point.y};
+    return { x: point.x, y: point.y };
   }
 
   var w = geometry.w;
@@ -15,8 +15,12 @@ function coordinates(view, model, geometry) {
 
   // take in account the label rotation
   var rotation = model.rotation;
-  var dx = Math.abs(w / 2 * Math.cos(rotation)) + Math.abs(h / 2 * Math.sin(rotation));
-  var dy = Math.abs(w / 2 * Math.sin(rotation)) + Math.abs(h / 2 * Math.cos(rotation));
+  var dx =
+    Math.abs((w / 2) * Math.cos(rotation)) +
+    Math.abs((h / 2) * Math.sin(rotation));
+  var dy =
+    Math.abs((w / 2) * Math.sin(rotation)) +
+    Math.abs((h / 2) * Math.cos(rotation));
 
   // scale the unit vector (vx, vy) to get at least dx or dy equal to
   // w or h respectively (else we would calculate the distance to the
@@ -31,7 +35,7 @@ function coordinates(view, model, geometry) {
 
   return {
     x: point.x + dx,
-    y: point.y + dy
+    y: point.y + dy,
   };
 }
 
@@ -73,7 +77,7 @@ function compute(labels) {
   }
 
   // Auto hide overlapping labels
-  return collide(labels, function(s0, s1) {
+  return collide(labels, function (s0, s1) {
     var h0 = s0._hidable;
     var h1 = s1._hidable;
 
@@ -86,7 +90,7 @@ function compute(labels) {
 }
 
 export default {
-  prepare: function(datasets) {
+  prepare: function (datasets) {
     var labels = [];
     var i, j, ilen, jlen, label;
 
@@ -99,7 +103,7 @@ export default {
           _hidable: false,
           _visible: true,
           _set: i,
-          _idx: j
+          _idx: j,
         };
       }
     }
@@ -107,13 +111,11 @@ export default {
     // TODO New `z` option: labels with a higher z-index are drawn
     // of top of the ones with a lower index. Lowest z-index labels
     // are also discarded first when hiding overlapping labels.
-    labels.sort(function(a, b) {
+    labels.sort(function (a, b) {
       var sa = a.$layout;
       var sb = b.$layout;
 
-      return sa._idx === sb._idx
-        ? sb._set - sa._set
-        : sb._idx - sa._idx;
+      return sa._idx === sb._idx ? sb._set - sa._set : sb._idx - sa._idx;
     });
 
     this.update(labels);
@@ -121,7 +123,7 @@ export default {
     return labels;
   },
 
-  update: function(labels) {
+  update: function (labels) {
     var dirty = false;
     var i, ilen, label, model, state;
 
@@ -129,7 +131,7 @@ export default {
       label = labels[i];
       model = label.model();
       state = label.$layout;
-      state._hidable = model && model.display === 'auto';
+      state._hidable = model && model.display === "auto";
       state._visible = label.visible();
       dirty |= state._hidable;
     }
@@ -139,7 +141,7 @@ export default {
     }
   },
 
-  lookup: function(labels, point) {
+  lookup: function (labels, point) {
     var i, state;
 
     // IMPORTANT Iterate in the reverse order since items at the end of
@@ -156,7 +158,7 @@ export default {
     return null;
   },
 
-  draw: function(chart, labels) {
+  draw: function (chart, labels) {
     var i, ilen, label, state, geometry, center;
 
     for (i = 0, ilen = labels.length; i < ilen; ++i) {
@@ -170,5 +172,5 @@ export default {
         label.draw(chart, center);
       }
     }
-  }
+  },
 };

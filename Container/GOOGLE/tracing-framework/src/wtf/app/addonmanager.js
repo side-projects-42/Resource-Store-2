@@ -11,21 +11,19 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.AddonManager');
-goog.provide('wtf.app.AddonTabPanel');
+goog.provide("wtf.app.AddonManager");
+goog.provide("wtf.app.AddonTabPanel");
 
-goog.require('goog.Disposable');
-goog.require('goog.Uri');
-goog.require('goog.asserts');
-goog.require('goog.dom');
-goog.require('goog.dom.TagName');
-goog.require('goog.dom.classes');
-goog.require('goog.style');
-goog.require('wtf.addon');
-goog.require('wtf.app.TabPanel');
-goog.require('wtf.timing');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.Uri");
+goog.require("goog.asserts");
+goog.require("goog.dom");
+goog.require("goog.dom.TagName");
+goog.require("goog.dom.classes");
+goog.require("goog.style");
+goog.require("wtf.addon");
+goog.require("wtf.app.TabPanel");
+goog.require("wtf.timing");
 
 /**
  * Handles the creation and management of app addons.
@@ -36,7 +34,7 @@ goog.require('wtf.timing');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.app.AddonManager = function(documentView) {
+wtf.app.AddonManager = function (documentView) {
   goog.base(this);
 
   var dom = documentView.getDom();
@@ -62,7 +60,7 @@ wtf.app.AddonManager = function(documentView) {
    * @private
    */
   this.addonsEl_ = dom.createElement(goog.dom.TagName.DIV);
-  this.addonsEl_.id = 'wtfAppAddons';
+  this.addonsEl_.id = "wtfAppAddons";
   dom.getDocument().body.appendChild(this.addonsEl_);
 
   /**
@@ -83,34 +81,31 @@ wtf.app.AddonManager = function(documentView) {
   this.loadedAddons_ = {};
 
   // Defer a bit to ensure everything gets created.
-  wtf.timing.setImmediate(function() {
+  wtf.timing.setImmediate(function () {
     var addons = wtf.addon.getAppAddons();
     for (var n = 0; n < addons.length; n++) {
       // TODO(benvanik): only load if no triggers? setup delayed loading for
       //     ones with triggers?
       this.loadAddon(addons[n]);
     }
-    _gaq.push(['_trackEvent', 'app', 'load_addons',
-      null, addons.length]);
+    _gaq.push(["_trackEvent", "app", "load_addons", null, addons.length]);
   }, this);
 };
 goog.inherits(wtf.app.AddonManager, goog.Disposable);
 
-
 /**
  * @override
  */
-wtf.app.AddonManager.prototype.disposeInternal = function() {
+wtf.app.AddonManager.prototype.disposeInternal = function () {
   goog.dom.removeNode(this.addonsEl_);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Loads the given addon, if it has not already been loaded.
  * @param {!wtf.addon.AppAddon} addon Addon.
  */
-wtf.app.AddonManager.prototype.loadAddon = function(addon) {
+wtf.app.AddonManager.prototype.loadAddon = function (addon) {
   var dom = this.dom_;
 
   var manifest = addon.getManifest();
@@ -124,7 +119,8 @@ wtf.app.AddonManager.prototype.loadAddon = function(addon) {
 
   // Create iframe container.
   var iframe = /** @type {!HTMLIFrameElement} */ (
-      dom.createElement(goog.dom.TagName.IFRAME));
+    dom.createElement(goog.dom.TagName.IFRAME)
+  );
   this.addonsEl_.appendChild(iframe);
 
   // Set base.
@@ -148,10 +144,9 @@ wtf.app.AddonManager.prototype.loadAddon = function(addon) {
 
   this.addons_.push({
     addon: addon,
-    iframe: iframe
+    iframe: iframe,
   });
 };
-
 
 /**
  * Sets up the addon API in the addon window.
@@ -159,15 +154,14 @@ wtf.app.AddonManager.prototype.loadAddon = function(addon) {
  * @param {!Window} addonGlobal Addon global scope.
  * @private
  */
-wtf.app.AddonManager.prototype.setupAddonApi_ = function(
-    addon, addonGlobal) {
+wtf.app.AddonManager.prototype.setupAddonApi_ = function (addon, addonGlobal) {
   var documentView = this.documentView_;
 
-  addonGlobal['wtf'] = goog.global['wtf'];
-  addonGlobal['d3'] = goog.global['d3'];
-  addonGlobal['documentView'] = {
-    'db': documentView.getDatabase(),
-    'createTabPanel': createTabPanel
+  addonGlobal["wtf"] = goog.global["wtf"];
+  addonGlobal["d3"] = goog.global["d3"];
+  addonGlobal["documentView"] = {
+    db: documentView.getDatabase(),
+    createTabPanel: createTabPanel,
   };
 
   var tabbar = documentView.getTabbar();
@@ -181,12 +175,18 @@ wtf.app.AddonManager.prototype.setupAddonApi_ = function(
    *     A callback that creates an external panel.
    */
   function createTabPanel(path, name, options, callback) {
-    tabbar.addPanel(new wtf.app.AddonTabPanel(
-        addon, documentView, path, name, options, callback));
-  };
+    tabbar.addPanel(
+      new wtf.app.AddonTabPanel(
+        addon,
+        documentView,
+        path,
+        name,
+        options,
+        callback
+      )
+    );
+  }
 };
-
-
 
 /**
  * A tab panel that defers logic to an external addon.
@@ -200,8 +200,14 @@ wtf.app.AddonManager.prototype.setupAddonApi_ = function(
  * @constructor
  * @extends {wtf.app.TabPanel}
  */
-wtf.app.AddonTabPanel = function(addon, documentView, path, name,
-    options, callback) {
+wtf.app.AddonTabPanel = function (
+  addon,
+  documentView,
+  path,
+  name,
+  options,
+  callback
+) {
   goog.base(this, documentView, path, name);
 
   /**
@@ -234,7 +240,7 @@ wtf.app.AddonTabPanel = function(addon, documentView, path, name,
    */
   this.handlers_ = null;
 
-  wtf.timing.setImmediate(function() {
+  wtf.timing.setImmediate(function () {
     // Create the iframe.
     this.setupIframe_();
     goog.asserts.assert(this.iframe_);
@@ -247,7 +253,6 @@ wtf.app.AddonTabPanel = function(addon, documentView, path, name,
 };
 goog.inherits(wtf.app.AddonTabPanel, wtf.app.TabPanel);
 
-
 /**
  * @typedef {{
  *   onLayout: (function(number, number))?,
@@ -256,28 +261,25 @@ goog.inherits(wtf.app.AddonTabPanel, wtf.app.TabPanel);
  */
 wtf.app.AddonTabPanel.Handlers;
 
-
 /**
  * @typedef {function(!Document):wtf.app.AddonTabPanel.Handlers}
  */
 wtf.app.AddonTabPanel.Callback;
 
-
 /**
  * @override
  */
-wtf.app.AddonTabPanel.prototype.createDom = function(dom) {
+wtf.app.AddonTabPanel.prototype.createDom = function (dom) {
   var el = dom.createElement(goog.dom.TagName.DIV);
-  goog.dom.classes.add(el, goog.getCssName('appUiTabPanel'));
+  goog.dom.classes.add(el, goog.getCssName("appUiTabPanel"));
   return el;
 };
-
 
 /**
  * Sets up the panel iframe.
  * @private
  */
-wtf.app.AddonTabPanel.prototype.setupIframe_ = function() {
+wtf.app.AddonTabPanel.prototype.setupIframe_ = function () {
   goog.asserts.assert(!this.iframe_);
 
   var manifest = this.addon_.getManifest();
@@ -287,7 +289,8 @@ wtf.app.AddonTabPanel.prototype.setupIframe_ = function() {
   // renamed CSS. Better would be to insert a default stylesheet with some
   // common styles (buttons/etc).
   var iframe = /** @type {!HTMLIFrameElement} */ (
-      this.getDom().createElement(goog.dom.TagName.IFRAME));
+    this.getDom().createElement(goog.dom.TagName.IFRAME)
+  );
   this.getRootElement().appendChild(iframe);
 
   // Set base.
@@ -299,12 +302,12 @@ wtf.app.AddonTabPanel.prototype.setupIframe_ = function() {
 
   // Set content size so it fits.
   goog.style.setStyle(iframe, {
-    'width': '100%',
-    'height': '100%'
+    width: "100%",
+    height: "100%",
   });
 
   // Add scripts.
-  var scripts = this.options_['scripts'] || [];
+  var scripts = this.options_["scripts"] || [];
   for (var n = 0; n < scripts.length; n++) {
     var script = idoc.createElement(goog.dom.TagName.SCRIPT);
     script.src = scripts[n];
@@ -312,36 +315,34 @@ wtf.app.AddonTabPanel.prototype.setupIframe_ = function() {
   }
 
   // Add stylesheets.
-  var stylesheets = this.options_['stylesheets'] || [];
+  var stylesheets = this.options_["stylesheets"] || [];
   for (var n = 0; n < stylesheets.length; n++) {
     var link = idoc.createElement(goog.dom.TagName.LINK);
-    link.rel = 'stylesheet';
+    link.rel = "stylesheet";
     link.href = stylesheets[n];
-    link.type = 'text/css';
+    link.type = "text/css";
     idoc.head.appendChild(link);
   }
 
   this.iframe_ = iframe;
 };
 
-
 /**
  * @override
  */
-wtf.app.AddonTabPanel.prototype.layoutInternal = function() {
-  if (this.handlers_ && this.handlers_['onLayout']) {
+wtf.app.AddonTabPanel.prototype.layoutInternal = function () {
+  if (this.handlers_ && this.handlers_["onLayout"]) {
     var currentSize = goog.style.getSize(this.getRootElement());
-    this.handlers_['onLayout'](currentSize.width, currentSize.height);
+    this.handlers_["onLayout"](currentSize.width, currentSize.height);
   }
 };
 
-
 /**
  * @override
  */
-wtf.app.AddonTabPanel.prototype.setVisible = function(value) {
-  goog.base(this, 'setVisible', value);
-  if (this.handlers_ && this.handlers_['onVisibilityChange']) {
-    this.handlers_['onVisibilityChange'](value);
+wtf.app.AddonTabPanel.prototype.setVisible = function (value) {
+  goog.base(this, "setVisible", value);
+  if (this.handlers_ && this.handlers_["onVisibilityChange"]) {
+    this.handlers_["onVisibilityChange"](value);
   }
 };

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ScopeChainBuilder} from './ScopeChainBuilder.js';
-import {ScopeReferences} from './ScopeReferences.js';
+import { ScopeChainBuilder } from "./ScopeChainBuilder.js";
+import { ScopeReferences } from "./ScopeReferences.js";
 import {
   FUNCTION_DECLARATION,
   FUNCTION_EXPRESSION,
@@ -21,9 +21,9 @@ import {
   IDENTIFIER_EXPRESSION,
   METHOD,
   MODULE,
-  SET_ACCESSOR
-} from '../syntax/trees/ParseTreeType.js';
-import {TYPEOF} from '../syntax/TokenType.js';
+  SET_ACCESSOR,
+} from "../syntax/trees/ParseTreeType.js";
+import { TYPEOF } from "../syntax/TokenType.js";
 
 function hasArgumentsInScope(scope) {
   for (; scope; scope = scope.parent) {
@@ -48,7 +48,6 @@ function inModuleScope(scope) {
   return false;
 }
 
-
 export class ScopeChainBuilderWithReferences extends ScopeChainBuilder {
   createScope(tree) {
     return new ScopeReferences(this.scope, tree);
@@ -61,11 +60,11 @@ export class ScopeChainBuilderWithReferences extends ScopeChainBuilder {
     let scope = this.scope;
 
     let name = tree.getStringValue();
-    if (name === 'arguments' && hasArgumentsInScope(scope)) {
+    if (name === "arguments" && hasArgumentsInScope(scope)) {
       return;
     }
 
-    if (name === '__moduleName' && inModuleScope(scope)) {
+    if (name === "__moduleName" && inModuleScope(scope)) {
       return;
     }
 
@@ -74,8 +73,10 @@ export class ScopeChainBuilderWithReferences extends ScopeChainBuilder {
 
   visitUnaryExpression(tree) {
     // Allow typeof x to be a heuristic for allowing reading x later.
-    if (tree.operator.type === TYPEOF &&
-        tree.operand.type === IDENTIFIER_EXPRESSION) {
+    if (
+      tree.operator.type === TYPEOF &&
+      tree.operand.type === IDENTIFIER_EXPRESSION
+    ) {
       let scope = this.scope;
       let binding = scope.getBinding(tree.operand);
       if (!binding) {

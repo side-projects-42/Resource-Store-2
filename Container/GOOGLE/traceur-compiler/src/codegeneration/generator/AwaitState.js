@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {State} from './State.js';
-import {parseStatements} from '../PlaceholderParser.js';
+import { State } from "./State.js";
+import { parseStatements } from "../PlaceholderParser.js";
 
 export class AwaitState extends State {
   /**
@@ -23,8 +23,7 @@ export class AwaitState extends State {
    * @param {Array.<ParseTree>} statements
    */
   constructor(id, callbackState, expression) {
-    super(id),
-    this.callbackState = callbackState;
+    super(id), (this.callbackState = callbackState);
     this.expression = expression;
   }
 
@@ -35,9 +34,10 @@ export class AwaitState extends State {
    */
   replaceState(oldState, newState) {
     return new AwaitState(
-        State.replaceStateId(this.id, oldState, newState),
-        State.replaceStateId(this.callbackState, oldState, newState),
-        this.expression);
+      State.replaceStateId(this.id, oldState, newState),
+      State.replaceStateId(this.callbackState, oldState, newState),
+      this.expression
+    );
   }
 
   /**
@@ -50,17 +50,17 @@ export class AwaitState extends State {
     let stateId, statements;
     if (State.isFinallyExit(enclosingFinally, this.callbackState)) {
       stateId = enclosingFinally.finallyState;
-      statements =
-          parseStatements `$ctx.finallyFallThrough = ${this.callbackState}`;
+      statements = parseStatements`$ctx.finallyFallThrough = ${this.callbackState}`;
     } else {
       stateId = this.callbackState;
       statements = [];
     }
 
     statements.push(
-      ...parseStatements `Promise.resolve(${this.expression}).then(
+      ...parseStatements`Promise.resolve(${this.expression}).then(
           $ctx.createCallback(${stateId}), $ctx.errback);
-          return;`);
+          return;`
+    );
     return statements;
   }
 }

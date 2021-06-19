@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
-var path = require('path');
+var fs = require("fs");
+var path = require("path");
 
-var traceur = require('./traceur.js');
+var traceur = require("./traceur.js");
 
-var inlineAndCompile = require('./inline-module.js').inlineAndCompile;
-var util = require('./file-util.js');
+var inlineAndCompile = require("./inline-module.js").inlineAndCompile;
+var util = require("./file-util.js");
 var writeFile = util.writeFile;
 var mkdirRecursive = util.mkdirRecursive;
 
@@ -29,7 +29,7 @@ var TreeWriter = traceur.outputgeneration.TreeWriter;
 var SourceMapGenerator = traceur.outputgeneration.SourceMapGenerator;
 
 function getSourceMapFileName(name) {
-  return name.replace(/\.js$/, '.map');
+  return name.replace(/\.js$/, ".map");
 }
 
 function writeTreeToFile(tree, filename, useSourceMaps, opt_sourceRoot) {
@@ -38,20 +38,19 @@ function writeTreeToFile(tree, filename, useSourceMaps, opt_sourceRoot) {
     var sourceMapFilePath = getSourceMapFileName(filename);
     var config = {
       file: path.basename(filename),
-      sourceRoot: opt_sourceRoot
+      sourceRoot: opt_sourceRoot,
     };
     var sourceMapGenerator = new SourceMapGenerator(config);
-    options = {sourceMapGenerator: sourceMapGenerator};
+    options = { sourceMapGenerator: sourceMapGenerator };
   }
 
   var compiledCode = TreeWriter.write(tree, options);
   if (useSourceMaps) {
-    compiledCode += '\n//@ sourceMappingURL=' +
-        path.basename(sourceMapFilePath);
+    compiledCode +=
+      "\n//@ sourceMappingURL=" + path.basename(sourceMapFilePath);
   }
   writeFile(filename, compiledCode);
-  if (useSourceMaps)
-    writeFile(sourceMapFilePath, options.sourceMap);
+  if (useSourceMaps) writeFile(sourceMapFilePath, options.sourceMap);
 }
 
 function compileToSingleFile(outputFile, includes, useSourceMaps) {
@@ -60,7 +59,7 @@ function compileToSingleFile(outputFile, includes, useSourceMaps) {
   var outputDir = path.dirname(resolvedOutputFile);
 
   // Resolve includes before changing directory.
-  var resolvedIncludes = includes.map(function(include) {
+  var resolvedIncludes = includes.map(function (include) {
     return path.resolve(include);
   });
 
@@ -68,16 +67,22 @@ function compileToSingleFile(outputFile, includes, useSourceMaps) {
   process.chdir(outputDir);
 
   // Make includes relative to output dir so that sourcemap paths are correct.
-  resolvedIncludes = resolvedIncludes.map(function(include) {
+  resolvedIncludes = resolvedIncludes.map(function (include) {
     return path.relative(outputDir, include);
   });
 
-  inlineAndCompile(resolvedIncludes, {}, reporter, function(tree) {
-    writeTreeToFile(tree, resolvedOutputFile, useSourceMaps);
-    process.exit(0);
-  }, function(err) {
-    process.exit(1);
-  });
+  inlineAndCompile(
+    resolvedIncludes,
+    {},
+    reporter,
+    function (tree) {
+      writeTreeToFile(tree, resolvedOutputFile, useSourceMaps);
+      process.exit(0);
+    },
+    function (err) {
+      process.exit(1);
+    }
+  );
 }
 
 function compileToDirectory(outputFile, includes, useSourceMaps) {
@@ -87,20 +92,23 @@ function compileToDirectory(outputFile, includes, useSourceMaps) {
   var current = 0;
 
   function next() {
-    if (current === includes.length)
-      process.exit(0);
+    if (current === includes.length) process.exit(0);
 
-    inlineAndCompile(includes.slice(current, current + 1), {}, reporter,
-        function(tree) {
-          var outputFile = path.join(outputDir, includes[current]);
-          var sourceRoot = path.relative(path.dirname(outputFile));
-          writeTreeToFile(tree, outputFile, useSourceMaps, sourceRoot);
-          current++;
-          next();
-        },
-        function(err) {
-          process.exit(1);
-        });
+    inlineAndCompile(
+      includes.slice(current, current + 1),
+      {},
+      reporter,
+      function (tree) {
+        var outputFile = path.join(outputDir, includes[current]);
+        var sourceRoot = path.relative(path.dirname(outputFile));
+        writeTreeToFile(tree, outputFile, useSourceMaps, sourceRoot);
+        current++;
+        next();
+      },
+      function (err) {
+        process.exit(1);
+      }
+    );
   }
 
   next();

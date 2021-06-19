@@ -1,12 +1,14 @@
 module.exports = {
-  description: 'https://github.com/chartjs/Chart.js/issues/4234',
+  description: "https://github.com/chartjs/Chart.js/issues/4234",
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      datasets: [{
-        data: [0, 2, 45, 30]
-      }],
-      labels: ['A', 'B', 'C', 'D']
+      datasets: [
+        {
+          data: [0, 2, 45, 30],
+        },
+      ],
+      labels: ["A", "B", "C", "D"],
     },
     options: {
       scales: {
@@ -14,15 +16,15 @@ module.exports = {
           ticks: {
             count: 21,
             callback: (v) => v.toString(),
-          }
+          },
         },
         x: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

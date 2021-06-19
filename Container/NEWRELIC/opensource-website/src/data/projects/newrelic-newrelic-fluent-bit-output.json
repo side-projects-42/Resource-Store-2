@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-fluent-bit-output",
+  "fullName": "newrelic/newrelic-fluent-bit-output",
+  "slug": "newrelic-newrelic-fluent-bit-output",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Fluent Bit Output for New Relic",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-fluent-bit-output",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-fluent-bit-output",
+  "iconUrl": null,
+  "shortDescription": "Fluent Bit to New Relic Logs",
+  "description": "A Fluent Bit output plugin that sends logs to New Relic",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Go",
+  "projectTags": ["logging"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Fluent Bit Output for New Relic",
+    "url": "https://github.com/newrelic/newrelic-fluent-bit-output"
+  }
+}

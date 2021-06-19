@@ -12,12 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  CONST,
-  LET,
-  VAR
-} from '../syntax/TokenType.js';
-import {ScopeVisitor} from './ScopeVisitor.js';
+import { CONST, LET, VAR } from "../syntax/TokenType.js";
+import { ScopeVisitor } from "./ScopeVisitor.js";
 
 /**
  * This adds the bindings to the scopes.

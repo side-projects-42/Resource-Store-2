@@ -2,10 +2,7 @@
   "name": "Diagrams",
   "required_version": "1.0.5",
   "app": {
-    "scripts": [
-      "diagrams-app.js"
-    ],
-    "stylesheets": [
-    ]
+    "scripts": ["diagrams-app.js"],
+    "stylesheets": []
   }
 }

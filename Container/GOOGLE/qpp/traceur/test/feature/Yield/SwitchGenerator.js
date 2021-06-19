@@ -20,9 +20,8 @@ function* switchGenerator(val) {
   yield val * 5;
 }
 
-
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -31,7 +30,7 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assertEquals('125', accumulate(switchGenerator(1)));
-assertEquals('410', accumulate(switchGenerator(2)));
-assertEquals('15', accumulate(switchGenerator(3)));
-assertEquals('4020', accumulate(switchGenerator(4)));
+assertEquals("125", accumulate(switchGenerator(1)));
+assertEquals("410", accumulate(switchGenerator(2)));
+assertEquals("15", accumulate(switchGenerator(3)));
+assertEquals("4020", accumulate(switchGenerator(4)));

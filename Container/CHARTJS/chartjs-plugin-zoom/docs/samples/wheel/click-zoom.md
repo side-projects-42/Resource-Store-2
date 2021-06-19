@@ -20,124 +20,133 @@ Tortor condimentum lacinia quis vel eros donec ac. Phasellus vestibulum lorem se
 ```js chart-editor
 // <block:data:1>
 const DATA_COUNT = 70;
-const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
+const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
 
-const labels = Utils.months({count: DATA_COUNT});
+const labels = Utils.months({ count: DATA_COUNT });
 const data = {
   labels: labels,
   datasets: [
     {
-      label: 'Dataset 1',
+      label: "Dataset 1",
       data: Utils.numbers(NUMBER_CFG),
       borderColor: Utils.randomColor(0.4),
       backgroundColor: Utils.randomColor(0.1),
-      stack: 'combined',
-      type: 'bar'
+      stack: "combined",
+      type: "bar",
     },
     {
-      label: 'Dataset 2',
+      label: "Dataset 2",
       data: Utils.numbers(NUMBER_CFG),
       borderColor: Utils.randomColor(0.4),
       backgroundColor: Utils.randomColor(0.1),
       pointBorderColor: Utils.randomColor(0.7),
       pointBackgroundColor: Utils.randomColor(0.5),
-      stack: 'combined'
-    }
-  ]
+      stack: "combined",
+    },
+  ],
 };
 // </block:data>
 
 // <block:zoom:0>
 const zoomOptions = {
   limits: {
-    y: {min: 0, max: 200, minRange: 50}
+    y: { min: 0, max: 200, minRange: 50 },
   },
   pan: {
     enabled: true,
-    mode: 'xy',
+    mode: "xy",
   },
   zoom: {
     wheel: {
       enabled: false,
     },
     pinch: {
-      enabled: false
+      enabled: false,
     },
-    mode: 'xy',
-  }
+    mode: "xy",
+  },
 };
 // </block:zoom>
 
 // <block:border:3>
 const borderPlugin = {
-  id: 'chartAreaBorder',
+  id: "chartAreaBorder",
   beforeDraw(chart, args, options) {
-    const {ctx, chartArea: {left, top, width, height}} = chart;
+    const {
+      ctx,
+      chartArea: { left, top, width, height },
+    } = chart;
     if (chart.options.plugins.zoom.zoom.enabled) {
       ctx.save();
-      ctx.strokeStyle = 'red';
+      ctx.strokeStyle = "red";
       ctx.lineWidth = 1;
       ctx.strokeRect(left, top, width, height);
       ctx.restore();
     }
-  }
+  },
 };
 // </block:border>
 
-const zoomStatus = () => 'Zoom: ' + (zoomOptions.zoom.enabled ? 'enabled' : 'disabled');
+const zoomStatus = () =>
+  "Zoom: " + (zoomOptions.zoom.enabled ? "enabled" : "disabled");
 
 // <block:config:1>
 const config = {
-  type: 'line',
+  type: "line",
   data: data,
   options: {
-    scales: {y: {stacked: true, min: 0}},
+    scales: { y: { stacked: true, min: 0 } },
     plugins: {
       zoom: zoomOptions,
       title: {
         display: true,
-        position: 'bottom',
-        text: zoomStatus
-      }
+        position: "bottom",
+        text: zoomStatus,
+      },
     },
     onClick(e) {
       const chart = e.chart;
-      chart.options.plugins.zoom.zoom.wheel.enabled = !chart.options.plugins.zoom.zoom.wheel.enabled;
-      chart.options.plugins.zoom.zoom.pinch.enabled = !chart.options.plugins.zoom.zoom.pinch.enabled;
+      chart.options.plugins.zoom.zoom.wheel.enabled =
+        !chart.options.plugins.zoom.zoom.wheel.enabled;
+      chart.options.plugins.zoom.zoom.pinch.enabled =
+        !chart.options.plugins.zoom.zoom.pinch.enabled;
       chart.update();
-    }
+    },
   },
-  plugins: [borderPlugin]
+  plugins: [borderPlugin],
 };
 // </block:config>
 
 const actions = [
   {
-    name: 'Randomize',
+    name: "Randomize",
     handler(chart) {
-      chart.data.datasets.forEach(dataset => {
+      chart.data.datasets.forEach((dataset) => {
         dataset.data = Utils.numbers(NUMBER_CFG);
       });
       chart.update();
-    }
-  }, {
-    name: 'Toggle zoom',
+    },
+  },
+  {
+    name: "Toggle zoom",
     handler(chart) {
       zoomOptions.zoom.wheel.enabled = !zoomOptions.zoom.wheel.enabled;
       chart.update();
-    }
-  }, {
-    name: 'Toggle pan',
+    },
+  },
+  {
+    name: "Toggle pan",
     handler(chart) {
       zoomOptions.pan.enabled = !zoomOptions.pan.enabled;
       chart.update();
     },
-  }, {
-    name: 'Reset zoom',
+  },
+  {
+    name: "Reset zoom",
     handler(chart) {
       chart.resetZoom();
-    }
-  }
+    },
+  },
 ];
 
 module.exports = {

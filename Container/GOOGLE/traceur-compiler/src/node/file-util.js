@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var fs = require('fs');
-var path = require('path');
+var fs = require("fs");
+var path = require("path");
 
 function existsSync(p) {
   return fs.existsSync ? fs.existsSync(p) : path.existsSync(p);
@@ -25,11 +25,11 @@ function existsSync(p) {
  */
 function mkdirRecursive(dir) {
   var parts = path.normalize(dir).split(path.sep);
-  dir = '';
+  dir = "";
   for (var i = 0; i < parts.length; i++) {
     dir += parts[i] + path.sep;
     if (!existsSync(dir)) {
-      fs.mkdirSync(dir, 0x1FD); // 0775 permissions
+      fs.mkdirSync(dir, 0x1fd); // 0775 permissions
     }
   }
 }
@@ -60,11 +60,11 @@ function writeFile(filename, contents) {
 
   mkdirRecursive(outputdir);
   var outputfile = path.join(outputdir, path.basename(filename));
-  fs.writeFileSync(outputfile, contents, 'utf8');
+  fs.writeFileSync(outputfile, contents, "utf8");
 }
 
 function normalizePath(s) {
-  return path.sep == '\\' ? s.replace(/\\/g, '/') : s;
+  return path.sep == "\\" ? s.replace(/\\/g, "/") : s;
 }
 
 exports.mkdirRecursive = mkdirRecursive;

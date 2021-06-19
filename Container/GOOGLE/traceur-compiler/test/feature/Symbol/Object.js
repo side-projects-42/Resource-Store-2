@@ -7,13 +7,13 @@ assert.equal(42, object[s]);
 assert.deepEqual([], Object.getOwnPropertyNames(object));
 assert.isTrue(object.hasOwnProperty(s));
 
-assert.equal(32, object[s] -= 10);
-assert.equal(16, object[s] /= 2);
+assert.equal(32, (object[s] -= 10));
+assert.equal(16, (object[s] /= 2));
 assert.equal(16, object[s]);
 
 var n = Symbol();
-assert.equal(object[n] = 1, 1);
-assert.equal(object[n] += 2, 3);
+assert.equal((object[n] = 1), 1);
+assert.equal((object[n] += 2), 3);
 
 assert.isTrue(Object.getOwnPropertyDescriptor(object, n).enumerable);
 

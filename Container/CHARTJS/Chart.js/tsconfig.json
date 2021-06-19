@@ -18,11 +18,6 @@
     "includeVersion": true,
     "out": "./dist/docs/typedoc"
   },
-  "include": [
-    "./src/**/*.js",
-    "./types"
-  ],
-  "exclude": [
-    "./types/tests"
-  ]
+  "include": ["./src/**/*.js", "./types"],
+  "exclude": ["./types/tests"]
 }

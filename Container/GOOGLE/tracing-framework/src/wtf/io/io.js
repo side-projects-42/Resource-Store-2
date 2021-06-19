@@ -11,24 +11,22 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io');
-goog.provide('wtf.io.BlobData');
-goog.provide('wtf.io.ByteArray');
-goog.provide('wtf.io.DataFormat');
-goog.provide('wtf.io.FloatConverter');
+goog.provide("wtf.io");
+goog.provide("wtf.io.BlobData");
+goog.provide("wtf.io.ByteArray");
+goog.provide("wtf.io.DataFormat");
+goog.provide("wtf.io.FloatConverter");
 
-goog.require('goog.asserts');
-goog.require('goog.crypt.base64');
-goog.require('goog.string');
-
+goog.require("goog.asserts");
+goog.require("goog.crypt.base64");
+goog.require("goog.string");
 
 /**
  * File extension (including dot) used for trace files.
  * @const
  * @type {string}
  */
-wtf.io.FILE_EXTENSION = '.wtf-trace';
-
+wtf.io.FILE_EXTENSION = ".wtf-trace";
 
 /**
  * Gets a unique filename.
@@ -38,37 +36,37 @@ wtf.io.FILE_EXTENSION = '.wtf-trace';
  * @param {string=} opt_contentType Content type used to pick an extension.
  * @return {string} Full filename.
  */
-wtf.io.getTimedFilename = function(prefix, name, opt_contentType) {
+wtf.io.getTimedFilename = function (prefix, name, opt_contentType) {
   // prefix-YYYY-MM-DDTHH-MM-SS
   var dt = new Date();
-  var suffix = '-' +
-      dt.getFullYear() +
-      goog.string.padNumber(dt.getMonth() + 1, 2) +
-      goog.string.padNumber(dt.getDate(), 2) + 'T' +
-      goog.string.padNumber(dt.getHours(), 2) +
-      goog.string.padNumber(dt.getMinutes(), 2) +
-      goog.string.padNumber(dt.getSeconds(), 2);
+  var suffix =
+    "-" +
+    dt.getFullYear() +
+    goog.string.padNumber(dt.getMonth() + 1, 2) +
+    goog.string.padNumber(dt.getDate(), 2) +
+    "T" +
+    goog.string.padNumber(dt.getHours(), 2) +
+    goog.string.padNumber(dt.getMinutes(), 2) +
+    goog.string.padNumber(dt.getSeconds(), 2);
 
   var extension = wtf.io.FILE_EXTENSION;
   switch (opt_contentType) {
     default:
-    case 'application/x-extension-wtf-trace':
-      extension = '.wtf-trace';
+    case "application/x-extension-wtf-trace":
+      extension = ".wtf-trace";
       break;
-    case 'application/x-extension-wtf-json':
-      extension = '.wtf-json';
+    case "application/x-extension-wtf-json":
+      extension = ".wtf-json";
       break;
   }
 
   return prefix + name + suffix + extension;
 };
 
-
 /**
  * @typedef {wtf.io.Blob|Blob|ArrayBufferView|string}
  */
 wtf.io.BlobData;
-
 
 /**
  * Describes the ways data can be represented.
@@ -80,24 +78,21 @@ wtf.io.DataFormat = {
   /** Handle data as a Blob. */
   BLOB: 1,
   /** Handle data as an ArrayBuffer. */
-  ARRAY_BUFFER: 2
+  ARRAY_BUFFER: 2,
 };
-
 
 /**
  * @typedef {Uint8Array}
  */
 wtf.io.ByteArray;
 
-
 /**
  * Whether typed arrays are present.
  * @const
  * @type {boolean}
  */
-wtf.io.HAS_TYPED_ARRAYS = !!goog.global['Uint8Array'];
+wtf.io.HAS_TYPED_ARRAYS = !!goog.global["Uint8Array"];
 goog.asserts.assert(wtf.io.HAS_TYPED_ARRAYS);
-
 
 /**
  * Creates a byte array.
@@ -106,37 +101,34 @@ goog.asserts.assert(wtf.io.HAS_TYPED_ARRAYS);
  * @param {number} size Size, in bytes.
  * @return {!wtf.io.ByteArray} The new array.
  */
-wtf.io.createByteArray = function(size) {
+wtf.io.createByteArray = function (size) {
   return new Uint8Array(size);
 };
-
 
 /**
  * Checks to see if the given value is a valid byte array type.
  * @param {*} value Value to test.
  * @return {boolean} True if the input is a byte array.
  */
-wtf.io.isByteArray = function(value) {
+wtf.io.isByteArray = function (value) {
   if (!value) {
     return false;
   }
-  return (value instanceof Uint8Array);
+  return value instanceof Uint8Array;
 };
-
 
 /**
  * Creates a new byte array from a regular array.
  * @param {!Array.<number>} source Source array.
  * @return {!wtf.io.ByteArray} The new byte array.
  */
-wtf.io.createByteArrayFromArray = function(source) {
+wtf.io.createByteArrayFromArray = function (source) {
   var target = wtf.io.createByteArray(source.length);
   for (var n = 0; n < source.length; n++) {
-    target[n] = source[n] & 0xFF;
+    target[n] = source[n] & 0xff;
   }
   return target;
 };
-
 
 /**
  * Checks to see if the two byte arrays are equal.
@@ -144,7 +136,7 @@ wtf.io.createByteArrayFromArray = function(source) {
  * @param {!wtf.io.ByteArray} b Second array.
  * @return {boolean} True if the arrays are equal.
  */
-wtf.io.byteArraysEqual = function(a, b) {
+wtf.io.byteArraysEqual = function (a, b) {
   if (a.length != b.length) {
     return false;
   }
@@ -156,24 +148,22 @@ wtf.io.byteArraysEqual = function(a, b) {
   return true;
 };
 
-
 /**
  * Copies a byte array from one to another.
  * @param {!wtf.io.ByteArray} source Source array.
  * @param {!wtf.io.ByteArray} target Target array.
  * @param {number=} opt_targetOffset Offset into the target to write the source.
  */
-wtf.io.copyByteArray = function(source, target, opt_targetOffset) {
+wtf.io.copyByteArray = function (source, target, opt_targetOffset) {
   target.set(source, opt_targetOffset || 0);
 };
-
 
 /**
  * Combines multiple byte arrays into one.
  * @param {!Array.<!wtf.io.ByteArray>} sources Source byte arrays.
  * @return {!wtf.io.ByteArray} A byte array containing all of the source data.
  */
-wtf.io.combineByteArrays = function(sources) {
+wtf.io.combineByteArrays = function (sources) {
   var totalSize = 0;
   for (var n = 0; n < sources.length; n++) {
     totalSize += sources[n].length;
@@ -186,7 +176,6 @@ wtf.io.combineByteArrays = function(sources) {
   return target;
 };
 
-
 /**
  * Slices a byte array to the given length, creating a clone.
  * No bounds checking is performed. Results are undefined if values are out of
@@ -196,7 +185,7 @@ wtf.io.combineByteArrays = function(sources) {
  * @param {number} length Length from the offset to slice.
  * @return {!wtf.io.ByteArray} Sliced array.
  */
-wtf.io.sliceByteArray = function(source, offset, length) {
+wtf.io.sliceByteArray = function (source, offset, length) {
   // NOTE: IE10 does not have the slice method, so we need to fallback.
   if (source.buffer.slice) {
     var buffer = source.buffer.slice(offset, offset + length);
@@ -209,16 +198,14 @@ wtf.io.sliceByteArray = function(source, offset, length) {
   }
 };
 
-
 /**
  * Converts the given byte array to a string.
  * @param {!wtf.io.ByteArray} value Byte array.
  * @return {string} A string containing the value.
  */
-wtf.io.byteArrayToString = function(value) {
+wtf.io.byteArrayToString = function (value) {
   return goog.crypt.base64.encodeByteArray(value);
 };
-
 
 /**
  * Converts the given string to a byte array.
@@ -226,7 +213,7 @@ wtf.io.byteArrayToString = function(value) {
  * @param {!wtf.io.ByteArray} target Target byte array.
  * @return {number} Number of bytes written or -1 if an error occurred.
  */
-wtf.io.stringToByteArray = function(value, target) {
+wtf.io.stringToByteArray = function (value, target) {
   // TODO(benvanik): optimize to create no garbage
   var result = goog.crypt.base64.decodeStringToByteArray(value);
   if (!result) {
@@ -241,13 +228,12 @@ wtf.io.stringToByteArray = function(value, target) {
   return result.length;
 };
 
-
 /**
  * Converts the given string to a byte array.
  * @param {string} value String representation of a byte array.
  * @return {wtf.io.ByteArray} Byte array, if the string was valid.
  */
-wtf.io.stringToNewByteArray = function(value) {
+wtf.io.stringToNewByteArray = function (value) {
   // TODO(benvanik): optimize to create no garbage
   var result = goog.crypt.base64.decodeStringToByteArray(value);
   if (!result) {
@@ -255,7 +241,6 @@ wtf.io.stringToNewByteArray = function(value) {
   }
   return wtf.io.createByteArrayFromArray(result);
 };
-
 
 /**
  * Interface describing classes that can convert floating point numbers to
@@ -269,7 +254,6 @@ wtf.io.stringToNewByteArray = function(value) {
  */
 wtf.io.FloatConverter;
 
-
 /**
  * Floating point number converter, initialized on first use by
  * {@see wtf.io#getFloatConverter}.
@@ -278,12 +262,11 @@ wtf.io.FloatConverter;
  */
 wtf.io.floatConverter_ = null;
 
-
 /**
  * Gets a singleton floating point number converter.
  * @return {!wtf.io.FloatConverter} Shared converter.
  */
-wtf.io.getFloatConverter = function() {
+wtf.io.getFloatConverter = function () {
   if (wtf.io.floatConverter_) {
     return wtf.io.floatConverter_;
   }
@@ -292,21 +275,21 @@ wtf.io.getFloatConverter = function() {
   var float64 = new Float64Array(16);
   var float64byte = new Uint8Array(float64.buffer);
   wtf.io.floatConverter_ = {
-    float32ToUint8Array: function(value, target, offset) {
+    float32ToUint8Array: function (value, target, offset) {
       float32[0] = value;
       target[offset++] = float32byte[0];
       target[offset++] = float32byte[1];
       target[offset++] = float32byte[2];
       target[offset++] = float32byte[3];
     },
-    uint8ArrayToFloat32: function(source, offset) {
+    uint8ArrayToFloat32: function (source, offset) {
       float32byte[0] = source[offset++];
       float32byte[1] = source[offset++];
       float32byte[2] = source[offset++];
       float32byte[3] = source[offset++];
       return float32[0];
     },
-    float64ToUint8Array: function(value, target, offset) {
+    float64ToUint8Array: function (value, target, offset) {
       float64[0] = value;
       target[offset++] = float64byte[0];
       target[offset++] = float64byte[1];
@@ -317,7 +300,7 @@ wtf.io.getFloatConverter = function() {
       target[offset++] = float64byte[6];
       target[offset++] = float64byte[7];
     },
-    uint8ArrayToFloat64: function(source, offset) {
+    uint8ArrayToFloat64: function (source, offset) {
       float64byte[0] = source[offset++];
       float64byte[1] = source[offset++];
       float64byte[2] = source[offset++];
@@ -327,7 +310,7 @@ wtf.io.getFloatConverter = function() {
       float64byte[6] = source[offset++];
       float64byte[7] = source[offset++];
       return float64[0];
-    }
+    },
   };
   return wtf.io.floatConverter_;
 };

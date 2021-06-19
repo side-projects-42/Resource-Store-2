@@ -1,0 +1,51 @@
+{
+  "projectFullName": "newrelic/newrelic-opencensus-exporter-go",
+  "issues": {
+    "open": 0
+  },
+  "releases": 4,
+  "latestRelease": {
+    "name": "v0.4.0",
+    "date": "2020-02-13T00:30:02Z"
+  },
+  "commits": 26,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 2,
+  "pullRequests": {
+    "open": 2
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 52758187,
+      "login": "newrelic-eheinlein",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/52758187?v=4",
+      "htmlUrl": "https://github.com/newrelic-eheinlein",
+      "contributions": 1
+    },
+    {
+      "id": 5543599,
+      "login": "MrAlias",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/5543599?v=4",
+      "htmlUrl": "https://github.com/MrAlias",
+      "contributions": 6
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxOTA=",
+      "name": "Go",
+      "color": "#00ADD8"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

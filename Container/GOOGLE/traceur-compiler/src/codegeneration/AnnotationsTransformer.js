@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {
-  CONSTRUCTOR
-} from '../syntax/PredefinedName.js';
-import {STRING} from '../syntax/TokenType.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { CONSTRUCTOR } from "../syntax/PredefinedName.js";
+import { STRING } from "../syntax/TokenType.js";
 import {
   AnonBlock,
   ClassDeclaration,
@@ -26,9 +24,9 @@ import {
   GetAccessor,
   LiteralExpression,
   Method,
-  SetAccessor
-} from '../syntax/trees/ParseTrees.js';
-import {propName} from '../staticsemantics/PropName.js';
+  SetAccessor,
+} from "../syntax/trees/ParseTrees.js";
+import { propName } from "../staticsemantics/PropName.js";
 import {
   createArgumentList,
   createArrayLiteral,
@@ -36,9 +34,9 @@ import {
   createIdentifierExpression,
   createMemberExpression,
   createNewExpression,
-  createStringLiteralToken
-} from './ParseTreeFactory.js';
-import {parseExpression, parseStatement} from './PlaceholderParser.js';
+  createStringLiteralToken,
+} from "./ParseTreeFactory.js";
+import { parseExpression, parseStatement } from "./PlaceholderParser.js";
 
 class AnnotationsScope {
   constructor() {
@@ -107,7 +105,7 @@ class AnnotationsScope {
  *    b.annotations = [new A];
  *    b.parameters = [[T, new A], [T]];
  */
- export class AnnotationsTransformer extends ParseTreeTransformer {
+export class AnnotationsTransformer extends ParseTreeTransformer {
   constructor() {
     super();
     this.stack_ = [new AnnotationsScope()];
@@ -133,14 +131,23 @@ class AnnotationsScope {
     // we need to recurse to collect the constructor metadata before
     // we process the class metadata
     tree = super.transformClassDeclaration(tree);
-    scope.metadata.unshift(...this.transformMetadata_(
+    scope.metadata.unshift(
+      ...this.transformMetadata_(
         createIdentifierExpression(tree.name),
         scope.annotations,
-        scope.constructorParameters));
+        scope.constructorParameters
+      )
+    );
 
     if (tree.annotations.length > 0) {
-      tree = new ClassDeclaration(tree.location, tree.name,
-          tree.superClass, tree.elements, [], null);
+      tree = new ClassDeclaration(
+        tree.location,
+        tree.name,
+        tree.superClass,
+        tree.elements,
+        [],
+        null
+      );
     }
     return this.appendMetadata_(tree);
   }
@@ -150,80 +157,119 @@ class AnnotationsScope {
     let scope = this.pushAnnotationScope_();
     scope.annotations.push(...exportAnnotations, ...tree.annotations);
 
-    scope.metadata.push(...this.transformMetadata_(
+    scope.metadata.push(
+      ...this.transformMetadata_(
         createIdentifierExpression(tree.name),
         scope.annotations,
-        tree.parameterList.parameters));
+        tree.parameterList.parameters
+      )
+    );
 
     tree = super.transformFunctionDeclaration(tree);
     if (tree.annotations.length > 0) {
-      tree = new FunctionDeclaration(tree.location, tree.name, tree.functionKind,
-          tree.parameterList, tree.typeAnnotation, [], tree.body);
+      tree = new FunctionDeclaration(
+        tree.location,
+        tree.name,
+        tree.functionKind,
+        tree.parameterList,
+        tree.typeAnnotation,
+        [],
+        tree.body
+      );
     }
     return this.appendMetadata_(tree);
   }
 
   transformFormalParameter(tree) {
     if (tree.annotations.length > 0) {
-      tree = new FormalParameter(tree.location, tree.parameter,
-          tree.typeAnnotation, []);
+      tree = new FormalParameter(
+        tree.location,
+        tree.parameter,
+        tree.typeAnnotation,
+        []
+      );
     }
     return super.transformFormalParameter(tree);
   }
 
   transformGetAccessor(tree) {
-    if (!this.scope.inClassScope)
-      return super.transformGetAccessor(tree);
+    if (!this.scope.inClassScope) return super.transformGetAccessor(tree);
 
-    this.scope.metadata.push(...this.transformMetadata_(
-        this.transformAccessor_(tree, this.scope.className, 'get'),
+    this.scope.metadata.push(
+      ...this.transformMetadata_(
+        this.transformAccessor_(tree, this.scope.className, "get"),
         tree.annotations,
-        []));
+        []
+      )
+    );
 
     if (tree.annotations.length > 0) {
-      tree = new GetAccessor(tree.location, tree.isStatic, tree.name,
-          tree.typeAnnotation, [], tree.body);
+      tree = new GetAccessor(
+        tree.location,
+        tree.isStatic,
+        tree.name,
+        tree.typeAnnotation,
+        [],
+        tree.body
+      );
     }
     return super.transformGetAccessor(tree);
   }
 
   transformSetAccessor(tree) {
-    if (!this.scope.inClassScope)
-      return super.transformSetAccessor(tree);
+    if (!this.scope.inClassScope) return super.transformSetAccessor(tree);
 
-    this.scope.metadata.push(...this.transformMetadata_(
-        this.transformAccessor_(tree, this.scope.className, 'set'),
+    this.scope.metadata.push(
+      ...this.transformMetadata_(
+        this.transformAccessor_(tree, this.scope.className, "set"),
         tree.annotations,
-        tree.parameterList.parameters));
+        tree.parameterList.parameters
+      )
+    );
 
     let parameterList = this.transformAny(tree.parameterList);
     if (parameterList !== tree.parameterList || tree.annotations.length > 0) {
-      tree = new SetAccessor(tree.location, tree.isStatic, tree.name,
-          parameterList, [], tree.body);
+      tree = new SetAccessor(
+        tree.location,
+        tree.isStatic,
+        tree.name,
+        parameterList,
+        [],
+        tree.body
+      );
     }
     return super.transformSetAccessor(tree);
   }
 
   transformMethod(tree) {
-    if (!this.scope.inClassScope)
-      return super.transformMethod(tree);
+    if (!this.scope.inClassScope) return super.transformMethod(tree);
 
     if (!tree.isStatic && propName(tree) === CONSTRUCTOR) {
       this.scope.annotations.push(...tree.annotations);
       this.scope.constructorParameters = tree.parameterList.parameters;
     } else {
-      this.scope.metadata.push(...this.transformMetadata_(
+      this.scope.metadata.push(
+        ...this.transformMetadata_(
           this.transformPropertyMethod_(tree, this.scope.className),
           tree.annotations,
-          tree.parameterList.parameters));
+          tree.parameterList.parameters
+        )
+      );
     }
 
     let parameterList = this.transformAny(tree.parameterList);
-    if (parameterList !== tree.parameterList ||
-        tree.annotations.length > 0) {
-      tree = new Method(tree.location, tree.isStatic,
-          tree.functionKind, tree.name, parameterList,
-          tree.typeAnnotation, [], tree.body, tree.debugName);
+    if (parameterList !== tree.parameterList || tree.annotations.length > 0) {
+      tree = new Method(
+        tree.location,
+        tree.isStatic,
+        tree.functionKind,
+        tree.name,
+        parameterList,
+        tree.typeAnnotation,
+        [],
+        tree.body,
+        tree.debugName
+      );
     }
     return super.transformMethod(tree);
   }
@@ -242,23 +288,24 @@ class AnnotationsScope {
 
   transformClassReference_(tree, className) {
     let parent = createIdentifierExpression(className);
-    if (!tree.isStatic)
-      parent = createMemberExpression(parent, 'prototype');
+    if (!tree.isStatic) parent = createMemberExpression(parent, "prototype");
     return parent;
   }
 
   transformPropertyMethod_(tree, className) {
-    return createMemberExpression(this.transformClassReference_(tree, className),
-                                  tree.name.literalToken);
+    return createMemberExpression(
+      this.transformClassReference_(tree, className),
+      tree.name.literalToken
+    );
   }
 
   transformAccessor_(tree, className, accessor) {
     let args = createArgumentList([
       this.transformClassReference_(tree, className),
-      this.createLiteralStringExpression_(tree.name)
+      this.createLiteralStringExpression_(tree.name),
     ]);
 
-    let descriptor = parseExpression `Object.getOwnPropertyDescriptor(${args})`;
+    let descriptor = parseExpression`Object.getOwnPropertyDescriptor(${args})`;
     return createMemberExpression(descriptor, accessor);
   }
 
@@ -293,24 +340,34 @@ class AnnotationsScope {
     if (annotations !== null) {
       annotations = this.transformAnnotations_(annotations);
       if (annotations.length > 0) {
-        metadataStatements.push(this.createDefinePropertyStatement_(target,
-            'annotations', createArrayLiteral(annotations)));
+        metadataStatements.push(
+          this.createDefinePropertyStatement_(
+            target,
+            "annotations",
+            createArrayLiteral(annotations)
+          )
+        );
       }
     }
 
     if (parameters !== null) {
       parameters = this.transformParameters_(parameters);
       if (parameters.length > 0) {
-        metadataStatements.push(this.createDefinePropertyStatement_(target,
-            'parameters', createArrayLiteral(parameters)));
+        metadataStatements.push(
+          this.createDefinePropertyStatement_(
+            target,
+            "parameters",
+            createArrayLiteral(parameters)
+          )
+        );
       }
     }
     return metadataStatements;
   }
 
   createDefinePropertyStatement_(target, property, value) {
-    return parseStatement `Object.defineProperty(${target}, ${property},
-        {get: function() {return ${value}}});`
+    return parseStatement`Object.defineProperty(${target}, ${property},
+        {get: function() {return ${value}}});`;
   }
 
   createLiteralStringExpression_(tree) {

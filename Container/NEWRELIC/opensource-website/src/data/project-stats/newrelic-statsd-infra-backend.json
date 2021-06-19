@@ -1,0 +1,93 @@
+{
+  "projectFullName": "newrelic/statsd-infra-backend",
+  "issues": {
+    "open": 0
+  },
+  "releases": 6,
+  "latestRelease": {
+    "name": "v1.0.6",
+    "date": null
+  },
+  "commits": 69,
+  "lastSixMonthsCommitTotal": 2,
+  "contributors": 8,
+  "pullRequests": {
+    "open": 2
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 13438133,
+      "login": "matiasburni",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13438133?v=4",
+      "htmlUrl": "https://github.com/matiasburni",
+      "contributions": 1
+    },
+    {
+      "id": 939550,
+      "login": "mariomac",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/939550?v=4",
+      "htmlUrl": "https://github.com/mariomac",
+      "contributions": 1
+    },
+    {
+      "id": 30615,
+      "login": "sbz",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/30615?v=4",
+      "htmlUrl": "https://github.com/sbz",
+      "contributions": 3
+    },
+    {
+      "id": 4612272,
+      "login": "Noly",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/4612272?v=4",
+      "htmlUrl": "https://github.com/Noly",
+      "contributions": 2
+    },
+    {
+      "id": 19733683,
+      "login": "snyk-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19733683?v=4",
+      "htmlUrl": "https://github.com/snyk-bot",
+      "contributions": 2
+    },
+    {
+      "id": 5297542,
+      "login": "alejandrodnm",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/5297542?v=4",
+      "htmlUrl": "https://github.com/alejandrodnm",
+      "contributions": 3
+    },
+    {
+      "id": 10852,
+      "login": "areina",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/10852?v=4",
+      "htmlUrl": "https://github.com/areina",
+      "contributions": 34
+    },
+    {
+      "id": 717815,
+      "login": "carlosroman",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/717815?v=4",
+      "htmlUrl": "https://github.com/carlosroman",
+      "contributions": 3
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

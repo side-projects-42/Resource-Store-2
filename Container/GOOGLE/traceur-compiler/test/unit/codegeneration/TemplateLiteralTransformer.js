@@ -12,27 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
-import {Compiler} from '../../../src/Compiler.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
+import { Compiler } from "../../../src/Compiler.js";
 
-suite('TemplateLiteralTransformer', function() {
-
+suite("TemplateLiteralTransformer", function () {
   function testResult(name, content, expectedResult) {
-    test(name, function() {
+    test(name, function () {
       var result = Compiler.script(content);
       var value = (0, eval)(result);
       assert.equal(value, expectedResult);
     });
   }
 
-  testResult('\\r cooked', '`a\rb`', 'a\nb');
-  testResult('\\n cooked', '`a\nb`', 'a\nb');
-  testResult('\\r\\n cooked', '`a\r\nb`', 'a\nb');
+  testResult("\\r cooked", "`a\rb`", "a\nb");
+  testResult("\\n cooked", "`a\nb`", "a\nb");
+  testResult("\\r\\n cooked", "`a\r\nb`", "a\nb");
 
-  testResult('\\r raw', '((x) => x.raw[0]) `a\rb`', 'a\nb');
-  testResult('\\n raw', '((x) => x.raw[0]) `a\nb`', 'a\nb');
-  testResult('\\r\\n raw', '((x) => x.raw[0]) `a\r\nb`', 'a\nb');
+  testResult("\\r raw", "((x) => x.raw[0]) `a\rb`", "a\nb");
+  testResult("\\n raw", "((x) => x.raw[0]) `a\nb`", "a\nb");
+  testResult("\\r\\n raw", "((x) => x.raw[0]) `a\r\nb`", "a\nb");
 
-  testResult('\\\\r cooked', '`a\\rb`', 'a\rb');
-  testResult('\\\\r raw', '((x) => x.raw[0]) `a\\rb`', 'a\\rb');
+  testResult("\\\\r cooked", "`a\\rb`", "a\rb");
+  testResult("\\\\r raw", "((x) => x.raw[0]) `a\\rb`", "a\\rb");
 });

@@ -1,4 +1,4 @@
-import {tanh} from '../../../src/runtime/polyfills/Math.js';
+import { tanh } from "../../../src/runtime/polyfills/Math.js";
 
 function testTanh(tanh) {
   assert.equal(0, tanh(0));

@@ -1,24 +1,22 @@
 var x = 42;
 
-Function.prototype.testFunction = function() {
+Function.prototype.testFunction = function () {
   return [this, 42, this.call];
 };
 
-Object.defineProperty(Function.prototype, 'testGetter', {
-  get: function() {
+Object.defineProperty(Function.prototype, "testGetter", {
+  get: function () {
     return [this, x, this.call];
   },
-  configurable: true
+  configurable: true,
 });
 
-
-Object.defineProperty(Function.prototype, 'testSetter', {
-  set: function(value) {
+Object.defineProperty(Function.prototype, "testSetter", {
+  set: function (value) {
     x = [this, value, this.call];
   },
-  configurable: true
+  configurable: true,
 });
-
 
 class NoExtends {
   static method() {

@@ -12,14 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ARGUMENTS, CONSTRUCTOR, THIS} from '../syntax/PredefinedName.js';
-import {AlphaRenamer} from './AlphaRenamer.js';
-import {FunctionExpression} from '../syntax/trees/ParseTrees.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {ParenTrait} from './ParenTrait.js';
-import alphaRenameThisAndArguments from './alphaRenameThisAndArguments.js';
-import {FUNCTION_BODY, LITERAL_PROPERTY_NAME} from '../syntax/trees/ParseTreeType.js';
-import {FindThisOrArguments} from './FindThisOrArguments.js';
+import { ARGUMENTS, CONSTRUCTOR, THIS } from "../syntax/PredefinedName.js";
+import { AlphaRenamer } from "./AlphaRenamer.js";
+import { FunctionExpression } from "../syntax/trees/ParseTrees.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { ParenTrait } from "./ParenTrait.js";
+import alphaRenameThisAndArguments from "./alphaRenameThisAndArguments.js";
+import {
+  FUNCTION_BODY,
+  LITERAL_PROPERTY_NAME,
+} from "../syntax/trees/ParseTreeType.js";
+import { FindThisOrArguments } from "./FindThisOrArguments.js";
 import {
   createAssignmentExpression,
   createCommaExpression,
@@ -27,7 +30,7 @@ import {
   createIdentifierExpression,
   createReturnStatement,
   createThisExpression,
-} from './ParseTreeFactory.js';
+} from "./ParseTreeFactory.js";
 
 /**
  * Converts a concise body to a function body.
@@ -85,19 +88,32 @@ export class ArrowFunctionTransformer extends ParenTrait(TempVarTransformer) {
 
     let body = this.transformAny(tree.body);
     body = convertConciseBody(body);
-    let functionExpression = new FunctionExpression(tree.location, null,
-        tree.functionKind, parameterList, null, [], body);
+    let functionExpression = new FunctionExpression(
+      tree.location,
+      null,
+      tree.functionKind,
+      parameterList,
+      null,
+      [],
+      body
+    );
 
     let expressions = [];
     if (argumentsTempName) {
-      expressions.push(createAssignmentExpression(
+      expressions.push(
+        createAssignmentExpression(
           createIdentifierExpression(argumentsTempName),
-          createIdentifierExpression(ARGUMENTS)));
+          createIdentifierExpression(ARGUMENTS)
+        )
+      );
     }
     if (thisTempName) {
-      expressions.push(createAssignmentExpression(
+      expressions.push(
+        createAssignmentExpression(
           createIdentifierExpression(thisTempName),
-          createThisExpression()));
+          createThisExpression()
+        )
+      );
     }
 
     if (expressions.length === 0) {
@@ -125,8 +141,15 @@ export class ArrowFunctionTransformer extends ParenTrait(TempVarTransformer) {
 
     let body = this.transformAny(alphaRenamed.body);
     body = convertConciseBody(body);
-    let functionExpression = new FunctionExpression(tree.location, null,
-        tree.functionKind, parameterList, null, [], body);
+    let functionExpression = new FunctionExpression(
+      tree.location,
+      null,
+      tree.functionKind,
+      parameterList,
+      null,
+      [],
+      body
+    );
 
     return functionExpression;
   }
@@ -137,7 +160,6 @@ export class ArrowFunctionTransformer extends ParenTrait(TempVarTransformer) {
     let result = super.transformClassExpression(tree);
     this.inDerivedClass_ = inDerivedClass;
     return result;
-
   }
 
   transformClassDeclaration(tree) {
@@ -150,13 +172,14 @@ export class ArrowFunctionTransformer extends ParenTrait(TempVarTransformer) {
 
   transformMethod(tree) {
     let inConstructor = this.inConstructor_;
-    this.inConstructor_ = !tree.isStatic && tree.functionKind === null &&
-        tree.name.type === LITERAL_PROPERTY_NAME &&
-        tree.name.literalToken.value === CONSTRUCTOR;
+    this.inConstructor_ =
+      !tree.isStatic &&
+      tree.functionKind === null &&
+      tree.name.type === LITERAL_PROPERTY_NAME &&
+      tree.name.literalToken.value === CONSTRUCTOR;
     let result = super.transformMethod(tree);
     this.inConstructor_ = inConstructor;
     return result;
-
   }
 
   /**
@@ -169,7 +192,14 @@ export class ArrowFunctionTransformer extends ParenTrait(TempVarTransformer) {
   static transform(tempVarTransformer, tree) {
     tree = alphaRenameThisAndArguments(tempVarTransformer, tree);
     let body = convertConciseBody(tree.body);
-    return new FunctionExpression(tree.location, null, tree.functionKind,
-        tree.parameterList, null, [], body);
+    return new FunctionExpression(
+      tree.location,
+      null,
+      tree.functionKind,
+      tree.parameterList,
+      null,
+      [],
+      body
+    );
   }
 }

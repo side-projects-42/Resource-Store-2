@@ -1,7 +1,7 @@
-const commonjs = require('@rollup/plugin-commonjs');
-const { nodeResolve } = require('@rollup/plugin-node-resolve');
-const terser = require('rollup-plugin-terser').terser;
-const pkg = require('./package.json');
+const commonjs = require("@rollup/plugin-commonjs");
+const { nodeResolve } = require("@rollup/plugin-node-resolve");
+const terser = require("rollup-plugin-terser").terser;
+const pkg = require("./package.json");
 
 const banner = `/*!
  * @license
@@ -15,49 +15,45 @@ const banner = `/*!
  */`;
 
 module.exports = [
-	{
-		input: 'src/index.js',
-		output: {
-			name: 'Chart.Financial',
-			file: `dist/${pkg.name}.js`,
-			banner: banner,
-			format: 'umd',
-			indent: false,
-			globals: {
-				'chart.js': 'Chart'
-			}
-		},
-		plugins: [
-			commonjs({
-				include: 'node_modules/**',
-			}),
-			nodeResolve(),
-		],
-		external: [
-			'chart.js'
-		]
-	},
-	{
-		input: 'src/index.js',
-		output: {
-			name: 'Chart.Financial',
-			file: `dist/${pkg.name}.min.js`,
-			banner: banner,
-			format: 'umd',
-			indent: false,
-			globals: {
-				'chart.js': 'Chart'
-			}
-		},
-		plugins: [
-			commonjs({
-				include: 'node_modules/**',
-			}),
-			nodeResolve(),
-			terser({output: {comments: 'some'}})
-		],
-		external: [
-			'chart.js'
-		]
-	}
+  {
+    input: "src/index.js",
+    output: {
+      name: "Chart.Financial",
+      file: `dist/${pkg.name}.js`,
+      banner: banner,
+      format: "umd",
+      indent: false,
+      globals: {
+        "chart.js": "Chart",
+      },
+    },
+    plugins: [
+      commonjs({
+        include: "node_modules/**",
+      }),
+      nodeResolve(),
+    ],
+    external: ["chart.js"],
+  },
+  {
+    input: "src/index.js",
+    output: {
+      name: "Chart.Financial",
+      file: `dist/${pkg.name}.min.js`,
+      banner: banner,
+      format: "umd",
+      indent: false,
+      globals: {
+        "chart.js": "Chart",
+      },
+    },
+    plugins: [
+      commonjs({
+        include: "node_modules/**",
+      }),
+      nodeResolve(),
+      terser({ output: { comments: "some" } }),
+    ],
+    external: ["chart.js"],
+  },
 ];

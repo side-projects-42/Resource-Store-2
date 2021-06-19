@@ -1,4 +1,4 @@
-import * as m from './resources/default-live.js';
+import * as m from "./resources/default-live.js";
 
 assert.equal(m.default(), 1);
 m.changeDefault();

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CPSTransformer} from './CPSTransformer.js';
-import {EndState} from './EndState.js';
+import { CPSTransformer } from "./CPSTransformer.js";
+import { EndState } from "./EndState.js";
 import {
   ACTION_SEND,
   ACTION_THROW,
@@ -25,17 +25,17 @@ import {
   RUNTIME,
   STORED_EXCEPTION,
   TRACEUR_RUNTIME,
-  YIELD_RETURN
-} from '../../syntax/PredefinedName.js';
+  YIELD_RETURN,
+} from "../../syntax/PredefinedName.js";
 import {
   STATE_MACHINE,
-  YIELD_EXPRESSION
-} from '../../syntax/trees/ParseTreeType.js';
-import {parseStatement} from '../PlaceholderParser.js';
-import {StateMachine} from '../../syntax/trees/StateMachine.js';
-import {VAR} from '../../syntax/TokenType.js';
-import {YieldState} from './YieldState.js';
-import {ReturnState} from './ReturnState.js';
+  YIELD_EXPRESSION,
+} from "../../syntax/trees/ParseTreeType.js";
+import { parseStatement } from "../PlaceholderParser.js";
+import { StateMachine } from "../../syntax/trees/StateMachine.js";
+import { VAR } from "../../syntax/TokenType.js";
+import { YieldState } from "./YieldState.js";
+import { ReturnState } from "./ReturnState.js";
 import {
   createAssignStateStatement,
   createAssignmentStatement,
@@ -52,8 +52,8 @@ import {
   createThisExpression,
   createThrowStatement,
   createUndefinedExpression,
-  createVariableStatement
-} from '../ParseTreeFactory.js';
+  createVariableStatement,
+} from "../ParseTreeFactory.js";
 
 // Generator states. Terminology roughly matches that of
 //   http://wiki.ecmascript.org/doku.php?id=harmony:generators
@@ -63,7 +63,7 @@ var ST_NEWBORN = 0;
 var ST_EXECUTING = 1;
 var ST_SUSPENDED = 2;
 var ST_CLOSED = 3;
-var GSTATE = 'GState';
+var GSTATE = "GState";
 
 /**
  * Desugars generator function bodies. Generator function bodies contain
@@ -102,11 +102,9 @@ export class GeneratorTransformer extends CPSTransformer {
     var startState = this.allocateState();
     var fallThroughState = this.allocateState();
     return this.stateToStateMachine_(
-        new YieldState(
-            startState,
-            fallThroughState,
-            this.transformAny(e)),
-        fallThroughState);
+      new YieldState(startState, fallThroughState, this.transformAny(e)),
+      fallThroughState
+    );
   }
 
   /**
@@ -114,8 +112,10 @@ export class GeneratorTransformer extends CPSTransformer {
    * @return {ParseTree}
    */
   transformYieldExpression(tree) {
-    this.reporter.reportError(tree.location.start,
-        'Only \'a = yield b\' and \'var a = yield b\' currently supported.');
+    this.reporter.reportError(
+      tree.location.start,
+      "Only 'a = yield b' and 'var a = yield b' currently supported."
+    );
     return tree;
   }
 
@@ -125,8 +125,7 @@ export class GeneratorTransformer extends CPSTransformer {
    */
   transformExpressionStatement(tree) {
     var e = tree.expression;
-    if (e.type === YIELD_EXPRESSION)
-      return this.transformYieldExpression_(e);
+    if (e.type === YIELD_EXPRESSION) return this.transformYieldExpression_(e);
 
     return super.transformExpressionStatement(tree);
   }
@@ -136,8 +135,10 @@ export class GeneratorTransformer extends CPSTransformer {
    * @return {ParseTree}
    */
   transformAwaitStatement(tree) {
-    this.reporter.reportError(tree.location.start,
-        'Generator function may not have an async statement.');
+    this.reporter.reportError(
+      tree.location.start,
+      "Generator function may not have an async statement."
+    );
     return tree;
   }
 
@@ -151,8 +152,10 @@ export class GeneratorTransformer extends CPSTransformer {
       return result;
     }
     // TODO: Is 'return' allowed inside 'finally'?
-    this.reporter.reportError(tree.location.start,
-        'yield or return not permitted from within a finally block.');
+    this.reporter.reportError(
+      tree.location.start,
+      "yield or return not permitted from within a finally block."
+    );
     return result;
   }
 
@@ -164,11 +167,13 @@ export class GeneratorTransformer extends CPSTransformer {
     var startState = this.allocateState();
     var fallThroughState = this.allocateState();
     return this.stateToStateMachine_(
-        new ReturnState(
-            startState,
-            fallThroughState,
-            this.transformAny(tree.expression)),
-        fallThroughState);
+      new ReturnState(
+        startState,
+        fallThroughState,
+        this.transformAny(tree.expression)
+      ),
+      fallThroughState
+    );
   }
 
   /**
@@ -198,14 +203,16 @@ export class GeneratorTransformer extends CPSTransformer {
       return tree;
     }
     var machine = transformedTree;
-    machine = new StateMachine(machine.startState,
-                               machine.fallThroughState,
-                               this.removeEmptyStates(machine.states),
-                               machine.exceptionBlocks);
+    machine = new StateMachine(
+      machine.startState,
+      machine.fallThroughState,
+      this.removeEmptyStates(machine.states),
+      machine.exceptionBlocks
+    );
 
     var statements = [];
 
-    var G = '$G';
+    var G = "$G";
 
     // TODO(arv): Simplify the outputted code by only alpha renaming this and
     // arguments if needed.
@@ -224,7 +231,7 @@ export class GeneratorTransformer extends CPSTransformer {
     statements.push(...this.getMachineVariables(tree, machine));
 
     statements.push(
-        parseStatement `
+      parseStatement`
         var ${G} = {
           GState: ${ST_NEWBORN},
           current: undefined,
@@ -232,12 +239,14 @@ export class GeneratorTransformer extends CPSTransformer {
           innerFunction: ${this.generateMachineInnerFunction(machine)},
           moveNext: ${this.generateMachineMethod(machine)}
         };
-        `);
+        `
+    );
 
     // TODO(arv): The result should be an instance of Generator.
     // https://code.google.com/p/traceur-compiler/issues/detail?id=109
-    var generatorWrap = this.runtimeInliner_.get('generatorWrap',
-        `
+    var generatorWrap = this.runtimeInliner_.get(
+      "generatorWrap",
+      `
         function (generator) {
           return ${TRACEUR_RUNTIME}.addIterator({
             send: function(x) {
@@ -310,9 +319,10 @@ export class GeneratorTransformer extends CPSTransformer {
               }
             }
           });
-        }`);
+        }`
+    );
     var id = createIdentifierExpression;
-    statements.push(parseStatement `return ${generatorWrap}(${id(G)});`);
+    statements.push(parseStatement`return ${generatorWrap}(${id(G)});`);
 
     return createBlock(statements);
   }
@@ -324,11 +334,13 @@ export class GeneratorTransformer extends CPSTransformer {
    */
   machineUncaughtExceptionStatements(rethrowState, machineEndState) {
     return createStatementList(
-        createAssignmentStatement(
-            createMemberExpression(createThisExpression(), GSTATE),
-            createNumberLiteral(ST_CLOSED)),
-        createAssignStateStatement(machineEndState),
-        createThrowStatement(createIdentifierExpression(STORED_EXCEPTION)));
+      createAssignmentStatement(
+        createMemberExpression(createThisExpression(), GSTATE),
+        createNumberLiteral(ST_CLOSED)
+      ),
+      createAssignStateStatement(machineEndState),
+      createThrowStatement(createIdentifierExpression(STORED_EXCEPTION))
+    );
   }
 
   /**
@@ -337,7 +349,8 @@ export class GeneratorTransformer extends CPSTransformer {
    */
   machineRethrowStatements(machineEndState) {
     return createStatementList(
-        createThrowStatement(createIdentifierExpression(STORED_EXCEPTION)));
+      createThrowStatement(createIdentifierExpression(STORED_EXCEPTION))
+    );
   }
 
   /**
@@ -360,7 +373,9 @@ export class GeneratorTransformer extends CPSTransformer {
    * @return {Block}
    */
   static transformGeneratorBody(runtimeInliner, reporter, body) {
-    return new GeneratorTransformer(runtimeInliner, reporter).
-        transformGeneratorBody(body);
+    return new GeneratorTransformer(
+      runtimeInliner,
+      reporter
+    ).transformGeneratorBody(body);
   }
-};
+}

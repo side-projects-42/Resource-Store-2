@@ -1,0 +1,60 @@
+{
+  "projectFullName": "newrelic/open-source-office",
+  "issues": {
+    "open": 9
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 21,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 2,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU1NDY4NDczODY=",
+      "title": "Layout nerdpacks: Explicitly set the height on all sections so that the `fullHeight` prop of charts works with out extra configuration",
+      "url": "https://github.com/newrelic/open-source-office/issues/27",
+      "createdAt": "2020-01-08T13:03:10Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "danielgolden",
+        "id": "MDQ6VXNlcjgxMjk4OQ==",
+        "email": "",
+        "name": "Daniel Golden"
+      },
+      "number": 27,
+      "createdBy": "Daniel Golden"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 4
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 6
+    }
+  ],
+  "languages": [],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

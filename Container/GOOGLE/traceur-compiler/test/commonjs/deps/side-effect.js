@@ -1,2 +1,2 @@
-import object from './object-for-side-effects.js';
+import object from "./object-for-side-effects.js";
 object.sideEffect++;

@@ -12,26 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AsyncGeneratorTransformer} from './AsyncGeneratorTransformer.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+import { AsyncGeneratorTransformer } from "./AsyncGeneratorTransformer.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   AnonBlock,
   FunctionDeclaration,
-  FunctionExpression
-} from '../syntax/trees/ParseTrees.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
+  FunctionExpression,
+} from "../syntax/trees/ParseTrees.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
 import {
   createBindingIdentifier,
   createIdentifierExpression as id,
-  createIdentifierToken
-} from './ParseTreeFactory.js';
-import {
-  parseExpression,
-  parseStatement
-} from './PlaceholderParser.js';
+  createIdentifierToken,
+} from "./ParseTreeFactory.js";
+import { parseExpression, parseStatement } from "./PlaceholderParser.js";
 
-export class AsyncGeneratorTransformPass extends
-    ImportRuntimeTrait(TempVarTransformer) {
+export class AsyncGeneratorTransformPass extends ImportRuntimeTrait(
+  TempVarTransformer
+) {
   // TODO: This class is modelled after GeneratorTransformPass. When the spec
   // for async generators will have stabilized, it may be an option to merge
   // this class into GeneratorTransformPass. However, note: This transformer
@@ -52,24 +50,26 @@ export class AsyncGeneratorTransformPass extends
       return super.transformFunctionDeclaration(tree);
 
     let nameIdExpression = id(tree.name.identifierToken);
-    let initAsyncGeneratorFunction =
-        this.getRuntimeExpression('initAsyncGeneratorFunction');
-    let setupPrototypeExpression = parseExpression
-        `${initAsyncGeneratorFunction}(${nameIdExpression})`;
+    let initAsyncGeneratorFunction = this.getRuntimeExpression(
+      "initAsyncGeneratorFunction"
+    );
+    let setupPrototypeExpression = parseExpression`${initAsyncGeneratorFunction}(${nameIdExpression})`;
 
     // Function declarations in blocks do not hoist. In that case we add the
     // variable declaration after the function declaration.
 
-    let tmpVar = id(this.inBlock_ ?
-        this.getTempIdentifier() : this.addTempVar(setupPrototypeExpression));
+    let tmpVar = id(
+      this.inBlock_
+        ? this.getTempIdentifier()
+        : this.addTempVar(setupPrototypeExpression)
+    );
     let funcDecl = this.transformFunction_(tree, FunctionDeclaration, tmpVar);
 
-    if (!this.inBlock_)
-      return funcDecl;
+    if (!this.inBlock_) return funcDecl;
 
     return new AnonBlock(null, [
       funcDecl,
-      parseStatement `var ${tmpVar} = ${setupPrototypeExpression}`
+      parseStatement`var ${tmpVar} = ${setupPrototypeExpression}`,
     ]);
   }
 
@@ -82,34 +82,52 @@ export class AsyncGeneratorTransformPass extends
     if (!tree.name) {
       // We need a name to be able to reference the function object.
       name = createIdentifierToken(this.getTempIdentifier());
-      tree = new FunctionExpression(tree.location,
-          createBindingIdentifier(name), tree.functionKind,
-          tree.parameterList, tree.typeAnnotation, tree.annotations,
-          tree.body);
+      tree = new FunctionExpression(
+        tree.location,
+        createBindingIdentifier(name),
+        tree.functionKind,
+        tree.parameterList,
+        tree.typeAnnotation,
+        tree.annotations,
+        tree.body
+      );
     } else {
       name = tree.name.identifierToken;
     }
 
-    let functionExpression =
-        this.transformFunction_(tree, FunctionExpression, id(name));
-    let initAsyncGeneratorFunction =
-        this.getRuntimeExpression('initAsyncGeneratorFunction');
-    return parseExpression
-        `${initAsyncGeneratorFunction}(${functionExpression })`;
+    let functionExpression = this.transformFunction_(
+      tree,
+      FunctionExpression,
+      id(name)
+    );
+    let initAsyncGeneratorFunction = this.getRuntimeExpression(
+      "initAsyncGeneratorFunction"
+    );
+    return parseExpression`${initAsyncGeneratorFunction}(${functionExpression})`;
   }
 
   transformFunction_(tree, constructor, nameExpression) {
     let body = super.transformAny(tree.body);
     body = AsyncGeneratorTransformer.transformAsyncGeneratorBody(
-        this.identifierGenerator, this.reporter, this.options, body,
-        nameExpression);
+      this.identifierGenerator,
+      this.reporter,
+      this.options,
+      body,
+      nameExpression
+    );
 
     // The async generator has been transformed away.
     let functionKind = null;
 
-    return new constructor(tree.location, tree.name, functionKind,
-                           tree.parameterList, tree.typeAnnotation || null,
-                           tree.annotations || null, body);
+    return new constructor(
+      tree.location,
+      tree.name,
+      functionKind,
+      tree.parameterList,
+      tree.typeAnnotation || null,
+      tree.annotations || null,
+      body
+    );
   }
 
   transformBlock(tree) {

@@ -20,13 +20,11 @@
  * @return {Array.<ParseTree>}
  */
 export function prependStatements(statements, ...statementsToPrepend) {
-  if (!statements.length)
-    return statementsToPrepend;
+  if (!statements.length) return statementsToPrepend;
 
-  if (!statementsToPrepend.length)
-    return statements;
+  if (!statementsToPrepend.length) return statements;
 
-  let transformed  = [];
+  let transformed = [];
   let inProlog = true;
   statements.forEach((statement) => {
     if (inProlog && !statement.isDirectivePrologue()) {

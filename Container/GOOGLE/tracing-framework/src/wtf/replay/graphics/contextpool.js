@@ -11,15 +11,13 @@
  * @author chizeng@google.com (Chi Zeng)
  */
 
-goog.provide('wtf.replay.graphics.ContextPool');
+goog.provide("wtf.replay.graphics.ContextPool");
 
-goog.require('goog.Disposable');
-goog.require('goog.asserts');
-goog.require('goog.dom');
-goog.require('goog.dom.TagName');
-goog.require('goog.webgl');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.asserts");
+goog.require("goog.dom");
+goog.require("goog.dom.TagName");
+goog.require("goog.webgl");
 
 /**
  * A pool of <canvas> contexts based on types and attributes.
@@ -30,7 +28,7 @@ goog.require('goog.webgl');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.replay.graphics.ContextPool = function(opt_dom) {
+wtf.replay.graphics.ContextPool = function (opt_dom) {
   goog.base(this);
 
   /**
@@ -49,15 +47,13 @@ wtf.replay.graphics.ContextPool = function(opt_dom) {
 };
 goog.inherits(wtf.replay.graphics.ContextPool, goog.Disposable);
 
-
 /**
  * Name of the property stored on a context for the hash.
  * @type {string}
  * @const
  * @private
  */
-wtf.replay.graphics.ContextPool.HASH_PROPERTY_NAME_ = '__context_pool_hash__';
-
+wtf.replay.graphics.ContextPool.HASH_PROPERTY_NAME_ = "__context_pool_hash__";
 
 /**
  * Generates a hash string for a context.
@@ -68,26 +64,29 @@ wtf.replay.graphics.ContextPool.HASH_PROPERTY_NAME_ = '__context_pool_hash__';
  * @return {string} A hash string for the context.
  * @private
  */
-wtf.replay.graphics.ContextPool.prototype.getContextHash_ =
-    function(contextType, opt_attributes, opt_width, opt_height) {
+wtf.replay.graphics.ContextPool.prototype.getContextHash_ = function (
+  contextType,
+  opt_attributes,
+  opt_width,
+  opt_height
+) {
   var hashString =
-      contextType + goog.global.JSON.stringify(opt_attributes || {});
+    contextType + goog.global.JSON.stringify(opt_attributes || {});
   if (opt_width && opt_height) {
-    hashString += opt_width + 'x' + opt_height;
+    hashString += opt_width + "x" + opt_height;
   }
 
   return hashString;
 };
-
 
 /**
  * Releases a context into the pool. The context must have been originally
  * gotten from this pool.
  * @param {!WebGLRenderingContext} context A context to release.
  */
-wtf.replay.graphics.ContextPool.prototype.releaseContext = function(context) {
+wtf.replay.graphics.ContextPool.prototype.releaseContext = function (context) {
   var contextHash =
-      context[wtf.replay.graphics.ContextPool.HASH_PROPERTY_NAME_];
+    context[wtf.replay.graphics.ContextPool.HASH_PROPERTY_NAME_];
   var contextList = this.contexts_[contextHash];
   if (contextList) {
     contextList.push(context);
@@ -95,7 +94,6 @@ wtf.replay.graphics.ContextPool.prototype.releaseContext = function(context) {
     this.contexts_[contextHash] = [context];
   }
 };
-
 
 /**
  * Creates a new context or gets an existing one from the pool. Returns null
@@ -109,13 +107,21 @@ wtf.replay.graphics.ContextPool.prototype.releaseContext = function(context) {
  * @return {WebGLRenderingContext} A context. Or null if the context type is
  * not supported (ie 'experimental-webgl' may be supported, but not 'webgl').
  */
-wtf.replay.graphics.ContextPool.prototype.getContext =
-    function(contextType, opt_attributes, opt_width, opt_height) {
+wtf.replay.graphics.ContextPool.prototype.getContext = function (
+  contextType,
+  opt_attributes,
+  opt_width,
+  opt_height
+) {
   // Ensure that either both width and height are set or neither are set.
-  goog.asserts.assert(opt_width && opt_height || !opt_width && !opt_height);
+  goog.asserts.assert((opt_width && opt_height) || (!opt_width && !opt_height));
 
   var contextHash = this.getContextHash_(
-      contextType, opt_attributes, opt_width, opt_height);
+    contextType,
+    opt_attributes,
+    opt_width,
+    opt_height
+  );
   var contextList = this.contexts_[contextHash];
 
   var retrievedContext;
@@ -137,7 +143,7 @@ wtf.replay.graphics.ContextPool.prototype.getContext =
 
     // Assign a hash to the context.
     retrievedContext[wtf.replay.graphics.ContextPool.HASH_PROPERTY_NAME_] =
-        contextHash;
+      contextHash;
   }
 
   // Set the canvas's size if it is specified.
@@ -149,16 +155,15 @@ wtf.replay.graphics.ContextPool.prototype.getContext =
   return retrievedContext;
 };
 
-
 /**
  * Resets a context to its initial state.
  * @param {!WebGLRenderingContext} ctx A context.
  * @private
  */
-wtf.replay.graphics.ContextPool.prototype.resetWebGLContext_ =
-    function(ctx) {
+wtf.replay.graphics.ContextPool.prototype.resetWebGLContext_ = function (ctx) {
   var numAttribs = /** @type {number} */ (
-      ctx.getParameter(goog.webgl.MAX_VERTEX_ATTRIBS));
+    ctx.getParameter(goog.webgl.MAX_VERTEX_ATTRIBS)
+  );
   var tmp = ctx.createBuffer();
   ctx.bindBuffer(goog.webgl.ARRAY_BUFFER, tmp);
   for (var ii = 0; ii < numAttribs; ++ii) {
@@ -169,7 +174,8 @@ wtf.replay.graphics.ContextPool.prototype.resetWebGLContext_ =
 
   ctx.deleteBuffer(tmp);
   var numTextureUnits = /** @type {number} */ (
-      ctx.getParameter(goog.webgl.MAX_TEXTURE_IMAGE_UNITS));
+    ctx.getParameter(goog.webgl.MAX_TEXTURE_IMAGE_UNITS)
+  );
   for (var ii = 0; ii < numTextureUnits; ++ii) {
     ctx.activeTexture(goog.webgl.TEXTURE0 + ii);
     ctx.bindTexture(goog.webgl.TEXTURE_CUBE_MAP, null);
@@ -204,15 +210,20 @@ wtf.replay.graphics.ContextPool.prototype.resetWebGLContext_ =
   ctx.pixelStorei(goog.webgl.UNPACK_ALIGNMENT, 4);
   ctx.pixelStorei(goog.webgl.UNPACK_FLIP_Y_WEBGL, 0);
   ctx.pixelStorei(goog.webgl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
-  ctx.pixelStorei(goog.webgl.UNPACK_COLORSPACE_CONVERSION_WEBGL,
-      goog.webgl.BROWSER_DEFAULT_WEBGL);
+  ctx.pixelStorei(
+    goog.webgl.UNPACK_COLORSPACE_CONVERSION_WEBGL,
+    goog.webgl.BROWSER_DEFAULT_WEBGL
+  );
   ctx.polygonOffset(0, 0);
   ctx.sampleCoverage(1, false);
   ctx.scissor(0, 0, ctx.canvas.width, ctx.canvas.height);
-  ctx.stencilFunc(goog.webgl.ALWAYS, 0, 0xFFFFFFFF);
-  ctx.stencilMask(0xFFFFFFFF);
+  ctx.stencilFunc(goog.webgl.ALWAYS, 0, 0xffffffff);
+  ctx.stencilMask(0xffffffff);
   ctx.stencilOp(goog.webgl.KEEP, goog.webgl.KEEP, goog.webgl.KEEP);
   ctx.viewport(0, 0, ctx.canvas.width, ctx.canvas.height);
-  ctx.clear(goog.webgl.COLOR_BUFFER_BIT |
-      goog.webgl.DEPTH_BUFFER_BIT | goog.webgl.STENCIL_BUFFER_BIT);
+  ctx.clear(
+    goog.webgl.COLOR_BUFFER_BIT |
+      goog.webgl.DEPTH_BUFFER_BIT |
+      goog.webgl.STENCIL_BUFFER_BIT
+  );
 };

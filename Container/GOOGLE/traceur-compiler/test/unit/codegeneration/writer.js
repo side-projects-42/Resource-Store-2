@@ -12,63 +12,70 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-import {IdentifierToken} from '../../../src/syntax/IdentifierToken.js';
-import {LiteralToken} from '../../../src/syntax/LiteralToken.js';
-import * as TokenType from '../../../src/syntax/TokenType.js';
-import {Token} from '../../../src/syntax/Token.js';
+import { IdentifierToken } from "../../../src/syntax/IdentifierToken.js";
+import { LiteralToken } from "../../../src/syntax/LiteralToken.js";
+import * as TokenType from "../../../src/syntax/TokenType.js";
+import { Token } from "../../../src/syntax/Token.js";
 
-import {write} from '../../../src/outputgeneration/TreeWriter.js';
-import * as trees from '../../../src/syntax/trees/ParseTrees.js';
+import { write } from "../../../src/outputgeneration/TreeWriter.js";
+import * as trees from "../../../src/syntax/trees/ParseTrees.js";
 
-
-suite('writer.js', function() {
-
-  test('WriteStatement', function() {
-    var tree = new trees.Script(
-      null,
-      [new trees.VariableStatement(
+suite("writer.js", function () {
+  test("WriteStatement", function () {
+    var tree = new trees.Script(null, [
+      new trees.VariableStatement(
         null,
-        new trees.VariableDeclarationList(
-          null,
-          'var',
-          [new trees.VariableDeclaration(
+        new trees.VariableDeclarationList(null, "var", [
+          new trees.VariableDeclaration(
             null,
-            new trees.IdentifierExpression(null, new IdentifierToken(null, 'x')),
+            new trees.IdentifierExpression(
+              null,
+              new IdentifierToken(null, "x")
+            ),
             null,
-            new trees.LiteralExpression(null, new LiteralToken(TokenType.NUMBER, '1', null)))]
-        )
+            new trees.LiteralExpression(
+              null,
+              new LiteralToken(TokenType.NUMBER, "1", null)
+            )
+          ),
+        ])
       ),
       new trees.IfStatement(
         null,
         new trees.BinaryExpression(
           null,
-          new trees.IdentifierExpression(null, new IdentifierToken(null, 'x')),
+          new trees.IdentifierExpression(null, new IdentifierToken(null, "x")),
           new Token(TokenType.CLOSE_ANGLE, null),
-          new trees.LiteralExpression(null, new LiteralToken(TokenType.NUMBER, '0', null))
-        ),
-        new trees.Block(
-          null,
-          [new trees.PostfixExpression(
+          new trees.LiteralExpression(
             null,
-            new trees.IdentifierExpression(null, new IdentifierToken(null, 'x')),
-            new Token(TokenType.PLUS_PLUS, null)
-          )]
+            new LiteralToken(TokenType.NUMBER, "0", null)
+          )
         ),
+        new trees.Block(null, [
+          new trees.PostfixExpression(
+            null,
+            new trees.IdentifierExpression(
+              null,
+              new IdentifierToken(null, "x")
+            ),
+            new Token(TokenType.PLUS_PLUS, null)
+          ),
+        ]),
         null
-      )
+      ),
     ]);
     var actual = write(tree);
 
-    var expected = 'var x = 1;\nif (x > 0) {\n  x++\n}\n';
+    var expected = "var x = 1;\nif (x > 0) {\n  x++\n}\n";
     assert.equal(expected, actual);
   });
 
   var errorReporter = {
-    reportError: function(position, message) {
-      throw new chai.AssertionError({message: message + ', ' + position});
-    }
+    reportError: function (position, message) {
+      throw new chai.AssertionError({ message: message + ", " + position });
+    },
   };
 
   function parse(name, source) {
@@ -82,28 +89,27 @@ suite('writer.js', function() {
     return write(tree);
   }
 
-  test('ParseAndWriteKeywords', function() {
-    var result = parseAndWrite('test', 'x.case = 5;\n');
-    assert.equal('x.case = 5;\n', result);
-    var result = parseAndWrite('test', 'var obj = {var: 42};\n');
-    assert.equal('var obj = {var: 42};\n', result);
+  test("ParseAndWriteKeywords", function () {
+    var result = parseAndWrite("test", "x.case = 5;\n");
+    assert.equal("x.case = 5;\n", result);
+    var result = parseAndWrite("test", "var obj = {var: 42};\n");
+    assert.equal("var obj = {var: 42};\n", result);
   });
 
-  test('pretty print', function() {
-    var tree = parse('test', 'function f() { return 42; }');
+  test("pretty print", function () {
+    var tree = parse("test", "function f() { return 42; }");
     var result = write(tree);
-    assert.equal(result, 'function f() {\n  return 42;\n}\n');
+    assert.equal(result, "function f() {\n  return 42;\n}\n");
 
-    result = write(tree, {prettyPrint: false});
-    assert.equal(result, 'function f(){\nreturn 42;\n}\n');
+    result = write(tree, { prettyPrint: false });
+    assert.equal(result, "function f(){\nreturn 42;\n}\n");
 
-    tree = parse('test', 'aaa.bbb');
-    result = write(tree, {prettyPrint: false});
-    assert.equal(result, 'aaa.bbb;\n');
+    tree = parse("test", "aaa.bbb");
+    result = write(tree, { prettyPrint: false });
+    assert.equal(result, "aaa.bbb;\n");
 
     tree = tree.scriptItemList[0].expression;
-    result = write(tree, {prettyPrint: false});
-    assert.equal(result, 'aaa.bbb');
+    result = write(tree, { prettyPrint: false });
+    assert.equal(result, "aaa.bbb");
   });
-
 });

@@ -14,6 +14,6 @@ for (var key in p) {
   keys.push(key);
 }
 
-assert.isTrue(keys.indexOf('x') !== -1);
-assert.isTrue(keys.indexOf('y') !== -1);
-assert.isTrue(keys.indexOf('constructor') === -1);
+assert.isTrue(keys.indexOf("x") !== -1);
+assert.isTrue(keys.indexOf("y") !== -1);
+assert.isTrue(keys.indexOf("constructor") === -1);

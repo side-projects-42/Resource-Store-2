@@ -12,53 +12,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert, setup} from '../../unit/unitTestRunner.js';
+import { suite, test, assert, setup } from "../../unit/unitTestRunner.js";
 
-import {InlineModuleTransformer} from '../../../src/codegeneration/InlineModuleTransformer.js';
-import {Options} from '../../../src/Options.js';
-import * as ParseTreeFactory from '../../../src/codegeneration/ParseTreeFactory.js';
-import {write} from '../../../src/outputgeneration/TreeWriter.js';
+import { InlineModuleTransformer } from "../../../src/codegeneration/InlineModuleTransformer.js";
+import { Options } from "../../../src/Options.js";
+import * as ParseTreeFactory from "../../../src/codegeneration/ParseTreeFactory.js";
+import { write } from "../../../src/outputgeneration/TreeWriter.js";
 
-suite('InlineModuleTransformer.js', function() {
+suite("InlineModuleTransformer.js", function () {
+  var transformer = null;
 
-  var transformer = null
-
-  setup(function() {
+  setup(function () {
     transformer = new InlineModuleTransformer(null, null, new Options());
   });
 
   function str(s) {
     return ParseTreeFactory.createExpressionStatement(
-        ParseTreeFactory.createStringLiteral(s));
+      ParseTreeFactory.createStringLiteral(s)
+    );
   }
 
   function removeWhiteSpaces(str) {
-    return str.replace(/\s/g, '');
+    return str.replace(/\s/g, "");
   }
 
   function assertEqualIgnoringWhiteSpaces(a, b) {
     assert.equal(removeWhiteSpaces(a), removeWhiteSpaces(b));
   }
 
-  suite('wrapModule', function() {
+  suite("wrapModule", function () {
     function writeArray(arr) {
-      return arr.map(function(item) {
-        return write(item, undefined, '/');
-      }).join('');
+      return arr
+        .map(function (item) {
+          return write(item, undefined, "/");
+        })
+        .join("");
     }
 
-    test('without this', function() {
+    test("without this", function () {
       transformer.moduleName = "test/module";
       assertEqualIgnoringWhiteSpaces(
-          'var $__test_47_module__ = (function(){"CODE";})();',
-          writeArray(transformer.wrapModule([str('CODE')])));
+        'var $__test_47_module__ = (function(){"CODE";})();',
+        writeArray(transformer.wrapModule([str("CODE")]))
+      );
     });
 
-    test('with this', function() {
+    test("with this", function () {
       transformer.moduleName = "test/module";
       assertEqualIgnoringWhiteSpaces(
-          "var$__test_47_module__=(function(){this})();",
-          writeArray(transformer.wrapModule([ParseTreeFactory.createThisExpression()])));
+        "var$__test_47_module__=(function(){this})();",
+        writeArray(
+          transformer.wrapModule([ParseTreeFactory.createThisExpression()])
+        )
+      );
     });
   });
 });

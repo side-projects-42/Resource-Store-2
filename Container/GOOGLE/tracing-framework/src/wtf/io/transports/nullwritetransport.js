@@ -11,34 +11,30 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.NullWriteTransport');
+goog.provide("wtf.io.transports.NullWriteTransport");
 
-goog.require('wtf.io.WriteTransport');
-
-
+goog.require("wtf.io.WriteTransport");
 
 /**
  * Write-only no-op transport base type.
  * @constructor
  * @extends {wtf.io.WriteTransport}
  */
-wtf.io.transports.NullWriteTransport = function() {
+wtf.io.transports.NullWriteTransport = function () {
   goog.base(this);
 };
 goog.inherits(wtf.io.transports.NullWriteTransport, wtf.io.WriteTransport);
 
-
 /**
  * @override
  */
-wtf.io.transports.NullWriteTransport.prototype.write = function(data) {
+wtf.io.transports.NullWriteTransport.prototype.write = function (data) {
   // No-op.
 };
 
-
 /**
  * @override
  */
-wtf.io.transports.NullWriteTransport.prototype.flush = function() {
+wtf.io.transports.NullWriteTransport.prototype.flush = function () {
   // No-op.
 };

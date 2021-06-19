@@ -1,21 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>CodeMirror: Smalltalk mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="smalltalk.js"></script>
-    <link rel="stylesheet" href="../../doc/docs.css">
+    <link rel="stylesheet" href="../../doc/docs.css" />
     <style>
-      .CodeMirror {border: 2px solid #dee; border-right-width: 10px;}
-      .CodeMirror-gutter {border: none; background: #dee;}
-      .CodeMirror-gutter pre {color: white; font-weight: bold;}
+      .CodeMirror {
+        border: 2px solid #dee;
+        border-right-width: 10px;
+      }
+      .CodeMirror-gutter {
+        border: none;
+        background: #dee;
+      }
+      .CodeMirror-gutter pre {
+        color: white;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
     <h1>CodeMirror: Smalltalk mode</h1>
 
-<form><textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
 " 
     This is a test of the Smalltalk code
 "
@@ -37,14 +47,16 @@ Seaside.WAComponent subclass: #MyCounter [
 ]
 
 MyCounter registerAsApplication: 'mycounter'
-</textarea></form>
+</textarea
+      >
+    </form>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
         mode: "text/x-stsrc",
-        indentUnit: 4
+        indentUnit: 4,
       });
     </script>
 

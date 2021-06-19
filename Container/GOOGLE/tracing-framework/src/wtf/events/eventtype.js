@@ -11,15 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.events.EventType');
+goog.provide("wtf.events.EventType");
 
-goog.require('goog.events');
-
+goog.require("goog.events");
 
 /**
  * Event type names.
  * @enum {string}
  */
 wtf.events.EventType = {
-  INVALIDATED: goog.events.getUniqueId('invalidated')
+  INVALIDATED: goog.events.getUniqueId("invalidated"),
 };

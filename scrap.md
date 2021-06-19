@@ -10,13 +10,18 @@ done
 
 
 #!/bin/bash
-for i in $(curl "https://api.github.com/orgs/microsoft/repos" | grep -oP '"clone_url":\s*"\K[^"]+'); do
+for i in $(curl "https://api.github.com/orgs/wikimedia/repos" | grep -oP '"clone_url":\s*"\K[^"]+'); do
   echo git clone "$i"
 done
 
 
+nzakas
 
-
+CNTX={users}; NAME={wifelette}; PAGE=1
+curl "https://api.github.com/$CNTX/$NAME/repos?page=$PAGE&per_page=100" |
+  grep -e 'git_url*' |
+  cut -d \" -f 4 |
+  xargs -L1 git clone
 
 
 find . -empty -type f -print -delete

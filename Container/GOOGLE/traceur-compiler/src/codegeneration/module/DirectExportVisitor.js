@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ExportVisitor} from './ExportVisitor.js';
-import {TYPE_ALIAS_DECLARATION} from '../../syntax/trees/ParseTreeType.js';
+import { ExportVisitor } from "./ExportVisitor.js";
+import { TYPE_ALIAS_DECLARATION } from "../../syntax/trees/ParseTreeType.js";
 
 /**
  * Visits a parse tree and adds all the exports.
@@ -36,7 +36,11 @@ export class DirectExportVisitor extends ExportVisitor {
   }
 
   addExport(name, tree) {
-    this.namedExports.push({name, tree, moduleSpecifier: this.moduleSpecifier});
+    this.namedExports.push({
+      name,
+      tree,
+      moduleSpecifier: this.moduleSpecifier,
+    });
   }
 
   visitExportStar(tree) {
@@ -48,7 +52,8 @@ export class DirectExportVisitor extends ExportVisitor {
   }
 
   getNonTypeNamedExports() {
-    return this.namedExports.filter(exp =>
-        exp.tree.type !== TYPE_ALIAS_DECLARATION);
+    return this.namedExports.filter(
+      (exp) => exp.tree.type !== TYPE_ALIAS_DECLARATION
+    );
   }
 }

@@ -20,24 +20,24 @@ import {
   ForOfStatement,
   ForStatement,
   VariableDeclarationList,
-  VariableStatement
-} from '../syntax/trees/ParseTrees.js';
+  VariableStatement,
+} from "../syntax/trees/ParseTrees.js";
 import {
   OBJECT_PATTERN,
-  VARIABLE_DECLARATION_LIST
-} from '../syntax/trees/ParseTreeType.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {StringSet} from '../util/StringSet.js';
-import {VAR} from '../syntax/TokenType.js';
+  VARIABLE_DECLARATION_LIST,
+} from "../syntax/trees/ParseTreeType.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { StringSet } from "../util/StringSet.js";
+import { VAR } from "../syntax/TokenType.js";
 import {
   createAssignmentExpression,
   createCommaExpression,
   createExpressionStatement,
   createIdentifierExpression as id,
   createParenExpression,
-  createVariableDeclaration
-} from './ParseTreeFactory.js';
-import {prependStatements} from './PrependStatements.js';
+  createVariableDeclaration,
+} from "./ParseTreeFactory.js";
+import { prependStatements } from "./PrependStatements.js";
 
 /**
  * Hoists variables to the top of the function body. This only transforms the
@@ -75,8 +75,7 @@ class HoistVariablesTransformer extends ParseTreeTransformer {
 
   transformFunctionBody(tree) {
     let statements = this.transformList(tree.statements);
-    if (statements === tree.statements)
-      return tree;
+    if (statements === tree.statements) return tree;
 
     statements = this.prependVariables(statements);
     statements = this.prependFunctions(statements);
@@ -104,15 +103,16 @@ class HoistVariablesTransformer extends ParseTreeTransformer {
   }
 
   getVariableStatement() {
-    if (!this.hasVariables())
-      return new AnonBlock(null, []);
+    if (!this.hasVariables()) return new AnonBlock(null, []);
 
     let declarations = this.getVariableNames().map((name) => {
       return createVariableDeclaration(name, null);
     });
 
-    return new VariableStatement(null,
-        new VariableDeclarationList(null, VAR, declarations));
+    return new VariableStatement(
+      null,
+      new VariableDeclarationList(null, VAR, declarations)
+    );
   }
 
   getFunctions() {
@@ -120,24 +120,20 @@ class HoistVariablesTransformer extends ParseTreeTransformer {
   }
 
   prependVariables(statements) {
-    if (!this.hasVariables())
-      return statements;
+    if (!this.hasVariables()) return statements;
     return prependStatements(statements, this.getVariableStatement());
   }
 
   prependFunctions(statements) {
-    if (!this.hasFunctions())
-      return statements;
+    if (!this.hasFunctions()) return statements;
     return prependStatements(statements, this.getFunctionDeclarations());
   }
 
   transformVariableStatement(tree) {
     let declarations = this.transformAny(tree.declarations);
-    if (declarations === tree.declarations)
-      return tree;
+    if (declarations === tree.declarations) return tree;
 
-    if (declarations === null)
-      return new AnonBlock(null, []);
+    if (declarations === null) return new AnonBlock(null, []);
 
     // let/const are not hoisted. Just return a variable statement.
     if (declarations.type === VARIABLE_DECLARATION_LIST)
@@ -181,8 +177,7 @@ class HoistVariablesTransformer extends ParseTreeTransformer {
   transformBindingIdentifier(tree) {
     let idToken = tree.identifierToken;
     this.addVariable(idToken.value);
-    if (this.keepBindingIdentifiers_)
-      return tree;
+    if (this.keepBindingIdentifiers_) return tree;
     return id(idToken);
   }
 
@@ -197,11 +192,9 @@ class HoistVariablesTransformer extends ParseTreeTransformer {
       // transformVariableDeclaration Remove these null trees now.
       expressions = expressions.filter((tree) => tree);
 
-      if (expressions.length === 0)
-        return null;
+      if (expressions.length === 0) return null;
 
-      if (expressions.length === 1)
-        return expressions[0];
+      if (expressions.length === 1) return expressions[0];
 
       return createCommaExpression(expressions);
     }
@@ -213,8 +206,7 @@ class HoistVariablesTransformer extends ParseTreeTransformer {
   transformCatch(tree) {
     // Ensure that we do not transform the catch binding.
     let catchBody = this.transformAny(tree.catchBody);
-    if (catchBody === tree.catchBody)
-      return tree;
+    if (catchBody === tree.catchBody) return tree;
     return new Catch(tree.location, tree.binding, catchBody);
   }
 
@@ -234,9 +226,11 @@ class HoistVariablesTransformer extends ParseTreeTransformer {
     let initializer = this.transformLoopIninitaliser_(tree.initializer);
     let collection = this.transformAny(tree.collection);
     let body = this.transformAny(tree.body);
-    if (initializer === tree.initializer &&
-        collection === tree.collection &&
-        body === tree.body) {
+    if (
+      initializer === tree.initializer &&
+      collection === tree.collection &&
+      body === tree.body
+    ) {
       return tree;
     }
 
@@ -257,14 +251,21 @@ class HoistVariablesTransformer extends ParseTreeTransformer {
     let condition = this.transformAny(tree.condition);
     let increment = this.transformAny(tree.increment);
     let body = this.transformAny(tree.body);
-    if (initializer === tree.initializer &&
-        condition === tree.condition &&
-        increment === tree.increment &&
-        body === tree.body) {
+    if (
+      initializer === tree.initializer &&
+      condition === tree.condition &&
+      increment === tree.increment &&
+      body === tree.body
+    ) {
       return tree;
     }
-    return new ForStatement(tree.location, initializer,
-                            condition, increment, body);
+    return new ForStatement(
+      tree.location,
+      initializer,
+      condition,
+      increment,
+      body
+    );
   }
 
   transformBlock(tree) {

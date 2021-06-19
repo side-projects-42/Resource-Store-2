@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CONST, LET, VAR} from '../../../src/syntax/TokenType.js';
-import {Compiler} from '../../../src/Compiler.js';
-import {ParseTreeVisitor} from '../../../src/syntax/ParseTreeVisitor.js';
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { CONST, LET, VAR } from "../../../src/syntax/TokenType.js";
+import { Compiler } from "../../../src/Compiler.js";
+import { ParseTreeVisitor } from "../../../src/syntax/ParseTreeVisitor.js";
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-suite('TempVarTransformerUseLet.js', function() {
-
+suite("TempVarTransformerUseLet.js", function () {
   class CheckDeclarations extends ParseTreeVisitor {
     constructor(declarationType) {
       super();
@@ -26,23 +25,24 @@ suite('TempVarTransformerUseLet.js', function() {
     }
     visitVariableDeclarationList(tree) {
       if (this.declarationType === LET) {
-        assert(tree.declarationType === LET || tree.declarationType === CONST,
-            `Expecte let or const but found ${tree.declarationType}`);
+        assert(
+          tree.declarationType === LET || tree.declarationType === CONST,
+          `Expecte let or const but found ${tree.declarationType}`
+        );
       } else {
         assert.equal(tree.declarationType, this.declarationType);
       }
       super.visitVariableDeclarationList(tree);
     }
-
   }
 
   function testResult(declarationType, content, expectedResult) {
-    test('', function() {
+    test("", function () {
       let compiler = new Compiler({
         exponentiation: true,
-        blockBinding: declarationType === VAR || 'parse',
+        blockBinding: declarationType === VAR || "parse",
         script: true,
-        sourceMaps: false
+        sourceMaps: false,
       });
       let tree = compiler.parse(content);
       let transformed = compiler.transform(tree);
@@ -51,25 +51,25 @@ suite('TempVarTransformerUseLet.js', function() {
     });
   }
 
-  testResult(VAR, '({a, b} = {})');
-  testResult(LET, '({a, b} = {})');
+  testResult(VAR, "({a, b} = {})");
+  testResult(LET, "({a, b} = {})");
 
-  testResult(VAR, 'const [x, y] = []');
-  testResult(LET, 'const [x, y] = []');
+  testResult(VAR, "const [x, y] = []");
+  testResult(LET, "const [x, y] = []");
 
-  testResult(VAR, '() => this');
-  testResult(LET, '() => this');
+  testResult(VAR, "() => this");
+  testResult(LET, "() => this");
 
-  testResult(VAR, 'function f() { () => arguments; }');
-  testResult(LET, 'function f() { () => arguments; }');
+  testResult(VAR, "function f() { () => arguments; }");
+  testResult(LET, "function f() { () => arguments; }");
 
-  testResult(VAR, 'let x = 2; x **= 3;');
-  testResult(LET, 'let x = 2; x **= 3;');
+  testResult(VAR, "let x = 2; x **= 3;");
+  testResult(LET, "let x = 2; x **= 3;");
 
   // TODO(arv): ForOfTransformer does not do the right thing here.
   // testResult(VAR, 'for (let x of []) {}');
   // testResult(LET, 'for (let x of []) {}');
 
-  testResult(VAR, 'obj.m(1, ...[2, 3])');
-  testResult(LET, 'obj.m(1, ...[2, 3])');
+  testResult(VAR, "obj.m(1, ...[2, 3])");
+  testResult(LET, "obj.m(1, ...[2, 3])");
 });

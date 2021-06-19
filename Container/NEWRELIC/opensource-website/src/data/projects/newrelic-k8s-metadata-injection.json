@@ -1,0 +1,27 @@
+{
+  "name": "k8s-metadata-injection",
+  "fullName": "newrelic/k8s-metadata-injection",
+  "slug": "newrelic-k8s-metadata-injection",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Kubernetes Metadata Injection",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/k8s-metadata-injection",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/k8s-metadata-injection",
+  "iconUrl": null,
+  "shortDescription": "Kubernetes metadata in APM Services",
+  "description": "Kubernetes metadata injection for New Relic APM to make a linkage between APM and Infrastructure data.",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Go",
+  "projectTags": [
+    "exporter",
+    "k8"
+  ],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Kubernetes Metadata Injection",
+    "url": "https://github.com/newrelic/k8s-metadata-injection"
+  }
+}

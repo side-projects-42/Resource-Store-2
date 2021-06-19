@@ -1,0 +1,114 @@
+{
+  "projectFullName": "newrelic/newrelic-airflow-plugin",
+  "issues": {
+    "open": 6
+  },
+  "releases": 5,
+  "latestRelease": {
+    "name": "v0.2.0",
+    "date": "2021-05-28T20:14:56Z"
+  },
+  "commits": 36,
+  "lastSixMonthsCommitTotal": 13,
+  "contributors": 6,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU1MTk1MDM4NTA=",
+      "title": "Verify correctness of generated metrics.",
+      "url": "https://github.com/newrelic/newrelic-airflow-plugin/issues/1",
+      "createdAt": "2019-11-07T20:48:26Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "BrandonTheBuilder",
+        "id": "MDQ6VXNlcjEzODgxNDg3",
+        "email": "",
+        "name": "Loren Arthur"
+      },
+      "number": 1,
+      "createdBy": "Loren Arthur"
+    },
+    {
+      "id": "MDU6SXNzdWU1MTk1NTM5NzY=",
+      "title": "Read plugin configuration from airflow.cfg",
+      "url": "https://github.com/newrelic/newrelic-airflow-plugin/issues/2",
+      "createdAt": "2019-11-07T22:39:31Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "BrandonTheBuilder",
+        "id": "MDQ6VXNlcjEzODgxNDg3",
+        "email": "",
+        "name": "Loren Arthur"
+      },
+      "number": 2,
+      "createdBy": "Loren Arthur"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 2586758,
+      "login": "mrbungie",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/2586758?v=4",
+      "htmlUrl": "https://github.com/mrbungie",
+      "contributions": 3
+    },
+    {
+      "id": 6374032,
+      "login": "a-feld",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6374032?v=4",
+      "htmlUrl": "https://github.com/a-feld",
+      "contributions": 3
+    },
+    {
+      "id": 43244625,
+      "login": "melissaklein24",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43244625?v=4",
+      "htmlUrl": "https://github.com/melissaklein24",
+      "contributions": 1
+    },
+    {
+      "id": 6328360,
+      "login": "matewilk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6328360?v=4",
+      "htmlUrl": "https://github.com/matewilk",
+      "contributions": 4
+    },
+    {
+      "id": 13881487,
+      "login": "BrandonTheBuilder",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13881487?v=4",
+      "htmlUrl": "https://github.com/BrandonTheBuilder",
+      "contributions": 13
+    },
+    {
+      "id": 11214426,
+      "login": "TimPansino",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/11214426?v=4",
+      "htmlUrl": "https://github.com/TimPansino",
+      "contributions": 11
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDU=",
+      "name": "Python",
+      "color": "#3572A5"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

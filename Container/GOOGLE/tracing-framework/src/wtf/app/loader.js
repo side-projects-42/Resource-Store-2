@@ -11,40 +11,38 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.Loader');
+goog.provide("wtf.app.Loader");
 
-goog.require('goog.Disposable');
-goog.require('goog.array');
-goog.require('goog.asserts');
-goog.require('goog.async.Deferred');
-goog.require('goog.dom.TagName');
-goog.require('goog.events');
-goog.require('goog.events.EventType');
-goog.require('goog.result');
-goog.require('goog.string');
-goog.require('wtf.db.BlobDataSourceInfo');
-goog.require('wtf.db.Database');
-goog.require('wtf.db.DriveDataSourceInfo');
-goog.require('wtf.db.UrlDataSourceInfo');
-goog.require('wtf.db.sources.CallsDataSource');
-goog.require('wtf.db.sources.ChunkedDataSource');
-goog.require('wtf.db.sources.CpuProfileDataSource');
-goog.require('wtf.doc.Document');
-goog.require('wtf.io');
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.ReadTransport');
-goog.require('wtf.io.cff.BinaryStreamSource');
-goog.require('wtf.io.cff.JsonStreamSource');
-goog.require('wtf.io.drive');
-goog.require('wtf.io.transports.BlobReadTransport');
-goog.require('wtf.io.transports.XhrReadTransport');
-goog.require('wtf.pal');
-goog.require('wtf.timing');
-goog.require('wtf.ui.Dialog');
-goog.require('wtf.ui.ErrorDialog');
-goog.require('wtf.ui.ProgressDialog');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.array");
+goog.require("goog.asserts");
+goog.require("goog.async.Deferred");
+goog.require("goog.dom.TagName");
+goog.require("goog.events");
+goog.require("goog.events.EventType");
+goog.require("goog.result");
+goog.require("goog.string");
+goog.require("wtf.db.BlobDataSourceInfo");
+goog.require("wtf.db.Database");
+goog.require("wtf.db.DriveDataSourceInfo");
+goog.require("wtf.db.UrlDataSourceInfo");
+goog.require("wtf.db.sources.CallsDataSource");
+goog.require("wtf.db.sources.ChunkedDataSource");
+goog.require("wtf.db.sources.CpuProfileDataSource");
+goog.require("wtf.doc.Document");
+goog.require("wtf.io");
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.ReadTransport");
+goog.require("wtf.io.cff.BinaryStreamSource");
+goog.require("wtf.io.cff.JsonStreamSource");
+goog.require("wtf.io.drive");
+goog.require("wtf.io.transports.BlobReadTransport");
+goog.require("wtf.io.transports.XhrReadTransport");
+goog.require("wtf.pal");
+goog.require("wtf.timing");
+goog.require("wtf.ui.Dialog");
+goog.require("wtf.ui.ErrorDialog");
+goog.require("wtf.ui.ProgressDialog");
 
 /**
  * Handles all trace loading behavior.
@@ -52,7 +50,7 @@ goog.require('wtf.ui.ProgressDialog');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.app.Loader = function(mainDisplay) {
+wtf.app.Loader = function (mainDisplay) {
   goog.base(this);
 
   /**
@@ -82,16 +80,14 @@ wtf.app.Loader = function(mainDisplay) {
 };
 goog.inherits(wtf.app.Loader, goog.Disposable);
 
-
 /**
  * @override
  */
-wtf.app.Loader.prototype.disposeInternal = function() {
+wtf.app.Loader.prototype.disposeInternal = function () {
   // TODO(benvanik): abort any in-progress loads.
   goog.dispose(this.progressDialog_);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Attempts to guess the content type of the file entry by filename.
@@ -99,37 +95,38 @@ wtf.app.Loader.prototype.disposeInternal = function() {
  * @return {string} Content type.
  * @private
  */
-wtf.app.Loader.prototype.inferContentType_ = function(filename) {
-  if (goog.string.endsWith(filename, '.wtf-trace') ||
-      goog.string.endsWith(filename, '.bin.part')) {
-    return 'application/x-extension-wtf-trace';
-  } else if (goog.string.endsWith(filename, '.wtf-json')) {
-    return 'application/x-extension-wtf-json';
-  } else if (goog.string.endsWith(filename, '.wtf-calls')) {
-    return 'application/x-extension-wtf-calls';
-  } else if (goog.string.endsWith(filename, '.cpuprofile')) {
-    return 'application/x-extension-cpuprofile';
+wtf.app.Loader.prototype.inferContentType_ = function (filename) {
+  if (
+    goog.string.endsWith(filename, ".wtf-trace") ||
+    goog.string.endsWith(filename, ".bin.part")
+  ) {
+    return "application/x-extension-wtf-trace";
+  } else if (goog.string.endsWith(filename, ".wtf-json")) {
+    return "application/x-extension-wtf-json";
+  } else if (goog.string.endsWith(filename, ".wtf-calls")) {
+    return "application/x-extension-wtf-calls";
+  } else if (goog.string.endsWith(filename, ".cpuprofile")) {
+    return "application/x-extension-cpuprofile";
   }
   // Default. Maybe we should just return null.
-  return 'application/x-extension-wtf-trace';
+  return "application/x-extension-wtf-trace";
 };
-
 
 /**
  * Begins loading snapshot data from an incoming IPC command.
  * See the extension.js file in the injector for details about the command.
  * @param {!Object} data Command data.
  */
-wtf.app.Loader.prototype.loadSnapshot = function(data) {
-  var contentLength = data['content_length'];
-  _gaq.push(['_trackEvent', 'app', 'open_snapshot', null, contentLength]);
+wtf.app.Loader.prototype.loadSnapshot = function (data) {
+  var contentLength = data["content_length"];
+  _gaq.push(["_trackEvent", "app", "open_snapshot", null, contentLength]);
 
   // Build entries.
   // Note that the command may contain either buffers or URLs.
-  var contentTypes = data['content_types'];
-  var contentSources = data['content_sources'];
-  var contentBuffers = data['content_buffers'];
-  var contentUrls = data['content_urls'];
+  var contentTypes = data["content_types"];
+  var contentSources = data["content_sources"];
+  var contentBuffers = data["content_buffers"];
+  var contentUrls = data["content_urls"];
   goog.asserts.assert(contentTypes.length == contentSources.length);
   var sourceInfos = [];
   for (var n = 0; n < contentTypes.length; n++) {
@@ -151,17 +148,22 @@ wtf.app.Loader.prototype.loadSnapshot = function(data) {
       } else {
         blob = wtf.io.Blob.create([buffer]);
       }
-      sourceInfos.push(new wtf.db.BlobDataSourceInfo(
-          contentSources[n], contentTypes[n], blob));
+      sourceInfos.push(
+        new wtf.db.BlobDataSourceInfo(contentSources[n], contentTypes[n], blob)
+      );
     } else {
-      sourceInfos.push(new wtf.db.UrlDataSourceInfo(
-          contentSources[n], contentTypes[n], contentUrls[n]));
+      sourceInfos.push(
+        new wtf.db.UrlDataSourceInfo(
+          contentSources[n],
+          contentTypes[n],
+          contentUrls[n]
+        )
+      );
     }
   }
 
   this.loadDataSources_(sourceInfos);
 };
-
 
 /**
  * Requests a local open dialog.
@@ -171,29 +173,35 @@ wtf.app.Loader.prototype.loadSnapshot = function(data) {
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.app.Loader.prototype.requestLocalOpenDialog = function(
-    opt_selectCallback, opt_scope) {
+wtf.app.Loader.prototype.requestLocalOpenDialog = function (
+  opt_selectCallback,
+  opt_scope
+) {
   var inputElement = this.dom_.createElement(goog.dom.TagName.INPUT);
-  inputElement['type'] = 'file';
-  inputElement['multiple'] = true;
-  inputElement['accept'] = [
-    '.wtf-trace,application/x-extension-wtf-trace',
-    '.wtf-json,application/x-extension-wtf-json',
-    '.wtf-calls,application/x-extension-wtf-calls',
-    '.cpuprofile,application/x-extension-cpuprofile',
-    '.part,application/x-extension-part'
-  ].join(',');
-  goog.events.listenOnce(inputElement, goog.events.EventType.CHANGE,
-      function(e) {
-        if (opt_selectCallback) {
-          opt_selectCallback.call(opt_scope);
-        }
-        _gaq.push(['_trackEvent', 'app', 'open_local_files']);
-        this.loadFiles(inputElement.files);
-      }, false, this);
+  inputElement["type"] = "file";
+  inputElement["multiple"] = true;
+  inputElement["accept"] = [
+    ".wtf-trace,application/x-extension-wtf-trace",
+    ".wtf-json,application/x-extension-wtf-json",
+    ".wtf-calls,application/x-extension-wtf-calls",
+    ".cpuprofile,application/x-extension-cpuprofile",
+    ".part,application/x-extension-part",
+  ].join(",");
+  goog.events.listenOnce(
+    inputElement,
+    goog.events.EventType.CHANGE,
+    function (e) {
+      if (opt_selectCallback) {
+        opt_selectCallback.call(opt_scope);
+      }
+      _gaq.push(["_trackEvent", "app", "open_local_files"]);
+      this.loadFiles(inputElement.files);
+    },
+    false,
+    this
+  );
   inputElement.click();
 };
-
 
 /**
  * Requests a Drive open dialog.
@@ -203,109 +211,133 @@ wtf.app.Loader.prototype.requestLocalOpenDialog = function(
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.app.Loader.prototype.requestDriveOpenDialog = function(
-    opt_cancelCallback, opt_scope) {
+wtf.app.Loader.prototype.requestDriveOpenDialog = function (
+  opt_cancelCallback,
+  opt_scope
+) {
   if (!wtf.io.drive.isSupported()) {
     wtf.ui.ErrorDialog.show(
-        'Drive support not enabled',
-        'Drive is not supported in this build.',
-        this.dom_);
+      "Drive support not enabled",
+      "Drive is not supported in this build.",
+      this.dom_
+    );
     if (opt_cancelCallback) {
       opt_cancelCallback.call(opt_scope);
     }
     return;
   }
 
-  goog.result.wait(wtf.io.drive.showFilePicker({
-    title: 'Select a trace file'
-  }), function(filesResult) {
-    var files = /** @type {Array.<!File>} */ (filesResult.getValue());
-    if (!files || !files.length) {
-      // Cancelled.
-      if (opt_cancelCallback) {
-        opt_cancelCallback.call(opt_scope);
-      }
-      return;
-    }
-
-    _gaq.push(['_trackEvent', 'app', 'open_drive_files']);
-
-    var sourceInfos = [];
-    var errors = [];
-    var remaining = files.length;
-    goog.array.forEach(files, function(file) {
-      var filename = file[0];
-      var fileId = file[1];
-      var contentType = this.inferContentType_(filename);
-
-      // This call will kick off a bunch of API calls to get file metadata/etc.
-      goog.result.wait(wtf.io.drive.queryFile(fileId), function(result) {
-        remaining--;
-        var driveFile =
-            /** @type {wtf.io.drive.DriveFile} */ (result.getValue());
-        if (driveFile) {
-          sourceInfos.push(new wtf.db.DriveDataSourceInfo(
-              driveFile.filename, contentType, fileId, driveFile));
-        } else {
-          errors.push(result.getError());
+  goog.result.wait(
+    wtf.io.drive.showFilePicker({
+      title: "Select a trace file",
+    }),
+    function (filesResult) {
+      var files = /** @type {Array.<!File>} */ (filesResult.getValue());
+      if (!files || !files.length) {
+        // Cancelled.
+        if (opt_cancelCallback) {
+          opt_cancelCallback.call(opt_scope);
         }
-        if (!remaining) {
-          finished.call(this);
-        }
-      }, this);
-    }, this);
-
-    /**
-     * @this {wtf.app.Loader}
-     */
-    function finished() {
-      if (errors.length) {
-        // TODO(benvanik): log errors?
-        this.loadFailed_(
-            'Unable to load files',
-            'An error occurred while trying to fetch a file from Drive.',
-            true);
         return;
       }
 
-      this.loadDataSources_(sourceInfos);
-    };
-  }, this);
-};
+      _gaq.push(["_trackEvent", "app", "open_drive_files"]);
 
+      var sourceInfos = [];
+      var errors = [];
+      var remaining = files.length;
+      goog.array.forEach(
+        files,
+        function (file) {
+          var filename = file[0];
+          var fileId = file[1];
+          var contentType = this.inferContentType_(filename);
+
+          // This call will kick off a bunch of API calls to get file metadata/etc.
+          goog.result.wait(
+            wtf.io.drive.queryFile(fileId),
+            function (result) {
+              remaining--;
+              var driveFile = /** @type {wtf.io.drive.DriveFile} */ (
+                result.getValue()
+              );
+              if (driveFile) {
+                sourceInfos.push(
+                  new wtf.db.DriveDataSourceInfo(
+                    driveFile.filename,
+                    contentType,
+                    fileId,
+                    driveFile
+                  )
+                );
+              } else {
+                errors.push(result.getError());
+              }
+              if (!remaining) {
+                finished.call(this);
+              }
+            },
+            this
+          );
+        },
+        this
+      );
+
+      /**
+       * @this {wtf.app.Loader}
+       */
+      function finished() {
+        if (errors.length) {
+          // TODO(benvanik): log errors?
+          this.loadFailed_(
+            "Unable to load files",
+            "An error occurred while trying to fetch a file from Drive.",
+            true
+          );
+          return;
+        }
+
+        this.loadDataSources_(sourceInfos);
+      }
+    },
+    this
+  );
+};
 
 /**
  * Begins loading a set of HTML5 File objects.
  * These can be from the filesystem, dragged in, etc.
  * @param {!Array.<!File>} files File objects.
  */
-wtf.app.Loader.prototype.loadFiles = function(files) {
+wtf.app.Loader.prototype.loadFiles = function (files) {
   var sourceInfos = [];
   for (var n = 0; n < files.length; n++) {
     var filename = files[n].name;
     var contentType = this.inferContentType_(filename);
-    sourceInfos.push(new wtf.db.BlobDataSourceInfo(
-        filename, contentType, wtf.io.Blob.fromNative(files[n])));
+    sourceInfos.push(
+      new wtf.db.BlobDataSourceInfo(
+        filename,
+        contentType,
+        wtf.io.Blob.fromNative(files[n])
+      )
+    );
   }
   this.loadDataSources_(sourceInfos);
 };
-
 
 /**
  * Begins loading a set of files from URLs.
  * @param {!Array.<string>} urls URLs.
  */
-wtf.app.Loader.prototype.loadUrls = function(urls) {
+wtf.app.Loader.prototype.loadUrls = function (urls) {
   var sourceInfos = [];
   for (var n = 0; n < urls.length; n++) {
     var url = urls[n];
     var contentType = this.inferContentType_(url);
-    sourceInfos.push(new wtf.db.UrlDataSourceInfo(
-        url, contentType, url));
+    sourceInfos.push(new wtf.db.UrlDataSourceInfo(url, contentType, url));
   }
   this.loadDataSources_(sourceInfos);
 };
-
 
 /**
  * Begins loading the data sources and handles their async completion.
@@ -314,8 +346,7 @@ wtf.app.Loader.prototype.loadUrls = function(urls) {
  *     the title will be inferred from the entries.
  * @private
  */
-wtf.app.Loader.prototype.loadDataSources_ = function(
-    sourceInfos, opt_title) {
+wtf.app.Loader.prototype.loadDataSources_ = function (sourceInfos, opt_title) {
   // If we are already loading, ignore.
   // This prevents multiple drops.
   if (this.progressDialog_) {
@@ -330,12 +361,15 @@ wtf.app.Loader.prototype.loadDataSources_ = function(
   var db = doc.getDatabase();
 
   // Show error dialogs.
-  db.addListener(wtf.db.Database.EventType.SOURCE_ERROR,
-      function(source, message, opt_detail) {
-        goog.global.console.log(message, opt_detail);
-        wtf.ui.ErrorDialog.show(message, opt_detail, this.dom_);
-        _gaq.push(['_trackEvent', 'app', 'source_error', message]);
-      }, this);
+  db.addListener(
+    wtf.db.Database.EventType.SOURCE_ERROR,
+    function (source, message, opt_detail) {
+      goog.global.console.log(message, opt_detail);
+      wtf.ui.ErrorDialog.show(message, opt_detail, this.dom_);
+      _gaq.push(["_trackEvent", "app", "source_error", message]);
+    },
+    this
+  );
 
   // TODO(benvanik): avoid showing the loading dialog for small traces.
 
@@ -344,7 +378,10 @@ wtf.app.Loader.prototype.loadDataSources_ = function(
   var body = this.dom_.getDocument().body;
   goog.asserts.assert(body);
   this.progressDialog_ = new wtf.ui.ProgressDialog(
-      body, 'Loading traces...', this.dom_);
+    body,
+    "Loading traces...",
+    this.dom_
+  );
 
   // Create entries for each source and the data source itself.
   // Note that these are handled async and make take some time to setup
@@ -358,30 +395,36 @@ wtf.app.Loader.prototype.loadDataSources_ = function(
   }
 
   // Wait until the dialog is displayed.
-  this.progressDialog_.addListener(wtf.ui.Dialog.EventType.OPENED, function() {
-    // Each entry must be loaded serially since each trace might be injecting
-    // into its own zone, e.g. with workers.
-    var deferred = new goog.async.Deferred();
-    goog.array.map(entries, function(entry) {
-      deferred.addCallback(function() {
-        return entry.start(db);
+  this.progressDialog_.addListener(
+    wtf.ui.Dialog.EventType.OPENED,
+    function () {
+      // Each entry must be loaded serially since each trace might be injecting
+      // into its own zone, e.g. with workers.
+      var deferred = new goog.async.Deferred();
+      goog.array.map(entries, function (entry) {
+        deferred.addCallback(function () {
+          return entry.start(db);
+        });
       });
-    });
 
-    deferred.addCallbacks(
-        function() {
+      deferred.addCallbacks(
+        function () {
           this.loadSucceeded_(doc, entries, opt_title);
         },
-        function(args) {
+        function (args) {
           this.loadFailed_(
-              'Unable to load snapshot',
-              'Source files could not be fetched.',
-              false);
-        }, this);
-    deferred.callback(true);
-  }, this);
+            "Unable to load snapshot",
+            "Source files could not be fetched.",
+            false
+          );
+        },
+        this
+      );
+      deferred.callback(true);
+    },
+    this
+  );
 };
-
 
 /**
  * Calculates a title name from the given entries.
@@ -389,12 +432,12 @@ wtf.app.Loader.prototype.loadDataSources_ = function(
  * @return {string} New title string.
  * @private
  */
-wtf.app.Loader.prototype.generateTitleFromEntries_ = function(entries) {
-  var title = '';
+wtf.app.Loader.prototype.generateTitleFromEntries_ = function (entries) {
+  var title = "";
   for (var n = 0; n < entries.length; n++) {
     var sourceInfo = entries[n].sourceInfo;
     var filename = sourceInfo.filename;
-    var lastSlash = filename.lastIndexOf('/');
+    var lastSlash = filename.lastIndexOf("/");
     if (lastSlash != -1) {
       filename = filename.substr(lastSlash + 1);
     }
@@ -402,7 +445,6 @@ wtf.app.Loader.prototype.generateTitleFromEntries_ = function(entries) {
   }
   return title;
 };
-
 
 /**
  * Handles successful loads.
@@ -412,8 +454,8 @@ wtf.app.Loader.prototype.generateTitleFromEntries_ = function(entries) {
  *     the title will be inferred from the entries.
  * @private
  */
-wtf.app.Loader.prototype.loadSucceeded_ = function(doc, entries, opt_title) {
-  _gaq.push(['_trackEvent', 'app', 'open_files', null]);
+wtf.app.Loader.prototype.loadSucceeded_ = function (doc, entries, opt_title) {
+  _gaq.push(["_trackEvent", "app", "open_files", null]);
 
   // Close the progress dialog.
   if (this.progressDialog_) {
@@ -436,12 +478,15 @@ wtf.app.Loader.prototype.loadSucceeded_ = function(doc, entries, opt_title) {
 
     // Zoom to fit.
     // TODO(benvanik): remove setTimeout when zoomToFit is based on view.
-    wtf.timing.setTimeout(50, function() {
-      documentView.zoomToFit();
-    }, this);
-  };
+    wtf.timing.setTimeout(
+      50,
+      function () {
+        documentView.zoomToFit();
+      },
+      this
+    );
+  }
 };
-
 
 /**
  * Handles load failures.
@@ -450,8 +495,8 @@ wtf.app.Loader.prototype.loadSucceeded_ = function(doc, entries, opt_title) {
  * @param {boolean} showDialog Whether to show the error dialog.
  * @private
  */
-wtf.app.Loader.prototype.loadFailed_ = function(title, message, showDialog) {
-  _gaq.push(['_trackEvent', 'app', 'load_failed', title]);
+wtf.app.Loader.prototype.loadFailed_ = function (title, message, showDialog) {
+  _gaq.push(["_trackEvent", "app", "load_failed", title]);
 
   // Close the progress dialog.
   goog.dispose(this.progressDialog_);
@@ -463,8 +508,6 @@ wtf.app.Loader.prototype.loadFailed_ = function(title, message, showDialog) {
   }
 };
 
-
-
 /**
  * A data source loader entry.
  * Tracks progress and allows for completion events.
@@ -472,7 +515,7 @@ wtf.app.Loader.prototype.loadFailed_ = function(title, message, showDialog) {
  * @constructor
  * @private
  */
-wtf.app.Loader.Entry_ = function(sourceInfo) {
+wtf.app.Loader.Entry_ = function (sourceInfo) {
   /**
    * Data source info.
    * @type {!wtf.db.DataSourceInfo}
@@ -511,52 +554,67 @@ wtf.app.Loader.Entry_ = function(sourceInfo) {
     // Drive URL - need to make some drive calls first.
     var driveFile = sourceInfo.driveFile;
     goog.asserts.assert(driveFile);
-    goog.result.wait(wtf.io.drive.downloadFile(driveFile),
-        function(result) {
-          var transport = new wtf.io.transports.XhrReadTransport(
-              sourceInfo.filename,
-              /** @type {!XMLHttpRequest} */ (result.getValue()));
-          this.transportDeferred_.callback(transport);
-        }, this);
+    goog.result.wait(
+      wtf.io.drive.downloadFile(driveFile),
+      function (result) {
+        var transport = new wtf.io.transports.XhrReadTransport(
+          sourceInfo.filename,
+          /** @type {!XMLHttpRequest} */ (result.getValue())
+        );
+        this.transportDeferred_.callback(transport);
+      },
+      this
+    );
   } else if (sourceInfo instanceof wtf.db.UrlDataSourceInfo) {
     // Simple URL (or blob URL) transport.
     var transport = new wtf.io.transports.XhrReadTransport(sourceInfo.url);
     this.transportDeferred_.callback(transport);
   } else {
-    throw new Error('Unknown data source type.');
+    throw new Error("Unknown data source type.");
   }
 };
-
 
 /**
  * Begins the load of the entry.
  * @param {!wtf.db.Database} db Target database.
  * @return {!goog.async.Deferred} A deferred fulfilled when the load completes.
  */
-wtf.app.Loader.Entry_.prototype.start = function(db) {
+wtf.app.Loader.Entry_.prototype.start = function (db) {
   var deferred = new goog.async.Deferred();
-  this.transportDeferred_.addCallback(function(transport) {
+  this.transportDeferred_.addCallback(function (transport) {
     goog.asserts.assert(!this.source);
 
     // Here be heuristics based on mime type.
     // TODO(benvanik): sniff contents/don't rely on mime type/etc.
     switch (this.sourceInfo.contentType) {
       default:
-      case 'application/x-extension-wtf-trace':
+      case "application/x-extension-wtf-trace":
         this.source = new wtf.db.sources.ChunkedDataSource(
-            db, this.sourceInfo, new wtf.io.cff.BinaryStreamSource(transport));
+          db,
+          this.sourceInfo,
+          new wtf.io.cff.BinaryStreamSource(transport)
+        );
         break;
-      case 'application/x-extension-wtf-json':
+      case "application/x-extension-wtf-json":
         this.source = new wtf.db.sources.ChunkedDataSource(
-            db, this.sourceInfo, new wtf.io.cff.JsonStreamSource(transport));
+          db,
+          this.sourceInfo,
+          new wtf.io.cff.JsonStreamSource(transport)
+        );
         break;
-      case 'application/x-extension-wtf-calls':
+      case "application/x-extension-wtf-calls":
         this.source = new wtf.db.sources.CallsDataSource(
-            db, this.sourceInfo, transport);
+          db,
+          this.sourceInfo,
+          transport
+        );
         break;
-      case 'application/x-extension-cpuprofile':
+      case "application/x-extension-cpuprofile":
         this.source = new wtf.db.sources.CpuProfileDataSource(
-            db, this.sourceInfo, transport);
+          db,
+          this.sourceInfo,
+          transport
+        );
         break;
     }
 
@@ -564,14 +622,21 @@ wtf.app.Loader.Entry_.prototype.start = function(db) {
     db.addSource(this.source);
 
     // Listen for transport progress events to update the task.
-    transport.addListener(wtf.io.ReadTransport.EventType.PROGRESS,
-        function(loaded, total) {
-          this.task.setProgress(loaded, total);
-        }, this);
-    transport.addListener(wtf.io.ReadTransport.EventType.END, function() {
-      // Switch into 'processing' mode.
-      this.task.setStyle(wtf.ui.ProgressDialog.TaskStyle.SECONDARY);
-    }, this);
+    transport.addListener(
+      wtf.io.ReadTransport.EventType.PROGRESS,
+      function (loaded, total) {
+        this.task.setProgress(loaded, total);
+      },
+      this
+    );
+    transport.addListener(
+      wtf.io.ReadTransport.EventType.END,
+      function () {
+        // Switch into 'processing' mode.
+        this.task.setStyle(wtf.ui.ProgressDialog.TaskStyle.SECONDARY);
+      },
+      this
+    );
 
     // Kick off the source.
     this.source.start().chainDeferred(deferred);

@@ -14,6 +14,6 @@
 
 /** @enum {string} */
 export var SymbolType = {
-  EXPORT: 'EXPORT',
-  MODULE: 'MODULE'
+  EXPORT: "EXPORT",
+  MODULE: "MODULE",
 };

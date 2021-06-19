@@ -1,8 +1,8 @@
-import Chart from 'chart.js';
+import Chart from "chart.js";
 
 var helpers = Chart.helpers;
 
-var formatter = function(value) {
+var formatter = function (value) {
   if (helpers.isNullOrUndef(value)) {
     return null;
   }
@@ -15,15 +15,15 @@ var formatter = function(value) {
     } else if (!helpers.isNullOrUndef(value.r)) {
       label = value.r;
     } else {
-      label = '';
+      label = "";
       keys = Object.keys(value);
       for (k = 0, klen = keys.length; k < klen; ++k) {
-        label += (k !== 0 ? ', ' : '') + keys[k] + ': ' + value[keys[k]];
+        label += (k !== 0 ? ", " : "") + keys[k] + ": " + value[keys[k]];
       }
     }
   }
 
-  return '' + label;
+  return "" + label;
 };
 
 /**
@@ -32,8 +32,8 @@ var formatter = function(value) {
  */
 
 export default {
-  align: 'center',
-  anchor: 'center',
+  align: "center",
+  anchor: "center",
   backgroundColor: null,
   borderColor: null,
   borderRadius: 0,
@@ -47,7 +47,7 @@ export default {
     lineHeight: 1.2,
     size: undefined,
     style: undefined,
-    weight: null
+    weight: null,
   },
   formatter: formatter,
   labels: undefined,
@@ -58,12 +58,12 @@ export default {
     top: 4,
     right: 4,
     bottom: 4,
-    left: 4
+    left: 4,
   },
   rotation: 0,
-  textAlign: 'start',
+  textAlign: "start",
   textStrokeColor: undefined,
   textStrokeWidth: 0,
   textShadowBlur: 0,
-  textShadowColor: undefined
+  textShadowColor: undefined,
 };

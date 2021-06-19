@@ -12,13 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  ParseTree,
-  ParseTreeType
-} from '../../syntax/trees/ParseTree.js';
-import {ParseTreeVisitor} from '../../syntax/ParseTreeVisitor.js';
-import {Symbol} from '../../semantics/symbols/Symbol.js';
-import {resolveUrl} from '../../util/url.js';
+import { ParseTree, ParseTreeType } from "../../syntax/trees/ParseTree.js";
+import { ParseTreeVisitor } from "../../syntax/ParseTreeVisitor.js";
+import { Symbol } from "../../semantics/symbols/Symbol.js";
+import { resolveUrl } from "../../util/url.js";
 
 function getFriendlyName(module) {
   return module.name || module.url;
@@ -82,15 +79,19 @@ export class ModuleVisitor extends ParseTreeVisitor {
 
       if (!parent.hasModule(name)) {
         if (reportErrors) {
-          this.reportError_(tree, '\'%s\' is not a module', name);
+          this.reportError_(tree, "'%s' is not a module", name);
         }
         return null;
       }
 
       if (!parent.hasExport(name)) {
         if (reportErrors) {
-          this.reportError_(tree, '\'%s\' is not exported by %s', name,
-              getFriendlyName(parent));
+          this.reportError_(
+            tree,
+            "'%s' is not exported by %s",
+            name,
+            getFriendlyName(parent)
+          );
         }
         return null;
       }
@@ -102,7 +103,7 @@ export class ModuleVisitor extends ParseTreeVisitor {
     var parent = this.getModuleByName(name);
     if (!parent) {
       if (reportErrors) {
-        this.reportError_(tree, '\'%s\' is not a module', name);
+        this.reportError_(tree, "'%s' is not a module", name);
       }
       return null;
     }
@@ -150,7 +151,7 @@ export class ModuleVisitor extends ParseTreeVisitor {
   checkForDuplicateModule_(name, tree) {
     var parent = this.currentModule;
     if (parent.hasModule(name)) {
-      this.reportError_(tree, 'Duplicate module declaration \'%s\'', name);
+      this.reportError_(tree, "Duplicate module declaration '%s'", name);
       this.reportRelatedError_(parent.getModule(name).tree);
       return false;
     }
@@ -182,14 +183,16 @@ export class ModuleVisitor extends ParseTreeVisitor {
    */
   reportRelatedError_(symbolOrTree) {
     if (symbolOrTree instanceof ParseTree) {
-      this.reportError_(symbolOrTree, 'Location related to previous error');
+      this.reportError_(symbolOrTree, "Location related to previous error");
     } else {
       var tree = symbolOrTree.tree;
       if (tree) {
         this.reportRelatedError_(tree);
       } else {
-        this.reporter_.reportError(null,
-            `Module related to previous error: ${symbolOrTree.url}`);
+        this.reporter_.reportError(
+          null,
+          `Module related to previous error: ${symbolOrTree.url}`
+        );
       }
     }
   }

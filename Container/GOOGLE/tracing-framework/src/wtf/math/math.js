@@ -11,8 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.math');
-
+goog.provide("wtf.math");
 
 /**
  * Remaps a value from one range to another.
@@ -23,10 +22,9 @@ goog.provide('wtf.math');
  * @param {number} max2 Maximum value in range 2.
  * @return {number} Remapped value in range 2.
  */
-wtf.math.remap = function(value, min1, max1, min2, max2) {
-  return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+wtf.math.remap = function (value, min1, max1, min2, max2) {
+  return min2 + ((value - min1) * (max2 - min2)) / (max1 - min1);
 };
-
 
 /**
  * Remaps a value from one range to another using an easing function.
@@ -37,7 +35,7 @@ wtf.math.remap = function(value, min1, max1, min2, max2) {
  * @param {number} max2 Maximum value in range 2.
  * @return {number} Remapped value in range 2.
  */
-wtf.math.smoothRemap = function(value, min1, max1, min2, max2) {
+wtf.math.smoothRemap = function (value, min1, max1, min2, max2) {
   if (value < min1) {
     return min2;
   } else if (value > max1) {

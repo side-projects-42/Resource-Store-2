@@ -41,21 +41,21 @@ let chart = new Chart(ctx, {
 
 Namespace: `options.scales[scaleId]`
 
-| Name | Type | Description
-| ---- | ---- | -----------
-| `min` | `string`\|`number` | The minimum item to display. [more...](#min-max-configuration)
-| `max` | `string`\|`number` | The maximum item to display. [more...](#min-max-configuration)
-| `labels` | `string[]`\|`string[][]` | An array of labels to display. When an individual label is an array of strings, each item is rendered on a new line.
+| Name     | Type                     | Description                                                                                                          |
+| -------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `min`    | `string`\|`number`       | The minimum item to display. [more...](#min-max-configuration)                                                       |
+| `max`    | `string`\|`number`       | The maximum item to display. [more...](#min-max-configuration)                                                       |
+| `labels` | `string[]`\|`string[][]` | An array of labels to display. When an individual label is an array of strings, each item is rendered on a new line. |
 
-!!!include(axes/cartesian/_common.md)!!!
+!!!include(axes/cartesian/\_common.md)!!!
 
-!!!include(axes/_common.md)!!!
+!!!include(axes/\_common.md)!!!
 
 ## Tick Configuration
 
-!!!include(axes/cartesian/_common_ticks.md)!!!
+!!!include(axes/cartesian/\_common_ticks.md)!!!
 
-!!!include(axes/_common_ticks.md)!!!
+!!!include(axes/\_common_ticks.md)!!!
 
 ## Min Max Configuration
 
@@ -63,20 +63,22 @@ For both the `min` and `max` properties, the value must be `string` in the `labe
 
 ```javascript
 let chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        datasets: [{
-            data: [10, 20, 30, 40, 50, 60]
-        }],
-        labels: ['January', 'February', 'March', 'April', 'May', 'June']
+  type: "line",
+  data: {
+    datasets: [
+      {
+        data: [10, 20, 30, 40, 50, 60],
+      },
+    ],
+    labels: ["January", "February", "March", "April", "May", "June"],
+  },
+  options: {
+    scales: {
+      x: {
+        min: "March",
+      },
     },
-    options: {
-        scales: {
-            x: {
-                min: 'March'
-            }
-        }
-    }
+  },
 });
 ```
 

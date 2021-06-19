@@ -1,37 +1,39 @@
 const labels = [];
 const data = [];
 for (let i = 1; i <= 100; i++) {
-  labels.push('Label ' + i);
-  data.push(Math.sin(i / 100 * Math.PI) * 10);
+  labels.push("Label " + i);
+  data.push(Math.sin((i / 100) * Math.PI) * 10);
 }
 
-const canvas = document.createElement('canvas');
+const canvas = document.createElement("canvas");
 canvas.width = 512;
 canvas.height = 512;
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext("2d");
 
 module.exports = {
   tolerance: 0.02,
   config: {
-    type: 'bar',
+    type: "bar",
     data: {
       labels,
-      datasets: [{
-        data,
-        barPercentage: 1,
-        categoryPercentage: 1,
-        backgroundColor: c => c.index < 50 ? 'blue' : 'red'
-      }]
+      datasets: [
+        {
+          data,
+          barPercentage: 1,
+          categoryPercentage: 1,
+          backgroundColor: (c) => (c.index < 50 ? "blue" : "red"),
+        },
+      ],
     },
     options: {
       events: [],
       scales: {
         x: {
           display: false,
-          min: 'Label 50',
-          max: 'Label 100',
+          min: "Label 50",
+          max: "Label 100",
         },
-        y: {display: false, max: 10}
+        y: { display: false, max: 10 },
       },
       plugins: {
         legend: false,
@@ -39,14 +41,14 @@ module.exports = {
         zoom: {
           pan: {
             enabled: true,
-            mode: 'x',
-          }
-        }
+            mode: "x",
+          },
+        },
       },
       layout: {
-        padding: 2
-      }
-    }
+        padding: 2,
+      },
+    },
   },
   options: {
     run(chart) {
@@ -56,12 +58,12 @@ module.exports = {
       for (let i = 0; i < steps; i++) {
         const col = i % n;
         const row = Math.floor(i / n);
-        chart.pan({x: 25});
+        chart.pan({ x: 25 });
         chart.update();
         ctx.drawImage(chart.canvas, col * side, row * side, side, side);
       }
       Chart.helpers.clearCanvas(chart.canvas);
       chart.ctx.drawImage(canvas, 0, 0);
-    }
-  }
+    },
+  },
 };

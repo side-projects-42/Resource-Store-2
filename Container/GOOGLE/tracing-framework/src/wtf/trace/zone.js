@@ -11,9 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.Zone');
-
-
+goog.provide("wtf.trace.Zone");
 
 /**
  * Zone tracking utility.
@@ -25,7 +23,7 @@ goog.provide('wtf.trace.Zone');
  * @param {string} location Zone location (such as URI of the script).
  * @constructor
  */
-wtf.trace.Zone = function(zoneId, timestamp, name, type, location) {
+wtf.trace.Zone = function (zoneId, timestamp, name, type, location) {
   /**
    * Zone ID.
    * @type {number}

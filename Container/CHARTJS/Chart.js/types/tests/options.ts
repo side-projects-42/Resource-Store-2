@@ -1,33 +1,36 @@
-import { Chart } from '../index.esm';
+import { Chart } from "../index.esm";
 
-const chart = new Chart('test', {
-  type: 'bar',
+const chart = new Chart("test", {
+  type: "bar",
   data: {
-    labels: ['a'],
-    datasets: [{
-      data: [1],
-    }, {
-      type: 'line',
-      data: [{ x: 1, y: 1 }]
-    }]
+    labels: ["a"],
+    datasets: [
+      {
+        data: [1],
+      },
+      {
+        type: "line",
+        data: [{ x: 1, y: 1 }],
+      },
+    ],
   },
   options: {
     animation: {
-      duration: 500
+      duration: 500,
     },
-    backgroundColor: 'red',
+    backgroundColor: "red",
     datasets: {
       line: {
         animation: {
-          duration: 600
+          duration: 600,
         },
-        backgroundColor: 'blue',
-      }
+        backgroundColor: "blue",
+      },
     },
     elements: {
       point: {
-        backgroundColor: 'red'
-      }
-    }
-  }
+        backgroundColor: "red",
+      },
+    },
+  },
 });

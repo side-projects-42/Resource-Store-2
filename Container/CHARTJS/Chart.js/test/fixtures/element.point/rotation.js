@@ -1,23 +1,34 @@
 var gradient;
 
-var datasets = ['circle', 'cross', 'crossRot', 'dash', 'line', 'rect', 'rectRounded', 'rectRot', 'star', 'triangle'].map(function(style, y) {
+var datasets = [
+  "circle",
+  "cross",
+  "crossRot",
+  "dash",
+  "line",
+  "rect",
+  "rectRounded",
+  "rectRot",
+  "star",
+  "triangle",
+].map(function (style, y) {
   return {
     pointStyle: style,
-    data: Array.apply(null, Array(17)).map(function(v, x) {
-      return {x: x, y: 10 - y};
-    })
+    data: Array.apply(null, Array(17)).map(function (v, x) {
+      return { x: x, y: 10 - y };
+    }),
   };
 });
 
-var angles = Array.apply(null, Array(17)).map(function(v, i) {
+var angles = Array.apply(null, Array(17)).map(function (v, i) {
   return -180 + i * 22.5;
 });
 
 module.exports = {
   config: {
-    type: 'bubble',
+    type: "bubble",
     data: {
-      datasets: datasets
+      datasets: datasets,
     },
     options: {
       responsive: false,
@@ -25,30 +36,30 @@ module.exports = {
         point: {
           rotation: angles,
           radius: 10,
-          backgroundColor: function(context) {
+          backgroundColor: function (context) {
             if (!gradient) {
               gradient = context.chart.ctx.createLinearGradient(0, 0, 512, 256);
-              gradient.addColorStop(0, '#ff0000');
-              gradient.addColorStop(1, '#0000ff');
+              gradient.addColorStop(0, "#ff0000");
+              gradient.addColorStop(1, "#0000ff");
             }
             return gradient;
           },
-          borderColor: '#cccccc'
-        }
+          borderColor: "#cccccc",
+        },
       },
       layout: {
-        padding: 20
+        padding: 20,
       },
       scales: {
-        x: {display: false},
-        y: {display: false}
-      }
-    }
+        x: { display: false },
+        y: { display: false },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

@@ -1,5 +1,9 @@
-import registry from './core.registry';
-import {callback as callCallback, isNullOrUndef, valueOrDefault} from '../helpers/helpers.core';
+import registry from "./core.registry";
+import {
+  callback as callCallback,
+  isNullOrUndef,
+  valueOrDefault,
+} from "../helpers/helpers.core";
 
 /**
  * @typedef { import("./core.controller").default } Chart
@@ -16,43 +20,44 @@ import {callback as callCallback, isNullOrUndef, valueOrDefault} from '../helper
  * @return {boolean}
  */
 
-
 export default class PluginService {
   constructor() {
     this._init = [];
   }
 
   /**
-	 * Calls enabled plugins for `chart` on the specified hook and with the given args.
-	 * This method immediately returns as soon as a plugin explicitly returns false. The
-	 * returned value can be used, for instance, to interrupt the current action.
-	 * @param {Chart} chart - The chart instance for which plugins should be called.
-	 * @param {string} hook - The name of the plugin method to call (e.g. 'beforeUpdate').
-	 * @param {object} [args] - Extra arguments to apply to the hook call.
+   * Calls enabled plugins for `chart` on the specified hook and with the given args.
+   * This method immediately returns as soon as a plugin explicitly returns false. The
+   * returned value can be used, for instance, to interrupt the current action.
+   * @param {Chart} chart - The chart instance for which plugins should be called.
+   * @param {string} hook - The name of the plugin method to call (e.g. 'beforeUpdate').
+   * @param {object} [args] - Extra arguments to apply to the hook call.
    * @param {filterCallback} [filter] - Filtering function for limiting which plugins are notified
-	 * @returns {boolean} false if any of the plugins return false, else returns true.
-	 */
+   * @returns {boolean} false if any of the plugins return false, else returns true.
+   */
   notify(chart, hook, args, filter) {
     const me = this;
 
-    if (hook === 'beforeInit') {
+    if (hook === "beforeInit") {
       me._init = me._createDescriptors(chart, true);
-      me._notify(me._init, chart, 'install');
+      me._notify(me._init, chart, "install");
     }
 
-    const descriptors = filter ? me._descriptors(chart).filter(filter) : me._descriptors(chart);
+    const descriptors = filter
+      ? me._descriptors(chart).filter(filter)
+      : me._descriptors(chart);
     const result = me._notify(descriptors, chart, hook, args);
 
-    if (hook === 'destroy') {
-      me._notify(descriptors, chart, 'stop');
-      me._notify(me._init, chart, 'uninstall');
+    if (hook === "destroy") {
+      me._notify(descriptors, chart, "stop");
+      me._notify(me._init, chart, "uninstall");
     }
     return result;
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _notify(descriptors, chart, hook, args) {
     args = args || {};
     for (const descriptor of descriptors) {
@@ -80,15 +85,15 @@ export default class PluginService {
   }
 
   /**
-	 * @param {Chart} chart
-	 * @private
-	 */
+   * @param {Chart} chart
+   * @private
+   */
   _descriptors(chart) {
     if (this._cache) {
       return this._cache;
     }
 
-    const descriptors = this._cache = this._createDescriptors(chart);
+    const descriptors = (this._cache = this._createDescriptors(chart));
 
     this._notifyStateChanges(chart);
 
@@ -97,22 +102,28 @@ export default class PluginService {
 
   _createDescriptors(chart, all) {
     const config = chart && chart.config;
-    const options = valueOrDefault(config.options && config.options.plugins, {});
+    const options = valueOrDefault(
+      config.options && config.options.plugins,
+      {}
+    );
     const plugins = allPlugins(config);
     // options === false => all plugins are disabled
-    return options === false && !all ? [] : createDescriptors(chart, plugins, options, all);
+    return options === false && !all
+      ? []
+      : createDescriptors(chart, plugins, options, all);
   }
 
   /**
-	 * @param {Chart} chart
-	 * @private
-	 */
+   * @param {Chart} chart
+   * @private
+   */
   _notifyStateChanges(chart) {
     const previousDescriptors = this._oldCache || [];
     const descriptors = this._cache;
-    const diff = (a, b) => a.filter(x => !b.some(y => x.plugin.id === y.plugin.id));
-    this._notify(diff(previousDescriptors, descriptors), chart, 'stop');
-    this._notify(diff(descriptors, previousDescriptors), chart, 'start');
+    const diff = (a, b) =>
+      a.filter((x) => !b.some((y) => x.plugin.id === y.plugin.id));
+    this._notify(diff(previousDescriptors, descriptors), chart, "stop");
+    this._notify(diff(descriptors, previousDescriptors), chart, "start");
   }
 }
 
@@ -161,7 +172,7 @@ function createDescriptors(chart, plugins, options, all) {
     }
     result.push({
       plugin,
-      options: pluginOpts(chart.config, plugin, opts, context)
+      options: pluginOpts(chart.config, plugin, opts, context),
     });
   }
 
@@ -177,5 +188,9 @@ function createDescriptors(chart, plugins, options, all) {
 function pluginOpts(config, plugin, opts, context) {
   const keys = config.pluginScopeKeys(plugin);
   const scopes = config.getOptionScopes(opts, keys);
-  return config.createResolver(scopes, context, [''], {scriptable: false, indexable: false, allKeys: true});
+  return config.createResolver(scopes, context, [""], {
+    scriptable: false,
+    indexable: false,
+    allKeys: true,
+  });
 }

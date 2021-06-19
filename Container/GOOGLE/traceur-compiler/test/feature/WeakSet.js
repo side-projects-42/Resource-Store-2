@@ -1,4 +1,4 @@
-import {WeakSet as WeakSetPF} from '../../src/runtime/polyfills/WeakSet.js';
+import { WeakSet as WeakSetPF } from "../../src/runtime/polyfills/WeakSet.js";
 
 function test(ctor) {
   var ws = new ctor();
@@ -20,11 +20,11 @@ function test(ctor) {
   assert.isFalse(ws.has(f1));
   assert.isFalse(ws.delete(f1));
 
-  var nonObjects = ['a', true, false, 42, null, undefined];
+  var nonObjects = ["a", true, false, 42, null, undefined];
 
   for (var x of nonObjects) {
     assert.throws(() => {
-      ws.add(x)
+      ws.add(x);
     }, TypeError);
 
     assert.isFalse(ws.has(x));

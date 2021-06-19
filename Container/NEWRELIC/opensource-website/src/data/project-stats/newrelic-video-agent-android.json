@@ -1,0 +1,56 @@
+{
+  "projectFullName": "newrelic/video-agent-android",
+  "issues": {
+    "open": 1
+  },
+  "releases": 1,
+  "latestRelease": {
+    "name": "0.99.5",
+    "date": null
+  },
+  "commits": 277,
+  "lastSixMonthsCommitTotal": 60,
+  "contributors": 2,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 8813505,
+      "login": "adwetzelnr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8813505?v=4",
+      "htmlUrl": "https://github.com/adwetzelnr",
+      "contributions": 1
+    },
+    {
+      "id": 6130000,
+      "login": "asllop",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6130000?v=4",
+      "htmlUrl": "https://github.com/asllop",
+      "contributions": 126
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNTg=",
+      "name": "Java",
+      "color": "#b07219"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UyNzI=",
+      "name": "Kotlin",
+      "color": "#A97BFF"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

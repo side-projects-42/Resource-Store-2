@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as sym from './private-symbol.js';
-import * as weak from './private-weak-map.js';
+import * as sym from "./private-symbol.js";
+import * as weak from "./private-weak-map.js";
 
-const hasWeakMap = typeof WeakMap === 'function';
+const hasWeakMap = typeof WeakMap === "function";
 const m = hasWeakMap ? weak : sym;
 
 export const isPrivateSymbol = m.isPrivateSymbol;

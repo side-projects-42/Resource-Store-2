@@ -1,0 +1,51 @@
+{
+  "projectFullName": "newrelic/newrelic-service-broker-tile",
+  "issues": {
+    "open": 2
+  },
+  "releases": 5,
+  "latestRelease": {
+    "name": "1.12.28",
+    "date": null
+  },
+  "commits": 53,
+  "lastSixMonthsCommitTotal": 1,
+  "contributors": 2,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 1749572,
+      "login": "tmartin14",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1749572?v=4",
+      "htmlUrl": "https://github.com/tmartin14",
+      "contributions": 3
+    },
+    {
+      "id": 4672940,
+      "login": "shahramk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/4672940?v=4",
+      "htmlUrl": "https://github.com/shahramk",
+      "contributions": 34
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNTg=",
+      "name": "Java",
+      "color": "#b07219"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

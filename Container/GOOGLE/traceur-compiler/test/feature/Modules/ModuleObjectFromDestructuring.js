@@ -1,3 +1,3 @@
-import * as m from './resources/export-destructuring.js';
+import * as m from "./resources/export-destructuring.js";
 
-assert.deepEqual(['x', 'y'], Object.keys(m).sort());
+assert.deepEqual(["x", "y"], Object.keys(m).sort());

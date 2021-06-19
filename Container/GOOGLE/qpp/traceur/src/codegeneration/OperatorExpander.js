@@ -14,8 +14,8 @@
 
 import {
   IDENTIFIER_EXPRESSION,
-  SUPER_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
+  SUPER_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
 import {
   AMPERSAND,
   AMPERSAND_EQUAL,
@@ -38,8 +38,8 @@ import {
   STAR,
   STAR_EQUAL,
   UNSIGNED_RIGHT_SHIFT,
-  UNSIGNED_RIGHT_SHIFT_EQUAL
-} from '../syntax/TokenType.js';
+  UNSIGNED_RIGHT_SHIFT_EQUAL,
+} from "../syntax/TokenType.js";
 import {
   createAssignmentExpression,
   createBinaryOperator,
@@ -48,8 +48,8 @@ import {
   createMemberExpression,
   createMemberLookupExpression,
   createOperatorToken,
-  createParenExpression
-} from './ParseTreeFactory.js';
+  createParenExpression,
+} from "./ParseTreeFactory.js";
 
 /**
  * Returns the binary operator that the assignment operator should use. For
@@ -80,7 +80,7 @@ function getBinaryOperator(type) {
     case BAR_EQUAL:
       return BAR;
     default:
-      throw Error('unreachable');
+      throw Error("unreachable");
   }
 }
 
@@ -100,8 +100,10 @@ function getBinaryOperator(type) {
 export function expandMemberLookupExpression(tree, tempVarTransformer) {
   var tmp1;
   var expressions = [];
-  if (tree.left.operand.type == SUPER_EXPRESSION ||
-      tree.left.operand.type == IDENTIFIER_EXPRESSION) {
+  if (
+    tree.left.operand.type == SUPER_EXPRESSION ||
+    tree.left.operand.type == IDENTIFIER_EXPRESSION
+  ) {
     tmp1 = tree.left.operand;
   } else {
     tmp1 = createIdentifierExpression(tempVarTransformer.addTempVar());
@@ -112,11 +114,13 @@ export function expandMemberLookupExpression(tree, tempVarTransformer) {
   expressions.push(
     createAssignmentExpression(tmp2, tree.left.memberExpression),
     createAssignmentExpression(
+      createMemberLookupExpression(tmp1, tmp2),
+      createBinaryOperator(
         createMemberLookupExpression(tmp1, tmp2),
-        createBinaryOperator(
-            createMemberLookupExpression(tmp1, tmp2),
-            createOperatorToken(getBinaryOperator(tree.operator.type)),
-            tree.right))
+        createOperatorToken(getBinaryOperator(tree.operator.type)),
+        tree.right
+      )
+    )
   );
   return createParenExpression(createCommaExpression(expressions));
 }
@@ -138,8 +142,10 @@ export function expandMemberLookupExpression(tree, tempVarTransformer) {
 export function expandMemberExpression(tree, tempVarTransformer) {
   var tmp;
   var expressions = [];
-  if (tree.left.operand.type == SUPER_EXPRESSION ||
-      tree.left.operand.type == IDENTIFIER_EXPRESSION) {
+  if (
+    tree.left.operand.type == SUPER_EXPRESSION ||
+    tree.left.operand.type == IDENTIFIER_EXPRESSION
+  ) {
     tmp = tree.left.operand;
   } else {
     tmp = createIdentifierExpression(tempVarTransformer.addTempVar());
@@ -147,11 +153,14 @@ export function expandMemberExpression(tree, tempVarTransformer) {
   }
 
   expressions.push(
-      createAssignmentExpression(
-          createMemberExpression(tmp, tree.left.memberName),
-          createBinaryOperator(
-              createMemberExpression(tmp, tree.left.memberName),
-              createOperatorToken(getBinaryOperator(tree.operator.type)),
-              tree.right)));
+    createAssignmentExpression(
+      createMemberExpression(tmp, tree.left.memberName),
+      createBinaryOperator(
+        createMemberExpression(tmp, tree.left.memberName),
+        createOperatorToken(getBinaryOperator(tree.operator.type)),
+        tree.right
+      )
+    )
+  );
   return createParenExpression(createCommaExpression(expressions));
 }

@@ -1,10 +1,10 @@
-import {isFinite} from 'chart.js/helpers';
+import { isFinite } from "chart.js/helpers";
 
 const PI = Math.PI;
 const HALF_PI = PI / 2;
 
 export function scaleValue(scale, value, fallback) {
-  value = typeof value === 'number' ? value : scale.parse(value);
+  value = typeof value === "number" ? value : scale.parse(value);
   return isFinite(value) ? scale.getPixelForValue(value) : fallback;
 }
 
@@ -66,6 +66,6 @@ export function rotated(point, center, angle) {
 
   return {
     x: cx + cos * (point.x - cx) - sin * (point.y - cy),
-    y: cy + sin * (point.x - cx) + cos * (point.y - cy)
+    y: cy + sin * (point.x - cx) + cos * (point.y - cy),
   };
 }

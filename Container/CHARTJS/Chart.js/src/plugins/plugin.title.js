@@ -1,13 +1,13 @@
-import Element from '../core/core.element';
-import layouts from '../core/core.layouts';
-import {PI, isArray, toPadding, toFont} from '../helpers';
-import {_toLeftRightCenter, _alignStartEnd} from '../helpers/helpers.extras';
-import {renderText} from '../helpers/helpers.canvas';
+import Element from "../core/core.element";
+import layouts from "../core/core.layouts";
+import { PI, isArray, toPadding, toFont } from "../helpers";
+import { _toLeftRightCenter, _alignStartEnd } from "../helpers/helpers.extras";
+import { renderText } from "../helpers/helpers.canvas";
 
 export class Title extends Element {
   /**
-	 * @param {{ ctx: any; options: any; chart: any; }} config
-	 */
+   * @param {{ ctx: any; options: any; chart: any; }} config
+   */
   constructor(config) {
     super();
 
@@ -43,7 +43,8 @@ export class Title extends Element {
 
     const lineCount = isArray(opts.text) ? opts.text.length : 1;
     me._padding = toPadding(opts.padding);
-    const textSize = lineCount * toFont(opts.font).lineHeight + me._padding.height;
+    const textSize =
+      lineCount * toFont(opts.font).lineHeight + me._padding.height;
 
     if (me.isHorizontal()) {
       me.height = textSize;
@@ -54,11 +55,11 @@ export class Title extends Element {
 
   isHorizontal() {
     const pos = this.options.position;
-    return pos === 'top' || pos === 'bottom';
+    return pos === "top" || pos === "bottom";
   }
 
   _drawArgs(offset) {
-    const {top, left, bottom, right, options} = this;
+    const { top, left, bottom, right, options } = this;
     const align = options.align;
     let rotation = 0;
     let maxWidth, titleX, titleY;
@@ -68,7 +69,7 @@ export class Title extends Element {
       titleY = top + offset;
       maxWidth = right - left;
     } else {
-      if (options.position === 'left') {
+      if (options.position === "left") {
         titleX = left + offset;
         titleY = _alignStartEnd(align, bottom, top);
         rotation = PI * -0.5;
@@ -79,7 +80,7 @@ export class Title extends Element {
       }
       maxWidth = bottom - top;
     }
-    return {titleX, titleY, maxWidth, rotation};
+    return { titleX, titleY, maxWidth, rotation };
   }
 
   draw() {
@@ -94,14 +95,14 @@ export class Title extends Element {
     const fontOpts = toFont(opts.font);
     const lineHeight = fontOpts.lineHeight;
     const offset = lineHeight / 2 + me._padding.top;
-    const {titleX, titleY, maxWidth, rotation} = me._drawArgs(offset);
+    const { titleX, titleY, maxWidth, rotation } = me._drawArgs(offset);
 
     renderText(ctx, opts.text, 0, 0, fontOpts, {
       color: opts.color,
       maxWidth,
       rotation,
       textAlign: _toLeftRightCenter(opts.align),
-      textBaseline: 'middle',
+      textBaseline: "middle",
       translation: [titleX, titleY],
     });
   }
@@ -111,7 +112,7 @@ function createTitle(chart, titleOpts) {
   const title = new Title({
     ctx: chart.ctx,
     options: titleOpts,
-    chart
+    chart,
   });
 
   layouts.configure(chart, title, titleOpts);
@@ -120,12 +121,12 @@ function createTitle(chart, titleOpts) {
 }
 
 export default {
-  id: 'title',
+  id: "title",
 
   /**
-	 * For tests
-	 * @private
-	 */
+   * For tests
+   * @private
+   */
   _element: Title,
 
   start(chart, _args, options) {
@@ -145,20 +146,20 @@ export default {
   },
 
   defaults: {
-    align: 'center',
+    align: "center",
     display: false,
     font: {
-      weight: 'bold',
+      weight: "bold",
     },
     fullSize: true,
     padding: 10,
-    position: 'top',
-    text: '',
-    weight: 2000         // by default greater than legend (1000) to be above
+    position: "top",
+    text: "",
+    weight: 2000, // by default greater than legend (1000) to be above
   },
 
   defaultRoutes: {
-    color: 'color'
+    color: "color",
   },
 
   descriptors: {

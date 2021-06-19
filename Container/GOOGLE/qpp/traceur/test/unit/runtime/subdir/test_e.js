@@ -1,1 +1,1 @@
-export var name = 'E';
+export var name = "E";

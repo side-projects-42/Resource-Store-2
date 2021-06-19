@@ -11,9 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.Part');
-
-
+goog.provide("wtf.io.cff.Part");
 
 /**
  * Part abstract base type.
@@ -23,7 +21,7 @@ goog.provide('wtf.io.cff.Part');
  * @param {wtf.io.cff.PartType} partType Part type.
  * @constructor
  */
-wtf.io.cff.Part = function(partType) {
+wtf.io.cff.Part = function (partType) {
   /**
    * Part type.
    * @type {wtf.io.cff.PartType}
@@ -32,15 +30,13 @@ wtf.io.cff.Part = function(partType) {
   this.partType_ = partType;
 };
 
-
 /**
  * Gets the part type ID.
  * @return {wtf.io.cff.PartType} Part type.
  */
-wtf.io.cff.Part.prototype.getType = function() {
+wtf.io.cff.Part.prototype.getType = function () {
   return this.partType_;
 };
-
 
 /**
  * Initializes the part from the given blob data.
@@ -51,7 +47,6 @@ wtf.io.cff.Part.prototype.getType = function() {
  */
 wtf.io.cff.Part.prototype.initFromBlobData = goog.abstractMethod;
 
-
 /**
  * Gets the part as a blob data type (string/Blob/typed array).
  * The result will not be modified and may be a reference to live data.
@@ -59,14 +54,12 @@ wtf.io.cff.Part.prototype.initFromBlobData = goog.abstractMethod;
  */
 wtf.io.cff.Part.prototype.toBlobData = goog.abstractMethod;
 
-
 /**
  * Initializes the part from the given JSON object.
  * Throws errors on invalid JSON.
  * @param {!Object} value JSON value.
  */
 wtf.io.cff.Part.prototype.initFromJsonObject = goog.abstractMethod;
-
 
 /**
  * Converts the part into a JSON object.

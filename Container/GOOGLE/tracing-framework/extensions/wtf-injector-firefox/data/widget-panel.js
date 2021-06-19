@@ -11,35 +11,30 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-var buttonToggle = document.querySelector('.buttonToggleInjector');
-buttonToggle.onclick = function(e) {
+var buttonToggle = document.querySelector(".buttonToggleInjector");
+buttonToggle.onclick = function (e) {
   e.preventDefault();
-  self.port.emit('perform', 'toggle');
+  self.port.emit("perform", "toggle");
 };
 
-
-var buttonReset = document.querySelector('.buttonResetSettings');
-buttonReset.onclick = function(e) {
+var buttonReset = document.querySelector(".buttonResetSettings");
+buttonReset.onclick = function (e) {
   e.preventDefault();
-  self.port.emit('perform', 'reset');
+  self.port.emit("perform", "reset");
 };
 
-
-var buttonShowUi = document.querySelector('.buttonShowUi');
-buttonShowUi.onclick = function(e) {
+var buttonShowUi = document.querySelector(".buttonShowUi");
+buttonShowUi.onclick = function (e) {
   e.preventDefault();
-  self.port.emit('perform', 'show_ui');
+  self.port.emit("perform", "show_ui");
 };
-
 
 var currentState = null;
-self.port.on('show', function(state) {
+self.port.on("show", function (state) {
   currentState = state;
-  if (currentState && currentState['enabled']) {
-    buttonToggle.innerHTML = 'Disable For This URL';
+  if (currentState && currentState["enabled"]) {
+    buttonToggle.innerHTML = "Disable For This URL";
   } else {
-    buttonToggle.innerHTML = 'Enable For This URL';
+    buttonToggle.innerHTML = "Enable For This URL";
   }
 });
-

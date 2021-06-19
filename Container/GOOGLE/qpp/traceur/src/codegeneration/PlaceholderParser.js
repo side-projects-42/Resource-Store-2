@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ArrayMap} from '../util/ArrayMap.js';
+import { ArrayMap } from "../util/ArrayMap.js";
 import {
   BLOCK,
   EXPRESSION_STATEMENT,
-  IDENTIFIER_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
-import {IdentifierToken} from '../syntax/IdentifierToken.js';
-import {MutedErrorReporter} from '../util/MutedErrorReporter.js';
-import {ParseTree} from '../syntax/trees/ParseTree.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {Parser} from '../syntax/Parser.js';
+  IDENTIFIER_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
+import { IdentifierToken } from "../syntax/IdentifierToken.js";
+import { MutedErrorReporter } from "../util/MutedErrorReporter.js";
+import { ParseTree } from "../syntax/trees/ParseTree.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { Parser } from "../syntax/Parser.js";
 import {
   PropertyMethodAssignment,
   PropertyNameAssignment,
-  PropertyNameShorthand
-} from '../syntax/trees/ParseTrees.js';
-import {SourceFile} from '../syntax/SourceFile.js';
-import {IDENTIFIER} from '../syntax/TokenType.js';
+  PropertyNameShorthand,
+} from "../syntax/trees/ParseTrees.js";
+import { SourceFile } from "../syntax/SourceFile.js";
+import { IDENTIFIER } from "../syntax/TokenType.js";
 import {
   createArrayLiteralExpression,
   createBindingIdentifier,
@@ -46,8 +46,8 @@ import {
   createParenExpression,
   createSetAccessor,
   createStringLiteral,
-  createVoid0
-} from './ParseTreeFactory.js';
+  createVoid0,
+} from "./ParseTreeFactory.js";
 
 /**
  * @fileoverview This file provides two template string functions,
@@ -74,7 +74,7 @@ import {
  */
 var NOT_FOUND = {};
 
-var PREFIX = '$__placeholder__';
+var PREFIX = "$__placeholder__";
 
 var cache = new ArrayMap();
 
@@ -117,8 +117,7 @@ function parse(sourceLiterals, values, doParse) {
     tree = doParse();
     cache.set(sourceLiterals, tree);
   }
-  if (!values.length)
-    return tree;
+  if (!values.length) return tree;
   return new PlaceholderTransformer(values).transformAny(tree);
 }
 
@@ -128,7 +127,6 @@ function parse(sourceLiterals, values, doParse) {
  * |PlaceholderTransformer|.
  */
 export class PlaceholderParser {
-
   /**
    * @param {Array.<string>} sourceLiterals
    * @return {ParseTree}
@@ -165,7 +163,7 @@ export class PlaceholderParser {
       source += PREFIX + (i - 1) + sourceLiterals[i];
     }
 
-    var file = new SourceFile('parse@TemplateParser', source);
+    var file = new SourceFile("parse@TemplateParser", source);
     var errorReporter = new MutedErrorReporter();
     var parser = new Parser(errorReporter, file);
     var tree = doParse(parser);
@@ -180,41 +178,34 @@ export class PlaceholderParser {
  * @return {ParseTree}
  */
 function convertValueToExpression(value) {
-  if (value instanceof ParseTree)
-    return value;
+  if (value instanceof ParseTree) return value;
   if (value instanceof IdentifierToken)
     return createIdentifierExpression(value);
   if (Array.isArray(value)) {
     if (value[0] instanceof ParseTree) {
-      if (value.length === 1)
-        return value[0];
-      if (value[0].isStatement())
-        return createBlock(value);
-      else
-        return createParenExpression(createCommaExpression(value));
+      if (value.length === 1) return value[0];
+      if (value[0].isStatement()) return createBlock(value);
+      else return createParenExpression(createCommaExpression(value));
     }
     return createArrayLiteralExpression(value.map(convertValueToExpression));
   }
-  if (value === null)
-    return createNullLiteral();
-  if (value === undefined)
-    return createVoid0();
+  if (value === null) return createNullLiteral();
+  if (value === undefined) return createVoid0();
 
   switch (typeof value) {
-    case 'string':
+    case "string":
       return createStringLiteral(value);
-    case 'boolean':
+    case "boolean":
       return createBooleanLiteral(value);
-    case 'number':
+    case "number":
       return createNumberLiteral(value);
   }
 
-  throw new Error('Not implemented');
+  throw new Error("Not implemented");
 }
 
 function convertValueToIdentifierToken(value) {
-  if (value instanceof IdentifierToken)
-    return value;
+  if (value instanceof IdentifierToken) return value;
   return createIdentifierToken(value);
 }
 
@@ -247,62 +238,57 @@ export class PlaceholderTransformer extends ParseTreeTransformer {
    *     represent a placeholder.
    */
   getValue_(str) {
-    if (str.indexOf(PREFIX) !== 0)
-      return NOT_FOUND;
+    if (str.indexOf(PREFIX) !== 0) return NOT_FOUND;
     return this.getValueAt(Number(str.slice(PREFIX.length)));
   }
 
   transformIdentifierExpression(tree) {
     var value = this.getValue_(tree.identifierToken.value);
-    if (value === NOT_FOUND)
-      return tree;
+    if (value === NOT_FOUND) return tree;
     return convertValueToExpression(value);
   }
 
   transformBindingIdentifier(tree) {
     var value = this.getValue_(tree.identifierToken.value);
-    if (value === NOT_FOUND)
-      return tree;
+    if (value === NOT_FOUND) return tree;
     return createBindingIdentifier(value);
   }
 
   transformExpressionStatement(tree) {
     if (tree.expression.type === IDENTIFIER_EXPRESSION) {
-      var transformedExpression =
-          this.transformIdentifierExpression(tree.expression);
-      if (transformedExpression === tree.expression)
-        return tree;
-      if (transformedExpression.isStatement())
-        return transformedExpression;
+      var transformedExpression = this.transformIdentifierExpression(
+        tree.expression
+      );
+      if (transformedExpression === tree.expression) return tree;
+      if (transformedExpression.isStatement()) return transformedExpression;
       return createExpressionStatement(transformedExpression);
     }
     return super.transformExpressionStatement(tree);
   }
 
   transformBlock(tree) {
-    if (tree.statements.length === 1 &&
-        tree.statements[0].type === EXPRESSION_STATEMENT) {
-      var transformedStatement =
-          this.transformExpressionStatement(tree.statements[0]);
-      if (transformedStatement === tree.statements[0])
-        return tree;
-      if (transformedStatement.type === BLOCK)
-        return transformedStatement;
+    if (
+      tree.statements.length === 1 &&
+      tree.statements[0].type === EXPRESSION_STATEMENT
+    ) {
+      var transformedStatement = this.transformExpressionStatement(
+        tree.statements[0]
+      );
+      if (transformedStatement === tree.statements[0]) return tree;
+      if (transformedStatement.type === BLOCK) return transformedStatement;
     }
     return super.transformBlock(tree);
   }
 
   transformGetAccessor(tree) {
     var value = this.getValue_(tree.name.value);
-    if (value === NOT_FOUND)
-      return super.transformGetAccessor(tree);
+    if (value === NOT_FOUND) return super.transformGetAccessor(tree);
     return createGetAccessor(value, this.transformAny(tree.body));
   }
 
   transformMemberExpression(tree) {
     var value = this.getValue_(tree.memberName.value);
-    if (value === NOT_FOUND)
-      return super.transformMemberExpression(tree);
+    if (value === NOT_FOUND) return super.transformMemberExpression(tree);
     var operand = this.transformAny(tree.operand);
     return createMemberExpression(operand, value);
   }
@@ -312,12 +298,13 @@ export class PlaceholderTransformer extends ParseTreeTransformer {
       var value = this.getValue_(tree.name.value);
       if (value !== NOT_FOUND) {
         return new PropertyMethodAssignment(
-            tree.location,
-            tree.isStatic,
-            tree.isGenerator,
-            convertValueToIdentifierToken(value),
-            this.transformAny(tree.formalParameterList),
-            this.transformAny(tree.functionBody));
+          tree.location,
+          tree.isStatic,
+          tree.isGenerator,
+          convertValueToIdentifierToken(value),
+          this.transformAny(tree.formalParameterList),
+          this.transformAny(tree.functionBody)
+        );
       }
     }
     return super.transformPropertyMethodAssignment(tree);
@@ -327,9 +314,11 @@ export class PlaceholderTransformer extends ParseTreeTransformer {
     if (tree.name.type === IDENTIFIER) {
       var value = this.getValue_(tree.name.value);
       if (value !== NOT_FOUND) {
-        return new PropertyNameAssignment(null,
-            convertValueToIdentifierToken(value),
-            this.transformAny(tree.value));
+        return new PropertyNameAssignment(
+          null,
+          convertValueToIdentifierToken(value),
+          this.transformAny(tree.value)
+        );
       }
     }
     return super.transformPropertyNameAssignment(tree);
@@ -338,20 +327,22 @@ export class PlaceholderTransformer extends ParseTreeTransformer {
   transformPropertyNameShorthand(tree) {
     var value = this.getValue_(tree.name.value);
     if (value !== NOT_FOUND) {
-      if (value instanceof ParseTree)
-        return value;
-      return new PropertyNameShorthand(null,
-                                       convertValueToIdentifierToken(value));
+      if (value instanceof ParseTree) return value;
+      return new PropertyNameShorthand(
+        null,
+        convertValueToIdentifierToken(value)
+      );
     }
     return super.transformPropertyNameShorthand(tree);
   }
 
   transformSetAccessor(tree) {
     var value = this.getValue_(tree.name.value);
-    if (value === NOT_FOUND)
-      return super.transformSetAccessor(tree);
-    return createSetAccessor(value,
-                            this.transformAny(tree.parameter),
-                            this.transformAny(tree.body));
+    if (value === NOT_FOUND) return super.transformSetAccessor(tree);
+    return createSetAccessor(
+      value,
+      this.transformAny(tree.parameter),
+      this.transformAny(tree.body)
+    );
   }
 }

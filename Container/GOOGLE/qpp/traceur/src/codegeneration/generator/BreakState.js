@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {FallThroughState} from './FallThroughState.js';
-import {State} from './State.js';
-import {createStatementList} from '../ParseTreeFactory.js';
+import { FallThroughState } from "./FallThroughState.js";
+import { State } from "./State.js";
+import { createStatementList } from "../ParseTreeFactory.js";
 
 export class BreakState extends State {
   /**
@@ -33,7 +33,9 @@ export class BreakState extends State {
    */
   replaceState(oldState, newState) {
     return new BreakState(
-        State.replaceStateId(this.id, oldState, newState), this.label);
+      State.replaceStateId(this.id, oldState, newState),
+      this.label
+    );
   }
 
   /**
@@ -43,7 +45,7 @@ export class BreakState extends State {
    * @return {Array.<ParseTree>}
    */
   transform(enclosingFinally, machineEndState, reporter) {
-    throw new Error('These should be removed before the transform step');
+    throw new Error("These should be removed before the transform step");
   }
 
   /**

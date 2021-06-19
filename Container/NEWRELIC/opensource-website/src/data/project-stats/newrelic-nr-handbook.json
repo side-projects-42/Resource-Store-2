@@ -1,0 +1,56 @@
+{
+  "projectFullName": "newrelic/nr-handbook",
+  "issues": {
+    "open": 0
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 36,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 4,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 28544519,
+      "login": "goldenplec",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/28544519?v=4",
+      "htmlUrl": "https://github.com/goldenplec",
+      "contributions": 1
+    },
+    {
+      "id": 8999556,
+      "login": "frank-dornberger",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8999556?v=4",
+      "htmlUrl": "https://github.com/frank-dornberger",
+      "contributions": 3
+    },
+    {
+      "id": 184273,
+      "login": "kidk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/184273?v=4",
+      "htmlUrl": "https://github.com/kidk",
+      "contributions": 1
+    },
+    {
+      "id": 37779995,
+      "login": "ryanv94",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/37779995?v=4",
+      "htmlUrl": "https://github.com/ryanv94",
+      "contributions": 25
+    }
+  ],
+  "languages": [],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

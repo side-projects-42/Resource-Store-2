@@ -11,15 +11,13 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.chunks.FileHeaderChunk');
+goog.provide("wtf.io.cff.chunks.FileHeaderChunk");
 
-goog.require('goog.asserts');
-goog.require('wtf.io.cff.Chunk');
-goog.require('wtf.io.cff.ChunkType');
-goog.require('wtf.io.cff.PartType');
-goog.require('wtf.io.cff.parts.FileHeaderPart');
-
-
+goog.require("goog.asserts");
+goog.require("wtf.io.cff.Chunk");
+goog.require("wtf.io.cff.ChunkType");
+goog.require("wtf.io.cff.PartType");
+goog.require("wtf.io.cff.parts.FileHeaderPart");
 
 /**
  * A chunk containing trace header data.
@@ -30,7 +28,7 @@ goog.require('wtf.io.cff.parts.FileHeaderPart');
  * @constructor
  * @extends {wtf.io.cff.Chunk}
  */
-wtf.io.cff.chunks.FileHeaderChunk = function(opt_chunkId) {
+wtf.io.cff.chunks.FileHeaderChunk = function (opt_chunkId) {
   goog.base(this, opt_chunkId, wtf.io.cff.ChunkType.FILE_HEADER);
 
   /**
@@ -42,11 +40,10 @@ wtf.io.cff.chunks.FileHeaderChunk = function(opt_chunkId) {
 };
 goog.inherits(wtf.io.cff.chunks.FileHeaderChunk, wtf.io.cff.Chunk);
 
-
 /**
  * @override
  */
-wtf.io.cff.chunks.FileHeaderChunk.prototype.load = function(parts) {
+wtf.io.cff.chunks.FileHeaderChunk.prototype.load = function (parts) {
   goog.asserts.assert(!this.fileHeaderPart_);
 
   // Add all parts.
@@ -55,43 +52,46 @@ wtf.io.cff.chunks.FileHeaderChunk.prototype.load = function(parts) {
     this.addPart(part);
     switch (part.getType()) {
       case wtf.io.cff.PartType.FILE_HEADER:
-        this.fileHeaderPart_ =
-            /** @type {!wtf.io.cff.parts.FileHeaderPart} */ (part);
+        this.fileHeaderPart_ = /** @type {!wtf.io.cff.parts.FileHeaderPart} */ (
+          part
+        );
         break;
       default:
-        goog.asserts.fail('Unknown part type: ' + part.getType());
-        throw new Error('Unknown part type ' + part.getType() + ' in chunk.');
+        goog.asserts.fail("Unknown part type: " + part.getType());
+        throw new Error("Unknown part type " + part.getType() + " in chunk.");
     }
   }
 
   goog.asserts.assert(this.fileHeaderPart_);
   if (!this.fileHeaderPart_) {
-    throw new Error('No file header part found in header chunk.');
+    throw new Error("No file header part found in header chunk.");
   }
 };
-
 
 /**
  * Initializes a file header chunk with the given header data.
  * @param {wtf.data.ContextInfo=} opt_contextInfo Initial context info.
  * @param {Object=} opt_metadata Metadata.
  */
-wtf.io.cff.chunks.FileHeaderChunk.prototype.init = function(
-    opt_contextInfo, opt_metadata) {
+wtf.io.cff.chunks.FileHeaderChunk.prototype.init = function (
+  opt_contextInfo,
+  opt_metadata
+) {
   this.fileHeader_ = new wtf.io.cff.parts.FileHeaderPart(
-      opt_contextInfo, opt_metadata);
+    opt_contextInfo,
+    opt_metadata
+  );
 
   this.removeAllParts();
   this.addPart(this.fileHeader_);
 };
-
 
 /**
  * Gets the file header data.
  * The header must have been initialized before calling this method.
  * @return {!wtf.io.cff.parts.FileHeaderPart} File header data.
  */
-wtf.io.cff.chunks.FileHeaderChunk.prototype.getFileHeader = function() {
+wtf.io.cff.chunks.FileHeaderChunk.prototype.getFileHeader = function () {
   goog.asserts.assert(this.fileHeaderPart_);
   return this.fileHeaderPart_;
 };

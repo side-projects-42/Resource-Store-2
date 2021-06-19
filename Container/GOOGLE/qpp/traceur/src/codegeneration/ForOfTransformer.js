@@ -18,11 +18,11 @@ import {
   GET_ITERATOR,
   MOVE_NEXT,
   RUNTIME,
-  TRACEUR_RUNTIME
-} from '../syntax/PredefinedName.js';
-import {VARIABLE_DECLARATION_LIST} from '../syntax/trees/ParseTreeType.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {VAR} from '../syntax/TokenType.js';
+  TRACEUR_RUNTIME,
+} from "../syntax/PredefinedName.js";
+import { VARIABLE_DECLARATION_LIST } from "../syntax/trees/ParseTreeType.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { VAR } from "../syntax/TokenType.js";
 import {
   createArgumentList,
   createAssignmentExpression,
@@ -36,15 +36,14 @@ import {
   createMemberExpression,
   createTryStatement,
   createVariableStatement,
-  createWhileStatement
-} from './ParseTreeFactory.js';
-import {parseStatement} from './PlaceholderParser.js';
+  createWhileStatement,
+} from "./ParseTreeFactory.js";
+import { parseStatement } from "./PlaceholderParser.js";
 
 /**
  * Desugars for-of statement.
  */
 export class ForOfTransformer extends TempVarTransformer {
-
   // for ( initializer of collection ) statement
   //
   // var $it = traceurRuntime.getIterator(collection);
@@ -69,19 +68,22 @@ export class ForOfTransformer extends TempVarTransformer {
     if (tree.initializer.type === VARIABLE_DECLARATION_LIST) {
       // {var,let} initializer = $it.next();
       assignment = createVariableStatement(
-          tree.initializer.declarationType,
-          tree.initializer.declarations[0].lvalue,
-          createCallExpression(createMemberExpression(iter, 'next')));
+        tree.initializer.declarationType,
+        tree.initializer.declarations[0].lvalue,
+        createCallExpression(createMemberExpression(iter, "next"))
+      );
     } else {
       // initializer = $it.next();
       assignment = createExpressionStatement(
-          createAssignmentExpression(
-              tree.initializer,
-              createCallExpression(createMemberExpression(iter, 'next'))));
+        createAssignmentExpression(
+          tree.initializer,
+          createCallExpression(createMemberExpression(iter, "next"))
+        )
+      );
     }
 
     var id = createIdentifierExpression;
-    return parseStatement `
+    return parseStatement`
       {
         var ${iter} = ${id(TRACEUR_RUNTIME)}.getIterator(${tree.collection});
         try {

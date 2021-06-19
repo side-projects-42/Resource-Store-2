@@ -1,4 +1,4 @@
-const getRightToLeftAdapter = function(rectX, width) {
+const getRightToLeftAdapter = function (rectX, width) {
   return {
     x(x) {
       return rectX + rectX + width - x;
@@ -7,10 +7,10 @@ const getRightToLeftAdapter = function(rectX, width) {
       width = w;
     },
     textAlign(align) {
-      if (align === 'center') {
+      if (align === "center") {
         return align;
       }
-      return align === 'right' ? 'left' : 'right';
+      return align === "right" ? "left" : "right";
     },
     xPlus(x, value) {
       return x - value;
@@ -21,12 +21,13 @@ const getRightToLeftAdapter = function(rectX, width) {
   };
 };
 
-const getLeftToRightAdapter = function() {
+const getLeftToRightAdapter = function () {
   return {
     x(x) {
       return x;
     },
-    setWidth(w) { // eslint-disable-line no-unused-vars
+    setWidth(w) {
+      // eslint-disable-line no-unused-vars
     },
     textAlign(align) {
       return align;
@@ -34,7 +35,8 @@ const getLeftToRightAdapter = function() {
     xPlus(x, value) {
       return x + value;
     },
-    leftForLtr(x, _itemWidth) { // eslint-disable-line no-unused-vars
+    leftForLtr(x, _itemWidth) {
+      // eslint-disable-line no-unused-vars
       return x;
     },
   };
@@ -46,14 +48,14 @@ export function getRtlAdapter(rtl, rectX, width) {
 
 export function overrideTextDirection(ctx, direction) {
   let style, original;
-  if (direction === 'ltr' || direction === 'rtl') {
+  if (direction === "ltr" || direction === "rtl") {
     style = ctx.canvas.style;
     original = [
-      style.getPropertyValue('direction'),
-      style.getPropertyPriority('direction'),
+      style.getPropertyValue("direction"),
+      style.getPropertyPriority("direction"),
     ];
 
-    style.setProperty('direction', direction, 'important');
+    style.setProperty("direction", direction, "important");
     ctx.prevTextDirection = original;
   }
 }
@@ -61,6 +63,6 @@ export function overrideTextDirection(ctx, direction) {
 export function restoreTextDirection(ctx, original) {
   if (original !== undefined) {
     delete ctx.prevTextDirection;
-    ctx.canvas.style.setProperty('direction', original[0], original[1]);
+    ctx.canvas.style.setProperty("direction", original[0], original[1]);
   }
 }

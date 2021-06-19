@@ -25,96 +25,99 @@ function generateData() {
 // </block:setup>
 
 var config = /* <block:config:0> */ {
-  type: 'bubble',
+  type: "bubble",
   data: {
-    datasets: [{
-      backgroundColor: Utils.color(0),
-      borderColor: Utils.color(0),
-      data: generateData()
-    }, {
-      backgroundColor: Utils.color(1),
-      borderColor: Utils.color(1),
-      data: generateData()
-    }]
+    datasets: [
+      {
+        backgroundColor: Utils.color(0),
+        borderColor: Utils.color(0),
+        data: generateData(),
+      },
+      {
+        backgroundColor: Utils.color(1),
+        borderColor: Utils.color(1),
+        data: generateData(),
+      },
+    ],
   },
   options: {
     plugins: {
       datalabels: {
-        anchor: function(context) {
+        anchor: function (context) {
           var value = context.dataset.data[context.dataIndex];
-          return value.v < 50 ? 'end' : 'center';
+          return value.v < 50 ? "end" : "center";
         },
-        align: function(context) {
+        align: function (context) {
           var value = context.dataset.data[context.dataIndex];
-          return value.v < 50 ? 'end' : 'center';
+          return value.v < 50 ? "end" : "center";
         },
-        color: function(context) {
+        color: function (context) {
           var value = context.dataset.data[context.dataIndex];
-          return value.v < 50 ? context.dataset.backgroundColor : 'white';
+          return value.v < 50 ? context.dataset.backgroundColor : "white";
         },
         font: {
-          weight: 'bold'
+          weight: "bold",
         },
-        formatter: function(value) {
+        formatter: function (value) {
           return Math.round(value.v);
         },
         offset: 2,
-        padding: 0
-      }
+        padding: 0,
+      },
     },
 
     // Core options
     aspectRatio: 5 / 3,
     layout: {
-      padding: 16
+      padding: 16,
     },
     elements: {
       point: {
-        radius: function(context) {
+        radius: function (context) {
           var value = context.dataset.data[context.dataIndex];
           var size = context.chart.width;
           var base = Math.abs(value.v) / 100;
           return (size / 24) * base;
-        }
-      }
+        },
+      },
     },
-  }
-} /* </block:config> */;
+  },
+}; /* </block:config> */
 
 var actions = [
   {
-    name: 'Randomize',
-    handler: function(chart) {
-      chart.data.datasets.forEach(function(dataset, i) {
+    name: "Randomize",
+    handler: function (chart) {
+      chart.data.datasets.forEach(function (dataset, i) {
         dataset.backgroundColor = dataset.borderColor = Utils.color();
         dataset.data = generateData();
       });
 
       chart.update();
-    }
+    },
   },
   {
-    name: 'Add data',
-    handler: function(chart) {
+    name: "Add data",
+    handler: function (chart) {
       chart.data.labels.push(chart.data.labels.length);
-      chart.data.datasets.forEach(function(dataset, i) {
+      chart.data.datasets.forEach(function (dataset, i) {
         dataset.data.push(generatePoint());
       });
 
       chart.update();
-    }
+    },
   },
   {
-    name: 'Remove data',
-    handler: function(chart) {
+    name: "Remove data",
+    handler: function (chart) {
       chart.data.labels.shift();
-      chart.data.datasets.forEach(function(dataset, i) {
+      chart.data.datasets.forEach(function (dataset, i) {
         dataset.data.shift();
       });
 
       chart.update();
-    }
-  }
+    },
+  },
 ];
 
 module.exports = {

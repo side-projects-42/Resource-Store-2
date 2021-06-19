@@ -2,11 +2,11 @@
 
 Namespace: `options.interaction`, the global interaction configuration is at `Chart.defaults.interaction`. To configure which events trigger chart interactions, see [events](#events).
 
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| `mode` | `string` | `'nearest'` | Sets which elements appear in the interaction. See [Interaction Modes](#modes) for details.
-| `intersect` | `boolean` | `true` | if true, the interaction mode only applies when the mouse position intersects an item on the chart.
-| `axis` | `string` | `'x'` | Can be set to `'x'`, `'y'`, or `'xy'` to define which directions are used in calculating distances. Defaults to `'x'` for `'index'` mode and `'xy'` in `dataset` and `'nearest'` modes.
+| Name        | Type      | Default     | Description                                                                                                                                                                             |
+| ----------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mode`      | `string`  | `'nearest'` | Sets which elements appear in the interaction. See [Interaction Modes](#modes) for details.                                                                                             |
+| `intersect` | `boolean` | `true`      | if true, the interaction mode only applies when the mouse position intersects an item on the chart.                                                                                     |
+| `axis`      | `string`  | `'x'`       | Can be set to `'x'`, `'y'`, or `'xy'` to define which directions are used in calculating distances. Defaults to `'x'` for `'index'` mode and `'xy'` in `dataset` and `'nearest'` modes. |
 
 By default, these options apply to both the hover and tooltip interactions. The same options can be set in the `options.hover` namespace, in which case they will only affect the hover interaction. Similarly, the options can be set in the `options.plugins.tooltip` namespace to independently configure the tooltip interactions.
 
@@ -15,11 +15,11 @@ By default, these options apply to both the hover and tooltip interactions. The 
 The following properties define how the chart interacts with events.
 Namespace: `options`
 
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| `events` | `string[]` | `['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove']` | The `events` option defines the browser events that the chart should listen to for. Each of these events trigger hover and are passed to plugins. [more...](#event-option)
-| `onHover` | `function` | `null` | Called when any of the events fire over chartArea. Passed the event, an array of active elements (bars, points, etc), and the chart.
-| `onClick` | `function` | `null` | Called if the event is of type `'mouseup'`, `'click'` or '`'contextmenu'` over chartArea. Passed the event, an array of active elements, and the chart.
+| Name      | Type       | Default                                                         | Description                                                                                                                                                                |
+| --------- | ---------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `events`  | `string[]` | `['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove']` | The `events` option defines the browser events that the chart should listen to for. Each of these events trigger hover and are passed to plugins. [more...](#event-option) |
+| `onHover` | `function` | `null`                                                          | Called when any of the events fire over chartArea. Passed the event, an array of active elements (bars, points, etc), and the chart.                                       |
+| `onClick` | `function` | `null`                                                          | Called if the event is of type `'mouseup'`, `'click'` or '`'contextmenu'` over chartArea. Passed the event, an array of active elements, and the chart.                    |
 
 ### Event Option
 
@@ -27,12 +27,12 @@ For example, to have the chart only respond to click events, you could do:
 
 ```javascript
 var chart = new Chart(ctx, {
-  type: 'line',
+  type: "line",
   data: data,
   options: {
     // This chart will not respond to mousemove, etc
-    events: ['click']
-  }
+    events: ["click"],
+  },
 });
 ```
 
@@ -40,19 +40,19 @@ Events for each plugin can be further limited by defining (allowed) events array
 
 ```javascript
 var chart = new Chart(ctx, {
-  type: 'line',
+  type: "line",
   data: data,
   options: {
     // All of these (default) events trigger a hover and are passed to all plugins,
     // unless limited at plugin options
-    events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+    events: ["mousemove", "mouseout", "click", "touchstart", "touchmove"],
     plugins: {
       tooltip: {
         // Tooltip will only receive click events
-        events: ['click']
-      }
-    }
-  }
+        events: ["click"],
+      },
+    },
+  },
 });
 ```
 
@@ -62,17 +62,17 @@ A common occurrence is taking an event, such as a click, and finding the data co
 
 ```javascript
 const chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        onClick: (e) => {
-            const canvasPosition = Chart.helpers.getRelativePosition(e, chart);
+  type: "line",
+  data: data,
+  options: {
+    onClick: (e) => {
+      const canvasPosition = Chart.helpers.getRelativePosition(e, chart);
 
-            // Substitute the appropriate scale IDs
-            const dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
-            const dataY = chart.scales.y.getValueForPixel(canvasPosition.y);
-        }
-    }
+      // Substitute the appropriate scale IDs
+      const dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
+      const dataY = chart.scales.y.getValueForPixel(canvasPosition.y);
+    },
+  },
 });
 ```
 
@@ -90,13 +90,13 @@ Finds all of the items that intersect the point.
 
 ```javascript
 var chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        interaction: {
-            mode: 'point'
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    interaction: {
+      mode: "point",
+    },
+  },
 });
 ```
 
@@ -106,13 +106,13 @@ Gets the items that are at the nearest distance to the point. The nearest item i
 
 ```javascript
 var chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        interaction: {
-            mode: 'nearest'
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    interaction: {
+      mode: "nearest",
+    },
+  },
 });
 ```
 
@@ -122,13 +122,13 @@ Finds item at the same index. If the `intersect` setting is true, the first inte
 
 ```javascript
 var chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        interaction: {
-            mode: 'index'
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    interaction: {
+      mode: "index",
+    },
+  },
 });
 ```
 
@@ -136,14 +136,14 @@ To use index mode in a chart like the horizontal bar chart, where we search alon
 
 ```javascript
 var chart = new Chart(ctx, {
-    type: 'bar',
-    data: data,
-    options: {
-        interaction: {
-            mode: 'index',
-            axis: 'y'
-        }
-    }
+  type: "bar",
+  data: data,
+  options: {
+    interaction: {
+      mode: "index",
+      axis: "y",
+    },
+  },
 });
 ```
 
@@ -153,13 +153,13 @@ Finds items in the same dataset. If the `intersect` setting is true, the first i
 
 ```javascript
 var chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        interaction: {
-            mode: 'dataset'
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    interaction: {
+      mode: "dataset",
+    },
+  },
 });
 ```
 
@@ -169,13 +169,13 @@ Returns all items that would intersect based on the `X` coordinate of the positi
 
 ```javascript
 var chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        interaction: {
-            mode: 'x'
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    interaction: {
+      mode: "x",
+    },
+  },
 });
 ```
 
@@ -185,12 +185,12 @@ Returns all items that would intersect based on the `Y` coordinate of the positi
 
 ```javascript
 var chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        interaction: {
-            mode: 'y'
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    interaction: {
+      mode: "y",
+    },
+  },
 });
 ```

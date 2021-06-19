@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 import {
   ArrayPattern,
   BindingElement,
@@ -21,15 +21,14 @@ import {
   ObjectPattern,
   ObjectPatternField,
   RestParameter,
-  SpreadPatternElement
-} from '../syntax/trees/ParseTrees.js';
-import {EQUAL} from '../syntax/TokenType.js';
+  SpreadPatternElement,
+} from "../syntax/trees/ParseTrees.js";
+import { EQUAL } from "../syntax/TokenType.js";
 import {
   IDENTIFIER_EXPRESSION,
-  SPREAD_PATTERN_ELEMENT
-} from '../syntax/trees/ParseTreeType.js';
-import {AssignmentPatternTransformerError} from
-    './AssignmentPatternTransformer.js';
+  SPREAD_PATTERN_ELEMENT,
+} from "../syntax/trees/ParseTreeType.js";
+import { AssignmentPatternTransformerError } from "./AssignmentPatternTransformer.js";
 
 /**
  * @fileoverview This transformer is used by the parser to transform a
@@ -54,19 +53,22 @@ export class CoverFormalsTransformer extends ParseTreeTransformer {
   }
 
   transformIdentifierExpression(tree) {
-    return new BindingElement(tree.location,
-        new BindingIdentifier(tree.location, tree.identifierToken),
-        null);
+    return new BindingElement(
+      tree.location,
+      new BindingIdentifier(tree.location, tree.identifierToken),
+      null
+    );
   }
 
   transformBinaryOperator(tree) {
-    if (tree.operator.type !== EQUAL)
-      throw new CoverFormalsTransformerError();
+    if (tree.operator.type !== EQUAL) throw new CoverFormalsTransformerError();
 
     var bindingElement = this.transformAny(tree.left);
-    return new BindingElement(tree.location,
-                              bindingElement.binding,
-                              tree.right);
+    return new BindingElement(
+      tree.location,
+      bindingElement.binding,
+      tree.right
+    );
   }
 
   transformArrayLiteralExpression(tree) {
@@ -84,29 +86,39 @@ export class CoverFormalsTransformer extends ParseTreeTransformer {
         throw new CoverFormalsTransformerError();
     }
 
-    return new BindingElement(tree.location,
-                              new ArrayPattern(tree.location, elements),
-                              null);
+    return new BindingElement(
+      tree.location,
+      new ArrayPattern(tree.location, elements),
+      null
+    );
   }
 
   transformObjectLiteralExpression(tree) {
     var propertyNameAndValues = this.transformList(tree.propertyNameAndValues);
 
-    return new BindingElement(tree.location,
-        new ObjectPattern(tree.location, propertyNameAndValues), null);
+    return new BindingElement(
+      tree.location,
+      new ObjectPattern(tree.location, propertyNameAndValues),
+      null
+    );
   }
 
   transformPropertyNameAssignment(tree) {
     // TODO(arv) name is currently just a token but that will change with
     // [names].
-    return new ObjectPatternField(tree.location, tree.name,
-                                  this.transformAny(tree.value));
+    return new ObjectPatternField(
+      tree.location,
+      tree.name,
+      this.transformAny(tree.value)
+    );
   }
 
   transformPropertyNameShorthand(tree) {
-    return new BindingElement(tree.location,
-                              new BindingIdentifier(tree.location, tree.name),
-                              null);
+    return new BindingElement(
+      tree.location,
+      new BindingIdentifier(tree.location, tree.name),
+      null
+    );
   }
 
   transformSpreadExpression(tree) {
@@ -114,9 +126,10 @@ export class CoverFormalsTransformer extends ParseTreeTransformer {
     if (tree.expression.type !== IDENTIFIER_EXPRESSION)
       throw new CoverFormalsTransformerError();
 
-    var bindingIdentifier =
-        new BindingIdentifier(tree.expression.location,
-                              tree.expression.identifierToken);
+    var bindingIdentifier = new BindingIdentifier(
+      tree.expression.location,
+      tree.expression.identifierToken
+    );
 
     if (this.inArrayPattern_)
       return new SpreadPatternElement(tree.location, bindingIdentifier);

@@ -1,17 +1,19 @@
 function noClassA() {}
 noClassA.prototype = {
-  ma: function() { return 'ma'; }
-}
+  ma: function () {
+    return "ma";
+  },
+};
 
 class NoClassB extends noClassA {
   mb() {
-    return 'mb ' + super.ma();
+    return "mb " + super.ma();
   }
 }
 
 // ----------------------------------------------------------------------------
 
-var b = new NoClassB;
+var b = new NoClassB();
 assertTrue(b instanceof noClassA);
-assertEquals('ma', b.ma());
-assertEquals('mb ma', b.mb());
+assertEquals("ma", b.ma());
+assertEquals("mb ma", b.mb());

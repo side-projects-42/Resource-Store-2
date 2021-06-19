@@ -13,7 +13,7 @@
 // limitations under the License.
 
 function assertString(value) {
-  if (typeof value !== 'string') throw new TypeError();
+  if (typeof value !== "string") throw new TypeError();
 }
 
 export class StringSet {

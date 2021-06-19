@@ -2,4 +2,4 @@
 // Options: --property-name-shorthand=false
 
 var x = 42;
-var object = {x};
+var object = { x };

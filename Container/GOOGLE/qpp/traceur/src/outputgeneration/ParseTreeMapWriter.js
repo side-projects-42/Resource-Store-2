@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeWriter} from './ParseTreeWriter.js';
+import { ParseTreeWriter } from "./ParseTreeWriter.js";
 
 /**
  * Converts a ParseTree to text and a source Map
@@ -45,14 +45,14 @@ export class ParseTreeMapWriter extends ParseTreeWriter {
     var mapping = {
       generated: {
         line: this.outputLineCount_,
-        column: this.currentLine_.length
+        column: this.currentLine_.length,
       },
       original: {
         // +1 because line is zero based
         line: this.currentLocation.start.line + 1,
-        column: this.currentLocation.start.column
-       },
-       source: this.currentLocation.start.source.name
+        column: this.currentLocation.start.column,
+      },
+      source: this.currentLocation.start.source.name,
     };
     this.sourceMapGenerator_.addMapping(mapping);
   }

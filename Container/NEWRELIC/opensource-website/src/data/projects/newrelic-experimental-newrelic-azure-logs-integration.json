@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-azure-logs-integration",
+  "fullName": "newrelic-experimental/newrelic-azure-logs-integration",
+  "slug": "newrelic-experimental-newrelic-azure-logs-integration",
+  "owner": {
+    "login": "newrelic-experimental",
+    "type": "Organization"
+  },
+  "title": "Azure EventHub integration for New Relic Logs",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic-experimental/newrelic-azure-logs-integration",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic-experimental/newrelic-azure-logs-integration",
+  "iconUrl": null,
+  "shortDescription": "",
+  "description": "Azure EventHub data to New Relic Logs",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "C#",
+  "projectTags": ["logging", "nrlabs"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Azure EventHub integration for New Relic Logs",
+    "url": "https://github.com/newrelic-experimental/newrelic-azure-logs-integration"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "aws-log-ingestion",
+  "fullName": "newrelic/aws-log-ingestion",
+  "slug": "newrelic-aws-log-ingestion",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "AWS log ingestion",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/aws-log-ingestion",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/aws-log-ingestion",
+  "iconUrl": null,
+  "shortDescription": "AWS log ingestion",
+  "description": "AWS Serverless application that sends log data from CloudWatch Logs to New Relic Infrastructure - Cloud Integrations.",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Python",
+  "projectTags": [
+    "logging"
+  ],
+  "acceptsContributions": true,
+  "website": {
+    "title": "aws log-ingestion",
+    "url": "https://github.com/newrelic/aws-log-ingestion"
+  }
+}

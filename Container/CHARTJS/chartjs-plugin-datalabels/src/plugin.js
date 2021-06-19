@@ -2,15 +2,15 @@
  * @see https://github.com/chartjs/Chart.js/issues/4176
  */
 
-import Chart from 'chart.js';
-import Label from './label';
-import utils from './utils';
-import layout from './layout';
-import defaults from './defaults';
+import Chart from "chart.js";
+import Label from "./label";
+import utils from "./utils";
+import layout from "./layout";
+import defaults from "./defaults";
 
 var helpers = Chart.helpers;
-var EXPANDO_KEY = '$datalabels';
-var DEFAULT_KEY = '$default';
+var EXPANDO_KEY = "$datalabels";
+var DEFAULT_KEY = "$default";
 
 function configure(dataset, options) {
   var override = dataset.datalabels;
@@ -31,13 +31,9 @@ function configure(dataset, options) {
   delete options.labels;
 
   if (keys.length) {
-    keys.forEach(function(key) {
+    keys.forEach(function (key) {
       if (labels[key]) {
-        configs.push(helpers.merge({}, [
-          options,
-          labels[key],
-          {_key: key}
-        ]));
+        configs.push(helpers.merge({}, [options, labels[key], { _key: key }]));
       }
     });
   } else {
@@ -46,8 +42,8 @@ function configure(dataset, options) {
   }
 
   // listeners: {<event-type>: {<label-key>: <fn>}}
-  listeners = configs.reduce(function(target, config) {
-    helpers.each(config.listeners || {}, function(fn, event) {
+  listeners = configs.reduce(function (target, config) {
+    helpers.each(config.listeners || {}, function (fn, event) {
       target[event] = target[event] || {};
       target[event][config._key || DEFAULT_KEY] = fn;
     });
@@ -58,7 +54,7 @@ function configure(dataset, options) {
 
   return {
     labels: configs,
-    listeners: listeners
+    listeners: listeners,
   };
 }
 
@@ -122,9 +118,9 @@ function handleMoveEvents(chart, event) {
     return;
   }
 
-  if (event.type === 'mousemove') {
+  if (event.type === "mousemove") {
     label = layout.lookup(expando._labels, event);
-  } else if (event.type !== 'mouseout') {
+  } else if (event.type !== "mouseout") {
     return;
   }
 
@@ -160,32 +156,32 @@ function invalidate(chart) {
   // No render scheduled: trigger a "lazy" render that can be canceled in case
   // of hover interactions. The 1ms duration is a workaround to make sure an
   // animation is created so the controller can stop it before any transition.
-  chart.render({duration: 1, lazy: true});
+  chart.render({ duration: 1, lazy: true });
 }
 
 Chart.defaults.global.plugins.datalabels = defaults;
 
 export default {
-  id: 'datalabels',
+  id: "datalabels",
 
-  beforeInit: function(chart) {
+  beforeInit: function (chart) {
     chart[EXPANDO_KEY] = {
-      _actives: []
+      _actives: [],
     };
   },
 
-  beforeUpdate: function(chart) {
+  beforeUpdate: function (chart) {
     var expando = chart[EXPANDO_KEY];
     expando._listened = false;
-    expando._listeners = {};     // {<event-type>: {<dataset-index>: {<label-key>: <fn>}}}
-    expando._datasets = [];      // per dataset labels: [Label[]]
-    expando._labels = [];        // layouted labels: Label[]
+    expando._listeners = {}; // {<event-type>: {<dataset-index>: {<label-key>: <fn>}}}
+    expando._datasets = []; // per dataset labels: [Label[]]
+    expando._labels = []; // layouted labels: Label[]
   },
 
-  afterDatasetUpdate: function(chart, args, options) {
+  afterDatasetUpdate: function (chart, args, options) {
     var datasetIndex = args.index;
     var expando = chart[EXPANDO_KEY];
-    var labels = expando._datasets[datasetIndex] = [];
+    var labels = (expando._datasets[datasetIndex] = []);
     var visible = chart.isDatasetVisible(datasetIndex);
     var dataset = chart.data.datasets[datasetIndex];
     var config = configure(dataset, options);
@@ -207,14 +203,14 @@ export default {
           label = new Label(cfg, ctx, el, i);
           label.$groups = {
             _set: datasetIndex,
-            _key: key || DEFAULT_KEY
+            _key: key || DEFAULT_KEY,
           };
           label.$context = {
             active: false,
             chart: chart,
             dataIndex: i,
             dataset: dataset,
-            datasetIndex: datasetIndex
+            datasetIndex: datasetIndex,
           };
 
           label.update(label.$context);
@@ -229,49 +225,50 @@ export default {
     // Store listeners at the chart level and per event type to optimize
     // cases where no listeners are registered for a specific event.
     helpers.merge(expando._listeners, config.listeners, {
-      merger: function(event, target, source) {
+      merger: function (event, target, source) {
         target[event] = target[event] || {};
         target[event][args.index] = source[event];
         expando._listened = true;
-      }
+      },
     });
   },
 
-  afterUpdate: function(chart, options) {
+  afterUpdate: function (chart, options) {
     chart[EXPANDO_KEY]._labels = layout.prepare(
       chart[EXPANDO_KEY]._datasets,
-      options);
+      options
+    );
   },
 
   // Draw labels on top of all dataset elements
   // https://github.com/chartjs/chartjs-plugin-datalabels/issues/29
   // https://github.com/chartjs/chartjs-plugin-datalabels/issues/32
-  afterDatasetsDraw: function(chart) {
+  afterDatasetsDraw: function (chart) {
     layout.draw(chart, chart[EXPANDO_KEY]._labels);
   },
 
-  beforeEvent: function(chart, event) {
+  beforeEvent: function (chart, event) {
     // If there is no listener registered for this chart, `listened` will be false,
     // meaning we can immediately ignore the incoming event and avoid useless extra
     // computation for users who don't implement label interactions.
     if (chart[EXPANDO_KEY]._listened) {
       switch (event.type) {
-      case 'mousemove':
-      case 'mouseout':
-        handleMoveEvents(chart, event);
-        break;
-      case 'click':
-        handleClickEvents(chart, event);
-        break;
-      default:
+        case "mousemove":
+        case "mouseout":
+          handleMoveEvents(chart, event);
+          break;
+        case "click":
+          handleClickEvents(chart, event);
+          break;
+        default:
       }
     }
   },
 
-  afterEvent: function(chart) {
+  afterEvent: function (chart) {
     var expando = chart[EXPANDO_KEY];
     var previous = expando._actives;
-    var actives = expando._actives = chart.lastActive || [];  // public API?!
+    var actives = (expando._actives = chart.lastActive || []); // public API?!
     var updates = utils.arrayDiff(previous, actives);
     var i, ilen, j, jlen, update, label, labels;
 
@@ -281,7 +278,7 @@ export default {
         labels = update[0][EXPANDO_KEY] || [];
         for (j = 0, jlen = labels.length; j < jlen; ++j) {
           label = labels[j];
-          label.$context.active = (update[1] === 1);
+          label.$context.active = update[1] === 1;
           label.update(label.$context);
         }
       }
@@ -293,5 +290,5 @@ export default {
     }
 
     delete expando._dirty;
-  }
+  },
 };

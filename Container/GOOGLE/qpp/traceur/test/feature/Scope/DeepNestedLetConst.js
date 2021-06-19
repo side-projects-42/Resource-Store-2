@@ -1,12 +1,12 @@
 // Options: --block-binding
 
-var a = 'var a';
+var a = "var a";
 {
-  var b = 'var b';
+  var b = "var b";
   {
-    let c = 'let c';
+    let c = "let c";
     {
-      const d = 'const d';
+      const d = "const d";
     }
   }
 }

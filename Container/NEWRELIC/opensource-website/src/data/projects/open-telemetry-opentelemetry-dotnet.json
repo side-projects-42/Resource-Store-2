@@ -1,0 +1,13 @@
+{
+  "name": "opentelemetry-dotnet",
+  "githubUrl": "https://github.com/open-telemetry/opentelemetry-dotnet",
+  "fullName": "open-telemetry-opentelemetry-dotnet",
+  "slug": "open-telemetry-opentelemetry-dotnet",
+  "owner": {
+    "login": "open-telemetry",
+    "type": "Organization"
+  },
+  "title": "OpenTelemetry .NET SDK",
+  "description": "New Relic contributes to the .NET SDK project.",
+  "projectType": "external"
+}

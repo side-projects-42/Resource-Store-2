@@ -1,5 +1,5 @@
 // Options: --annotations
-import {Anno} from './resources/setup.js';
+import { Anno } from "./resources/setup.js";
 
 var object = {
   get foo() {
@@ -8,9 +8,10 @@ var object = {
       get b() {}
     }
     return Foo;
-  }
+  },
 };
 
-assert.deepEqual([new Anno],
-    Object.getOwnPropertyDescriptor(object.foo.prototype, 'b').get.annotations);
-
+assert.deepEqual(
+  [new Anno()],
+  Object.getOwnPropertyDescriptor(object.foo.prototype, "b").get.annotations
+);

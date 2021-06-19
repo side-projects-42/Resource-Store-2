@@ -1,22 +1,27 @@
-import {callback as call} from 'chart.js/helpers';
-import Hammer from 'hammerjs';
-import {pan, zoom} from './core';
-import {getState} from './state';
-import {directionEnabled, getEnabledScalesByPoint} from './utils';
+import { callback as call } from "chart.js/helpers";
+import Hammer from "hammerjs";
+import { pan, zoom } from "./core";
+import { getState } from "./state";
+import { directionEnabled, getEnabledScalesByPoint } from "./utils";
 
 function createEnabler(chart, state) {
-  return function(recognizer, event) {
+  return function (recognizer, event) {
     const panOptions = state.options.pan;
     if (!panOptions || !panOptions.enabled) {
       return false;
     }
-    if (!event || !event.srcEvent) { // Sometimes Hammer queries this with a null event.
+    if (!event || !event.srcEvent) {
+      // Sometimes Hammer queries this with a null event.
       return true;
     }
     const modifierKey = panOptions.modifierKey;
-    const requireModifier = modifierKey && (event.pointerType === 'mouse');
-    if (!state.panning && requireModifier && !event.srcEvent[modifierKey + 'Key']) {
-      call(panOptions.onPanRejected, [{chart, event}]);
+    const requireModifier = modifierKey && event.pointerType === "mouse";
+    if (
+      !state.panning &&
+      requireModifier &&
+      !event.srcEvent[modifierKey + "Key"]
+    ) {
+      call(panOptions.onPanRejected, [{ chart, event }]);
       return false;
     }
     return true;
@@ -38,24 +43,24 @@ function pinchAxes(p0, p1) {
   } else {
     y = true;
   }
-  return {x, y};
+  return { x, y };
 }
 
 function handlePinch(chart, state, e) {
   if (state.scale) {
-    const {center, pointers} = e;
+    const { center, pointers } = e;
     // Hammer reports the total scaling. We need the incremental amount
-    const zoomPercent = 1 / state.scale * e.scale;
+    const zoomPercent = (1 / state.scale) * e.scale;
     const rect = e.target.getBoundingClientRect();
     const pinch = pinchAxes(pointers[0], pointers[1]);
     const mode = state.options.zoom.mode;
     const amount = {
-      x: pinch.x && directionEnabled(mode, 'x', chart) ? zoomPercent : 1,
-      y: pinch.y && directionEnabled(mode, 'y', chart) ? zoomPercent : 1,
+      x: pinch.x && directionEnabled(mode, "x", chart) ? zoomPercent : 1,
+      y: pinch.y && directionEnabled(mode, "y", chart) ? zoomPercent : 1,
       focalPoint: {
         x: center.x - rect.left,
-        y: center.y - rect.top
-      }
+        y: center.y - rect.top,
+      },
     };
 
     zoom(chart, amount);
@@ -75,7 +80,7 @@ function endPinch(chart, state, e) {
   if (state.scale) {
     handlePinch(chart, state, e);
     state.scale = null; // reset
-    call(state.options.zoom.onZoomComplete, [{chart}]);
+    call(state.options.zoom.onZoomComplete, [{ chart }]);
   }
 }
 
@@ -83,28 +88,34 @@ function handlePan(chart, state, e) {
   const delta = state.delta;
   if (delta) {
     state.panning = true;
-    pan(chart, {x: e.deltaX - delta.x, y: e.deltaY - delta.y}, state.panScales);
-    state.delta = {x: e.deltaX, y: e.deltaY};
+    pan(
+      chart,
+      { x: e.deltaX - delta.x, y: e.deltaY - delta.y },
+      state.panScales
+    );
+    state.delta = { x: e.deltaX, y: e.deltaY };
   }
 }
 
 function startPan(chart, state, event) {
-  const {enabled, overScaleMode, onPanStart, onPanRejected} = state.options.pan;
+  const { enabled, overScaleMode, onPanStart, onPanRejected } =
+    state.options.pan;
   if (!enabled) {
     return;
   }
   const rect = event.target.getBoundingClientRect();
   const point = {
     x: event.center.x - rect.left,
-    y: event.center.y - rect.top
+    y: event.center.y - rect.top,
   };
 
-  if (call(onPanStart, [{chart, event, point}]) === false) {
-    return call(onPanRejected, [{chart, event}]);
+  if (call(onPanStart, [{ chart, event, point }]) === false) {
+    return call(onPanRejected, [{ chart, event }]);
   }
 
-  state.panScales = overScaleMode && getEnabledScalesByPoint(overScaleMode, point, chart);
-  state.delta = {x: 0, y: 0};
+  state.panScales =
+    overScaleMode && getEnabledScalesByPoint(overScaleMode, point, chart);
+  state.delta = { x: 0, y: 0 };
   clearTimeout(state.panEndTimeout);
   handlePan(chart, state, event);
 }
@@ -113,7 +124,7 @@ function endPan(chart, state) {
   state.delta = null;
   if (state.panning) {
     state.panEndTimeout = setTimeout(() => (state.panning = false), 500);
-    call(state.options.pan.onPanComplete, [{chart}]);
+    call(state.options.pan.onPanComplete, [{ chart }]);
   }
 }
 
@@ -121,24 +132,26 @@ const hammers = new WeakMap();
 export function startHammer(chart, options) {
   const state = getState(chart);
   const canvas = chart.canvas;
-  const {pan: panOptions, zoom: zoomOptions} = options;
+  const { pan: panOptions, zoom: zoomOptions } = options;
 
   const mc = new Hammer.Manager(canvas);
   if (zoomOptions && zoomOptions.pinch.enabled) {
     mc.add(new Hammer.Pinch());
-    mc.on('pinchstart', () => startPinch(chart, state));
-    mc.on('pinch', (e) => handlePinch(chart, state, e));
-    mc.on('pinchend', (e) => endPinch(chart, state, e));
+    mc.on("pinchstart", () => startPinch(chart, state));
+    mc.on("pinch", (e) => handlePinch(chart, state, e));
+    mc.on("pinchend", (e) => endPinch(chart, state, e));
   }
 
   if (panOptions && panOptions.enabled) {
-    mc.add(new Hammer.Pan({
-      threshold: panOptions.threshold,
-      enable: createEnabler(chart, state)
-    }));
-    mc.on('panstart', (e) => startPan(chart, state, e));
-    mc.on('panmove', (e) => handlePan(chart, state, e));
-    mc.on('panend', () => endPan(chart, state));
+    mc.add(
+      new Hammer.Pan({
+        threshold: panOptions.threshold,
+        enable: createEnabler(chart, state),
+      })
+    );
+    mc.on("panstart", (e) => startPan(chart, state, e));
+    mc.on("panmove", (e) => handlePan(chart, state, e));
+    mc.on("panend", () => endPan(chart, state));
   }
 
   hammers.set(chart, mc);
@@ -147,12 +160,12 @@ export function startHammer(chart, options) {
 export function stopHammer(chart) {
   const mc = hammers.get(chart);
   if (mc) {
-    mc.remove('pinchstart');
-    mc.remove('pinch');
-    mc.remove('pinchend');
-    mc.remove('panstart');
-    mc.remove('pan');
-    mc.remove('panend');
+    mc.remove("pinchstart");
+    mc.remove("pinch");
+    mc.remove("pinchend");
+    mc.remove("panstart");
+    mc.remove("pan");
+    mc.remove("panend");
     mc.destroy();
     hammers.delete(chart);
   }

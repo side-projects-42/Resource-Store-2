@@ -25,12 +25,12 @@ instrumention functions like `wtf.trace.instrument`.
 
 ## Guidelines
 
-* Trace fewer than 10,000 scopes per frame. That's about 2ms of overhead.
-* Never use `enterScope`, `appendScopeData`, or `timeStamp`.
-* Never use the `any` event argument type.
-* Prefer the `ascii` event argument type to `utf8` which can be up to 2x slower.
-* Avoid large strings as `ascii` or `utf8` event arguments.
-* Avoid arrays as event arguments where non-arrays work (x,y,z vs. []).
+- Trace fewer than 10,000 scopes per frame. That's about 2ms of overhead.
+- Never use `enterScope`, `appendScopeData`, or `timeStamp`.
+- Never use the `any` event argument type.
+- Prefer the `ascii` event argument type to `utf8` which can be up to 2x slower.
+- Avoid large strings as `ascii` or `utf8` event arguments.
+- Avoid arrays as event arguments where non-arrays work (x,y,z vs. []).
 
 ## Benchmarks
 
@@ -39,6 +39,7 @@ TODO(benvanik): post a public benchmark page.
 ## Warning Information
 
 <a name="warn_too_many_events_per_frame"></a>
+
 ### Too Many Events Per Frame
 
 TODO(benvanik): document this

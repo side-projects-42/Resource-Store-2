@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-unix-monitor",
+  "fullName": "newrelic/newrelic-unix-monitor",
+  "slug": "newrelic-newrelic-unix-monitor",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Unix Monitor",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-unix-monitor",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-unix-monitor",
+  "iconUrl": null,
+  "shortDescription": "Monitor Unix systems",
+  "description": "Monitoring service for Unix (AIX, HP-UX, Linux, Mac, Solaris) systems",
+  "ossCategory": "community-project",
+  "primaryLanguage": "Java",
+  "projectTags": ["agent","nrlabs"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Unix Monitor",
+    "url": "https://github.com/newrelic/newrelic-unix-monitor"
+  }
+}

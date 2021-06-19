@@ -20,13 +20,13 @@ import {
   Module,
   ObjectPattern,
   ObjectPatternField,
-  Script
-} from '../syntax/trees/ParseTrees.js';
-import {DestructuringTransformer} from './DestructuringTransformer.js';
-import {DirectExportVisitor} from './module/DirectExportVisitor.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
-import {ImportSimplifyingTransformer} from './ImportSimplifyingTransformer.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+  Script,
+} from "../syntax/trees/ParseTrees.js";
+import { DestructuringTransformer } from "./DestructuringTransformer.js";
+import { DirectExportVisitor } from "./module/DirectExportVisitor.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
+import { ImportSimplifyingTransformer } from "./ImportSimplifyingTransformer.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   CLASS_DECLARATION,
   EXPORT_DEFAULT,
@@ -36,13 +36,10 @@ import {
   IMPORT_SPECIFIER_SET,
   IMPORT_TYPE_CLAUSE,
   NAME_SPACE_EXPORT,
-} from '../syntax/trees/ParseTreeType.js';
-import {VAR} from '../syntax/TokenType.js';
-import {assert} from '../util/assert.js';
-import {
-  resolveUrl,
-  canonicalizeUrl
-} from '../util/url.js';
+} from "../syntax/trees/ParseTreeType.js";
+import { VAR } from "../syntax/TokenType.js";
+import { assert } from "../util/assert.js";
+import { resolveUrl, canonicalizeUrl } from "../util/url.js";
 import {
   createArgumentList,
   createExpressionStatement,
@@ -53,19 +50,21 @@ import {
   createUseStrictDirective,
   createVariableStatement,
   createVoid0,
-} from './ParseTreeFactory.js';
+} from "./ParseTreeFactory.js";
 import {
   parseExpression,
   parsePropertyDefinition,
   parseStatement,
-  parseStatements
-} from './PlaceholderParser.js';
-import SkipFunctionsTransformerTrait from './SkipFunctionsTransformerTrait.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {prependStatements} from './PrependStatements.js';
+  parseStatements,
+} from "./PlaceholderParser.js";
+import SkipFunctionsTransformerTrait from "./SkipFunctionsTransformerTrait.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { prependStatements } from "./PrependStatements.js";
 
 function removeUseStrictDirectives(tree) {
-  let result = tree.scriptItemList.filter(tree => !tree.isUseStrictDirective());
+  let result = tree.scriptItemList.filter(
+    (tree) => !tree.isUseStrictDirective()
+  );
   return new Module(tree.location, result, tree.moduleName);
 }
 
@@ -87,9 +86,13 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
   }
 
   getTempVarNameForModuleName(moduleName) {
-    return '$__' + moduleName.replace(/[^a-zA-Z0-9$]/g, function(c) {
-      return '_' + String(c.charCodeAt(0)) + '_';
-    }) + '__';
+    return (
+      "$__" +
+      moduleName.replace(/[^a-zA-Z0-9$]/g, function (c) {
+        return "_" + String(c.charCodeAt(0)) + "_";
+      }) +
+      "__"
+    );
   }
 
   getModuleName(tree) {
@@ -98,7 +101,7 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
 
   getTempVarNameForModuleSpecifier(moduleSpecifier) {
     let name = moduleSpecifier.token.processedValue;
-    if (name[0] === '.' && this.moduleName) {
+    if (name[0] === "." && this.moduleName) {
       name = resolveUrl(this.moduleName, name);
     } else {
       name = canonicalizeUrl(name);
@@ -136,7 +139,7 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
   moduleProlog() {
     let statements = [createUseStrictDirective()];
     if (this.moduleName) {
-      statements.push(parseStatement `var __moduleName = ${this.moduleName};`);
+      statements.push(parseStatement`var __moduleName = ${this.moduleName};`);
     }
     return statements;
   }
@@ -144,22 +147,20 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
   wrapModule(statements) {
     let functionExpression;
     if (this.options.transformOptions.require) {
-      functionExpression = parseExpression `function(require) {
+      functionExpression = parseExpression`function(require) {
         ${statements}
       }`;
     } else {
-      functionExpression = parseExpression `function() {
+      functionExpression = parseExpression`function() {
         ${statements}
       }`;
     }
 
     if (this.moduleName === null) {
-      return parseStatements
-          `$traceurRuntime.ModuleStore.getAnonymousModule(
+      return parseStatements`$traceurRuntime.ModuleStore.getAnonymousModule(
               ${functionExpression});`;
     }
-    return parseStatements
-        `$traceurRuntime.registerModule(${this.moduleName}, [], ${functionExpression});`;
+    return parseStatements`$traceurRuntime.registerModule(${this.moduleName}, [], ${functionExpression});`;
   }
 
   /**
@@ -169,11 +170,10 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
    */
   getGetterExport(exp) {
     const returnExpression = this.getGetterExportReturnExpression(exp);
-    return parsePropertyDefinition
-        `get ${exp.name}() { return ${returnExpression}; }`;
+    return parsePropertyDefinition`get ${exp.name}() { return ${returnExpression}; }`;
   }
 
-  getGetterExportReturnExpression({name, tree, moduleSpecifier}) {
+  getGetterExportReturnExpression({ name, tree, moduleSpecifier }) {
     let returnExpression;
     switch (tree.type) {
       case EXPORT_DEFAULT:
@@ -182,7 +182,7 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
           case FUNCTION_DECLARATION:
             return createIdentifierExpression(tree.expression.name);
           default:
-            return createIdentifierExpression('$__default');
+            return createIdentifierExpression("$__default");
         }
         break;
 
@@ -191,7 +191,7 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
           let idName = this.getTempVarNameForModuleSpecifier(moduleSpecifier);
           return createMemberExpression(idName, tree.lhs);
         }
-        return createIdentifierExpression(tree.lhs)
+        return createIdentifierExpression(tree.lhs);
 
       case NAME_SPACE_EXPORT: {
         let idName = this.getTempVarNameForModuleSpecifier(moduleSpecifier);
@@ -200,7 +200,7 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
 
       case FORWARD_DEFAULT_EXPORT: {
         let idName = this.getTempVarNameForModuleSpecifier(moduleSpecifier);
-        return createMemberExpression(idName, 'default');
+        return createMemberExpression(idName, "default");
       }
 
       default:
@@ -209,17 +209,23 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
   }
 
   getExportProperties() {
-    return this.exportVisitor.getNonTypeNamedExports().map((exp) => {
-      // export_name: {get: function() { return export_name },
-      return this.getGetterExport(exp);
-    }).concat(this.exportVisitor.namedExports.map((exp) => {
-      return this.getSetterExport(exp);
-    })).filter(e => e);
+    return this.exportVisitor
+      .getNonTypeNamedExports()
+      .map((exp) => {
+        // export_name: {get: function() { return export_name },
+        return this.getGetterExport(exp);
+      })
+      .concat(
+        this.exportVisitor.namedExports.map((exp) => {
+          return this.getSetterExport(exp);
+        })
+      )
+      .filter((e) => e);
   }
 
   // By default, the module transformer doesn't create setters,
   // as the Module object is read only.
-  getSetterExport({name, tree, moduleSpecifier}) {
+  getSetterExport({ name, tree, moduleSpecifier }) {
     return null;
   }
 
@@ -235,16 +241,17 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
     let starExports = this.exportVisitor.starExports;
     let starIdents = starExports.map((moduleSpecifier) => {
       return createIdentifierExpression(
-          this.getTempVarNameForModuleSpecifier(moduleSpecifier));
+        this.getTempVarNameForModuleSpecifier(moduleSpecifier)
+      );
     });
     let args = createArgumentList([exportObject, ...starIdents]);
-    const runtime = this.getRuntimeExpression('exportStar');
-    return parseExpression `${runtime}(${args})`;
+    const runtime = this.getRuntimeExpression("exportStar");
+    return parseExpression`${runtime}(${args})`;
   }
 
   addExportStatement(statements) {
     let exportObject = this.getExportObject();
-    statements.push(parseStatement `return ${exportObject}`);
+    statements.push(parseStatement`return ${exportObject}`);
     return statements;
   }
 
@@ -273,7 +280,7 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
       case FUNCTION_DECLARATION:
         return tree.expression;
     }
-    return parseStatement `var $__default = ${tree.expression}`;
+    return parseStatement`var $__default = ${tree.expression}`;
   }
 
   transformNamedExport(tree) {
@@ -285,7 +292,7 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
       return createVariableStatement(VAR, idName, expression);
     }
 
-    return new AnonBlock(null, [])
+    return new AnonBlock(null, []);
   }
 
   /**
@@ -296,7 +303,7 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
     assert(this.moduleName);
     let name = tree.token.processedValue;
     // import/module {x} from './name.js' is relative to the current file.
-    return parseExpression `$traceurRuntime.getModule(
+    return parseExpression`$traceurRuntime.getModule(
       $traceurRuntime.normalizeModuleName(${name}, ${this.moduleName}));`;
   }
 
@@ -319,8 +326,10 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
 
     // import 'module'
     // import {} from 'module'
-    if (tree.importClause.type === IMPORT_SPECIFIER_SET &&
-        tree.importClause.specifiers.length === 0) {
+    if (
+      tree.importClause.type === IMPORT_SPECIFIER_SET &&
+      tree.importClause.specifiers.length === 0
+    ) {
       return createExpressionStatement(this.transformAny(tree.moduleSpecifier));
     }
 
@@ -331,11 +340,15 @@ export class ModuleTransformer extends ImportRuntimeTrait(TempVarTransformer) {
 
     // If destructuring patterns are kept in the output code, keep this as is,
     // otherwise transform it here.
-    if (this.options.transformOptions.destructuring ||
-        !this.options.parseOptions.destructuring) {
-      let destructuringTransformer =
-          new DestructImportVarStatement(this.identifierGenerator,
-                                         this.reporter, this.options);
+    if (
+      this.options.transformOptions.destructuring ||
+      !this.options.parseOptions.destructuring
+    ) {
+      let destructuringTransformer = new DestructImportVarStatement(
+        this.identifierGenerator,
+        this.reporter,
+        this.options
+      );
       varStatement = varStatement.transform(destructuringTransformer);
     }
 

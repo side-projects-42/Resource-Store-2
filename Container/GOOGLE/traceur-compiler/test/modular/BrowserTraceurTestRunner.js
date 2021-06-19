@@ -14,47 +14,49 @@
 
 /** @fileoverview Configure mocha for Traceur testing.in browsers */
 
-import {TraceurTestRunner} from './TraceurTestRunner.js';
-import {webLoader} from '../../src/loader/webLoader.js';
+import { TraceurTestRunner } from "./TraceurTestRunner.js";
+import { webLoader } from "../../src/loader/webLoader.js";
 
 function optionsOnURL() {
   let params = window.location.search.substring(1);
-  let nameValuePairs = params.split('&');
+  let nameValuePairs = params.split("&");
   let options = {};
-  nameValuePairs.forEach(function(pair){
-    let segments = pair.split('=');
+  nameValuePairs.forEach(function (pair) {
+    let segments = pair.split("=");
     options[segments[0]] = decodeURIComponent(segments[1]);
   });
   return options;
 }
 
 export class BrowserTraceurTestRunner extends TraceurTestRunner {
-
   constructor(mochaOptions = optionsOnURL(), traceurTestOptions) {
-    mochaOptions.reporter = mochaOptions.reporter || 'html';
-    mochaOptions.ui = mochaOptions.ui || 'tdd';
+    mochaOptions.reporter = mochaOptions.reporter || "html";
+    mochaOptions.ui = mochaOptions.ui || "tdd";
     mochaOptions.importMetadata = mochaOptions.importMetadata || {
       traceurOptions: {
-        sourceMaps: 'inline'
-      }
-    }
+        sourceMaps: "inline",
+      },
+    };
     super(mochaOptions, traceurTestOptions);
   }
 
   expandPatterns() {
-    let url = './traceurService/testGlobs?patterns=';
+    let url = "./traceurService/testGlobs?patterns=";
     url += encodeURIComponent(JSON.stringify(this.patterns_));
     return new Promise((resolve, reject) => {
-      webLoader.load(url, (files) => {
-        resolve(JSON.parse(files).forEach((file) => this.addFile(file)));
-      }, (ex) => {
-        console.error(url + ' FAILED ', ex.stack || ex);
-      });
+      webLoader.load(
+        url,
+        (files) => {
+          resolve(JSON.parse(files).forEach((file) => this.addFile(file)));
+        },
+        (ex) => {
+          console.error(url + " FAILED ", ex.stack || ex);
+        }
+      );
     });
   }
 
   getOptions() {
     return this.defaultOptions();
   }
-
-};
+}

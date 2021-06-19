@@ -1,36 +1,43 @@
 // Demo app for Querypoint debugging
 
 var obj = {
-  prop: ko.observable(0)
+  prop: ko.observable(0),
 };
 
 var condition = {
-  value: 1
+  value: 1,
 };
 
 var oldValue;
 var message;
 
-obj.prop.subscribe(function(newValue){
-    message = ko.computed(function(){
-        return "I've been clicked " + newValue + " times";
-    }).extend({throttle: 2000});
+obj.prop.subscribe(function (newValue) {
+  message = ko
+    .computed(function () {
+      return "I've been clicked " + newValue + " times";
+    })
+    .extend({ throttle: 2000 });
 });
 
 function onClick() {
   foo() + 1;
-  var p = 'prop';
+  var p = "prop";
   obj[p](obj[p]() + 1);
   bar();
   // lots more code....
   updateButton();
-  setTimeout(function(){ doSetTimeouts(1)}, 2000);
+  setTimeout(function () {
+    doSetTimeouts(1);
+  }, 2000);
 }
 
-function doSetTimeouts(number){
+function doSetTimeouts(number) {
   condition.prop = number;
-  console.warn('Asynchronous call ' + number);
-  if(number < 5) setTimeout(function(){ doSetTimeouts(number + 1)}, 2000);
+  console.warn("Asynchronous call " + number);
+  if (number < 5)
+    setTimeout(function () {
+      doSetTimeouts(number + 1);
+    }, 2000);
 }
 
 function updateButton() {
@@ -49,16 +56,16 @@ function bar() {
   }
   condition.prop = 7;
   var button = document.querySelector("#myButton");
-  button.innerHTML = 'I am not a bug';
+  button.innerHTML = "I am not a bug";
 }
 
 function onLoad() {
-  var button = document.createElement('button');
+  var button = document.createElement("button");
   button.innerHTML = "Try Me!";
-  button.addEventListener('click', onClick);
+  button.addEventListener("click", onClick);
   button.id = "myButton";
   document.body.appendChild(button);
-  console.warn("This is your first warning");  
+  console.warn("This is your first warning");
 }
 
-window.addEventListener('load',onLoad);
+window.addEventListener("load", onLoad);

@@ -15,13 +15,12 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.replay.timeTravel.exports');
+goog.provide("wtf.replay.timeTravel.exports");
 
 /** @suppress {extraRequire} */
-goog.require('wtf.replay.timeTravel');
+goog.require("wtf.replay.timeTravel");
 /** @suppress {extraRequire} */
-goog.require('wtf.util');
-
+goog.require("wtf.util");
 
 /**
  * @define {boolean} Whether to enable exporting of the wtf.replay.timeTravel

@@ -6,22 +6,22 @@
 // Sends messages with data of types: { type: 'success' } | { type: 'error', errorMessage: string }
 
 // eslint-disable-next-line no-undef
-importScripts('../src/chart.js');
+importScripts("../src/chart.js");
 
-onmessage = function(event) {
+onmessage = function (event) {
   try {
-    const {type, canvas} = event.data;
-    if (type !== 'initialize') {
-      throw new Error('invalid message type received by worker: ' + type);
+    const { type, canvas } = event.data;
+    if (type !== "initialize") {
+      throw new Error("invalid message type received by worker: " + type);
     }
 
     const chart = new Chart(canvas);
     if (!(chart.platform instanceof Chart.platforms.BasicPlatform)) {
-      throw new Error('did not use basic platform for chart in web worker');
+      throw new Error("did not use basic platform for chart in web worker");
     }
 
-    postMessage({type: 'success'});
+    postMessage({ type: "success" });
   } catch (error) {
-    postMessage({type: 'error', errorMessage: error.stack});
+    postMessage({ type: "error", errorMessage: error.stack });
   }
 };

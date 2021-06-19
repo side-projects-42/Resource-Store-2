@@ -1,0 +1,246 @@
+{
+  "projectFullName": "newrelic/newrelic-dotnet-agent",
+  "issues": {
+    "open": 86
+  },
+  "releases": 61,
+  "latestRelease": {
+    "name": "v8.40.0",
+    "date": "2021-06-08T01:32:41Z"
+  },
+  "commits": 332,
+  "lastSixMonthsCommitTotal": 86,
+  "contributors": 16,
+  "pullRequests": {
+    "open": 3
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU2ODMxMjkyNDk=",
+      "title": "Reduce string allocations in BrowserMonitoringWriter",
+      "url": "https://github.com/newrelic/newrelic-dotnet-agent/issues/117",
+      "createdAt": "2020-08-20T22:16:35Z",
+      "comments": {
+        "totalCount": 2
+      },
+      "author": {
+        "login": "lspangler584",
+        "id": "MDQ6VXNlcjIwMjY3OTc1",
+        "email": "",
+        "name": null
+      },
+      "number": 117,
+      "createdBy": "lspangler584"
+    },
+    {
+      "id": "MDU6SXNzdWU2ODM2NDY3NzU=",
+      "title": "Stop using Exceptions for flow control",
+      "url": "https://github.com/newrelic/newrelic-dotnet-agent/issues/131",
+      "createdAt": "2020-08-21T15:36:21Z",
+      "comments": {
+        "totalCount": 1
+      },
+      "author": {
+        "login": "lspangler584",
+        "id": "MDQ6VXNlcjIwMjY3OTc1",
+        "email": "",
+        "name": null
+      },
+      "number": 131,
+      "createdBy": "lspangler584"
+    },
+    {
+      "id": "MDU6SXNzdWU2ODM3MzUyODA=",
+      "title": "Add Lambda Example",
+      "url": "https://github.com/newrelic/newrelic-dotnet-agent/issues/134",
+      "createdAt": "2020-08-21T18:21:31Z",
+      "comments": {
+        "totalCount": 1
+      },
+      "author": {
+        "login": "lspangler584",
+        "id": "MDQ6VXNlcjIwMjY3OTc1",
+        "email": "",
+        "name": null
+      },
+      "number": 134,
+      "createdBy": "lspangler584"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 4761745,
+      "login": "elucus",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/4761745?v=4",
+      "htmlUrl": "https://github.com/elucus",
+      "contributions": 4
+    },
+    {
+      "id": 3676547,
+      "login": "alanwest",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3676547?v=4",
+      "htmlUrl": "https://github.com/alanwest",
+      "contributions": 5
+    },
+    {
+      "id": 3522458,
+      "login": "jifeingo",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3522458?v=4",
+      "htmlUrl": "https://github.com/jifeingo",
+      "contributions": 38
+    },
+    {
+      "id": 654808,
+      "login": "tehbio",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/654808?v=4",
+      "htmlUrl": "https://github.com/tehbio",
+      "contributions": 7
+    },
+    {
+      "id": 20267975,
+      "login": "lspangler584",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/20267975?v=4",
+      "htmlUrl": "https://github.com/lspangler584",
+      "contributions": 31
+    },
+    {
+      "id": 83677148,
+      "login": "JcolemanNR",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/83677148?v=4",
+      "htmlUrl": "https://github.com/JcolemanNR",
+      "contributions": 6
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 1
+    },
+    {
+      "id": 188129,
+      "login": "bgrainger",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/188129?v=4",
+      "htmlUrl": "https://github.com/bgrainger",
+      "contributions": 5
+    },
+    {
+      "id": 58010132,
+      "login": "mmfred",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/58010132?v=4",
+      "htmlUrl": "https://github.com/mmfred",
+      "contributions": 2
+    },
+    {
+      "id": 69914680,
+      "login": "angelatan2",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/69914680?v=4",
+      "htmlUrl": "https://github.com/angelatan2",
+      "contributions": 12
+    },
+    {
+      "id": 6098021,
+      "login": "jaffinito",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6098021?v=4",
+      "htmlUrl": "https://github.com/jaffinito",
+      "contributions": 38
+    },
+    {
+      "id": 30146,
+      "login": "amweiss",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/30146?v=4",
+      "htmlUrl": "https://github.com/amweiss",
+      "contributions": 1
+    },
+    {
+      "id": 57361211,
+      "login": "nr-ahemsath",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/57361211?v=4",
+      "htmlUrl": "https://github.com/nr-ahemsath",
+      "contributions": 67
+    },
+    {
+      "id": 56414817,
+      "login": "vuqtran88",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/56414817?v=4",
+      "htmlUrl": "https://github.com/vuqtran88",
+      "contributions": 51
+    },
+    {
+      "id": 28942544,
+      "login": "katiewest820",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/28942544?v=4",
+      "htmlUrl": "https://github.com/katiewest820",
+      "contributions": 2
+    },
+    {
+      "id": 45495992,
+      "login": "nrcventura",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/45495992?v=4",
+      "htmlUrl": "https://github.com/nrcventura",
+      "contributions": 6
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UyMzI=",
+      "name": "C#",
+      "color": "#178600"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxMzk=",
+      "name": "Shell",
+      "color": "#89e051"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U1MzU=",
+      "name": "Dockerfile",
+      "color": "#384d54"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U0NjM=",
+      "name": "Batchfile",
+      "color": "#C1F12E"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UyNjQ=",
+      "name": "PowerShell",
+      "color": "#012456"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNzU=",
+      "name": "Groovy",
+      "color": "#e69f56"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UzMDI=",
+      "name": "XSLT",
+      "color": "#EB8CEB"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U0NDA=",
+      "name": "CMake",
+      "color": null
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDI=",
+      "name": "C++",
+      "color": "#f34b7d"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDk=",
+      "name": "C",
+      "color": "#555555"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

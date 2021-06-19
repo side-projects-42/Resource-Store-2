@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-php-daemon-docker",
+  "fullName": "newrelic/newrelic-php-daemon-docker",
+  "slug": "newrelic-newrelic-php-daemon-docker",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic PHP Daemon Docker",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-php-daemon-docker",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-php-daemon-docker",
+  "iconUrl": null,
+  "shortDescription": "Docker image",
+  "description": "A docker image for the New Relic PHP Daemon",
+  "ossCategory": "community-project",
+  "primaryLanguage": "Dockerfile",
+  "projectTags": ["tools"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic PHP Daemon Docker",
+    "url": "https://github.com/newrelic/newrelic-php-daemon-docker"
+  }
+}

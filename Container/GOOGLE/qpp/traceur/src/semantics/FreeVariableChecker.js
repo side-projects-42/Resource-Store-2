@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ARGUMENTS} from '../syntax/PredefinedName.js';
+import { ARGUMENTS } from "../syntax/PredefinedName.js";
 import {
   BindingIdentifier,
-  IdentifierExpression
-} from '../syntax/trees/ParseTrees.js';
-import {IdentifierToken} from '../syntax/IdentifierToken.js';
-import {IDENTIFIER_EXPRESSION} from '../syntax/trees/ParseTreeType.js';
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
-import {TYPEOF} from '../syntax/TokenType.js';
+  IdentifierExpression,
+} from "../syntax/trees/ParseTrees.js";
+import { IdentifierToken } from "../syntax/IdentifierToken.js";
+import { IDENTIFIER_EXPRESSION } from "../syntax/trees/ParseTreeType.js";
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
+import { TYPEOF } from "../syntax/TokenType.js";
 
 var global = this;
 
@@ -85,7 +85,7 @@ export class FreeVariableChecker extends ParseTreeVisitor {
    * @return {Scope}
    */
   pushScope_() {
-    return this.scope_ = new Scope(this.scope_);
+    return (this.scope_ = new Scope(this.scope_));
   }
 
   /**
@@ -94,7 +94,7 @@ export class FreeVariableChecker extends ParseTreeVisitor {
    */
   pop_(scope) {
     if (this.scope_ != scope) {
-      throw new Error('FreeVariableChecker scope mismatch');
+      throw new Error("FreeVariableChecker scope mismatch");
     }
 
     this.validateScope_();
@@ -180,8 +180,7 @@ export class FreeVariableChecker extends ParseTreeVisitor {
   }
 
   visitIdentifierExpression(tree) {
-    if (this.disableChecksLevel_)
-      return;
+    if (this.disableChecksLevel_) return;
     var name = getVariableName(tree);
     var scope = this.scope_;
     if (!(name in scope.references)) {
@@ -191,8 +190,10 @@ export class FreeVariableChecker extends ParseTreeVisitor {
 
   visitUnaryExpression(tree) {
     // Allow typeof x to be a heuristic for allowing reading x later.
-    if (tree.operator.type === TYPEOF &&
-        tree.operand.type === IDENTIFIER_EXPRESSION) {
+    if (
+      tree.operator.type === TYPEOF &&
+      tree.operand.type === IDENTIFIER_EXPRESSION
+    ) {
       this.declareVariable_(tree.operand);
     } else {
       super.visitUnaryExpression(tree);
@@ -230,8 +231,7 @@ export class FreeVariableChecker extends ParseTreeVisitor {
    * At the top level scope we issue errors for any remaining free variables.
    */
   validateScope_() {
-    if (this.disableChecksLevel_)
-      return;
+    if (this.disableChecksLevel_) return;
 
     var scope = this.scope_;
 
@@ -249,7 +249,7 @@ export class FreeVariableChecker extends ParseTreeVisitor {
 
           // If we're at the top level scope, then issue an error for
           // remaining free variables.
-          errors.push([location.start, '%s is not defined', name]);
+          errors.push([location.start, "%s is not defined", name]);
         } else if (!(name in scope.parent.references)) {
           scope.parent.references[name] = location;
         }

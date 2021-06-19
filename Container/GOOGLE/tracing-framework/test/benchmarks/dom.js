@@ -11,7 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-benchmark.register('dom.image', function() {
-  new Image();
-}, ['browser']);
+benchmark.register(
+  "dom.image",
+  function () {
+    new Image();
+  },
+  ["browser"]
+);

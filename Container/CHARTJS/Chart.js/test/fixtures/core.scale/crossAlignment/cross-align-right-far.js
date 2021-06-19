@@ -1,29 +1,31 @@
 module.exports = {
   config: {
-    type: 'bar',
+    type: "bar",
     data: {
-      datasets: [{
-        data: [1, 2, 3],
-      }],
-      labels: ['Long long label 1', 'Label2', 'Label3']
+      datasets: [
+        {
+          data: [1, 2, 3],
+        },
+      ],
+      labels: ["Long long label 1", "Label2", "Label3"],
     },
     options: {
-      indexAxis: 'y',
+      indexAxis: "y",
       scales: {
         y: {
-          position: 'right',
+          position: "right",
           ticks: {
-            crossAlign: 'far',
+            crossAlign: "far",
           },
         },
-      }
-    }
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

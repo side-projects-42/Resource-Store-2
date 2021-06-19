@@ -1,0 +1,24 @@
+{
+  "name": "nr1-cloud-optimize",
+  "fullName": "newrelic/nr1-cloud-optimize",
+  "slug": "newrelic-nr1-cloud-optimize",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic One Cloud Optimize",
+  "supportUrl": "https://discuss.newrelic.com/t/cloud-optimizer-nerdpack/82936",
+  "githubUrl": "https://github.com/newrelic/nr1-cloud-optimize",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/nr1-cloud-optimize",
+  "iconUrl": "https://github.com/newrelic/nr1-cloud-optimize/blob/master/icon.png?raw=true",
+  "shortDescription": "AWS, GCP, and Azure cost management",
+  "description": "Identify right-sizing opportunities and potential savings of your cloud environment (AWS, GCP, or Azure)",
+  "ossCategory": "new-relic-one-catalog-project",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app", "nri"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic One Cloud Optimize",
+    "url": "https://github.com/newrelic/nr1-cloud-optimize"
+  }
+}

@@ -1,4 +1,4 @@
-import {log10} from '../../../src/runtime/polyfills/Math.js';
+import { log10 } from "../../../src/runtime/polyfills/Math.js";
 
 function testLog10(log10) {
   assert.equal(1, log10(10));

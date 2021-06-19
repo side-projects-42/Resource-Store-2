@@ -12,38 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AwaitState} from './AwaitState.js';
+import { AwaitState } from "./AwaitState.js";
 import {
   BinaryExpression,
-  ExpressionStatement
-} from '../../syntax/trees/ParseTrees.js';
-import {CPSTransformer} from './CPSTransformer.js';
-import {EndState} from './EndState.js';
-import {FallThroughState} from './FallThroughState.js';
-import ImportRuntimeTrait from '../ImportRuntimeTrait.js';
+  ExpressionStatement,
+} from "../../syntax/trees/ParseTrees.js";
+import { CPSTransformer } from "./CPSTransformer.js";
+import { EndState } from "./EndState.js";
+import { FallThroughState } from "./FallThroughState.js";
+import ImportRuntimeTrait from "../ImportRuntimeTrait.js";
 import {
   AWAIT_EXPRESSION,
   BINARY_EXPRESSION,
-  STATE_MACHINE
-} from '../../syntax/trees/ParseTreeType.js';
+  STATE_MACHINE,
+} from "../../syntax/trees/ParseTreeType.js";
 import {
   parseExpression,
   parseStatement,
-  parseStatements
-} from '../PlaceholderParser.js';
-import {StateMachine} from '../../syntax/trees/StateMachine.js';
-import {FindInFunctionScope} from '../FindInFunctionScope.js'
-import {createUndefinedExpression} from '../ParseTreeFactory.js';
+  parseStatements,
+} from "../PlaceholderParser.js";
+import { StateMachine } from "../../syntax/trees/StateMachine.js";
+import { FindInFunctionScope } from "../FindInFunctionScope.js";
+import { createUndefinedExpression } from "../ParseTreeFactory.js";
 
 /**
  * @param {ParseTree} tree Expression tree
  * @return {boolean}
  */
 function isAwaitAssign(tree) {
-  return tree.type === BINARY_EXPRESSION &&
-      tree.operator.isAssignmentOperator() &&
-      tree.right.type === AWAIT_EXPRESSION &&
-      tree.left.isLeftHandSideExpression();
+  return (
+    tree.type === BINARY_EXPRESSION &&
+    tree.operator.isAssignmentOperator() &&
+    tree.right.type === AWAIT_EXPRESSION &&
+    tree.left.isLeftHandSideExpression()
+  );
 }
 
 class AwaitFinder extends FindInFunctionScope {
@@ -69,10 +71,8 @@ function scopeContainsAwait(tree) {
  * }
  */
 export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
-
   expressionNeedsStateMachine(tree) {
-    if (tree === null)
-      return false;
+    if (tree === null) return false;
     return scopeContainsAwait(tree);
   }
 
@@ -85,14 +85,14 @@ export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
       return this.transformAwaitAssign_(expression);
 
     if (this.expressionNeedsStateMachine(expression)) {
-       return this.expressionToStateMachine(expression).machine;
+      return this.expressionToStateMachine(expression).machine;
     }
 
     return super.transformExpressionStatement(tree);
   }
 
   transformAwaitExpression(tree) {
-    throw new Error('Internal error');
+    throw new Error("Internal error");
   }
 
   transformAwaitExpression_(tree) {
@@ -100,14 +100,18 @@ export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
   }
 
   transformAwaitAssign_(tree) {
-    return this.transformAwait_(tree, tree.right.expression, tree.left,
-                                tree.operator);
+    return this.transformAwait_(
+      tree,
+      tree.right.expression,
+      tree.left,
+      tree.operator
+    );
   }
 
   transformAwait_(tree, inExpression, left, operator) {
     let expression, machine;
     if (this.expressionNeedsStateMachine(inExpression)) {
-      ({expression, machine} = this.expressionToStateMachine(inExpression));
+      ({ expression, machine } = this.expressionToStateMachine(inExpression));
     } else {
       expression = this.transformAny(inExpression);
     }
@@ -126,18 +130,25 @@ export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
     //    break;
     if (left) {
       let statement = new ExpressionStatement(
+        tree.location,
+        new BinaryExpression(
           tree.location,
-          new BinaryExpression(
-              tree.location,
-              left,
-              operator,
-              parseExpression `$ctx.value`));
-      states.push(new FallThroughState(callbackState, fallThroughState,
-                                       [statement]));
+          left,
+          operator,
+          parseExpression`$ctx.value`
+        )
+      );
+      states.push(
+        new FallThroughState(callbackState, fallThroughState, [statement])
+      );
     }
 
-    let awaitMachine =
-        new StateMachine(createTaskState, fallThroughState, states, []);
+    let awaitMachine = new StateMachine(
+      createTaskState,
+      fallThroughState,
+      states,
+      []
+    );
 
     if (machine) {
       awaitMachine = machine.append(awaitMachine);
@@ -156,8 +167,10 @@ export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
       return result;
     }
     // TODO: is this a reasonable restriction?
-    this.reporter.reportError(tree.location,
-        'await not permitted within a finally block.');
+    this.reporter.reportError(
+      tree.location,
+      "await not permitted within a finally block."
+    );
     return result;
   }
 
@@ -168,26 +181,31 @@ export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
   transformReturnStatement(tree) {
     let expression, machine;
     if (this.expressionNeedsStateMachine(tree.expression)) {
-      ({expression, machine} = this.expressionToStateMachine(tree.expression));
+      ({ expression, machine } = this.expressionToStateMachine(
+        tree.expression
+      ));
     } else {
       expression = tree.expression || createUndefinedExpression();
     }
 
     let startState = this.allocateState();
     let endState = this.allocateState();
-    let completeState = new FallThroughState(startState, endState,
-        parseStatements `$ctx.returnValue = ${expression}`);
+    let completeState = new FallThroughState(
+      startState,
+      endState,
+      parseStatements`$ctx.returnValue = ${expression}`
+    );
     let end = new EndState(endState);
     let returnMachine = new StateMachine(
-        startState,
-        // TODO: this should not be required, but removing requires making consumers resilient
-        // TODO: to INVALID fallThroughState
-        this.allocateState(),
-        [completeState, end],
-        []);
+      startState,
+      // TODO: this should not be required, but removing requires making consumers resilient
+      // TODO: to INVALID fallThroughState
+      this.allocateState(),
+      [completeState, end],
+      []
+    );
 
-    if (machine)
-      returnMachine = machine.append(returnMachine);
+    if (machine) returnMachine = machine.append(returnMachine);
     return returnMachine;
   }
 
@@ -196,7 +214,7 @@ export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
    * @return {ParseTree}
    */
   createCompleteTask_(result) {
-    return parseStatement `$ctx.resolve(${result})`;
+    return parseStatement`$ctx.resolve(${result})`;
   }
 
   /**
@@ -214,7 +232,7 @@ export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
    * @return {FunctionBody}
    */
   transformAsyncBody(tree) {
-    let asyncWrap = this.getRuntimeExpression('asyncWrap');
+    let asyncWrap = this.getRuntimeExpression("asyncWrap");
     return this.transformCpsFunctionBody(tree, asyncWrap);
   }
 
@@ -225,7 +243,10 @@ export class AsyncTransformer extends ImportRuntimeTrait(CPSTransformer) {
    * @return {Block}
    */
   static transformAsyncBody(identifierGenerator, reporter, options, body) {
-    return new AsyncTransformer(identifierGenerator, reporter, options).
-        transformAsyncBody(body);
+    return new AsyncTransformer(
+      identifierGenerator,
+      reporter,
+      options
+    ).transformAsyncBody(body);
   }
-};
+}

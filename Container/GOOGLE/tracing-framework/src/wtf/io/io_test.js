@@ -5,17 +5,16 @@
  * found in the LICENSE file.
  */
 
-goog.provide('wtf.io_test');
+goog.provide("wtf.io_test");
 
-goog.require('wtf.io');
-
+goog.require("wtf.io");
 
 /**
  * wtf.io testing.
  */
-wtf.io_test = suite('wtf.io', function() {
-  suite('ByteArray', function() {
-    test('#createByteArray', function() {
+wtf.io_test = suite("wtf.io", function () {
+  suite("ByteArray", function () {
+    test("#createByteArray", function () {
       var array = wtf.io.createByteArray(123);
       assert.isNotNull(array);
       assert.lengthOf(array, 123);
@@ -31,19 +30,19 @@ wtf.io_test = suite('wtf.io', function() {
       assert.equal(array[1], 0);
     });
 
-    test('#isByteArray', function() {
+    test("#isByteArray", function () {
       assert.isFalse(wtf.io.isByteArray(undefined));
       assert.isFalse(wtf.io.isByteArray(null));
       assert.isFalse(wtf.io.isByteArray(0));
-      assert.isFalse(wtf.io.isByteArray(''));
-      assert.isFalse(wtf.io.isByteArray(function() {}));
+      assert.isFalse(wtf.io.isByteArray(""));
+      assert.isFalse(wtf.io.isByteArray(function () {}));
       assert.isFalse(wtf.io.isByteArray({}));
 
       var array = wtf.io.createByteArray(123);
       assert.isTrue(wtf.io.isByteArray(array));
     });
 
-    test('#byteArraysEqual', function() {
+    test("#byteArraysEqual", function () {
       var sourceArray = wtf.io.createByteArray(4);
       var targetArray = wtf.io.createByteArray(4);
       assert.isTrue(wtf.io.byteArraysEqual(sourceArray, targetArray));
@@ -54,7 +53,7 @@ wtf.io_test = suite('wtf.io', function() {
       assert.isFalse(wtf.io.byteArraysEqual(sourceArray, targetArray));
     });
 
-    test('#createByteArrayFromArray', function() {
+    test("#createByteArrayFromArray", function () {
       assert.lengthOf(wtf.io.createByteArrayFromArray([]), 0);
 
       var sourceArray = [1, 2, 3];
@@ -62,7 +61,7 @@ wtf.io_test = suite('wtf.io', function() {
       assert.arraysEqual(targetArray, sourceArray);
     });
 
-    test('#copyByteArray', function() {
+    test("#copyByteArray", function () {
       var sourceArray = wtf.io.createByteArray(4);
       var targetArray = wtf.io.createByteArray(4);
       sourceArray[0] = 0;
@@ -79,7 +78,7 @@ wtf.io_test = suite('wtf.io', function() {
       assert.equal(targetArray[5], 0);
     });
 
-    test('#combineByteArrays', function() {
+    test("#combineByteArrays", function () {
       var result;
 
       var array0 = wtf.io.createByteArray(4);
@@ -100,20 +99,19 @@ wtf.io_test = suite('wtf.io', function() {
 
       result = wtf.io.combineByteArrays([array0, array1]);
       assert.lengthOf(result, 6);
-      assert.arraysEqual(result, [
-        0, 1, 2, 3, 4, 5
-      ]);
+      assert.arraysEqual(result, [0, 1, 2, 3, 4, 5]);
 
       result = wtf.io.combineByteArrays([array1, array1]);
       assert.lengthOf(result, 4);
-      assert.arraysEqual(result, [
-        4, 5, 4, 5
-      ]);
+      assert.arraysEqual(result, [4, 5, 4, 5]);
     });
 
-    test('#sliceByteArray', function() {
+    test("#sliceByteArray", function () {
       var array = wtf.io.createByteArray(4);
-      array[0] = 0; array[1] = 1; array[2] = 2; array[3] = 3;
+      array[0] = 0;
+      array[1] = 1;
+      array[2] = 2;
+      array[3] = 3;
 
       var result = wtf.io.sliceByteArray(array, 0, 4);
       assert.notStrictEqual(array, result);
@@ -134,29 +132,32 @@ wtf.io_test = suite('wtf.io', function() {
       assert.equal(result[0], array[1]);
     });
 
-    test('#byteArrayToString', function() {
+    test("#byteArrayToString", function () {
       var array = wtf.io.createByteArray(4);
-      array[0] = 0; array[1] = 1; array[2] = 2; array[3] = 3;
+      array[0] = 0;
+      array[1] = 1;
+      array[2] = 2;
+      array[3] = 3;
       var result = wtf.io.byteArrayToString(array);
-      assert.equal(result, 'AAECAw==');
+      assert.equal(result, "AAECAw==");
 
       array = wtf.io.createByteArray(0);
       result = wtf.io.byteArrayToString(array);
-      assert.equal(result, '');
+      assert.equal(result, "");
     });
 
-    test('#stringToByteArray', function() {
+    test("#stringToByteArray", function () {
       var targetArray = wtf.io.createByteArray(4);
-      var length = wtf.io.stringToByteArray('AAECAw==', targetArray);
+      var length = wtf.io.stringToByteArray("AAECAw==", targetArray);
       assert.equal(length, 4);
       assert.arraysEqual(targetArray, [0, 1, 2, 3]);
 
-      length = wtf.io.stringToByteArray('', targetArray);
+      length = wtf.io.stringToByteArray("", targetArray);
       assert.equal(length, 0);
 
       targetArray = wtf.io.createByteArray(5);
       targetArray[4] = 123;
-      length = wtf.io.stringToByteArray('AAECAw==', targetArray);
+      length = wtf.io.stringToByteArray("AAECAw==", targetArray);
       assert.equal(length, 4);
       assert.arraysEqual(targetArray, [0, 1, 2, 3, 123]);
     });

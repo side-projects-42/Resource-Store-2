@@ -4,8 +4,8 @@
 
 {
   (function functionExpression() {
-    return 'inner';
+    return "inner";
   });
 
-  functionExpression;  // function expression doesn't add name to the scope.
+  functionExpression; // function expression doesn't add name to the scope.
 }

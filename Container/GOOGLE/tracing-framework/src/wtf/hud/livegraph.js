@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.hud.LiveGraph');
+goog.provide("wtf.hud.LiveGraph");
 
-goog.require('goog.dom.TagName');
-goog.require('goog.dom.classes');
-goog.require('goog.events.EventType');
-goog.require('wtf.ui.Control');
-goog.require('wtf.ui.Painter');
-goog.require('wtf.util.canvas');
-
-
+goog.require("goog.dom.TagName");
+goog.require("goog.dom.classes");
+goog.require("goog.events.EventType");
+goog.require("wtf.ui.Control");
+goog.require("wtf.ui.Painter");
+goog.require("wtf.util.canvas");
 
 /**
  * HUD overlay control UI.
@@ -31,7 +29,7 @@ goog.require('wtf.util.canvas');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.hud.LiveGraph = function(session, options, parentElement) {
+wtf.hud.LiveGraph = function (session, options, parentElement) {
   goog.base(this, parentElement);
 
   /**
@@ -42,27 +40,29 @@ wtf.hud.LiveGraph = function(session, options, parentElement) {
    */
   this.enabled_ = true;
 
-  this.getHandler().listen(this.getRootElement(),
-      goog.events.EventType.CLICK, this.graphClicked_, false);
+  this.getHandler().listen(
+    this.getRootElement(),
+    goog.events.EventType.CLICK,
+    this.graphClicked_,
+    false
+  );
 
   this.setupPainter_();
 };
 goog.inherits(wtf.hud.LiveGraph, wtf.ui.Control);
 
-
 /**
  * @override
  */
-wtf.hud.LiveGraph.prototype.createDom = function(dom) {
+wtf.hud.LiveGraph.prototype.createDom = function (dom) {
   return dom.createElement(goog.dom.TagName.CANVAS);
 };
-
 
 /**
  * Sets up the graph painter.
  * @private
  */
-wtf.hud.LiveGraph.prototype.setupPainter_ = function() {
+wtf.hud.LiveGraph.prototype.setupPainter_ = function () {
   if (!wtf.util.canvas.isSupported()) {
     this.enabled_ = false;
     // TODO(benvanik): show 'canvas disabled' message.
@@ -70,42 +70,39 @@ wtf.hud.LiveGraph.prototype.setupPainter_ = function() {
   }
 
   var canvas = /** @type {!HTMLCanvasElement} */ (this.getRootElement());
-  goog.dom.classes.add(canvas, goog.getCssName('hudGraphCanvas'));
+  goog.dom.classes.add(canvas, goog.getCssName("hudGraphCanvas"));
   canvas.width = 1;
   canvas.height = 1;
 
   this.setPaintContext(new wtf.ui.Painter(canvas));
 };
 
-
 /**
  * Sets the enabled state of the graph.
  * When disabled the graph will not draw.
  * @param {boolean} value Enabled value.
  */
-wtf.hud.LiveGraph.prototype.setEnabled = function(value) {
+wtf.hud.LiveGraph.prototype.setEnabled = function (value) {
   this.enabled_ = value;
   if (value) {
     this.requestRepaint();
   }
 };
 
-
 /**
  * Handles clicks on the graph.
  * @param {!goog.events.BrowserEvent} e Event.
  * @private
  */
-wtf.hud.LiveGraph.prototype.graphClicked_ = function(e) {
+wtf.hud.LiveGraph.prototype.graphClicked_ = function (e) {
   // TODO(benvanik): embiggen graph? config dialog?
 };
-
 
 /**
  * Advances the HUD time.
  * @param {number=} opt_time New time. Prefer using {@see wtf#now}.
  */
-wtf.hud.LiveGraph.prototype.advance = function(opt_time) {
+wtf.hud.LiveGraph.prototype.advance = function (opt_time) {
   // TODO(benvanik): advance time, update the overlay
   // var time = opt_time || wtf.now();
 

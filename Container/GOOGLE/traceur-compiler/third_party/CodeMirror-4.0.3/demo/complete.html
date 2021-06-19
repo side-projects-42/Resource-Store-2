@@ -1,32 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <title>CodeMirror: Autocomplete Demo</title>
-<meta charset="utf-8"/>
-<link rel=stylesheet href="../doc/docs.css">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../doc/docs.css" />
 
-<link rel="stylesheet" href="../lib/codemirror.css">
-<link rel="stylesheet" href="../addon/hint/show-hint.css">
+<link rel="stylesheet" href="../lib/codemirror.css" />
+<link rel="stylesheet" href="../addon/hint/show-hint.css" />
 <script src="../lib/codemirror.js"></script>
 <script src="../addon/hint/show-hint.js"></script>
 <script src="../addon/hint/javascript-hint.js"></script>
 <script src="../mode/javascript/javascript.js"></script>
 
-<div id=nav>
-  <a href="http://codemirror.net"><img id=logo src="../doc/logo.png"></a>
+<div id="nav">
+  <a href="http://codemirror.net"><img id="logo" src="../doc/logo.png" /></a>
 
   <ul>
-    <li><a href="../index.html">Home</a>
-    <li><a href="../doc/manual.html">Manual</a>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../doc/manual.html">Manual</a></li>
+    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
   </ul>
+
   <ul>
-    <li><a class=active href="#">Autocomplete</a>
+    <li><a class="active" href="#">Autocomplete</a></li>
   </ul>
 </div>
 
 <article>
-<h2>Autocomplete Demo</h2>
-<form><textarea id="code" name="code">
+  <h2>Autocomplete Demo</h2>
+  <form>
+    <textarea id="code" name="code">
 function getCompletions(token, context) {
   var found = [], start = token.string;
   function maybeAdd(str) {
@@ -62,18 +64,25 @@ function getCompletions(token, context) {
   }
   return found;
 }
-</textarea></form>
+</textarea
+    >
+  </form>
 
-<p>Press <strong>ctrl-space</strong> to activate autocompletion. Built
-on top of the <a href="../doc/manual.html#addon_show-hint"><code>show-hint</code></a>
-and <a href="../doc/manual.html#addon_javascript-hint"><code>javascript-hint</code></a>
-addons.</p>
+  <p>
+    Press <strong>ctrl-space</strong> to activate autocompletion. Built on top
+    of the
+    <a href="../doc/manual.html#addon_show-hint"><code>show-hint</code></a> and
+    <a href="../doc/manual.html#addon_javascript-hint"
+      ><code>javascript-hint</code></a
+    >
+    addons.
+  </p>
 
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true,
-        extraKeys: {"Ctrl-Space": "autocomplete"},
-        mode: {name: "javascript", globalVars: true}
-      });
-    </script>
-  </article>
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true,
+      extraKeys: { "Ctrl-Space": "autocomplete" },
+      mode: { name: "javascript", globalVars: true },
+    });
+  </script>
+</article>

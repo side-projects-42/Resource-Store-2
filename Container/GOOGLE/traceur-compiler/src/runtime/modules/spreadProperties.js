@@ -29,14 +29,15 @@ function createDataProperty(o, p, v) {
 }
 
 function copyDataProperties(target, source) {
-  if (source == null) {  // needs to be ==
+  if (source == null) {
+    // needs to be ==
     return;
   }
 
   // The spec has a ToObject here but getOwnProperty* does the ToObjext so we
   // do not need to call it here.
 
-  const copy = keys => {
+  const copy = (keys) => {
     for (let i = 0; i < keys.length; i++) {
       const nextKey = keys[i];
       if (propertyIsEnumerable.call(source, nextKey)) {
@@ -50,7 +51,7 @@ function copyDataProperties(target, source) {
   copy(getOwnPropertySymbols(source));
 }
 
-export default function() {
+export default function () {
   const target = arguments[0];
   for (let i = 1; i < arguments.length; i++) {
     copyDataProperties(target, arguments[i]);

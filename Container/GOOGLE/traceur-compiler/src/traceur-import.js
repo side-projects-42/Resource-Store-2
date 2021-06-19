@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as traceur from './traceur.js';
+import * as traceur from "./traceur.js";
 
 // Export traceur as a global property.
 Reflect.global.traceur = traceur;
 
 // TODO(jjb):  import ModuleStore once we merge the static and dynamic modules.
-$traceurRuntime.ModuleStore.set('traceur@', traceur);
+$traceurRuntime.ModuleStore.set("traceur@", traceur);

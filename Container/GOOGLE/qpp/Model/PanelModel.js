@@ -3,39 +3,37 @@
 
 // Backing data for QuerypointModel Panel, save/restore object
 
-(function() {
-
-  'use strict';
+(function () {
+  "use strict";
 
   /**
    @param string url, no search or hash part
    */
-  var PanelModel = QuerypointModel.PanelModel = function (url){
+  var PanelModel = (QuerypointModel.PanelModel = function (url) {
     this.record = new PanelModel.Record();
     this.record.sites[0] = PanelModel.Site(url);
     this.scrubber = {
-      selectedSite: 0,        // index into record.sites
-      selectedReload: 0,    // index into record.sites[selectedSite]
+      selectedSite: 0, // index into record.sites
+      selectedReload: 0, // index into record.sites[selectedSite]
       selectedMessage: 0, // index into record.sites[selectedSite].reloads[selectedReload]
-    }
+    };
     this.buffers = {
-      openURLs: [url],       // By default we open the html 
+      openURLs: [url], // By default we open the html
       unsavedBuffers: [],
-      userOpenedBuffer: 0 
-    }
-  }; 
+      userOpenedBuffer: 0,
+    };
+  });
 
-  PanelModel.Record = function() {
+  PanelModel.Record = function () {
     this.sites = []; // ordered by time
-  }
+  };
 
-  PanelModel.Site = function(url) {
+  PanelModel.Site = function (url) {
     this.url = url;
     this.reloads = [];
-  }
+  };
 
-  PanelModel.Reload = function() {
-    messages: []
-  }
-
-}());
+  PanelModel.Reload = function () {
+    messages: [];
+  };
+})();

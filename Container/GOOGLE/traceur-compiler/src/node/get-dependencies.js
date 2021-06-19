@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ModuleSpecifierVisitor} from '../codegeneration/module/ModuleSpecifierVisitor.js';
-import {Parser} from '../syntax/Parser.js';
-import {SourceFile} from '../syntax/SourceFile.js';
+import { ModuleSpecifierVisitor } from "../codegeneration/module/ModuleSpecifierVisitor.js";
+import { Parser } from "../syntax/Parser.js";
+import { SourceFile } from "../syntax/SourceFile.js";
 
-const {normalize, resolve, dirname} = require('path');
-const {readFileSync} = require('fs');
+const { normalize, resolve, dirname } = require("path");
+const { readFileSync } = require("fs");
 
 function addDependencies(deps, path) {
   path = resolve(path);
   if (deps.has(path)) return;
 
-  let content = readFileSync(path, 'utf-8');
+  let content = readFileSync(path, "utf-8");
   let sourceFile = new SourceFile(path, content);
   let parser = new Parser(sourceFile);
   let tree = parser.parseModule();

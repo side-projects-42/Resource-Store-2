@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
 
 /**
  * This is used to find something in a tree. Extend this class and override
@@ -44,8 +44,7 @@ export class FindVisitor extends ParseTreeVisitor {
   set found(v) {
     if (v) {
       this.found_ = true;
-      if (!this.keepOnGoing_)
-        this.shouldContinue_ = false;
+      if (!this.keepOnGoing_) this.shouldContinue_ = false;
     }
   }
 

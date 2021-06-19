@@ -11,7 +11,7 @@ function* sequenceGenerator() {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -20,4 +20,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('1463', accumulate(sequenceGenerator()));
+assert.equal("1463", accumulate(sequenceGenerator()));

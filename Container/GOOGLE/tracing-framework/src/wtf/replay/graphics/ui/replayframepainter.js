@@ -11,15 +11,13 @@
  * @author scotttodd@google.com (Scott Todd)
  */
 
-goog.provide('wtf.replay.graphics.ui.ReplayFramePainter');
+goog.provide("wtf.replay.graphics.ui.ReplayFramePainter");
 
-goog.require('goog.dom.classes');
-goog.require('wtf.events');
-goog.require('wtf.math');
-goog.require('wtf.replay.graphics.FrameTimeVisualizer');
-goog.require('wtf.ui.Painter');
-
-
+goog.require("goog.dom.classes");
+goog.require("wtf.events");
+goog.require("wtf.math");
+goog.require("wtf.replay.graphics.FrameTimeVisualizer");
+goog.require("wtf.ui.Painter");
 
 /**
  * Frame painter.
@@ -31,8 +29,12 @@ goog.require('wtf.ui.Painter');
  * @constructor
  * @extends {wtf.ui.Painter}
  */
-wtf.replay.graphics.ui.ReplayFramePainter = function(canvas, min, max,
-    opt_visualizer) {
+wtf.replay.graphics.ui.ReplayFramePainter = function (
+  canvas,
+  min,
+  max,
+  opt_visualizer
+) {
   goog.base(this, canvas);
 
   /**
@@ -65,20 +67,24 @@ wtf.replay.graphics.ui.ReplayFramePainter = function(canvas, min, max,
 
   if (this.frameTimeVisualizer_) {
     this.frameTimeVisualizer_.addListener(
-        wtf.replay.graphics.FrameTimeVisualizer.EventType.FRAMES_UPDATED,
-        function() {
-          if (this.selectedExperiment_ == null) {
-            this.updateExperiments_();
-          }
-          this.requestRepaint();
-        }, this);
+      wtf.replay.graphics.FrameTimeVisualizer.EventType.FRAMES_UPDATED,
+      function () {
+        if (this.selectedExperiment_ == null) {
+          this.updateExperiments_();
+        }
+        this.requestRepaint();
+      },
+      this
+    );
 
     this.frameTimeVisualizer_.addListener(
-        wtf.replay.graphics.FrameTimeVisualizer.EventType.EXPERIMENTS_UPDATED,
-        function() {
-          this.updateExperiments_();
-          this.requestRepaint();
-        }, this);
+      wtf.replay.graphics.FrameTimeVisualizer.EventType.EXPERIMENTS_UPDATED,
+      function () {
+        this.updateExperiments_();
+        this.requestRepaint();
+      },
+      this
+    );
   }
 
   /**
@@ -106,38 +112,35 @@ wtf.replay.graphics.ui.ReplayFramePainter = function(canvas, min, max,
 };
 goog.inherits(wtf.replay.graphics.ui.ReplayFramePainter, wtf.ui.Painter);
 
-
 /**
  * Gets the current frame number.
  * @return {number} The current frame number.
  */
 wtf.replay.graphics.ui.ReplayFramePainter.prototype.getCurrentFrame =
-    function() {
-  return this.currentFrame_;
-};
-
+  function () {
+    return this.currentFrame_;
+  };
 
 /**
  * Sets the current frame number.
  * @param {number} frameNumber The current frame number.
  */
-wtf.replay.graphics.ui.ReplayFramePainter.prototype.setCurrentFrame = function(
-    frameNumber) {
+wtf.replay.graphics.ui.ReplayFramePainter.prototype.setCurrentFrame = function (
+  frameNumber
+) {
   this.currentFrame_ = frameNumber;
   this.requestRepaint();
 };
-
 
 /**
  * Updates experiments data.
  * @private
  */
 wtf.replay.graphics.ui.ReplayFramePainter.prototype.updateExperiments_ =
-    function() {
-  var experimentIndex = this.frameTimeVisualizer_.getCurrentExperimentIndex();
-  this.selectedExperiment_ = experimentIndex;
-};
-
+  function () {
+    var experimentIndex = this.frameTimeVisualizer_.getCurrentExperimentIndex();
+    this.selectedExperiment_ = experimentIndex;
+  };
 
 /**
  * Colors used to draw frame time bars and other elements.
@@ -149,74 +152,73 @@ wtf.replay.graphics.ui.ReplayFramePainter.COLORS_ = {
   /**
    * The default background color of odd rows.
    */
-  ODD_ROW_BACKGROUND: '#FFFFFF',
+  ODD_ROW_BACKGROUND: "#FFFFFF",
 
   /**
    * The default background color of even rows.
    */
-  EVEN_ROW_BACKGROUND: '#FAFAFA',
+  EVEN_ROW_BACKGROUND: "#FAFAFA",
 
   /**
    * The background color of the currently selected frame.
    */
-  CURRENT_BACKGROUND: '#466CBF',
+  CURRENT_BACKGROUND: "#466CBF",
 
   /**
    * The background color of the currently selected frame.
    */
-  HOVER_BACKGROUND: '#777777',
+  HOVER_BACKGROUND: "#777777",
 
   /**
    * The color for lines at the 17ms and 33ms heights.
    */
-  TIME_MARKERS: '#DDDDDD',
+  TIME_MARKERS: "#DDDDDD",
 
   /**
    * The border color of the currently hovered over frame.
    */
-  HOVER_BORDER: '#222222',
+  HOVER_BORDER: "#222222",
 
   /**
    * The color for frames whose average duration is less than 17ms.
    */
-  FRAME_TIME_17: '#4C993F',
+  FRAME_TIME_17: "#4C993F",
 
   /**
    * The color for frames whose average duration is between 17ms and 33ms.
    */
-  FRAME_TIME_33: '#ED9128',
+  FRAME_TIME_33: "#ED9128",
 
   /**
    * The color for frames whose average duration is between 33ms and 50ms.
    */
-  FRAME_TIME_50: '#F23838',
+  FRAME_TIME_50: "#F23838",
 
   /**
    * The color for frames whose average duration is greater than 50ms.
    */
-  FRAME_TIME_50_PLUS: '#991E1E',
+  FRAME_TIME_50_PLUS: "#991E1E",
 
   /**
    * The color for the time between frames.
    */
-  BETWEEN_FRAMES_TIME: '#BBBBBB',
+  BETWEEN_FRAMES_TIME: "#BBBBBB",
 
   /**
    * The control background color.
    */
-  CONTROL_BACKGROUND: '#CCCCCC',
+  CONTROL_BACKGROUND: "#CCCCCC",
 
   /**
    * The control border color.
    */
-  CONTROL_BORDER: '#222222',
+  CONTROL_BORDER: "#222222",
 
   /**
    * The control selected color.
    */
-  CONTROL_SELECTED: '#466CBF'
+  CONTROL_SELECTED: "#466CBF",
 };
-
 
 /**
  * Sizes used for the graphs.
@@ -263,9 +265,8 @@ wtf.replay.graphics.ui.ReplayFramePainter.SIZES_ = {
   /**
    * Experiment control x padding between squares.
    */
-  CONTROL_PADDING: 6
+  CONTROL_PADDING: 6,
 };
-
 
 /**
  * Outline size in pixels. Used to draw outlined bars in the bar graph.
@@ -274,12 +275,13 @@ wtf.replay.graphics.ui.ReplayFramePainter.SIZES_ = {
  */
 wtf.replay.graphics.ui.ReplayFramePainter.OUTLINE_SIZE = 2;
 
-
 /**
  * @override
  */
-wtf.replay.graphics.ui.ReplayFramePainter.prototype.repaintInternal = function(
-    ctx, bounds) {
+wtf.replay.graphics.ui.ReplayFramePainter.prototype.repaintInternal = function (
+  ctx,
+  bounds
+) {
   // The x-axis is frame number, the y-axis is frame duration.
   var yScale = 1 / wtf.math.remap(45, 0, bounds.height, 0, 1);
 
@@ -294,8 +296,8 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.repaintInternal = function(
 
   // Draw background bars in alternating shades of grey.
   for (i = this.min_; i < this.max_; ++i) {
-    ctx.fillStyle = i % 2 ?
-        colors.ODD_ROW_BACKGROUND : colors.EVEN_ROW_BACKGROUND;
+    ctx.fillStyle =
+      i % 2 ? colors.ODD_ROW_BACKGROUND : colors.EVEN_ROW_BACKGROUND;
     this.drawBar_(ctx, bounds, i, 0, bounds.height);
   }
 
@@ -364,10 +366,20 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.repaintInternal = function(
           duration = frame.getAverageDuration();
           var lineY = bounds.height - duration * yScale;
 
-          var startX = wtf.math.remap(j - 0.5, this.min_, this.max_,
-              0, bounds.width);
-          var endX = wtf.math.remap(j + 0.5, this.min_, this.max_,
-              0, bounds.width);
+          var startX = wtf.math.remap(
+            j - 0.5,
+            this.min_,
+            this.max_,
+            0,
+            bounds.width
+          );
+          var endX = wtf.math.remap(
+            j + 0.5,
+            this.min_,
+            this.max_,
+            0,
+            bounds.width
+          );
 
           ctx.beginPath();
           ctx.moveTo(startX, lineY);
@@ -395,8 +407,8 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.repaintInternal = function(
   for (i = 0; i < experiments.length; ++i) {
     ctx.fillStyle = colors.CONTROL_BACKGROUND;
 
-    leftX = sizes.CONTROLS_X_OFFSET +
-        i * (sizes.CONTROL + sizes.CONTROL_PADDING);
+    leftX =
+      sizes.CONTROLS_X_OFFSET + i * (sizes.CONTROL + sizes.CONTROL_PADDING);
     topY = bounds.height - (sizes.CONTROLS_Y_OFFSET + sizes.CONTROL);
     ctx.fillRect(leftX, topY, sizes.CONTROL, sizes.CONTROL);
 
@@ -418,7 +430,6 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.repaintInternal = function(
   }
 };
 
-
 /**
  * Draws a bar on the canvas for a frame, handles computing the frame width.
  * @param {!CanvasRenderingContext2D} ctx Canvas render context.
@@ -429,62 +440,78 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.repaintInternal = function(
  * @param {boolean=} opt_outline If true, draw only an outline.
  * @private
  */
-wtf.replay.graphics.ui.ReplayFramePainter.prototype.drawBar_ = function(
-    ctx, bounds, frameNumber, topY, height, opt_outline) {
+wtf.replay.graphics.ui.ReplayFramePainter.prototype.drawBar_ = function (
+  ctx,
+  bounds,
+  frameNumber,
+  topY,
+  height,
+  opt_outline
+) {
   var sizes = wtf.replay.graphics.ui.ReplayFramePainter.SIZES_;
-  var leftX = wtf.math.remap(frameNumber - 0.5, this.min_, this.max_, 0,
-      bounds.width);
+  var leftX = wtf.math.remap(
+    frameNumber - 0.5,
+    this.min_,
+    this.max_,
+    0,
+    bounds.width
+  );
   var frameWidth = bounds.width / (this.max_ - this.min_);
 
   if (opt_outline) {
     var outlineSize = sizes.OUTLINE;
     ctx.lineWidth = outlineSize;
 
-    ctx.strokeRect(leftX - outlineSize / 2, topY - outlineSize / 2,
-        frameWidth + outlineSize, height + outlineSize);
+    ctx.strokeRect(
+      leftX - outlineSize / 2,
+      topY - outlineSize / 2,
+      frameWidth + outlineSize,
+      height + outlineSize
+    );
   } else {
     ctx.fillRect(leftX, topY, frameWidth, height);
   }
 };
 
-
 /**
  * @override
  */
 wtf.replay.graphics.ui.ReplayFramePainter.prototype.onMouseMoveInternal =
-    function(x, y, modifiers, bounds) {
-  this.hoverX_ = x;
-  this.hoverY_ = y;
+  function (x, y, modifiers, bounds) {
+    this.hoverX_ = x;
+    this.hoverY_ = y;
 
-  var controlHit = this.hitControlTest_(x, y, bounds);
-  var cssName = goog.getCssName('canvasPointer');
-  var canvas = this.getCanvas();
-  if (controlHit !== undefined) {
-    goog.dom.classes.add(canvas, cssName);
-  } else {
-    goog.dom.classes.remove(canvas, cssName);
-  }
+    var controlHit = this.hitControlTest_(x, y, bounds);
+    var cssName = goog.getCssName("canvasPointer");
+    var canvas = this.getCanvas();
+    if (controlHit !== undefined) {
+      goog.dom.classes.add(canvas, cssName);
+    } else {
+      goog.dom.classes.remove(canvas, cssName);
+    }
 
-  this.requestRepaint();
-};
-
+    this.requestRepaint();
+  };
 
 /**
  * @override
  */
 wtf.replay.graphics.ui.ReplayFramePainter.prototype.onMouseOutInternal =
-    function() {
-  this.hoverX_ = 0;
-  this.hoverY_ = 0;
-  this.requestRepaint();
-};
-
+  function () {
+    this.hoverX_ = 0;
+    this.hoverY_ = 0;
+    this.requestRepaint();
+  };
 
 /**
  * @override
  */
-wtf.replay.graphics.ui.ReplayFramePainter.prototype.onClickInternal =
-    function(x, y, modifiers, bounds) {
+wtf.replay.graphics.ui.ReplayFramePainter.prototype.onClickInternal = function (
+  x,
+  y,
+  modifiers,
+  bounds
+) {
   var controlHit = this.hitControlTest_(x, y, bounds);
   if (controlHit !== undefined) {
     this.selectedExperiment_ = controlHit;
@@ -504,61 +531,58 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.onClickInternal =
 
   var commandManager = wtf.events.getCommandManager();
   if (commandManager) {
-    commandManager.execute('goto_replay_frame', this, null, frameHit);
+    commandManager.execute("goto_replay_frame", this, null, frameHit);
   }
 
   return true;
 };
 
-
 /**
  * @override
  */
 wtf.replay.graphics.ui.ReplayFramePainter.prototype.getInfoStringInternal =
-    function(x, y, bounds) {
+  function (x, y, bounds) {
+    var controlHit = this.hitControlTest_(x, y, bounds);
+    if (controlHit !== undefined) {
+      var experiments = this.frameTimeVisualizer_.getExperiments();
+      var experiment = experiments[controlHit];
 
-  var controlHit = this.hitControlTest_(x, y, bounds);
-  if (controlHit !== undefined) {
-    var experiments = this.frameTimeVisualizer_.getExperiments();
-    var experiment = experiments[controlHit];
+      var controlLabel = experiment.getName() + "\n";
+      controlLabel += "Average FPS: " + experiment.getAverageFPS().toFixed(2);
+      return controlLabel;
+    }
 
-    var controlLabel = experiment.getName() + '\n';
-    controlLabel += 'Average FPS: ' + experiment.getAverageFPS().toFixed(2);
-    return controlLabel;
-  }
+    var frameHit = this.hitTest_(x, y, bounds);
+    if (!frameHit) {
+      return undefined;
+    }
 
-  var frameHit = this.hitTest_(x, y, bounds);
-  if (!frameHit) {
-    return undefined;
-  }
+    var frameLabel = "Frame #" + frameHit;
 
-  var frameLabel = 'Frame #' + frameHit;
+    if (this.frameTimeVisualizer_) {
+      var tooltips = [];
+      tooltips.push(frameLabel + "\n");
 
-  if (this.frameTimeVisualizer_) {
-    var tooltips = [];
-    tooltips.push(frameLabel + '\n');
+      var experiments = this.frameTimeVisualizer_.getExperiments();
+      for (var i = 0; i < experiments.length; ++i) {
+        var frames = experiments[i].getFrames();
 
-    var experiments = this.frameTimeVisualizer_.getExperiments();
-    for (var i = 0; i < experiments.length; ++i) {
-      var frames = experiments[i].getFrames();
-
-      if (frames[frameHit] && (i == this.selectedExperiment_ || i == 0)) {
-        var name = experiments[i].getName() + '\n';
-        var tooltip = frames[frameHit].getTooltip();
-        if (tooltip) {
-          tooltips.push(name + tooltip);
+        if (frames[frameHit] && (i == this.selectedExperiment_ || i == 0)) {
+          var name = experiments[i].getName() + "\n";
+          var tooltip = frames[frameHit].getTooltip();
+          if (tooltip) {
+            tooltips.push(name + tooltip);
+          }
         }
+      }
+
+      if (tooltips.length > 0) {
+        return tooltips.join("\n");
       }
     }
 
-    if (tooltips.length > 0) {
-      return tooltips.join('\n');
-    }
-  }
-
-  return frameLabel;
-};
-
+    return frameLabel;
+  };
 
 /**
  * Finds the frame at the given point.
@@ -568,12 +592,21 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.getInfoStringInternal =
  * @return {number} Frame number at the given point.
  * @private
  */
-wtf.replay.graphics.ui.ReplayFramePainter.prototype.hitTest_ = function(
-    x, y, bounds) {
-  return Math.round(wtf.math.remap(x, bounds.left, bounds.left + bounds.width,
-      this.min_, this.max_));
+wtf.replay.graphics.ui.ReplayFramePainter.prototype.hitTest_ = function (
+  x,
+  y,
+  bounds
+) {
+  return Math.round(
+    wtf.math.remap(
+      x,
+      bounds.left,
+      bounds.left + bounds.width,
+      this.min_,
+      this.max_
+    )
+  );
 };
-
 
 /**
  * Finds the experiment control at the given point.
@@ -584,8 +617,11 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.hitTest_ = function(
  *   Returns undefined if there is no experiment control at the point.
  * @private
  */
-wtf.replay.graphics.ui.ReplayFramePainter.prototype.hitControlTest_ = function(
-    x, y, bounds) {
+wtf.replay.graphics.ui.ReplayFramePainter.prototype.hitControlTest_ = function (
+  x,
+  y,
+  bounds
+) {
   if (!this.frameTimeVisualizer_) {
     return undefined;
   }
@@ -594,12 +630,16 @@ wtf.replay.graphics.ui.ReplayFramePainter.prototype.hitControlTest_ = function(
   var sizes = wtf.replay.graphics.ui.ReplayFramePainter.SIZES_;
 
   for (var i = 0; i < experiments.length; ++i) {
-    var leftX = sizes.CONTROLS_X_OFFSET +
-        i * (sizes.CONTROL + sizes.CONTROL_PADDING);
+    var leftX =
+      sizes.CONTROLS_X_OFFSET + i * (sizes.CONTROL + sizes.CONTROL_PADDING);
     var topY = bounds.height - (sizes.CONTROLS_Y_OFFSET + sizes.CONTROL);
 
-    if (x > leftX && x < leftX + sizes.CONTROL &&
-        y > topY && y < topY + sizes.CONTROL) {
+    if (
+      x > leftX &&
+      x < leftX + sizes.CONTROL &&
+      y > topY &&
+      y < topY + sizes.CONTROL
+    ) {
       return i;
     }
   }

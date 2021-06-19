@@ -1,0 +1,67 @@
+{
+  "name": "thanks",
+  "description": "Give thanks to the open source maintainers you depend on!",
+  "version": "1.5.0",
+  "author": {
+    "name": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "https://feross.org"
+  },
+  "bin": "dist/cmd.js",
+  "bugs": {
+    "url": "https://github.com/feross/thanks/issues"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "common-tags": "^1.7.2",
+    "got": "^8.0.3",
+    "minimist": "^1.2.0",
+    "npm-registry-client": "^8.5.0",
+    "opn": "^5.2.0",
+    "ora": "^1.4.0",
+    "pify": "^3.0.0",
+    "pkg-dir": "^2.0.0",
+    "pkg-up": "^2.0.0",
+    "prompt-confirm": "^1.2.0",
+    "read-package-tree": "^5.1.6",
+    "registry-auth-token": "^3.3.2",
+    "registry-url": "^3.1.0",
+    "strip-ansi": "^4.0.0",
+    "term-size": "^1.2.0",
+    "text-table": "^0.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.39",
+    "@babel/core": "^7.0.0-beta.39",
+    "@babel/plugin-transform-async-to-generator": "^7.0.0-beta.39",
+    "standard": "*"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "keywords": [
+    "donate",
+    "donor",
+    "earn",
+    "fund",
+    "funding",
+    "open source",
+    "patreon",
+    "support",
+    "sustain",
+    "sustainability",
+    "thank you",
+    "thanks"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feross/thanks.git"
+  },
+  "scripts": {
+    "build": "mkdir -p dist && babel src/cmd.js > dist/cmd.js && chmod +x dist/cmd.js",
+    "prepublish": "npm run build",
+    "test": "standard && npm run build && ./dist/cmd.js --no-open"
+  }
+}

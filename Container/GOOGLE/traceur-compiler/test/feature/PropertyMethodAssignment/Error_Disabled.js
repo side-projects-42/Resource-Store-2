@@ -4,5 +4,5 @@
 var object = {
   method() {
     return 42;
-  }
+  },
 };

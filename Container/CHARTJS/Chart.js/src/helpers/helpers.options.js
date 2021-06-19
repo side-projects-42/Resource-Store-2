@@ -1,9 +1,11 @@
-import defaults from '../core/core.defaults';
-import {isArray, isObject, toDimension, valueOrDefault} from './helpers.core';
-import {toFontString} from './helpers.canvas';
+import defaults from "../core/core.defaults";
+import { isArray, isObject, toDimension, valueOrDefault } from "./helpers.core";
+import { toFontString } from "./helpers.canvas";
 
 const LINE_HEIGHT = new RegExp(/^(normal|(\d+(?:\.\d+)?)(px|em|%)?)$/);
-const FONT_STYLE = new RegExp(/^(normal|italic|initial|inherit|unset|(oblique( -?[0-9]?[0-9]deg)?))$/);
+const FONT_STYLE = new RegExp(
+  /^(normal|italic|initial|inherit|unset|(oblique( -?[0-9]?[0-9]deg)?))$/
+);
 
 /**
  * @alias Chart.helpers.options
@@ -18,27 +20,27 @@ const FONT_STYLE = new RegExp(/^(normal|italic|initial|inherit|unset|(oblique( -
  * @since 2.7.0
  */
 export function toLineHeight(value, size) {
-  const matches = ('' + value).match(LINE_HEIGHT);
-  if (!matches || matches[1] === 'normal') {
+  const matches = ("" + value).match(LINE_HEIGHT);
+  if (!matches || matches[1] === "normal") {
     return size * 1.2;
   }
 
   value = +matches[2];
 
   switch (matches[3]) {
-  case 'px':
-    return value;
-  case '%':
-    value /= 100;
-    break;
-  default:
-    break;
+    case "px":
+      return value;
+    case "%":
+      value /= 100;
+      break;
+    default:
+      break;
   }
 
   return size * value;
 }
 
-const numberOrZero = v => +v || 0;
+const numberOrZero = (v) => +v || 0;
 
 export function _readValueToProps(value, props) {
   const ret = {};
@@ -46,8 +48,8 @@ export function _readValueToProps(value, props) {
   const keys = objProps ? Object.keys(props) : props;
   const read = isObject(value)
     ? objProps
-      ? prop => valueOrDefault(value[prop], value[props[prop]])
-      : prop => value[prop]
+      ? (prop) => valueOrDefault(value[prop], value[props[prop]])
+      : (prop) => value[prop]
     : () => value;
 
   for (const prop of keys) {
@@ -65,7 +67,12 @@ export function _readValueToProps(value, props) {
  * @since 3.0.0
  */
 export function toTRBL(value) {
-  return _readValueToProps(value, {top: 'y', right: 'x', bottom: 'y', left: 'x'});
+  return _readValueToProps(value, {
+    top: "y",
+    right: "x",
+    bottom: "y",
+    left: "x",
+  });
 }
 
 /**
@@ -76,7 +83,12 @@ export function toTRBL(value) {
  * @since 3.0.0
  */
 export function toTRBLCorners(value) {
-  return _readValueToProps(value, ['topLeft', 'topRight', 'bottomLeft', 'bottomRight']);
+  return _readValueToProps(value, [
+    "topLeft",
+    "topRight",
+    "bottomLeft",
+    "bottomRight",
+  ]);
 }
 
 /**
@@ -96,7 +108,6 @@ export function toPadding(value) {
   return obj;
 }
 
-
 /**
  * Parses font options and returns the font object.
  * @param {object} options - A object that contains font options to be parsed.
@@ -110,22 +121,25 @@ export function toFont(options, fallback) {
 
   let size = valueOrDefault(options.size, fallback.size);
 
-  if (typeof size === 'string') {
+  if (typeof size === "string") {
     size = parseInt(size, 10);
   }
   let style = valueOrDefault(options.style, fallback.style);
-  if (style && !('' + style).match(FONT_STYLE)) {
+  if (style && !("" + style).match(FONT_STYLE)) {
     console.warn('Invalid font style specified: "' + style + '"');
-    style = '';
+    style = "";
   }
 
   const font = {
     family: valueOrDefault(options.family, fallback.family),
-    lineHeight: toLineHeight(valueOrDefault(options.lineHeight, fallback.lineHeight), size),
+    lineHeight: toLineHeight(
+      valueOrDefault(options.lineHeight, fallback.lineHeight),
+      size
+    ),
     size,
     style,
     weight: valueOrDefault(options.weight, fallback.weight),
-    string: ''
+    string: "",
   };
 
   font.string = toFontString(font);
@@ -152,7 +166,7 @@ export function resolve(inputs, context, index, info) {
     if (value === undefined) {
       continue;
     }
-    if (context !== undefined && typeof value === 'function') {
+    if (context !== undefined && typeof value === "function") {
       value = value(context);
       cacheable = false;
     }
@@ -175,9 +189,9 @@ export function resolve(inputs, context, index, info) {
  * @private
  */
 export function _addGrace(minmax, grace) {
-  const {min, max} = minmax;
+  const { min, max } = minmax;
   return {
     min: min - Math.abs(toDimension(grace, min)),
-    max: max + toDimension(grace, max)
+    max: max + toDimension(grace, max),
   };
 }

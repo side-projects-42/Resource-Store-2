@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 function enumerableOnlyObject(obj) {
   let result = Object.create(null);
-  Object.keys(obj).forEach(function(key) {
-    Object.defineProperty(result, key, {enumerable: true, value: obj[key]});
+  Object.keys(obj).forEach(function (key) {
+    Object.defineProperty(result, key, { enumerable: true, value: obj[key] });
   });
   return result;
 }
@@ -48,14 +47,14 @@ export const optionsV01 = enumerableOnlyObject({
   jsx: false,
   lowResolutionSourceMap: false,
   memberVariables: false,
-  moduleName: 'default',
-  modules: 'bootstrap',
+  moduleName: "default",
+  modules: "bootstrap",
   numericLiterals: true,
-  outputLanguage: 'es5',
+  outputLanguage: "es5",
   properTailCalls: false,
   propertyMethods: true,
   propertyNameShorthand: true,
-  referrer: '',
+  referrer: "",
   require: false,
   restParameters: true,
   script: false,
@@ -92,8 +91,15 @@ export const versionLockedOptions = optionsV01;
 let defaultValues = Object.create(null);
 let featureOptions = Object.create(null);
 let experimentalOptions = Object.create(null);
-let moduleOptions =
-    ['amd', 'commonjs', 'closure', 'instantiate', 'inline', 'bootstrap', 'parse'];
+let moduleOptions = [
+  "amd",
+  "commonjs",
+  "closure",
+  "instantiate",
+  "inline",
+  "bootstrap",
+  "parse",
+];
 
 const EXPERIMENTAL = 0;
 const ON_BY_DEFAULT = 1;
@@ -105,8 +111,7 @@ const ON_BY_DEFAULT = 1;
 function addFeatureOption(name, kind) {
   featureOptions[name] = true;
 
-  if (kind === EXPERIMENTAL)
-    experimentalOptions[name] = true;
+  if (kind === EXPERIMENTAL) experimentalOptions[name] = true;
 
   let defaultValue = kind === ON_BY_DEFAULT;
   defaultValues[name] = defaultValue;
@@ -120,56 +125,55 @@ function addBoolOption(name) {
 }
 
 // ON_BY_DEFAULT
-addFeatureOption('arrowFunctions', ON_BY_DEFAULT);     // 13.2
-addFeatureOption('blockBinding', ON_BY_DEFAULT);       // 12.1
-addFeatureOption('classes', ON_BY_DEFAULT);            // 13.5
-addFeatureOption('computedPropertyNames', ON_BY_DEFAULT);  // 11.1.5
-addFeatureOption('defaultParameters', ON_BY_DEFAULT);  // Cant find in the spec
-addFeatureOption('destructuring', ON_BY_DEFAULT);      // 11.13.1
-addFeatureOption('forOf', ON_BY_DEFAULT);              // 12.6.4
-addFeatureOption('generators', ON_BY_DEFAULT); // 13.4
-addFeatureOption('modules', 'SPECIAL');    // 14
-addFeatureOption('numericLiterals', ON_BY_DEFAULT);
-addFeatureOption('propertyMethods', ON_BY_DEFAULT);    // 13.3
-addFeatureOption('propertyNameShorthand', ON_BY_DEFAULT);
-addFeatureOption('restParameters', ON_BY_DEFAULT);     // 13.1
-addFeatureOption('sourceMaps', 'SPECIAL');
-addFeatureOption('spread', ON_BY_DEFAULT);             // 11.1.4, 11.2.5
-addFeatureOption('symbols', ON_BY_DEFAULT);
-addFeatureOption('templateLiterals', ON_BY_DEFAULT);   // 7.6.8
-addFeatureOption('unicodeEscapeSequences', ON_BY_DEFAULT);  // 11.8.4
-addFeatureOption('unicodeExpressions', ON_BY_DEFAULT);
+addFeatureOption("arrowFunctions", ON_BY_DEFAULT); // 13.2
+addFeatureOption("blockBinding", ON_BY_DEFAULT); // 12.1
+addFeatureOption("classes", ON_BY_DEFAULT); // 13.5
+addFeatureOption("computedPropertyNames", ON_BY_DEFAULT); // 11.1.5
+addFeatureOption("defaultParameters", ON_BY_DEFAULT); // Cant find in the spec
+addFeatureOption("destructuring", ON_BY_DEFAULT); // 11.13.1
+addFeatureOption("forOf", ON_BY_DEFAULT); // 12.6.4
+addFeatureOption("generators", ON_BY_DEFAULT); // 13.4
+addFeatureOption("modules", "SPECIAL"); // 14
+addFeatureOption("numericLiterals", ON_BY_DEFAULT);
+addFeatureOption("propertyMethods", ON_BY_DEFAULT); // 13.3
+addFeatureOption("propertyNameShorthand", ON_BY_DEFAULT);
+addFeatureOption("restParameters", ON_BY_DEFAULT); // 13.1
+addFeatureOption("sourceMaps", "SPECIAL");
+addFeatureOption("spread", ON_BY_DEFAULT); // 11.1.4, 11.2.5
+addFeatureOption("symbols", ON_BY_DEFAULT);
+addFeatureOption("templateLiterals", ON_BY_DEFAULT); // 7.6.8
+addFeatureOption("unicodeEscapeSequences", ON_BY_DEFAULT); // 11.8.4
+addFeatureOption("unicodeExpressions", ON_BY_DEFAULT);
 
 // EXPERIMENTAL due to performance impact although properly part of ES6
-addFeatureOption('properTailCalls', EXPERIMENTAL);
+addFeatureOption("properTailCalls", EXPERIMENTAL);
 
 // EXPERIMENTAL
-addFeatureOption('annotations', EXPERIMENTAL);
-addFeatureOption('arrayComprehension', EXPERIMENTAL); // 11.4.1.2
-addFeatureOption('asyncFunctions', EXPERIMENTAL);
-addFeatureOption('asyncGenerators', EXPERIMENTAL);
-addFeatureOption('exponentiation', EXPERIMENTAL);
-addFeatureOption('exportFromExtended', EXPERIMENTAL);
-addFeatureOption('forOn', EXPERIMENTAL);
-addFeatureOption('generatorComprehension', EXPERIMENTAL);
-addFeatureOption('importRuntime', EXPERIMENTAL);
-addFeatureOption('jsx', EXPERIMENTAL);
-addFeatureOption('memberVariables', EXPERIMENTAL);
-addFeatureOption('require', EXPERIMENTAL);
-addFeatureOption('spreadProperties', EXPERIMENTAL);
-addFeatureOption('types', EXPERIMENTAL);
+addFeatureOption("annotations", EXPERIMENTAL);
+addFeatureOption("arrayComprehension", EXPERIMENTAL); // 11.4.1.2
+addFeatureOption("asyncFunctions", EXPERIMENTAL);
+addFeatureOption("asyncGenerators", EXPERIMENTAL);
+addFeatureOption("exponentiation", EXPERIMENTAL);
+addFeatureOption("exportFromExtended", EXPERIMENTAL);
+addFeatureOption("forOn", EXPERIMENTAL);
+addFeatureOption("generatorComprehension", EXPERIMENTAL);
+addFeatureOption("importRuntime", EXPERIMENTAL);
+addFeatureOption("jsx", EXPERIMENTAL);
+addFeatureOption("memberVariables", EXPERIMENTAL);
+addFeatureOption("require", EXPERIMENTAL);
+addFeatureOption("spreadProperties", EXPERIMENTAL);
+addFeatureOption("types", EXPERIMENTAL);
 
 let transformOptionsPrototype = {};
 
 Object.keys(featureOptions).forEach((name) => {
   Object.defineProperty(transformOptionsPrototype, name, {
-    get: function() {
+    get: function () {
       let v = this.proxiedOptions_[name];
-      if (v === 'parse')
-        return false;
+      if (v === "parse") return false;
       return v;
     },
-    enumerable: true
+    enumerable: true,
   });
 });
 
@@ -177,23 +181,21 @@ let parseOptionsPrototype = {};
 
 Object.keys(featureOptions).forEach((name) => {
   Object.defineProperty(parseOptionsPrototype, name, {
-    get: function() {
+    get: function () {
       return !!this.proxiedOptions_[name];
     },
-    enumerable: true
+    enumerable: true,
   });
 });
 
-
-addBoolOption('commentCallback');
-addBoolOption('debug');
-addBoolOption('debugNames');
-addBoolOption('freeVariableChecker');
-addBoolOption('script');
-addBoolOption('validate');
+addBoolOption("commentCallback");
+addBoolOption("debug");
+addBoolOption("debugNames");
+addBoolOption("freeVariableChecker");
+addBoolOption("script");
+addBoolOption("validate");
 
 export class Options {
-
   constructor(options = Object.create(null)) {
     this.reset();
 
@@ -202,34 +204,36 @@ export class Options {
       modules_: {
         value: versionLockedOptions.modules,
         writable: true,
-        enumerable: false
+        enumerable: false,
       },
       sourceMaps_: {
         value: versionLockedOptions.sourceMaps,
         writable: true,
-        enumerable: false
+        enumerable: false,
       },
       sourceRoot_: {
         value: versionLockedOptions.sourceRoot,
         writable: true,
-        enumerable: false
+        enumerable: false,
       },
       transformOptions: {
         value: Object.create(transformOptionsPrototype, {
           proxiedOptions_: {
             value: this,
-            enumerable: false
-          }}),
-        enumerable: false
+            enumerable: false,
+          },
+        }),
+        enumerable: false,
       },
       parseOptions: {
         value: Object.create(parseOptionsPrototype, {
           proxiedOptions_: {
             value: this,
-            enumerable: false
-          }}),
-        enumerable: false
-      }
+            enumerable: false,
+          },
+        }),
+        enumerable: false,
+      },
     });
 
     this.setFromObject(options);
@@ -286,7 +290,11 @@ export class Options {
    * @return {Options} with every atScript option set true.
    */
   static atscript() {
-    return new Options({types: true, annotations: true, memberVariables: true});
+    return new Options({
+      types: true,
+      annotations: true,
+      memberVariables: true,
+    });
   }
 
   get modules() {
@@ -294,11 +302,14 @@ export class Options {
   }
 
   set modules(value) {
-    if (typeof value === 'boolean' && !value)
-      value = 'bootstrap';
+    if (typeof value === "boolean" && !value) value = "bootstrap";
     if (moduleOptions.indexOf(value) === -1) {
-      throw new Error('Invalid \'modules\' option \'' + value + '\', not in ' +
-        moduleOptions.join(', '));
+      throw new Error(
+        "Invalid 'modules' option '" +
+          value +
+          "', not in " +
+          moduleOptions.join(", ")
+      );
     }
     this.modules_ = value;
   }
@@ -308,15 +319,18 @@ export class Options {
   }
 
   set sourceMaps(value) {
-    if (value === null || typeof value === 'boolean') {
-      this.sourceMaps_ = value ? 'file' : false;
+    if (value === null || typeof value === "boolean") {
+      this.sourceMaps_ = value ? "file" : false;
       return;
     }
-    if (value === 'file' || value === 'inline' || value === 'memory') {
+    if (value === "file" || value === "inline" || value === "memory") {
       this.sourceMaps_ = value;
     } else {
-      throw new Error('Option sourceMaps should be ' +
-          '[false|inline|file|memory], not ' + value);
+      throw new Error(
+        "Option sourceMaps should be " +
+          "[false|inline|file|memory], not " +
+          value
+      );
     }
   }
 
@@ -337,10 +351,10 @@ export class Options {
    * boolean values.
    */
   setDefaults() {
-    this.modules = 'bootstrap';
-    this.moduleName = 'default';
-    this.outputLanguage = 'es5';
-    this.referrer = '';
+    this.modules = "bootstrap";
+    this.moduleName = "default";
+    this.outputLanguage = "es5";
+    this.referrer = "";
     this.sourceMaps = false;
     this.sourceRoot = false;
     this.lowResolutionSourceMap = false;
@@ -361,16 +375,16 @@ export class Options {
    */
   setFromObject(object) {
     Object.keys(this).forEach((name) => {
-      if (name in object)
-        this.setOption(name, object[name]);
+      if (name in object) this.setOption(name, object[name]);
     });
     this.modules = object.modules || this.modules;
-    if (typeof object.sourceMaps === 'boolean' ||
-        typeof object.sourceMaps === 'string') {
+    if (
+      typeof object.sourceMaps === "boolean" ||
+      typeof object.sourceMaps === "string"
+    ) {
       this.sourceMaps = object.sourceMaps;
     }
-    if (object.sourceRoot !== undefined)
-      this.sourceRoot = object.sourceRoot;
+    if (object.sourceRoot !== undefined) this.sourceRoot = object.sourceRoot;
     return this;
   }
 
@@ -379,7 +393,7 @@ export class Options {
     if (name in this) {
       this[name] = value;
     } else {
-      throw Error('Unknown option: ' + name);
+      throw Error("Unknown option: " + name);
     }
   }
 
@@ -390,26 +404,24 @@ export class Options {
         mismatches.push({
           key: key,
           now: $traceurRuntime.options[key],
-          v01: ref[key]
+          v01: ref[key],
         });
       }
     });
     return mismatches;
   }
-
-};
-
+}
 
 // TODO: Refactor this so that we can keep all of these in one place.
 let descriptions = {
-  experimental: 'Turns on all experimental features',
-  require: 'Generate require function argument for node when modules=register',
-  sourceMaps: 'Generate source map and (\'file\') write to .map' +
-      ' or (\'inline\') append data URL',
+  experimental: "Turns on all experimental features",
+  require: "Generate require function argument for node when modules=register",
+  sourceMaps:
+    "Generate source map and ('file') write to .map" +
+    " or ('inline') append data URL",
 };
 
 export class CommandOptions extends Options {
-
   /**
    * Takes a string and parses it and sets the options based on that
    * string.
@@ -440,27 +452,24 @@ export class CommandOptions extends Options {
     let re = /--([^=]+)(?:=(.+))?/;
     let m = re.exec(s);
 
-    if (m)
-      this.setOptionCoerced(m[1], m[2]);
+    if (m) this.setOptionCoerced(m[1], m[2]);
   }
 
   setOptionCoerced(name, value) {
     // commander.js give value = null if no argument follows --option-name
-    if (typeof value !== 'undefined' && value !== null)
+    if (typeof value !== "undefined" && value !== null)
       value = coerceOptionValue(value);
-    else
-      value = true;
+    else value = true;
 
-    this.setOption(name,  value);
+    this.setOption(name, value);
   }
-
 }
 
 function coerceOptionValue(v) {
   switch (v) {
-    case 'false':
+    case "false":
       return false;
-    case 'true':
+    case "true":
     case true:
       return true;
     default:
@@ -473,7 +482,7 @@ function coerceOptionValue(v) {
  * Converts a string from aaa-bbb-ccc to aaaBbbCcc.
  */
 function toCamelCase(s) {
-  return s.replace(/-\w/g, function(ch) {
+  return s.replace(/-\w/g, function (ch) {
     return ch[1].toUpperCase();
   });
 }
@@ -482,8 +491,8 @@ function toCamelCase(s) {
  * Converts a string from aaaBbbCcc to aaa-bbb-ccc.
  */
 export function toDashCase(s) {
-  return s.replace(/[A-Z]/g, function(ch) {
-    return '-' + ch.toLowerCase();
+  return s.replace(/[A-Z]/g, function (ch) {
+    return "-" + ch.toLowerCase();
   });
 }
 
@@ -495,80 +504,90 @@ export function toDashCase(s) {
  */
 export function addOptions(flags, commandOptions) {
   // Start with the non-boolean options.
-  flags.option('--referrer <name>',
-      'Bracket output code with System.referrerName=<name>',
-      (name) => {
-        commandOptions.setOption('referrer', name);
-        System.map = System.semverMap(name);
-        return name;
-      });
-  flags.option('--modules <' + moduleOptions.join(', ') + '>',
-      'select the output format for modules',
-      (moduleFormat) => {
-        commandOptions.modules = moduleFormat;
-      });
-  flags.option('--moduleName [true|false|default]',
-    'true for named, false for anonymous modules; default depends on --modules',
-    (moduleName) => {
-      if (moduleName === 'true')
-        moduleName = true;
-      else if (moduleName === 'false')
-        moduleName = false;
-      else
-        moduleName = 'default';
-      commandOptions.moduleName = moduleName;
-    });
-  flags.option('--outputLanguage <es6|es5>',
-    'compilation target language',
-    (outputLanguage) => {
-      if (outputLanguage === 'es6' || outputLanguage === 'es5')
-        commandOptions.outputLanguage = outputLanguage;
-      else
-        throw new Error('outputLanguage must be one of es5, es6');
-  });
-  flags.option('--source-maps [file|inline|memory]',
-    'sourceMaps generated to file or inline with data: URL',
-    (to) => { return commandOptions.sourceMaps = to; }
-  );
-  flags.option('--source-root <true|false|string>',
-    'sourcemap sourceRoot value. false to omit, ' +
-        'true for directory of output file.',
-    (to) => {
-      if (to === 'false')
-        to = false;
-      else if (to === 'true')
-        to = true;
-      return commandOptions.sourceRoot = to;
+  flags.option(
+    "--referrer <name>",
+    "Bracket output code with System.referrerName=<name>",
+    (name) => {
+      commandOptions.setOption("referrer", name);
+      System.map = System.semverMap(name);
+      return name;
     }
   );
-  flags.option('--low-resolution-source-maps',
-    'Lower sourceMaps granularity to one mapping per output line',
-    () => { return commandOptions.lowResolutionSourceMap = true; }
+  flags.option(
+    "--modules <" + moduleOptions.join(", ") + ">",
+    "select the output format for modules",
+    (moduleFormat) => {
+      commandOptions.modules = moduleFormat;
+    }
   );
-  flags.option('--experimental',
-    'Turns on all experimental features',
-    () => { commandOptions.experimental = true; }
+  flags.option(
+    "--moduleName [true|false|default]",
+    "true for named, false for anonymous modules; default depends on --modules",
+    (moduleName) => {
+      if (moduleName === "true") moduleName = true;
+      else if (moduleName === "false") moduleName = false;
+      else moduleName = "default";
+      commandOptions.moduleName = moduleName;
+    }
   );
+  flags.option(
+    "--outputLanguage <es6|es5>",
+    "compilation target language",
+    (outputLanguage) => {
+      if (outputLanguage === "es6" || outputLanguage === "es5")
+        commandOptions.outputLanguage = outputLanguage;
+      else throw new Error("outputLanguage must be one of es5, es6");
+    }
+  );
+  flags.option(
+    "--source-maps [file|inline|memory]",
+    "sourceMaps generated to file or inline with data: URL",
+    (to) => {
+      return (commandOptions.sourceMaps = to);
+    }
+  );
+  flags.option(
+    "--source-root <true|false|string>",
+    "sourcemap sourceRoot value. false to omit, " +
+      "true for directory of output file.",
+    (to) => {
+      if (to === "false") to = false;
+      else if (to === "true") to = true;
+      return (commandOptions.sourceRoot = to);
+    }
+  );
+  flags.option(
+    "--low-resolution-source-maps",
+    "Lower sourceMaps granularity to one mapping per output line",
+    () => {
+      return (commandOptions.lowResolutionSourceMap = true);
+    }
+  );
+  flags.option("--experimental", "Turns on all experimental features", () => {
+    commandOptions.experimental = true;
+  });
 
-  flags.option('--atscript',
-    'Turns on all AtScript features',
-    () => { commandOptions.atscript = true; }
-  );
+  flags.option("--atscript", "Turns on all AtScript features", () => {
+    commandOptions.atscript = true;
+  });
 
-  Object.keys(commandOptions).forEach(function(name) {
+  Object.keys(commandOptions).forEach(function (name) {
     let dashedName = toDashCase(name);
-    if (flags.optionFor('--' + name) || flags.optionFor('--' + dashedName)) {
-      return;   // non-boolean already in flags.
+    if (flags.optionFor("--" + name) || flags.optionFor("--" + dashedName)) {
+      return; // non-boolean already in flags.
     } else if (name in featureOptions) {
-      flags.option('--' + dashedName + ' [true|false|parse]',
-                   descriptions[name]);
+      flags.option(
+        "--" + dashedName + " [true|false|parse]",
+        descriptions[name]
+      );
       flags.on(dashedName, (value) =>
-        commandOptions.setOptionCoerced(dashedName, value));
+        commandOptions.setOptionCoerced(dashedName, value)
+      );
     } else if (commandOptions[name] !== null) {
-      flags.option('--' + dashedName, descriptions[name]);
+      flags.option("--" + dashedName, descriptions[name]);
       flags.on(dashedName, () => commandOptions.setOption(dashedName, true));
     } else {
-      throw new Error('Unexpected null commandOption ' + name);
+      throw new Error("Unexpected null commandOption " + name);
     }
   });
   // After we've processed the commandOptions, set defaults for commandOptions.

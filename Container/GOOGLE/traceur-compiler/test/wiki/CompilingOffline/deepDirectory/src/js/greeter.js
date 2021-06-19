@@ -1,4 +1,6 @@
 // greeter.js
 export class Greeter {
-  sayHi() { console.log('Hi!'); }
+  sayHi() {
+    console.log("Hi!");
+  }
 }

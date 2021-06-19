@@ -12,35 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ErrorReporter} from 'traceur@0.0/src/util/ErrorReporter.js';
-import {SourceMapVisualizer} from './SourceMapVisualizer.js';
-import {transcode, renderSourceMap} from './transcode.js';
-import {Options} from 'traceur@0.0/src/Options.js';
-import {setOptionsFromSource} from './replOptions.js';
+import { ErrorReporter } from "traceur@0.0/src/util/ErrorReporter.js";
+import { SourceMapVisualizer } from "./SourceMapVisualizer.js";
+import { transcode, renderSourceMap } from "./transcode.js";
+import { Options } from "traceur@0.0/src/Options.js";
+import { setOptionsFromSource } from "./replOptions.js";
 
 let hasError = false;
 let debouncedCompile = debounced(compile, 200, 2000);
-let input = CodeMirror.fromTextArea(document.querySelector('.input'), {
+let input = CodeMirror.fromTextArea(document.querySelector(".input"), {
   lineNumbers: true,
-  keyMap: 'sublime'
+  keyMap: "sublime",
 });
-input.on('change', debouncedCompile);
-input.on('cursorActivity', onInputCursorActivity);
+input.on("change", debouncedCompile);
+input.on("cursorActivity", onInputCursorActivity);
 
-let outputCheckbox = document.querySelector('input.output');
+let outputCheckbox = document.querySelector("input.output");
 let output = CodeMirror.fromTextArea(
-    document.querySelector('textarea.output'), {
-      lineNumbers: true,
-      keyMap: 'sublime',
-      readOnly: true
-    });
-output.getWrapperElement().classList.add('output-wrapper');
-let evalCheckbox = document.querySelector('input.eval');
-let errorElement = document.querySelector('pre.error');
+  document.querySelector("textarea.output"),
+  {
+    lineNumbers: true,
+    keyMap: "sublime",
+    readOnly: true,
+  }
+);
+output.getWrapperElement().classList.add("output-wrapper");
+let evalCheckbox = document.querySelector("input.eval");
+let errorElement = document.querySelector("pre.error");
 
-outputCheckbox.addEventListener('click', (e) => {
-  document.documentElement.classList[
-      outputCheckbox.checked ? 'remove' : 'add']('hide-output');
+outputCheckbox.addEventListener("click", (e) => {
+  document.documentElement.classList[outputCheckbox.checked ? "remove" : "add"](
+    "hide-output"
+  );
 });
 
 /**
@@ -68,7 +71,9 @@ function debounced(func, tmin, tmax) {
     id = setTimeout(wrappedFunc, t);
   }
   // id is nonzero only when a debounced function is pending.
-  debouncedFunc.delay = () => { id && debouncedFunc(); }
+  debouncedFunc.delay = () => {
+    id && debouncedFunc();
+  };
   return debouncedFunc;
 }
 
@@ -79,8 +84,11 @@ function onInputCursorActivity() {
 
 function updateLocation(contents) {
   if (history.replaceState) {
-    history.replaceState(null, document.title,
-                         '#' + encodeURIComponent(contents));
+    history.replaceState(
+      null,
+      document.title,
+      "#" + encodeURIComponent(contents)
+    );
   }
 }
 
@@ -88,14 +96,15 @@ let options = new Options();
 
 function compile() {
   hasError = false;
-  output.setValue('');
+  output.setValue("");
 
-  let name = 'repl';
+  let name = "repl";
   let contents = input.getValue();
   updateLocation(contents);
   try {
     options.setFromObject(
-        setOptionsFromSource(contents, resetAndCompileContents));
+      setOptionsFromSource(contents, resetAndCompileContents)
+    );
     compileContents(contents);
   } catch (ex) {
     onFailure(ex);
@@ -114,8 +123,7 @@ function resetAndCompileContents(contents, newOptions) {
 }
 
 function onFailure(error, metadata) {
-  if (metadata.transcoded)
-    output.setValue(metadata.transcoded);
+  if (metadata.transcoded) output.setValue(metadata.transcoded);
   hasError = true;
   errorElement.hidden = false;
 
@@ -123,8 +131,8 @@ function onFailure(error, metadata) {
   if (error) {
     if (error.stack) {
       s = error.stack;
-    } else if (error.name === 'MultipleErrors') {
-      s = error.errors.join('\n');
+    } else if (error.name === "MultipleErrors") {
+      s = error.errors.join("\n");
     }
   } else {
     s = String(error);
@@ -141,12 +149,11 @@ function compileContents(contents) {
       let info = metadata.compiler.sourceMapInfo;
       sourceMapVisualizer.updateMap(info);
     } else {
-      sourceMapVisualizer.updateMap({sourceMapURL: null});
+      sourceMapVisualizer.updateMap({ sourceMapURL: null });
     }
   }
 
-  if (transcode)
-    transcode(contents, options, onTranscoded, onFailure);
+  if (transcode) transcode(contents, options, onTranscoded, onFailure);
 }
 
 if (location.hash) {

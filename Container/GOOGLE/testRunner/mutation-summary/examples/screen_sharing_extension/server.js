@@ -12,36 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var WebSocket = require('faye-websocket');
-var http      = require('http');
-var fs        = require('fs');
+var WebSocket = require("faye-websocket");
+var http = require("http");
+var fs = require("fs");
 
 var server = http.createServer();
 
-fs.readFile('mirror.html', function(err, mirrorHTML) {
-  fs.readFile('mirror.js', function(err, mirrorJS) {
-    fs.readFile('tree_mirror.js', function(err, treeMirrorJS) {
-
-      server.addListener('request', function(request, response) {
-        if (request.url == '/mirror.html' || request.url == '/' || request.url == '/index.html') {
-          response.writeHead(200, {'Content-Type': 'text/html'});
+fs.readFile("mirror.html", function (err, mirrorHTML) {
+  fs.readFile("mirror.js", function (err, mirrorJS) {
+    fs.readFile("tree_mirror.js", function (err, treeMirrorJS) {
+      server.addListener("request", function (request, response) {
+        if (
+          request.url == "/mirror.html" ||
+          request.url == "/" ||
+          request.url == "/index.html"
+        ) {
+          response.writeHead(200, { "Content-Type": "text/html" });
           response.end(mirrorHTML);
           return;
         }
 
-        if (request.url == '/mirror.js') {
-          response.writeHead(200, {'Content-Type': 'text/javascript'});
+        if (request.url == "/mirror.js") {
+          response.writeHead(200, { "Content-Type": "text/javascript" });
           response.end(mirrorJS);
           return;
         }
 
-        if (request.url == '/tree_mirror.js') {
-          response.writeHead(200, {'Content-Type': 'text/javascript'});
+        if (request.url == "/tree_mirror.js") {
+          response.writeHead(200, { "Content-Type": "text/javascript" });
           response.end(treeMirrorJS);
           return;
         }
 
-        console.error('unknown resource: ' + request.url);
+        console.error("unknown resource: " + request.url);
       });
     });
   });
@@ -51,15 +54,15 @@ var messages = [];
 var receivers = [];
 var projector;
 
-server.addListener('upgrade', function(request, rawsocket, head) {
+server.addListener("upgrade", function (request, rawsocket, head) {
   var socket = new WebSocket(request, rawsocket, head);
 
   // Projector.
-  if (request.url == '/projector') {
-    console.log('projector connection initiating.');
+  if (request.url == "/projector") {
+    console.log("projector connection initiating.");
 
     if (projector) {
-      console.log('closing existing projector. setting messages to 0');
+      console.log("closing existing projector. setting messages to 0");
       projector.close();
       messages.length = 0;
     }
@@ -68,47 +71,56 @@ server.addListener('upgrade', function(request, rawsocket, head) {
 
     messages.push(JSON.stringify({ clear: true }));
 
-    receivers.forEach(function(socket) {
+    receivers.forEach(function (socket) {
       socket.send(messages[0]);
     });
 
-
-    socket.onmessage = function(event) {
-      console.log('message received. now at ' + messages.length + ' . sending to ' + receivers.length);
-      receivers.forEach(function(receiver) {
+    socket.onmessage = function (event) {
+      console.log(
+        "message received. now at " +
+          messages.length +
+          " . sending to " +
+          receivers.length
+      );
+      receivers.forEach(function (receiver) {
         receiver.send(event.data);
       });
 
       messages.push(event.data);
     };
 
-    socket.onclose = function() {
-      console.log('projector closing, clearing messages');
+    socket.onclose = function () {
+      console.log("projector closing, clearing messages");
       messages.length = 0;
-      receivers.forEach(function(socket) {
+      receivers.forEach(function (socket) {
         socket.send(JSON.stringify({ clear: true }));
       });
 
       projector = undefined;
-    }
+    };
 
-    console.log('projector open completed.')
+    console.log("projector open completed.");
     return;
   }
 
   // Receivers.
-  if (request.url == '/receiver') {
+  if (request.url == "/receiver") {
     receivers.push(socket);
 
-    console.log('receiver opened. now at ' + receivers.length + ' sending ' + messages.length + ' messages');
+    console.log(
+      "receiver opened. now at " +
+        receivers.length +
+        " sending " +
+        messages.length +
+        " messages"
+    );
     socket.send(JSON.stringify(messages));
 
-
-    socket.onclose = function() {
+    socket.onclose = function () {
       var index = receivers.indexOf(socket);
       receivers.splice(index, 1);
-      console.log('receiver closed. now at ' + receivers.length);
-    }
+      console.log("receiver closed. now at " + receivers.length);
+    };
   }
 });
 

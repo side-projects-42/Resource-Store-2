@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Method} from '../syntax/trees/ParseTrees.js';
-import {SUPER_EXPRESSION} from '../syntax/trees/ParseTreeType.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { Method } from "../syntax/trees/ParseTrees.js";
+import { SUPER_EXPRESSION } from "../syntax/trees/ParseTreeType.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 import {
   createCommaExpression,
   createExpressionStatement,
   createFunctionBody,
   createParenExpression,
   createThisExpression,
-} from './ParseTreeFactory.js';
-import {prependStatements} from './PrependStatements.js';
+} from "./ParseTreeFactory.js";
+import { prependStatements } from "./PrependStatements.js";
 
 /**
  * Transforms class constructors when classes have initialized instance
@@ -44,10 +44,17 @@ export function transformConstructor(constructor, initExpression, superClass) {
   let initStatement = createExpressionStatement(initExpression);
   statements = prependStatements(statements, initStatement);
 
-  return new Method(constructor.location, false,
-      constructor.functionKind, constructor.name, constructor.parameterList,
-      constructor.typeAnnotation, constructor.annotations,
-      createFunctionBody(statements), constructor.debugName);
+  return new Method(
+    constructor.location,
+    false,
+    constructor.functionKind,
+    constructor.name,
+    constructor.parameterList,
+    constructor.typeAnnotation,
+    constructor.annotations,
+    createFunctionBody(statements),
+    constructor.debugName
+  );
 }
 
 class SuperCallTransformer extends ParseTreeTransformer {
@@ -60,7 +67,8 @@ class SuperCallTransformer extends ParseTreeTransformer {
     if (tree.operand.type === SUPER_EXPRESSION) {
       var thisExpression = createThisExpression();
       return createParenExpression(
-          createCommaExpression([tree, this.expression, thisExpression]));
+        createCommaExpression([tree, this.expression, thisExpression])
+      );
     }
 
     return super.transformCallExpression(tree);

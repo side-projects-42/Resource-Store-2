@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SUPER_EXPRESSION} from '../syntax/trees/ParseTreeType.js';
-import {FindVisitor} from '../codegeneration/FindVisitor.js';
+import { SUPER_EXPRESSION } from "../syntax/trees/ParseTreeType.js";
+import { FindVisitor } from "../codegeneration/FindVisitor.js";
 
 class ConstructorValidator extends FindVisitor {
   /**
@@ -35,7 +35,7 @@ class ConstructorValidator extends FindVisitor {
   }
 
   visitThisExpression(tree) {
-    this.reportError_(tree.location, 'this');
+    this.reportError_(tree.location, "this");
   }
 
   visitCallExpression(tree) {
@@ -49,12 +49,14 @@ class ConstructorValidator extends FindVisitor {
   }
 
   visitSuperExpression(tree) {
-    this.reportError_(tree.location, 'super property');
+    this.reportError_(tree.location, "super property");
   }
 
   reportError_(location, kind) {
-    this.reporter_.reportError(location,
-        `'${kind}' is not allowed before super()`);
+    this.reporter_.reportError(
+      location,
+      `'${kind}' is not allowed before super()`
+    );
     this.hasError = true;
     this.found = true;
   }
@@ -66,7 +68,6 @@ export function validateConstructor(tree, reporter) {
   if (visitor.hasError) return false;
   if (visitor.found) return true;
 
-  reporter.reportError(tree.location,
-                       'Derived constructor must call super()');
+  reporter.reportError(tree.location, "Derived constructor must call super()");
   return false;
 }

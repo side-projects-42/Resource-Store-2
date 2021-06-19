@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CPSTransformer} from './CPSTransformer.js';
-import {EndState} from './EndState.js';
-import {FallThroughState} from './FallThroughState.js';
+import { CPSTransformer } from "./CPSTransformer.js";
+import { EndState } from "./EndState.js";
+import { FallThroughState } from "./FallThroughState.js";
 import {
   $VALUE,
   CALLBACK,
@@ -30,12 +30,12 @@ import {
   STATE,
   STORED_EXCEPTION,
   THEN,
-  WAIT_TASK
-} from '../../syntax/PredefinedName.js';
-import {STATE_MACHINE} from '../../syntax/trees/ParseTreeType.js';
-import {parseStatement} from '../PlaceholderParser.js';
-import {StateMachine} from '../../syntax/trees/StateMachine.js';
-import {VAR} from '../../syntax/TokenType.js';
+  WAIT_TASK,
+} from "../../syntax/PredefinedName.js";
+import { STATE_MACHINE } from "../../syntax/trees/ParseTreeType.js";
+import { parseStatement } from "../PlaceholderParser.js";
+import { StateMachine } from "../../syntax/trees/StateMachine.js";
+import { VAR } from "../../syntax/TokenType.js";
 import {
   createArgumentList,
   createAssignStateStatement,
@@ -56,8 +56,8 @@ import {
   createStatementList,
   createThrowStatement,
   createUndefinedExpression,
-  createVariableStatement
-} from '../ParseTreeFactory.js';
+  createVariableStatement,
+} from "../ParseTreeFactory.js";
 
 /**
  * Desugars async function bodies. Async function bodies contain 'async' statements.
@@ -86,8 +86,10 @@ export class AsyncTransformer extends CPSTransformer {
    * @return {ParseTree}
    */
   transformYieldExpression(tree) {
-    this.reporter.reportError(tree.location.start,
-        'Async function may not have a yield expression.');
+    this.reporter.reportError(
+      tree.location.start,
+      "Async function may not have a yield expression."
+    );
     return tree;
   }
 
@@ -106,18 +108,32 @@ export class AsyncTransformer extends CPSTransformer {
     //    $waitTask = expression;
     //    $waitTask.then($createCallback(callbackState), $createErrback(errbackState));
     //    return;
-    states.push(new FallThroughState(createTaskState, callbackState, createStatementList(
-        createAssignmentStatement(
+    states.push(
+      new FallThroughState(
+        createTaskState,
+        callbackState,
+        createStatementList(
+          createAssignmentStatement(
             createIdentifierExpression(WAIT_TASK),
-            tree.expression),
-        createCallStatement(
+            tree.expression
+          ),
+          createCallStatement(
             createMemberExpression(WAIT_TASK, THEN),
             createArgumentList(
-                createCallExpression(createIdentifierExpression(CREATE_CALLBACK),
-                    createArgumentList(createNumberLiteral(callbackState))),
-                createCallExpression(createIdentifierExpression(CREATE_ERRBACK),
-                    createArgumentList(createNumberLiteral(errbackState))))),
-        createReturnStatement(null))));
+              createCallExpression(
+                createIdentifierExpression(CREATE_CALLBACK),
+                createArgumentList(createNumberLiteral(callbackState))
+              ),
+              createCallExpression(
+                createIdentifierExpression(CREATE_ERRBACK),
+                createArgumentList(createNumberLiteral(errbackState))
+              )
+            )
+          ),
+          createReturnStatement(null)
+        )
+      )
+    );
     //  case callbackState:
     //    identifier = $value;
     //    $state = fallThroughState;
@@ -125,17 +141,28 @@ export class AsyncTransformer extends CPSTransformer {
     var assignment;
     if (tree.identifier != null) {
       assignment = createStatementList(
-          createAssignmentStatement(
+        createAssignmentStatement(
           createIdentifierExpression(tree.identifier),
-          createIdentifierExpression($VALUE)));
+          createIdentifierExpression($VALUE)
+        )
+      );
     } else {
       assignment = createStatementList();
     }
-    states.push(new FallThroughState(callbackState, fallThroughState, assignment));
+    states.push(
+      new FallThroughState(callbackState, fallThroughState, assignment)
+    );
     //  case errbackState:
     //    throw $err;
-    states.push(new FallThroughState(errbackState, fallThroughState, createStatementList(
-        createThrowStatement(createIdentifierExpression(ERR)))));
+    states.push(
+      new FallThroughState(
+        errbackState,
+        fallThroughState,
+        createStatementList(
+          createThrowStatement(createIdentifierExpression(ERR))
+        )
+      )
+    );
 
     return new StateMachine(createTaskState, fallThroughState, states, []);
   }
@@ -150,7 +177,10 @@ export class AsyncTransformer extends CPSTransformer {
       return result;
     }
     // TODO: is this a reasonable restriction?
-    this.reporter.reportError(tree.location.start, 'async not permitted within a finally block.');
+    this.reporter.reportError(
+      tree.location.start,
+      "async not permitted within a finally block."
+    );
     return result;
   }
 
@@ -165,17 +195,21 @@ export class AsyncTransformer extends CPSTransformer {
     }
     var startState = this.allocateState();
     var endState = this.allocateState();
-    var completeState = new FallThroughState(startState, endState,
-        // $result.callback(result);
-        createStatementList(this.createCompleteTask_(result)));
+    var completeState = new FallThroughState(
+      startState,
+      endState,
+      // $result.callback(result);
+      createStatementList(this.createCompleteTask_(result))
+    );
     var end = new EndState(endState);
     return new StateMachine(
-        startState,
-        // TODO: this should not be required, but removing requires making consumers resilient
-        // TODO: to INVALID fallThroughState
-        this.allocateState(),
-        [completeState, end],
-        []);
+      startState,
+      // TODO: this should not be required, but removing requires making consumers resilient
+      // TODO: to INVALID fallThroughState
+      this.allocateState(),
+      [completeState, end],
+      []
+    );
   }
 
   /**
@@ -184,7 +218,9 @@ export class AsyncTransformer extends CPSTransformer {
    */
   createCompleteTask_(result) {
     return createCallStatement(
-        createMemberExpression(RESULT, CALLBACK), createArgumentList(result));
+      createMemberExpression(RESULT, CALLBACK),
+      createArgumentList(result)
+    );
   }
 
   /**
@@ -227,32 +263,27 @@ export class AsyncTransformer extends CPSTransformer {
     //     lifted machine variables
     statements.push(...this.getMachineVariables(tree, machine));
     //   var $value;
-    statements.push(createVariableStatement(
-        VAR,
-        $VALUE,
-        null));
+    statements.push(createVariableStatement(VAR, $VALUE, null));
     //   var $err;
-    statements.push(createVariableStatement(
-        VAR,
-        ERR,
-        null));
+    statements.push(createVariableStatement(VAR, ERR, null));
     // TODO: var $cancel = ...;
     //   var $result = new Deferred();
-    statements.push(createVariableStatement(
+    statements.push(
+      createVariableStatement(
         VAR,
         RESULT,
         createNewExpression(
-            createIdentifierExpression(DEFERRED),
-            createEmptyArgumentList())));
+          createIdentifierExpression(DEFERRED),
+          createEmptyArgumentList()
+        )
+      )
+    );
     //   var $waitTask;
-    statements.push(createVariableStatement(
-        VAR,
-        WAIT_TASK,
-        null));
+    statements.push(createVariableStatement(VAR, WAIT_TASK, null));
     var id = createIdentifierExpression;
-    var G = '$G';
+    var G = "$G";
     statements.push(
-        parseStatement `
+      parseStatement`
         var ${G} = {
           GState: 0,
           current: undefined,
@@ -260,53 +291,79 @@ export class AsyncTransformer extends CPSTransformer {
           innerFunction: ${this.generateMachineInnerFunction(machine)},
           moveNext: ${this.generateMachineMethod(machine)}
         };
-        `);
+        `
+    );
     //   var $continuation = $G.moveNext.bind($G);
     statements.push(
-        parseStatement `
-        var ${id(CONTINUATION)} = ${id(G)}.moveNext.bind(${id(G)});`);
+      parseStatement`
+        var ${id(CONTINUATION)} = ${id(G)}.moveNext.bind(${id(G)});`
+    );
     //   var $createCallback = function(newState) { return function (value) { $state = newState; $value = value; $continuation(); }}
-    statements.push(createVariableStatement(
+    statements.push(
+      createVariableStatement(
         VAR,
         CREATE_CALLBACK,
         createFunctionExpression(
-            createParameterList(NEW_STATE),
-            createBlock(
-                createReturnStatement(
-                    createFunctionExpression(
-                        createParameterList(1),
-                        createBlock(
-                            createAssignmentStatement(
-                                createIdentifierExpression(STATE),
-                                createIdentifierExpression(NEW_STATE)),
-                                createAssignmentStatement(
-                                    createIdentifierExpression($VALUE),
-                                    createParameterReference(0)),
-                                createCallStatement(createIdentifierExpression(CONTINUATION)))))))));
+          createParameterList(NEW_STATE),
+          createBlock(
+            createReturnStatement(
+              createFunctionExpression(
+                createParameterList(1),
+                createBlock(
+                  createAssignmentStatement(
+                    createIdentifierExpression(STATE),
+                    createIdentifierExpression(NEW_STATE)
+                  ),
+                  createAssignmentStatement(
+                    createIdentifierExpression($VALUE),
+                    createParameterReference(0)
+                  ),
+                  createCallStatement(createIdentifierExpression(CONTINUATION))
+                )
+              )
+            )
+          )
+        )
+      )
+    );
     //   var $createErrback = function(newState) { return function (err) { $state = newState; $err = err; $continuation(); }}
-    statements.push(createVariableStatement(
+    statements.push(
+      createVariableStatement(
         VAR,
         CREATE_ERRBACK,
         createFunctionExpression(
-            createParameterList(NEW_STATE),
-            createBlock(
-                createReturnStatement(
-                    createFunctionExpression(
-                        createParameterList(1),
-                        createBlock(
-                            createAssignmentStatement(
-                                createIdentifierExpression(STATE),
-                                createIdentifierExpression(NEW_STATE)),
-                                createAssignmentStatement(
-                                    createIdentifierExpression(ERR),
-                                    createParameterReference(0)),
-                                createCallStatement(createIdentifierExpression(CONTINUATION)))))))));
+          createParameterList(NEW_STATE),
+          createBlock(
+            createReturnStatement(
+              createFunctionExpression(
+                createParameterList(1),
+                createBlock(
+                  createAssignmentStatement(
+                    createIdentifierExpression(STATE),
+                    createIdentifierExpression(NEW_STATE)
+                  ),
+                  createAssignmentStatement(
+                    createIdentifierExpression(ERR),
+                    createParameterReference(0)
+                  ),
+                  createCallStatement(createIdentifierExpression(CONTINUATION))
+                )
+              )
+            )
+          )
+        )
+      )
+    );
     //  $continuation();
-    statements.push(createCallStatement(createIdentifierExpression(CONTINUATION)));
+    statements.push(
+      createCallStatement(createIdentifierExpression(CONTINUATION))
+    );
     //  return $result.createPromise();
-    statements.push(createReturnStatement(
-        createCallExpression(
-            createMemberExpression(RESULT, CREATE_PROMISE))));
+    statements.push(
+      createReturnStatement(
+        createCallExpression(createMemberExpression(RESULT, CREATE_PROMISE))
+      )
+    );
 
     return createBlock(statements);
   }
@@ -318,8 +375,9 @@ export class AsyncTransformer extends CPSTransformer {
    */
   machineUncaughtExceptionStatements(rethrowState, machineEndState) {
     return createStatementList(
-        createAssignStateStatement(rethrowState),
-        createBreakStatement());
+      createAssignStateStatement(rethrowState),
+      createBreakStatement()
+    );
   }
 
   /** @return {Array.<ParseTree>} */
@@ -337,9 +395,10 @@ export class AsyncTransformer extends CPSTransformer {
     // $state = machineEndState;
     // break;
     return createStatementList(
-        this.createCompleteTask_(createUndefinedExpression()),
-        createAssignStateStatement(machineEndState),
-        createBreakStatement());
+      this.createCompleteTask_(createUndefinedExpression()),
+      createAssignStateStatement(machineEndState),
+      createBreakStatement()
+    );
   }
 
   /**
@@ -348,14 +407,16 @@ export class AsyncTransformer extends CPSTransformer {
    */
   machineRethrowStatements(machineEndState) {
     return createStatementList(
-        // $result.errback($storedException);
-        createCallStatement(
+      // $result.errback($storedException);
+      createCallStatement(
         createMemberExpression(RESULT, ERRBACK),
-        createArgumentList(createIdentifierExpression(STORED_EXCEPTION))),
-        // $state = machineEndState
-        createAssignStateStatement(machineEndState),
-        // break;
-        createBreakStatement());
+        createArgumentList(createIdentifierExpression(STORED_EXCEPTION))
+      ),
+      // $state = machineEndState
+      createAssignStateStatement(machineEndState),
+      // break;
+      createBreakStatement()
+    );
   }
 }
 
@@ -364,6 +425,6 @@ export class AsyncTransformer extends CPSTransformer {
  * @param {Block} body
  * @return {Block}
  */
-AsyncTransformer.transformAsyncBody = function(reporter, body) {
+AsyncTransformer.transformAsyncBody = function (reporter, body) {
   return new AsyncTransformer(reporter).transformAsyncBody(body);
 };

@@ -23,7 +23,12 @@ assert.deepEqual([1, 2, 3].fill(5, -3, -1), [5, 5, 3]);
 assert.deepEqual([1, 2, 3].fill(5, 1, -1), [1, 5, 3]);
 
 // should fill custom object
-assert.deepEqual(Array.prototype.fill.call({'0': 1, 'length': 3}, 5), {'0': 5, '1': 5, '2': 5, 'length': 3});
+assert.deepEqual(Array.prototype.fill.call({ 0: 1, length: 3 }, 5), {
+  0: 5,
+  1: 5,
+  2: 5,
+  length: 3,
+});
 
 // Disabled until V8 finishes their implementation of Array fill.
 // should handle custom object with negative length
@@ -33,16 +38,15 @@ assert.deepEqual(Array.prototype.fill.call({'0': 1, 'length': 3}, 5), {'0': 5, '
 assert.deepEqual([].fill(5), []);
 
 // should handle bad start
-assert.deepEqual([1, 2, 3].fill(5, 'hello'), [5, 5, 5]);
+assert.deepEqual([1, 2, 3].fill(5, "hello"), [5, 5, 5]);
 
 // should handle bad end
 assert.deepEqual([1, 2, 3].fill(5, 1, {}), [1, 2, 3]);
 
 // should handle bad start and end
-assert.deepEqual([1, 2, 3].fill(5, 'hello', {}), [1, 2, 3]);
-
+assert.deepEqual([1, 2, 3].fill(5, "hello", {}), [1, 2, 3]);
 
 // should handle bad this
-assert.throws(function() {
-  Array.prototype.fill.call(null, 5)
+assert.throws(function () {
+  Array.prototype.fill.call(null, 5);
 }, TypeError);

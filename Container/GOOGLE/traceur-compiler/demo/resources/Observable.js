@@ -47,10 +47,11 @@ export default class Observable {
 
   static fromEvent(element, type) {
     return new Observable(function (generator) {
-      var decoratedGenerator = new DecoratedGenerator(generator,
-          () => element.removeEventListener(type, handler));
+      var decoratedGenerator = new DecoratedGenerator(generator, () =>
+        element.removeEventListener(type, handler)
+      );
 
-      var handler = event => decoratedGenerator.next(event);
+      var handler = (event) => decoratedGenerator.next(event);
 
       element.addEventListener(type, handler);
 
@@ -58,4 +59,3 @@ export default class Observable {
     });
   }
 }
-

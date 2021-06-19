@@ -19,7 +19,7 @@ class C extends B {
     assert.equal(this.x, 0);
 
     // Don't use assert.typeOf since we are testing typeof.
-    assert.equal(typeof super.x, 'number');
+    assert.equal(typeof super.x, "number");
   }
 }
 

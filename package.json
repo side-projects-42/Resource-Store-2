@@ -1,0 +1,22 @@
+{
+  "name": "resource-store-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/side-projects-42/Resource-Store-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/side-projects-42/Resource-Store-2/issues"
+  },
+  "homepage": "https://github.com/side-projects-42/Resource-Store-2#readme",
+  "dependencies": {
+    "@bgoonz11/repoutils": "^1.0.5"
+  }
+}

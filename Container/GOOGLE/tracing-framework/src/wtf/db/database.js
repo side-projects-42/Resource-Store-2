@@ -11,17 +11,15 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.Database');
+goog.provide("wtf.db.Database");
 
-goog.require('goog.asserts');
-goog.require('goog.events');
-goog.require('wtf.db.EventTypeTable');
-goog.require('wtf.db.Unit');
-goog.require('wtf.db.Zone');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.events.EventType');
-
-
+goog.require("goog.asserts");
+goog.require("goog.events");
+goog.require("wtf.db.EventTypeTable");
+goog.require("wtf.db.Unit");
+goog.require("wtf.db.Zone");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.events.EventType");
 
 /**
  * Virtualized event database.
@@ -45,7 +43,7 @@ goog.require('wtf.events.EventType');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.db.Database = function() {
+wtf.db.Database = function () {
   goog.base(this);
 
   /**
@@ -133,14 +131,12 @@ wtf.db.Database = function() {
 };
 goog.inherits(wtf.db.Database, wtf.events.EventEmitter);
 
-
 /**
  * @override
  */
-wtf.db.Database.prototype.disposeInternal = function() {
-  goog.base(this, 'disposeInternal');
+wtf.db.Database.prototype.disposeInternal = function () {
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Event types for the database.
@@ -150,41 +146,39 @@ wtf.db.Database.EventType = {
   /**
    * The sources listing changed (source added/etc).
    */
-  SOURCES_CHANGED: goog.events.getUniqueId('sources_changed'),
+  SOURCES_CHANGED: goog.events.getUniqueId("sources_changed"),
 
   /**
    * A source had an error parsing an input.
    * Args: [source, message, opt_detail]
    */
-  SOURCE_ERROR: goog.events.getUniqueId('source_error'),
+  SOURCE_ERROR: goog.events.getUniqueId("source_error"),
 
   /**
    * A source has ended and will produce no more data.
    * Args: [source]
    */
-  SOURCE_ENDED: goog.events.getUniqueId('source_ended'),
+  SOURCE_ENDED: goog.events.getUniqueId("source_ended"),
 
   /**
    * One or more zones was added. Args include a list of the added zones.
    */
-  ZONES_ADDED: goog.events.getUniqueId('zones_added')
+  ZONES_ADDED: goog.events.getUniqueId("zones_added"),
 };
-
 
 /**
  * Handles database structure invalidation (new sources/etc).
  * @private
  */
-wtf.db.Database.prototype.invalidate_ = function() {
+wtf.db.Database.prototype.invalidate_ = function () {
   this.emitEvent(wtf.events.EventType.INVALIDATED);
 };
-
 
 /**
  * Adds a data source to the database.
  * @param {!wtf.db.DataSource} dataSource Data source to add to the database.\.
  */
-wtf.db.Database.prototype.addSource = function(dataSource) {
+wtf.db.Database.prototype.addSource = function (dataSource) {
   // Add to the database.
   // TODO(benvanik): dispose when completed?
   this.sources_.push(dataSource);
@@ -194,24 +188,21 @@ wtf.db.Database.prototype.addSource = function(dataSource) {
   this.invalidate_();
 };
 
-
 /**
  * Gets a list of all sources that have been added to provide event data.
  * @return {!Array.<!wtf.db.DataSource>} A list of all sources. Do not modify.
  */
-wtf.db.Database.prototype.getSources = function() {
+wtf.db.Database.prototype.getSources = function () {
   return this.sources_;
 };
-
 
 /**
  * Gets the unit of measure used in the database.
  * @return {wtf.db.Unit} Unit of measure.
  */
-wtf.db.Database.prototype.getUnits = function() {
+wtf.db.Database.prototype.getUnits = function () {
   return this.units_;
 };
-
 
 /**
  * Gets the timebase that all event times are relative to.
@@ -219,10 +210,9 @@ wtf.db.Database.prototype.getUnits = function() {
  * the event occurred at.
  * @return {number} Timebase.
  */
-wtf.db.Database.prototype.getTimebase = function() {
+wtf.db.Database.prototype.getTimebase = function () {
   return this.commonTimebase_;
 };
-
 
 /**
  * Computes a time delay for the given source from the shared timebase.
@@ -232,7 +222,7 @@ wtf.db.Database.prototype.getTimebase = function() {
  * @return {number} The time delay between the given timebase and the shared
  *     one.
  */
-wtf.db.Database.prototype.computeTimeDelay = function(timebase) {
+wtf.db.Database.prototype.computeTimeDelay = function (timebase) {
   if (this.commonTimebase_ == -1) {
     this.commonTimebase_ = timebase;
     return 0;
@@ -240,7 +230,6 @@ wtf.db.Database.prototype.computeTimeDelay = function(timebase) {
     return this.commonTimebase_ - timebase;
   }
 };
-
 
 /**
  * Creates a new zone or gets an existing one if a matching zone already exists.
@@ -250,11 +239,11 @@ wtf.db.Database.prototype.computeTimeDelay = function(timebase) {
  * @param {string} location Zone location (such as URI of the script).
  * @return {!wtf.db.Zone} Zone.
  */
-wtf.db.Database.prototype.createOrGetZone = function(name, type, location) {
-  var key = name + ':' + type + ':' + location;
+wtf.db.Database.prototype.createOrGetZone = function (name, type, location) {
+  var key = name + ":" + type + ":" + location;
 
   // If there is a nameless default zone then merge with that.
-  if (this.defaultZone_ && this.defaultZone_.getName() == '') {
+  if (this.defaultZone_ && this.defaultZone_.getName() == "") {
     this.defaultZone_.resetInfo(name, type, location);
     this.zoneMap_[key] = this.defaultZone_;
     return this.defaultZone_;
@@ -275,54 +264,49 @@ wtf.db.Database.prototype.createOrGetZone = function(name, type, location) {
   return value;
 };
 
-
 /**
  * Gets the default zone.
  * If it doesn't exist it will be created.
  * @return {!wtf.db.Zone} The default zone.
  */
-wtf.db.Database.prototype.getDefaultZone = function() {
+wtf.db.Database.prototype.getDefaultZone = function () {
   if (!this.defaultZone_) {
-    this.defaultZone_ = new wtf.db.Zone(this, '', '', '');
+    this.defaultZone_ = new wtf.db.Zone(this, "", "", "");
     this.zoneList_.push(this.defaultZone_);
   }
   return this.defaultZone_;
 };
 
-
 /**
  * Gets a list of all zones. Do not modify.
  * @return {!Array.<!wtf.db.Zone>} Zones.
  */
-wtf.db.Database.prototype.getZones = function() {
+wtf.db.Database.prototype.getZones = function () {
   return this.zoneList_;
 };
-
 
 /**
  * Gets the event type table.
  * @return {!wtf.db.EventTypeTable} Event type table.
  */
-wtf.db.Database.prototype.getEventTypeTable = function() {
+wtf.db.Database.prototype.getEventTypeTable = function () {
   return this.eventTypeTable_;
 };
-
 
 /**
  * Gets the event type for the given event name.
  * @param {string} name Event name.
  * @return {wtf.db.EventType?} Event type, if found.
  */
-wtf.db.Database.prototype.getEventType = function(name) {
+wtf.db.Database.prototype.getEventType = function (name) {
   return this.eventTypeTable_.getByName(name);
 };
-
 
 /**
  * Gets the first frame list containing valid frames from any zone, if any.
  * @return {wtf.db.FrameList} Frame list, if any.
  */
-wtf.db.Database.prototype.getFirstFrameList = function() {
+wtf.db.Database.prototype.getFirstFrameList = function () {
   for (var n = 0; n < this.zoneList_.length; n++) {
     var zone = this.zoneList_[n];
     var frameList = zone.getFrameList();
@@ -333,24 +317,21 @@ wtf.db.Database.prototype.getFirstFrameList = function() {
   return null;
 };
 
-
 /**
  * Gets the time of the first event in the index.
  * @return {number} Time of the first event or 0 if no events.
  */
-wtf.db.Database.prototype.getFirstEventTime = function() {
+wtf.db.Database.prototype.getFirstEventTime = function () {
   return this.firstEventTime_;
 };
-
 
 /**
  * Gets the time of the last event in the index.
  * @return {number} Time of the last event or 0 if no events.
  */
-wtf.db.Database.prototype.getLastEventTime = function() {
+wtf.db.Database.prototype.getLastEventTime = function () {
   return this.lastEventTime_;
 };
-
 
 /**
  * Signals that a data source was initialized with header information.
@@ -358,7 +339,7 @@ wtf.db.Database.prototype.getLastEventTime = function() {
  * @param {!wtf.db.DataSource} source Source that was initialized.
  * @return {boolean} Whether the initialization was successful.
  */
-wtf.db.Database.prototype.sourceInitialized = function(source) {
+wtf.db.Database.prototype.sourceInitialized = function (source) {
   // Handle source units.
   // If this is the first source we just switch to that, otherwise we verify
   // that the user isn't trying to mix units.
@@ -367,9 +348,11 @@ wtf.db.Database.prototype.sourceInitialized = function(source) {
     this.units_ = units;
   } else {
     if (this.units_ != units) {
-      this.sourceError(source,
-          'Mixing measurement units is not supported.',
-          'All sources loaded must be of the same type (time/size).');
+      this.sourceError(
+        source,
+        "Mixing measurement units is not supported.",
+        "All sources loaded must be of the same type (time/size)."
+      );
       return false;
     }
   }
@@ -377,28 +360,28 @@ wtf.db.Database.prototype.sourceInitialized = function(source) {
   return true;
 };
 
-
 /**
  * Signals that an error occurred while parsing a trace source.
  * @param {!wtf.db.DataSource} source Source that had the error.
  * @param {string} message Error message.
  * @param {string=} opt_detail Detailed information.
  */
-wtf.db.Database.prototype.sourceError =
-    function(source, message, opt_detail) {
-  this.emitEvent(wtf.db.Database.EventType.SOURCE_ERROR,
-      source, message, opt_detail);
+wtf.db.Database.prototype.sourceError = function (source, message, opt_detail) {
+  this.emitEvent(
+    wtf.db.Database.EventType.SOURCE_ERROR,
+    source,
+    message,
+    opt_detail
+  );
 };
-
 
 /**
  * Signals that a data source ended successfully.
  * @param {!wtf.db.DataSource} source Source that ended.
  */
-wtf.db.Database.prototype.sourceEnded = function(source) {
+wtf.db.Database.prototype.sourceEnded = function (source) {
   this.emitEvent(wtf.db.Database.EventType.SOURCE_ENDED, source);
 };
-
 
 /**
  * Begins a batch of events.
@@ -406,24 +389,22 @@ wtf.db.Database.prototype.sourceEnded = function(source) {
  * All events dispatched will be from the given source.
  * @param {!wtf.db.DataSource} source Source adding the events.
  */
-wtf.db.Database.prototype.beginInsertingEvents = function(source) {
+wtf.db.Database.prototype.beginInsertingEvents = function (source) {
   goog.asserts.assert(!this.insertingEvents_);
   this.insertingEvents_ = true;
 
   // For tracking newly created zones.
   this.beginningZoneCount_ = this.zoneList_.length;
-  if (this.zoneList_.length == 1 &&
-      this.zoneList_[0].getName() == '') {
+  if (this.zoneList_.length == 1 && this.zoneList_[0].getName() == "") {
     // Special handling for the default zone.
     this.beginningZoneCount_ = 0;
   }
 };
 
-
 /**
  * Ends a batch of events.
  */
-wtf.db.Database.prototype.endInsertingEvents = function() {
+wtf.db.Database.prototype.endInsertingEvents = function () {
   goog.asserts.assert(this.insertingEvents_);
   this.insertingEvents_ = false;
 
@@ -434,10 +415,14 @@ wtf.db.Database.prototype.endInsertingEvents = function() {
     var eventList = this.zoneList_[n].getEventList();
     eventList.rebuild();
 
-    this.firstEventTime_ =
-        Math.min(eventList.getFirstEventTime(), this.firstEventTime_);
-    this.lastEventTime_ =
-        Math.max(eventList.getLastEventTime(), this.lastEventTime_);
+    this.firstEventTime_ = Math.min(
+      eventList.getFirstEventTime(),
+      this.firstEventTime_
+    );
+    this.lastEventTime_ = Math.max(
+      eventList.getLastEventTime(),
+      this.lastEventTime_
+    );
   }
   if (this.firstEventTime_ == Number.MAX_VALUE) {
     this.firstEventTime_ = 0;
@@ -454,35 +439,49 @@ wtf.db.Database.prototype.endInsertingEvents = function() {
   this.invalidate_();
 };
 
-
-
-goog.exportSymbol(
-    'wtf.db.Database',
-    wtf.db.Database);
+goog.exportSymbol("wtf.db.Database", wtf.db.Database);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'addSource',
-    wtf.db.Database.prototype.addSource);
+  wtf.db.Database.prototype,
+  "addSource",
+  wtf.db.Database.prototype.addSource
+);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'getSources',
-    wtf.db.Database.prototype.getSources);
+  wtf.db.Database.prototype,
+  "getSources",
+  wtf.db.Database.prototype.getSources
+);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'getTimebase',
-    wtf.db.Database.prototype.getTimebase);
+  wtf.db.Database.prototype,
+  "getTimebase",
+  wtf.db.Database.prototype.getTimebase
+);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'getZones',
-    wtf.db.Database.prototype.getZones);
+  wtf.db.Database.prototype,
+  "getZones",
+  wtf.db.Database.prototype.getZones
+);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'getEventTypeTable',
-    wtf.db.Database.prototype.getEventTypeTable);
+  wtf.db.Database.prototype,
+  "getEventTypeTable",
+  wtf.db.Database.prototype.getEventTypeTable
+);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'getEventType',
-    wtf.db.Database.prototype.getEventType);
+  wtf.db.Database.prototype,
+  "getEventType",
+  wtf.db.Database.prototype.getEventType
+);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'getFirstFrameList',
-    wtf.db.Database.prototype.getFirstFrameList);
+  wtf.db.Database.prototype,
+  "getFirstFrameList",
+  wtf.db.Database.prototype.getFirstFrameList
+);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'getFirstEventTime',
-    wtf.db.Database.prototype.getFirstEventTime);
+  wtf.db.Database.prototype,
+  "getFirstEventTime",
+  wtf.db.Database.prototype.getFirstEventTime
+);
 goog.exportProperty(
-    wtf.db.Database.prototype, 'getLastEventTime',
-    wtf.db.Database.prototype.getLastEventTime);
+  wtf.db.Database.prototype,
+  "getLastEventTime",
+  wtf.db.Database.prototype.getLastEventTime
+);

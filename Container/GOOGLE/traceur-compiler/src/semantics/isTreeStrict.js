@@ -23,9 +23,9 @@ import {
   METHOD,
   MODULE,
   SCRIPT,
-  SET_ACCESSOR
-} from '../syntax/trees/ParseTreeType.js';
-import {hasUseStrict} from './util.js';
+  SET_ACCESSOR,
+} from "../syntax/trees/ParseTreeType.js";
+import { hasUseStrict } from "./util.js";
 
 export function isTreeStrict(tree) {
   switch (tree.type) {

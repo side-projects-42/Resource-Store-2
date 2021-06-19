@@ -1,9 +1,19 @@
 class One {
-  constructor(o) { o.r = 'c1'; }
-  m() { return 'm1'; }
-  get g() { return 'g1'; }
-  set x(v) { this.x_ = v+1; }
-  get x() { return this.x_; }
+  constructor(o) {
+    o.r = "c1";
+  }
+  m() {
+    return "m1";
+  }
+  get g() {
+    return "g1";
+  }
+  set x(v) {
+    this.x_ = v + 1;
+  }
+  get x() {
+    return this.x_;
+  }
 }
 
 // All OneExt class decls are identical.
@@ -16,12 +26,20 @@ class OneExtWrapper {
       constructor() {
         var o = {};
         super(o);
-        assert.equal('c1', o.r);
+        assert.equal("c1", o.r);
       }
-      m() { return super.m(); }
-      get g() { return super.g; }
-      set x(v) { super.x = v; }
-      get x() { return super.x; }
+      m() {
+        return super.m();
+      }
+      get g() {
+        return super.g;
+      }
+      set x(v) {
+        super.x = v;
+      }
+      get x() {
+        return super.x;
+      }
     }
     this.Cconstr = OneExt;
   }
@@ -30,27 +48,43 @@ class OneExtWrapper {
       constructor() {
         var o = {};
         super(o);
-        assert.equal('c1', o.r);
+        assert.equal("c1", o.r);
       }
-      m() { return super.m(); }
-      get g() { return super.g; }
-      set x(v) { super.x = v; }
-      get x() { return super.x; }
+      m() {
+        return super.m();
+      }
+      get g() {
+        return super.g;
+      }
+      set x(v) {
+        super.x = v;
+      }
+      get x() {
+        return super.x;
+      }
     }
     return OneExt;
   }
   mf() {
-    return (function(){
+    return (function () {
       class OneExt extends One {
         constructor() {
           var o = {};
           super(o);
-          assert.equal('c1', o.r);
+          assert.equal("c1", o.r);
         }
-        m() { return super.m(); }
-        get g() { return super.g; }
-        set x(v) { super.x = v; }
-        get x() { return super.x; }
+        m() {
+          return super.m();
+        }
+        get g() {
+          return super.g;
+        }
+        set x(v) {
+          super.x = v;
+        }
+        get x() {
+          return super.x;
+        }
       }
       return OneExt;
     })();
@@ -60,12 +94,20 @@ class OneExtWrapper {
       constructor() {
         var o = {};
         super(o);
-        assert.equal('c1', o.r);
+        assert.equal("c1", o.r);
       }
-      m() { return super.m(); }
-      get g() { return super.g; }
-      set x(v) { super.x = v; }
-      get x() { return super.x; }
+      m() {
+        return super.m();
+      }
+      get g() {
+        return super.g;
+      }
+      set x(v) {
+        super.x = v;
+      }
+      get x() {
+        return super.x;
+      }
     }
     return OneExt;
   }
@@ -74,12 +116,20 @@ class OneExtWrapper {
       constructor() {
         var o = {};
         super(o);
-        assert.equal('c1', o.r);
+        assert.equal("c1", o.r);
       }
-      m() { return super.m(); }
-      get g() { return super.g; }
-      set x(v) { super.x = v; }
-      get x() { return super.x; }
+      m() {
+        return super.m();
+      }
+      get g() {
+        return super.g;
+      }
+      set x(v) {
+        super.x = v;
+      }
+      get x() {
+        return super.x;
+      }
     }
     this.C = OneExt;
   }
@@ -92,13 +142,13 @@ class OneExtWrapper {
 
 function checkClass(C) {
   var o = new C();
-  assert.equal('m1', o.m());
-  assert.equal('g1', o.g);
-  o.x = 'x';
-  assert.equal('x1', o.x);
+  assert.equal("m1", o.m());
+  assert.equal("g1", o.g);
+  o.x = "x";
+  assert.equal("x1", o.x);
 }
 
 var o = new OneExtWrapper();
-o.Cprop = 'dummy value';
+o.Cprop = "dummy value";
 
 [o.Cconstr, o.m(), o.mf(), o.g, o.Cprop].forEach(checkClass);

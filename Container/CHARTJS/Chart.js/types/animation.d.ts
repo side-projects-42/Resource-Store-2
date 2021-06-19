@@ -1,5 +1,5 @@
-import { Chart } from './index.esm';
-import { AnyObject } from './basic';
+import { Chart } from "./index.esm";
+import { AnyObject } from "./basic";
 
 export class Animation {
   constructor(cfg: AnyObject, target: AnyObject, prop: string, to?: unknown);
@@ -10,13 +10,17 @@ export class Animation {
 }
 
 export interface AnimationEvent {
-	chart: Chart;
-	numSteps: number;
-	currentState: number;
+  chart: Chart;
+  numSteps: number;
+  currentState: number;
 }
 
 export class Animator {
-  listen(chart: Chart, event: 'complete' | 'progress', cb: (event: AnimationEvent) => void): void;
+  listen(
+    chart: Chart,
+    event: "complete" | "progress",
+    cb: (event: AnimationEvent) => void
+  ): void;
   add(chart: Chart, items: readonly Animation[]): void;
   has(chart: Chart): boolean;
   start(chart: Chart): void;

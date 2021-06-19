@@ -1,14 +1,16 @@
-(function(mod) {
-  if (typeof exports == "object" && typeof module == "object") // CommonJS
+(function (mod) {
+  if (typeof exports == "object" && typeof module == "object")
+    // CommonJS
     mod(require("../../lib/codemirror"));
-  else if (typeof define == "function" && define.amd) // AMD
+  else if (typeof define == "function" && define.amd)
+    // AMD
     define(["../../lib/codemirror"], mod);
-  else // Plain browser env
-    mod(CodeMirror);
-})(function(CodeMirror) {
+  // Plain browser env
+  else mod(CodeMirror);
+})(function (CodeMirror) {
   "use strict";
 
-  CodeMirror.defineOption("rulers", false, function(cm, val, old) {
+  CodeMirror.defineOption("rulers", false, function (cm, val, old) {
     if (old && old != CodeMirror.Init) {
       clearRulers(cm);
       cm.off("refresh", refreshRulers);
@@ -34,7 +36,8 @@
     var bot = -cm.display.scroller.offsetHeight;
     for (var i = 0; i < val.length; i++) {
       var elt = document.createElement("div");
-      var col, cls = null;
+      var col,
+        cls = null;
       if (typeof val[i] == "number") {
         col = val[i];
       } else {
@@ -42,7 +45,8 @@
         cls = val[i].className;
       }
       elt.className = "CodeMirror-ruler" + (cls ? " " + cls : "");
-      elt.style.cssText = "left: " + (left + col * cw) + "px; top: -50px; bottom: " + bot + "px";
+      elt.style.cssText =
+        "left: " + (left + col * cw) + "px; top: -50px; bottom: " + bot + "px";
       cm.display.lineSpace.insertBefore(elt, cm.display.cursorDiv);
     }
   }

@@ -15,13 +15,13 @@
 import {
   CaseClause,
   DefaultClause,
-  SwitchStatement
-} from '../../syntax/trees/ParseTrees.js';
-import {State} from './State.js';
+  SwitchStatement,
+} from "../../syntax/trees/ParseTrees.js";
+import { State } from "./State.js";
 import {
   createBreakStatement,
-  createStatementList
-} from '../ParseTreeFactory.js';
+  createStatementList,
+} from "../ParseTreeFactory.js";
 
 /**
  * Represents a pair of ParseTree and integer.
@@ -68,13 +68,16 @@ export class SwitchState extends State {
    */
   replaceState(oldState, newState) {
     var clauses = this.clauses.map((clause) => {
-      return new SwitchClause(clause.first,
-          State.replaceStateId(clause.second, oldState, newState));
+      return new SwitchClause(
+        clause.first,
+        State.replaceStateId(clause.second, oldState, newState)
+      );
     });
     return new SwitchState(
-        State.replaceStateId(this.id, oldState, newState),
-        this.expression,
-        clauses);
+      State.replaceStateId(this.id, oldState, newState),
+      this.expression,
+      clauses
+    );
   }
 
   /**
@@ -88,15 +91,25 @@ export class SwitchState extends State {
     for (var i = 0; i < this.clauses.length; i++) {
       var clause = this.clauses[i];
       if (clause.first == null) {
-        clauses.push(new DefaultClause(null,
-            State.generateJump(enclosingFinally, clause.second)));
+        clauses.push(
+          new DefaultClause(
+            null,
+            State.generateJump(enclosingFinally, clause.second)
+          )
+        );
       } else {
-        clauses.push(new CaseClause(null, clause.first,
-            State.generateJump(enclosingFinally, clause.second)));
+        clauses.push(
+          new CaseClause(
+            null,
+            clause.first,
+            State.generateJump(enclosingFinally, clause.second)
+          )
+        );
       }
     }
     return createStatementList(
-        new SwitchStatement(null, this.expression, clauses),
-        createBreakStatement());
+      new SwitchStatement(null, this.expression, clauses),
+      createBreakStatement()
+    );
   }
 }

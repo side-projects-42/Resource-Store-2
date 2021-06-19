@@ -2,88 +2,88 @@ const data = {
   datasets: [
     {
       label: 1,
-      backgroundColor: 'orange',
+      backgroundColor: "orange",
       data: [
         {
-          x: '2021-03-24',
-          y: 464
-        }
-      ]
+          x: "2021-03-24",
+          y: 464,
+        },
+      ],
     },
     {
       label: 2,
-      backgroundColor: 'red',
+      backgroundColor: "red",
       data: [
         {
-          x: '2021-03-24',
-          y: 464
-        }
-      ]
+          x: "2021-03-24",
+          y: 464,
+        },
+      ],
     },
     {
       label: 3,
-      backgroundColor: 'blue',
+      backgroundColor: "blue",
       data: [
         {
-          x: '2021-03-24',
-          y: 390
-        }
-      ]
+          x: "2021-03-24",
+          y: 390,
+        },
+      ],
     },
     {
       label: 4,
-      backgroundColor: 'purple',
+      backgroundColor: "purple",
       data: [
         {
-          x: '2021-03-25',
-          y: 464
-        }
-      ]
+          x: "2021-03-25",
+          y: 464,
+        },
+      ],
     },
     {
       label: 5,
-      backgroundColor: 'black',
+      backgroundColor: "black",
       data: [
         {
-          x: '2021-03-25',
-          y: 464
-        }
-      ]
+          x: "2021-03-25",
+          y: 464,
+        },
+      ],
     },
     {
       label: 6,
-      backgroundColor: 'cyan',
+      backgroundColor: "cyan",
       data: [
         {
-          x: '2021-03-25',
-          y: 390
-        }
-      ]
-    }
-  ]
+          x: "2021-03-25",
+          y: 390,
+        },
+      ],
+    },
+  ],
 };
 
 module.exports = {
-  description: 'https://github.com/chartjs/Chart.js/issues/8718',
+  description: "https://github.com/chartjs/Chart.js/issues/8718",
   config: {
-    type: 'bar',
+    type: "bar",
     data,
     options: {
       scales: {
         x: {
-          type: 'time',
+          type: "time",
           time: {
-            unit: 'day',
+            unit: "day",
           },
         },
         y: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
-    canvas: {width: 256, height: 128}
-  }
+    canvas: { width: 256, height: 128 },
+  },
 };

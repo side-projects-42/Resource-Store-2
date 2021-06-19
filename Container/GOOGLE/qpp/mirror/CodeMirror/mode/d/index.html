@@ -1,19 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CodeMirror: D mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="../../addon/edit/matchbrackets.js"></script>
     <script src="d.js"></script>
-    <link rel="stylesheet" href="../../doc/docs.css">
-    <style>.CodeMirror {border: 2px inset #dee;}</style>
+    <link rel="stylesheet" href="../../doc/docs.css" />
+    <style>
+      .CodeMirror {
+        border: 2px inset #dee;
+      }
+    </style>
   </head>
   <body>
     <h1>CodeMirror: D mode</h1>
 
-<form><textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
 /* D demo code // copied from phobos/sd/metastrings.d */
 // Written in the D programming language.
 
@@ -243,20 +248,25 @@ deprecated alias parseUinteger ParseUinteger;
 /// Ditto
 deprecated alias parseUinteger ParseInteger;
 
-</textarea></form>
+</textarea
+      >
+    </form>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
         indentUnit: 4,
-        mode: "text/x-d"
+        mode: "text/x-d",
       });
     </script>
 
-    <p>Simple mode that handle D-Syntax (<a href="http://www.dlang.org">DLang Homepage</a>).</p>
+    <p>
+      Simple mode that handle D-Syntax (<a href="http://www.dlang.org"
+        >DLang Homepage</a
+      >).
+    </p>
 
-    <p><strong>MIME types defined:</strong> <code>text/x-d</code>
-    .</p>
+    <p><strong>MIME types defined:</strong> <code>text/x-d</code> .</p>
   </body>
 </html>

@@ -1,0 +1,16 @@
+{
+	"dial": {
+		"requires": [
+			"widget", 
+			"dd-drag", 
+			"substitute", 
+			"event-mouseenter", 
+			"event-move",
+			"event-key",
+			"transition",
+			"intl"
+		], 
+		"lang": ["en", "es"],
+		"skinnable": true
+	}
+}

@@ -1,0 +1,24 @@
+{
+  "name": "nr1-apdex-optimizer",
+  "fullName": "newrelic/nr1-apdex-optimizer",
+  "slug": "newrelic-nr1-apdex-optimizer",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic One Apdex Optimizer",
+  "supportUrl": "https://discuss.newrelic.com/t/nr1-apdex-optimizer-nerdpack/92054",
+  "githubUrl": "https://github.com/newrelic/nr1-apdex-optimizer",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/nr1-apdex-optimizer",
+  "iconUrl": null,
+  "shortDescription": "Improve apdex across Services",
+  "description": "Monitor and improve apdex scores and settings",
+  "ossCategory": "community-project",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic One Apdex Optimizer",
+    "url": "https://github.com/newrelic/nr1-apdex-optimizer"
+  }
+}

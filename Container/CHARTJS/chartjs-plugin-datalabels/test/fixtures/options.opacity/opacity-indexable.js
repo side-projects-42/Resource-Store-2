@@ -9,42 +9,44 @@ for (var i = 0; i < count; ++i) {
 
 export default {
   config: {
-    type: 'line',
+    type: "line",
     data: {
       labels: labels,
-      datasets: [{
-        data: labels,
-        datalabels: {
-          backgroundColor: '#00ff77'
-        }
-      }]
+      datasets: [
+        {
+          data: labels,
+          datalabels: {
+            backgroundColor: "#00ff77",
+          },
+        },
+      ],
     },
     options: {
       layout: {
-        padding: 24
+        padding: 24,
       },
       plugins: {
         datalabels: {
-          backgroundColor: '#00ff77',
-          borderColor: '#0000ff',
+          backgroundColor: "#00ff77",
+          borderColor: "#0000ff",
           borderWidth: 4,
-          color: '#0000ff',
+          color: "#0000ff",
           font: {
-            size: 0
+            size: 0,
           },
           opacity: inputs,
           padding: 8,
-          formatter: function() {
-            return '\u25AE';
-          }
-        }
-      }
-    }
+          formatter: function () {
+            return "\u25AE";
+          },
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 48,
-      width: 768
-    }
-  }
+      width: 768,
+    },
+  },
 };

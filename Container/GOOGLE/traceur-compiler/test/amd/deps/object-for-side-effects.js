@@ -1,2 +1,2 @@
 const object = {};
-export {object as default};
+export { object as default };

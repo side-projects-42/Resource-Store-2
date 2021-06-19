@@ -1,0 +1,144 @@
+{
+  "projectFullName": "newrelic/nr1-neon",
+  "issues": {
+    "open": 5
+  },
+  "releases": 13,
+  "latestRelease": {
+    "name": "v0.4.3",
+    "date": "2021-02-17T23:03:00Z"
+  },
+  "commits": 368,
+  "lastSixMonthsCommitTotal": 17,
+  "contributors": 9,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU1NTYzNDA4MTI=",
+      "title": "Augment the Board setup to support for Tags",
+      "url": "https://github.com/newrelic/nr1-neon/issues/14",
+      "createdAt": "2020-01-28T16:55:43Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "tangollama",
+        "id": "MDQ6VXNlcjkyOTI2MQ==",
+        "email": "",
+        "name": "Joel Worrall"
+      },
+      "number": 14,
+      "createdBy": "Joel Worrall"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 18
+    },
+    {
+      "id": 8731013,
+      "login": "prototypicalpro",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8731013?v=4",
+      "htmlUrl": "https://github.com/prototypicalpro",
+      "contributions": 1
+    },
+    {
+      "id": 104112,
+      "login": "siva-epari",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/104112?v=4",
+      "htmlUrl": "https://github.com/siva-epari",
+      "contributions": 1
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 5
+    },
+    {
+      "id": 55203603,
+      "login": "austin-schaefer",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/55203603?v=4",
+      "htmlUrl": "https://github.com/austin-schaefer",
+      "contributions": 1
+    },
+    {
+      "id": 66321197,
+      "login": "nr-opensource-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66321197?v=4",
+      "htmlUrl": "https://github.com/nr-opensource-bot",
+      "contributions": 10
+    },
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 8
+    },
+    {
+      "id": 20893240,
+      "login": "glitton",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/20893240?v=4",
+      "htmlUrl": "https://github.com/glitton",
+      "contributions": 151
+    },
+    {
+      "id": 6021115,
+      "login": "amit-y",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6021115?v=4",
+      "htmlUrl": "https://github.com/amit-y",
+      "contributions": 27
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U2MDU=",
+      "name": "SCSS",
+      "color": "#c6538c"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/logo.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/neon1.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/neon2.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-1.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-2.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-APIKey1.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-APIKey2.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-APIKey3.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-InsertKey4.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-SaveKey5.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-channel6.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-customHeaders8.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-customHeaders9.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-customPayload10.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-home.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-logo.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-save11.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-webhook7.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-webhookChannel13.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-neon/master/catalog/screenshots/nr1-neon-webhookComplete12.png"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

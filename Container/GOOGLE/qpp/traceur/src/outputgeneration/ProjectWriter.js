@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {TreeWriter} from './TreeWriter.js';
+import { TreeWriter } from "./TreeWriter.js";
 
 // TODO(arv): This should just export the static function instead.
 
@@ -26,9 +26,11 @@ export class ProjectWriter {}
  * @param {Object=} options to ParseTreeWriter.write
  * @return {string}
  */
-ProjectWriter.write = function(results, options = undefined) {
-  return results.keys().map((file) => {
-    return TreeWriter.write(results.get(file), options);
-  }).join('');
+ProjectWriter.write = function (results, options = undefined) {
+  return results
+    .keys()
+    .map((file) => {
+      return TreeWriter.write(results.get(file), options);
+    })
+    .join("");
 };
-

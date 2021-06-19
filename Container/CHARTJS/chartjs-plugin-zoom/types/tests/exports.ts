@@ -1,16 +1,18 @@
-import { Chart } from 'chart.js';
-import Zoom, { pan, zoom, resetZoom } from '../index';
+import { Chart } from "chart.js";
+import Zoom, { pan, zoom, resetZoom } from "../index";
 
 Chart.register(Zoom);
 Chart.unregister(Zoom);
 
-const chart = new Chart('id', {
-  type: 'bar',
+const chart = new Chart("id", {
+  type: "bar",
   data: {
     labels: [],
-    datasets: [{
-      data: []
-    }]
+    datasets: [
+      {
+        data: [],
+      },
+    ],
   },
   options: {
     plugins: {
@@ -19,28 +21,28 @@ const chart = new Chart('id', {
           x: {
             min: 1,
             max: 2,
-            minRange: 1
+            minRange: 1,
           },
           y: {
             min: 1,
             max: 2,
-            minRange: 1
-          }
+            minRange: 1,
+          },
         },
         pan: {
           enabled: true,
-          mode: 'x'
+          mode: "x",
         },
         zoom: {
           wheel: {
-            enabled: true
+            enabled: true,
           },
-          mode: 'x',
-        }
+          mode: "x",
+        },
       },
-    }
+    },
   },
-  plugins: [Zoom]
+  plugins: [Zoom],
 });
 
 chart.resetZoom();
@@ -50,6 +52,6 @@ chart.zoom({ x: 1, y: 1.1, focalPoint: { x: 10, y: 10 } }, true);
 chart.pan(10);
 chart.pan({ x: 10, y: 20 }, [chart.scales.x]);
 
-pan(chart, -42, undefined, 'zoom');
-zoom(chart, { x: 1, y: 1.1, focalPoint: { x: 10, y: 10 } }, 'zoom');
-resetZoom(chart, 'none');
+pan(chart, -42, undefined, "zoom");
+zoom(chart, { x: 1, y: 1.1, focalPoint: { x: 10, y: 10 } }, "zoom");
+resetZoom(chart, "none");

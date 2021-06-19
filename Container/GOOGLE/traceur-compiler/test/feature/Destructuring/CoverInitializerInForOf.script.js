@@ -1,7 +1,7 @@
 // https://github.com/google/traceur-compiler/issues/836
 
 var count = 0;
-for ({a = 0} of [{}]) {
+for ({ a = 0 } of [{}]) {
   count++;
   assert.equal(a, 0);
 }

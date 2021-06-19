@@ -1,26 +1,31 @@
-import {Element} from 'chart.js';
-import {scaleValue, roundedRect} from '../helpers';
+import { Element } from "chart.js";
+import { scaleValue, roundedRect } from "../helpers";
 
 export default class BoxAnnotation extends Element {
   inRange(mouseX, mouseY, useFinalPosition) {
-    const {x, y, width, height} = this.getProps(['x', 'y', 'width', 'height'], useFinalPosition);
+    const { x, y, width, height } = this.getProps(
+      ["x", "y", "width", "height"],
+      useFinalPosition
+    );
 
-    return mouseX >= x &&
-			mouseX <= x + width &&
-			mouseY >= y &&
-			mouseY <= y + height;
+    return (
+      mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height
+    );
   }
 
   getCenterPoint(useFinalPosition) {
-    const {x, y, width, height} = this.getProps(['x', 'y', 'width', 'height'], useFinalPosition);
+    const { x, y, width, height } = this.getProps(
+      ["x", "y", "width", "height"],
+      useFinalPosition
+    );
     return {
       x: x + width / 2,
-      y: y + height / 2
+      y: y + height / 2,
     };
   }
 
   draw(ctx) {
-    const {x, y, width, height, options} = this;
+    const { x, y, width, height, options } = this;
 
     ctx.save();
 
@@ -45,11 +50,11 @@ export default class BoxAnnotation extends Element {
   resolveElementProperties(chart, options) {
     const xScale = chart.scales[options.xScaleID];
     const yScale = chart.scales[options.yScaleID];
-    let {top: y, left: x, bottom: y2, right: x2} = chart.chartArea;
+    let { top: y, left: x, bottom: y2, right: x2 } = chart.chartArea;
     let min, max;
 
     if (!xScale && !yScale) {
-      return {options: {}};
+      return { options: {} };
     }
 
     if (xScale) {
@@ -72,12 +77,12 @@ export default class BoxAnnotation extends Element {
       x2,
       y2,
       width: x2 - x,
-      height: y2 - y
+      height: y2 - y,
     };
   }
 }
 
-BoxAnnotation.id = 'boxAnnotation';
+BoxAnnotation.id = "boxAnnotation";
 
 BoxAnnotation.defaults = {
   display: true,
@@ -86,15 +91,15 @@ BoxAnnotation.defaults = {
   borderDashOffset: 0,
   borderWidth: 1,
   cornerRadius: 0,
-  xScaleID: 'x',
+  xScaleID: "x",
   xMin: undefined,
   xMax: undefined,
-  yScaleID: 'y',
+  yScaleID: "y",
   yMin: undefined,
-  yMax: undefined
+  yMax: undefined,
 };
 
 BoxAnnotation.defaultRoutes = {
-  borderColor: 'color',
-  backgroundColor: 'color'
+  borderColor: "color",
+  backgroundColor: "color",
 };

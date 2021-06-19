@@ -17,67 +17,97 @@
 
 -->
 <html>
-<head>
-<title></title>
-<script src="../../../node_modules/closure-library/closure/goog/base.js"></script>
-<script>
+  <head>
+    <title></title>
+    <script src="../../../node_modules/closure-library/closure/goog/base.js"></script>
+    <script>
+      goog.require("goog.testing.jsunit");
+    </script>
+    <script src="../../../bin/traceur.js"></script>
+  </head>
+  <body>
+    <script>
+      function tearDown() {
+        traceur.options.experimental = false;
+      }
 
-goog.require('goog.testing.jsunit');
+      var variablesInBlock = traceur.getModuleForTesting(
+        "semantics/VariableBinder.js"
+      ).variablesInBlock;
+      var variablesInFunction = traceur.getModuleForTesting(
+        "semantics/VariableBinder.js"
+      ).variablesInFunction;
+      var Parser = traceur.syntax.Parser;
+      var SourceFile = traceur.syntax.SourceFile;
+      var ErrorReporter = traceur.util.ErrorReporter;
 
-</script>
-<script src="../../../bin/traceur.js"></script>
-</head>
-<body>
-<script>
+      function parse(code) {
+        var errors = new ErrorReporter();
+        var tree = new Parser(
+          errors,
+          new SourceFile("inline", code)
+        ).parseProgram();
+        assertFalse(errors.hadError());
+        assertEquals(1, tree.programElements.length);
+        return tree.programElements[0];
+      }
 
-function tearDown() {
-  traceur.options.experimental = false;
-}
+      function idsToString(identifiers) {
+        return Object.keys(identifiers).sort().join(",");
+      }
 
-var variablesInBlock =
-    traceur.getModuleForTesting('semantics/VariableBinder.js').variablesInBlock;
-var variablesInFunction =
-    traceur.getModuleForTesting('semantics/VariableBinder.js').
-        variablesInFunction;
-var Parser = traceur.syntax.Parser;
-var SourceFile = traceur.syntax.SourceFile;
-var ErrorReporter = traceur.util.ErrorReporter;
+      function testBoundIdentifiersInBlock() {
+        traceur.options.experimental = true;
+        assertEquals(
+          "f",
+          idsToString(
+            variablesInBlock(parse("{ function f(x) { var y; }; }"), false)
+          )
+        );
+        assertEquals(
+          "",
+          idsToString(
+            variablesInBlock(parse("{ var x = function f() {}; }"), false)
+          )
+        );
+        assertEquals(
+          "x",
+          idsToString(
+            variablesInBlock(parse("{ let x = function f() {}; }"), false)
+          )
+        );
 
-function parse(code) {
-  var errors = new ErrorReporter();
-  var tree = new Parser(errors, new SourceFile('inline', code)).parseProgram();
-  assertFalse(errors.hadError());
-  assertEquals(1, tree.programElements.length);
-  return tree.programElements[0];
-}
+        // Now set includeFunctionScope = true
+        assertEquals(
+          "f",
+          idsToString(
+            variablesInBlock(parse("{ function f(x) { var y; }; }"), true)
+          )
+        );
+        assertEquals(
+          "x",
+          idsToString(
+            variablesInBlock(parse("{ var x = function f() {}; }"), true)
+          )
+        );
+      }
 
-function idsToString(identifiers) {
-  return Object.keys(identifiers).sort().join(',');
-}
-
-function testBoundIdentifiersInBlock() {
-  traceur.options.experimental = true;
-  assertEquals('f', idsToString(variablesInBlock(parse(
-      '{ function f(x) { var y; }; }'), false)));
-  assertEquals('', idsToString(variablesInBlock(parse(
-      '{ var x = function f() {}; }'), false)));
-  assertEquals('x', idsToString(variablesInBlock(parse(
-      '{ let x = function f() {}; }'), false)));
-
-  // Now set includeFunctionScope = true
-  assertEquals('f', idsToString(variablesInBlock(parse(
-      '{ function f(x) { var y; }; }'), true)));
-  assertEquals('x', idsToString(variablesInBlock(parse(
-      '{ var x = function f() {}; }'), true)));
-}
-
-function testBoundIdentifiersInFunction() {
-  assertEquals('x,y', idsToString(variablesInFunction(parse(
-      'function f(x) { var y; f(); }'))));
-  assertEquals('', idsToString(variablesInFunction(parse(
-      'function f() { try { } catch (x) { function g(y) { } } }'))));
-}
-
-</script>
-</body>
+      function testBoundIdentifiersInFunction() {
+        assertEquals(
+          "x,y",
+          idsToString(
+            variablesInFunction(parse("function f(x) { var y; f(); }"))
+          )
+        );
+        assertEquals(
+          "",
+          idsToString(
+            variablesInFunction(
+              parse("function f() { try { } catch (x) { function g(y) { } } }")
+            )
+          )
+        );
+      }
+    </script>
+  </body>
 </html>

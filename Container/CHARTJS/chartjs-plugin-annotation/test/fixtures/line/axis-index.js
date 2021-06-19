@@ -1,11 +1,13 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      datasets: [{
-        data: [10, 20, 30, 0, 55],
-      }],
-      labels: ['A', 'B', 'C', 'D', 'E']
+      datasets: [
+        {
+          data: [10, 20, 30, 0, 55],
+        },
+      ],
+      labels: ["A", "B", "C", "D", "E"],
     },
     options: {
       plugins: {
@@ -13,12 +15,12 @@ module.exports = {
         annotation: {
           annotations: {
             annotation1: {
-              type: 'line',
-              scaleID: 'y',
+              type: "line",
+              scaleID: "y",
               borderWidth: 3,
-              borderColor: 'black',
+              borderColor: "black",
               value: (ctx) => {
-                if (ctx.type === 'annotation') {
+                if (ctx.type === "annotation") {
                   const scale = ctx.chart.scales.y;
                   if (scale.ticks && scale.ticks.length > 1) {
                     return scale.ticks[1].value;
@@ -26,17 +28,17 @@ module.exports = {
                 }
                 return 0;
               },
-            }
-          }
-        }
+            },
+          },
+        },
       },
-    }
+    },
   },
   options: {
     spriteText: true,
     run(chart) {
       chart.hide(0);
       chart.show(0);
-    }
-  }
+    },
+  },
 };

@@ -11,15 +11,13 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.StreamingHttpWriteStream');
+goog.provide("wtf.io.StreamingHttpWriteStream");
 
-goog.require('goog.asserts');
-goog.require('goog.labs.net.xhr');
-goog.require('goog.result');
-goog.require('goog.result.Result');
-goog.require('wtf.io.HttpWriteStream');
-
-
+goog.require("goog.asserts");
+goog.require("goog.labs.net.xhr");
+goog.require("goog.result");
+goog.require("goog.result.Result");
+goog.require("wtf.io.HttpWriteStream");
 
 /**
  * Streaming HTTP write stream.
@@ -30,7 +28,7 @@ goog.require('wtf.io.HttpWriteStream');
  * @constructor
  * @extends {wtf.io.HttpWriteStream}
  */
-wtf.io.StreamingHttpWriteStream = function(endpoint) {
+wtf.io.StreamingHttpWriteStream = function (endpoint) {
   goog.base(this);
 
   /**
@@ -45,7 +43,7 @@ wtf.io.StreamingHttpWriteStream = function(endpoint) {
    * @type {string}
    * @private
    */
-  this.sessionId_ = '' + (0 | Math.random() * (1 << 30));
+  this.sessionId_ = "" + (0 | (Math.random() * (1 << 30)));
 
   /**
    * A unique ID for the session.
@@ -53,7 +51,7 @@ wtf.io.StreamingHttpWriteStream = function(endpoint) {
    * @type {string}
    * @private
    */
-  this.streamId_ = '' + (0 | Math.random() * (1 << 30));
+  this.streamId_ = "" + (0 | (Math.random() * (1 << 30)));
 
   /**
    * Base URL.
@@ -62,11 +60,11 @@ wtf.io.StreamingHttpWriteStream = function(endpoint) {
    */
   this.baseUrl_ = [
     this.endpoint_,
-    'session',
+    "session",
     this.sessionId_,
-    'stream',
-    this.streamId_
-  ].join('/');
+    "stream",
+    this.streamId_,
+  ].join("/");
 
   /**
    * Result waiter for creation.
@@ -74,56 +72,69 @@ wtf.io.StreamingHttpWriteStream = function(endpoint) {
    * @type {!goog.result.Result}
    * @private
    */
-  this.createWaiter_ = goog.labs.net.xhr.post(this.baseUrl_ + '/create', '', {
+  this.createWaiter_ = goog.labs.net.xhr.post(this.baseUrl_ + "/create", "", {
     headers: {
-      'X-Trace-Format': 'application/x-extension-wtf-trace'
-    }
+      "X-Trace-Format": "application/x-extension-wtf-trace",
+    },
   });
 };
 goog.inherits(wtf.io.StreamingHttpWriteStream, wtf.io.HttpWriteStream);
 
-
 /**
  * @override
  */
-wtf.io.StreamingHttpWriteStream.prototype.disposeInternal = function() {
-  goog.base(this, 'disposeInternal');
+wtf.io.StreamingHttpWriteStream.prototype.disposeInternal = function () {
+  goog.base(this, "disposeInternal");
 };
 
-
 /**
  * @override
  */
-wtf.io.StreamingHttpWriteStream.prototype.write = function(
-    buffer, returnBufferCallback, opt_selfObj) {
+wtf.io.StreamingHttpWriteStream.prototype.write = function (
+  buffer,
+  returnBufferCallback,
+  opt_selfObj
+) {
   // Typed arrays - can subview to prevent a clone here.
   var async = true;
   var data = new Uint8Array(buffer.data.buffer, 0, buffer.offset);
 
-  var mimeType = 'application/octet-stream';
+  var mimeType = "application/octet-stream";
 
   // Fast-path for synchronous and already created.
-  if (!async &&
-      this.createWaiter_.getState() == goog.result.Result.State.SUCCESS) {
-    var result = this.postData(this.baseUrl_ + '/append', mimeType, data);
-    goog.result.wait(result, function() {
-      returnBufferCallback.call(opt_selfObj, buffer);
-    }, this);
+  if (
+    !async &&
+    this.createWaiter_.getState() == goog.result.Result.State.SUCCESS
+  ) {
+    var result = this.postData(this.baseUrl_ + "/append", mimeType, data);
+    goog.result.wait(
+      result,
+      function () {
+        returnBufferCallback.call(opt_selfObj, buffer);
+      },
+      this
+    );
   } else {
     // Async - only release buffer when done.
-    goog.result.wait(this.createWaiter_, function() {
-      goog.asserts.assert(data);
-      var result = this.postData(this.baseUrl_ + '/append', mimeType, data);
-      goog.result.wait(result, function() {
-        returnBufferCallback.call(opt_selfObj, buffer);
-      }, this);
-    }, this);
+    goog.result.wait(
+      this.createWaiter_,
+      function () {
+        goog.asserts.assert(data);
+        var result = this.postData(this.baseUrl_ + "/append", mimeType, data);
+        goog.result.wait(
+          result,
+          function () {
+            returnBufferCallback.call(opt_selfObj, buffer);
+          },
+          this
+        );
+      },
+      this
+    );
   }
 };
-
 
 /**
  * @override
  */
-wtf.io.StreamingHttpWriteStream.prototype.flush = function() {
-};
+wtf.io.StreamingHttpWriteStream.prototype.flush = function () {};

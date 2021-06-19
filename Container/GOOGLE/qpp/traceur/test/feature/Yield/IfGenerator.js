@@ -13,7 +13,7 @@ function* ifGenerator(condition) {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -22,5 +22,5 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assertEquals('13', accumulate(ifGenerator(true)));
-assertEquals('24', accumulate(ifGenerator(false)));
+assertEquals("13", accumulate(ifGenerator(true)));
+assertEquals("24", accumulate(ifGenerator(false)));

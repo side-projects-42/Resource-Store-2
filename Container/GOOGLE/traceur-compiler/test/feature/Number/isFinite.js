@@ -1,4 +1,4 @@
-import {isFinite} from '../../../src/runtime/polyfills/Number.js';
+import { isFinite } from "../../../src/runtime/polyfills/Number.js";
 
 function testIsFinite(isFinite) {
   assert.isTrue(isFinite(-0));
@@ -9,9 +9,9 @@ function testIsFinite(isFinite) {
   assert.isTrue(isFinite(Number.MIN_SAFE_INTEGER - 13));
   assert.isTrue(isFinite(Number.MIN_VALUE));
 
-  assert.isFalse(isFinite('-0'));
-  assert.isFalse(isFinite('0'));
-  assert.isFalse(isFinite('x'));
+  assert.isFalse(isFinite("-0"));
+  assert.isFalse(isFinite("0"));
+  assert.isFalse(isFinite("x"));
   assert.isFalse(isFinite(-Infinity));
   assert.isFalse(isFinite(-NaN));
   assert.isFalse(isFinite(Infinity));
@@ -23,7 +23,13 @@ function testIsFinite(isFinite) {
   assert.isFalse(isFinite(null));
   assert.isFalse(isFinite(true));
   assert.isFalse(isFinite(undefined));
-  assert.isFalse(isFinite({valueOf() { return 1; }}));
+  assert.isFalse(
+    isFinite({
+      valueOf() {
+        return 1;
+      },
+    })
+  );
 }
 
 testIsFinite(isFinite);

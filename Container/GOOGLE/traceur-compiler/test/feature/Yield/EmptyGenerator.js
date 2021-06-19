@@ -1,5 +1,4 @@
-function* f() {
-}
+function* f() {}
 
 var g = f();
-assert.deepEqual(g.next(), {done: true, value: undefined});
+assert.deepEqual(g.next(), { done: true, value: undefined });

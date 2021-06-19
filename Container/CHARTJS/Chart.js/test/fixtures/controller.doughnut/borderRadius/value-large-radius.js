@@ -1,6 +1,6 @@
 module.exports = {
   config: {
-    type: 'doughnut',
+    type: "doughnut",
     data: {
       labels: [0, 1, 2, 3, 4, 5],
       datasets: [
@@ -9,14 +9,14 @@ module.exports = {
           // Radius is large enough to clip
           borderRadius: 200,
           backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)'
-          ]
+            "rgb(255, 99, 132)",
+            "rgb(255, 159, 64)",
+            "rgb(255, 205, 86)",
+            "rgb(75, 192, 192)",
+            "rgb(54, 162, 235)",
+          ],
         },
-      ]
+      ],
     },
     // options: {
     //   elements: {
@@ -30,7 +30,7 @@ module.exports = {
   options: {
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

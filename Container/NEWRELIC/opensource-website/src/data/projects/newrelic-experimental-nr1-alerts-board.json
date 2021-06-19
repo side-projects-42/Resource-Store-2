@@ -1,0 +1,24 @@
+{
+  "name": "nr1-alerts-board",
+  "fullName": "newrelic-experimental/nr1-alerts-board",
+  "slug": "newrelic-experimental-nr1-alerts-board",
+  "owner": {
+    "login": "newrelic-experimental",
+    "type": "Organization"
+  },
+  "title": "Alerts Dashboard",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic-experimental/nr1-alerts-board",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic-experimental/nr1-alerts-board",
+  "iconUrl": null,
+  "shortDescription": "Alert dashboard application",
+  "description": "New Relic One Alerts Dashboard application",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Alerts Dashboard",
+    "url": "https://github.com/newrelic-experimental/nr1-alerts-board"
+  }
+}

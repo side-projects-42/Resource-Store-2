@@ -1,0 +1,28 @@
+{
+  "name": "java-log-extensions",
+  "fullName": "newrelic/java-log-extensions",
+  "slug": "newrelic-java-log-extensions",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Java Logging",
+  "supportUrl": "https://discuss.newrelic.com/tags/javaagent",
+  "githubUrl": "https://github.com/newrelic/java-log-extensions",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/java-log-extensions",
+  "defaultBranch": "main",
+  "contributingGuideUrl": "https://github.com/newrelic/java-log-extensions/blob/main/CONTRIBUTING.md",
+  "iconUrl": null,
+  "shortDescription": "Extensions for Java logging",
+  "description": "Source for the New Relic Java log framework extensions.",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Java",
+  "projectTags": [
+    "logging"
+  ],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Java Logging",
+    "url": "https://github.com/newrelic/java-log-extensions"
+  }
+}

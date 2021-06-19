@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 /**
  * A token representing a javascript literal. Includes string, regexp, and
  * number literals. Boolean and null literals are represented as regular keyword
@@ -24,12 +23,8 @@
  * TODO: Regexp literals should have their own token type.
  */
 
-import {Token} from './Token.js';
-import {
-  NULL,
-  NUMBER,
-  STRING
-} from './TokenType.js';
+import { Token } from "./Token.js";
+import { NULL, NUMBER, STRING } from "./TokenType.js";
 
 /**
  * Helper class for getting the processed value out of a string literal token.
@@ -42,12 +37,11 @@ class StringParser {
    */
   constructor(value) {
     this.value = value;
-    this.index = 0;  // value is wrapped in " or '
+    this.index = 0; // value is wrapped in " or '
   }
 
   next() {
-    if (++this.index >= this.value.length - 1)
-      throw StopIteration;
+    if (++this.index >= this.value.length - 1) throw StopIteration;
 
     return this.value[this.index];
   }
@@ -55,13 +49,12 @@ class StringParser {
   parse() {
     // If there are no escape sequences we can just return the contents of the
     // string.
-    if (this.value.indexOf('\\') === -1)
-      return this.value.slice(1, -1);
+    if (this.value.indexOf("\\") === -1) return this.value.slice(1, -1);
 
-    var result = '';
+    var result = "";
 
     for (var ch of this) {
-      result += ch === '\\' ? this.parseEscapeSequence() : ch;
+      result += ch === "\\" ? this.parseEscapeSequence() : ch;
     }
 
     return result;
@@ -70,35 +63,35 @@ class StringParser {
   parseEscapeSequence() {
     var ch = this.next();
     switch (ch) {
-      case '\n':  // <LF>
-      case '\r':  // <CR>
-      case '\u2028':  // <LS>
-      case '\u2029':  // <PS>
-        return '';
-      case '0':
-        return '\0';
-      case 'b':
-        return '\b';
-      case 'f':
-        return '\f';
-      case 'n':
-        return '\n';
-      case 'r':
-        return '\r';
-      case 't':
-        return '\t';
-      case 'v':
-        return '\v';
-      case 'x':
+      case "\n": // <LF>
+      case "\r": // <CR>
+      case "\u2028": // <LS>
+      case "\u2029": // <PS>
+        return "";
+      case "0":
+        return "\0";
+      case "b":
+        return "\b";
+      case "f":
+        return "\f";
+      case "n":
+        return "\n";
+      case "r":
+        return "\r";
+      case "t":
+        return "\t";
+      case "v":
+        return "\v";
+      case "x":
         // 2 hex digits
         return String.fromCharCode(parseInt(next() + next(), 16));
-      case 'u':
+      case "u":
         // 4 hex digits
-        return String.fromCharCode(parseInt(next() + next() +
-                                            next() + next(), 16));
+        return String.fromCharCode(
+          parseInt(next() + next() + next() + next(), 16)
+        );
       default:
-        if (Number(ch) < 8)
-          throw new Error('Octal literals are not supported');
+        if (Number(ch) < 8) throw new Error("Octal literals are not supported");
         return ch;
     }
   }
@@ -139,7 +132,7 @@ export class LiteralToken extends Token {
         return parser.parse();
 
       default:
-        throw new Error('Not implemented');
+        throw new Error("Not implemented");
     }
   }
 }

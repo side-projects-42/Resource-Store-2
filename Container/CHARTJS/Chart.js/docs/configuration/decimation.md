@@ -6,18 +6,18 @@ The decimation plugin can be used with line charts to automatically decimate dat
 
 Namespace: `options.plugins.decimation`, the global options for the plugin are defined in `Chart.defaults.plugins.decimation`.
 
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| `enabled` | `boolean` | `false` | Is decimation enabled?
-| `algorithm` | `string` | `'min-max'` | Decimation algorithm to use. See the [more...](#decimation-algorithms)
-| `samples` | `number` | | If the `'lttb'` algorithm is used, this is the number of samples in the output dataset. Defaults to the canvas width to pick 1 sample per pixel.
+| Name        | Type      | Default     | Description                                                                                                                                      |
+| ----------- | --------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `enabled`   | `boolean` | `false`     | Is decimation enabled?                                                                                                                           |
+| `algorithm` | `string`  | `'min-max'` | Decimation algorithm to use. See the [more...](#decimation-algorithms)                                                                           |
+| `samples`   | `number`  |             | If the `'lttb'` algorithm is used, this is the number of samples in the output dataset. Defaults to the canvas width to pick 1 sample per pixel. |
 
 ## Decimation Algorithms
 
 Decimation algorithm to use for data. Options are:
 
-* `'lttb'`
-* `'min-max'`
+- `'lttb'`
+- `'min-max'`
 
 ### Largest Triangle Three Bucket (LTTB) Decimation
 
@@ -39,4 +39,4 @@ To use the decimation plugin, the following requirements must be met:
 
 ## Related Samples
 
-* [Data Decimation Sample](../samples/advanced/data-decimation)
+- [Data Decimation Sample](../samples/advanced/data-decimation)

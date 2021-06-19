@@ -1,25 +1,35 @@
-import {Context} from './context';
+import { Context } from "./context";
 
-type Align = 'bottom' | 'center' | 'end' | 'left' | 'right' | 'start' | 'top' | number;
-type Anchor = 'center' | 'end' | 'start';
+type Align =
+  | "bottom"
+  | "center"
+  | "end"
+  | "left"
+  | "right"
+  | "start"
+  | "top"
+  | number;
+type Anchor = "center" | "end" | "start";
 type Color = string | CanvasGradient | CanvasPattern;
 type Listener = (context: Context) => boolean | void;
-type TextAlign = 'left' | 'right' | 'start' | 'center' | 'end';
+type TextAlign = "left" | "right" | "start" | "center" | "end";
 
 type Font = {
   family?: string;
   lineHeight?: string | number;
   size?: number;
-  style?: 'normal' | 'italic' | 'oblique';
-  weight?: 'normal' | 'bold' | 'bolder' | 'lighter' | number;
+  style?: "normal" | "italic" | "oblique";
+  weight?: "normal" | "bold" | "bolder" | "lighter" | number;
 };
 
-type Padding = number | {
-  top?: number;
-  right?: number;
-  bottom?: number;
-  left?: number;
-};
+type Padding =
+  | number
+  | {
+      top?: number;
+      right?: number;
+      bottom?: number;
+      left?: number;
+    };
 
 // Generic types
 type Indexable<T> = T | T[];

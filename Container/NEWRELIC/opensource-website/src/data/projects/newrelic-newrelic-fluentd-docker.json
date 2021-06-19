@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-fluentd-docker",
+  "fullName": "newrelic/newrelic-fluentd-docker",
+  "slug": "newrelic-newrelic-fluentd-docker",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Fluentd Docker Image for New Relic Logs",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-fluentd-docker",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-fluentd-docker",
+  "iconUrl": null,
+  "shortDescription": "Docker image for Fluentd",
+  "description": "A custom Fluentd Docker image for forwarding log events to New Relic.",
+  "ossCategory": "community-project",
+  "primaryLanguage": "Shell",
+  "projectTags": ["logging"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Fluentd Docker Image for New Relic Logs",
+    "url": "https://github.com/newrelic/newrelic-fluentd-docker"
+  }
+}

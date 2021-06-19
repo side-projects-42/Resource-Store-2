@@ -10,9 +10,9 @@ title: Introduction
 
 ## Table of Contents
 
-* [Installation](installation.md)
-* [Options](options.md)
-* [Samples](../samples)
+- [Installation](installation.md)
+- [Options](options.md)
+- [Samples](../samples)
 
 ## Example
 
@@ -23,12 +23,12 @@ new Chart(ctx, {
     // ... other options ...
     plugins: {
       deferred: {
-        xOffset: 150,   // defer until 150px of the canvas width are inside the viewport
-        yOffset: '50%', // defer until 50% of the canvas height are inside the viewport
-        delay: 500      // delay of 500 ms after the canvas is considered inside the viewport
-      }
-    }
-  }
+        xOffset: 150, // defer until 150px of the canvas width are inside the viewport
+        yOffset: "50%", // defer until 50% of the canvas height are inside the viewport
+        delay: 500, // delay of 500 ms after the canvas is considered inside the viewport
+      },
+    },
+  },
 });
 ```
 

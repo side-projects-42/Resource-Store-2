@@ -12,37 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-import {IdentifierToken} from '../../../src/syntax/IdentifierToken.js';
-import {LiteralToken} from '../../../src/syntax/LiteralToken.js';
-import {Token} from '../../../src/syntax/Token.js';
-import * as TokenType from '../../../src/syntax/TokenType.js';
+import { IdentifierToken } from "../../../src/syntax/IdentifierToken.js";
+import { LiteralToken } from "../../../src/syntax/LiteralToken.js";
+import { Token } from "../../../src/syntax/Token.js";
+import * as TokenType from "../../../src/syntax/TokenType.js";
 
-suite('Token.js', function() {
-
-  test('Token', function() {
-    var token = new Token('type', 'location');
-    assert.equal('type', token.type);
-    assert.equal('location', token.location);
+suite("Token.js", function () {
+  test("Token", function () {
+    var token = new Token("type", "location");
+    assert.equal("type", token.type);
+    assert.equal("location", token.location);
   });
 
-  test('TokenType', function() {
-    assert.equal('=', TokenType.EQUAL);
+  test("TokenType", function () {
+    assert.equal("=", TokenType.EQUAL);
   });
 
-  test('LiteralToken', function() {
-    var token = new LiteralToken('type', 'value', 'location');
-    assert.equal('type', token.type);
-    assert.equal('value', token.value);
-    assert.equal('location', token.location);
+  test("LiteralToken", function () {
+    var token = new LiteralToken("type", "value", "location");
+    assert.equal("type", token.type);
+    assert.equal("value", token.value);
+    assert.equal("location", token.location);
   });
 
-  test('IdentifierToken', function() {
-    var token = new IdentifierToken('location', 'id');
-    assert.equal('identifier', token.type);
-    assert.equal('id', token.value);
-    assert.equal('location', token.location);
+  test("IdentifierToken", function () {
+    var token = new IdentifierToken("location", "id");
+    assert.equal("identifier", token.type);
+    assert.equal("id", token.value);
+    assert.equal("location", token.location);
   });
-
 });

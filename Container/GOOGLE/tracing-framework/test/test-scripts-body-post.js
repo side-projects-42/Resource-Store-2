@@ -1,3 +1,3 @@
 (function bodyPost() {
-  console.log('body post');
+  console.log("body post");
 })();

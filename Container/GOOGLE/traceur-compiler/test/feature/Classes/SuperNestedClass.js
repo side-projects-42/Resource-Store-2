@@ -6,16 +6,15 @@ class Animal {
 
 class Roo extends Animal {
   constructor() {
-    class Koala extends (super('R'), Animal) {
+    class Koala extends (super("R"), Animal) {
       constructor() {
-        super('K');
+        super("K");
       }
     }
-    this.a = new Koala;
+    this.a = new Koala();
   }
 }
 
-
 var r = new Roo();
-assert.equal('R', r.name);
-assert.equal('K', r.a.name);
+assert.equal("R", r.name);
+assert.equal("K", r.a.name);

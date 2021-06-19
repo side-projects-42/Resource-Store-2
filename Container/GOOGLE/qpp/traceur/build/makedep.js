@@ -20,53 +20,61 @@
 //   bin/traceur.js: src/options.js
 //   bin/traceur.js: src/codegeneration/RestParameterTransformer.js
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
-var path = require('path');
+var fs = require("fs");
+var path = require("path");
 
 var flags;
 var cmdName = path.basename(process.argv[1]);
 try {
-  flags = new (require('commander').Command)(cmdName);
+  flags = new (require("commander").Command)(cmdName);
 } catch (ex) {
-  console.error('Commander.js is required for this to work. To install it ' +
-                'run:\n\n  npm install commander\n');
+  console.error(
+    "Commander.js is required for this to work. To install it " +
+      "run:\n\n  npm install commander\n"
+  );
   process.exit(1);
 }
 flags.setMaxListeners(100);
 
-var traceur = require('../src/node/traceur.js');
+var traceur = require("../src/node/traceur.js");
 
-flags.option('--depTarget <FILE>', 'path to the dependency target');
+flags.option("--depTarget <FILE>", "path to the dependency target");
 
 traceur.options.addOptions(flags);
 
 flags.parse(process.argv);
 
 if (!flags.depTarget) {
-  console.error('\n  `--depTarget\' missing.\n');
+  console.error("\n  `--depTarget' missing.\n");
   process.exit(1);
 }
 
 var includes = flags.args;
 if (!includes.length) {
-  console.error('\n  At least one input file is needed.\n');
+  console.error("\n  At least one input file is needed.\n");
   process.exit(1);
 }
 
 var ErrorReporter = traceur.util.ErrorReporter;
 
-var resolvedIncludes = includes.map(function(include) {
+var resolvedIncludes = includes.map(function (include) {
   return path.resolve(include);
 });
 
 var reporter = new ErrorReporter();
 
-var inlineAndCompile = require('../src/node/inline-module.js').inlineAndCompile;
+var inlineAndCompile = require("../src/node/inline-module.js").inlineAndCompile;
 
-inlineAndCompile(resolvedIncludes, flags, reporter, function(tree) {
-  process.exit(0);
-}, function(err) {
-  process.exit(1);
-});
+inlineAndCompile(
+  resolvedIncludes,
+  flags,
+  reporter,
+  function (tree) {
+    process.exit(0);
+  },
+  function (err) {
+    process.exit(1);
+  }
+);

@@ -12,55 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert, setup} from '../../unit/unitTestRunner.js';
+import { suite, test, assert, setup } from "../../unit/unitTestRunner.js";
 
-import {AmdTransformer} from '../../../src/codegeneration/AmdTransformer.js';
-import {Options} from '../../../src/Options.js';
-import * as ParseTreeFactory from '../../../src/codegeneration/ParseTreeFactory.js';
-import {write} from '../../../src/outputgeneration/TreeWriter.js';
+import { AmdTransformer } from "../../../src/codegeneration/AmdTransformer.js";
+import { Options } from "../../../src/Options.js";
+import * as ParseTreeFactory from "../../../src/codegeneration/ParseTreeFactory.js";
+import { write } from "../../../src/outputgeneration/TreeWriter.js";
 
-suite('AmdTransformer.js', function() {
+suite("AmdTransformer.js", function () {
+  var transformer = null;
 
-  var transformer = null
-
-  setup(function() {
+  setup(function () {
     transformer = new AmdTransformer(null, null, new Options());
   });
 
   function str(s) {
     return ParseTreeFactory.createExpressionStatement(
-        ParseTreeFactory.createStringLiteral(s));
+      ParseTreeFactory.createStringLiteral(s)
+    );
   }
 
-  suite('wrapModule', function() {
+  suite("wrapModule", function () {
     function writeArray(arr) {
-      return arr.map(function(item) {
-        return write(item);
-      }).join('');
+      return arr
+        .map(function (item) {
+          return write(item);
+        })
+        .join("");
     }
 
     function removeWhiteSpaces(str) {
-      return str.replace(/\s/g, '');
+      return str.replace(/\s/g, "");
     }
 
     function assertEqualIgnoringWhiteSpaces(a, b) {
       assert.equal(removeWhiteSpaces(a), removeWhiteSpaces(b));
     }
 
-    test('with no dependencies', function() {
+    test("with no dependencies", function () {
       assertEqualIgnoringWhiteSpaces(
-          'define([], function() {"CODE";});',
-          writeArray(transformer.wrapModule([str('CODE')])));
+        'define([], function() {"CODE";});',
+        writeArray(transformer.wrapModule([str("CODE")]))
+      );
     });
 
-    test('with dependencies', function() {
-      transformer.dependencies.push({path: './foo', local: '__dep0'});
-      transformer.dependencies.push({path: './bar', local: '__dep1'});
+    test("with dependencies", function () {
+      transformer.dependencies.push({ path: "./foo", local: "__dep0" });
+      transformer.dependencies.push({ path: "./bar", local: "__dep1" });
 
       assertEqualIgnoringWhiteSpaces(
-          'define(["./foo","./bar"],function(__dep0,__dep1){"CODE";});',
-          writeArray(transformer.wrapModule([str('CODE')])));
+        'define(["./foo","./bar"],function(__dep0,__dep1){"CODE";});',
+        writeArray(transformer.wrapModule([str("CODE")]))
+      );
     });
   });
-
 });

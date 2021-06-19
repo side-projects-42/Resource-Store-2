@@ -1,1 +1,1 @@
-import {} from './resources/m.js';
+import {} from "./resources/m.js";

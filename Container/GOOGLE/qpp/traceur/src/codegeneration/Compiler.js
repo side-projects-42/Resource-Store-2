@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ModuleAnalyzer} from '../semantics/ModuleAnalyzer.js';
-import {Parser} from '../syntax/Parser.js';
-import {ProgramTransformer} from './ProgramTransformer.js';
-import {Project} from '../semantics/symbols/Project.js';
+import { ModuleAnalyzer } from "../semantics/ModuleAnalyzer.js";
+import { Parser } from "../syntax/Parser.js";
+import { ProgramTransformer } from "./ProgramTransformer.js";
+import { Project } from "../semantics/symbols/Project.js";
 
 /**
  * @fileoverview Compiles a Traceur Project. Drives the overall compilation
@@ -73,8 +73,7 @@ export class Compiler {
     if (this.hadError_()) {
       return;
     }
-    this.results_ = ProgramTransformer.transform(this.reporter_,
-                                                 this.project_);
+    this.results_ = ProgramTransformer.transform(this.reporter_, this.project_);
   }
 
   /**
@@ -88,9 +87,11 @@ export class Compiler {
     if (this.hadError_()) {
       return;
     }
-    this.results_ = ProgramTransformer.transformFile(this.reporter_,
-                                                     this.project_,
-                                                     sourceFile);
+    this.results_ = ProgramTransformer.transformFile(
+      this.reporter_,
+      this.project_,
+      sourceFile
+    );
   }
 
   /**
@@ -146,7 +147,9 @@ export class Compiler {
     }
 
     this.project_.setParseTree(
-        file, new Parser(this.reporter_, file).parseProgram(true));
+      file,
+      new Parser(this.reporter_, file).parseProgram(true)
+    );
   }
 
   /**
@@ -164,7 +167,7 @@ export class Compiler {
  * @return {ObjectMap} A map from input file name to
  *     translated results. Returns null if there was a compile error.
  */
-Compiler.compile = function(reporter, project) {
+Compiler.compile = function (reporter, project) {
   return new Compiler(reporter, project).compile_();
 };
 
@@ -176,7 +179,7 @@ Compiler.compile = function(reporter, project) {
  * @return {ParseTree} A map from input file name to
  *     translated results. Returns null if there was a compile error.
  */
-Compiler.compileFile = function(reporter, sourceFile, url) {
+Compiler.compileFile = function (reporter, sourceFile, url) {
   var project = new Project(url);
   project.addFile(sourceFile);
   return new Compiler(reporter, project).compileFile_(sourceFile);

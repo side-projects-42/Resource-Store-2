@@ -12,9 +12,9 @@ Chart.js relies on [Travis CI](https://travis-ci.org/) to automate the library [
 
 Creation of this tag triggers a new build:
 
-* `Chart.js.zip` package is generated, containing dist files and examples
-* `dist/*.js`, `types/*.ts`, and `Chart.js.zip` are attached to the GitHub release (downloads)
-* A new npm package is published on [npmjs](https://www.npmjs.com/package/chart.js)
+- `Chart.js.zip` package is generated, containing dist files and examples
+- `dist/*.js`, `types/*.ts`, and `Chart.js.zip` are attached to the GitHub release (downloads)
+- A new npm package is published on [npmjs](https://www.npmjs.com/package/chart.js)
 
 Finally, [cdnjs](https://cdnjs.com/libraries/Chart.js) is automatically updated from the npm release.
 
@@ -29,6 +29,6 @@ If there is a need to create a patch version for an older release:
 
 ### Further Reading
 
-* [GitHub Action releases](https://github.com/chartjs/Chart.js/pull/7891)
-* [dist/* files](https://github.com/chartjs/Chart.js/issues/3033)
-* [cdnjs npm auto update](https://github.com/cdnjs/cdnjs/pull/8401)
+- [GitHub Action releases](https://github.com/chartjs/Chart.js/pull/7891)
+- [dist/\* files](https://github.com/chartjs/Chart.js/issues/3033)
+- [cdnjs npm auto update](https://github.com/cdnjs/cdnjs/pull/8401)

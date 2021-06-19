@@ -1,0 +1,72 @@
+{
+  "projectFullName": "newrelic/newrelic-java-agent-ansible-role",
+  "issues": {
+    "open": 1
+  },
+  "releases": 7,
+  "latestRelease": {
+    "name": "1.0.1",
+    "date": "2020-07-08T19:40:01Z"
+  },
+  "commits": 57,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 5,
+  "pullRequests": {
+    "open": 1
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 1773616,
+      "login": "theletterf",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1773616?v=4",
+      "htmlUrl": "https://github.com/theletterf",
+      "contributions": 2
+    },
+    {
+      "id": 63664197,
+      "login": "rishimukhop1",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/63664197?v=4",
+      "htmlUrl": "https://github.com/rishimukhop1",
+      "contributions": 1
+    },
+    {
+      "id": 38018054,
+      "login": "Julien4218",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/38018054?v=4",
+      "htmlUrl": "https://github.com/Julien4218",
+      "contributions": 1
+    },
+    {
+      "id": 43244625,
+      "login": "melissaklein24",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43244625?v=4",
+      "htmlUrl": "https://github.com/melissaklein24",
+      "contributions": 2
+    },
+    {
+      "id": 19716792,
+      "login": "njvrzm",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19716792?v=4",
+      "htmlUrl": "https://github.com/njvrzm",
+      "contributions": 20
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U0MTc=",
+      "name": "HTML",
+      "color": "#e34c26"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

@@ -1,19 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>CodeMirror: Markdown mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="../xml/xml.js"></script>
     <script src="markdown.js"></script>
-    <style type="text/css">.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
-    <link rel="stylesheet" href="../../doc/docs.css">
+    <style type="text/css">
+      .CodeMirror {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+    </style>
+    <link rel="stylesheet" href="../../doc/docs.css" />
   </head>
   <body>
     <h1>CodeMirror: Markdown mode</h1>
 
-<!-- source: http://daringfireball.net/projects/markdown/basics.text -->
-<form><textarea id="code" name="code">
+    <!-- source: http://daringfireball.net/projects/markdown/basics.text -->
+    <form>
+      <textarea id="code" name="code">
 Markdown: Basics
 ================
 
@@ -321,18 +327,19 @@ Output:
         &amp;lt;p&amp;gt;For example.&amp;lt;/p&amp;gt;
     &amp;lt;/blockquote&amp;gt;
     &lt;/code&gt;&lt;/pre&gt;
-</textarea></form>
+</textarea
+      >
+    </form>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        mode: 'markdown',
+        mode: "markdown",
         lineNumbers: true,
         matchBrackets: true,
-        theme: "default"
+        theme: "default",
       });
     </script>
 
     <p><strong>MIME types defined:</strong> <code>text/x-markdown</code>.</p>
-
   </body>
 </html>

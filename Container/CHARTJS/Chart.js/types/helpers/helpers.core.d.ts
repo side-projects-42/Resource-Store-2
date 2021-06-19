@@ -1,4 +1,4 @@
-import { AnyObject } from '../basic';
+import { AnyObject } from "../basic";
 
 /**
  * An empty function that can be used, for example, for optional callback.
@@ -54,9 +54,9 @@ export function valueOrDefault<T>(value: T | undefined, defaultValue: T): T;
  * @returns {*}
  */
 export function callback<T extends (this: TA, ...args: unknown[]) => R, TA, R>(
-	fn: T | undefined,
-	args: unknown[],
-	thisArg?: TA
+  fn: T | undefined,
+  args: unknown[],
+  thisArg?: TA
 ): R | undefined;
 
 /**
@@ -69,10 +69,10 @@ export function callback<T extends (this: TA, ...args: unknown[]) => R, TA, R>(
  * @param [reverse] - If true, iterates backward on the loopable.
  */
 export function each<T, TA>(
-	loopable: T[],
-	fn: (this: TA, v: T, i: number) => void,
-	thisArg?: TA,
-	reverse?: boolean
+  loopable: T[],
+  fn: (this: TA, v: T, i: number) => void,
+  thisArg?: TA,
+  reverse?: boolean
 ): void;
 /**
  * Note(SB) for performance sake, this method should only be used when loopable type
@@ -84,10 +84,10 @@ export function each<T, TA>(
  * @param [reverse] - If true, iterates backward on the loopable.
  */
 export function each<T, TA>(
-	loopable: { [key: string]: T },
-	fn: (this: TA, v: T, k: string) => void,
-	thisArg?: TA,
-	reverse?: boolean
+  loopable: { [key: string]: T },
+  fn: (this: TA, v: T, k: string) => void,
+  thisArg?: TA,
+  reverse?: boolean
 ): void;
 
 /**
@@ -97,7 +97,12 @@ export function each<T, TA>(
 export function clone<T>(source: T): T;
 
 export interface MergeOptions {
-	merger?: (key: string, target: AnyObject, source: AnyObject, options: AnyObject) => AnyObject;
+  merger?: (
+    key: string,
+    target: AnyObject,
+    source: AnyObject,
+    options: AnyObject
+  ) => AnyObject;
 }
 /**
  * Recursively deep copies `source` properties into `target` with the given `options`.
@@ -109,16 +114,36 @@ export interface MergeOptions {
  * @returns {object} The `target` object.
  */
 export function merge<T>(target: T, source: [], options?: MergeOptions): T;
-export function merge<T, S1>(target: T, source: S1, options?: MergeOptions): T & S1;
-export function merge<T, S1>(target: T, source: [S1], options?: MergeOptions): T & S1;
-export function merge<T, S1, S2>(target: T, source: [S1, S2], options?: MergeOptions): T & S1 & S2;
-export function merge<T, S1, S2, S3>(target: T, source: [S1, S2, S3], options?: MergeOptions): T & S1 & S2 & S3;
+export function merge<T, S1>(
+  target: T,
+  source: S1,
+  options?: MergeOptions
+): T & S1;
+export function merge<T, S1>(
+  target: T,
+  source: [S1],
+  options?: MergeOptions
+): T & S1;
+export function merge<T, S1, S2>(
+  target: T,
+  source: [S1, S2],
+  options?: MergeOptions
+): T & S1 & S2;
+export function merge<T, S1, S2, S3>(
+  target: T,
+  source: [S1, S2, S3],
+  options?: MergeOptions
+): T & S1 & S2 & S3;
 export function merge<T, S1, S2, S3, S4>(
-	target: T,
-	source: [S1, S2, S3, S4],
-	options?: MergeOptions
+  target: T,
+  source: [S1, S2, S3, S4],
+  options?: MergeOptions
 ): T & S1 & S2 & S3 & S4;
-export function merge<T>(target: T, source: AnyObject[], options?: MergeOptions): AnyObject;
+export function merge<T>(
+  target: T,
+  source: AnyObject[],
+  options?: MergeOptions
+): AnyObject;
 
 /**
  * Recursively deep copies `source` properties into `target` *only* if not defined in target.
@@ -131,8 +156,14 @@ export function mergeIf<T>(target: T, source: []): T;
 export function mergeIf<T, S1>(target: T, source: S1): T & S1;
 export function mergeIf<T, S1>(target: T, source: [S1]): T & S1;
 export function mergeIf<T, S1, S2>(target: T, source: [S1, S2]): T & S1 & S2;
-export function mergeIf<T, S1, S2, S3>(target: T, source: [S1, S2, S3]): T & S1 & S2 & S3;
-export function mergeIf<T, S1, S2, S3, S4>(target: T, source: [S1, S2, S3, S4]): T & S1 & S2 & S3 & S4;
+export function mergeIf<T, S1, S2, S3>(
+  target: T,
+  source: [S1, S2, S3]
+): T & S1 & S2 & S3;
+export function mergeIf<T, S1, S2, S3, S4>(
+  target: T,
+  source: [S1, S2, S3, S4]
+): T & S1 & S2 & S3 & S4;
 export function mergeIf<T>(target: T, source: AnyObject[]): AnyObject;
 
 export function resolveObjectKey(obj: AnyObject, key: string): AnyObject;

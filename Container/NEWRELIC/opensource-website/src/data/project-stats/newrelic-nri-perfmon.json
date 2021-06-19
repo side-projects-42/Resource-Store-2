@@ -1,0 +1,77 @@
+{
+  "projectFullName": "newrelic/nri-perfmon",
+  "issues": {
+    "open": 0
+  },
+  "releases": 13,
+  "latestRelease": {
+    "name": "0.6.1",
+    "date": "2020-12-09T03:50:46Z"
+  },
+  "commits": 175,
+  "lastSixMonthsCommitTotal": 8,
+  "contributors": 5,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 1215492,
+      "login": "brunotag",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1215492?v=4",
+      "htmlUrl": "https://github.com/brunotag",
+      "contributions": 2
+    },
+    {
+      "id": 30607359,
+      "login": "peetk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/30607359?v=4",
+      "htmlUrl": "https://github.com/peetk",
+      "contributions": 6
+    },
+    {
+      "id": 754009,
+      "login": "halocameo",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/754009?v=4",
+      "htmlUrl": "https://github.com/halocameo",
+      "contributions": 1
+    },
+    {
+      "id": 13701055,
+      "login": "anwittin",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13701055?v=4",
+      "htmlUrl": "https://github.com/anwittin",
+      "contributions": 2
+    },
+    {
+      "id": 3536684,
+      "login": "sschwartzman",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3536684?v=4",
+      "htmlUrl": "https://github.com/sschwartzman",
+      "contributions": 138
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UyMzI=",
+      "name": "C#",
+      "color": "#178600"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UyNjQ=",
+      "name": "PowerShell",
+      "color": "#012456"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTA=",
+    "name": "Other",
+    "spdxId": "NOASSERTION",
+    "url": "http://choosealicense.com/licenses/other/",
+    "featured": false,
+    "key": "other"
+  }
+}

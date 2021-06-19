@@ -1,6 +1,6 @@
 module.exports = {
   config: {
-    type: 'polarArea',
+    type: "polarArea",
     data: {
       labels: [0, 1, 2, 3, 4, 5],
       datasets: [
@@ -8,28 +8,28 @@ module.exports = {
           // option in dataset
           data: [0, 2, 4, null, 6, 8],
           backgroundColor: [
-            '#ff0000',
-            '#00ff00',
-            '#0000ff',
-            '#ffff00',
-            '#ff00ff',
-            '#000000'
-          ]
+            "#ff0000",
+            "#00ff00",
+            "#0000ff",
+            "#ffff00",
+            "#ff00ff",
+            "#000000",
+          ],
         },
-      ]
+      ],
     },
     options: {
       scales: {
         r: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

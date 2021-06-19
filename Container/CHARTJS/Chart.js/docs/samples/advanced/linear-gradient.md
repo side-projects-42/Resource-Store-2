@@ -4,20 +4,24 @@
 // <block:actions:3>
 const actions = [
   {
-    name: 'Randomize',
+    name: "Randomize",
     handler(chart) {
-      chart.data.datasets.forEach(dataset => {
-        dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
+      chart.data.datasets.forEach((dataset) => {
+        dataset.data = Utils.numbers({
+          count: chart.data.labels.length,
+          min: -100,
+          max: 100,
+        });
       });
       chart.update();
-    }
+    },
   },
   {
-    name: 'Add Data',
+    name: "Add Data",
     handler(chart) {
       const data = chart.data;
       if (data.datasets.length > 0) {
-        data.labels = Utils.months({count: data.labels.length + 1});
+        data.labels = Utils.months({ count: data.labels.length + 1 });
 
         for (var index = 0; index < data.datasets.length; ++index) {
           data.datasets[index].data.push(Utils.rand(-100, 100));
@@ -25,20 +29,20 @@ const actions = [
 
         chart.update();
       }
-    }
+    },
   },
   {
-    name: 'Remove Data',
+    name: "Remove Data",
     handler(chart) {
       chart.data.labels.splice(-1, 1); // remove the label first
 
-      chart.data.datasets.forEach(dataset => {
+      chart.data.datasets.forEach((dataset) => {
         dataset.data.pop();
       });
 
       chart.update();
-    }
-  }
+    },
+  },
 ];
 // </block:actions>
 
@@ -64,18 +68,18 @@ function getGradient(ctx, chartArea) {
 
 // <block:setup:2>
 const DATA_COUNT = 7;
-const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
-const labels = Utils.months({count: 7});
+const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };
+const labels = Utils.months({ count: 7 });
 
 const data = {
   labels: labels,
   datasets: [
     {
-      label: 'Dataset 1',
+      label: "Dataset 1",
       data: Utils.numbers(NUMBER_CFG),
-      borderColor: function(context) {
+      borderColor: function (context) {
         const chart = context.chart;
-        const {ctx, chartArea} = chart;
+        const { ctx, chartArea } = chart;
 
         if (!chartArea) {
           // This case happens on initial chart load
@@ -84,21 +88,21 @@ const data = {
         return getGradient(ctx, chartArea);
       },
     },
-  ]
+  ],
 };
 // </block:setup>
 
 // <block:config:1>
 const config = {
-  type: 'line',
+  type: "line",
   data: data,
   options: {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: "top",
       },
-    }
+    },
   },
 };
 // </block:config>

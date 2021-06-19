@@ -14,10 +14,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.icons');
+goog.provide("wtf.ui.icons");
 
-goog.require('goog.string');
-
+goog.require("goog.string");
 
 /**
  * Icon data cache, by URI.
@@ -26,26 +25,23 @@ goog.require('goog.string');
  */
 wtf.ui.icons.cache_ = {};
 
-
 /**
  * Gets icon data from the cache, if it exists.
  * @param {string} uri Icon URI.
  * @return {?string} Icon data, if found.
  */
-wtf.ui.icons.getIconData = function(uri) {
+wtf.ui.icons.getIconData = function (uri) {
   return wtf.ui.icons.cache_[uri] || null;
 };
-
 
 /**
  * Sets the icon data cache value for the given URI.
  * @param {string} uri Icon URI.
  * @param {string} value Icon data.
  */
-wtf.ui.icons.setIconData = function(uri, value) {
+wtf.ui.icons.setIconData = function (uri, value) {
   wtf.ui.icons.cache_[uri] = value;
 };
-
 
 /**
  * Makes the given DOM element an icon with the data from the given URI.
@@ -55,9 +51,9 @@ wtf.ui.icons.setIconData = function(uri, value) {
  * @param {!HTMLImageElement} img HTML image element to make into an icon.
  * @param {string} uri Icon URI.
  */
-wtf.ui.icons.makeIcon = function(img, uri) {
+wtf.ui.icons.makeIcon = function (img, uri) {
   var value = uri;
-  if (!goog.string.startsWith(uri, 'data:')) {
+  if (!goog.string.startsWith(uri, "data:")) {
     var data = wtf.ui.icons.getIconData(uri);
     if (data) {
       value = data;
@@ -66,7 +62,4 @@ wtf.ui.icons.makeIcon = function(img, uri) {
   img.src = value;
 };
 
-
-goog.exportSymbol(
-    'wtf.ui.icons.setIconData',
-    wtf.ui.icons.setIconData);
+goog.exportSymbol("wtf.ui.icons.setIconData", wtf.ui.icons.setIconData);

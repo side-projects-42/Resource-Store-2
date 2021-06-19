@@ -2,7 +2,7 @@
 // transformation turns array lookup and member access into function calls, and
 // I'd like to keep that from being a confounding factor.
 
-'use strict';
+"use strict";
 
 var a, b, c, x, y, z;
 a = b = c = x = y = z = undefined;
@@ -44,21 +44,21 @@ checkA();
 checkA();
 
 // ParseTreeType.MEMBER_EXPRESSION
-x = {x: {a: 1, b: 2, c: 3}};
-var {a, b, c} = x.x;
+x = { x: { a: 1, b: 2, c: 3 } };
+var { a, b, c } = x.x;
 checkAbc();
 
-var {a} = x.x;
+var { a } = x.x;
 checkA();
 
-x = {x: [1, 2, 3]};
+x = { x: [1, 2, 3] };
 var [a] = x.x;
 checkA();
 [a] = x.x;
 checkA();
 
 // ParseTreeType.MEMBER_LOOKUP_EXPRESSION
-x = [[1,2,3]];
+x = [[1, 2, 3]];
 var [a] = x[0];
 checkA();
 [a] = x[0];
@@ -67,7 +67,6 @@ var [a, b, c] = x[0];
 checkAbc();
 [a, b, c] = x[0];
 checkAbc();
-
 
 // ParseTreeType.PAREN_EXPRESSION
 var [a] = 42 === 42 ? [1] : [42];
@@ -91,13 +90,15 @@ checkA();
 checkA();
 
 // ParseTreeType.OBJECT_LITERAL
-var {a} = {a: 1, b: 2, c: 3};
+var { a } = { a: 1, b: 2, c: 3 };
 checkA();
-var {x: {a}} = {x: {a: 1, b: 2}, c: 3};
+var {
+  x: { a },
+} = { x: { a: 1, b: 2 }, c: 3 };
 checkA();
 
 // ParseTreeType.CALL_EXPRESSION
-x = function() {
+x = function () {
   return [1, 2, 3];
 };
 var [a, b, c] = x();
@@ -105,10 +106,10 @@ checkAbc();
 [a, b, c] = x();
 checkAbc();
 
-x = function() {
-  return {a: 1, b: 2, c: 3};
+x = function () {
+  return { a: 1, b: 2, c: 3 };
 };
-var {a, b, c} = x();
+var { a, b, c } = x();
 checkAbc();
 // ParseTreeType.IDENTIFIER_EXPRESSION
 
@@ -132,9 +133,9 @@ checkAbc();
 checkAbc();
 
 x = [1, [2, 3]];
-var [ a, [b, c] ] = x;
+var [a, [b, c]] = x;
 checkAbc();
-[ a, [b, c] ] = x;
+[a, [b, c]] = x;
 checkAbc();
 
 x = [[1, 2], 3];
@@ -150,18 +151,20 @@ checkAbc();
 checkAbc();
 
 // objects
-x = {a: 1, b: 2, c: 3};
-var {a, b, c} = x;
+x = { a: 1, b: 2, c: 3 };
+var { a, b, c } = x;
 checkAbc();
 
-x = {a: 1, b: 2, c: 3};
-var {a} = x;
+x = { a: 1, b: 2, c: 3 };
+var { a } = x;
 checkA();
 
-x = {a: 1, b: 2, c: 3};
-var {a, b, c} = x;
+x = { a: 1, b: 2, c: 3 };
+var { a, b, c } = x;
 checkAbc();
 
-x = {x: {a: 1, b: 2}, c: 3};
-var {x: {a}} = x;
+x = { x: { a: 1, b: 2 }, c: 3 };
+var {
+  x: { a },
+} = x;
 checkA();

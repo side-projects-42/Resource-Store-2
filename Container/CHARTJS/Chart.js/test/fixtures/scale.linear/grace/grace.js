@@ -1,30 +1,32 @@
 module.exports = {
-  description: 'https://github.com/chartjs/Chart.js/issues/7734',
+  description: "https://github.com/chartjs/Chart.js/issues/7734",
   config: {
-    type: 'bar',
+    type: "bar",
     data: {
-      labels: ['a', 'b'],
-      datasets: [{
-        data: [1.2, -0.2],
-      }],
+      labels: ["a", "b"],
+      datasets: [
+        {
+          data: [1.2, -0.2],
+        },
+      ],
     },
     options: {
-      indexAxis: 'y',
+      indexAxis: "y",
       scales: {
         y: {
-          display: false
+          display: false,
         },
         x: {
-          grace: 0.3
-        }
-      }
-    }
+          grace: 0.3,
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       width: 512,
-      height: 128
-    }
-  }
+      height: 128,
+    },
+  },
 };

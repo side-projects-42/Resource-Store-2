@@ -12,42 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../unit/unitTestRunner.js';
-import {Compiler} from '../../src/Compiler.js';
-import {Options, versionLockedOptions} from '../../src/Options.js';
+import { suite, test, assert } from "../unit/unitTestRunner.js";
+import { Compiler } from "../../src/Compiler.js";
+import { Options, versionLockedOptions } from "../../src/Options.js";
 
-suite('Compiler', function() {
-
-  test('Compiler synchronous', function() {
+suite("Compiler", function () {
+  test("Compiler synchronous", function () {
     var compiler = new Compiler();
-    var content = 'var x = 5;';
+    var content = "var x = 5;";
     var result = compiler.compile(content);
     assert.isTrue(result.length > 0);
   });
 
-  test('Compiler synchronous, errors', function() {
+  test("Compiler synchronous, errors", function () {
     var compiler = new Compiler();
-    var content = 'syntax error';
-    assert.throws(function() { compiler.compile(content); });
+    var content = "syntax error";
+    assert.throws(function () {
+      compiler.compile(content);
+    });
   });
 
-  test('Compiler synchronous, experimental option', function() {
-    var compiler = new Compiler({experimental: true});
-    var content = 'let x = 5;';
+  test("Compiler synchronous, experimental option", function () {
+    var compiler = new Compiler({ experimental: true });
+    var content = "let x = 5;";
     var result = compiler.compile(content);
     assert.isTrue(result.length > 0);
   });
 
-  test('Compiler options locked', function() {
+  test("Compiler options locked", function () {
     var options = new Options();
     var mismatches = options.diff(versionLockedOptions);
-    if (mismatches.length)
-      console.error('Options changed ', mismatches);
+    if (mismatches.length) console.error("Options changed ", mismatches);
     assert.equal(mismatches.length, 0);
 
-    var checkDiff =
-        new Options({blockBinding: !versionLockedOptions.blockBinding});
+    var checkDiff = new Options({
+      blockBinding: !versionLockedOptions.blockBinding,
+    });
     assert.equal(checkDiff.diff(versionLockedOptions).length, 1);
   });
-
 });

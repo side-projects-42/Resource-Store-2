@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {LiteralExpression} from '../syntax/trees/ParseTrees.js';
-import {LiteralToken} from '../syntax/LiteralToken.js';
-import {STRING} from '../syntax/TokenType.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { LiteralExpression } from "../syntax/trees/ParseTrees.js";
+import { LiteralToken } from "../syntax/LiteralToken.js";
+import { STRING } from "../syntax/TokenType.js";
 
 let re = /(\\*)\\u{([0-9a-fA-F]+)}/g;
 
 function zeroPad(value) {
-  return '0000'.slice(value.length) + value;
+  return "0000".slice(value.length) + value;
 }
 
 function needsTransform(token) {
@@ -36,13 +36,16 @@ function transformToken(token) {
 
     let codePoint = parseInt(hexDigits, 16);
     let value;
-    if (codePoint <= 0xFFFF) {
-      value = '\\u' + zeroPad(codePoint.toString(16).toUpperCase());
+    if (codePoint <= 0xffff) {
+      value = "\\u" + zeroPad(codePoint.toString(16).toUpperCase());
     } else {
-      let high = Math.floor((codePoint - 0x10000) / 0x400) + 0xD800;
-      let low = (codePoint - 0x10000) % 0x400 + 0xDC00;
-      value = '\\u' + high.toString(16).toUpperCase() +
-              '\\u' + low.toString(16).toUpperCase();
+      let high = Math.floor((codePoint - 0x10000) / 0x400) + 0xd800;
+      let low = ((codePoint - 0x10000) % 0x400) + 0xdc00;
+      value =
+        "\\u" +
+        high.toString(16).toUpperCase() +
+        "\\u" +
+        low.toString(16).toUpperCase();
     }
 
     return backslashes + value;
@@ -54,8 +57,10 @@ export class UnicodeEscapeSequenceTransformer extends ParseTreeTransformer {
     let token = tree.literalToken;
     if (needsTransform(token)) {
       let value = transformToken(token);
-      return new LiteralExpression(tree.location,
-          new LiteralToken(STRING, value, token.location));
+      return new LiteralExpression(
+        tree.location,
+        new LiteralToken(STRING, value, token.location)
+      );
     }
     return tree;
   }

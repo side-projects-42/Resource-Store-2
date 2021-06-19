@@ -1,19 +1,25 @@
 class ElementHolder {
-  getElement() { return this.element; }
+  getElement() {
+    return this.element;
+  }
 
   makeFilterCapturedThis() {
     var capturedThis = this;
     return function (x) {
       return x == capturedThis.element;
-    }
+    };
   }
 
   makeFilterLostThis() {
-    return function () { return this; }
+    return function () {
+      return this;
+    };
   }
 
   makeFilterHidden(element) {
-    return function (x) { return x == element; }
+    return function (x) {
+      return x == element;
+    };
   }
 }
 

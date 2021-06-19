@@ -1,23 +1,21 @@
 // Google BSD license http://code.google.com/google_bsd_license.html
 // Copyright 2012 Google Inc. johnjbarton@google.com
 
-(function(){
+(function () {
+  "use strict";
 
-  'use strict';
-
-  Querypoint.Query = function() {
-  }
+  Querypoint.Query = function () {};
 
   Querypoint.Query.prototype = {
-    tracePrompt: function() {
+    tracePrompt: function () {
       var emptyTrace = {
-        loadNumber: '_',
-        turn: '_',
-        activation: '_',
+        loadNumber: "_",
+        turn: "_",
+        activation: "_",
         value: {
           stringRep: this.tracePromptText(),
-          valueType: 'string',
-          valueClass: 'prompt'
+          valueType: "string",
+          valueClass: "prompt",
         },
         query: this,
         isPrompt: true,
@@ -27,26 +25,24 @@
 
     // These are class-level function (no this), stored in the prototype table
 
-    setQueryOnTree: function(tree, query) {
+    setQueryOnTree: function (tree, query) {
       tree.location.queries = tree.location.queries || [];
       tree.location.queries.push(query);
     },
-    
-    getQueryOnTree: function(tree, queryConstructor) {
+
+    getQueryOnTree: function (tree, queryConstructor) {
       if (tree.location.queries) {
         var found;
-        tree.location.queries.some(function(query) {
-          found = (query instanceof queryConstructor) ? query : null;
+        tree.location.queries.some(function (query) {
+          found = query instanceof queryConstructor ? query : null;
           return !!found;
         });
         return found;
       }
     },
-    
-    isActive: function() {
+
+    isActive: function () {
       return this._isActive;
     },
-
   };
-
-}());
+})();

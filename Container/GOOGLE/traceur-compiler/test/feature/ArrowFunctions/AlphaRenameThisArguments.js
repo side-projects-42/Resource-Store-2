@@ -1,4 +1,3 @@
-
 var self = {};
 
 function f() {
@@ -11,7 +10,7 @@ function f() {
     var ARGUMENTS = 1;
 
     var object = {
-      function: function() {
+      function: function () {
         return [this, arguments];
       },
       method() {
@@ -19,23 +18,23 @@ function f() {
       },
       arrow: () => {
         return [this, arguments];
-      }
+      },
     };
 
     assert.equal(object, object.function()[THIS]);
-    assert.equal(2, object.function('a', 'b')[ARGUMENTS].length);
-    assert.equal('a', object.function('a', 'b')[ARGUMENTS][0]);
-    assert.equal('b', object.function('a', 'b')[ARGUMENTS][1]);
+    assert.equal(2, object.function("a", "b")[ARGUMENTS].length);
+    assert.equal("a", object.function("a", "b")[ARGUMENTS][0]);
+    assert.equal("b", object.function("a", "b")[ARGUMENTS][1]);
 
     assert.equal(object, object.method()[THIS]);
-    assert.equal(3, object.method('c', 'd', 'e')[ARGUMENTS].length);
-    assert.equal('c', object.method('c', 'd', 'e')[ARGUMENTS][0]);
-    assert.equal('d', object.method('c', 'd', 'e')[ARGUMENTS][1]);
-    assert.equal('e', object.method('c', 'd', 'e')[ARGUMENTS][2]);
+    assert.equal(3, object.method("c", "d", "e")[ARGUMENTS].length);
+    assert.equal("c", object.method("c", "d", "e")[ARGUMENTS][0]);
+    assert.equal("d", object.method("c", "d", "e")[ARGUMENTS][1]);
+    assert.equal("e", object.method("c", "d", "e")[ARGUMENTS][2]);
 
     assert.equal(self, object.arrow()[THIS]);
-    assert.equal(1, object.arrow('f', 'g')[ARGUMENTS].length);
-    assert.equal(42, object.arrow('f', 'g')[ARGUMENTS][0]);
+    assert.equal(1, object.arrow("f", "g")[ARGUMENTS].length);
+    assert.equal(42, object.arrow("f", "g")[ARGUMENTS][0]);
   })();
 }
 

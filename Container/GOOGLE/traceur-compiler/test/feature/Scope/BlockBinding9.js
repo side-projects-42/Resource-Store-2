@@ -1,15 +1,15 @@
 // Options: --block-binding
 
 function f() {
-  return 'outer';
+  return "outer";
 }
 
 {
   (function f() {
-    return 'inner';
+    return "inner";
   });
 
-  assert.equal('outer', f());
+  assert.equal("outer", f());
 }
 
-assert.equal('outer', f());
+assert.equal("outer", f());

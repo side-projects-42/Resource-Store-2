@@ -11,18 +11,16 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.parts.BinaryResourcePart');
-goog.provide('wtf.io.cff.parts.ResourcePart');
-goog.provide('wtf.io.cff.parts.StringResourcePart');
+goog.provide("wtf.io.cff.parts.BinaryResourcePart");
+goog.provide("wtf.io.cff.parts.ResourcePart");
+goog.provide("wtf.io.cff.parts.StringResourcePart");
 
-goog.require('goog.asserts');
-goog.require('goog.async.Deferred');
-goog.require('wtf.io');
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.cff.Part');
-goog.require('wtf.io.cff.PartType');
-
-
+goog.require("goog.asserts");
+goog.require("goog.async.Deferred");
+goog.require("wtf.io");
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.cff.Part");
+goog.require("wtf.io.cff.PartType");
 
 /**
  * Abstract base type for parts containing an embedded data resource.
@@ -31,12 +29,10 @@ goog.require('wtf.io.cff.PartType');
  * @constructor
  * @extends {wtf.io.cff.Part}
  */
-wtf.io.cff.parts.ResourcePart = function(partType) {
+wtf.io.cff.parts.ResourcePart = function (partType) {
   goog.base(this, partType);
 };
 goog.inherits(wtf.io.cff.parts.ResourcePart, wtf.io.cff.Part);
-
-
 
 /**
  * String embedded data resource part.
@@ -45,7 +41,7 @@ goog.inherits(wtf.io.cff.parts.ResourcePart, wtf.io.cff.Part);
  * @constructor
  * @extends {wtf.io.cff.parts.ResourcePart}
  */
-wtf.io.cff.parts.StringResourcePart = function(opt_value) {
+wtf.io.cff.parts.StringResourcePart = function (opt_value) {
   goog.base(this, wtf.io.cff.PartType.STRING_RESOURCE);
 
   /**
@@ -55,38 +51,38 @@ wtf.io.cff.parts.StringResourcePart = function(opt_value) {
    */
   this.value_ = opt_value || null;
 };
-goog.inherits(wtf.io.cff.parts.StringResourcePart,
-    wtf.io.cff.parts.ResourcePart);
-
+goog.inherits(
+  wtf.io.cff.parts.StringResourcePart,
+  wtf.io.cff.parts.ResourcePart
+);
 
 /**
  * Gets the resource value.
  * @return {string} Resource value.
  */
-wtf.io.cff.parts.StringResourcePart.prototype.getValue = function() {
+wtf.io.cff.parts.StringResourcePart.prototype.getValue = function () {
   goog.asserts.assert(this.value_);
   return this.value_;
 };
-
 
 /**
  * Sets the resource value.
  * @param {string} value Resource value.
  */
-wtf.io.cff.parts.StringResourcePart.prototype.setValue = function(value) {
+wtf.io.cff.parts.StringResourcePart.prototype.setValue = function (value) {
   this.value_ = value;
 };
-
 
 /**
  * @override
  */
-wtf.io.cff.parts.StringResourcePart.prototype.initFromBlobData = function(
-    data) {
+wtf.io.cff.parts.StringResourcePart.prototype.initFromBlobData = function (
+  data
+) {
   var deferred = new goog.async.Deferred();
 
   var blob = wtf.io.Blob.create([data]);
-  blob.readAsText(function(value) {
+  blob.readAsText(function (value) {
     this.value_ = value;
     deferred.callback(this);
   }, this);
@@ -94,35 +90,31 @@ wtf.io.cff.parts.StringResourcePart.prototype.initFromBlobData = function(
   return deferred;
 };
 
-
 /**
  * @override
  */
-wtf.io.cff.parts.StringResourcePart.prototype.toBlobData = function() {
-  return this.value_ || '';
+wtf.io.cff.parts.StringResourcePart.prototype.toBlobData = function () {
+  return this.value_ || "";
 };
 
-
 /**
  * @override
  */
-wtf.io.cff.parts.StringResourcePart.prototype.initFromJsonObject = function(
-    value) {
-  this.value_ = value['value'];
+wtf.io.cff.parts.StringResourcePart.prototype.initFromJsonObject = function (
+  value
+) {
+  this.value_ = value["value"];
 };
 
-
 /**
  * @override
  */
-wtf.io.cff.parts.StringResourcePart.prototype.toJsonObject = function() {
+wtf.io.cff.parts.StringResourcePart.prototype.toJsonObject = function () {
   return {
-    'type': this.getType(),
-    'value': this.value_
+    type: this.getType(),
+    value: this.value_,
   };
 };
-
-
 
 /**
  * Binary embedded data resource part.
@@ -131,7 +123,7 @@ wtf.io.cff.parts.StringResourcePart.prototype.toJsonObject = function() {
  * @constructor
  * @extends {wtf.io.cff.parts.ResourcePart}
  */
-wtf.io.cff.parts.BinaryResourcePart = function(opt_value) {
+wtf.io.cff.parts.BinaryResourcePart = function (opt_value) {
   goog.base(this, wtf.io.cff.PartType.BINARY_RESOURCE);
 
   /**
@@ -141,36 +133,35 @@ wtf.io.cff.parts.BinaryResourcePart = function(opt_value) {
    */
   this.value_ = opt_value || null;
 };
-goog.inherits(wtf.io.cff.parts.BinaryResourcePart,
-    wtf.io.cff.parts.ResourcePart);
-
+goog.inherits(
+  wtf.io.cff.parts.BinaryResourcePart,
+  wtf.io.cff.parts.ResourcePart
+);
 
 /**
  * Gets the resource value.
  * @return {!(wtf.io.Blob|Blob|ArrayBufferView)} Resource value.
  */
-wtf.io.cff.parts.BinaryResourcePart.prototype.getValue = function() {
+wtf.io.cff.parts.BinaryResourcePart.prototype.getValue = function () {
   goog.asserts.assert(this.value_);
   return this.value_;
 };
-
 
 /**
  * Sets the resource value.
  * @param {!(wtf.io.Blob|Blob|ArrayBufferView)} value Resource value.
  */
-wtf.io.cff.parts.BinaryResourcePart.prototype.setValue = function(value) {
+wtf.io.cff.parts.BinaryResourcePart.prototype.setValue = function (value) {
   this.value_ = value;
 };
-
 
 /**
  * @override
  */
-wtf.io.cff.parts.BinaryResourcePart.prototype.initFromBlobData = function(
-    data) {
-  if (data instanceof Blob ||
-      wtf.io.Blob.isBlob(data)) {
+wtf.io.cff.parts.BinaryResourcePart.prototype.initFromBlobData = function (
+  data
+) {
+  if (data instanceof Blob || wtf.io.Blob.isBlob(data)) {
     this.value_ = data;
   } else {
     // NOTE: cloning so that we don't hang on to the full buffer forever.
@@ -179,42 +170,40 @@ wtf.io.cff.parts.BinaryResourcePart.prototype.initFromBlobData = function(
   }
 };
 
-
 /**
  * @override
  */
-wtf.io.cff.parts.BinaryResourcePart.prototype.toBlobData = function() {
+wtf.io.cff.parts.BinaryResourcePart.prototype.toBlobData = function () {
   goog.asserts.assert(this.value_);
   return this.value_;
 };
 
-
 /**
  * @override
  */
-wtf.io.cff.parts.BinaryResourcePart.prototype.initFromJsonObject = function(
-    value) {
-  switch (value['mode']) {
-    case 'base64':
-      var byteLength = value['byteLength'] || 0;
+wtf.io.cff.parts.BinaryResourcePart.prototype.initFromJsonObject = function (
+  value
+) {
+  switch (value["mode"]) {
+    case "base64":
+      var byteLength = value["byteLength"] || 0;
       var bytes = wtf.io.createByteArray(byteLength);
-      wtf.io.stringToByteArray(value['value'], bytes);
+      wtf.io.stringToByteArray(value["value"], bytes);
       this.value_ = bytes;
       break;
     default:
-      throw 'JSON mode event data is not supported yet.';
+      throw "JSON mode event data is not supported yet.";
   }
 };
-
 
 /**
  * @override
  */
-wtf.io.cff.parts.BinaryResourcePart.prototype.toJsonObject = function() {
+wtf.io.cff.parts.BinaryResourcePart.prototype.toJsonObject = function () {
   goog.asserts.assert(this.value_);
 
   if (this.value_ instanceof Blob) {
-    throw 'JSON encoding of blobs not yet done.';
+    throw "JSON encoding of blobs not yet done.";
   } else {
     // Base64 encode.
     var arrayBufferValue = /** @type {!ArrayBufferView} */ (this.value_);
@@ -223,10 +212,10 @@ wtf.io.cff.parts.BinaryResourcePart.prototype.toJsonObject = function() {
     }
     var base64bytes = wtf.io.byteArrayToString(arrayBufferValue);
     return {
-      'type': this.getType(),
-      'mode': 'base64',
-      'byteLength': arrayBufferValue.byteLength,
-      'value': base64bytes
+      type: this.getType(),
+      mode: "base64",
+      byteLength: arrayBufferValue.byteLength,
+      value: base64bytes,
     };
   }
 };

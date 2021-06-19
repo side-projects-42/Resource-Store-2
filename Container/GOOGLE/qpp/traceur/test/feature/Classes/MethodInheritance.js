@@ -24,9 +24,9 @@ assertNoOwnProperties(a);
 assertNoOwnProperties(b);
 assertNoOwnProperties(c);
 
-assertHasOwnProperty(pa, 'ma');
-assertLacksOwnProperty(pa, 'mb', 'mc');
-assertHasOwnProperty(pb, 'mb');
-assertLacksOwnProperty(pb, 'ma', 'mc');
-assertHasOwnProperty(pc, 'mc');
-assertLacksOwnProperty(pc, 'ma', 'mb');
+assertHasOwnProperty(pa, "ma");
+assertLacksOwnProperty(pa, "mb", "mc");
+assertHasOwnProperty(pb, "mb");
+assertLacksOwnProperty(pb, "ma", "mc");
+assertHasOwnProperty(pc, "mc");
+assertLacksOwnProperty(pc, "ma", "mb");

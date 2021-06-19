@@ -2,5 +2,5 @@
 
 var object = {
   // Default parameters are not allowed on setters.
-  set x(value = 42) {}
-}
+  set x(value = 42) {},
+};

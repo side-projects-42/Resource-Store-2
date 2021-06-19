@@ -11,25 +11,23 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.tracks.TrackInfoBar');
+goog.provide("wtf.app.tracks.TrackInfoBar");
 
-goog.require('goog.positioning.Corner');
-goog.require('goog.soy');
-goog.require('goog.ui.Component');
-goog.require('goog.ui.MenuItem');
-goog.require('goog.ui.PopupMenu');
-goog.require('wtf.app.tracks.StatisticsTableSource');
-goog.require('wtf.app.tracks.trackinfobar');
-goog.require('wtf.db.SortMode');
-goog.require('wtf.db.Unit');
-goog.require('wtf.events');
-goog.require('wtf.events.EventType');
-goog.require('wtf.events.KeyboardScope');
-goog.require('wtf.ui.ResizableControl');
-goog.require('wtf.ui.SearchControl');
-goog.require('wtf.ui.VirtualTable');
-
-
+goog.require("goog.positioning.Corner");
+goog.require("goog.soy");
+goog.require("goog.ui.Component");
+goog.require("goog.ui.MenuItem");
+goog.require("goog.ui.PopupMenu");
+goog.require("wtf.app.tracks.StatisticsTableSource");
+goog.require("wtf.app.tracks.trackinfobar");
+goog.require("wtf.db.SortMode");
+goog.require("wtf.db.Unit");
+goog.require("wtf.events");
+goog.require("wtf.events.EventType");
+goog.require("wtf.events.KeyboardScope");
+goog.require("wtf.ui.ResizableControl");
+goog.require("wtf.ui.SearchControl");
+goog.require("wtf.ui.VirtualTable");
 
 /**
  * TracksPanel infobar control.
@@ -39,14 +37,16 @@ goog.require('wtf.ui.VirtualTable');
  * @constructor
  * @extends {wtf.ui.ResizableControl}
  */
-wtf.app.tracks.TrackInfoBar = function(tracksPanel, parentElement) {
+wtf.app.tracks.TrackInfoBar = function (tracksPanel, parentElement) {
   var documentView = tracksPanel.getDocumentView();
   var dom = documentView.getDom();
   goog.base(
-      this,
-      wtf.ui.ResizableControl.Orientation.VERTICAL,
-      goog.getCssName('splitter'),
-      parentElement, dom);
+    this,
+    wtf.ui.ResizableControl.Orientation.VERTICAL,
+    goog.getCssName("splitter"),
+    parentElement,
+    dom
+  );
   this.setSizeFrom(wtf.ui.ResizableControl.SizeFrom.BOTTOM_RIGHT);
   this.setSplitterLimits(300, undefined);
 
@@ -65,7 +65,10 @@ wtf.app.tracks.TrackInfoBar = function(tracksPanel, parentElement) {
    */
   this.selection_ = docView.getSelection();
   this.selection_.addListener(
-      wtf.events.EventType.INVALIDATED, this.updateInfo_, this);
+    wtf.events.EventType.INVALIDATED,
+    this.updateInfo_,
+    this
+  );
 
   /**
    * Search text field.
@@ -73,9 +76,11 @@ wtf.app.tracks.TrackInfoBar = function(tracksPanel, parentElement) {
    * @private
    */
   this.searchControl_ = new wtf.ui.SearchControl(
-      this.getChildElement(goog.getCssName('searchBox')), dom);
+    this.getChildElement(goog.getCssName("searchBox")),
+    dom
+  );
   this.registerDisposable(this.searchControl_);
-  this.searchControl_.setPlaceholderText('Partial name or /regex/');
+  this.searchControl_.setPlaceholderText("Partial name or /regex/");
 
   /**
    * Results table.
@@ -83,7 +88,9 @@ wtf.app.tracks.TrackInfoBar = function(tracksPanel, parentElement) {
    * @private
    */
   this.table_ = new wtf.ui.VirtualTable(
-      this.getChildElement(goog.getCssName('results')), dom);
+    this.getChildElement(goog.getCssName("results")),
+    dom
+  );
   this.registerDisposable(this.table_);
 
   /**
@@ -107,13 +114,13 @@ wtf.app.tracks.TrackInfoBar = function(tracksPanel, parentElement) {
   switch (db.getUnits()) {
     default:
     case wtf.db.Unit.TIME_MILLISECONDS:
-      unitName = 'Time';
+      unitName = "Time";
       break;
     case wtf.db.Unit.SIZE_KILOBYTES:
-      unitName = 'Size';
+      unitName = "Size";
       break;
     case wtf.db.Unit.COUNT:
-      unitName = 'Value';
+      unitName = "Value";
       break;
   }
 
@@ -121,23 +128,44 @@ wtf.app.tracks.TrackInfoBar = function(tracksPanel, parentElement) {
   var menu = new goog.ui.PopupMenu(dom);
   this.registerDisposable(menu);
   menu.attach(
-      this.getChildElement(goog.getCssName('sortButton')),
-      goog.positioning.Corner.BOTTOM_LEFT);
+    this.getChildElement(goog.getCssName("sortButton")),
+    goog.positioning.Corner.BOTTOM_LEFT
+  );
   menu.setToggleMode(true);
-  menu.addChild(new goog.ui.MenuItem(
-      'Sort by Total ' + unitName, wtf.db.SortMode.TOTAL_TIME, dom), true);
-  menu.addChild(new goog.ui.MenuItem(
-      'Sort by Own ' + unitName, wtf.db.SortMode.OWN_TIME, dom), true);
-  menu.addChild(new goog.ui.MenuItem(
-      'Sort by Mean ' + unitName, wtf.db.SortMode.MEAN_TIME, dom), true);
-  menu.addChild(new goog.ui.MenuItem(
-      'Sort by Count', wtf.db.SortMode.COUNT, dom), true);
+  menu.addChild(
+    new goog.ui.MenuItem(
+      "Sort by Total " + unitName,
+      wtf.db.SortMode.TOTAL_TIME,
+      dom
+    ),
+    true
+  );
+  menu.addChild(
+    new goog.ui.MenuItem(
+      "Sort by Own " + unitName,
+      wtf.db.SortMode.OWN_TIME,
+      dom
+    ),
+    true
+  );
+  menu.addChild(
+    new goog.ui.MenuItem(
+      "Sort by Mean " + unitName,
+      wtf.db.SortMode.MEAN_TIME,
+      dom
+    ),
+    true
+  );
+  menu.addChild(
+    new goog.ui.MenuItem("Sort by Count", wtf.db.SortMode.COUNT, dom),
+    true
+  );
   menu.render();
   var eh = this.getHandler();
-  menu.forEachChild(function(item) {
+  menu.forEachChild(function (item) {
     item.setCheckable(true);
-    eh.listen(item, goog.ui.Component.EventType.ACTION, function(e) {
-      menu.forEachChild(function(otherItem) {
+    eh.listen(item, goog.ui.Component.EventType.ACTION, function (e) {
+      menu.forEachChild(function (otherItem) {
         otherItem.setChecked(false);
       });
       item.setChecked(true);
@@ -150,80 +178,99 @@ wtf.app.tracks.TrackInfoBar = function(tracksPanel, parentElement) {
 
   var commandManager = wtf.events.getCommandManager();
   commandManager.registerSimpleCommand(
-      'filter_events', function(source, target, filterString, only) {
-        if (only) {
-          // TODO(benvanik): escape other characters?
-          filterString =
-              '/^' +
-              filterString.replace(/([\.\$\-\*\+\[\]\(\)\{\}])/g, '\\$1') +
-              '$/';
-        }
-        var parsed = this.selection_.setFilterExpression(filterString);
-        this.searchControl_.toggleError(!parsed);
-        this.searchControl_.setValue(filterString);
-      }, this);
+    "filter_events",
+    function (source, target, filterString, only) {
+      if (only) {
+        // TODO(benvanik): escape other characters?
+        filterString =
+          "/^" +
+          filterString.replace(/([\.\$\-\*\+\[\]\(\)\{\}])/g, "\\$1") +
+          "$/";
+      }
+      var parsed = this.selection_.setFilterExpression(filterString);
+      this.searchControl_.toggleError(!parsed);
+      this.searchControl_.setValue(filterString);
+    },
+    this
+  );
 
   this.searchControl_.addListener(
-      wtf.events.EventType.INVALIDATED,
-      function(newValue, oldValue) {
-        commandManager.execute('filter_events', this, null, newValue);
-      }, this);
+    wtf.events.EventType.INVALIDATED,
+    function (newValue, oldValue) {
+      commandManager.execute("filter_events", this, null, newValue);
+    },
+    this
+  );
 
   // Setup keyboard shortcuts.
   var keyboard = wtf.events.getWindowKeyboard(dom);
   var keyboardScope = new wtf.events.KeyboardScope(keyboard);
   this.registerDisposable(keyboardScope);
-  keyboardScope.addShortcut('command+f', function() {
-    this.searchControl_.focus();
-  }, this);
-  keyboardScope.addShortcut('esc', function() {
-    commandManager.execute('filter_events', this, null, '');
-  }, this);
+  keyboardScope.addShortcut(
+    "command+f",
+    function () {
+      this.searchControl_.focus();
+    },
+    this
+  );
+  keyboardScope.addShortcut(
+    "esc",
+    function () {
+      commandManager.execute("filter_events", this, null, "");
+    },
+    this
+  );
 
   // Update on database change.
   // TODO(benvanik): avoid when streaming? make incremental?
-  db.addListener(wtf.events.EventType.INVALIDATED, function() {
-    this.updateInfo_();
-  }, this);
+  db.addListener(
+    wtf.events.EventType.INVALIDATED,
+    function () {
+      this.updateInfo_();
+    },
+    this
+  );
   this.updateInfo_();
 };
 goog.inherits(wtf.app.tracks.TrackInfoBar, wtf.ui.ResizableControl);
 
-
 /**
  * @override
  */
-wtf.app.tracks.TrackInfoBar.prototype.disposeInternal = function() {
+wtf.app.tracks.TrackInfoBar.prototype.disposeInternal = function () {
   var commandManager = wtf.events.getCommandManager();
-  commandManager.unregisterCommand('filter_events');
-  goog.base(this, 'disposeInternal');
+  commandManager.unregisterCommand("filter_events");
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * @override
  */
-wtf.app.tracks.TrackInfoBar.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
-      wtf.app.tracks.trackinfobar.control, undefined, undefined, dom));
+wtf.app.tracks.TrackInfoBar.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(
+      wtf.app.tracks.trackinfobar.control,
+      undefined,
+      undefined,
+      dom
+    )
+  );
 };
-
 
 /**
  * @override
  */
-wtf.app.tracks.TrackInfoBar.prototype.layoutInternal = function() {
-  goog.base(this, 'layoutInternal');
+wtf.app.tracks.TrackInfoBar.prototype.layoutInternal = function () {
+  goog.base(this, "layoutInternal");
   this.table_.layout();
 };
-
 
 /**
  * Updates information based on the current filter.
  * This is called each time the filter changes.
  * @private
  */
-wtf.app.tracks.TrackInfoBar.prototype.updateInfo_ = function() {
+wtf.app.tracks.TrackInfoBar.prototype.updateInfo_ = function () {
   // This will generate the stats on demand and may take some time.
   var table = this.selection_.getSelectionStatistics();
 

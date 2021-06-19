@@ -1,47 +1,44 @@
-import LineController from './controller.line';
+import LineController from "./controller.line";
 
-export default class ScatterController extends LineController {
+export default class ScatterController extends LineController {}
 
-}
-
-ScatterController.id = 'scatter';
+ScatterController.id = "scatter";
 
 /**
  * @type {any}
  */
 ScatterController.defaults = {
   showLine: false,
-  fill: false
+  fill: false,
 };
 
 /**
  * @type {any}
  */
 ScatterController.overrides = {
-
   interaction: {
-    mode: 'point'
+    mode: "point",
   },
 
   plugins: {
     tooltip: {
       callbacks: {
         title() {
-          return '';     // doesn't make sense for scatter since data are formatted as a point
+          return ""; // doesn't make sense for scatter since data are formatted as a point
         },
         label(item) {
-          return '(' + item.label + ', ' + item.formattedValue + ')';
-        }
-      }
-    }
+          return "(" + item.label + ", " + item.formattedValue + ")";
+        },
+      },
+    },
   },
 
   scales: {
     x: {
-      type: 'linear'
+      type: "linear",
     },
     y: {
-      type: 'linear'
-    }
-  }
+      type: "linear",
+    },
+  },
 };

@@ -1,17 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>CodeMirror: LiveScript mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="livescript.js"></script>
-    <style>.CodeMirror {font-size: 80%;border-top: 1px solid silver; border-bottom: 1px solid silver;}</style>
-    <link rel="stylesheet" href="../../doc/docs.css">
-    <link rel="stylesheet" href="../../theme/solarized.css">
+    <style>
+      .CodeMirror {
+        font-size: 80%;
+        border-top: 1px solid silver;
+        border-bottom: 1px solid silver;
+      }
+    </style>
+    <link rel="stylesheet" href="../../doc/docs.css" />
+    <link rel="stylesheet" href="../../theme/solarized.css" />
   </head>
   <body>
     <h1>CodeMirror: LiveScript mode</h1>
-    <form><textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
 # LiveScript mode for CodeMirror
 # The following script, prelude.ls, is used to
 # demonstrate LiveScript mode for CodeMirror.
@@ -430,17 +437,22 @@ export installPrelude = !(target) ->
     target <<< target.prelude.isInstalled = true
 
 export prelude = out$
-</textarea></form>
+</textarea
+      >
+    </form>
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         theme: "solarized light",
-        lineNumbers: true
+        lineNumbers: true,
       });
     </script>
 
     <p><strong>MIME types defined:</strong> <code>text/x-livescript</code>.</p>
 
-    <p>The LiveScript mode was written by Kenneth Bentley (<a href="LICENSE">license</a>).</p>
-
+    <p>
+      The LiveScript mode was written by Kenneth Bentley (<a href="LICENSE"
+        >license</a
+      >).
+    </p>
   </body>
 </html>

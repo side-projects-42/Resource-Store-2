@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.remote.Client');
+goog.provide("wtf.remote.Client");
 
-goog.require('goog.Disposable');
-goog.require('goog.asserts');
-goog.require('wtf.data.ContextInfo');
-goog.require('wtf.io.Blob');
-goog.require('wtf.trace');
-goog.require('wtf.trace.ISessionListener');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.asserts");
+goog.require("wtf.data.ContextInfo");
+goog.require("wtf.io.Blob");
+goog.require("wtf.trace");
+goog.require("wtf.trace.ISessionListener");
 
 /**
  * Remote control client.
@@ -32,7 +30,7 @@ goog.require('wtf.trace.ISessionListener');
  * @extends {goog.Disposable}
  * @implements {wtf.trace.ISessionListener}
  */
-wtf.remote.Client = function(traceManager, options) {
+wtf.remote.Client = function (traceManager, options) {
   goog.base(this);
 
   /**
@@ -63,61 +61,59 @@ wtf.remote.Client = function(traceManager, options) {
   // TODO(benvanik): add DOM status box
 
   // Start connecting.
-  var uri = options.getOptionalString('wtf.remote.target');
+  var uri = options.getOptionalString("wtf.remote.target");
   goog.asserts.assert(uri);
   if (!uri) {
-    throw new Error('wtf.remote.target must be specified');
+    throw new Error("wtf.remote.target must be specified");
   }
   this.connect_(uri);
 };
 goog.inherits(wtf.remote.Client, goog.Disposable);
 
-
 /**
  * @override
  */
-wtf.remote.Client.prototype.disposeInternal = function() {
+wtf.remote.Client.prototype.disposeInternal = function () {
   // TODO(benvanik): remove DOM status box
 
   // Close socket.
   this.disconnect_();
 
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Starts connecting to a remote host.
  * @param {string} uri Websocket URI.
  * @private
  */
-wtf.remote.Client.prototype.connect_ = function(uri) {
+wtf.remote.Client.prototype.connect_ = function (uri) {
   goog.asserts.assert(!this.socket_);
 
   // Create the socket.
   // TODO(benvanik): create raw once there is a WebSocketProvider.
-  var socket = this.socket_ = new WebSocket(uri);
-  socket.binaryType = 'arraybuffer';
+  var socket = (this.socket_ = new WebSocket(uri));
+  socket.binaryType = "arraybuffer";
 
   // We avoid using EventHandler so that we can be sure we aren't instrumented.
   var self = this;
 
-  socket.onopen = wtf.trace.ignoreListener(function() {
+  socket.onopen = wtf.trace.ignoreListener(function () {
     // Grab context info.
     var contextInfoJson = wtf.data.ContextInfo.detect().serialize();
 
     // Setup commands list.
     var commandsJson = [
       {
-        'name': 'clear_snapshot',
-        'title': 'Clear Snapshot',
-        'tooltip': 'Reset snapshot data.'
+        name: "clear_snapshot",
+        title: "Clear Snapshot",
+        tooltip: "Reset snapshot data.",
       },
       {
-        'name': 'save_snapshot',
-        'title': 'Save Snapshot',
-        'tooltip': 'Save snapshot data to a file.'
-      }
+        name: "save_snapshot",
+        title: "Save Snapshot",
+        tooltip: "Save snapshot data to a file.",
+      },
     ];
     // TODO(benvanik): add provider buttons.
     //this.providerButtons_
@@ -125,41 +121,40 @@ wtf.remote.Client.prototype.connect_ = function(uri) {
     // Send over a hello packet to let the server know who we are and what
     // we support.
     var packet = {
-      'command': 'hello',
-      'client_type': 'tracer',
-      'context_info': contextInfoJson,
-      'commands': commandsJson
+      command: "hello",
+      client_type: "tracer",
+      context_info: contextInfoJson,
+      commands: commandsJson,
     };
     socket.send(goog.global.JSON.stringify(packet));
   });
 
-  socket.onerror = wtf.trace.ignoreListener(function(error) {
-    goog.global.console.log('remote socket error', error);
+  socket.onerror = wtf.trace.ignoreListener(function (error) {
+    goog.global.console.log("remote socket error", error);
   });
 
-  socket.onclose = wtf.trace.ignoreListener(function(e) {
+  socket.onclose = wtf.trace.ignoreListener(function (e) {
     goog.dispose(self);
   });
 
-  socket.onmessage = wtf.trace.ignoreListener(function(e) {
+  socket.onmessage = wtf.trace.ignoreListener(function (e) {
     var data = /** @type {Object} */ (goog.global.JSON.parse(e.data));
     if (!data) {
       return;
     }
-    switch (data['command']) {
-      case 'execute':
+    switch (data["command"]) {
+      case "execute":
         self.executeCommand_(data);
         break;
     }
   });
 };
 
-
 /**
  * Disconnects and cleans up the current socket, if any.
  * @private
  */
-wtf.remote.Client.prototype.disconnect_ = function() {
+wtf.remote.Client.prototype.disconnect_ = function () {
   if (!this.socket_) {
     return;
   }
@@ -174,33 +169,32 @@ wtf.remote.Client.prototype.disconnect_ = function() {
   socket.onmessage = null;
 };
 
-
 /**
  * Executes a command from a remote controller.
  * @param {!Object} data JSON parsed command object.
  * @private
  */
-wtf.remote.Client.prototype.executeCommand_ = function(data) {
+wtf.remote.Client.prototype.executeCommand_ = function (data) {
   var response = {
-    'command': 'response',
-    'id': data['source_id'],
-    'req_id': data['req_id'],
-    'name': data['name']
+    command: "response",
+    id: data["source_id"],
+    req_id: data["req_id"],
+    name: data["name"],
   };
   var responseBuffers = [];
 
-  switch (data['name']) {
-    case 'clear_snapshot':
+  switch (data["name"]) {
+    case "clear_snapshot":
       wtf.trace.reset();
       break;
-    case 'save_snapshot':
+    case "save_snapshot":
       // TODO(benvanik): use snapshotAll (or some future API).
       wtf.trace.snapshot(responseBuffers);
       for (var n = 0; n < responseBuffers.length; n++) {
         responseBuffers[n] = wtf.io.Blob.toNative(responseBuffers[n]);
       }
-      response['filename'] = wtf.trace.getTraceFilename();
-      response['mimeType'] = 'application/x-extension-wtf-trace';
+      response["filename"] = wtf.trace.getTraceFilename();
+      response["mimeType"] = "application/x-extension-wtf-trace";
       break;
     default:
       // Not a built-in - check provider buttons.
@@ -209,7 +203,7 @@ wtf.remote.Client.prototype.executeCommand_ = function(data) {
   }
 
   // Send the JSON response first.
-  response['buffer_count'] = responseBuffers.length;
+  response["buffer_count"] = responseBuffers.length;
   this.socket_.send(goog.global.JSON.stringify(response));
 
   // If there are any buffers, send each in its own packet.
@@ -219,28 +213,24 @@ wtf.remote.Client.prototype.executeCommand_ = function(data) {
   }
 };
 
+/**
+ * @override
+ */
+wtf.remote.Client.prototype.sessionStarted = function (session) {
+  //
+};
 
 /**
  * @override
  */
-wtf.remote.Client.prototype.sessionStarted = function(session) {
+wtf.remote.Client.prototype.sessionStopped = function (session) {
   //
 };
-
-
-/**
- * @override
- */
-wtf.remote.Client.prototype.sessionStopped = function(session) {
-  //
-};
-
 
 /**
  * @override
  */
 wtf.remote.Client.prototype.requestSnapshots = goog.nullFunction;
-
 
 /**
  * @override

@@ -26,9 +26,9 @@ Triggered for each pull-request. Calculates the compressed size compared to mast
 
 Publishing a GitHub release off the automated release process:
 
-* build of the `dist/*.js` files
-* `chartjs-plugin-zoom-{version}.tgz` package is generated, containing dist files and examples
-* `dist/*.js` and `chartjs-plugin-zoom-{version}.tgz` are attached to the GitHub release tag
-* a new npm package is published on [npmjs](https://www.npmjs.com/package/chartjs-plugin-zoom)
+- build of the `dist/*.js` files
+- `chartjs-plugin-zoom-{version}.tgz` package is generated, containing dist files and examples
+- `dist/*.js` and `chartjs-plugin-zoom-{version}.tgz` are attached to the GitHub release tag
+- a new npm package is published on [npmjs](https://www.npmjs.com/package/chartjs-plugin-zoom)
 
 Finally, [cdnjs](https://cdnjs.com/libraries/chartjs-plugin-zoom) is automatically updated from the npm release.

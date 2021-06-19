@@ -11,18 +11,17 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.EventDataEntry');
-goog.provide('wtf.db.EventStatistics');
-goog.provide('wtf.db.InstanceEventDataEntry');
-goog.provide('wtf.db.ScopeEventDataEntry');
-goog.provide('wtf.db.SortMode');
+goog.provide("wtf.db.EventDataEntry");
+goog.provide("wtf.db.EventStatistics");
+goog.provide("wtf.db.InstanceEventDataEntry");
+goog.provide("wtf.db.ScopeEventDataEntry");
+goog.provide("wtf.db.SortMode");
 
-goog.require('goog.Disposable');
-goog.require('goog.object');
-goog.require('wtf.data.EventClass');
-goog.require('wtf.data.EventFlag');
-goog.require('wtf.events.EventType');
-
+goog.require("goog.Disposable");
+goog.require("goog.object");
+goog.require("wtf.data.EventClass");
+goog.require("wtf.data.EventFlag");
+goog.require("wtf.events.EventType");
 
 /**
  * Sorting mode to use when retrieving entries.
@@ -33,30 +32,15 @@ wtf.db.SortMode = {
   COUNT: 1,
   TOTAL_TIME: 2,
   MEAN_TIME: 3,
-  OWN_TIME: 4
+  OWN_TIME: 4,
 };
 
-
-goog.exportSymbol(
-    'wtf.db.SortMode',
-    wtf.db.SortMode);
-goog.exportProperty(
-    wtf.db.SortMode, 'ANY',
-    wtf.db.SortMode.ANY);
-goog.exportProperty(
-    wtf.db.SortMode, 'COUNT',
-    wtf.db.SortMode.COUNT);
-goog.exportProperty(
-    wtf.db.SortMode, 'TOTAL_TIME',
-    wtf.db.SortMode.TOTAL_TIME);
-goog.exportProperty(
-    wtf.db.SortMode, 'MEAN_TIME',
-    wtf.db.SortMode.MEAN_TIME);
-goog.exportProperty(
-    wtf.db.SortMode, 'OWN_TIME',
-    wtf.db.SortMode.OWN_TIME);
-
-
+goog.exportSymbol("wtf.db.SortMode", wtf.db.SortMode);
+goog.exportProperty(wtf.db.SortMode, "ANY", wtf.db.SortMode.ANY);
+goog.exportProperty(wtf.db.SortMode, "COUNT", wtf.db.SortMode.COUNT);
+goog.exportProperty(wtf.db.SortMode, "TOTAL_TIME", wtf.db.SortMode.TOTAL_TIME);
+goog.exportProperty(wtf.db.SortMode, "MEAN_TIME", wtf.db.SortMode.MEAN_TIME);
+goog.exportProperty(wtf.db.SortMode, "OWN_TIME", wtf.db.SortMode.OWN_TIME);
 
 /**
  * Event data table.
@@ -66,7 +50,7 @@ goog.exportProperty(
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.db.EventStatistics = function(db) {
+wtf.db.EventStatistics = function (db) {
   goog.base(this);
 
   /**
@@ -94,13 +78,16 @@ wtf.db.EventStatistics = function(db) {
    */
   this.selectedTable_ = null;
 
-  db.addListener(wtf.events.EventType.INVALIDATED, function() {
-    this.fullTable_ = null;
-    this.selectedTable_ = null;
-  }, this);
+  db.addListener(
+    wtf.events.EventType.INVALIDATED,
+    function () {
+      this.fullTable_ = null;
+      this.selectedTable_ = null;
+    },
+    this
+  );
 };
 goog.inherits(wtf.db.EventStatistics, goog.Disposable);
-
 
 /**
  * Gets a table covering the requested time range or, if the times are omitted,
@@ -110,31 +97,40 @@ goog.inherits(wtf.db.EventStatistics, goog.Disposable);
  * @return {!wtf.db.EventStatistics.Table} A table covering the requested time
  *     range.
  */
-wtf.db.EventStatistics.prototype.getTable = function(
-    opt_startTime, opt_endTime) {
+wtf.db.EventStatistics.prototype.getTable = function (
+  opt_startTime,
+  opt_endTime
+) {
   var startTime = goog.isDef(opt_startTime) ? opt_startTime : -Number.MAX_VALUE;
   var endTime = goog.isDef(opt_endTime) ? opt_endTime : Number.MAX_VALUE;
   if (startTime == -Number.MAX_VALUE && endTime == Number.MAX_VALUE) {
     if (!this.fullTable_) {
       this.fullTable_ = new wtf.db.EventStatistics.Table(
-          this.db_, -Number.MAX_VALUE, Number.MAX_VALUE);
+        this.db_,
+        -Number.MAX_VALUE,
+        Number.MAX_VALUE
+      );
       this.fullTable_.rebuild();
     }
     return this.fullTable_;
   } else {
     if (this.selectedTable_) {
-      if (this.selectedTable_.getStartTime() == startTime &&
-          this.selectedTable_.getEndTime() == endTime) {
+      if (
+        this.selectedTable_.getStartTime() == startTime &&
+        this.selectedTable_.getEndTime() == endTime
+      ) {
         return this.selectedTable_;
       }
     }
     this.selectedTable_ = new wtf.db.EventStatistics.Table(
-        this.db_, startTime, endTime);
+      this.db_,
+      startTime,
+      endTime
+    );
     this.selectedTable_.rebuild();
     return this.selectedTable_;
   }
 };
-
 
 /**
  * Gets all of the event type names found in all of the given tables.
@@ -142,14 +138,19 @@ wtf.db.EventStatistics.prototype.getTable = function(
  * @param {wtf.data.EventClass=} opt_eventClass Class to limit to.
  * @return {!Array.<string>} All event type names.
  */
-wtf.db.EventStatistics.getAllEventTypeNames = function(tables, opt_eventClass) {
+wtf.db.EventStatistics.getAllEventTypeNames = function (
+  tables,
+  opt_eventClass
+) {
   var names = {};
   for (var n = 0; n < tables.length; n++) {
     var table = tables[n];
     for (var m = 0; m < table.list_.length; m++) {
       var eventType = table.list_[m].eventType;
-      if (opt_eventClass === undefined ||
-          eventType.eventClass == opt_eventClass) {
+      if (
+        opt_eventClass === undefined ||
+        eventType.eventClass == opt_eventClass
+      ) {
         names[eventType.name] = true;
       }
     }
@@ -157,18 +158,16 @@ wtf.db.EventStatistics.getAllEventTypeNames = function(tables, opt_eventClass) {
   return goog.object.getKeys(names);
 };
 
-
-goog.exportSymbol(
-    'wtf.db.EventStatistics',
-    wtf.db.EventStatistics);
+goog.exportSymbol("wtf.db.EventStatistics", wtf.db.EventStatistics);
 goog.exportProperty(
-    wtf.db.EventStatistics.prototype, 'getTable',
-    wtf.db.EventStatistics.prototype.getTable);
+  wtf.db.EventStatistics.prototype,
+  "getTable",
+  wtf.db.EventStatistics.prototype.getTable
+);
 goog.exportSymbol(
-    'wtf.db.EventStatistics.getAllEventTypeNames',
-    wtf.db.EventStatistics.getAllEventTypeNames);
-
-
+  "wtf.db.EventStatistics.getAllEventTypeNames",
+  wtf.db.EventStatistics.getAllEventTypeNames
+);
 
 /**
  * A result table generated from an event statistics build.
@@ -179,7 +178,7 @@ goog.exportSymbol(
  * @param {number} endTime Ending time.
  * @constructor
  */
-wtf.db.EventStatistics.Table = function(db, startTime, endTime) {
+wtf.db.EventStatistics.Table = function (db, startTime, endTime) {
   /**
    * Event database.
    * @type {!wtf.db.Database}
@@ -231,13 +230,12 @@ wtf.db.EventStatistics.Table = function(db, startTime, endTime) {
   this.listSortMode_ = wtf.db.SortMode.ANY;
 };
 
-
 /**
  * Rebuilds from the database.
  * @param {wtf.db.Filter=} opt_filter Filter.
  * @protected
  */
-wtf.db.EventStatistics.Table.prototype.rebuild = function(opt_filter) {
+wtf.db.EventStatistics.Table.prototype.rebuild = function (opt_filter) {
   this.eventCount_ = 0;
   var tableById = {};
   var list = [];
@@ -254,8 +252,10 @@ wtf.db.EventStatistics.Table.prototype.rebuild = function(opt_filter) {
     var type = eventTypeList[n];
 
     // Skip system events/etc.
-    if (type.flags & wtf.data.EventFlag.INTERNAL ||
-        type.flags & wtf.data.EventFlag.BUILTIN) {
+    if (
+      type.flags & wtf.data.EventFlag.INTERNAL ||
+      type.flags & wtf.data.EventFlag.BUILTIN
+    ) {
       continue;
     }
 
@@ -307,53 +307,49 @@ wtf.db.EventStatistics.Table.prototype.rebuild = function(opt_filter) {
   this.listSortMode_ = wtf.db.SortMode.ANY;
 };
 
-
 /**
  * Gets the time the table starts at.
  * @return {number} Starting time. May be MIN_VALUE to indicate a min.
  */
-wtf.db.EventStatistics.Table.prototype.getStartTime = function() {
+wtf.db.EventStatistics.Table.prototype.getStartTime = function () {
   return this.startTime_;
 };
-
 
 /**
  * Gets the time the table ends at.
  * @return {number} Ending time. May be MAX_VALUE to indicate a max.
  */
-wtf.db.EventStatistics.Table.prototype.getEndTime = function() {
+wtf.db.EventStatistics.Table.prototype.getEndTime = function () {
   return this.endTime_;
 };
-
 
 /**
  * Gets the total number of events included in the table.
  * @return {number} Event count.
  */
-wtf.db.EventStatistics.Table.prototype.getEventCount = function() {
+wtf.db.EventStatistics.Table.prototype.getEventCount = function () {
   return this.eventCount_;
 };
-
 
 /**
  * Gets all entries.
  * The result should not be modified.
  * @return {!Array.<!wtf.db.EventDataEntry>}
  */
-wtf.db.EventStatistics.Table.prototype.getEntries = function() {
+wtf.db.EventStatistics.Table.prototype.getEntries = function () {
   return this.list_;
 };
-
 
 /**
  * Gets the entry for an event type, if it exists.
  * @param {string} eventName Event name.
  * @return {wtf.db.EventDataEntry} Event entry, if it exists.
  */
-wtf.db.EventStatistics.Table.prototype.getEventTypeEntry = function(eventName) {
+wtf.db.EventStatistics.Table.prototype.getEventTypeEntry = function (
+  eventName
+) {
   return this.table_[eventName] || null;
 };
-
 
 /**
  * Gets all entries from the table of the given type.
@@ -361,8 +357,9 @@ wtf.db.EventStatistics.Table.prototype.getEventTypeEntry = function(eventName) {
  * @return {!Object.<!wtf.db.EventDataEntry>} All entries of the given
  *     class, keyed by event type name.
  */
-wtf.db.EventStatistics.Table.prototype.getEntriesByClass = function(
-    eventClass) {
+wtf.db.EventStatistics.Table.prototype.getEntriesByClass = function (
+  eventClass
+) {
   var result = {};
   for (var n = 0; n < this.list_.length; n++) {
     var entry = this.list_[n];
@@ -373,7 +370,6 @@ wtf.db.EventStatistics.Table.prototype.getEntriesByClass = function(
   return result;
 };
 
-
 /**
  * Enumerates all event type entries in the data table.
  * @param {function(this: T, !wtf.db.EventDataEntry)} callback
@@ -382,22 +378,27 @@ wtf.db.EventStatistics.Table.prototype.getEntriesByClass = function(
  * @param {wtf.db.SortMode=} opt_sortMode Sort mode.
  * @template T
  */
-wtf.db.EventStatistics.Table.prototype.forEach = function(
-    callback, opt_scope, opt_sortMode) {
+wtf.db.EventStatistics.Table.prototype.forEach = function (
+  callback,
+  opt_scope,
+  opt_sortMode
+) {
   // Sort before enumerating if the sort order does not match the cached
   // value.
   if (opt_sortMode && this.listSortMode_ != opt_sortMode) {
     this.listSortMode_ = opt_sortMode;
     switch (this.listSortMode_) {
       case wtf.db.SortMode.COUNT:
-        this.list_.sort(function(a, b) {
+        this.list_.sort(function (a, b) {
           return b.count - a.count;
         });
         break;
       case wtf.db.SortMode.TOTAL_TIME:
-        this.list_.sort(function(a, b) {
-          if (a instanceof wtf.db.ScopeEventDataEntry &&
-              b instanceof wtf.db.ScopeEventDataEntry) {
+        this.list_.sort(function (a, b) {
+          if (
+            a instanceof wtf.db.ScopeEventDataEntry &&
+            b instanceof wtf.db.ScopeEventDataEntry
+          ) {
             return b.totalTime_ - a.totalTime_;
           } else if (a instanceof wtf.db.ScopeEventDataEntry) {
             return -1;
@@ -409,9 +410,11 @@ wtf.db.EventStatistics.Table.prototype.forEach = function(
         });
         break;
       case wtf.db.SortMode.MEAN_TIME:
-        this.list_.sort(function(a, b) {
-          if (a instanceof wtf.db.ScopeEventDataEntry &&
-              b instanceof wtf.db.ScopeEventDataEntry) {
+        this.list_.sort(function (a, b) {
+          if (
+            a instanceof wtf.db.ScopeEventDataEntry &&
+            b instanceof wtf.db.ScopeEventDataEntry
+          ) {
             return b.getMeanTime() - a.getMeanTime();
           } else if (a instanceof wtf.db.ScopeEventDataEntry) {
             return -1;
@@ -423,9 +426,11 @@ wtf.db.EventStatistics.Table.prototype.forEach = function(
         });
         break;
       case wtf.db.SortMode.OWN_TIME:
-        this.list_.sort(function(a, b) {
-          if (a instanceof wtf.db.ScopeEventDataEntry &&
-              b instanceof wtf.db.ScopeEventDataEntry) {
+        this.list_.sort(function (a, b) {
+          if (
+            a instanceof wtf.db.ScopeEventDataEntry &&
+            b instanceof wtf.db.ScopeEventDataEntry
+          ) {
             return b.ownTime_ - a.ownTime_;
           } else if (a instanceof wtf.db.ScopeEventDataEntry) {
             return -1;
@@ -444,19 +449,21 @@ wtf.db.EventStatistics.Table.prototype.forEach = function(
   }
 };
 
-
 /**
  * Filters the event entries in the table based on the given filter.
  * @param {!wtf.db.Filter} filter Filter.
  * @return {!wtf.db.EventStatistics.Table} New table.
  */
-wtf.db.EventStatistics.Table.prototype.filter = function(filter) {
+wtf.db.EventStatistics.Table.prototype.filter = function (filter) {
   if (!filter.isActive()) {
     return this;
   }
 
   var newTable = new wtf.db.EventStatistics.Table(
-      this.db_, this.startTime_, this.endTime_);
+    this.db_,
+    this.startTime_,
+    this.endTime_
+  );
 
   if (filter.getArgumentFilter()) {
     // Slow path of building a new table by scanning all events.
@@ -479,34 +486,43 @@ wtf.db.EventStatistics.Table.prototype.filter = function(filter) {
   return newTable;
 };
 
-
 goog.exportProperty(
-    wtf.db.EventStatistics.Table.prototype, 'getEventCount',
-    wtf.db.EventStatistics.Table.prototype.getEventCount);
+  wtf.db.EventStatistics.Table.prototype,
+  "getEventCount",
+  wtf.db.EventStatistics.Table.prototype.getEventCount
+);
 goog.exportProperty(
-    wtf.db.EventStatistics.Table.prototype, 'getEntries',
-    wtf.db.EventStatistics.Table.prototype.getEntries);
+  wtf.db.EventStatistics.Table.prototype,
+  "getEntries",
+  wtf.db.EventStatistics.Table.prototype.getEntries
+);
 goog.exportProperty(
-    wtf.db.EventStatistics.Table.prototype, 'getEventTypeEntry',
-    wtf.db.EventStatistics.Table.prototype.getEventTypeEntry);
+  wtf.db.EventStatistics.Table.prototype,
+  "getEventTypeEntry",
+  wtf.db.EventStatistics.Table.prototype.getEventTypeEntry
+);
 goog.exportProperty(
-    wtf.db.EventStatistics.Table.prototype, 'getEntriesByClass',
-    wtf.db.EventStatistics.Table.prototype.getEntriesByClass);
+  wtf.db.EventStatistics.Table.prototype,
+  "getEntriesByClass",
+  wtf.db.EventStatistics.Table.prototype.getEntriesByClass
+);
 goog.exportProperty(
-    wtf.db.EventStatistics.Table.prototype, 'forEach',
-    wtf.db.EventStatistics.Table.prototype.forEach);
+  wtf.db.EventStatistics.Table.prototype,
+  "forEach",
+  wtf.db.EventStatistics.Table.prototype.forEach
+);
 goog.exportProperty(
-    wtf.db.EventStatistics.Table.prototype, 'filter',
-    wtf.db.EventStatistics.Table.prototype.filter);
-
-
+  wtf.db.EventStatistics.Table.prototype,
+  "filter",
+  wtf.db.EventStatistics.Table.prototype.filter
+);
 
 /**
  * Abstract base type for entries in the {@see wtf.db.EventStatistics}.
  * @param {!wtf.db.EventType} eventType Event type.
  * @constructor
  */
-wtf.db.EventDataEntry = function(eventType) {
+wtf.db.EventDataEntry = function (eventType) {
   /**
    * Event type.
    * @type {!wtf.db.EventType}
@@ -522,56 +538,53 @@ wtf.db.EventDataEntry = function(eventType) {
   this.count = 0;
 };
 
-
 /**
  * Appends an event to the entry.
  * @param {!wtf.db.EventIterator} it Event.
  */
 wtf.db.EventDataEntry.prototype.appendEvent = goog.abstractMethod;
 
-
 /**
  * Gets the event type this entry describes.
  * @return {!wtf.db.EventType} Event type.
  */
-wtf.db.EventDataEntry.prototype.getEventType = function() {
+wtf.db.EventDataEntry.prototype.getEventType = function () {
   return this.eventType;
 };
-
 
 /**
  * Gets the total number of events encountered.
  * @return {number} Event count.
  */
-wtf.db.EventDataEntry.prototype.getCount = function() {
+wtf.db.EventDataEntry.prototype.getCount = function () {
   return this.count;
 };
-
 
 /**
  * Gets the frequency of the events as a measure of instances/sec.
  * @return {number} Instances/second.
  */
-wtf.db.EventDataEntry.prototype.getFrequency = function() {
+wtf.db.EventDataEntry.prototype.getFrequency = function () {
   // TODO(benvanik): compute frequency of events.
   return 0;
 };
 
-
-goog.exportSymbol(
-    'wtf.db.EventDataEntry',
-    wtf.db.EventDataEntry);
+goog.exportSymbol("wtf.db.EventDataEntry", wtf.db.EventDataEntry);
 goog.exportProperty(
-    wtf.db.EventDataEntry.prototype, 'getEventType',
-    wtf.db.EventDataEntry.prototype.getEventType);
+  wtf.db.EventDataEntry.prototype,
+  "getEventType",
+  wtf.db.EventDataEntry.prototype.getEventType
+);
 goog.exportProperty(
-    wtf.db.EventDataEntry.prototype, 'getCount',
-    wtf.db.EventDataEntry.prototype.getCount);
+  wtf.db.EventDataEntry.prototype,
+  "getCount",
+  wtf.db.EventDataEntry.prototype.getCount
+);
 goog.exportProperty(
-    wtf.db.EventDataEntry.prototype, 'getFrequency',
-    wtf.db.EventDataEntry.prototype.getFrequency);
-
-
+  wtf.db.EventDataEntry.prototype,
+  "getFrequency",
+  wtf.db.EventDataEntry.prototype.getFrequency
+);
 
 /**
  * An entry in the {@see wtf.db.EventStatistics} describing scope
@@ -580,7 +593,7 @@ goog.exportProperty(
  * @constructor
  * @extends {wtf.db.EventDataEntry}
  */
-wtf.db.ScopeEventDataEntry = function(eventType) {
+wtf.db.ScopeEventDataEntry = function (eventType) {
   goog.base(this, eventType);
 
   /**
@@ -613,11 +626,10 @@ wtf.db.ScopeEventDataEntry = function(eventType) {
 };
 goog.inherits(wtf.db.ScopeEventDataEntry, wtf.db.EventDataEntry);
 
-
 /**
  * @override
  */
-wtf.db.ScopeEventDataEntry.prototype.appendEvent = function(it) {
+wtf.db.ScopeEventDataEntry.prototype.appendEvent = function (it) {
   if (!it.getEndTime()) {
     return;
   }
@@ -636,41 +648,37 @@ wtf.db.ScopeEventDataEntry.prototype.appendEvent = function(it) {
   this.buckets_[bucketIndex]++;
 };
 
-
 /**
  * Gets the total time spent within all scopes of this type, including
  * system time.
  * @return {number} Total time.
  */
-wtf.db.ScopeEventDataEntry.prototype.getTotalTime = function() {
+wtf.db.ScopeEventDataEntry.prototype.getTotalTime = function () {
   return this.totalTime_;
 };
-
 
 /**
  * Gets the total time spent within all scopes of this type, excluding children.
  * @return {number} Total time.
  */
-wtf.db.ScopeEventDataEntry.prototype.getOwnTime = function() {
+wtf.db.ScopeEventDataEntry.prototype.getOwnTime = function () {
   return this.ownTime_;
 };
-
 
 /**
  * Gets the total time spent within all scopes of this type, excluding
  * system time.
  * @return {number} Total time.
  */
-wtf.db.ScopeEventDataEntry.prototype.getUserTime = function() {
+wtf.db.ScopeEventDataEntry.prototype.getUserTime = function () {
   return this.userTime_;
 };
-
 
 /**
  * Gets the mean time of scopes of this type.
  * @return {number} Average mean time.
  */
-wtf.db.ScopeEventDataEntry.prototype.getMeanTime = function() {
+wtf.db.ScopeEventDataEntry.prototype.getMeanTime = function () {
   if (this.count) {
     if (this.eventType.flags & wtf.data.EventFlag.SYSTEM_TIME) {
       return this.totalTime_ / this.count;
@@ -682,37 +690,41 @@ wtf.db.ScopeEventDataEntry.prototype.getMeanTime = function() {
   }
 };
 
-
 /**
  * Gets the distribution of the events over 0-1s.
  * Any event that ran longer than 1s will be in the last bucket.
  * @return {!Uint32Array} Distribution.
  */
-wtf.db.ScopeEventDataEntry.prototype.getDistribution = function() {
+wtf.db.ScopeEventDataEntry.prototype.getDistribution = function () {
   return this.buckets_;
 };
 
-
-goog.exportSymbol(
-    'wtf.db.ScopeEventDataEntry',
-    wtf.db.ScopeEventDataEntry);
+goog.exportSymbol("wtf.db.ScopeEventDataEntry", wtf.db.ScopeEventDataEntry);
 goog.exportProperty(
-    wtf.db.ScopeEventDataEntry.prototype, 'getTotalTime',
-    wtf.db.ScopeEventDataEntry.prototype.getTotalTime);
+  wtf.db.ScopeEventDataEntry.prototype,
+  "getTotalTime",
+  wtf.db.ScopeEventDataEntry.prototype.getTotalTime
+);
 goog.exportProperty(
-    wtf.db.ScopeEventDataEntry.prototype, 'getOwnTime',
-    wtf.db.ScopeEventDataEntry.prototype.getOwnTime);
+  wtf.db.ScopeEventDataEntry.prototype,
+  "getOwnTime",
+  wtf.db.ScopeEventDataEntry.prototype.getOwnTime
+);
 goog.exportProperty(
-    wtf.db.ScopeEventDataEntry.prototype, 'getUserTime',
-    wtf.db.ScopeEventDataEntry.prototype.getUserTime);
+  wtf.db.ScopeEventDataEntry.prototype,
+  "getUserTime",
+  wtf.db.ScopeEventDataEntry.prototype.getUserTime
+);
 goog.exportProperty(
-    wtf.db.ScopeEventDataEntry.prototype, 'getMeanTime',
-    wtf.db.ScopeEventDataEntry.prototype.getMeanTime);
+  wtf.db.ScopeEventDataEntry.prototype,
+  "getMeanTime",
+  wtf.db.ScopeEventDataEntry.prototype.getMeanTime
+);
 goog.exportProperty(
-    wtf.db.ScopeEventDataEntry.prototype, 'getDistribution',
-    wtf.db.ScopeEventDataEntry.prototype.getDistribution);
-
-
+  wtf.db.ScopeEventDataEntry.prototype,
+  "getDistribution",
+  wtf.db.ScopeEventDataEntry.prototype.getDistribution
+);
 
 /**
  * An entry in the {@see wtf.db.EventStatistics} describing instance
@@ -721,20 +733,19 @@ goog.exportProperty(
  * @constructor
  * @extends {wtf.db.EventDataEntry}
  */
-wtf.db.InstanceEventDataEntry = function(eventType) {
+wtf.db.InstanceEventDataEntry = function (eventType) {
   goog.base(this, eventType);
 };
 goog.inherits(wtf.db.InstanceEventDataEntry, wtf.db.EventDataEntry);
 
-
 /**
  * @override
  */
-wtf.db.InstanceEventDataEntry.prototype.appendEvent = function(it) {
+wtf.db.InstanceEventDataEntry.prototype.appendEvent = function (it) {
   this.count++;
 };
 
-
 goog.exportSymbol(
-    'wtf.db.InstanceEventDataEntry',
-    wtf.db.InstanceEventDataEntry);
+  "wtf.db.InstanceEventDataEntry",
+  wtf.db.InstanceEventDataEntry
+);

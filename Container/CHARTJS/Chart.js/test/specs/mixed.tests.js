@@ -1,3 +1,3 @@
-describe('Mixed charts', function() {
-  describe('auto', jasmine.fixture.specs('mixed'));
+describe("Mixed charts", function () {
+  describe("auto", jasmine.fixture.specs("mixed"));
 });

@@ -12,4 +12,3 @@ class C {
 var o = new C(42);
 
 assert.equal(o.getX(), 42);
-

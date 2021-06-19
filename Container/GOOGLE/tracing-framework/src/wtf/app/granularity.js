@@ -11,8 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.Granularity');
-
+goog.provide("wtf.app.Granularity");
 
 /**
  * Useful time granularities, in ms.
@@ -32,5 +31,5 @@ wtf.app.Granularity = {
   /**
    * The finest granularity to work with.
    */
-  FINEST: 100
+  FINEST: 100,
 };

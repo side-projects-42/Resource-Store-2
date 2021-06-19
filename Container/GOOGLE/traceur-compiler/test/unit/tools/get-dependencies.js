@@ -12,30 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
-import getDependencies from '../../../src/node/get-dependencies.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
+import getDependencies from "../../../src/node/get-dependencies.js";
 
-suite('get-dependencies.js', () => {
-  test('Empty', () => {
+suite("get-dependencies.js", () => {
+  test("Empty", () => {
     let deps = getDependencies();
     assert.equal(deps.size, 0);
   });
 
-  test('Basic', () => {
-    let path = './test/unit/runtime/resources/test_module.js';
+  test("Basic", () => {
+    let path = "./test/unit/runtime/resources/test_module.js";
     let deps = getDependencies(path);
     assert.equal(deps.size, 4);
     let a = [...deps].map((d) => {
-      d = d.replace(/\\/g, '/');
-      let i = d.indexOf('/test/');
+      d = d.replace(/\\/g, "/");
+      let i = d.indexOf("/test/");
       return d.slice(i);
     });
     assert.deepEqual(a, [
-      '/test/unit/runtime/resources/test_module.js',
-      '/test/unit/runtime/resources/test_a.js',
-      '/test/unit/runtime/resources/test_b.js',
-      '/test/unit/runtime/resources/test_c.js'
+      "/test/unit/runtime/resources/test_module.js",
+      "/test/unit/runtime/resources/test_a.js",
+      "/test/unit/runtime/resources/test_b.js",
+      "/test/unit/runtime/resources/test_c.js",
     ]);
   });
-
 });

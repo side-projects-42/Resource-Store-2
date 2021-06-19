@@ -1,14 +1,13 @@
-
 function isObject(value) {
-  return Object.prototype.toString.call(value) === '[object Object]';
+  return Object.prototype.toString.call(value) === "[object Object]";
 }
 
 function isArray(value) {
-  return Object.prototype.toString.call(value) === '[object Array]';
+  return Object.prototype.toString.call(value) === "[object Array]";
 }
 
 function fmt(val) {
-  if (typeof val === 'string') {
+  if (typeof val === "string") {
     return `"${val}"`;
   }
   if (isArray(val) || isObject(val)) {
@@ -28,7 +27,9 @@ function compareArray(actual, expected, path) {
   }
 
   if (actual.length !== expected.length) {
-    diff.push(`${path}.length: Expected ${actual.length} to equal ${expected.length}`);
+    diff.push(
+      `${path}.length: Expected ${actual.length} to equal ${expected.length}`
+    );
     ret = false;
   }
   for (let i = 0; i < expected.length; i++) {
@@ -47,11 +48,11 @@ function compareArray(actual, expected, path) {
   }
   return {
     pass: ret,
-    message: diff.join('\n')
+    message: diff.join("\n"),
   };
 }
 
-function compareObject(actual, expected, path = '') {
+function compareObject(actual, expected, path = "") {
   let ret = true;
   const diff = [];
 
@@ -61,12 +62,12 @@ function compareObject(actual, expected, path = '') {
     actual = {};
   }
 
-  if (path !== '') {
-    path = path + '.';
+  if (path !== "") {
+    path = path + ".";
   }
 
   for (const key in expected) {
-    if (typeof key === 'string' && key.startsWith('_')) {
+    if (typeof key === "string" && key.startsWith("_")) {
       continue;
     }
     if (!Object.prototype.hasOwnProperty.call(expected, key)) {
@@ -87,7 +88,7 @@ function compareObject(actual, expected, path = '') {
   }
   return {
     pass: ret,
-    message: diff.join('\n')
+    message: diff.join("\n"),
   };
 }
 
@@ -108,6 +109,6 @@ export function toEqualOptions() {
   return {
     compare(actual, expected) {
       return compareObject(actual, expected);
-    }
+    },
   };
 }

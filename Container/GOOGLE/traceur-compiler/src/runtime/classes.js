@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import createClass from './modules/createClass.js';
-import superConstructor from './modules/superConstructor.js';
-import superGet from './modules/superGet.js';
-import superSet from './modules/superSet.js';
+import createClass from "./modules/createClass.js";
+import superConstructor from "./modules/superConstructor.js";
+import superGet from "./modules/superGet.js";
+import superSet from "./modules/superSet.js";
 
 $traceurRuntime.createClass = createClass;
 $traceurRuntime.superConstructor = superConstructor;

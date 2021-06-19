@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTree} from './ParseTree.js';
-import {STATE_MACHINE} from './ParseTreeType.js';
-import {State} from '../../codegeneration/generator/State.js';
-import {TryState} from '../../codegeneration/generator/TryState.js';
+import { ParseTree } from "./ParseTree.js";
+import { STATE_MACHINE } from "./ParseTreeType.js";
+import { State } from "../../codegeneration/generator/State.js";
+import { TryState } from "../../codegeneration/generator/TryState.js";
 
 /**
  * @param {TryState.Kind} kind
@@ -124,8 +124,11 @@ export class StateMachine extends ParseTree {
    */
   getEnclosingFinallyMap() {
     let enclosingMap = Object.create(null);
-    addCatchOrFinallyStates(TryState.Kind.FINALLY, enclosingMap,
-                            this.exceptionBlocks);
+    addCatchOrFinallyStates(
+      TryState.Kind.FINALLY,
+      enclosingMap,
+      this.exceptionBlocks
+    );
     return enclosingMap;
   }
 
@@ -137,10 +140,11 @@ export class StateMachine extends ParseTree {
 
   replaceStateId(oldState, newState) {
     return new StateMachine(
-        State.replaceStateId(this.startState, oldState, newState),
-        State.replaceStateId(this.fallThroughState, oldState, newState),
-        State.replaceAllStates(this.states, oldState, newState),
-        State.replaceAllStates(this.exceptionBlocks, oldState, newState));
+      State.replaceStateId(this.startState, oldState, newState),
+      State.replaceStateId(this.fallThroughState, oldState, newState),
+      State.replaceAllStates(this.states, oldState, newState),
+      State.replaceAllStates(this.exceptionBlocks, oldState, newState)
+    );
   }
 
   replaceStartState(newState) {
@@ -162,17 +166,23 @@ export class StateMachine extends ParseTree {
     for (let i = 0; i < nextMachine.states.length; i++) {
       let otherState = nextMachine.states[i];
       states.push(
-          otherState.replaceState(nextMachine.startState, this.fallThroughState));
+        otherState.replaceState(nextMachine.startState, this.fallThroughState)
+      );
     }
 
     let exceptionBlocks = [...this.exceptionBlocks];
     for (let i = 0; i < nextMachine.exceptionBlocks.length; i++) {
       let tryState = nextMachine.exceptionBlocks[i];
       exceptionBlocks.push(
-          tryState.replaceState(nextMachine.startState, this.fallThroughState));
+        tryState.replaceState(nextMachine.startState, this.fallThroughState)
+      );
     }
 
-    return new StateMachine(this.startState, nextMachine.fallThroughState,
-                            states, exceptionBlocks);
+    return new StateMachine(
+      this.startState,
+      nextMachine.fallThroughState,
+      states,
+      exceptionBlocks
+    );
   }
 }

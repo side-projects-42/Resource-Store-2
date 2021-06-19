@@ -11,20 +11,18 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.events.Keyboard');
-goog.provide('wtf.events.KeyboardScope');
+goog.provide("wtf.events.Keyboard");
+goog.provide("wtf.events.KeyboardScope");
 
-goog.require('goog.Disposable');
-goog.require('goog.asserts');
-goog.require('goog.dom.DomHelper');
-goog.require('goog.events.EventHandler');
-goog.require('goog.ui.KeyboardShortcutHandler');
-goog.require('goog.userAgent');
-goog.require('wtf.events.CommandManager');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.util');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.asserts");
+goog.require("goog.dom.DomHelper");
+goog.require("goog.events.EventHandler");
+goog.require("goog.ui.KeyboardShortcutHandler");
+goog.require("goog.userAgent");
+goog.require("wtf.events.CommandManager");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.util");
 
 /**
  * A keyboard commanding utility.
@@ -35,7 +33,7 @@ goog.require('wtf.util');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.events.Keyboard = function(targetWindow) {
+wtf.events.Keyboard = function (targetWindow) {
   goog.base(this);
 
   /**
@@ -66,27 +64,26 @@ wtf.events.Keyboard = function(targetWindow) {
   this.suspendCount_ = 0;
 
   this.eh_.listen(
-      this.keyHandler_,
-      goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
-      this.keyPressed_,
-      true);
+    this.keyHandler_,
+    goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
+    this.keyPressed_,
+    true
+  );
 };
 goog.inherits(wtf.events.Keyboard, wtf.events.EventEmitter);
-
 
 /**
  * The HTML code of the system key.
  * @const
  * @type {string}
  */
-wtf.events.Keyboard.SYSTEM_KEY = goog.userAgent.MAC ? '&#8984;' : 'ctrl';
-
+wtf.events.Keyboard.SYSTEM_KEY = goog.userAgent.MAC ? "&#8984;" : "ctrl";
 
 /**
  * Suspends listening for events.
  * Must be matched with a resume.
  */
-wtf.events.Keyboard.prototype.suspend = function() {
+wtf.events.Keyboard.prototype.suspend = function () {
   this.suspendCount_++;
   if (this.suspendCount_ == 1) {
     this.eh_.removeAll();
@@ -96,26 +93,25 @@ wtf.events.Keyboard.prototype.suspend = function() {
   }
 };
 
-
 /**
  * Resumes listening for events.
  * Must be matched with a suspend.
  */
-wtf.events.Keyboard.prototype.resume = function() {
+wtf.events.Keyboard.prototype.resume = function () {
   goog.asserts.assert(this.suspendCount_);
   this.suspendCount_--;
   if (!this.suspendCount_) {
     this.eh_.listen(
-        this.keyHandler_,
-        goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
-        this.keyPressed_,
-        true);
+      this.keyHandler_,
+      goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
+      this.keyPressed_,
+      true
+    );
     this.keyHandler_.setAlwaysPreventDefault(true);
     this.keyHandler_.setAlwaysStopPropagation(true);
     this.keyHandler_.setAllShortcutsAreGlobal(true);
   }
 };
-
 
 /**
  * Translates a shortcut string into the platform-specific variant.
@@ -123,14 +119,13 @@ wtf.events.Keyboard.prototype.resume = function() {
  * @return {string} Translated platform-specific variant.
  * @private
  */
-wtf.events.Keyboard.prototype.translateShortcut_ = function(shortcut) {
+wtf.events.Keyboard.prototype.translateShortcut_ = function (shortcut) {
   if (goog.userAgent.MAC) {
-    return shortcut.replace(/command/g, 'meta');
+    return shortcut.replace(/command/g, "meta");
   } else {
-    return shortcut.replace(/command/g, 'ctrl');
+    return shortcut.replace(/command/g, "ctrl");
   }
 };
-
 
 /**
  * Adds a command to be executed on the given key press.
@@ -140,10 +135,13 @@ wtf.events.Keyboard.prototype.translateShortcut_ = function(shortcut) {
  * @template T
  * @private
  */
-wtf.events.Keyboard.prototype.addShortcut_ = function(
-    shortcut, callback, opt_scope) {
+wtf.events.Keyboard.prototype.addShortcut_ = function (
+  shortcut,
+  callback,
+  opt_scope
+) {
   // Support multi shortcuts.
-  var shortcuts = shortcut.split('|');
+  var shortcuts = shortcut.split("|");
   for (var n = 0; n < shortcuts.length; n++) {
     shortcut = this.translateShortcut_(shortcuts[n]);
     if (!this.hasListeners(shortcut)) {
@@ -153,7 +151,6 @@ wtf.events.Keyboard.prototype.addShortcut_ = function(
   }
 };
 
-
 /**
  * Removes a shortcut command.
  * @param {string} shortcut Shortcut string (like 'ctrl+g').
@@ -161,10 +158,13 @@ wtf.events.Keyboard.prototype.addShortcut_ = function(
  * @param {Object=} opt_scope Scope for the callback function.
  * @private
  */
-wtf.events.Keyboard.prototype.removeShortcut_ = function(
-    shortcut, callback, opt_scope) {
+wtf.events.Keyboard.prototype.removeShortcut_ = function (
+  shortcut,
+  callback,
+  opt_scope
+) {
   // Support multi shortcuts.
-  var shortcuts = shortcut.split('|');
+  var shortcuts = shortcut.split("|");
   for (var n = 0; n < shortcuts.length; n++) {
     shortcut = this.translateShortcut_(shortcuts[n]);
     this.removeListener(shortcut, callback, opt_scope);
@@ -174,16 +174,14 @@ wtf.events.Keyboard.prototype.removeShortcut_ = function(
   }
 };
 
-
 /**
  * Handles key press events.
  * @param {!goog.ui.KeyboardShortcutEvent} e Key press event.
  * @private
  */
-wtf.events.Keyboard.prototype.keyPressed_ = function(e) {
+wtf.events.Keyboard.prototype.keyPressed_ = function (e) {
   this.emitEvent(e.identifier);
 };
-
 
 /**
  * A map of all keyboards by window UID.
@@ -192,18 +190,17 @@ wtf.events.Keyboard.prototype.keyPressed_ = function(e) {
  */
 wtf.events.Keyboard.keyboardInstances_ = {};
 
-
 /**
  * Gets the keyboard for the given window, creating one if needed.
  * @param {Window|goog.dom.DomHelper=} opt_window Window to get the keyboard of.
  * @return {!wtf.events.Keyboard} Keyboard for the given window.
  */
-wtf.events.Keyboard.getWindowKeyboard = function(opt_window) {
+wtf.events.Keyboard.getWindowKeyboard = function (opt_window) {
   if (opt_window && opt_window instanceof goog.dom.DomHelper) {
     opt_window = opt_window.getWindow();
   }
   var targetWindow = opt_window || goog.global;
-  var stash = wtf.util.getGlobalCacheObject('keyboard', targetWindow);
+  var stash = wtf.util.getGlobalCacheObject("keyboard", targetWindow);
   var uid = goog.getUid(stash);
   var keyboard = wtf.events.Keyboard.keyboardInstances_[uid];
   if (!keyboard) {
@@ -213,15 +210,13 @@ wtf.events.Keyboard.getWindowKeyboard = function(opt_window) {
   return keyboard;
 };
 
-
-
 /**
  * Event utility for scoping keyboard shortcuts.
  * @param {!wtf.events.Keyboard} keyboard Keyboard instance.
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.events.KeyboardScope = function(keyboard) {
+wtf.events.KeyboardScope = function (keyboard) {
   goog.base(this);
 
   /**
@@ -248,30 +243,27 @@ wtf.events.KeyboardScope = function(keyboard) {
 };
 goog.inherits(wtf.events.KeyboardScope, goog.Disposable);
 
-
 /**
  * @override
  */
-wtf.events.KeyboardScope.prototype.disposeInternal = function() {
+wtf.events.KeyboardScope.prototype.disposeInternal = function () {
   this.setEnabled(false);
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Gets a value indicating whether the keyboard scope is enabled.
  * @return {boolean} True if the shortcuts are enabled.
  */
-wtf.events.KeyboardScope.prototype.isEnabled = function() {
+wtf.events.KeyboardScope.prototype.isEnabled = function () {
   return this.enabled_;
 };
-
 
 /**
  * Sets the enabled state of the shortucts in the scope.
  * @param {boolean} value True to enable the shortcuts.
  */
-wtf.events.KeyboardScope.prototype.setEnabled = function(value) {
+wtf.events.KeyboardScope.prototype.setEnabled = function (value) {
   if (this.enabled_ == value) {
     return;
   }
@@ -286,7 +278,6 @@ wtf.events.KeyboardScope.prototype.setEnabled = function(value) {
   }
 };
 
-
 /**
  * Adds a callback to be executed on the given key press.
  * @param {string} shortcut Shortcut string (like 'ctrl+g').
@@ -294,28 +285,32 @@ wtf.events.KeyboardScope.prototype.setEnabled = function(value) {
  * @param {T=} opt_scope Scope for the callback function.
  * @template T
  */
-wtf.events.KeyboardScope.prototype.addShortcut = function(
-    shortcut, callback, opt_scope) {
+wtf.events.KeyboardScope.prototype.addShortcut = function (
+  shortcut,
+  callback,
+  opt_scope
+) {
   this.listeners_.push([shortcut, callback, opt_scope]);
   if (this.enabled_) {
     this.keyboard_.addShortcut_(shortcut, callback, opt_scope);
   }
 };
 
-
 /**
  * Adds a command to be executed on the given key press.
  * @param {string} shortcut Shortcut string (like 'ctrl+g').
  * @param {string} commandName Command name.
  */
-wtf.events.KeyboardScope.prototype.addCommandShortcut = function(
-    shortcut, commandName) {
+wtf.events.KeyboardScope.prototype.addCommandShortcut = function (
+  shortcut,
+  commandName
+) {
   function callback() {
     var commandManager = wtf.events.CommandManager.getShared();
     if (commandManager) {
       commandManager.execute(commandName, this, null);
     }
-  };
+  }
   this.listeners_.push([shortcut, callback, this]);
   if (this.enabled_) {
     this.keyboard_.addShortcut_(shortcut, callback, this);

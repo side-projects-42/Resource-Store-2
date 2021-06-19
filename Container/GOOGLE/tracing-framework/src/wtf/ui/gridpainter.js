@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.GridPainter');
+goog.provide("wtf.ui.GridPainter");
 
-goog.require('wtf.math');
-goog.require('wtf.ui.TimePainter');
-
-
+goog.require("wtf.math");
+goog.require("wtf.ui.TimePainter");
 
 /**
  * Paints a grid into the view.
@@ -24,7 +22,7 @@ goog.require('wtf.ui.TimePainter');
  * @constructor
  * @extends {wtf.ui.TimePainter}
  */
-wtf.ui.GridPainter = function(canvas) {
+wtf.ui.GridPainter = function (canvas) {
   goog.base(this, canvas);
 
   /**
@@ -43,22 +41,20 @@ wtf.ui.GridPainter = function(canvas) {
 };
 goog.inherits(wtf.ui.GridPainter, wtf.ui.TimePainter);
 
-
 /**
  * Sets the minimum/maximum granularities.
  * @param {number} min Minimum granularity.
  * @param {number} max Maximum granularity.
  */
-wtf.ui.GridPainter.prototype.setGranularities = function(min, max) {
+wtf.ui.GridPainter.prototype.setGranularities = function (min, max) {
   this.minGranularity_ = min;
   this.maxGranularity_ = max;
 };
 
-
 /**
  * @override
  */
-wtf.ui.GridPainter.prototype.repaintInternal = function(ctx, bounds) {
+wtf.ui.GridPainter.prototype.repaintInternal = function (ctx, bounds) {
   if (!this.isTimeRangeValid()) {
     return;
   }
@@ -71,9 +67,9 @@ wtf.ui.GridPainter.prototype.repaintInternal = function(ctx, bounds) {
   var duration = timeRight - timeLeft;
   var granularity = this.minGranularity_;
   var n = 0;
-  ctx.strokeStyle = '#000000';
+  ctx.strokeStyle = "#000000";
   while (granularity >= this.maxGranularity_ / 100) {
-    var lineSpacing = granularity / duration * bounds.width;
+    var lineSpacing = (granularity / duration) * bounds.width;
     if (lineSpacing < 5) {
       break;
     }
@@ -87,9 +83,13 @@ wtf.ui.GridPainter.prototype.repaintInternal = function(ctx, bounds) {
       if (n && time % (granularity * 10) == 0) {
         continue;
       }
-      var x = wtf.math.remap(time,
-          timeLeft, timeRight,
-          bounds.left, bounds.left + bounds.width);
+      var x = wtf.math.remap(
+        time,
+        timeLeft,
+        timeRight,
+        bounds.left,
+        bounds.left + bounds.width
+      );
       x = Math.round(x) + 0.5;
       if (x >= 0) {
         ctx.moveTo(x, bounds.top);

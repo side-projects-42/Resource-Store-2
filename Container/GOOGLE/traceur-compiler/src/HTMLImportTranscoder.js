@@ -13,13 +13,12 @@
 // limitations under the License.
 
 // Applies Traceur to HTML Import scripts related to a Web page.
-import {StringMap} from './util/StringMap.js';
-import {WebPageTranscoder, scriptSelector} from './WebPageTranscoder.js';
+import { StringMap } from "./util/StringMap.js";
+import { WebPageTranscoder, scriptSelector } from "./WebPageTranscoder.js";
 
-const importSelector = 'link[rel=import][href]';
+const importSelector = "link[rel=import][href]";
 
 export class HTMLImportTranscoder {
-
   constructor() {
     this.importsToProcess_ = [];
   }
@@ -28,7 +27,11 @@ export class HTMLImportTranscoder {
     let foundImportNodes = [];
 
     // process any import children
-    for (let parentIndex = 0; parentIndex < parentImportNodes.length; parentIndex++) {
+    for (
+      let parentIndex = 0;
+      parentIndex < parentImportNodes.length;
+      parentIndex++
+    ) {
       let parentLink = parentImportNodes[parentIndex];
       let childImportNodes = parentLink.import.querySelectorAll(importSelector);
       if (childImportNodes.length > 0)
@@ -51,7 +54,7 @@ export class HTMLImportTranscoder {
         dupFilterMap.set(processLink.href, 0);
         let scripts = processLink.import.querySelectorAll(scriptSelector);
         if (scripts.length > 0)
-          importsToParse.push({href: processLink.href, scripts: scripts});
+          importsToParse.push({ href: processLink.href, scripts: scripts });
       }
     }
 
@@ -62,8 +65,7 @@ export class HTMLImportTranscoder {
   selectAndProcessHTMLImports(importNodes, done) {
     // extract all imports and their child imports
     let importInfoList = this.filterHTMLImports_(importNodes);
-    if (importInfoList.length === 0)
-      done();
+    if (importInfoList.length === 0) done();
 
     // creates a transcoder for each HTMLImport and parse their script elements
     let processCount = importInfoList.length;
@@ -71,25 +73,26 @@ export class HTMLImportTranscoder {
       let transcoder = new WebPageTranscoder(importInfo.href);
       transcoder.addFilesFromScriptElements(importInfo.scripts, () => {
         processCount--;
-        if (processCount === 0 && done)
-          done();
+        if (processCount === 0 && done) done();
       });
     });
   }
 
   run(done = () => {}) {
     let ready = document.readyState;
-    if (ready === 'complete' || ready === 'loaded') {
+    if (ready === "complete" || ready === "loaded") {
       let importNodes = document.querySelectorAll(importSelector);
       if (importNodes.length > 0)
         this.selectAndProcessHTMLImports(importNodes, done);
     } else {
-      document.addEventListener('HTMLImportsLoaded',
-        (event) => {
-          let importNodes = event.detail && event.detail.allImports ? event.detail.allImports : document.querySelectorAll(importSelector);
-          if (importNodes.length > 0)
-            this.selectAndProcessHTMLImports(importNodes, done);
-        });
+      document.addEventListener("HTMLImportsLoaded", (event) => {
+        let importNodes =
+          event.detail && event.detail.allImports
+            ? event.detail.allImports
+            : document.querySelectorAll(importSelector);
+        if (importNodes.length > 0)
+          this.selectAndProcessHTMLImports(importNodes, done);
+      });
     }
   }
 }

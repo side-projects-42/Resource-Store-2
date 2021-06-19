@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-telemetry-sdk-dotnet",
+  "fullName": "newrelic/newrelic-telemetry-sdk-dotnet",
+  "slug": "newrelic-newrelic-telemetry-sdk-dotnet",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Telemetry SDK (.NET)",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-telemetry-sdk-dotnet",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-telemetry-sdk-dotnet",
+  "iconUrl": null,
+  "shortDescription": "New Relic OpenTelemetry for .NET",
+  "description": "New Relic Telemetry SDK and OpenTelemetry support for .NET",
+  "ossCategory": "community-project",
+  "primaryLanguage": "C#",
+  "projectTags": ["opentelemetry", "sdk"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Telemetry SDK (.NET)",
+    "url": "https://github.com/newrelic/newrelic-telemetry-sdk-dotnet"
+  }
+}

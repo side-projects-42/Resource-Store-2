@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.addon.TraceAddon');
+goog.provide("wtf.addon.TraceAddon");
 
-goog.require('goog.asserts');
-goog.require('wtf.events.EventEmitter');
-
-
+goog.require("goog.asserts");
+goog.require("wtf.events.EventEmitter");
 
 /**
  * Tracing addon.
@@ -24,7 +22,7 @@ goog.require('wtf.events.EventEmitter');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.addon.TraceAddon = function(manifest) {
+wtf.addon.TraceAddon = function (manifest) {
   goog.base(this);
 
   var info = manifest.getTracingInfo();
@@ -46,20 +44,18 @@ wtf.addon.TraceAddon = function(manifest) {
 };
 goog.inherits(wtf.addon.TraceAddon, wtf.events.EventEmitter);
 
-
 /**
  * Gets the addon manifest.
  * @return {!wtf.addon.Manifest} Addon manifest.
  */
-wtf.addon.TraceAddon.prototype.getManifest = function() {
+wtf.addon.TraceAddon.prototype.getManifest = function () {
   return this.manifest_;
 };
-
 
 /**
  * Gets the tracing information associated with the addon.
  * @return {!wtf.addon.Manifest.TracingInfo} Tracing information.
  */
-wtf.addon.TraceAddon.prototype.getInfo = function() {
+wtf.addon.TraceAddon.prototype.getInfo = function () {
   return this.info_;
 };

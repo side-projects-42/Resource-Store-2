@@ -1,0 +1,24 @@
+{
+  "name": "absinthe-schema-stitching-example",
+  "fullName": "newrelic/absinthe-schema-stitching-example",
+  "slug": "newrelic-absinthe-schema-stitching-example",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Absinthe Schema Stitching Example",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/absinthe-schema-stitching-example",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/absinthe-schema-stitching-example",
+  "iconUrl": null,
+  "shortDescription": "GraphQL schema stitching examples",
+  "description": "GraphQL schema stitching examples",
+  "ossCategory": "example-code",
+  "primaryLanguage": "Elixir",
+  "projectTags": ["graphql"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Absinthe Schema Stitching Example",
+    "url": "https://github.com/newrelic/absinthe-schema-stitching-example"
+  }
+}

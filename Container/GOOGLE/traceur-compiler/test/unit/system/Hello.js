@@ -12,34 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  suite,
-  test,
-  assert,
-  teardown
-} from '../../unit/unitTestRunner.js';
+import { suite, test, assert, teardown } from "../../unit/unitTestRunner.js";
 
-suite('Hello.js', function() {
-  if (typeof document === 'undefined')
-    return;
+suite("Hello.js", function () {
+  if (typeof document === "undefined") return;
 
   var iframe;
 
-  teardown(function() {
-    if (iframe)
-      iframe.parentNode.removeChild(iframe);
+  teardown(function () {
+    if (iframe) iframe.parentNode.removeChild(iframe);
   });
 
-  test('Hello', function(done) {
-    iframe = document.createElement('iframe');
+  test("Hello", function (done) {
+    iframe = document.createElement("iframe");
     document.body.appendChild(iframe);
-    iframe.style.cssText = 'position: absolute; top: -1000px';
-    iframe.addEventListener('load', function() {
-      var hello = iframe.contentDocument.querySelector('h1');
-      assert.equal('Hello World!', hello.textContent);
+    iframe.style.cssText = "position: absolute; top: -1000px";
+    iframe.addEventListener("load", function () {
+      var hello = iframe.contentDocument.querySelector("h1");
+      assert.equal("Hello World!", hello.textContent);
       done();
     });
-    iframe.src = '../example/hello.html'
+    iframe.src = "../example/hello.html";
   });
-
 });

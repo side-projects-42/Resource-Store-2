@@ -1,1 +1,1 @@
-export var Foo = 'Foo from foo.js';
+export var Foo = "Foo from foo.js";

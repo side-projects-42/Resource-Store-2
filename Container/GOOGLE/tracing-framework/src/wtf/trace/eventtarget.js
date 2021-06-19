@@ -11,16 +11,15 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.eventtarget');
-goog.provide('wtf.trace.eventtarget.BaseEventTarget');
-goog.provide('wtf.trace.eventtarget.Descriptor');
-goog.provide('wtf.trace.eventtarget.EventRegistration');
+goog.provide("wtf.trace.eventtarget");
+goog.provide("wtf.trace.eventtarget.BaseEventTarget");
+goog.provide("wtf.trace.eventtarget.Descriptor");
+goog.provide("wtf.trace.eventtarget.EventRegistration");
 
-goog.require('goog.userAgent');
-goog.require('wtf.data.webidl');
-goog.require('wtf.trace.Scope');
-goog.require('wtf.trace.events');
-
+goog.require("goog.userAgent");
+goog.require("wtf.data.webidl");
+goog.require("wtf.trace.Scope");
+goog.require("wtf.trace.events");
 
 /**
  * Checks to see whether on* events can be rewritten to support injection.
@@ -37,60 +36,60 @@ goog.require('wtf.trace.events');
  *   needsDelete: boolean
  * }}
  */
-wtf.trace.eventtarget.DEFINE_SUPPORT = (function() {
-  if (!goog.global['document']) {
+wtf.trace.eventtarget.DEFINE_SUPPORT = (function () {
+  if (!goog.global["document"]) {
     // TODO(benvanik): devise a test for workers.
     return {
       available: false,
-      needsDelete: false
+      needsDelete: false,
     };
   }
 
   var supportsDefine = false;
   var needsDelete = false;
   try {
-    var tagName = 'head';
-    var proto = goog.global['HTMLHeadElement'].prototype;
-    var eventName = 'onmousemove';
+    var tagName = "head";
+    var proto = goog.global["HTMLHeadElement"].prototype;
+    var eventName = "onmousemove";
     var propertyValue = 123;
     Object.defineProperty(proto, eventName, {
-      'configurable': true,
-      'enumerable': true,
-      'get': function() { return propertyValue; },
-      'set': function(value) { propertyValue = value; }
+      configurable: true,
+      enumerable: true,
+      get: function () {
+        return propertyValue;
+      },
+      set: function (value) {
+        propertyValue = value;
+      },
     });
     var el = document.createElement(tagName);
     el[eventName] = 456;
-    if (el[eventName] == 456 &&
-        propertyValue == 456) {
+    if (el[eventName] == 456 && propertyValue == 456) {
       supportsDefine = true;
     }
     if (!supportsDefine) {
       delete el[eventName];
       el[eventName] = 456;
-      if (el[eventName] == 456 &&
-          propertyValue == 456) {
+      if (el[eventName] == 456 && propertyValue == 456) {
         supportsDefine = true;
         needsDelete = true;
       }
     }
     delete proto[eventName];
-  } catch (e) {
-  }
+  } catch (e) {}
 
   return {
     available: supportsDefine,
-    needsDelete: needsDelete
+    needsDelete: needsDelete,
   };
 })();
-
 
 /**
  * Finds all of the event names on the given object.
  * @param {!Object} target Instance or prototype.
  * @return {!Array.<string>} Event names.
  */
-wtf.trace.eventtarget.getEventNames = function(target) {
+wtf.trace.eventtarget.getEventNames = function (target) {
   // Not present in IE8.
   if (!Object.getOwnPropertyNames) {
     return [];
@@ -103,18 +102,22 @@ wtf.trace.eventtarget.getEventNames = function(target) {
     var allNames = Object.getOwnPropertyNames(propertyTarget);
     for (var n = 0; n < allNames.length; n++) {
       var propertyName = allNames[n];
-      if (propertyName == 'onmousedown') {
+      if (propertyName == "onmousedown") {
         hasMouseEvents = true;
       }
-      if (propertyName.indexOf('on') == 0 &&
-          propertyName.toLowerCase() == propertyName) {
+      if (
+        propertyName.indexOf("on") == 0 &&
+        propertyName.toLowerCase() == propertyName
+      ) {
         var eventName = propertyName.substr(2);
         eventNames.push(eventName);
       }
     }
     propertyTarget = Object.getPrototypeOf(propertyTarget);
-    if (!propertyTarget ||
-        propertyTarget == /** @type {Object} */ (Object.prototype)) {
+    if (
+      !propertyTarget ||
+      propertyTarget == /** @type {Object} */ (Object.prototype)
+    ) {
       break;
     }
   }
@@ -122,13 +125,12 @@ wtf.trace.eventtarget.getEventNames = function(target) {
   if (goog.userAgent.GECKO) {
     // HACK: add firefox-specific events as needed.
     if (hasMouseEvents) {
-      eventNames.push('DOMMouseScroll');
+      eventNames.push("DOMMouseScroll");
     }
   }
 
   return eventNames;
 };
-
 
 /**
  * @typedef {{
@@ -146,7 +148,6 @@ wtf.trace.eventtarget.getEventNames = function(target) {
  */
 wtf.trace.eventtarget.Descriptor;
 
-
 /**
  * Creates an event target descriptor.
  * This doesn't hook any methods but makes it easier to do so later either
@@ -156,7 +157,7 @@ wtf.trace.eventtarget.Descriptor;
  *     to their event type descriptor from {@see wtf.data.webidl}.
  * @return {!wtf.trace.eventtarget.Descriptor} Event target descriptor.
  */
-wtf.trace.eventtarget.createDescriptor = function(prefix, eventTypes) {
+wtf.trace.eventtarget.createDescriptor = function (prefix, eventTypes) {
   var eventMap = {};
 
   var eventNames = [];
@@ -166,32 +167,34 @@ wtf.trace.eventtarget.createDescriptor = function(prefix, eventTypes) {
     eventNames.push(eventName);
 
     var signature = wtf.data.webidl.getEventSignature(
-        prefix, eventName, eventType);
-    var scopeEvent = wtf.trace.events.createScope(
-        signature);
+      prefix,
+      eventName,
+      eventType
+    );
+    var scopeEvent = wtf.trace.events.createScope(signature);
     eventMap[eventName] = scopeEvent;
 
-    var hiddenName = '__wtf_event_value_' + eventName;
+    var hiddenName = "__wtf_event_value_" + eventName;
     eventInfos.push({
       name: eventName,
       scopeEvent: scopeEvent,
-      getter: (function(hiddenName) {
-        return function() {
+      getter: (function (hiddenName) {
+        return function () {
           return this[hiddenName];
         };
       })(hiddenName),
-      setter: (function(hiddenName, eventName) {
-        return function(value) {
+      setter: (function (hiddenName, eventName) {
+        return function (value) {
           var currentValue = this[hiddenName];
           if (currentValue) {
-            this['removeEventListener'](eventName, currentValue, false);
+            this["removeEventListener"](eventName, currentValue, false);
           }
           if (value) {
-            this['addEventListener'](eventName, value, false);
+            this["addEventListener"](eventName, value, false);
           }
           this[hiddenName] = value;
         };
-      })(hiddenName, eventName)
+      })(hiddenName, eventName),
     });
   }
 
@@ -200,30 +203,27 @@ wtf.trace.eventtarget.createDescriptor = function(prefix, eventTypes) {
     eventTypes: eventTypes,
     eventNames: eventNames,
     eventMap: eventMap,
-    eventInfos: eventInfos
+    eventInfos: eventInfos,
   };
 };
-
 
 /**
  * Gets the descriptor for the given target, if found.
  * @param {!Object} target Target object.
  * @return {wtf.trace.eventtarget.Descriptor} Event descriptor, if found.
  */
-wtf.trace.eventtarget.getDescriptor = function(target) {
-  return target['__wtf_eventtarget_descriptor__'] || null;
+wtf.trace.eventtarget.getDescriptor = function (target) {
+  return target["__wtf_eventtarget_descriptor__"] || null;
 };
-
 
 /**
  * Sets the descriptor for the given target.
  * @param {!Object} target Target object (should be a prototype).
  * @param {!wtf.trace.eventtarget.Descriptor} value Event descriptor.
  */
-wtf.trace.eventtarget.setDescriptor = function(target, value) {
-  target['__wtf_eventtarget_descriptor__'] = value;
+wtf.trace.eventtarget.setDescriptor = function (target, value) {
+  target["__wtf_eventtarget_descriptor__"] = value;
 };
-
 
 /**
  * Mixin EventTarget-like behavior to an instance or prototype.
@@ -231,58 +231,61 @@ wtf.trace.eventtarget.setDescriptor = function(target, value) {
  * @param {!wtf.trace.eventtarget.Descriptor} descriptor Event descriptor.
  * @param {!Object} target An object instance or a prototype.
  */
-wtf.trace.eventtarget.mixin = function(descriptor, target) {
-  var originalAddEventListener = target['addEventListener'];
-  target['addEventListener'] =
-      /**
-       * @param {string} type Event type.
-       * @param {!EventListener|Function} listener Listener.
-       * @param {boolean=} opt_capture Capture.
-       * @this {!Object}
-       */
-      function(type, listener, opt_capture) {
-    var self = this || goog.global;
-    var eventType = descriptor.eventMap[type];
-    if (!eventType || self['__wtf_ignore__'] || listener['__wtf_ignore__']) {
-      // Ignored - do a normal add.
-      originalAddEventListener.call(self, type, listener, opt_capture);
-      return;
-    }
-
-    var wrappedEventListener = function wrappedEventListener(e) {
-      if (e['__wtf_ignore__']) {
+wtf.trace.eventtarget.mixin = function (descriptor, target) {
+  var originalAddEventListener = target["addEventListener"];
+  target["addEventListener"] =
+    /**
+     * @param {string} type Event type.
+     * @param {!EventListener|Function} listener Listener.
+     * @param {boolean=} opt_capture Capture.
+     * @this {!Object}
+     */
+    function (type, listener, opt_capture) {
+      var self = this || goog.global;
+      var eventType = descriptor.eventMap[type];
+      if (!eventType || self["__wtf_ignore__"] || listener["__wtf_ignore__"]) {
+        // Ignored - do a normal add.
+        originalAddEventListener.call(self, type, listener, opt_capture);
         return;
       }
-      var scope = self['__wtf_ignore__'] ? null : eventType();
-      try {
-        if (listener['handleEvent']) {
-          // Listener is an EventListener.
-          listener.handleEvent(e);
-        } else {
-          // Listener is a function.
-          return listener.apply(self, arguments);
-        }
-      } finally {
-        wtf.trace.Scope.leave(scope);
-      }
-    };
-    listener['__wrapped__'] = wrappedEventListener;
-    originalAddEventListener.call(
-        self, type, wrappedEventListener, opt_capture);
-  };
 
-  var originalRemoveEventListener = target['removeEventListener'];
-  target['removeEventListener'] = function(type, listener, opt_capture) {
+      var wrappedEventListener = function wrappedEventListener(e) {
+        if (e["__wtf_ignore__"]) {
+          return;
+        }
+        var scope = self["__wtf_ignore__"] ? null : eventType();
+        try {
+          if (listener["handleEvent"]) {
+            // Listener is an EventListener.
+            listener.handleEvent(e);
+          } else {
+            // Listener is a function.
+            return listener.apply(self, arguments);
+          }
+        } finally {
+          wtf.trace.Scope.leave(scope);
+        }
+      };
+      listener["__wrapped__"] = wrappedEventListener;
+      originalAddEventListener.call(
+        self,
+        type,
+        wrappedEventListener,
+        opt_capture
+      );
+    };
+
+  var originalRemoveEventListener = target["removeEventListener"];
+  target["removeEventListener"] = function (type, listener, opt_capture) {
     var self = this || goog.global;
-    if (listener && listener['__wrapped__']) {
-      listener = listener['__wrapped__'];
+    if (listener && listener["__wrapped__"]) {
+      listener = listener["__wrapped__"];
     }
     originalRemoveEventListener.call(self, type, listener, opt_capture);
   };
 
   // TODO(benvanik): instrument dispatchEvent for flows?
 };
-
 
 /**
  * Sets the on* event properties on the given target prototype.
@@ -291,7 +294,7 @@ wtf.trace.eventtarget.mixin = function(descriptor, target) {
  * @param {!wtf.trace.eventtarget.Descriptor} descriptor Event descriptor.
  * @param {!Object} target An object instance or a prototype.
  */
-wtf.trace.eventtarget.setEventProperties = function(descriptor, target) {
+wtf.trace.eventtarget.setEventProperties = function (descriptor, target) {
   if (!wtf.trace.eventtarget.DEFINE_SUPPORT.available) {
     return;
   }
@@ -300,21 +303,24 @@ wtf.trace.eventtarget.setEventProperties = function(descriptor, target) {
   for (var n = 0; n < eventInfos.length; n++) {
     var eventInfo = eventInfos[n];
     try {
-      Object.defineProperty(target, 'on' + eventInfo.name, {
-        'configurable': true,
-        'enumerable': true,
-        'get': eventInfo.getter,
-        'set': eventInfo.setter
+      Object.defineProperty(target, "on" + eventInfo.name, {
+        configurable: true,
+        enumerable: true,
+        get: eventInfo.getter,
+        set: eventInfo.setter,
       });
     } catch (e) {
       if (goog.DEBUG) {
-        goog.global.console.log('Unable to define property ' + eventInfo.name +
-            ' on ' + descriptor.prefix);
+        goog.global.console.log(
+          "Unable to define property " +
+            eventInfo.name +
+            " on " +
+            descriptor.prefix
+        );
       }
     }
   }
 };
-
 
 /**
  * Initializes on* event properties on the given target instance.
@@ -322,10 +328,12 @@ wtf.trace.eventtarget.setEventProperties = function(descriptor, target) {
  * @param {!Object} target Target object instance.
  * @return {boolean} Whether the action was performed.
  */
-wtf.trace.eventtarget.initializeEventProperties = function(target) {
+wtf.trace.eventtarget.initializeEventProperties = function (target) {
   // Ignore if nothing to do.
-  if (!wtf.trace.eventtarget.DEFINE_SUPPORT.available ||
-      !wtf.trace.eventtarget.DEFINE_SUPPORT.needsDelete) {
+  if (
+    !wtf.trace.eventtarget.DEFINE_SUPPORT.available ||
+    !wtf.trace.eventtarget.DEFINE_SUPPORT.needsDelete
+  ) {
     return false;
   }
 
@@ -333,7 +341,7 @@ wtf.trace.eventtarget.initializeEventProperties = function(target) {
   if (descriptor) {
     var eventNames = descriptor.eventNames;
     for (var n = 0; n < eventNames.length; n++) {
-      var eventName = 'on' + eventNames[n];
+      var eventName = "on" + eventNames[n];
       var value = target[eventName];
       target[eventName] = null;
       delete target[eventName];
@@ -347,7 +355,6 @@ wtf.trace.eventtarget.initializeEventProperties = function(target) {
   return false;
 };
 
-
 /**
  * Initializes on* event properties on the given DOM element and optionally
  * for all children.
@@ -355,9 +362,11 @@ wtf.trace.eventtarget.initializeEventProperties = function(target) {
  * @param {!Element} target Target DOM element.
  * @param {boolean=} opt_recursive Also initialize for all children.
  */
-wtf.trace.eventtarget.initializeDomEventProperties = function(
-    target, opt_recursive) {
-  if (target['__wtf_ignore__']) {
+wtf.trace.eventtarget.initializeDomEventProperties = function (
+  target,
+  opt_recursive
+) {
+  if (target["__wtf_ignore__"]) {
     return;
   }
 
@@ -369,17 +378,17 @@ wtf.trace.eventtarget.initializeDomEventProperties = function(
   // Do all descendants.
   if (opt_recursive) {
     // TODO(benvanik): enterTracingScope if descendants > N?
-    var descendants = target.getElementsByTagName('*');
+    var descendants = target.getElementsByTagName("*");
     for (var n = 0; n < descendants.length; n++) {
       var descendant = descendants[n];
-      if (descendant['__wtf_ignore__']) {
+      if (descendant["__wtf_ignore__"]) {
         continue;
       }
       var descriptor = wtf.trace.eventtarget.getDescriptor(descendant);
       if (descriptor) {
         var eventNames = descriptor.eventNames;
         for (var m = 0; m < eventNames.length; m++) {
-          var eventName = 'on' + eventNames[m];
+          var eventName = "on" + eventNames[m];
           var value = descendant[eventName];
           descendant[eventName] = null;
           delete descendant[eventName];
@@ -392,15 +401,13 @@ wtf.trace.eventtarget.initializeDomEventProperties = function(
   }
 };
 
-
-
 /**
  * EventTarget shim.
  * Proxy classes should subclass this to get EventTarget-like behavior.
  * @param {!wtf.trace.eventtarget.Descriptor} descriptor Event descriptor.
  * @constructor
  */
-wtf.trace.eventtarget.BaseEventTarget = function(descriptor) {
+wtf.trace.eventtarget.BaseEventTarget = function (descriptor) {
   /**
    * Event descriptor.
    * @type {!wtf.trace.eventtarget.Descriptor}
@@ -416,7 +423,6 @@ wtf.trace.eventtarget.BaseEventTarget = function(descriptor) {
   this.registrations_ = {};
 };
 
-
 /**
  * Adds an event listener.
  * @param {string} type The type of the event to listen for.
@@ -428,19 +434,22 @@ wtf.trace.eventtarget.BaseEventTarget = function(descriptor) {
  *     of the event.
  * @this {wtf.trace.eventtarget.BaseEventTarget}
  */
-wtf.trace.eventtarget.BaseEventTarget.prototype['addEventListener'] = function(
-    type, listener, opt_capture) {
+wtf.trace.eventtarget.BaseEventTarget.prototype["addEventListener"] = function (
+  type,
+  listener,
+  opt_capture
+) {
   var registration = this.registrations_[type];
   if (!registration) {
     registration = this.registrations_[type] =
-        new wtf.trace.eventtarget.EventRegistration();
+      new wtf.trace.eventtarget.EventRegistration();
   }
 
   var list = registration.dom2 || [];
   registration.dom2 = list;
   list.push({
     listener: listener,
-    capture: opt_capture || false
+    capture: opt_capture || false,
   });
 
   if (!registration.handlerCount) {
@@ -448,7 +457,6 @@ wtf.trace.eventtarget.BaseEventTarget.prototype['addEventListener'] = function(
   }
   registration.handlerCount++;
 };
-
 
 /**
  * Removes an event listener.
@@ -461,40 +469,37 @@ wtf.trace.eventtarget.BaseEventTarget.prototype['addEventListener'] = function(
  *     of the event.
  * @this {wtf.trace.eventtarget.BaseEventTarget}
  */
-wtf.trace.eventtarget.BaseEventTarget.prototype['removeEventListener'] =
-    function(type, listener, opt_capture) {
-  var registration = this.registrations_[type];
-  if (!registration) {
-    return;
-  }
-
-  var list = registration.dom2;
-  if (!list || !list.length) {
-    return;
-  }
-
-  for (var n = 0; n < list.length; n++) {
-    if (list[n].listener == listener &&
-        list[n].capture == opt_capture) {
-      list.splice(n, 1);
-      break;
+wtf.trace.eventtarget.BaseEventTarget.prototype["removeEventListener"] =
+  function (type, listener, opt_capture) {
+    var registration = this.registrations_[type];
+    if (!registration) {
+      return;
     }
-  }
 
-  registration.handlerCount--;
-  if (!registration.handlerCount) {
-    this.endTrackingEvent(type);
-  }
-};
+    var list = registration.dom2;
+    if (!list || !list.length) {
+      return;
+    }
 
+    for (var n = 0; n < list.length; n++) {
+      if (list[n].listener == listener && list[n].capture == opt_capture) {
+        list.splice(n, 1);
+        break;
+      }
+    }
+
+    registration.handlerCount--;
+    if (!registration.handlerCount) {
+      this.endTrackingEvent(type);
+    }
+  };
 
 /**
  * Indicates that the given event type should be tracked on the target object.
  * @param {string} type Event type name.
  */
 wtf.trace.eventtarget.BaseEventTarget.prototype.beginTrackingEvent =
-    goog.abstractMethod;
-
+  goog.abstractMethod;
 
 /**
  * Indicates that the given event type should be stop being tracked on the
@@ -502,8 +507,7 @@ wtf.trace.eventtarget.BaseEventTarget.prototype.beginTrackingEvent =
  * @param {string} type Event type name.
  */
 wtf.trace.eventtarget.BaseEventTarget.prototype.endTrackingEvent =
-    goog.abstractMethod;
-
+  goog.abstractMethod;
 
 /**
  * Sets a hook method to each event dispatch.
@@ -513,31 +517,35 @@ wtf.trace.eventtarget.BaseEventTarget.prototype.endTrackingEvent =
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.trace.eventtarget.BaseEventTarget.prototype.setEventHook = function(
-    type, callback, opt_scope) {
+wtf.trace.eventtarget.BaseEventTarget.prototype.setEventHook = function (
+  type,
+  callback,
+  opt_scope
+) {
   var registration = this.registrations_[type];
   if (!registration) {
     registration = this.registrations_[type] =
-        new wtf.trace.eventtarget.EventRegistration();
+      new wtf.trace.eventtarget.EventRegistration();
   }
 
   var list = registration.hooks || [];
   registration.hooks = list;
   list.push({
     callback: callback,
-    scope: opt_scope || this
+    scope: opt_scope || this,
   });
 };
-
 
 /**
  * Dispatches an event.
  * @param {Event} e Event.
  * @this {wtf.trace.eventtarget.BaseEventTarget}
  */
-wtf.trace.eventtarget.BaseEventTarget.prototype['dispatchEvent'] = function(e) {
+wtf.trace.eventtarget.BaseEventTarget.prototype["dispatchEvent"] = function (
+  e
+) {
   // Ignore events marked by implementations as being WTF-specific.
-  if (e['__wtf_ignore__']) {
+  if (e["__wtf_ignore__"]) {
     return;
   }
 
@@ -560,7 +568,6 @@ wtf.trace.eventtarget.BaseEventTarget.prototype['dispatchEvent'] = function(e) {
   }
 };
 
-
 /**
  * Dispatches an event ot a listener, wrapping it in a scope.
  * @param {Event} e Event.
@@ -570,16 +577,19 @@ wtf.trace.eventtarget.BaseEventTarget.prototype['dispatchEvent'] = function(e) {
  *   scope: !Object
  * }>} hooks Event hooks.
  */
-wtf.trace.eventtarget.BaseEventTarget.prototype.dispatchToListener = function(
-    e, listener, hooks) {
-  if (e['__wtf_ignore__']) {
+wtf.trace.eventtarget.BaseEventTarget.prototype.dispatchToListener = function (
+  e,
+  listener,
+  hooks
+) {
+  if (e["__wtf_ignore__"]) {
     return;
   }
 
   // Begin tracing scope.
   var eventKey = e.type;
   var eventType = this.descriptor_.eventMap[eventKey];
-  var scope = this['__wtf_ignore__'] ? null : (eventType ? eventType() : null);
+  var scope = this["__wtf_ignore__"] ? null : eventType ? eventType() : null;
 
   // Callback registered hooks.
   if (hooks && hooks.length) {
@@ -590,9 +600,9 @@ wtf.trace.eventtarget.BaseEventTarget.prototype.dispatchToListener = function(
 
   // Dispatch the event.
   try {
-    if (listener['handleEvent']) {
+    if (listener["handleEvent"]) {
       // Listener is an EventListener.
-      listener['handleEvent'](e);
+      listener["handleEvent"](e);
     } else {
       // Listener is a function.
       listener.call(this, e);
@@ -602,13 +612,11 @@ wtf.trace.eventtarget.BaseEventTarget.prototype.dispatchToListener = function(
   }
 };
 
-
-
 /**
  * Event listener registration collection.
  * @constructor
  */
-wtf.trace.eventtarget.EventRegistration = function() {
+wtf.trace.eventtarget.EventRegistration = function () {
   /**
    * Total number of event listeners.
    * This is used as a quick toggle for calling the tracking functions.

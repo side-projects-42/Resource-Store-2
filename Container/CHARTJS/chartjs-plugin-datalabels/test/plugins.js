@@ -1,6 +1,6 @@
 export default {
-  'jasmine-chart-area': {
-    afterDraw: function(chart) {
+  "jasmine-chart-area": {
+    afterDraw: function (chart) {
       var ctx = chart.ctx;
       var area = chart.chartArea;
 
@@ -10,11 +10,12 @@ export default {
         area.left,
         area.top,
         area.right - area.left,
-        area.bottom - area.top);
-      ctx.strokeStyle = 'blue';
+        area.bottom - area.top
+      );
+      ctx.strokeStyle = "blue";
       ctx.lineWidth = 2;
       ctx.stroke();
       ctx.restore();
-    }
-  }
+    },
+  },
 };

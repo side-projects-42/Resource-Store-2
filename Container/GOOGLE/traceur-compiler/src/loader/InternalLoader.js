@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {assert} from '../util/assert.js';
-import {LoaderCompiler} from './LoaderCompiler.js';
-import {ExportsList} from '../codegeneration/module/ModuleSymbol.js';
-import {isAbsolute, resolveUrl} from '../util/url.js';
-import {Options} from '../Options.js';
+import { assert } from "../util/assert.js";
+import { LoaderCompiler } from "./LoaderCompiler.js";
+import { ExportsList } from "../codegeneration/module/ModuleSymbol.js";
+import { isAbsolute, resolveUrl } from "../util/url.js";
+import { Options } from "../Options.js";
 
 var NOT_STARTED = 0;
 var LOADING = 1;
 var LOADED = 2;
 var PARSED = 3;
-var TRANSFORMING = 4
+var TRANSFORMING = 4;
 var TRANSFORMED = 5;
 var COMPLETE = 6;
 var ERROR = 7;
@@ -43,7 +43,7 @@ class LoaderError extends Error {
     super();
     this.message = msg;
     this.tree = tree;
-    this.name = 'LoaderError';
+    this.name = "LoaderError";
   }
 }
 
@@ -59,8 +59,15 @@ class CodeUnit {
    *     parse the code.
    * @param {number} state
    */
-  constructor(loaderCompiler, normalizedName, type, state,
-      name, referrerName, address) {
+  constructor(
+    loaderCompiler,
+    normalizedName,
+    type,
+    state,
+    name,
+    referrerName,
+    address
+  ) {
     this.promise = new Promise((res, rej) => {
       this.loaderCompiler = loaderCompiler;
       this.normalizedName = normalizedName;
@@ -84,7 +91,7 @@ class CodeUnit {
 
   set state(value) {
     if (value < this.state_) {
-      throw new Error('Invalid state change');
+      throw new Error("Invalid state change");
     }
     this.state_ = value;
   }
@@ -104,7 +111,7 @@ class CodeUnit {
   nameTrace() {
     var trace = this.specifiedAs();
     if (isAbsolute(this.name_)) {
-      return trace + 'An absolute name.\n';
+      return trace + "An absolute name.\n";
     }
     if (this.referrerName_) {
       return trace + this.importedBy() + this.normalizesTo();
@@ -121,19 +128,31 @@ class CodeUnit {
   }
 
   normalizesTo() {
-    return 'Normalizes to ' + this.normalizedName + '\n';
+    return "Normalizes to " + this.normalizedName + "\n";
   }
-
 }
 
 /**
  * CodeUnit coming from {@code Loader.set}.
  */
 class PreCompiledCodeUnit extends CodeUnit {
-  constructor(loaderCompiler, normalizedName, name, referrerName, address,
-      module) {
-    super(loaderCompiler, normalizedName, 'module', COMPLETE,
-        name, referrerName, address);
+  constructor(
+    loaderCompiler,
+    normalizedName,
+    name,
+    referrerName,
+    address,
+    module
+  ) {
+    super(
+      loaderCompiler,
+      normalizedName,
+      "module",
+      COMPLETE,
+      name,
+      referrerName,
+      address
+    );
     this.result = module;
     this.resolve(this.result);
   }
@@ -143,10 +162,25 @@ class PreCompiledCodeUnit extends CodeUnit {
  * CodeUnit coming from {@code Loader.register}.
  */
 class BundledCodeUnit extends CodeUnit {
-  constructor(loaderCompiler, normalizedName, name, referrerName, address,
-      deps, execute, setModule) {
-    super(loaderCompiler, normalizedName, 'module', TRANSFORMED,
-        name, referrerName, address);
+  constructor(
+    loaderCompiler,
+    normalizedName,
+    name,
+    referrerName,
+    address,
+    deps,
+    execute,
+    setModule
+  ) {
+    super(
+      loaderCompiler,
+      normalizedName,
+      "module",
+      TRANSFORMED,
+      name,
+      referrerName,
+      address
+    );
     this.deps = deps;
     this.execute = execute;
   }
@@ -154,8 +188,7 @@ class BundledCodeUnit extends CodeUnit {
     return this.deps;
   }
   evaluate() {
-    var normalizedNames =
-        this.deps.map((name) => this.loader_.normalize(name));
+    var normalizedNames = this.deps.map((name) => this.loader_.normalize(name));
     var module = this.execute.apply(Reflect.global, normalizedNames);
     setModule(this.normalizedName, module);
     return module;
@@ -183,8 +216,15 @@ class LoadCodeUnit extends HookedCodeUnit {
    * @param {string} normalizedName
    */
   constructor(loaderCompiler, normalizedName, name, referrerName, address) {
-    super(loaderCompiler, normalizedName, 'module', NOT_STARTED,
-        name, referrerName, address);
+    super(
+      loaderCompiler,
+      normalizedName,
+      "module",
+      NOT_STARTED,
+      name,
+      referrerName,
+      address
+    );
   }
 }
 
@@ -197,10 +237,23 @@ class EvalCodeUnit extends HookedCodeUnit {
    * @param {string} code
    * @param {string} caller script or module name
    */
-  constructor(loaderCompiler, code, type = 'script',
-      normalizedName, referrerName, address) {
-    super(loaderCompiler, normalizedName, type,
-        LOADED, null, referrerName, address);
+  constructor(
+    loaderCompiler,
+    code,
+    type = "script",
+    normalizedName,
+    referrerName,
+    address
+  ) {
+    super(
+      loaderCompiler,
+      normalizedName,
+      type,
+      LOADED,
+      null,
+      referrerName,
+      address
+    );
     this.source = code;
   }
 }
@@ -228,11 +281,12 @@ export class InternalLoader {
 
   defaultMetadata_(metadata = {}) {
     let incoming = metadata.traceurOptions;
-    if (incoming  && !(incoming instanceof Options)) {
+    if (incoming && !(incoming instanceof Options)) {
       var unknown = Options.listUnknownOptions(incoming);
       if (unknown.length) {
-        console.warn('Unknown metadata.traceurOptions ignored: ' +
-            unknown.join(','));
+        console.warn(
+          "Unknown metadata.traceurOptions ignored: " + unknown.join(",")
+        );
       }
     }
     metadata.traceurOptions = incoming || new Options();
@@ -250,10 +304,14 @@ export class InternalLoader {
     return this.sourceMapsByURL_[url] || this.sourceMapsByOutputName_[url];
   }
 
-  load(name, referrerName = this.loader_.baseURL,
-      address, metadata = {}) {
+  load(name, referrerName = this.loader_.baseURL, address, metadata = {}) {
     metadata = this.defaultMetadata_(metadata);
-    var codeUnit = this.getOrCreateCodeUnit_(name, referrerName, address, metadata);
+    var codeUnit = this.getOrCreateCodeUnit_(
+      name,
+      referrerName,
+      address,
+      metadata
+    );
     this.load_(codeUnit);
     return codeUnit.promise.then(() => codeUnit);
   }
@@ -264,44 +322,51 @@ export class InternalLoader {
     }
 
     if (codeUnit.state === TRANSFORMED) {
-      this.handleCodeUnitLoaded(codeUnit)
+      this.handleCodeUnitLoaded(codeUnit);
     } else {
-      if (codeUnit.state !== NOT_STARTED)
-        return codeUnit;
+      if (codeUnit.state !== NOT_STARTED) return codeUnit;
 
       codeUnit.state = LOADING;
       codeUnit.address = this.loader_.locate(codeUnit);
 
-      this.loader_.fetch(codeUnit).then((text) => {
-        codeUnit.source = text;
-        return codeUnit;
-      }).
-      then((load) => {
-        return this.loader_.translate(load)
-      }).
-      then((source) => {
-        codeUnit.source = source;
-        codeUnit.state = LOADED;
-        this.handleCodeUnitLoaded(codeUnit);
-        return codeUnit;
-      }).
-      catch((err) => {
-        try {
-          codeUnit.state = ERROR;
-          codeUnit.error = err;
-          this.handleCodeUnitLoadError(codeUnit);
-        } catch (ex) {
-          console.error('Internal Error ' + (ex.stack || ex));
-        }
-      });
+      this.loader_
+        .fetch(codeUnit)
+        .then((text) => {
+          codeUnit.source = text;
+          return codeUnit;
+        })
+        .then((load) => {
+          return this.loader_.translate(load);
+        })
+        .then((source) => {
+          codeUnit.source = source;
+          codeUnit.state = LOADED;
+          this.handleCodeUnitLoaded(codeUnit);
+          return codeUnit;
+        })
+        .catch((err) => {
+          try {
+            codeUnit.state = ERROR;
+            codeUnit.error = err;
+            this.handleCodeUnitLoadError(codeUnit);
+          } catch (ex) {
+            console.error("Internal Error " + (ex.stack || ex));
+          }
+        });
     }
 
     return codeUnit;
   }
 
   module(code, referrerName, address, metadata) {
-    var codeUnit = new EvalCodeUnit(this.loaderCompiler, code, 'module',
-                                      null, referrerName, address);
+    var codeUnit = new EvalCodeUnit(
+      this.loaderCompiler,
+      code,
+      "module",
+      null,
+      referrerName,
+      address
+    );
     codeUnit.metadata = this.defaultMetadata_(metadata);
     this.cache.set({}, codeUnit);
     this.handleCodeUnitLoaded(codeUnit);
@@ -309,9 +374,15 @@ export class InternalLoader {
   }
 
   define(normalizedName, code, address, metadata) {
-    var codeUnit = new EvalCodeUnit(this.loaderCompiler, code, 'module',
-                                    normalizedName, null, address);
-    var key = this.getKey(normalizedName, 'module');
+    var codeUnit = new EvalCodeUnit(
+      this.loaderCompiler,
+      code,
+      "module",
+      normalizedName,
+      null,
+      address
+    );
+    var key = this.getKey(normalizedName, "module");
     codeUnit.metadata = this.defaultMetadata_(metadata);
     this.cache.set(key, codeUnit);
     this.handleCodeUnitLoaded(codeUnit);
@@ -325,12 +396,21 @@ export class InternalLoader {
    * @param {string=} address, URL
    */
   script(code, name, referrerName, address, metadata) {
-    var normalizedName = this.loader_.normalize(name || '', referrerName, address);
-    var codeUnit = new EvalCodeUnit(this.loaderCompiler, code, 'script',
-                                    normalizedName, referrerName, address);
+    var normalizedName = this.loader_.normalize(
+      name || "",
+      referrerName,
+      address
+    );
+    var codeUnit = new EvalCodeUnit(
+      this.loaderCompiler,
+      code,
+      "script",
+      normalizedName,
+      referrerName,
+      address
+    );
     var key = {};
-    if (name)
-      key = this.getKey(normalizedName, 'script');
+    if (name) key = this.getKey(normalizedName, "script");
     codeUnit.metadata = this.defaultMetadata_(metadata);
     this.cache.set(key, codeUnit);
     this.handleCodeUnitLoaded(codeUnit);
@@ -338,40 +418,51 @@ export class InternalLoader {
   }
 
   getKey(url, type) {
-    var combined = type + ':' + url;
+    var combined = type + ":" + url;
     if (combined in this.urlToKey) {
       return this.urlToKey[combined];
     }
 
-    return this.urlToKey[combined] = {};
+    return (this.urlToKey[combined] = {});
   }
 
   getCodeUnit_(normalizedName, type) {
     var key = this.getKey(normalizedName, type);
     var codeUnit = this.cache.get(key);
-    return {key, codeUnit};
+    return { key, codeUnit };
   }
 
   getOrCreateCodeUnit_(name, referrerName, address, metadata) {
     var normalizedName = this.loader_.normalize(name, referrerName, address);
     // TODO(jjb): embed type in name per es-discuss Yehuda Katz,
     // eg import 'name,script';
-    var type = 'module';
+    var type = "module";
     if (metadata && metadata.traceurOptions && metadata.traceurOptions.script)
-      type = 'script';
-    var {key, codeUnit} = this.getCodeUnit_(normalizedName, type);
+      type = "script";
+    var { key, codeUnit } = this.getCodeUnit_(normalizedName, type);
 
     if (!codeUnit) {
       // All new code units need metadata set.
       assert(metadata && metadata.traceurOptions);
       var module = this.loader_.get(normalizedName);
       if (module) {
-        codeUnit = new PreCompiledCodeUnit(this.loaderCompiler, normalizedName,
-            name, referrerName, address, module);
-        codeUnit.type = 'module';
+        codeUnit = new PreCompiledCodeUnit(
+          this.loaderCompiler,
+          normalizedName,
+          name,
+          referrerName,
+          address,
+          module
+        );
+        codeUnit.type = "module";
       } else {
-        codeUnit = new LoadCodeUnit(this.loaderCompiler, normalizedName,
-            name, referrerName, address);
+        codeUnit = new LoadCodeUnit(
+          this.loaderCompiler,
+          normalizedName,
+          name,
+          referrerName,
+          address
+        );
         codeUnit.type = type;
       }
       // We copy the incoming metadata to pass values from the API and to
@@ -381,7 +472,7 @@ export class InternalLoader {
       codeUnit.metadata = {
         traceurOptions: metadata.traceurOptions,
         outputName: metadata.outputName,
-        rootModule: metadata.rootModule
+        rootModule: metadata.rootModule,
       };
       this.cache.set(key, codeUnit);
     }
@@ -394,7 +485,7 @@ export class InternalLoader {
 
   getCodeUnitForModuleSpecifier(name, referrerName) {
     var normalizedName = this.loader_.normalize(name, referrerName);
-    return this.getCodeUnit_(normalizedName, 'module').codeUnit;
+    return this.getCodeUnit_(normalizedName, "module").codeUnit;
   }
 
   getExportsListForModuleSpecifier(name, referrer) {
@@ -402,12 +493,12 @@ export class InternalLoader {
     var exportsList = codeUnit.metadata.moduleSymbol;
     if (!exportsList) {
       if (codeUnit.result) {
-        exportsList =
-            new ExportsList(codeUnit.normalizedName);
+        exportsList = new ExportsList(codeUnit.normalizedName);
         exportsList.addExportsFromModule(codeUnit.result);
       } else {
         throw new Error(
-            `InternalError: ${name} is not a module, required by ${referrer}`);
+          `InternalError: ${name} is not a module, required by ${referrer}`
+        );
       }
     }
     return exportsList;
@@ -428,8 +519,12 @@ export class InternalLoader {
         return;
       }
       codeUnit.dependencies = moduleSpecifiers.map((name) => {
-        return this.getOrCreateCodeUnit_(name, referrerName, null,
-            this.defaultModuleMetadata_(codeUnit.metadata));
+        return this.getOrCreateCodeUnit_(
+          name,
+          referrerName,
+          null,
+          this.defaultModuleMetadata_(codeUnit.metadata)
+        );
       });
     } catch (error) {
       this.rejectOneAndAll(codeUnit, error);
@@ -442,8 +537,7 @@ export class InternalLoader {
     if (this.areAll(PARSED)) {
       try {
         // Currently analyze is only needed for module dependencies.
-        if (codeUnit.type === 'module')
-          this.analyze();
+        if (codeUnit.type === "module") this.analyze();
         this.transform();
         this.evaluate();
       } catch (error) {
@@ -465,8 +559,9 @@ export class InternalLoader {
    * @param {CodeUnit} codeUnit
    */
   handleCodeUnitLoadError(codeUnit) {
-    var message = codeUnit.error ? String(codeUnit.error) + '\n' :
-        `Failed to load '${codeUnit.address}'.\n`;
+    var message = codeUnit.error
+      ? String(codeUnit.error) + "\n"
+      : `Failed to load '${codeUnit.address}'.\n`;
     message += codeUnit.nameTrace() + this.loader_.nameTrace(codeUnit);
 
     this.rejectOneAndAll(codeUnit, new Error(message));
@@ -478,8 +573,7 @@ export class InternalLoader {
   abortAll(errorMessage) {
     // Notify all codeUnit listeners (else tests hang til timeout).
     this.cache.forEach((codeUnit) => {
-      if (codeUnit.state !== ERROR)
-        codeUnit.reject(errorMessage);
+      if (codeUnit.state !== ERROR) codeUnit.reject(errorMessage);
     });
   }
 
@@ -500,14 +594,16 @@ export class InternalLoader {
       if (codeUnit.state === TRANSFORMING) {
         var cir = codeUnit.normalizedName;
         var cle = dependentName;
-        this.rejectOneAndAll(codeUnit, new Error(
-            `Unsupported circular dependency between ${cir} and ${cle}`));
+        this.rejectOneAndAll(
+          codeUnit,
+          new Error(`Unsupported circular dependency between ${cir} and ${cle}`)
+        );
         return;
       }
       codeUnit.state = TRANSFORMING;
       try {
         this.transformCodeUnit_(codeUnit);
-      } catch(error) {
+      } catch (error) {
         this.rejectOneAndAll(codeUnit, error);
         return;
       }
@@ -516,8 +612,7 @@ export class InternalLoader {
 
   transformCodeUnit_(codeUnit) {
     this.transformDependencies_(codeUnit.dependencies, codeUnit.normalizedName);
-    if (codeUnit.state === ERROR)
-      return;
+    if (codeUnit.state === ERROR) return;
 
     this.loaderCompiler.transform(codeUnit);
     codeUnit.state = TRANSFORMED;
@@ -580,12 +675,11 @@ export class InternalLoader {
       codeUnit.resolve(codeUnit.result);
     }
   }
-
 }
 
 export var internals = {
   CodeUnit,
   EvalCodeUnit,
   LoadCodeUnit,
-  LoaderCompiler
+  LoaderCompiler,
 };

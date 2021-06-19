@@ -17,7 +17,7 @@ function* tryFinallyFinallyGenerator() {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -26,4 +26,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('131723', accumulate(tryFinallyFinallyGenerator()));
+assert.equal("131723", accumulate(tryFinallyFinallyGenerator()));

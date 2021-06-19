@@ -1,7 +1,6 @@
-
 function onClick() {
   foo() + 1;
-  var p = 'prop';
+  var p = "prop";
   obj[p]++;
   bar();
   // lots more code....
@@ -14,4 +13,3 @@ function updateButton() {
   document.querySelector("#myButton").innerHTML = message;
   console.log(message);
 }
-

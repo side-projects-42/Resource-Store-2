@@ -1,4 +1,4 @@
-import {isFinite as isFiniteNumber} from './helpers.core';
+import { isFinite as isFiniteNumber } from "./helpers.core";
 
 /**
  * @alias Chart.helpers.math
@@ -12,7 +12,7 @@ export const INFINITY = Number.POSITIVE_INFINITY;
 export const RAD_PER_DEG = PI / 180;
 export const HALF_PI = PI / 2;
 export const QUARTER_PI = PI / 4;
-export const TWO_THIRDS_PI = PI * 2 / 3;
+export const TWO_THIRDS_PI = (PI * 2) / 3;
 
 export const log10 = Math.log10;
 export const sign = Math.sign;
@@ -24,7 +24,8 @@ export const sign = Math.sign;
 export function niceNum(range) {
   const niceRange = Math.pow(10, Math.floor(log10(range)));
   const fraction = range / niceRange;
-  const niceFraction = fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 5 ? 5 : 10;
+  const niceFraction =
+    fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 5 ? 5 : 10;
   return niceFraction * niceRange;
 }
 
@@ -43,7 +44,8 @@ export function _factorize(value) {
       result.push(value / i);
     }
   }
-  if (sqrt === (sqrt | 0)) { // if value is a square number
+  if (sqrt === (sqrt | 0)) {
+    // if value is a square number
     result.push(sqrt);
   }
 
@@ -61,7 +63,7 @@ export function almostEquals(x, y, epsilon) {
 
 export function almostWhole(x, epsilon) {
   const rounded = Math.round(x);
-  return ((rounded - epsilon) <= x) && ((rounded + epsilon) >= x);
+  return rounded - epsilon <= x && rounded + epsilon >= x;
 }
 
 /**
@@ -111,17 +113,20 @@ export function _decimalPlaces(x) {
 export function getAngleFromPoint(centrePoint, anglePoint) {
   const distanceFromXCenter = anglePoint.x - centrePoint.x;
   const distanceFromYCenter = anglePoint.y - centrePoint.y;
-  const radialDistanceFromCenter = Math.sqrt(distanceFromXCenter * distanceFromXCenter + distanceFromYCenter * distanceFromYCenter);
+  const radialDistanceFromCenter = Math.sqrt(
+    distanceFromXCenter * distanceFromXCenter +
+      distanceFromYCenter * distanceFromYCenter
+  );
 
   let angle = Math.atan2(distanceFromYCenter, distanceFromXCenter);
 
-  if (angle < (-0.5 * PI)) {
+  if (angle < -0.5 * PI) {
     angle += TAU; // make sure the returned angle is in the range of (-PI/2, 3PI/2]
   }
 
   return {
     angle,
-    distance: radialDistanceFromCenter
+    distance: radialDistanceFromCenter,
   };
 }
 
@@ -134,7 +139,7 @@ export function distanceBetweenPoints(pt1, pt2) {
  * @private
  */
 export function _angleDiff(a, b) {
-  return (a - b + PITAU) % TAU - PI;
+  return ((a - b + PITAU) % TAU) - PI;
 }
 
 /**
@@ -142,7 +147,7 @@ export function _angleDiff(a, b) {
  * @private
  */
 export function _normalizeAngle(a) {
-  return (a % TAU + TAU) % TAU;
+  return ((a % TAU) + TAU) % TAU;
 }
 
 /**
@@ -156,8 +161,12 @@ export function _angleBetween(angle, start, end, sameAngleIsFullCircle) {
   const angleToEnd = _normalizeAngle(e - a);
   const startToAngle = _normalizeAngle(a - s);
   const endToAngle = _normalizeAngle(a - e);
-  return a === s || a === e || (sameAngleIsFullCircle && s === e)
-    || (angleToStart > angleToEnd && startToAngle < endToAngle);
+  return (
+    a === s ||
+    a === e ||
+    (sameAngleIsFullCircle && s === e) ||
+    (angleToStart > angleToEnd && startToAngle < endToAngle)
+  );
 }
 
 /**

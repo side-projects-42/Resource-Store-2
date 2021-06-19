@@ -29,9 +29,9 @@ module.exports = {
   // ...
   output: {
     globals: {
-      'chart.js': 'Chart',
-      'chart.js/helpers': 'Chart.helpers'
-    }
-  }
+      "chart.js": "Chart",
+      "chart.js/helpers": "Chart.helpers",
+    },
+  },
 };
 ```

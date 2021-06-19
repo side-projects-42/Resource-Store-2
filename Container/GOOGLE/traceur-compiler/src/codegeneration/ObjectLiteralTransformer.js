@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {FindVisitor} from './FindVisitor.js';
+import { FindVisitor } from "./FindVisitor.js";
 import {
   FunctionExpression,
   IdentifierExpression,
-  LiteralExpression
-} from '../syntax/trees/ParseTrees.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {IDENTIFIER} from '../syntax/TokenType.js';
+  LiteralExpression,
+} from "../syntax/trees/ParseTrees.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { IDENTIFIER } from "../syntax/TokenType.js";
 import {
   COMPUTED_PROPERTY_NAME,
-  LITERAL_PROPERTY_NAME
-} from '../syntax/trees/ParseTreeType.js';
-import {StringMap} from '../util/StringMap.js';
+  LITERAL_PROPERTY_NAME,
+} from "../syntax/trees/ParseTreeType.js";
+import { StringMap } from "../util/StringMap.js";
 import {
   createAssignmentExpression,
   createCommaExpression,
@@ -36,9 +36,9 @@ import {
   createObjectLiteral,
   createParenExpression,
   createPropertyNameAssignment,
-  createStringLiteral
-} from './ParseTreeFactory.js';
-import {propName} from '../staticsemantics/PropName.js';
+  createStringLiteral,
+} from "./ParseTreeFactory.js";
+import { propName } from "../staticsemantics/PropName.js";
 
 /**
  * FindAdvancedProperty class that finds if an object literal contains a
@@ -52,11 +52,9 @@ class FindAdvancedProperty extends FindVisitor {
   }
 
   visitPropertyNameAssignment(tree) {
-    if (isProtoName(tree.name))
-      this.protoExpression = tree.value;
-    else
-      this.visitAny(tree.name);
-      // We do not want to visit object literals in the property's value.
+    if (isProtoName(tree.name)) this.protoExpression = tree.value;
+    else this.visitAny(tree.name);
+    // We do not want to visit object literals in the property's value.
   }
 
   visitMethod(tree) {
@@ -87,13 +85,12 @@ class FindAdvancedProperty extends FindVisitor {
   }
 
   visitComputedPropertyName(tree) {
-    if (this.transformOptions_.computedPropertyNames)
-      this.found = true;
+    if (this.transformOptions_.computedPropertyNames) this.found = true;
   }
 }
 
 function isProtoName(tree) {
-  return propName(tree) === '__proto__';
+  return propName(tree) === "__proto__";
 }
 
 /**
@@ -119,22 +116,19 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
   }
 
   findSeenAccessor_(name) {
-    if (name.type === COMPUTED_PROPERTY_NAME)
-      return null;
+    if (name.type === COMPUTED_PROPERTY_NAME) return null;
     let s = propName(name);
     return this.seenAccessors.get(s);
   }
 
   removeSeenAccessor_(name) {
-    if (name.type === COMPUTED_PROPERTY_NAME)
-      return;
+    if (name.type === COMPUTED_PROPERTY_NAME) return;
     let s = propName(name);
     this.seenAccessors.delete(s);
   }
 
   addSeenAccessor_(name, descr) {
-    if (name.type === COMPUTED_PROPERTY_NAME)
-      return;
+    if (name.type === COMPUTED_PROPERTY_NAME) return;
     let s = propName(name);
     this.seenAccessors.set(s, descr);
   }
@@ -154,10 +148,8 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
     let expression;
 
     if (name.type === LITERAL_PROPERTY_NAME) {
-      if (this.needsAdvancedTransform)
-        expression = this.getPropertyName_(name);
-      else
-        expression = name;
+      if (this.needsAdvancedTransform) expression = this.getPropertyName_(name);
+      else expression = name;
     } else {
       expression = name.expression;
     }
@@ -191,8 +183,7 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
       case IDENTIFIER:
         return createStringLiteral(token.value);
       default:
-        if (token.isKeyword())
-          return createStringLiteral(token.type);
+        if (token.isKeyword()) return createStringLiteral(token.type);
         return new LiteralExpression(token.location, token);
     }
   }
@@ -200,8 +191,12 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
   // Don't traverse into classes, let the class transformer handle classes.
   // Traversing into a class will transform the methods into:
   //     method: function () {...}.
-  transformClassDeclaration(tree) { return tree; }
-  transformClassExpression(tree) { return tree; }
+  transformClassDeclaration(tree) {
+    return tree;
+  }
+  transformClassExpression(tree) {
+    return tree;
+  }
 
   transformObjectLiteral(tree) {
     // If the object literal needs to be transformed this calls the
@@ -244,22 +239,20 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
       let expression = property[0];
       let descr = property[1];
       return createDefineProperty(
-          tempVarIdentifierExpression,
-          expression,
-          descr);
+        tempVarIdentifierExpression,
+        expression,
+        descr
+      );
     });
 
     let protoExpression = this.transformAny(finder.protoExpression);
     let objectExpression;
-    if (protoExpression)
-      objectExpression = createObjectCreate(protoExpression);
-    else
-      objectExpression = createObjectLiteral([]);
+    if (protoExpression) objectExpression = createObjectCreate(protoExpression);
+    else objectExpression = createObjectLiteral([]);
 
     expressions.unshift(
-        createAssignmentExpression(
-            tempVarIdentifierExpression,
-            objectExpression));
+      createAssignmentExpression(tempVarIdentifierExpression, objectExpression)
+    );
     expressions.push(tempVarIdentifierExpression);
     return createParenExpression(createCommaExpression(expressions));
   }
@@ -269,49 +262,49 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
       return super.transformPropertyNameAssignment(tree);
 
     // __proto__ is handled separately.
-    if (isProtoName(tree.name))
-      return null;
+    if (isProtoName(tree.name)) return null;
 
-    return this.createProperty_(tree.name,
-        {
-          value: this.transformAny(tree.value),
-          configurable: true,
-          enumerable: true,
-          writable: true
-        });
+    return this.createProperty_(tree.name, {
+      value: this.transformAny(tree.value),
+      configurable: true,
+      enumerable: true,
+      writable: true,
+    });
   }
   transformGetAccessor(tree) {
-    if (!this.needsAdvancedTransform)
-      return super.transformGetAccessor(tree);
+    if (!this.needsAdvancedTransform) return super.transformGetAccessor(tree);
 
     let body = this.transformAny(tree.body);
     let func = createFunctionExpression(createEmptyParameterList(), body);
-    return this.createProperty_(tree.name,
-        {
-          get: func,
-          configurable: true,
-          enumerable: true
-        });
+    return this.createProperty_(tree.name, {
+      get: func,
+      configurable: true,
+      enumerable: true,
+    });
   }
   transformSetAccessor(tree) {
-    if (!this.needsAdvancedTransform)
-      return super.transformSetAccessor(tree);
+    if (!this.needsAdvancedTransform) return super.transformSetAccessor(tree);
 
     let body = this.transformAny(tree.body);
     let parameterList = this.transformAny(tree.parameterList);
     let func = createFunctionExpression(parameterList, body);
-    return this.createProperty_(tree.name,
-        {
-          set: func,
-          configurable: true,
-          enumerable: true
-        });
+    return this.createProperty_(tree.name, {
+      set: func,
+      configurable: true,
+      enumerable: true,
+    });
   }
 
   transformMethod(tree) {
-    let func = new FunctionExpression(tree.location, tree.debugName, tree.functionKind,
-        this.transformAny(tree.parameterList), tree.typeAnnotation, [],
-        this.transformAny(tree.body));
+    let func = new FunctionExpression(
+      tree.location,
+      tree.debugName,
+      tree.functionKind,
+      this.transformAny(tree.parameterList),
+      tree.typeAnnotation,
+      [],
+      this.transformAny(tree.body)
+    );
     if (!this.needsAdvancedTransform) {
       // m() { }
       //  =>
@@ -320,13 +313,12 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
     }
 
     let expression = this.transformAny(tree.name);
-    return this.createProperty_(tree.name,
-        {
-          value: func,
-          configurable: true,
-          enumerable: true,
-          writable: true
-        });
+    return this.createProperty_(tree.name, {
+      value: func,
+      configurable: true,
+      enumerable: true,
+      writable: true,
+    });
   }
 
   transformPropertyNameShorthand(tree) {
@@ -334,12 +326,11 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
       return super.transformPropertyNameShorthand(tree);
 
     let expression = this.transformAny(tree.name);
-    return this.createProperty_(tree.name,
-        {
-          value: new IdentifierExpression(tree.location, tree.name.identifierToken),
-          configurable: true,
-          enumerable: false,
-          writable: true
-        });
+    return this.createProperty_(tree.name, {
+      value: new IdentifierExpression(tree.location, tree.name.identifierToken),
+      configurable: true,
+      enumerable: false,
+      writable: true,
+    });
   }
 }

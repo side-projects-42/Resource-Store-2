@@ -1,7 +1,9 @@
 class NameBindingBase {}
 
 class NameBindingDerived extends NameBindingBase {
-  getX() { return this.x; }
+  getX() {
+    return this.x;
+  }
 }
 
 // ----------------------------------------------------------------------------

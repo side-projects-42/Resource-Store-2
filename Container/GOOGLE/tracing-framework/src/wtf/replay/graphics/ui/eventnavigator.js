@@ -11,17 +11,15 @@
  * @author chizeng@google.com (Chi Zeng)
  */
 
-goog.provide('wtf.replay.graphics.ui.EventNavigator');
+goog.provide("wtf.replay.graphics.ui.EventNavigator");
 
-goog.require('goog.soy');
-goog.require('wtf.replay.graphics.Playback');
-goog.require('wtf.replay.graphics.ui.EventNavigatorTableSource');
-goog.require('wtf.replay.graphics.ui.EventNavigatorToolbar');
-goog.require('wtf.replay.graphics.ui.eventNavigator');
-goog.require('wtf.ui.Control');
-goog.require('wtf.ui.VirtualTable');
-
-
+goog.require("goog.soy");
+goog.require("wtf.replay.graphics.Playback");
+goog.require("wtf.replay.graphics.ui.EventNavigatorTableSource");
+goog.require("wtf.replay.graphics.ui.EventNavigatorToolbar");
+goog.require("wtf.replay.graphics.ui.eventNavigator");
+goog.require("wtf.ui.Control");
+goog.require("wtf.ui.VirtualTable");
 
 /**
  * Navigation of events control.
@@ -33,8 +31,12 @@ goog.require('wtf.ui.VirtualTable');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.replay.graphics.ui.EventNavigator = function(
-    playback, eventList, parentElement, opt_domHelper) {
+wtf.replay.graphics.ui.EventNavigator = function (
+  playback,
+  eventList,
+  parentElement,
+  opt_domHelper
+) {
   goog.base(this, parentElement, opt_domHelper);
 
   /**
@@ -42,9 +44,11 @@ wtf.replay.graphics.ui.EventNavigator = function(
    * @type {!wtf.replay.graphics.ui.EventNavigatorTableSource}
    * @private
    */
-  this.tableSource_ =
-      new wtf.replay.graphics.ui.EventNavigatorTableSource(
-          playback, eventList, this.getDom());
+  this.tableSource_ = new wtf.replay.graphics.ui.EventNavigatorTableSource(
+    playback,
+    eventList,
+    this.getDom()
+  );
   this.registerDisposable(this.tableSource_);
 
   /**
@@ -53,8 +57,10 @@ wtf.replay.graphics.ui.EventNavigator = function(
    * @private
    */
   this.toolbar_ = new wtf.replay.graphics.ui.EventNavigatorToolbar(
-      this.getChildElement(goog.getCssName('toolbarContainer')),
-      playback, this.getDom());
+    this.getChildElement(goog.getCssName("toolbarContainer")),
+    playback,
+    this.getDom()
+  );
   this.registerDisposable(this.toolbar_);
 
   /**
@@ -63,8 +69,9 @@ wtf.replay.graphics.ui.EventNavigator = function(
    * @private
    */
   this.table_ = new wtf.ui.VirtualTable(
-      this.getChildElement(goog.getCssName('tableOuter')),
-      this.getDom());
+    this.getChildElement(goog.getCssName("tableOuter")),
+    this.getDom()
+  );
   this.registerDisposable(this.table_);
 
   /**
@@ -86,36 +93,37 @@ wtf.replay.graphics.ui.EventNavigator = function(
 };
 goog.inherits(wtf.replay.graphics.ui.EventNavigator, wtf.ui.Control);
 
-
 /**
  * @override
  */
-wtf.replay.graphics.ui.EventNavigator.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
+wtf.replay.graphics.ui.EventNavigator.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(
       wtf.replay.graphics.ui.eventNavigator.controller,
-      undefined, undefined, dom));
+      undefined,
+      undefined,
+      dom
+    )
+  );
 };
-
 
 /**
  * Specifies that the event navigator is ready for interaction.
  */
-wtf.replay.graphics.ui.EventNavigator.prototype.setReady = function() {
+wtf.replay.graphics.ui.EventNavigator.prototype.setReady = function () {
   this.table_.setSource(this.tableSource_);
   this.toolbar_.setReady();
 };
 
-
 /**
  * Changes the layout of elements to fit the container.
  */
-wtf.replay.graphics.ui.EventNavigator.prototype.layout = function() {
+wtf.replay.graphics.ui.EventNavigator.prototype.layout = function () {
   this.table_.layout();
   if (this.table_.getSource()) {
     this.updateScrolling(this.playback_);
   }
 };
-
 
 /**
  * Listens to updates from the toolbar.
@@ -123,22 +131,25 @@ wtf.replay.graphics.ui.EventNavigator.prototype.layout = function() {
  * @private
  */
 wtf.replay.graphics.ui.EventNavigator.prototype.listenToToolbarUpdates_ =
-    function(playback) {
-  // If the user selects an event within a step, go to it.
-  this.toolbar_.addListener(
+  function (playback) {
+    // If the user selects an event within a step, go to it.
+    this.toolbar_.addListener(
       wtf.replay.graphics.ui.EventNavigatorToolbar.EventType
-          .MANUAL_SUB_STEP_SEEK,
-      function() {
+        .MANUAL_SUB_STEP_SEEK,
+      function () {
         this.updateScrolling(playback);
-      }, this);
+      },
+      this
+    );
 
-  // If the user changes the search value, update the events displayed.
-  this.toolbar_.addListener(
+    // If the user changes the search value, update the events displayed.
+    this.toolbar_.addListener(
       wtf.replay.graphics.ui.EventNavigatorToolbar.EventType
-          .SEARCH_VALUE_CHANGED,
-      this.setSearchValue_, this);
-};
-
+        .SEARCH_VALUE_CHANGED,
+      this.setSearchValue_,
+      this
+    );
+  };
 
 /**
  * Listens to play updates to determine if the event navigator should update
@@ -147,24 +158,27 @@ wtf.replay.graphics.ui.EventNavigator.prototype.listenToToolbarUpdates_ =
  * @private
  */
 wtf.replay.graphics.ui.EventNavigator.prototype.listenToPlayUpdates_ =
-    function(playback) {
-  // After playing begins, do not update the table events upon step change.
-  playback.addListener(
+  function (playback) {
+    // After playing begins, do not update the table events upon step change.
+    playback.addListener(
       wtf.replay.graphics.Playback.EventType.PLAY_BEGAN,
-      function() {
+      function () {
         this.unListenToStepUpdates_(playback);
         this.table_.setSource(null);
-      }, this);
+      },
+      this
+    );
 
-  // After playing stops, update the table events upon step change.
-  playback.addListener(
+    // After playing stops, update the table events upon step change.
+    playback.addListener(
       wtf.replay.graphics.Playback.EventType.PLAY_STOPPED,
-      function() {
+      function () {
         this.listenToStepUpdates_(playback);
         this.table_.setSource(this.tableSource_);
-      }, this);
-};
-
+      },
+      this
+    );
+  };
 
 /**
  * Ensures that the event table updates when the step changes.
@@ -172,15 +186,18 @@ wtf.replay.graphics.ui.EventNavigator.prototype.listenToPlayUpdates_ =
  * @private
  */
 wtf.replay.graphics.ui.EventNavigator.prototype.listenToStepUpdates_ =
-    function(playback) {
-  playback.addListener(
+  function (playback) {
+    playback.addListener(
       wtf.replay.graphics.Playback.EventType.STEP_CHANGED,
-      this.tableSource_.invalidate, this.tableSource_);
-  playback.addListener(
+      this.tableSource_.invalidate,
+      this.tableSource_
+    );
+    playback.addListener(
       wtf.replay.graphics.Playback.EventType.SUB_STEP_EVENT_CHANGED,
-      this.tableSource_.invalidate, this.tableSource_);
-};
-
+      this.tableSource_.invalidate,
+      this.tableSource_
+    );
+  };
 
 /**
  * Stops updating the event table based on changes in step.
@@ -188,31 +205,32 @@ wtf.replay.graphics.ui.EventNavigator.prototype.listenToStepUpdates_ =
  * @private
  */
 wtf.replay.graphics.ui.EventNavigator.prototype.unListenToStepUpdates_ =
-    function(playback) {
-  playback.removeListener(
+  function (playback) {
+    playback.removeListener(
       wtf.replay.graphics.Playback.EventType.STEP_CHANGED,
-      this.tableSource_.invalidate, this.tableSource_);
-};
-
+      this.tableSource_.invalidate,
+      this.tableSource_
+    );
+  };
 
 /**
  * Updates the token used to search within the events table.
  * @param {string} value The new value.
  * @private
  */
-wtf.replay.graphics.ui.EventNavigator.prototype.setSearchValue_ = function(
-    value) {
+wtf.replay.graphics.ui.EventNavigator.prototype.setSearchValue_ = function (
+  value
+) {
   this.tableSource_.setSearchValue(value);
 };
-
 
 /**
  * Updates the scrolling of the virtual table.
  * @param {!wtf.replay.graphics.Playback} playback The playback.
  */
-wtf.replay.graphics.ui.EventNavigator.prototype.updateScrolling = function(
-    playback) {
+wtf.replay.graphics.ui.EventNavigator.prototype.updateScrolling = function (
+  playback
+) {
   var rowToScrollTo = playback.getSubStepEventIndex() + 1;
-  this.table_.scrollToRow(
-      rowToScrollTo, wtf.ui.VirtualTable.Alignment.MIDDLE);
+  this.table_.scrollToRow(rowToScrollTo, wtf.ui.VirtualTable.Alignment.MIDDLE);
 };

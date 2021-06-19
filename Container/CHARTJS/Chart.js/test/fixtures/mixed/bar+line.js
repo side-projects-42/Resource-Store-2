@@ -3,37 +3,37 @@ module.exports = {
     data: {
       datasets: [
         {
-          type: 'line',
+          type: "line",
           data: [6, 16, 3, 19],
-          borderColor: '#0000ff',
-          fill: false
+          borderColor: "#0000ff",
+          fill: false,
         },
         {
-          type: 'bar',
+          type: "bar",
           data: [5, 20, 1, 10],
-          backgroundColor: '#00ff00',
-          borderColor: '#ff0000'
-        }
-      ]
+          backgroundColor: "#00ff00",
+          borderColor: "#ff0000",
+        },
+      ],
     },
     options: {
-      indexAxis: 'y',
+      indexAxis: "y",
       scales: {
         horz: {
-          position: 'top'
+          position: "top",
         },
         vert: {
-          axis: 'y',
-          labels: ['a', 'b', 'c', 'd']
-        }
-      }
-    }
+          axis: "y",
+          labels: ["a", "b", "c", "d"],
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

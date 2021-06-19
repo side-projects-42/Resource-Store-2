@@ -1,6 +1,6 @@
-import {isArray} from '../helpers/helpers.core';
-import {formatNumber} from '../helpers/helpers.intl';
-import {log10} from '../helpers/helpers.math';
+import { isArray } from "../helpers/helpers.core";
+import { formatNumber } from "../helpers/helpers.intl";
+import { log10 } from "../helpers/helpers.math";
 
 /**
  * Namespace to hold formatters for different types of ticks
@@ -14,7 +14,7 @@ const formatters = {
    * @return {string|string[]} the label to display
    */
   values(value) {
-    return isArray(value) ? value : '' + value;
+    return isArray(value) ? value : "" + value;
   },
 
   /**
@@ -27,7 +27,7 @@ const formatters = {
    */
   numeric(tickValue, index, ticks) {
     if (tickValue === 0) {
-      return '0'; // never show decimal places for 0
+      return "0"; // never show decimal places for 0
     }
 
     const locale = this.chart.options.locale;
@@ -36,9 +36,12 @@ const formatters = {
 
     if (ticks.length > 1) {
       // all ticks are small or there huge numbers; use scientific notation
-      const maxTick = Math.max(Math.abs(ticks[0].value), Math.abs(ticks[ticks.length - 1].value));
-      if (maxTick < 1e-4 || maxTick > 1e+15) {
-        notation = 'scientific';
+      const maxTick = Math.max(
+        Math.abs(ticks[0].value),
+        Math.abs(ticks[ticks.length - 1].value)
+      );
+      if (maxTick < 1e-4 || maxTick > 1e15) {
+        notation = "scientific";
       }
 
       delta = calculateDelta(tickValue, ticks);
@@ -47,12 +50,15 @@ const formatters = {
     const logDelta = log10(Math.abs(delta));
     const numDecimal = Math.max(Math.min(-1 * Math.floor(logDelta), 20), 0); // toFixed has a max of 20 decimal places
 
-    const options = {notation, minimumFractionDigits: numDecimal, maximumFractionDigits: numDecimal};
+    const options = {
+      notation,
+      minimumFractionDigits: numDecimal,
+      maximumFractionDigits: numDecimal,
+    };
     Object.assign(options, this.options.ticks.format);
 
     return formatNumber(tickValue, locale, options);
   },
-
 
   /**
    * Formatter for logarithmic ticks
@@ -64,22 +70,23 @@ const formatters = {
    */
   logarithmic(tickValue, index, ticks) {
     if (tickValue === 0) {
-      return '0';
+      return "0";
     }
-    const remain = tickValue / (Math.pow(10, Math.floor(log10(tickValue))));
+    const remain = tickValue / Math.pow(10, Math.floor(log10(tickValue)));
     if (remain === 1 || remain === 2 || remain === 5) {
       return formatters.numeric.call(this, tickValue, index, ticks);
     }
-    return '';
-  }
-
+    return "";
+  },
 };
-
 
 function calculateDelta(tickValue, ticks) {
   // Figure out how many digits to show
   // The space between the first two ticks might be smaller than normal spacing
-  let delta = ticks.length > 3 ? ticks[2].value - ticks[1].value : ticks[1].value - ticks[0].value;
+  let delta =
+    ticks.length > 3
+      ? ticks[2].value - ticks[1].value
+      : ticks[1].value - ticks[0].value;
 
   // If we have a number like 2.5 as the delta, figure out how many decimal places we need
   if (Math.abs(delta) >= 1 && tickValue !== Math.floor(tickValue)) {
@@ -93,4 +100,4 @@ function calculateDelta(tickValue, ticks) {
  * Namespace to hold static tick generation functions
  * @namespace Chart.Ticks
  */
-export default {formatters};
+export default { formatters };

@@ -1,5 +1,4 @@
-(function() {
-
+(function () {
   function* f() {
     function g() {
       return 42;
@@ -8,5 +7,4 @@
   }
 
   assert.equal(42, f().next().value());
-
 })();

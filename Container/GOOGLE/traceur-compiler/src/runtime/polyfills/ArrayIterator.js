@@ -14,11 +14,7 @@
 
 // This is based on the V8 implementation.
 
-import {
-  toObject,
-  toUint32,
-  createIteratorResultObject
-} from './utils.js';
+import { toObject, toUint32, createIteratorResultObject } from "./utils.js";
 
 var ARRAY_ITERATOR_KIND_KEYS = 1;
 var ARRAY_ITERATOR_KIND_VALUES = 2;
@@ -26,13 +22,12 @@ var ARRAY_ITERATOR_KIND_ENTRIES = 3;
 // The spec draft also has "sparse" but it is never used.
 
 class ArrayIterator {
-
   // 15.4.5.2.2 ArrayIterator.prototype.next( )
   next() {
     var iterator = toObject(this);
     var array = iterator.iteratorObject_;
     if (!array) {
-      throw new TypeError('Object is not an ArrayIterator');
+      throw new TypeError("Object is not an ArrayIterator");
     }
 
     var index = iterator.arrayIteratorNextIndex_;
@@ -65,7 +60,7 @@ class ArrayIterator {
 // 15.4.5.1 CreateArrayIterator Abstract Operation
 function createArrayIterator(array, kind) {
   var object = toObject(array);
-  var iterator = new ArrayIterator;
+  var iterator = new ArrayIterator();
   iterator.iteratorObject_ = object;
   iterator.arrayIteratorNextIndex_ = 0;
   iterator.arrayIterationKind_ = kind;

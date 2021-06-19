@@ -15,8 +15,8 @@
 /**
  * The traceur runtime.
  */
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
   var $create = Object.create;
   var $defineProperty = Object.defineProperty;
@@ -30,7 +30,7 @@
       configurable: true,
       enumerable: false,
       value: value,
-      writable: true
+      writable: true,
     };
   }
 
@@ -40,41 +40,39 @@
     // Harmony String Extras
     // http://wiki.ecmascript.org/doku.php?id=harmony:string_extras
     Object.defineProperties(String.prototype, {
-      startsWith: method(function(s) {
-       return this.lastIndexOf(s, 0) === 0;
+      startsWith: method(function (s) {
+        return this.lastIndexOf(s, 0) === 0;
       }),
-      endsWith: method(function(s) {
+      endsWith: method(function (s) {
         var t = String(s);
         var l = this.length - t.length;
         return l >= 0 && this.indexOf(t, l) === l;
       }),
-      contains: method(function(s) {
+      contains: method(function (s) {
         return this.indexOf(s) !== -1;
       }),
-      toArray: method(function() {
-        return this.split('');
-      })
+      toArray: method(function () {
+        return this.split("");
+      }),
     });
 
     // 15.5.3.4 String.raw ( callSite, ...substitutions)
-    $defineProperty(String, 'raw', {
-      value: function(callsite) {
+    $defineProperty(String, "raw", {
+      value: function (callsite) {
         var raw = callsite.raw;
-        var len = raw.length >>> 0;  // ToUint
-        if (len === 0)
-          return '';
-        var s = '';
+        var len = raw.length >>> 0; // ToUint
+        if (len === 0) return "";
+        var s = "";
         var i = 0;
         while (true) {
           s += raw[i];
-          if (i + 1 === len)
-            return s;
+          if (i + 1 === len) return s;
           s += arguments[++i];
         }
       },
       configurable: true,
       enumerable: false,
-      writable: true
+      writable: true,
     });
   }
 
@@ -85,7 +83,7 @@
    * @return {string}
    */
   function newUniqueString() {
-    return '__$' + Math.floor(Math.random() * 1e9) + '$' + ++counter + '$__';
+    return "__$" + Math.floor(Math.random() * 1e9) + "$" + ++counter + "$__";
   }
 
   var nameRe = /^__\$(?:\d+)\$(?:\d+)\$__$/;
@@ -98,9 +96,10 @@
    * @constructor
    */
   function Name(string) {
-    if (!string)
-      string = newUniqueString();
-    $defineProperty(this, internalStringValueName, {value: newUniqueString()});
+    if (!string) string = newUniqueString();
+    $defineProperty(this, internalStringValueName, {
+      value: newUniqueString(),
+    });
 
     function toString() {
       return string;
@@ -108,23 +107,26 @@
     $freeze(toString);
     $freeze(toString.prototype);
     var toStringDescr = method(toString);
-    $defineProperty(this, 'toString', toStringDescr);
+    $defineProperty(this, "toString", toStringDescr);
 
-    this.public = $freeze($create(null, {
-      toString: method($freeze(function toString() {
-        return string;
-      }))
-    }));
+    this.public = $freeze(
+      $create(null, {
+        toString: method(
+          $freeze(function toString() {
+            return string;
+          })
+        ),
+      })
+    );
     $freeze(this.public.toString.prototype);
 
     $freeze(this);
-  };
+  }
   $freeze(Name);
   $freeze(Name.prototype);
 
   function assertName(val) {
-    if (!NameModule.isName(val))
-      throw new TypeError(val + ' is not a Name');
+    if (!NameModule.isName(val)) throw new TypeError(val + " is not a Name");
     return val;
   }
 
@@ -137,22 +139,22 @@
 
   // HACK: We should use runtime/modules/std/name.js or something like that.
   var NameModule = $freeze({
-    Name: function(str) {
+    Name: function (str) {
       return new Name(str);
     },
-    isName: function(x) {
+    isName: function (x) {
       return x instanceof Name;
     },
     elementGet: elementGetName,
     elementSet: elementSetName,
-    elementDelete: elementDeleteName
+    elementDelete: elementDeleteName,
   });
 
   var filter = Array.prototype.filter.call.bind(Array.prototype.filter);
 
   // Override getOwnPropertyNames to filter out private name keys.
   function getOwnPropertyNames(object) {
-    return filter($getOwnPropertyNames(object), function(str) {
+    return filter($getOwnPropertyNames(object), function (str) {
       return !nameRe.test(str);
     });
   }
@@ -160,22 +162,25 @@
   // Override Object.prototpe.hasOwnProperty to always return false for
   // private names.
   function hasOwnProperty(name) {
-    if (NameModule.isName(name) || nameRe.test(name))
-      return false;
+    if (NameModule.isName(name) || nameRe.test(name)) return false;
     return $hasOwnProperty.call(this, name);
   }
 
   function elementDelete(object, name) {
-    if (traceur.options.trapMemberLookup &&
-        hasPrivateNameProperty(object, elementDeleteName)) {
+    if (
+      traceur.options.trapMemberLookup &&
+      hasPrivateNameProperty(object, elementDeleteName)
+    ) {
       return getProperty(object, elementDeleteName).call(object, name);
     }
     return deleteProperty(object, name);
   }
 
   function elementGet(object, name) {
-    if (traceur.options.trapMemberLookup &&
-        hasPrivateNameProperty(object, elementGetName)) {
+    if (
+      traceur.options.trapMemberLookup &&
+      hasPrivateNameProperty(object, elementGetName)
+    ) {
       return getProperty(object, elementGetName).call(object, name);
     }
     return getProperty(object, name);
@@ -187,8 +192,10 @@
   }
 
   function elementSet(object, name, value) {
-    if (traceur.options.trapMemberLookup &&
-        hasPrivateNameProperty(object, elementSetName)) {
+    if (
+      traceur.options.trapMemberLookup &&
+      hasPrivateNameProperty(object, elementSetName)
+    ) {
       getProperty(object, elementSetName).call(object, name, value);
     } else {
       setProperty(object, name, value);
@@ -197,23 +204,19 @@
   }
 
   function assertNotName(s) {
-    if (nameRe.test(s))
-      throw Error('Invalid access to private name');
+    if (nameRe.test(s)) throw Error("Invalid access to private name");
   }
 
   function deleteProperty(object, name) {
     if (NameModule.isName(name))
       return delete object[name[internalStringValueName]];
-    if (nameRe.test(name))
-      return true;
+    if (nameRe.test(name)) return true;
     return delete object[name];
   }
 
   function getProperty(object, name) {
-    if (NameModule.isName(name))
-      return object[name[internalStringValueName]];
-    if (nameRe.test(name))
-      return undefined;
+    if (NameModule.isName(name)) return object[name[internalStringValueName]];
+    if (nameRe.test(name)) return undefined;
     return object[name];
   }
 
@@ -222,8 +225,7 @@
   }
 
   function has(object, name) {
-    if (NameModule.isName(name) || nameRe.test(name))
-      return false;
+    if (NameModule.isName(name) || nameRe.test(name)) return false;
     return name in Object(object);
   }
 
@@ -231,10 +233,10 @@
   // http://wiki.ecmascript.org/doku.php?id=strawman:refactoring_put#object._get_set_property_built-ins
   function setProperty(object, name, value) {
     if (NameModule.isName(name)) {
-      var descriptor = $getPropertyDescriptor(object,
-                                              [name[internalStringValueName]]);
-      if (descriptor)
-        object[name[internalStringValueName]] = value;
+      var descriptor = $getPropertyDescriptor(object, [
+        name[internalStringValueName],
+      ]);
+      if (descriptor) object[name[internalStringValueName]] = value;
       else
         $defineProperty(object, name[internalStringValueName], nonEnum(value));
     } else {
@@ -248,7 +250,7 @@
       // Private names should never be enumerable.
       if (descriptor.enumerable) {
         descriptor = Object.create(descriptor, {
-          enumerable: {value: false}
+          enumerable: { value: false },
         });
       }
       $defineProperty(object, name[internalStringValueName], descriptor);
@@ -261,53 +263,55 @@
   function $getPropertyDescriptor(obj, name) {
     while (obj !== null) {
       var result = Object.getOwnPropertyDescriptor(obj, name);
-      if (result)
-        return result;
+      if (result) return result;
       obj = $getPrototypeOf(obj);
     }
     return undefined;
   }
 
   function getPropertyDescriptor(obj, name) {
-    if (NameModule.isName(name))
-      return undefined;
+    if (NameModule.isName(name)) return undefined;
     assertNotName(name);
     return $getPropertyDescriptor(obj, name);
   }
 
   function polyfillObject(Object) {
-    $defineProperty(Object, 'defineProperty', {value: defineProperty});
-    $defineProperty(Object, 'deleteProperty', method(deleteProperty));
-    $defineProperty(Object, 'getOwnPropertyNames',
-                    {value: getOwnPropertyNames});
-    $defineProperty(Object, 'getProperty', method(getProperty));
-    $defineProperty(Object, 'getPropertyDescriptor',
-                    method(getPropertyDescriptor));
-    $defineProperty(Object, 'has', method(has));
-    $defineProperty(Object, 'setProperty', method(setProperty));
-    $defineProperty(Object.prototype, 'hasOwnProperty',
-                    {value: hasOwnProperty});
+    $defineProperty(Object, "defineProperty", { value: defineProperty });
+    $defineProperty(Object, "deleteProperty", method(deleteProperty));
+    $defineProperty(Object, "getOwnPropertyNames", {
+      value: getOwnPropertyNames,
+    });
+    $defineProperty(Object, "getProperty", method(getProperty));
+    $defineProperty(
+      Object,
+      "getPropertyDescriptor",
+      method(getPropertyDescriptor)
+    );
+    $defineProperty(Object, "has", method(has));
+    $defineProperty(Object, "setProperty", method(setProperty));
+    $defineProperty(Object.prototype, "hasOwnProperty", {
+      value: hasOwnProperty,
+    });
 
     // Object.is
 
     // Unlike === this returns true for (NaN, NaN) and false for (0, -0).
     function is(left, right) {
-      if (left === right)
-        return left !== 0 || 1 / left === 1 / right;
+      if (left === right) return left !== 0 || 1 / left === 1 / right;
       return left !== left && right !== right;
     }
 
-    $defineProperty(Object, 'is', method(is));
+    $defineProperty(Object, "is", method(is));
   }
 
   // Iterators.
-  var iteratorName = new Name('iterator');
+  var iteratorName = new Name("iterator");
 
   var IterModule = {
     get iterator() {
       return iteratorName;
     },
-    isStopIteration: isStopIteration
+    isStopIteration: isStopIteration,
     // TODO: Implement the rest of @iter and move it to a different file that
     // gets compiled.
   };
@@ -328,18 +332,22 @@
 
   function polyfillArray(Array) {
     // Make arrays iterable.
-    defineProperty(Array.prototype, IterModule.iterator, method(function() {
-      var index = 0;
-      var array = this;
-      return {
-        next: function() {
-          if (index < array.length) {
-            return array[index++];
-          }
-          throw StopIterationLocal;
-        }
-      };
-    }));
+    defineProperty(
+      Array.prototype,
+      IterModule.iterator,
+      method(function () {
+        var index = 0;
+        var array = this;
+        return {
+          next: function () {
+            if (index < array.length) {
+              return array[index++];
+            }
+            throw StopIterationLocal;
+          },
+        };
+      })
+    );
   }
 
   // Generators: GeneratorReturn
@@ -347,29 +355,31 @@
 
   function setGeneratorReturn(GeneratorReturn, global) {
     switch (typeof GeneratorReturn) {
-      case 'function':
+      case "function":
         // StopIterationLocal instanceof GeneratorReturnLocal means we probably
         // want to maintain that invariant when we change GeneratorReturnLocal.
-        if (typeof GeneratorReturnLocal === 'function' &&
-            StopIterationLocal instanceof GeneratorReturnLocal) {
+        if (
+          typeof GeneratorReturnLocal === "function" &&
+          StopIterationLocal instanceof GeneratorReturnLocal
+        ) {
           GeneratorReturnLocal = GeneratorReturn;
           setStopIteration(undefined, global);
           return;
         }
         GeneratorReturnLocal = GeneratorReturn;
         return;
-      case 'undefined':
-        GeneratorReturnLocal = function(v) {
+      case "undefined":
+        GeneratorReturnLocal = function (v) {
           this.value = v;
         };
         GeneratorReturnLocal.prototype = {
-          toString: function() {
-            return '[object GeneratorReturn ' + this.value + ']';
-          }
+          toString: function () {
+            return "[object GeneratorReturn " + this.value + "]";
+          },
         };
         return;
       default:
-        throw new TypeError('constructor function required');
+        throw new TypeError("constructor function required");
     }
   }
 
@@ -384,20 +394,19 @@
 
   function setStopIteration(StopIteration, global) {
     switch (typeof StopIteration) {
-      case 'object':
+      case "object":
         StopIterationLocal = StopIteration;
         break;
-      case 'undefined':
+      case "undefined":
         StopIterationLocal = new GeneratorReturnLocal();
-        StopIterationLocal.toString = function() {
-          return '[object StopIteration]';
+        StopIterationLocal.toString = function () {
+          return "[object StopIteration]";
         };
         break;
       default:
-        throw new TypeError('invalid StopIteration type.');
+        throw new TypeError("invalid StopIteration type.");
     }
-    if (global)
-      global.StopIteration = StopIterationLocal;
+    if (global) global.StopIteration = StopIterationLocal;
   }
 
   setStopIteration(global.StopIteration, global);
@@ -433,8 +442,7 @@
   }
 
   function fire(self, value, isError) {
-    if (self.fired_)
-      throw new Error('already fired');
+    if (self.fired_) throw new Error("already fired");
 
     self.fired_ = true;
     self.result_ = [value, isError];
@@ -445,55 +453,52 @@
     fired_: false,
     result_: undefined,
 
-    createPromise: function() {
-      return {then: this.then.bind(this), cancel: this.cancel.bind(this)};
+    createPromise: function () {
+      return { then: this.then.bind(this), cancel: this.cancel.bind(this) };
     },
 
-    callback: function(value) {
+    callback: function (value) {
       fire(this, value, false);
     },
 
-    errback: function(err) {
+    errback: function (err) {
       fire(this, err, true);
     },
 
-    then: function(callback, errback) {
+    then: function (callback, errback) {
       var result = new Deferred(this.cancel.bind(this));
       this.listeners_.push({
         deferred: result,
         callback: callback,
-        errback: errback
+        errback: errback,
       });
-      if (this.fired_)
-        notify(this);
+      if (this.fired_) notify(this);
       return result.createPromise();
     },
 
-    cancel: function() {
-      if (this.fired_)
-        throw new Error('already finished');
+    cancel: function () {
+      if (this.fired_) throw new Error("already finished");
       var result;
       if (this.canceller_) {
         result = this.canceller_(this);
-        if (!result instanceof Error)
-          result = new Error(result);
+        if (!result instanceof Error) result = new Error(result);
       } else {
-        result = new Error('cancelled');
+        result = new Error("cancelled");
       }
       if (!this.fired_) {
         this.result_ = [result, true];
         notify(this);
       }
-    }
+    },
   };
 
   var modules = $freeze({
-    get '@name'() {
+    get "@name"() {
       return NameModule;
     },
-    get '@iter'() {
+    get "@iter"() {
       return IterModule;
-    }
+    },
   });
 
   // TODO(arv): Don't export this.
@@ -537,5 +542,4 @@
 
   // This file is sometimes used without traceur.js.
   global.$traceurRuntime = runtime;
-
-})(typeof global !== 'undefined' ? global : this);
+})(typeof global !== "undefined" ? global : this);

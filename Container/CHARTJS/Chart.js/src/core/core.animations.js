@@ -1,15 +1,15 @@
-import animator from './core.animator';
-import Animation from './core.animation';
-import defaults from './core.defaults';
-import {isArray, isObject} from '../helpers/helpers.core';
+import animator from "./core.animator";
+import Animation from "./core.animation";
+import defaults from "./core.defaults";
+import { isArray, isObject } from "../helpers/helpers.core";
 
-const numbers = ['x', 'y', 'borderWidth', 'radius', 'tension'];
-const colors = ['color', 'borderColor', 'backgroundColor'];
+const numbers = ["x", "y", "borderWidth", "radius", "tension"];
+const colors = ["color", "borderColor", "backgroundColor"];
 
-defaults.set('animation', {
+defaults.set("animation", {
   delay: undefined,
   duration: 1000,
-  easing: 'easeOutQuart',
+  easing: "easeOutQuart",
   fn: undefined,
   from: undefined,
   loop: undefined,
@@ -19,61 +19,62 @@ defaults.set('animation', {
 
 const animationOptions = Object.keys(defaults.animation);
 
-defaults.describe('animation', {
+defaults.describe("animation", {
   _fallback: false,
   _indexable: false,
-  _scriptable: (name) => name !== 'onProgress' && name !== 'onComplete' && name !== 'fn',
+  _scriptable: (name) =>
+    name !== "onProgress" && name !== "onComplete" && name !== "fn",
 });
 
-defaults.set('animations', {
+defaults.set("animations", {
   colors: {
-    type: 'color',
-    properties: colors
+    type: "color",
+    properties: colors,
   },
   numbers: {
-    type: 'number',
-    properties: numbers
+    type: "number",
+    properties: numbers,
   },
 });
 
-defaults.describe('animations', {
-  _fallback: 'animation',
+defaults.describe("animations", {
+  _fallback: "animation",
 });
 
-defaults.set('transitions', {
+defaults.set("transitions", {
   active: {
     animation: {
-      duration: 400
-    }
+      duration: 400,
+    },
   },
   resize: {
     animation: {
-      duration: 0
-    }
+      duration: 0,
+    },
   },
   show: {
     animations: {
       colors: {
-        from: 'transparent'
+        from: "transparent",
       },
       visible: {
-        type: 'boolean',
-        duration: 0 // show immediately
+        type: "boolean",
+        duration: 0, // show immediately
       },
-    }
+    },
   },
   hide: {
     animations: {
       colors: {
-        to: 'transparent'
+        to: "transparent",
       },
       visible: {
-        type: 'boolean',
-        easing: 'linear',
-        fn: v => v | 0 // for keeping the dataset visible all the way through the animation
+        type: "boolean",
+        easing: "linear",
+        fn: (v) => v | 0, // for keeping the dataset visible all the way through the animation
       },
-    }
-  }
+    },
+  },
 });
 
 export default class Animations {
@@ -90,7 +91,7 @@ export default class Animations {
 
     const animatedProps = this._properties;
 
-    Object.getOwnPropertyNames(config).forEach(key => {
+    Object.getOwnPropertyNames(config).forEach((key) => {
       const cfg = config[key];
       if (!isObject(cfg)) {
         return;
@@ -100,7 +101,7 @@ export default class Animations {
         resolved[option] = cfg[option];
       }
 
-      (isArray(cfg.properties) && cfg.properties || [key]).forEach((prop) => {
+      ((isArray(cfg.properties) && cfg.properties) || [key]).forEach((prop) => {
         if (prop === key || !animatedProps.has(prop)) {
           animatedProps.set(prop, resolved);
         }
@@ -109,9 +110,9 @@ export default class Animations {
   }
 
   /**
-	 * Utility to handle animation of `options`.
-	 * @private
-	 */
+   * Utility to handle animation of `options`.
+   * @private
+   */
   _animateOptions(target, values) {
     const newOptions = values.options;
     const options = resolveTargetOptions(target, newOptions);
@@ -124,19 +125,22 @@ export default class Animations {
       // Going to shared options:
       // After all animations are done, assign the shared options object to the element
       // So any new updates to the shared options are observed
-      awaitAll(target.options.$animations, newOptions).then(() => {
-        target.options = newOptions;
-      }, () => {
-        // rejected, noop
-      });
+      awaitAll(target.options.$animations, newOptions).then(
+        () => {
+          target.options = newOptions;
+        },
+        () => {
+          // rejected, noop
+        }
+      );
     }
 
     return animations;
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _createAnimations(target, values) {
     const animatedProps = this._properties;
     const animations = [];
@@ -147,11 +151,11 @@ export default class Animations {
 
     for (i = props.length - 1; i >= 0; --i) {
       const prop = props[i];
-      if (prop.charAt(0) === '$') {
+      if (prop.charAt(0) === "$") {
         continue;
       }
 
-      if (prop === 'options') {
+      if (prop === "options") {
         animations.push(...this._animateOptions(target, values));
         continue;
       }
@@ -180,13 +184,12 @@ export default class Animations {
     return animations;
   }
 
-
   /**
-	 * Update `target` properties to new values, using configured animations
-	 * @param {object} target - object to update
-	 * @param {object} values - new target properties
-	 * @returns {boolean|undefined} - `true` if animations were started
-	 **/
+   * Update `target` properties to new values, using configured animations
+   * @param {object} target - object to update
+   * @param {object} values - new target properties
+   * @returns {boolean|undefined} - `true` if animations were started
+   **/
   update(target, values) {
     if (this._properties.size === 0) {
       // Nothing is animated, just apply the new values.
@@ -228,7 +231,10 @@ function resolveTargetOptions(target, newOptions) {
   if (options.$shared) {
     // Going from shared options to distinct one:
     // Create new options object containing the old shared values and start updating that.
-    target.options = options = Object.assign({}, options, {$shared: false, $animations: {}});
+    target.options = options = Object.assign({}, options, {
+      $shared: false,
+      $animations: {},
+    });
   }
   return options;
 }

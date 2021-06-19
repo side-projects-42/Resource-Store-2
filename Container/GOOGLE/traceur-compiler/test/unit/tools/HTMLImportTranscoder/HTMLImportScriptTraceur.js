@@ -12,46 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-suite('HTMLImportScriptTraceur.js', function() {
-  if (typeof document === 'undefined')
-    return;
+suite("HTMLImportScriptTraceur.js", function () {
+  if (typeof document === "undefined") return;
 
   var iframe;
 
-  teardown(function() {
-    if (iframe)
-      iframe.parentNode.removeChild(iframe);
+  teardown(function () {
+    if (iframe) iframe.parentNode.removeChild(iframe);
   });
 
-  test('HTMLImport Scripts are transpiled', function(done) {
-    iframe = document.createElement('iframe');
+  test("HTMLImport Scripts are transpiled", function (done) {
+    iframe = document.createElement("iframe");
     document.body.appendChild(iframe);
-    iframe.style.cssText = 'position: absolute; top: -1000px';
-    iframe.addEventListener('load', function() {
-      var hello = iframe.contentDocument.querySelector('h1');
-      assert.equal('Success!', hello.textContent);
-      var world = iframe.contentDocument.querySelector('h2');
-      assert.equal('Traceur is the best!', world.textContent);
+    iframe.style.cssText = "position: absolute; top: -1000px";
+    iframe.addEventListener("load", function () {
+      var hello = iframe.contentDocument.querySelector("h1");
+      assert.equal("Success!", hello.textContent);
+      var world = iframe.contentDocument.querySelector("h2");
+      assert.equal("Traceur is the best!", world.textContent);
       done();
     });
-    iframe.src = 'test/unit/tools/HTMLImportTranscoder/basic/index.html'
+    iframe.src = "test/unit/tools/HTMLImportTranscoder/basic/index.html";
   });
 
   // based on http://w3c.github.io/webcomponents/spec/imports/#dfn-import-link-list
-  test('HTMLImport Scripts are loaded in correct order', function(done) {
-    iframe = document.createElement('iframe');
+  test("HTMLImport Scripts are loaded in correct order", function (done) {
+    iframe = document.createElement("iframe");
     document.body.appendChild(iframe);
-    iframe.style.cssText = 'position: absolute; top: -1000px';
-    iframe.addEventListener('load', function() {
+    iframe.style.cssText = "position: absolute; top: -1000px";
+    iframe.addEventListener("load", function () {
       // expected import order
       var expectedLoadOrder = ["f", "d", "b", "h", "e", "g", "c", "a"];
-      for(var index=0; index<expectedLoadOrder.length; index++)
-        assert.equal(expectedLoadOrder[index], iframe.contentDocument.actualLoadOrder[index]);
+      for (var index = 0; index < expectedLoadOrder.length; index++)
+        assert.equal(
+          expectedLoadOrder[index],
+          iframe.contentDocument.actualLoadOrder[index]
+        );
 
       done();
     });
-    iframe.src = 'test/unit/tools/HTMLImportTranscoder/import-order/index.html'
+    iframe.src = "test/unit/tools/HTMLImportTranscoder/import-order/index.html";
   });
-
-
 });

@@ -5,13 +5,12 @@
   </head>
   <body>
     <div>
-      <input id="frameSlider" type="range" min="0" max="0">
+      <input id="frameSlider" type="range" min="0" max="0" />
       <a id="playButton" href="">Play</a>
       <a id="resetButton" href="">Reset</a>
       <span id="status"></span>
     </div>
-    <div id="canvasRoot">
-    </div>
+    <div id="canvasRoot"></div>
   </body>
   <script>
     // Record history from scripts.
@@ -21,34 +20,34 @@
     var nextFrameNumber = 0;
     function intraFrame(fn, resources) {
       history.push({
-        type: 'I',
+        type: "I",
         fn: fn,
         resources: resources,
-        frameNumber: nextFrameNumber
+        frameNumber: nextFrameNumber,
       });
-    };
+    }
     function frame(frameNumber, startTime, fn, resources, endTime) {
       history.push({
-        type: 'F',
+        type: "F",
         fn: fn,
         resources: resources,
         frameNumber: frameNumber,
         startTime: startTime,
-        endTime: endTime
+        endTime: endTime,
       });
       minFrameNumber = Math.min(minFrameNumber, frameNumber);
       maxFrameNumber = Math.max(maxFrameNumber, frameNumber);
       nextFrameNumber = frameNumber + 1;
-    };
+    }
 
-    var statusEl = document.getElementById('status');
+    var statusEl = document.getElementById("status");
     function setStatus(ready, message) {
       statusEl.innerText = message;
       frameSlider.disabled = !ready;
-    };
+    }
 
-    var frameSlider = document.getElementById('frameSlider');
-    frameSlider.onchange = function() {
+    var frameSlider = document.getElementById("frameSlider");
+    frameSlider.onchange = function () {
       var targetFrameNumber = Number(frameSlider.value);
       if (targetFrameNumber < replayState.frameNumber) {
         frameSlider.value = replayState.frameNumber;
@@ -61,12 +60,12 @@
       frameNumber: -1,
       ctxs: {},
       objs: {
-        0: null
-      }
+        0: null,
+      },
     };
 
-    var playButton = document.getElementById('playButton');
-    playButton.onclick = function(e) {
+    var playButton = document.getElementById("playButton");
+    playButton.onclick = function (e) {
       e.preventDefault();
       play();
     };
@@ -78,19 +77,19 @@
         if (frameNumber < maxFrameNumber) {
           window.webkitRequestAnimationFrame(tick);
         }
-      };
+      }
 
       window.webkitRequestAnimationFrame(tick);
-    };
+    }
 
-    var resetButton = document.getElementById('resetButton');
-    resetButton.onclick = function(e) {
+    var resetButton = document.getElementById("resetButton");
+    resetButton.onclick = function (e) {
       e.preventDefault();
       reset();
       frameSlider.value = 0;
     };
     function reset(callback) {
-      setStatus(false, 'Preparing resources...');
+      setStatus(false, "Preparing resources...");
 
       frameSlider.min = minFrameNumber;
       frameSlider.max = maxFrameNumber;
@@ -100,7 +99,7 @@
         if (!obj) {
           continue;
         }
-        var ctx = obj['__gl_ctx__'];
+        var ctx = obj["__gl_ctx__"];
         if (obj instanceof WebGLBuffer) {
           ctx.deleteBuffer(obj);
         } else if (obj instanceof WebGLFramebuffer) {
@@ -119,15 +118,15 @@
       replayState.frameNumber = -1;
       replayState.ctxs = {};
       replayState.objs = {
-        0: null
+        0: null,
       };
       replayState.resources = {};
 
       setupResources(history, replayState.resources, callback);
 
-      var canvasRoot = document.getElementById('canvasRoot');
-      canvasRoot.innerHTML = '';
-    };
+      var canvasRoot = document.getElementById("canvasRoot");
+      canvasRoot.innerHTML = "";
+    }
 
     var pendingResourceCount = 0;
     function setupResources(history, resources, callback) {
@@ -135,12 +134,12 @@
         resources[resourceId] = value;
         pendingResourceCount--;
         if (!pendingResourceCount) {
-          setStatus(true, 'Ready!');
+          setStatus(true, "Ready!");
           if (callback) {
             callback();
           }
         }
-      };
+      }
       for (var n = 0; n < history.length; n++) {
         var entry = history[n];
         for (var i = 0; i < entry.resources.length; i++) {
@@ -150,56 +149,57 @@
         }
       }
       if (!pendingResourceCount) {
-        setStatus(true, 'Ready!');
+        setStatus(true, "Ready!");
         if (callback) {
           callback();
         }
       }
-    };
+    }
     function beginLoadingResource(resource, callback) {
       var blob = new Blob([resource.data], {
-        type: resource.mimeType
+        type: resource.mimeType,
       });
       var url = webkitURL.createObjectURL(blob);
       var img = new Image();
-      img.onerror = function() {
+      img.onerror = function () {
         webkitURL.revokeObjectURL(url);
-        console.log('Unable to load resource: ', arguments);
+        console.log("Unable to load resource: ", arguments);
         callback(resource.id, null);
       };
-      img.onload = function() {
+      img.onload = function () {
         webkitURL.revokeObjectURL(url);
         callback(resource.id, img);
       };
       img.src = url;
-    };
+    }
 
     function createContext(handle, attributes) {
-      var canvas = document.createElement('canvas');
+      var canvas = document.createElement("canvas");
       canvas.width = 100;
       canvas.height = 100;
       canvasRoot.appendChild(canvas);
       replayState.ctxs[handle] = canvas.getContext(
-          'experimental-webgl', attributes);
-    };
+        "experimental-webgl",
+        attributes
+      );
+    }
 
     function reshapeContext(ctx, width, height) {
-      if (ctx.canvas.width == width &&
-          ctx.canvas.height == height) {
+      if (ctx.canvas.width == width && ctx.canvas.height == height) {
         return;
       }
       ctx.canvas.width = width;
       ctx.canvas.height = height;
       ctx.viewport(0, 0, width, height);
-    };
+    }
 
     function assignObject(ctx, obj) {
-      obj['__gl_ctx__'] = ctx;
-    };
+      obj["__gl_ctx__"] = ctx;
+    }
 
     function replay(targetFrameNumber) {
       if (targetFrameNumber < replayState.frameNumber) {
-        reset(function() {
+        reset(function () {
           replay(targetFrameNumber);
         });
         return;
@@ -216,17 +216,17 @@
         entry.fn(replayState.ctxs, replayState.objs, replayState.resources);
         replayState.frameNumber = entry.frameNumber;
       }
-    };
+    }
 
-    setStatus(false, 'Loading trace script...');
+    setStatus(false, "Loading trace script...");
     var scriptUrl = window.location.search.substr(1);
     if (!scriptUrl.length) {
-      window.alert('No script specified');
+      window.alert("No script specified");
       return;
     }
-    var script = document.createElement('script');
+    var script = document.createElement("script");
     script.src = scriptUrl;
-    script.onload = function() {
+    script.onload = function () {
       reset();
     };
     document.head.appendChild(script);

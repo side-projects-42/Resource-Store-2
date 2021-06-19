@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-import {InlineModuleTransformer} from '../../../src/codegeneration/InlineModuleTransformer.js';
-import * as ParseTreeFactory from '../../../src/codegeneration/ParseTreeFactory.js';
-import {ParseTreeTransformer} from '../../../src/codegeneration/ParseTreeTransformer.js';
-import {ParseTreeValidator} from '../../../src/syntax/ParseTreeValidator.js';
-import {Parser} from '../../../src/syntax/Parser.js';
-import {SourceFile} from '../../../src/syntax/SourceFile.js';
-import {write} from '../../../src/outputgeneration/TreeWriter.js';
+import { InlineModuleTransformer } from "../../../src/codegeneration/InlineModuleTransformer.js";
+import * as ParseTreeFactory from "../../../src/codegeneration/ParseTreeFactory.js";
+import { ParseTreeTransformer } from "../../../src/codegeneration/ParseTreeTransformer.js";
+import { ParseTreeValidator } from "../../../src/syntax/ParseTreeValidator.js";
+import { Parser } from "../../../src/syntax/Parser.js";
+import { SourceFile } from "../../../src/syntax/SourceFile.js";
+import { write } from "../../../src/outputgeneration/TreeWriter.js";
 
-suite('low_level_tests.js', function() {
-
+suite("low_level_tests.js", function () {
   var createBreakStatement = ParseTreeFactory.createBreakStatement;
   var createContinueStatement = ParseTreeFactory.createContinueStatement;
   var createCatchStatement = ParseTreeFactory.createCatchStatement;
@@ -40,13 +39,13 @@ suite('low_level_tests.js', function() {
   function TestTransformer() {}
 
   TestTransformer.prototype = Object.create(ParseTreeTransformer.prototype);
-  TestTransformer.prototype.transformBreakStatement = function(tree) {
-    return createBreakStatement(tree.name);  // issue 75
+  TestTransformer.prototype.transformBreakStatement = function (tree) {
+    return createBreakStatement(tree.name); // issue 75
   };
-  TestTransformer.prototype.transformContinueStatement = function(tree) {
-    return createContinueStatement(tree.name);  // issue 75
+  TestTransformer.prototype.transformContinueStatement = function (tree) {
+    return createContinueStatement(tree.name); // issue 75
   };
-  TestTransformer.prototype.transformCatch = function(tree) {
+  TestTransformer.prototype.transformCatch = function (tree) {
     var catchBody = this.transformAny(tree.catchBody);
     var binding = this.transformAny(tree.binding);
 
@@ -57,9 +56,9 @@ suite('low_level_tests.js', function() {
     var errors = [];
 
     var errorReporter = {
-      reportError: function(position, message) {
-        errors.push({position: String(position), message: message});
-      }
+      reportError: function (position, message) {
+        errors.push({ position: String(position), message: message });
+      },
     };
 
     var tree = toTree(errorReporter, name, source);
@@ -75,57 +74,56 @@ suite('low_level_tests.js', function() {
     assert.equal(inputValue, outputValue);
   }
 
-  test('CreateBreakStatement', function() {
-    var name = 'createBreakStatement';
+  test("CreateBreakStatement", function () {
+    var name = "createBreakStatement";
     var source =
-       'function f() {\n' +
-       '  var a = 1;\n' +
-       '  L1: while(a < 10) {\n' +
-       '    while(a < 9) {\n' +
-       '      a++;\n' +
-       '      break L1;\n' +
-       '    }\n' +
-       '    a++;\n' +
-       '  }\n' +
-       '  return a;\n' +
-       '}\n' +
-       'f()\n';
+      "function f() {\n" +
+      "  var a = 1;\n" +
+      "  L1: while(a < 10) {\n" +
+      "    while(a < 9) {\n" +
+      "      a++;\n" +
+      "      break L1;\n" +
+      "    }\n" +
+      "    a++;\n" +
+      "  }\n" +
+      "  return a;\n" +
+      "}\n" +
+      "f()\n";
     oneTest(name, source);
   });
 
-  test('CreateContinueStatement', function() {
-    var name = 'createContinueStatement';
+  test("CreateContinueStatement", function () {
+    var name = "createContinueStatement";
     var source =
-       'function f() {\n' +
-       '  var a = 1, b = 1;\n' +
-       '  L1: while(a < 10) {\n' +
-       '    a++;\n' +
-       '    while(b < a) {\n' +
-       '      b++;\n' +
-       '      continue L1;\n' +
-       '    }\n' +
-       '    b++;\n' +
-       '  }\n' +
-       '  return b;\n' +
-       '}\n' +
-       'f()\n';
+      "function f() {\n" +
+      "  var a = 1, b = 1;\n" +
+      "  L1: while(a < 10) {\n" +
+      "    a++;\n" +
+      "    while(b < a) {\n" +
+      "      b++;\n" +
+      "      continue L1;\n" +
+      "    }\n" +
+      "    b++;\n" +
+      "  }\n" +
+      "  return b;\n" +
+      "}\n" +
+      "f()\n";
     oneTest(name, source);
   });
 
-  test('CreateCatch', function() {
-    var name = 'createCatch';
+  test("CreateCatch", function () {
+    var name = "createCatch";
     var source =
-       'function f() {\n' +
-       '  var a = 1;\n' +
-       '  try {\n' +
-       '    throw undefined;\n' +
-       '  } catch (exc) {\n' +
-       '    a = 2;\n' +
-       '  }\n' +
-       '  return a;\n' +
-       '}\n' +
-       'f()\n';
+      "function f() {\n" +
+      "  var a = 1;\n" +
+      "  try {\n" +
+      "    throw undefined;\n" +
+      "  } catch (exc) {\n" +
+      "    a = 2;\n" +
+      "  }\n" +
+      "  return a;\n" +
+      "}\n" +
+      "f()\n";
     oneTest(name, source);
   });
-
 });

@@ -1,0 +1,79 @@
+{
+  "projectFullName": "newrelic/newrelic-infinite-tracing-protobuf-java",
+  "issues": {
+    "open": 0
+  },
+  "releases": 2,
+  "latestRelease": {
+    "name": "v3.2",
+    "date": "2020-10-02T21:18:38Z"
+  },
+  "commits": 25,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 6,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 3496648,
+      "login": "jasonjkeller",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3496648?v=4",
+      "htmlUrl": "https://github.com/jasonjkeller",
+      "contributions": 3
+    },
+    {
+      "id": 7992384,
+      "login": "paperclypse",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/7992384?v=4",
+      "htmlUrl": "https://github.com/paperclypse",
+      "contributions": 2
+    },
+    {
+      "id": 43244625,
+      "login": "melissaklein24",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43244625?v=4",
+      "htmlUrl": "https://github.com/melissaklein24",
+      "contributions": 2
+    },
+    {
+      "id": 49817386,
+      "login": "jeffalder",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/49817386?v=4",
+      "htmlUrl": "https://github.com/jeffalder",
+      "contributions": 2
+    },
+    {
+      "id": 42678939,
+      "login": "bradleycamacho",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/42678939?v=4",
+      "htmlUrl": "https://github.com/bradleycamacho",
+      "contributions": 4
+    },
+    {
+      "id": 54085190,
+      "login": "breedx-nr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/54085190?v=4",
+      "htmlUrl": "https://github.com/breedx-nr",
+      "contributions": 4
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UyNzI=",
+      "name": "Kotlin",
+      "color": "#A97BFF"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

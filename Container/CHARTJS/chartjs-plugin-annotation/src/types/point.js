@@ -1,10 +1,9 @@
-import {Element} from 'chart.js';
-import {scaleValue} from '../helpers';
+import { Element } from "chart.js";
+import { scaleValue } from "../helpers";
 
 export default class PointAnnotation extends Element {
-
   inRange(x, y) {
-    const {width, options} = this;
+    const { width, options } = this;
     const center = this.getCenterPoint(true);
     const radius = width / 2 + options.borderWidth;
 
@@ -12,16 +11,19 @@ export default class PointAnnotation extends Element {
       return false;
     }
 
-    return (Math.pow(x - center.x, 2) + Math.pow(y - center.y, 2)) <= Math.pow(radius, 2);
+    return (
+      Math.pow(x - center.x, 2) + Math.pow(y - center.y, 2) <=
+      Math.pow(radius, 2)
+    );
   }
 
   getCenterPoint(useFinalPosition) {
-    const {x, y} = this.getProps(['x', 'y'], useFinalPosition);
-    return {x, y};
+    const { x, y } = this.getProps(["x", "y"], useFinalPosition);
+    return { x, y };
   }
 
   draw(ctx) {
-    const {x, y, width, options} = this;
+    const { x, y, width, options } = this;
 
     ctx.save();
 
@@ -41,7 +43,7 @@ export default class PointAnnotation extends Element {
   }
 
   resolveElementProperties(chart, options) {
-    const {chartArea, scales} = chart;
+    const { chartArea, scales } = chart;
     const xScale = scales[options.xScaleID];
     const yScale = scales[options.yScaleID];
     let x = chartArea.width / 2;
@@ -59,12 +61,12 @@ export default class PointAnnotation extends Element {
       x,
       y,
       width: options.radius * 2,
-      height: options.radius * 2
+      height: options.radius * 2,
     };
   }
 }
 
-PointAnnotation.id = 'pointAnnotation';
+PointAnnotation.id = "pointAnnotation";
 
 PointAnnotation.defaults = {
   display: true,
@@ -73,13 +75,13 @@ PointAnnotation.defaults = {
   borderDashOffset: 0,
   borderWidth: 1,
   radius: 10,
-  xScaleID: 'x',
+  xScaleID: "x",
   xValue: undefined,
-  yScaleID: 'y',
-  yValue: undefined
+  yScaleID: "y",
+  yValue: undefined,
 };
 
 PointAnnotation.defaultRoutes = {
-  borderColor: 'color',
-  backgroundColor: 'color'
+  borderColor: "color",
+  backgroundColor: "color",
 };

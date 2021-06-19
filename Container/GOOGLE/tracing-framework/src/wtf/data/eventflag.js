@@ -11,8 +11,7 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.data.EventFlag');
-
+goog.provide("wtf.data.EventFlag");
 
 /**
  * Event behavior flag bitmask.
@@ -29,14 +28,14 @@ wtf.data.EventFlag = {
    * types. Event arguments may also receive more preprocessing when being
    * recorded, such as string interning/etc.
    */
-  HIGH_FREQUENCY: (1 << 1),
+  HIGH_FREQUENCY: 1 << 1,
 
   /**
    * Event represents some system event that should not be counted towards user
    * code. This can include things such as runtime events (GCs/etc) and tracing
    * framework time (buffer swaps/etc).
    */
-  SYSTEM_TIME: (1 << 2),
+  SYSTEM_TIME: 1 << 2,
 
   /**
    * Event represents some internal system event such as flow control events.
@@ -44,7 +43,7 @@ wtf.data.EventFlag = {
    * parts of the system will ignore it. For some special events they will be
    * handled at load-time and never even delivered to the database.
    */
-  INTERNAL: (1 << 3),
+  INTERNAL: 1 << 3,
 
   /**
    * Event arguments will be appended to the containing scope's arguments,
@@ -53,14 +52,14 @@ wtf.data.EventFlag = {
    * If this is combined with the INTERNAL flag then the event is assumed to
    * be a built-in system append event and will have special handling.
    */
-  APPEND_SCOPE_DATA: (1 << 4),
+  APPEND_SCOPE_DATA: 1 << 4,
 
   /**
    * Event is a builtin event.
    * Only events defined by the tracing framework should set this bit. User
    * events should not have this flag set and may be ignored if they do.
    */
-  BUILTIN: (1 << 5),
+  BUILTIN: 1 << 5,
 
   /**
    * Event arguments will be appended to the given flow's data, overwritting
@@ -70,28 +69,33 @@ wtf.data.EventFlag = {
    * If this is combined with the INTERNAL flag then the event is assumed to
    * be a built-in system append event and will have special handling.
    */
-  APPEND_FLOW_DATA: (1 << 6)
+  APPEND_FLOW_DATA: 1 << 6,
 };
 
-
-goog.exportSymbol(
-    'wtf.data.EventFlag',
-    wtf.data.EventFlag);
+goog.exportSymbol("wtf.data.EventFlag", wtf.data.EventFlag);
 goog.exportProperty(
-    wtf.data.EventFlag, 'HIGH_FREQUENCY',
-    wtf.data.EventFlag.HIGH_FREQUENCY);
+  wtf.data.EventFlag,
+  "HIGH_FREQUENCY",
+  wtf.data.EventFlag.HIGH_FREQUENCY
+);
 goog.exportProperty(
-    wtf.data.EventFlag, 'SYSTEM_TIME',
-    wtf.data.EventFlag.SYSTEM_TIME);
+  wtf.data.EventFlag,
+  "SYSTEM_TIME",
+  wtf.data.EventFlag.SYSTEM_TIME
+);
 goog.exportProperty(
-    wtf.data.EventFlag, 'INTERNAL',
-    wtf.data.EventFlag.INTERNAL);
+  wtf.data.EventFlag,
+  "INTERNAL",
+  wtf.data.EventFlag.INTERNAL
+);
 goog.exportProperty(
-    wtf.data.EventFlag, 'APPEND_SCOPE_DATA',
-    wtf.data.EventFlag.APPEND_SCOPE_DATA);
+  wtf.data.EventFlag,
+  "APPEND_SCOPE_DATA",
+  wtf.data.EventFlag.APPEND_SCOPE_DATA
+);
+goog.exportProperty(wtf.data.EventFlag, "BUILTIN", wtf.data.EventFlag.BUILTIN);
 goog.exportProperty(
-    wtf.data.EventFlag, 'BUILTIN',
-    wtf.data.EventFlag.BUILTIN);
-goog.exportProperty(
-    wtf.data.EventFlag, 'APPEND_FLOW_DATA',
-    wtf.data.EventFlag.APPEND_FLOW_DATA);
+  wtf.data.EventFlag,
+  "APPEND_FLOW_DATA",
+  wtf.data.EventFlag.APPEND_FLOW_DATA
+);

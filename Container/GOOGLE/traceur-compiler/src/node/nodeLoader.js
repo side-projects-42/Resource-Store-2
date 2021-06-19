@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var fs = require('fs');
+var fs = require("fs");
 
 function stripShebang(data) {
-  if (/^#!/.test(data))
-    data = '//' + data;
+  if (/^#!/.test(data)) data = "//" + data;
   return data;
 }
 
 var nodeLoader = {
-  load: function(url, callback, errback) {
-    fs.readFile(url, 'utf8', function(err, data) {
+  load: function (url, callback, errback) {
+    fs.readFile(url, "utf8", function (err, data) {
       if (err) {
-        err.message = err.message.replace('ENOENT, open', 'File not found');
+        err.message = err.message.replace("ENOENT, open", "File not found");
         errback(err);
       } else {
         callback(stripShebang(data));
@@ -32,10 +31,10 @@ var nodeLoader = {
     });
 
     // Returns an abort function.
-    return function() {
-      callback = function() {};
+    return function () {
+      callback = function () {};
     };
-  }
+  },
 };
 
 module.exports = nodeLoader;

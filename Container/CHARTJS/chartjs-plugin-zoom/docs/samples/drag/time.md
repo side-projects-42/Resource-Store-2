@@ -4,51 +4,54 @@ Zooming is performed by clicking and selecting an area over the chart with the m
 
 ```js chart-editor
 // <block:data:1>
-const NUMBER_CFG = {count: 500, min: 0, max: 1000};
+const NUMBER_CFG = { count: 500, min: 0, max: 1000 };
 const data = {
-  datasets: [{
-    label: 'My First dataset',
-    borderColor: Utils.randomColor(0.4),
-    backgroundColor: Utils.randomColor(0.1),
-    pointBorderColor: Utils.randomColor(0.7),
-    pointBackgroundColor: Utils.randomColor(0.5),
-    pointBorderWidth: 1,
-    data: Utils.hourlyPoints(NUMBER_CFG),
-  }]
+  datasets: [
+    {
+      label: "My First dataset",
+      borderColor: Utils.randomColor(0.4),
+      backgroundColor: Utils.randomColor(0.1),
+      pointBorderColor: Utils.randomColor(0.7),
+      pointBackgroundColor: Utils.randomColor(0.5),
+      pointBorderWidth: 1,
+      data: Utils.hourlyPoints(NUMBER_CFG),
+    },
+  ],
 };
 // </block:data>
 
 // <block:scales:2>
 const scales = {
   x: {
-    position: 'bottom',
-    type: 'time',
+    position: "bottom",
+    type: "time",
     ticks: {
       autoSkip: true,
       autoSkipPadding: 50,
-      maxRotation: 0
+      maxRotation: 0,
     },
     time: {
       displayFormats: {
-        hour: 'HH:mm',
-        minute: 'HH:mm',
-        second: 'HH:mm:ss'
-      }
-    }
+        hour: "HH:mm",
+        minute: "HH:mm",
+        second: "HH:mm:ss",
+      },
+    },
   },
   y: {
-    position: 'right',
+    position: "right",
     ticks: {
-      callback: (val, index, ticks) => index === 0 || index === ticks.length - 1 ? null : val,
+      callback: (val, index, ticks) =>
+        index === 0 || index === ticks.length - 1 ? null : val,
     },
     grid: {
       borderColor: Utils.randomColor(1),
-      color: 'rgba( 0, 0, 0, 0.1)',
+      color: "rgba( 0, 0, 0, 0.1)",
     },
     title: {
       display: true,
-      text: (ctx) => ctx.scale.axis + ' axis',
-    }
+      text: (ctx) => ctx.scale.axis + " axis",
+    },
   },
 };
 // </block:scales>
@@ -57,23 +60,24 @@ const scales = {
 const zoomOptions = {
   pan: {
     enabled: true,
-    modifierKey: 'ctrl',
+    modifierKey: "ctrl",
   },
   zoom: {
     drag: {
-      enabled: true
+      enabled: true,
     },
-    mode: 'xy',
+    mode: "xy",
   },
 };
 // </block>
 
-const panStatus = () => zoomOptions.pan.enabled ? 'enabled' : 'disabled';
-const zoomStatus = () => zoomOptions.zoom.drag.enabled ? 'enabled' : 'disabled';
+const panStatus = () => (zoomOptions.pan.enabled ? "enabled" : "disabled");
+const zoomStatus = () =>
+  zoomOptions.zoom.drag.enabled ? "enabled" : "disabled";
 
 // <block:config:1>
 const config = {
-  type: 'scatter',
+  type: "scatter",
   data: data,
   options: {
     scales: scales,
@@ -81,46 +85,49 @@ const config = {
       zoom: zoomOptions,
       title: {
         display: true,
-        position: 'bottom',
-        text: (ctx) => 'Zoom: ' + zoomStatus() + ', Pan: ' + panStatus()
-      }
+        position: "bottom",
+        text: (ctx) => "Zoom: " + zoomStatus() + ", Pan: " + panStatus(),
+      },
     },
-  }
+  },
 };
 // </block:config>
 
 const actions = [
   {
-    name: 'Toggle zoom',
+    name: "Toggle zoom",
     handler(chart) {
       zoomOptions.zoom.drag.enabled = !zoomOptions.zoom.drag.enabled;
       chart.update();
-    }
-  }, {
-    name: 'Toggle pan',
+    },
+  },
+  {
+    name: "Toggle pan",
     handler(chart) {
       zoomOptions.pan.enabled = !zoomOptions.pan.enabled;
       chart.update();
     },
-  }, {
-    name: 'Reset zoom',
+  },
+  {
+    name: "Reset zoom",
     handler(chart) {
       chart.resetZoom();
-    }
-  }, {
-    name: 'Zoom to next week',
+    },
+  },
+  {
+    name: "Zoom to next week",
     handler(chart) {
-      chart.zoomScale('x', Utils.nextWeek(), 'default');
+      chart.zoomScale("x", Utils.nextWeek(), "default");
       chart.update();
-    }
-  }, {
-    name: 'Zoom to 400-600',
+    },
+  },
+  {
+    name: "Zoom to 400-600",
     handler(chart) {
-      chart.zoomScale('y', {min: 400, max: 600}, 'default');
+      chart.zoomScale("y", { min: 400, max: 600 }, "default");
       chart.update();
-    }
-  }
-
+    },
+  },
 ];
 
 module.exports = {

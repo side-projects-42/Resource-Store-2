@@ -1,15 +1,14 @@
-import Element from '../core/core.element';
-import {drawPoint} from '../helpers/helpers.canvas';
+import Element from "../core/core.element";
+import { drawPoint } from "../helpers/helpers.canvas";
 
 function inRange(el, pos, axis, useFinalPosition) {
   const options = el.options;
-  const {[axis]: value} = el.getProps([axis], useFinalPosition);
+  const { [axis]: value } = el.getProps([axis], useFinalPosition);
 
-  return (Math.abs(pos - value) < options.radius + options.hitRadius);
+  return Math.abs(pos - value) < options.radius + options.hitRadius;
 }
 
 export default class PointElement extends Element {
-
   constructor(cfg) {
     super();
 
@@ -25,28 +24,31 @@ export default class PointElement extends Element {
 
   inRange(mouseX, mouseY, useFinalPosition) {
     const options = this.options;
-    const {x, y} = this.getProps(['x', 'y'], useFinalPosition);
-    return ((Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2)) < Math.pow(options.hitRadius + options.radius, 2));
+    const { x, y } = this.getProps(["x", "y"], useFinalPosition);
+    return (
+      Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2) <
+      Math.pow(options.hitRadius + options.radius, 2)
+    );
   }
 
   inXRange(mouseX, useFinalPosition) {
-    return inRange(this, mouseX, 'x', useFinalPosition);
+    return inRange(this, mouseX, "x", useFinalPosition);
   }
 
   inYRange(mouseY, useFinalPosition) {
-    return inRange(this, mouseY, 'y', useFinalPosition);
+    return inRange(this, mouseY, "y", useFinalPosition);
   }
 
   getCenterPoint(useFinalPosition) {
-    const {x, y} = this.getProps(['x', 'y'], useFinalPosition);
-    return {x, y};
+    const { x, y } = this.getProps(["x", "y"], useFinalPosition);
+    return { x, y };
   }
 
   size(options) {
     options = options || this.options || {};
     let radius = options.radius || 0;
-    radius = Math.max(radius, radius && options.hoverRadius || 0);
-    const borderWidth = radius && options.borderWidth || 0;
+    radius = Math.max(radius, (radius && options.hoverRadius) || 0);
+    const borderWidth = (radius && options.borderWidth) || 0;
     return (radius + borderWidth) * 2;
   }
 
@@ -70,7 +72,7 @@ export default class PointElement extends Element {
   }
 }
 
-PointElement.id = 'point';
+PointElement.id = "point";
 
 /**
  * @type {any}
@@ -80,15 +82,15 @@ PointElement.defaults = {
   hitRadius: 1,
   hoverBorderWidth: 1,
   hoverRadius: 4,
-  pointStyle: 'circle',
+  pointStyle: "circle",
   radius: 3,
-  rotation: 0
+  rotation: 0,
 };
 
 /**
  * @type {any}
  */
 PointElement.defaultRoutes = {
-  backgroundColor: 'backgroundColor',
-  borderColor: 'borderColor'
+  backgroundColor: "backgroundColor",
+  borderColor: "borderColor",
 };

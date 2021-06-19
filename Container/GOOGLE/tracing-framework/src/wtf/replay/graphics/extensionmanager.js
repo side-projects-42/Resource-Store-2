@@ -12,13 +12,11 @@
  * @author chizeng@google.com (Chi Zeng)
  */
 
-goog.provide('wtf.replay.graphics.ExtensionManager');
+goog.provide("wtf.replay.graphics.ExtensionManager");
 
-goog.require('goog.Disposable');
-goog.require('goog.object');
-goog.require('goog.string');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.object");
+goog.require("goog.string");
 
 /**
  * Verifies if extensions are supported and tries to retrieve other extensions
@@ -28,7 +26,7 @@ goog.require('goog.string');
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.replay.graphics.ExtensionManager = function(contextPool) {
+wtf.replay.graphics.ExtensionManager = function (contextPool) {
   goog.base(this);
 
   /**
@@ -47,14 +45,12 @@ wtf.replay.graphics.ExtensionManager = function(contextPool) {
 };
 goog.inherits(wtf.replay.graphics.ExtensionManager, goog.Disposable);
 
-
 /**
  * A list of potential extension prefixes.
  * @const
  * @type {!Array.<string>}
  */
-wtf.replay.graphics.ExtensionManager.PREFIXES = ['MOZ_', 'WEBKIT_'];
-
+wtf.replay.graphics.ExtensionManager.PREFIXES = ["MOZ_", "WEBKIT_"];
 
 /**
  * Gets the set of supported extensions.
@@ -62,18 +58,18 @@ wtf.replay.graphics.ExtensionManager.PREFIXES = ['MOZ_', 'WEBKIT_'];
  * @private
  */
 wtf.replay.graphics.ExtensionManager.prototype.getSupportedExtensions_ =
-    function() {
-  var gl = this.contextPool_.getContext('webgl') ||
-      this.contextPool_.getContext('experimental-webgl');
-  if (!gl) {
-    throw new Error('Unable to get WebGL context.');
-  }
-  var extensionList = gl.getSupportedExtensions();
-  var supportedExtensions = goog.object.createSet(extensionList);
-  this.contextPool_.releaseContext(gl);
-  return supportedExtensions;
-};
-
+  function () {
+    var gl =
+      this.contextPool_.getContext("webgl") ||
+      this.contextPool_.getContext("experimental-webgl");
+    if (!gl) {
+      throw new Error("Unable to get WebGL context.");
+    }
+    var extensionList = gl.getSupportedExtensions();
+    var supportedExtensions = goog.object.createSet(extensionList);
+    this.contextPool_.releaseContext(gl);
+    return supportedExtensions;
+  };
 
 /**
  * Gets a related extension name supported by the user agent. Returns the same
@@ -83,8 +79,9 @@ wtf.replay.graphics.ExtensionManager.prototype.getSupportedExtensions_ =
  * @return {string?} The name of a related supported extension or null if one
  *     does not exist.
  */
-wtf.replay.graphics.ExtensionManager.prototype.getRelatedExtension =
-    function(extensionName) {
+wtf.replay.graphics.ExtensionManager.prototype.getRelatedExtension = function (
+  extensionName
+) {
   // If this extension is supported, return the same name back.
   // This is a common result, so we should optimize for it.
   if (this.supportedExtensions_[extensionName]) {

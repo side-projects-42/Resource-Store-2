@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
 // This is used by the prepublish script in package.json. The scripts section
 // in package.json uses platform specific code (cmd.exe on Windows etc) so these
 // need to be as simple as possible.
 
-var spawn = require('child_process').spawn;
+var spawn = require("child_process").spawn;
 
 // We set the NO_PREPUBLISH environment flag in the Makefile to prevent
 // endless loop of makes and npm installs.
 if (!process.env.NO_PREPUBLISH) {
-  spawn('make', ['prepublish'], {stdio: 'inherit'}).
-      on('close', function(code) {
-        process.exit(code);
-      });
+  spawn("make", ["prepublish"], { stdio: "inherit" }).on(
+    "close",
+    function (code) {
+      process.exit(code);
+    }
+  );
 }

@@ -19,8 +19,8 @@ npm install moment chartjs-adapter-moment --save
 ```
 
 ```javascript
-import { Chart } from 'chart.js';
-import 'chartjs-adapter-moment';
+import { Chart } from "chart.js";
+import "chartjs-adapter-moment";
 ```
 
 ### CDN

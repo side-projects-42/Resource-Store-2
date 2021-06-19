@@ -1,6 +1,6 @@
 // Options: --annotations
-import {Anno} from './resources/setup.js';
+import { Anno } from "./resources/setup.js";
 
-function AnnotatedParam(@Anno('x') x) {}
+function AnnotatedParam(@Anno("x") x) {}
 
-assert.deepEqual([[new Anno('x')]], AnnotatedParam.parameters);
+assert.deepEqual([[new Anno("x")]], AnnotatedParam.parameters);

@@ -1,7 +1,7 @@
 // Options: --block-binding
 
-let x = 'let';
+let x = "let";
 
 // ----------------------------------------------------------------------------
 
-assert.equal(x, 'let');
+assert.equal(x, "let");

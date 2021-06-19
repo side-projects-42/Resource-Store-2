@@ -13,13 +13,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.Blob');
+goog.provide("wtf.io.Blob");
 
-goog.require('goog.asserts');
-goog.require('goog.userAgent.product');
-goog.require('wtf');
-
-
+goog.require("goog.asserts");
+goog.require("goog.userAgent.product");
+goog.require("wtf");
 
 /**
  * Blob interface.
@@ -27,8 +25,7 @@ goog.require('wtf');
  * {@see wtf.io#createBlob}.
  * @interface
  */
-wtf.io.Blob = function() {};
-
+wtf.io.Blob = function () {};
 
 /**
  * Gets the size of the blob, in bytes.
@@ -36,13 +33,11 @@ wtf.io.Blob = function() {};
  */
 wtf.io.Blob.prototype.getSize = goog.nullFunction;
 
-
 /**
  * Gets the content type of the blob.
  * @return {string} Content type, or the empty string.
  */
 wtf.io.Blob.prototype.getType = goog.nullFunction;
-
 
 /**
  * Slices a blob and returns a new blob that is a copy of that data.
@@ -53,13 +48,11 @@ wtf.io.Blob.prototype.getType = goog.nullFunction;
  */
 wtf.io.Blob.prototype.slice = goog.nullFunction;
 
-
 /**
  * Closes the blob object.
  * The blob cannot be used after calling this method.
  */
 wtf.io.Blob.prototype.close = goog.nullFunction;
-
 
 /**
  * Reads the entire blob contents as an ArrayBuffer.
@@ -70,7 +63,6 @@ wtf.io.Blob.prototype.close = goog.nullFunction;
  */
 wtf.io.Blob.prototype.readAsArrayBuffer = goog.nullFunction;
 
-
 /**
  * Reads the entire blob contents as a text string.
  * @param {!function(this:T, string?)} callback Callback that receives the
@@ -80,13 +72,11 @@ wtf.io.Blob.prototype.readAsArrayBuffer = goog.nullFunction;
  */
 wtf.io.Blob.prototype.readAsText = goog.nullFunction;
 
-
 /**
  * Returns the native object wrapped by this blob.
  * @return {Object} Blob object.
  */
 wtf.io.Blob.prototype.toNative = goog.nullFunction;
-
 
 /**
  * Creates a blob from the given blob parts.
@@ -95,7 +85,7 @@ wtf.io.Blob.prototype.toNative = goog.nullFunction;
  * @param {{type: string}=} opt_options Options.
  * @return {!wtf.io.Blob} New blob.
  */
-wtf.io.Blob.create = function(parts, opt_options) {
+wtf.io.Blob.create = function (parts, opt_options) {
   if (wtf.NODE) {
     var result = new wtf.io.NodeBlob_();
     result.init(parts, opt_options);
@@ -107,13 +97,12 @@ wtf.io.Blob.create = function(parts, opt_options) {
   }
 };
 
-
 /**
  * Determines whether the given value is a blob.
  * @param {*} value Value to test.
  * @return {boolean} True if the value is a blob.
  */
-wtf.io.Blob.isBlob = function(value) {
+wtf.io.Blob.isBlob = function (value) {
   if (wtf.NODE) {
     return value instanceof wtf.io.NodeBlob_;
   } else {
@@ -121,13 +110,12 @@ wtf.io.Blob.isBlob = function(value) {
   }
 };
 
-
 /**
  * Wraps a native blob object without copying the data.
  * @param {!(Blob|Buffer)} value Source value.
  * @return {!wtf.io.Blob} A blob object.
  */
-wtf.io.Blob.fromNative = function(value) {
+wtf.io.Blob.fromNative = function (value) {
   if (wtf.NODE) {
     return new wtf.io.NodeBlob_(/** @type {!Buffer} */ (value));
   } else {
@@ -135,14 +123,13 @@ wtf.io.Blob.fromNative = function(value) {
   }
 };
 
-
 /**
  * Converts a blob to a platform native binary blob object.
  * This does not copy the data.
  * @param {!wtf.io.Blob} blob Blob value.
  * @return {!(Blob|Buffer)} Blob.
  */
-wtf.io.Blob.toNative = function(blob) {
+wtf.io.Blob.toNative = function (blob) {
   if (wtf.NODE) {
     return blob.buffer_;
   } else {
@@ -150,27 +137,32 @@ wtf.io.Blob.toNative = function(blob) {
   }
 };
 
-
 /**
  * Converts a list of blob parts into a list that contains native blobs.
  * This does not copy the data.
  * @param {!Array.<ArrayBufferView|Blob|wtf.io.Blob|string>} parts Parts.
  * @return {!Array.<ArrayBufferView|Blob|string>} Blob parts.
  */
-wtf.io.Blob.toNativeParts = function(parts) {
+wtf.io.Blob.toNativeParts = function (parts) {
   var result = new Array(parts.length);
   for (var n = 0; n < parts.length; n++) {
     var part = parts[n];
     if (wtf.io.Blob.isBlob(part)) {
       part = wtf.io.Blob.toNative(/** @type {!wtf.io.Blob} */ (part));
     } else {
-      if (goog.userAgent.product.SAFARI &&
-          part && part.buffer instanceof ArrayBuffer) {
+      if (
+        goog.userAgent.product.SAFARI &&
+        part &&
+        part.buffer instanceof ArrayBuffer
+      ) {
         // Safari can't handle ArrayBufferView in Blob ctors, so we need to copy
         // our view (which is likely not the whole size of the buffer) to ensure
         // we write exactly what was requested.
         var source = new Uint8Array(
-            part.buffer, part.byteOffset, part.byteLength);
+          part.buffer,
+          part.byteOffset,
+          part.byteLength
+        );
         part = new Uint8Array(part.byteLength);
         for (var m = 0; m < part.byteLength; m++) {
           part[m] = source[m];
@@ -189,8 +181,6 @@ wtf.io.Blob.toNativeParts = function(parts) {
   return result;
 };
 
-
-
 /**
  * A blob implementation for web browsers.
  * Use the {@see #init} method to initialize a new blob instance.
@@ -199,7 +189,7 @@ wtf.io.Blob.toNativeParts = function(parts) {
  * @implements {wtf.io.Blob}
  * @private
  */
-wtf.io.BrowserBlob_ = function(opt_existingBlob) {
+wtf.io.BrowserBlob_ = function (opt_existingBlob) {
   /**
    * Underlying browser blob.
    * @type {Blob}
@@ -208,114 +198,110 @@ wtf.io.BrowserBlob_ = function(opt_existingBlob) {
   this.blob_ = opt_existingBlob || null;
 };
 
-
 /**
  * Initializes a new blob.
  * @param {!Array.<ArrayBuffer|ArrayBufferView|wtf.io.Blob|Blob|string>} parts
  *     Blob parts that will be concatenated into the new blob.
  * @param {{type: string}=} opt_options Options.
  */
-wtf.io.BrowserBlob_.prototype.init = function(parts, opt_options) {
+wtf.io.BrowserBlob_.prototype.init = function (parts, opt_options) {
   goog.asserts.assert(!this.blob_);
   parts = wtf.io.Blob.toNativeParts(parts);
   this.blob_ = new Blob(parts, opt_options || {});
 };
 
-
 /**
  * @override
  */
-wtf.io.BrowserBlob_.prototype.getSize = function() {
+wtf.io.BrowserBlob_.prototype.getSize = function () {
   return this.blob_.size;
 };
 
-
 /**
  * @override
  */
-wtf.io.BrowserBlob_.prototype.getType = function() {
+wtf.io.BrowserBlob_.prototype.getType = function () {
   return this.blob_.type;
 };
 
-
 /**
  * @override
  */
-wtf.io.BrowserBlob_.prototype.slice = function(
-    opt_start, opt_end, opt_contentType) {
+wtf.io.BrowserBlob_.prototype.slice = function (
+  opt_start,
+  opt_end,
+  opt_contentType
+) {
   var result;
-  if (this.blob_['slice']) {
-    result = this.blob_['slice'](opt_start, opt_end, opt_contentType);
-  } else if (this.blob_['webkitSlice']) {
-    result = this.blob_['webkitSlice'](opt_start, opt_end, opt_contentType);
+  if (this.blob_["slice"]) {
+    result = this.blob_["slice"](opt_start, opt_end, opt_contentType);
+  } else if (this.blob_["webkitSlice"]) {
+    result = this.blob_["webkitSlice"](opt_start, opt_end, opt_contentType);
   } else {
-    throw new Error('No Blob slice method available on this browser.');
+    throw new Error("No Blob slice method available on this browser.");
   }
   return new wtf.io.BrowserBlob_(result);
 };
 
-
 /**
  * @override
  */
-wtf.io.BrowserBlob_.prototype.close = function() {
+wtf.io.BrowserBlob_.prototype.close = function () {
   // Not all browsers support the close() method, yet.
-  if (this.blob_['close']) {
-    this.blob_['close']();
+  if (this.blob_["close"]) {
+    this.blob_["close"]();
   }
 };
 
-
 /**
  * @override
  */
-wtf.io.BrowserBlob_.prototype.readAsArrayBuffer = function(
-    callback, opt_scope) {
+wtf.io.BrowserBlob_.prototype.readAsArrayBuffer = function (
+  callback,
+  opt_scope
+) {
   goog.asserts.assert(this.blob_);
   if (!this.blob_.size) {
-    callback.call(opt_scope, (new Uint8Array(0)).buffer);
+    callback.call(opt_scope, new Uint8Array(0).buffer);
     return;
   }
 
   var fileReader = new FileReader();
-  fileReader.onload = function() {
+  fileReader.onload = function () {
     callback.call(opt_scope, /** @type {ArrayBuffer} */ (fileReader.result));
   };
   fileReader.readAsArrayBuffer(this.blob_);
 };
 
-
 /**
  * @override
  */
-wtf.io.BrowserBlob_.prototype.readAsText = function(callback, opt_scope) {
+wtf.io.BrowserBlob_.prototype.readAsText = function (callback, opt_scope) {
   goog.asserts.assert(this.blob_);
   if (!this.blob_.size) {
-    callback.call(opt_scope, '');
+    callback.call(opt_scope, "");
     return;
   }
 
   var fileReader = new FileReader();
-  fileReader.onload = function() {
+  fileReader.onload = function () {
     callback.call(opt_scope, /** @type {?string} */ (fileReader.result));
   };
   fileReader.readAsText(this.blob_);
 };
 
-
 /**
  * @override
  */
-wtf.io.BrowserBlob_.prototype.toNative = function() {
+wtf.io.BrowserBlob_.prototype.toNative = function () {
   return this.blob_;
 };
 
-
 goog.exportProperty(
-    wtf.io.BrowserBlob_.prototype, 'toNative',
-    wtf.io.BrowserBlob_.prototype.toNative);
-
-
+  wtf.io.BrowserBlob_.prototype,
+  "toNative",
+  wtf.io.BrowserBlob_.prototype.toNative
+);
 
 /**
  * A blob implementation for node.js based on buffers.
@@ -325,7 +311,7 @@ goog.exportProperty(
  * @implements {wtf.io.Blob}
  * @private
  */
-wtf.io.NodeBlob_ = function(opt_buffer) {
+wtf.io.NodeBlob_ = function (opt_buffer) {
   /**
    * Underlying node.js binary buffer.
    * @type {Buffer}
@@ -338,9 +324,8 @@ wtf.io.NodeBlob_ = function(opt_buffer) {
    * @type {string}
    * @private
    */
-  this.contentType_ = '';
+  this.contentType_ = "";
 };
-
 
 /**
  * Initializes a new blob.
@@ -348,7 +333,7 @@ wtf.io.NodeBlob_ = function(opt_buffer) {
  *     Blob parts that will be concatenated into the new blob.
  * @param {{type: string}=} opt_options Options.
  */
-wtf.io.NodeBlob_.prototype.init = function(parts, opt_options) {
+wtf.io.NodeBlob_.prototype.init = function (parts, opt_options) {
   goog.asserts.assert(!this.buffer_);
 
   if (!parts.length) {
@@ -367,11 +352,11 @@ wtf.io.NodeBlob_.prototype.init = function(parts, opt_options) {
       } else if (part instanceof wtf.io.NodeBlob_) {
         // Another blob.
         totalSize += part.getSize();
-      } else if (typeof part == 'string') {
+      } else if (typeof part == "string") {
         // String.
         totalSize += Buffer.byteLength(part);
       } else {
-        goog.asserts.fail('Unknown part type in Blob constructor.');
+        goog.asserts.fail("Unknown part type in Blob constructor.");
       }
     }
 
@@ -398,40 +383,40 @@ wtf.io.NodeBlob_.prototype.init = function(parts, opt_options) {
         // Another blob.
         part.buffer_.copy(this.buffer_, o);
         o += part.getSize();
-      } else if (typeof part == 'string') {
+      } else if (typeof part == "string") {
         // String.
         o += this.buffer_.write(part, o);
       } else {
-        goog.asserts.fail('Unknown part type in Blob constructor.');
+        goog.asserts.fail("Unknown part type in Blob constructor.");
       }
     }
   }
 
-  this.contentType_ = (opt_options ? opt_options['type'] : '') || '';
+  this.contentType_ = (opt_options ? opt_options["type"] : "") || "";
 };
-
 
 /**
  * @override
  */
-wtf.io.NodeBlob_.prototype.getSize = function() {
+wtf.io.NodeBlob_.prototype.getSize = function () {
   return this.buffer_.length;
 };
 
-
 /**
  * @override
  */
-wtf.io.NodeBlob_.prototype.getType = function() {
+wtf.io.NodeBlob_.prototype.getType = function () {
   return this.contentType_;
 };
 
-
 /**
  * @override
  */
-wtf.io.NodeBlob_.prototype.slice = function(
-    opt_start, opt_end, opt_contentType) {
+wtf.io.NodeBlob_.prototype.slice = function (
+  opt_start,
+  opt_end,
+  opt_contentType
+) {
   var size = this.buffer_.length;
   var relativeStart = goog.isDef(opt_start) ? opt_start : 0;
   if (relativeStart < 0) {
@@ -450,24 +435,21 @@ wtf.io.NodeBlob_.prototype.slice = function(
   var result = new wtf.io.NodeBlob_();
   result.buffer_ = new Buffer(span);
   this.buffer_.copy(result.buffer_, 0, relativeStart, relativeEnd);
-  result.contentType_ = opt_contentType || '';
+  result.contentType_ = opt_contentType || "";
   return result;
 };
 
-
 /**
  * @override
  */
-wtf.io.NodeBlob_.prototype.close = function() {
+wtf.io.NodeBlob_.prototype.close = function () {
   // No-op.
 };
 
-
 /**
  * @override
  */
-wtf.io.NodeBlob_.prototype.readAsArrayBuffer = function(
-    callback, opt_scope) {
+wtf.io.NodeBlob_.prototype.readAsArrayBuffer = function (callback, opt_scope) {
   var result = new Uint8Array(this.buffer_.length);
   for (var n = 0; n < this.buffer_.length; n++) {
     result[n] = this.buffer_[n];
@@ -477,25 +459,24 @@ wtf.io.NodeBlob_.prototype.readAsArrayBuffer = function(
   callback.call(opt_scope, result.buffer);
 };
 
-
 /**
  * @override
  */
-wtf.io.NodeBlob_.prototype.readAsText = function(callback, opt_scope) {
+wtf.io.NodeBlob_.prototype.readAsText = function (callback, opt_scope) {
   var result = this.buffer_.toString();
   // TODO(benvanik): make this async?
   callback.call(opt_scope, result);
 };
 
-
 /**
  * @override
  */
-wtf.io.NodeBlob_.prototype.toNative = function() {
+wtf.io.NodeBlob_.prototype.toNative = function () {
   return this.buffer_;
 };
 
-
 goog.exportProperty(
-    wtf.io.NodeBlob_.prototype, 'toNative',
-    wtf.io.NodeBlob_.prototype.toNative);
+  wtf.io.NodeBlob_.prototype,
+  "toNative",
+  wtf.io.NodeBlob_.prototype.toNative
+);

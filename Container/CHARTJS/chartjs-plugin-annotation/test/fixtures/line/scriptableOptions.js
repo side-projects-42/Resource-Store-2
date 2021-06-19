@@ -1,29 +1,29 @@
 module.exports = {
   config: {
-    type: 'scatter',
+    type: "scatter",
     options: {
       scales: {
         x: {
           display: false,
           min: 0,
-          max: 100
+          max: 100,
         },
         y: {
           display: false,
           min: 0,
-          max: 100
-        }
+          max: 100,
+        },
       },
       plugins: {
         annotation: {
           drawTime() {
-            return 'afterDatasetsDraw';
+            return "afterDatasetsDraw";
           },
           annotations: {
             auto1: {
-              type: 'line',
+              type: "line",
               scaleID() {
-                return 'y';
+                return "y";
               },
               value() {
                 return 0;
@@ -32,26 +32,26 @@ module.exports = {
                 return 80;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
-                rotation: 'auto',
-                position: 'start',
-                backgroundColor: 'red',
-                content: 'auto rotation',
-                enabled: true
+                rotation: "auto",
+                position: "start",
+                backgroundColor: "red",
+                content: "auto rotation",
+                enabled: true,
               },
             },
             auto2: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 90;
@@ -66,25 +66,25 @@ module.exports = {
                 return 50;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
-                rotation: 'auto',
-                backgroundColor: 'red',
-                content: 'auto rotation',
-                enabled: true
+                rotation: "auto",
+                backgroundColor: "red",
+                content: "auto rotation",
+                enabled: true,
               },
             },
             auto3: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 30;
@@ -99,25 +99,25 @@ module.exports = {
                 return 85;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
-                rotation: 'auto',
-                backgroundColor: 'red',
-                content: 'auto rotation',
-                enabled: true
+                rotation: "auto",
+                backgroundColor: "red",
+                content: "auto rotation",
+                enabled: true,
               },
             },
             auto4: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 65;
@@ -132,25 +132,25 @@ module.exports = {
                 return 100;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
-                rotation: 'auto',
-                backgroundColor: 'red',
-                content: 'auto rotation',
-                enabled: true
+                rotation: "auto",
+                backgroundColor: "red",
+                content: "auto rotation",
+                enabled: true,
               },
             },
             man1: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 10;
@@ -165,25 +165,25 @@ module.exports = {
                 return 70;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
                 rotation: 90,
-                backgroundColor: 'red',
-                content: 'rotated 90',
-                enabled: true
+                backgroundColor: "red",
+                content: "rotated 90",
+                enabled: true,
               },
             },
             man2: {
-              type: 'line',
+              type: "line",
               xScaleID() {
-                return 'x';
+                return "x";
               },
               yScaleID() {
-                return 'y';
+                return "y";
               },
               xMin() {
                 return 10;
@@ -198,24 +198,24 @@ module.exports = {
                 return 50;
               },
               borderColor() {
-                return 'black';
+                return "black";
               },
               borderWidth() {
                 return 5;
               },
               label: {
                 rotation: -80,
-                backgroundColor: 'red',
-                content: 'rotated -80',
-                enabled: true
+                backgroundColor: "red",
+                content: "rotated -80",
+                enabled: true,
               },
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   },
   options: {
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

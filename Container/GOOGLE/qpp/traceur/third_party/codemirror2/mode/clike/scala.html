@@ -1,29 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>CodeMirror: C-like mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
-    <link rel="stylesheet" href="../../theme/ambiance.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
+    <link rel="stylesheet" href="../../theme/ambiance.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="clike.js"></script>
-    <link rel="stylesheet" href="../../doc/docs.css">
+    <link rel="stylesheet" href="../../doc/docs.css" />
     <style>
-      body
-      {
+      body {
         margin: 0;
         padding: 0;
-        max-width:inherit;
+        max-width: inherit;
         height: 100%;
       }
-      html, form, .CodeMirror, .CodeMirror-scroll
-      {
-        height: 100%;        
+      html,
+      form,
+      .CodeMirror,
+      .CodeMirror-scroll {
+        height: 100%;
       }
     </style>
   </head>
   <body>
-<form>
-<textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
 
   /*                     __                                               *\
   **     ________ ___   / /  ___     Scala API                            **
@@ -750,15 +751,16 @@
   }
 
 
-</textarea>
-</form>
+</textarea
+      >
+    </form>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
         theme: "ambiance",
-        mode: "text/x-scala"
+        mode: "text/x-scala",
       });
     </script>
   </body>

@@ -15,20 +15,17 @@
 import {
   BLOCK,
   VARIABLE_DECLARATION_LIST,
-  IDENTIFIER_EXPRESSION
-} from '../../syntax/trees/ParseTreeType.js';
-import {
-  LENGTH,
-  PUSH
-} from '../../syntax/PredefinedName.js';
-import {TempVarTransformer} from '../TempVarTransformer.js';
+  IDENTIFIER_EXPRESSION,
+} from "../../syntax/trees/ParseTreeType.js";
+import { LENGTH, PUSH } from "../../syntax/PredefinedName.js";
+import { TempVarTransformer } from "../TempVarTransformer.js";
 import {
   BANG,
   IN,
   OPEN_ANGLE,
   PLUS_PLUS,
-  VAR
-} from '../../syntax/TokenType.js';
+  VAR,
+} from "../../syntax/TokenType.js";
 import {
   createArgumentList,
   createAssignmentStatement,
@@ -49,8 +46,8 @@ import {
   createPostfixExpression,
   createUnaryExpression,
   createVariableDeclarationList,
-  createVariableStatement
-} from '../ParseTreeFactory.js';
+  createVariableStatement,
+} from "../ParseTreeFactory.js";
 
 /**
  * Desugars for-in loops to be compatible with generators.
@@ -87,8 +84,8 @@ export class ForInTransformPass extends TempVarTransformer {
     // let $keys = [];
     let keys = this.getTempIdentifier();
     elements.push(
-        createVariableStatement(VAR, keys,
-        createEmptyArrayLiteral()));
+      createVariableStatement(VAR, keys, createEmptyArrayLiteral())
+    );
 
     // var $collection = object;
     let collection = this.getTempIdentifier();
@@ -97,36 +94,43 @@ export class ForInTransformPass extends TempVarTransformer {
     // for (let $p in $collection) $keys.push($p);
     let p = this.getTempIdentifier();
     elements.push(
-        createForInStatement(
-            // var $p
-            createVariableDeclarationList(VAR, p, null),
-            // $collection
-            createIdentifierExpression(collection),
-            // $keys.push($p)
-            createCallStatement(
-                createMemberExpression(keys, PUSH),
-                createArgumentList([createIdentifierExpression(p)]))));
+      createForInStatement(
+        // var $p
+        createVariableDeclarationList(VAR, p, null),
+        // $collection
+        createIdentifierExpression(collection),
+        // $keys.push($p)
+        createCallStatement(
+          createMemberExpression(keys, PUSH),
+          createArgumentList([createIdentifierExpression(p)])
+        )
+      )
+    );
 
     let i = this.getTempIdentifier();
 
     // $keys[$i]
     let lookup = createMemberLookupExpression(
-        createIdentifierExpression(keys),
-        createIdentifierExpression(i));
+      createIdentifierExpression(keys),
+      createIdentifierExpression(i)
+    );
 
     let originalKey, assignOriginalKey;
     if (tree.initializer.type === VARIABLE_DECLARATION_LIST) {
       let decList = tree.initializer;
       originalKey = createIdentifierExpression(decList.declarations[0].lvalue);
       // var key = $keys[$i];
-      assignOriginalKey = createVariableStatement(decList.declarationType,
-          originalKey.identifierToken, lookup);
+      assignOriginalKey = createVariableStatement(
+        decList.declarationType,
+        originalKey.identifierToken,
+        lookup
+      );
     } else if (tree.initializer.type === IDENTIFIER_EXPRESSION) {
       originalKey = tree.initializer;
       // key = $keys[$i];
       assignOriginalKey = createAssignmentStatement(tree.initializer, lookup);
     } else {
-      throw new Error('Invalid left hand side of for in loop');
+      throw new Error("Invalid left hand side of for in loop");
     }
 
     let innerBlock = [];
@@ -136,37 +140,46 @@ export class ForInTransformPass extends TempVarTransformer {
 
     // if (!(key in $collection))
     innerBlock.push(
-        createIfStatement(
-            createUnaryExpression(
-                createOperatorToken(BANG),
-                createParenExpression(
-                    createBinaryExpression(
-                        originalKey,
-                        createOperatorToken(IN),
-                        createIdentifierExpression(collection)))),
-            // continue
-            createContinueStatement(),
-            null));
+      createIfStatement(
+        createUnaryExpression(
+          createOperatorToken(BANG),
+          createParenExpression(
+            createBinaryExpression(
+              originalKey,
+              createOperatorToken(IN),
+              createIdentifierExpression(collection)
+            )
+          )
+        ),
+        // continue
+        createContinueStatement(),
+        null
+      )
+    );
 
     // add original body
     innerBlock.push(...bodyStatements);
 
     // for (var $i = 0; $i < $keys.length; $i++) {
     elements.push(
-        createForStatement(
-            // var $i = 0
-            createVariableDeclarationList(VAR, i, createNumberLiteral(0)),
-            // $i < $keys.length
-            createBinaryExpression(
-                createIdentifierExpression(i),
-                createOperatorToken(OPEN_ANGLE),
-                createMemberExpression(keys, LENGTH)),
-            // $i++
-            createPostfixExpression(
-                createIdentifierExpression(i),
-                createOperatorToken(PLUS_PLUS)),
-            // body
-            createBlock(innerBlock)));
+      createForStatement(
+        // var $i = 0
+        createVariableDeclarationList(VAR, i, createNumberLiteral(0)),
+        // $i < $keys.length
+        createBinaryExpression(
+          createIdentifierExpression(i),
+          createOperatorToken(OPEN_ANGLE),
+          createMemberExpression(keys, LENGTH)
+        ),
+        // $i++
+        createPostfixExpression(
+          createIdentifierExpression(i),
+          createOperatorToken(PLUS_PLUS)
+        ),
+        // body
+        createBlock(innerBlock)
+      )
+    );
 
     return createBlock(elements);
   }

@@ -1,10 +1,10 @@
-define([], function() {
+define([], function () {
   "use strict";
-  var q = 'q';
+  var q = "q";
   return {
     get q() {
       return q;
     },
-    __esModule: true
+    __esModule: true,
   };
 });

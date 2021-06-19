@@ -11,15 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.Filter');
-goog.provide('wtf.db.FilterResult');
+goog.provide("wtf.db.Filter");
+goog.provide("wtf.db.FilterResult");
 
-goog.require('goog.string');
-goog.require('wtf.data.EventFlag');
-goog.require('wtf.db.EventIterator');
-goog.require('wtf.db.FilterParser');
-goog.require('wtf.util.FunctionBuilder');
-
+goog.require("goog.string");
+goog.require("wtf.data.EventFlag");
+goog.require("wtf.db.EventIterator");
+goog.require("wtf.db.FilterParser");
+goog.require("wtf.util.FunctionBuilder");
 
 /**
  * Filter result values.
@@ -28,10 +27,8 @@ goog.require('wtf.util.FunctionBuilder');
 wtf.db.FilterResult = {
   UPDATED: 0,
   FAILED: 1,
-  NO_CHANGE: 2
+  NO_CHANGE: 2,
 };
-
-
 
 /**
  * Event filter state manager.
@@ -52,13 +49,13 @@ wtf.db.FilterResult = {
  * @param {string=} opt_value Initial string value. See {@see #setFromString}.
  * @constructor
  */
-wtf.db.Filter = function(opt_value) {
+wtf.db.Filter = function (opt_value) {
   /**
    * String that the filter is based on.
    * @type {string}
    * @private
    */
-  this.sourceString_ = '';
+  this.sourceString_ = "";
 
   /**
    * Parsed expression tree.
@@ -96,13 +93,11 @@ wtf.db.Filter = function(opt_value) {
   }
 };
 
-
 /**
  * A function that filters on event types.
  * @typedef {function(!wtf.db.EventType):boolean}
  */
 wtf.db.Filter.EventTypeFilterFunction;
-
 
 /**
  * A function that filters an event based on its arguments.
@@ -110,45 +105,41 @@ wtf.db.Filter.EventTypeFilterFunction;
  */
 wtf.db.Filter.ArgumentFilterFunction;
 
-
 /**
  * Gets a function that tests if an event type passes the filter.
  * @return {wtf.db.Filter.EventTypeFilterFunction?} Filter function, or null if
  *     all should pass.
  */
-wtf.db.Filter.prototype.getEventTypeFilter = function() {
+wtf.db.Filter.prototype.getEventTypeFilter = function () {
   return this.eventTypeFilter_;
 };
-
 
 /**
  * Gets a function that tests if an event passes the filter.
  * @return {wtf.db.Filter.ArgumentFilterFunction?} Filter function, or null if
  *     all should pass.
  */
-wtf.db.Filter.prototype.getArgumentFilter = function() {
+wtf.db.Filter.prototype.getArgumentFilter = function () {
   return this.argumentFilter_;
 };
-
 
 /**
  * Gets a value indicating whether the filter is 'active' and doing anything.
  * @return {boolean} True if the filter filters anything.
  */
-wtf.db.Filter.prototype.isActive = function() {
+wtf.db.Filter.prototype.isActive = function () {
   return !!(this.eventTypeFilter_ || this.argumentFilter_);
 };
-
 
 /**
  * Clears the current filter.
  * @return {wtf.db.FilterResult} Result.
  */
-wtf.db.Filter.prototype.clear = function() {
+wtf.db.Filter.prototype.clear = function () {
   if (!this.eventTypeFilter_ && !this.argumentFilter_) {
     return wtf.db.FilterResult.NO_CHANGE;
   }
-  this.sourceString_ = '';
+  this.sourceString_ = "";
   this.expressionTree_ = null;
   this.parseError_ = null;
   this.eventTypeFilter_ = null;
@@ -156,18 +147,17 @@ wtf.db.Filter.prototype.clear = function() {
   return wtf.db.FilterResult.UPDATED;
 };
 
-
 /**
  * Updates the filter from a string query.
  * @param {string} value String query.
  * @return {wtf.db.FilterResult} Result.
  */
-wtf.db.Filter.prototype.setFromString = function(value) {
+wtf.db.Filter.prototype.setFromString = function (value) {
   this.parseError_ = null;
 
   // We need support for codegen.
   if (!wtf.util.FunctionBuilder.isSupported()) {
-    this.parseError_ = new Error('Runtime function generation not supported.');
+    this.parseError_ = new Error("Runtime function generation not supported.");
     return wtf.db.FilterResult.FAILED;
   }
 
@@ -201,33 +191,29 @@ wtf.db.Filter.prototype.setFromString = function(value) {
   return wtf.db.FilterResult.UPDATED;
 };
 
-
 /**
  * Gets a string representing this filter.
  * @return {string} Filter string. May be the empty string.
  */
-wtf.db.Filter.prototype.toString = function() {
+wtf.db.Filter.prototype.toString = function () {
   return this.sourceString_;
 };
-
 
 /**
  * Gets the most recent parse error, or null if parsing was successful.
  * @return {Error} Error, if any.
  */
-wtf.db.Filter.prototype.getError = function() {
+wtf.db.Filter.prototype.getError = function () {
   return this.parseError_;
 };
-
 
 /**
  * Gets a string that can be used to help debug the compiled filter.
  * @return {string} Debug string.
  */
-wtf.db.Filter.prototype.getDebugString = function() {
+wtf.db.Filter.prototype.getDebugString = function () {
   return goog.global.JSON.stringify(this.expressionTree_, null, 2);
 };
-
 
 /**
  * Generates an event type filter function from the given expression tree.
@@ -236,29 +222,28 @@ wtf.db.Filter.prototype.getDebugString = function() {
  *     no filter specified.
  * @private
  */
-wtf.db.Filter.prototype.generateEventTypeFilter_ = function(expr) {
+wtf.db.Filter.prototype.generateEventTypeFilter_ = function (expr) {
   if (!expr.type_query) {
     return null;
   }
 
   var regex;
   switch (expr.type_query.type) {
-    case 'substring':
+    case "substring":
       var escapedValue = goog.string.regExpEscape(expr.type_query.value);
-      regex = new RegExp('.*' + escapedValue + '.*', 'i');
+      regex = new RegExp(".*" + escapedValue + ".*", "i");
       break;
-    case 'regex':
+    case "regex":
       regex = new RegExp(expr.type_query.value, expr.type_query.flags);
       break;
     default:
-      throw new Error('Invalid event type filter query.');
+      throw new Error("Invalid event type filter query.");
   }
 
   return function eventTypeFilter(eventType) {
     return regex.test(eventType.name);
   };
 };
-
 
 /**
  * Generates an argument filter function from the given expression tree.
@@ -267,14 +252,14 @@ wtf.db.Filter.prototype.generateEventTypeFilter_ = function(expr) {
  *     no filter specified.
  * @private
  */
-wtf.db.Filter.prototype.generateArgumentFilter_ = function(expr) {
+wtf.db.Filter.prototype.generateArgumentFilter_ = function (expr) {
   if (!expr.arg_query) {
     return null;
   }
 
   var builder = new wtf.util.FunctionBuilder();
   builder.begin();
-  builder.addArgument('it');
+  builder.addArgument("it");
 
   // Generate a list of expressions that must be true to pass the filter.
   var expressions = [];
@@ -285,7 +270,7 @@ wtf.db.Filter.prototype.generateArgumentFilter_ = function(expr) {
     // If either side references an argument, ensure the argument exists.
     var argumentInfos = [
       getExpressionArgumentInfo(binaryExpression.lhs),
-      getExpressionArgumentInfo(binaryExpression.rhs)
+      getExpressionArgumentInfo(binaryExpression.rhs),
     ];
     for (var i = 0; i < argumentInfos.length; i++) {
       var argumentInfo = argumentInfos[i];
@@ -297,18 +282,18 @@ wtf.db.Filter.prototype.generateArgumentFilter_ = function(expr) {
         needsArguments = true;
       }
       if (argumentInfo.requiresScope) {
-        expressions.push('it.isScope()');
+        expressions.push("it.isScope()");
       }
     }
 
     // We really want exact semantics.
     var op = binaryExpression.op;
     switch (op) {
-      case '==':
-        op = '===';
+      case "==":
+        op = "===";
         break;
-      case '!=':
-        op = '!==';
+      case "!=":
+        op = "!==";
         break;
     }
 
@@ -317,115 +302,115 @@ wtf.db.Filter.prototype.generateArgumentFilter_ = function(expr) {
     var rhs = stringifyExpressionValue(binaryExpression.rhs);
 
     // The real expression.
-    if (binaryExpression.rhs.type == 'regex') {
-      var prefix = op == '!~' ? '!' : '';
-      expressions.push('( ' + prefix + rhs + '.test(' + lhs + ') )');
+    if (binaryExpression.rhs.type == "regex") {
+      var prefix = op == "!~" ? "!" : "";
+      expressions.push("( " + prefix + rhs + ".test(" + lhs + ") )");
     } else {
-      expressions.push('(' + lhs + ' ' + op + ' ' + rhs + ')');
+      expressions.push("(" + lhs + " " + op + " " + rhs + ")");
     }
   }
 
   // Only add arguments object if any expressions use it.
   if (needsArguments) {
-    builder.append('var args = it.getArguments();');
-    builder.append('if (!args) return false;');
+    builder.append("var args = it.getArguments();");
+    builder.append("if (!args) return false;");
   }
 
   if (expressions.length) {
-    builder.append('return ' + expressions.join(' && ') + ';');
+    builder.append("return " + expressions.join(" && ") + ";");
   } else {
-    builder.append('return true;');
+    builder.append("return true;");
   }
 
-  return builder.end('argumentFilter');
+  return builder.end("argumentFilter");
 
   function getExpressionArgumentInfo(exprValue) {
-    if (exprValue.type != 'reference') {
+    if (exprValue.type != "reference") {
       return null;
     }
     function findArgumentName(access) {
       if (goog.isString(access)) {
-        if (access[0] == '@') {
+        if (access[0] == "@") {
           var requiresScope = false;
           switch (access.toLowerCase()) {
-            case '@duration':
-            case '@userduration':
-            case '@ownduration':
-            case '@flowid':
+            case "@duration":
+            case "@userduration":
+            case "@ownduration":
+            case "@flowid":
               requiresScope = true;
               break;
           }
           return {
             name: null,
-            requiresScope: requiresScope
+            requiresScope: requiresScope,
           };
         } else {
           return {
             name: access,
-            requiresScope: false
+            requiresScope: false,
           };
         }
       } else {
         return findArgumentName(access.base);
       }
-    };
+    }
     return findArgumentName(exprValue.value);
-  };
+  }
   function stringifyExpressionValue(exprValue) {
     switch (exprValue.type) {
-      case 'number':
+      case "number":
         return String(exprValue.value);
-      case 'string':
+      case "string":
         return '"' + exprValue.value + '"';
-      case 'boolean':
+      case "boolean":
         return String(exprValue.value);
-      case 'null':
-        return 'null';
-      case 'array':
-        return '[' + String(exprValue.value) + ']';
-      case 'object':
+      case "null":
+        return "null";
+      case "array":
+        return "[" + String(exprValue.value) + "]";
+      case "object":
         return goog.global.JSON.stringify(exprValue.value);
-      case 'regex':
+      case "regex":
         var regExpr = '(new RegExp("' + String(exprValue.value) + '"';
         if (exprValue.value.flags) {
           regExpr += ', "' + String(exprValue.flags) + '"';
         }
-        regExpr += '))';
+        regExpr += "))";
         return regExpr;
-      case 'reference':
+      case "reference":
         return stringifyReferenceAccess(exprValue.value);
       default:
-        throw new Error('Unknown expression value type: ' + exprValue.type);
+        throw new Error("Unknown expression value type: " + exprValue.type);
     }
-  };
+  }
   function stringifyReferenceAccess(access) {
     if (goog.isString(access)) {
-      if (access[0] == '@') {
+      if (access[0] == "@") {
         switch (access.toLowerCase()) {
-          case '@time':
-            return 'it.getTime()';
-          case '@duration':
-            return 'it.getTotalDuration()';
-          case '@userduration':
-            return 'it.getUserDuration()';
-          case '@ownduration':
-            return 'it.getOwnDuration()';
-          case '@flowid':
-            return 'it.getChildFlowId()';
+          case "@time":
+            return "it.getTime()";
+          case "@duration":
+            return "it.getTotalDuration()";
+          case "@userduration":
+            return "it.getUserDuration()";
+          case "@ownduration":
+            return "it.getOwnDuration()";
+          case "@flowid":
+            return "it.getChildFlowId()";
           default:
-            throw new Error('Unknown event attribute: ' + access);
+            throw new Error("Unknown event attribute: " + access);
         }
       } else {
         return 'args["' + access + '"]';
       }
     } else {
-      var name = goog.isString(access.name) ?
-          '"' + access.name + '"' : access.name;
-      return stringifyReferenceAccess(access.base) + '[' + name + ']';
+      var name = goog.isString(access.name)
+        ? '"' + access.name + '"'
+        : access.name;
+      return stringifyReferenceAccess(access.base) + "[" + name + "]";
     }
-  };
+  }
 };
-
 
 /**
  * Gets a presence-checking map of all event types that match the filter.
@@ -434,7 +419,7 @@ wtf.db.Filter.prototype.generateArgumentFilter_ = function(expr) {
  * @param {!wtf.db.EventTypeTable} eventTypeTable Type table.
  * @return {!Object.<number, boolean>} Type ID map.
  */
-wtf.db.Filter.prototype.getMatchedEventTypes = function(eventTypeTable) {
+wtf.db.Filter.prototype.getMatchedEventTypes = function (eventTypeTable) {
   var result = {};
 
   var evaluator = this.eventTypeFilter_;
@@ -455,14 +440,13 @@ wtf.db.Filter.prototype.getMatchedEventTypes = function(eventTypeTable) {
   return result;
 };
 
-
 /**
  * Filters an event list and returns an iterator with only those events
  * selected.
  * @param {!wtf.db.EventList} eventList Event list.
  * @return {!wtf.db.EventIterator} Filtered iterator.
  */
-wtf.db.Filter.prototype.applyToEventList = function(eventList) {
+wtf.db.Filter.prototype.applyToEventList = function (eventList) {
   var matchedEventTypes = this.getMatchedEventTypes(eventList.eventTypeTable);
   var argumentFilter = this.argumentFilter_;
 
@@ -477,20 +461,22 @@ wtf.db.Filter.prototype.applyToEventList = function(eventList) {
     }
   }
 
-  return new wtf.db.EventIterator(
-      eventList, 0, matches.length - 1, 0, matches);
+  return new wtf.db.EventIterator(eventList, 0, matches.length - 1, 0, matches);
 };
 
-
-goog.exportSymbol(
-    'wtf.db.Filter',
-    wtf.db.Filter);
+goog.exportSymbol("wtf.db.Filter", wtf.db.Filter);
 goog.exportProperty(
-    wtf.db.Filter.prototype, 'clear',
-    wtf.db.Filter.prototype.clear);
+  wtf.db.Filter.prototype,
+  "clear",
+  wtf.db.Filter.prototype.clear
+);
 goog.exportProperty(
-    wtf.db.Filter.prototype, 'toString',
-    wtf.db.Filter.prototype.toString);
+  wtf.db.Filter.prototype,
+  "toString",
+  wtf.db.Filter.prototype.toString
+);
 goog.exportProperty(
-    wtf.db.Filter.prototype, 'setFromString',
-    wtf.db.Filter.prototype.setFromString);
+  wtf.db.Filter.prototype,
+  "setFromString",
+  wtf.db.Filter.prototype.setFromString
+);

@@ -1,6 +1,6 @@
-const resolve = require('@rollup/plugin-node-resolve').default;
-const terser = require('rollup-plugin-terser').terser;
-const pkg = require('./package.json');
+const resolve = require("@rollup/plugin-node-resolve").default;
+const terser = require("rollup-plugin-terser").terser;
+const pkg = require("./package.json");
 
 const banner = `/*!
  * ${pkg.name} v${pkg.version}
@@ -9,14 +9,11 @@ const banner = `/*!
  * Released under the ${pkg.license} license
  */`;
 
-const input = 'src/index.js';
-const external = [
-  'chart.js',
-  'date-fns'
-];
+const input = "src/index.js";
+const external = ["chart.js", "date-fns"];
 const globals = {
-  'chart.js': 'Chart',
-  'date-fns': 'dateFns'
+  "chart.js": "Chart",
+  "date-fns": "dateFns",
 };
 
 module.exports = [
@@ -25,77 +22,71 @@ module.exports = [
     output: {
       file: pkg.main,
       banner: banner,
-      format: 'umd',
+      format: "umd",
       indent: false,
-      globals
+      globals,
     },
-    external
+    external,
   },
   {
     input,
     output: {
-      file: pkg.main.replace('.js', '.min.js'),
-      format: 'umd',
+      file: pkg.main.replace(".js", ".min.js"),
+      format: "umd",
       indent: false,
-      globals
+      globals,
     },
     plugins: [
       terser({
         output: {
-          preamble: banner
-        }
-      })
+          preamble: banner,
+        },
+      }),
     ],
-    external
+    external,
   },
   {
     input,
     output: {
       file: pkg.module,
       banner: banner,
-      format: 'esm',
+      format: "esm",
       indent: false,
-      globals
+      globals,
     },
-    external
+    external,
   },
   {
     input,
     output: {
-      file: pkg.main.replace('.js', '.bundle.js'),
-      format: 'umd',
+      file: pkg.main.replace(".js", ".bundle.js"),
+      format: "umd",
       indent: false,
       globals: {
-        'chart.js': 'Chart'
-      }
+        "chart.js": "Chart",
+      },
     },
-    plugins: [
-      resolve(),
-    ],
-    external: [
-      'chart.js'
-    ]
+    plugins: [resolve()],
+    external: ["chart.js"],
   },
   {
     input,
     output: {
-      file: pkg.main.replace('.js', '.bundle.min.js'),
-      format: 'umd',
+      file: pkg.main.replace(".js", ".bundle.min.js"),
+      format: "umd",
       indent: false,
       globals: {
-        'chart.js': 'Chart'
-      }
+        "chart.js": "Chart",
+      },
     },
     plugins: [
       resolve(),
       terser({
         output: {
-          preamble: banner
-        }
-      })
+          preamble: banner,
+        },
+      }),
     ],
-    external: [
-      'chart.js'
-    ]
-  }
+    external: ["chart.js"],
+  },
 ];

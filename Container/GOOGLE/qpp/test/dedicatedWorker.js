@@ -1,5 +1,5 @@
 var message_id = 1;
-onmessage = function(event) {
+onmessage = function (event) {
   doWork();
 };
 

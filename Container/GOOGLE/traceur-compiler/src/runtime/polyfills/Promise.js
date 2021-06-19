@@ -17,16 +17,16 @@
 //   https://github.com/slightlyoff/Promises/blob/master/src/Promise.js
 //   https://github.com/domenic/promises-unwrapping/blob/master/testable-implementation.js
 
-import async from '../../../node_modules/rsvp/lib/rsvp/asap.js';
-import {isObject, registerPolyfill} from './utils.js';
-import {createPrivateSymbol, getPrivate, setPrivate} from '../private.js';
+import async from "../../../node_modules/rsvp/lib/rsvp/asap.js";
+import { isObject, registerPolyfill } from "./utils.js";
+import { createPrivateSymbol, getPrivate, setPrivate } from "../private.js";
 
 // Status values: 0 = pending, +1 = resolved, -1 = rejected
 
 var promiseRaw = {};
 
 function isPromise(x) {
-  return x && typeof x === 'object' && x.status_ !== undefined;
+  return x && typeof x === "object" && x.status_ !== undefined;
 }
 
 function idResolveHandler(x) {
@@ -38,9 +38,11 @@ function idRejectHandler(x) {
 }
 
 // Simple chaining (a.k.a. flatMap).
-function chain(promise,
-               onResolve = idResolveHandler,
-               onReject = idRejectHandler) {
+function chain(
+  promise,
+  onResolve = idResolveHandler,
+  onReject = idRejectHandler
+) {
   var deferred = getDeferred(promise.constructor);
   switch (promise.status_) {
     case undefined:
@@ -65,8 +67,12 @@ function getDeferred(C) {
     var promise = promiseInit(new $Promise(promiseRaw));
     return {
       promise: promise,
-      resolve: (x) => { promiseResolve(promise, x) },
-      reject: (r) => { promiseReject(promise, r) }
+      resolve: (x) => {
+        promiseResolve(promise, x);
+      },
+      reject: (r) => {
+        promiseReject(promise, r);
+      },
     };
   } else {
     var result = {};
@@ -92,34 +98,45 @@ function promiseInit(promise) {
 
 export class Promise {
   constructor(resolver) {
-    if (resolver === promiseRaw)
-      return;
-    if (typeof resolver !== 'function')
-      throw new TypeError;
+    if (resolver === promiseRaw) return;
+    if (typeof resolver !== "function") throw new TypeError();
     var promise = promiseInit(this);
     try {
-      resolver((x) => { promiseResolve(promise, x) },
-               (r) => { promiseReject(promise, r) });
+      resolver(
+        (x) => {
+          promiseResolve(promise, x);
+        },
+        (r) => {
+          promiseReject(promise, r);
+        }
+      );
     } catch (e) {
       promiseReject(promise, e);
     }
   }
 
   catch(onReject) {
-    return this.then(undefined, onReject)
+    return this.then(undefined, onReject);
   }
 
   // Extended functionality for multi-unwrapping chaining and coercive 'then'.
   then(onResolve, onReject) {
-    if (typeof onResolve !== 'function') onResolve = idResolveHandler;
-    if (typeof onReject !== 'function') onReject = idRejectHandler;
+    if (typeof onResolve !== "function") onResolve = idResolveHandler;
+    if (typeof onReject !== "function") onReject = idRejectHandler;
     var that = this;
     var constructor = this.constructor;
-    return chain(this, function(x) {
-      x = promiseCoerce(constructor, x);
-      return x === that ? onReject(new TypeError) :
-          isPromise(x) ? x.then(onResolve, onReject) : onResolve(x)
-    }, onReject);
+    return chain(
+      this,
+      function (x) {
+        x = promiseCoerce(constructor, x);
+        return x === that
+          ? onReject(new TypeError())
+          : isPromise(x)
+          ? x.then(onResolve, onReject)
+          : onResolve(x);
+      },
+      onReject
+    );
   }
 
   // Convenience.
@@ -132,7 +149,9 @@ export class Promise {
       // Optimized case, avoid extra closure.
       return promiseSet(new $Promise(promiseRaw), +1, x);
     } else {
-      return new this(function(resolve, reject) { resolve(x) });
+      return new this(function (resolve, reject) {
+        resolve(x);
+      });
     }
   }
 
@@ -141,7 +160,9 @@ export class Promise {
       // Optimized case, avoid extra closure.
       return promiseSet(new $Promise(promiseRaw), -1, r);
     } else {
-      return new this((resolve, reject) => { reject(r) });
+      return new this((resolve, reject) => {
+        reject(r);
+      });
     }
   }
 
@@ -155,10 +176,10 @@ export class Promise {
       var i = 0;
       for (var value of values) {
         var countdownFunction = makeCountdownFunction(i);
-        this.resolve(value).then(
-            countdownFunction,
-            (r) => { deferred.reject(r); });
-        ++i
+        this.resolve(value).then(countdownFunction, (r) => {
+          deferred.reject(r);
+        });
+        ++i;
         ++count;
       }
       // iterable must be empty as otherwise the count wouldn't be decreased
@@ -170,9 +191,8 @@ export class Promise {
       function makeCountdownFunction(i) {
         return (x) => {
           resolutions[i] = x;
-          if (--count === 0)
-            deferred.resolve(resolutions);
-        }
+          if (--count === 0) deferred.resolve(resolutions);
+        };
       }
     } catch (e) {
       deferred.reject(e);
@@ -186,8 +206,13 @@ export class Promise {
       // TODO(arv): values should be an iterable
       for (var i = 0; i < values.length; i++) {
         this.resolve(values[i]).then(
-            (x) => { deferred.resolve(x); },
-            (r) => { deferred.reject(r); });
+          (x) => {
+            deferred.resolve(x);
+          },
+          (r) => {
+            deferred.reject(r);
+          }
+        );
       }
     } catch (e) {
       deferred.reject(e);
@@ -208,8 +233,7 @@ function promiseReject(promise, r) {
 }
 
 function promiseDone(promise, status, value, reactions) {
-  if (promise.status_ !== 0)
-    return;
+  if (promise.status_ !== 0) return;
   promiseEnqueue(value, reactions);
   promiseSet(promise, status, value);
 }
@@ -217,7 +241,7 @@ function promiseDone(promise, status, value, reactions) {
 function promiseEnqueue(value, tasks) {
   async(() => {
     for (var i = 0; i < tasks.length; i += 2) {
-      promiseHandle(value, tasks[i], tasks[i + 1])
+      promiseHandle(value, tasks[i], tasks[i + 1]);
     }
   });
 }
@@ -225,15 +249,15 @@ function promiseEnqueue(value, tasks) {
 function promiseHandle(value, handler, deferred) {
   try {
     var result = handler(value);
-    if (result === deferred.promise)
-      throw new TypeError;
+    if (result === deferred.promise) throw new TypeError();
     else if (isPromise(result))
       chain(result, deferred.resolve, deferred.reject);
-    else
-      deferred.resolve(result);
+    else deferred.resolve(result);
   } catch (e) {
     // TODO(arv): perhaps log uncaught exceptions below.
-    try { deferred.reject(e) } catch(e) {}
+    try {
+      deferred.reject(e);
+    } catch (e) {}
   }
 }
 
@@ -249,7 +273,7 @@ function promiseCoerce(constructor, x) {
       setPrivate(x, thenableSymbol, promise);
       return promise;
     }
-    if (typeof then === 'function') {
+    if (typeof then === "function") {
       var p = getPrivate(x, thenableSymbol);
       if (p) {
         return p;
@@ -269,8 +293,7 @@ function promiseCoerce(constructor, x) {
 }
 
 export function polyfillPromise(global) {
-  if (!global.Promise)
-    global.Promise = Promise;
+  if (!global.Promise) global.Promise = Promise;
 }
 
 registerPolyfill(polyfillPromise);

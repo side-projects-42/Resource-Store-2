@@ -6,57 +6,57 @@ for (var i = 0; i < count; ++i) {
   labels.push(i);
 }
 
-['start', 'center', 'end'].forEach(function(anchor, v) {
+["start", "center", "end"].forEach(function (anchor, v) {
   datasets.push({
-    data: labels.map(function() {
+    data: labels.map(function () {
       return v + 2;
     }),
     datalabels: {
-      anchor: anchor
-    }
+      anchor: anchor,
+    },
   });
 });
 
 export default {
   config: {
-    type: 'radar',
+    type: "radar",
     data: {
       labels: labels,
-      datasets: datasets
+      datasets: datasets,
     },
     options: {
       layout: {
-        padding: 32
+        padding: 32,
       },
       elements: {
         line: {
-          backgroundColor: 'transparent',
-          borderColor: 'transparent'
+          backgroundColor: "transparent",
+          borderColor: "transparent",
         },
         point: {
-          radius: 16
-        }
+          radius: 16,
+        },
       },
       scale: {
-        display: false
+        display: false,
       },
       plugins: {
         datalabels: {
-          backgroundColor: '#00ff77',
-          borderColor: 'black',
+          backgroundColor: "#00ff77",
+          borderColor: "black",
           borderWidth: 2,
           font: {
-            size: 0
+            size: 0,
           },
-          padding: 8
-        }
-      }
-    }
+          padding: 8,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 512,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

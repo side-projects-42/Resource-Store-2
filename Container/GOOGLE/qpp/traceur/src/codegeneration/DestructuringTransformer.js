@@ -12,12 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  ARRAY,
-  CALL,
-  PROTOTYPE,
-  SLICE
-} from '../syntax/PredefinedName.js';
+import { ARRAY, CALL, PROTOTYPE, SLICE } from "../syntax/PredefinedName.js";
 import {
   ARRAY_LITERAL_EXPRESSION,
   ARRAY_PATTERN,
@@ -32,8 +27,8 @@ import {
   OBJECT_PATTERN,
   OBJECT_PATTERN_FIELD,
   PAREN_EXPRESSION,
-  VARIABLE_DECLARATION_LIST
-} from '../syntax/trees/ParseTreeType.js';
+  VARIABLE_DECLARATION_LIST,
+} from "../syntax/trees/ParseTreeType.js";
 import {
   BindingElement,
   Catch,
@@ -42,16 +37,10 @@ import {
   FunctionDeclaration,
   FunctionExpression,
   LiteralExpression,
-  SetAccessor
-} from '../syntax/trees/ParseTrees.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  EQUAL,
-  IDENTIFIER,
-  IN,
-  LET,
-  VAR
-} from '../syntax/TokenType.js';
+  SetAccessor,
+} from "../syntax/trees/ParseTrees.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { EQUAL, IDENTIFIER, IN, LET, VAR } from "../syntax/TokenType.js";
 import {
   createArgumentList,
   createAssignmentExpression,
@@ -71,10 +60,10 @@ import {
   createStringLiteral,
   createVariableDeclaration,
   createVariableDeclarationList,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {options} from '../options.js';
-import {prependStatements} from './PrependStatements.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { options } from "../options.js";
+import { prependStatements } from "./PrependStatements.js";
 
 var stack = [];
 
@@ -123,8 +112,7 @@ class VariableDeclarationDesugaring extends Desugaring {
 
   assign(lvalue, rvalue) {
     if (lvalue.type === BINDING_ELEMENT) {
-      this.declarations.push(createVariableDeclaration(lvalue.binding,
-          rvalue));
+      this.declarations.push(createVariableDeclaration(lvalue.binding, rvalue));
       return;
     }
 
@@ -140,37 +128,37 @@ class VariableDeclarationDesugaring extends Desugaring {
  */
 function createConditionalMemberExpression(rvalue, identToken, initializer) {
   if (identToken.type !== IDENTIFIER) {
-    return createConditionalMemberLookupExpression(rvalue,
-        new LiteralExpression(null, identToken),
-        initializer);
+    return createConditionalMemberLookupExpression(
+      rvalue,
+      new LiteralExpression(null, identToken),
+      initializer
+    );
   }
 
-  if (!initializer)
-    return createMemberExpression(rvalue, identToken);
+  if (!initializer) return createMemberExpression(rvalue, identToken);
 
   return createConditionalExpression(
-      createBinaryOperator(
-          createStringLiteral(identToken.value),
-          createOperatorToken(IN),
-          rvalue),
-      createMemberExpression(rvalue, identToken),
-      initializer);
+    createBinaryOperator(
+      createStringLiteral(identToken.value),
+      createOperatorToken(IN),
+      rvalue
+    ),
+    createMemberExpression(rvalue, identToken),
+    initializer
+  );
 }
 
 /**
  * Creates something like [index] in rvalue ? rvalue[index] : initializer
  */
 function createConditionalMemberLookupExpression(rvalue, index, initializer) {
-  if (!initializer)
-    return createMemberLookupExpression(rvalue, index);
+  if (!initializer) return createMemberLookupExpression(rvalue, index);
 
   return createConditionalExpression(
-      createBinaryOperator(
-          index,
-          createOperatorToken(IN),
-          rvalue),
-      createMemberLookupExpression(rvalue, index),
-      initializer);
+    createBinaryOperator(index, createOperatorToken(IN), rvalue),
+    createMemberLookupExpression(rvalue, index),
+    initializer
+  );
 }
 
 /**
@@ -185,7 +173,7 @@ export class DestructuringTransformer extends TempVarTransformer {
    */
   transformArrayPattern(tree) {
     // Patterns should be desugared by their parent nodes.
-    throw new Error('unreachable');
+    throw new Error("unreachable");
   }
 
   /**
@@ -194,7 +182,7 @@ export class DestructuringTransformer extends TempVarTransformer {
    */
   transformObjectPattern(tree) {
     // Patterns should be desugard by their parent nodes.
-    throw new Error('unreachable');
+    throw new Error("unreachable");
   }
 
   /**
@@ -230,11 +218,11 @@ export class DestructuringTransformer extends TempVarTransformer {
 
     this.desugarPattern_(desugaring, lvalue);
     desugaring.expressions.unshift(
-        createAssignmentExpression(tempIdent, rvalue));
+      createAssignmentExpression(tempIdent, rvalue)
+    );
     desugaring.expressions.push(tempIdent);
 
-    return createParenExpression(
-        createCommaExpression(desugaring.expressions));
+    return createParenExpression(createCommaExpression(desugaring.expressions));
   }
 
   /**
@@ -265,17 +253,17 @@ export class DestructuringTransformer extends TempVarTransformer {
     tree.declarations.forEach((declaration) => {
       if (declaration.lvalue.isPattern()) {
         desugaredDeclarations.push(
-            ...this.desugarVariableDeclaration_(declaration));
+          ...this.desugarVariableDeclaration_(declaration)
+        );
       } else {
         desugaredDeclarations.push(declaration);
       }
     });
 
     // Desugar more.
-    var transformedTree =  this.transformVariableDeclarationList(
-        createVariableDeclarationList(
-            tree.declarationType,
-            desugaredDeclarations));
+    var transformedTree = this.transformVariableDeclarationList(
+      createVariableDeclarationList(tree.declarationType, desugaredDeclarations)
+    );
 
     this.popTempVarState();
 
@@ -283,15 +271,19 @@ export class DestructuringTransformer extends TempVarTransformer {
   }
 
   transformForInStatement(tree) {
-    return this.transformForInOrOf_(tree,
-                                    super.transformForInStatement,
-                                    ForInStatement);
+    return this.transformForInOrOf_(
+      tree,
+      super.transformForInStatement,
+      ForInStatement
+    );
   }
 
   transformForOfStatement(tree) {
-    return this.transformForInOrOf_(tree,
-                                    super.transformForOfStatement,
-                                    ForOfStatement);
+    return this.transformForInOrOf_(
+      tree,
+      super.transformForOfStatement,
+      ForOfStatement
+    );
   }
 
   /**
@@ -305,9 +297,11 @@ export class DestructuringTransformer extends TempVarTransformer {
    * @private
    */
   transformForInOrOf_(tree, superMethod, constr) {
-    if (!tree.initializer.isPattern() &&
-        (tree.initializer.type !== VARIABLE_DECLARATION_LIST ||
-         !this.destructuringInDeclaration_(tree.initializer))) {
+    if (
+      !tree.initializer.isPattern() &&
+      (tree.initializer.type !== VARIABLE_DECLARATION_LIST ||
+        !this.destructuringInDeclaration_(tree.initializer))
+    ) {
       return superMethod.call(this, tree);
     }
 
@@ -340,13 +334,11 @@ export class DestructuringTransformer extends TempVarTransformer {
 
     var statements = [];
     var binding = this.desugarBinding_(lvalue, statements, declarationType);
-    var initializer = createVariableDeclarationList(VAR,
-        binding, null);
+    var initializer = createVariableDeclarationList(VAR, binding, null);
 
     var collection = this.transformAny(tree.collection);
     var body = this.transformAny(tree.body);
-    if (body.type !== BLOCK)
-      body = createBlock(body);
+    if (body.type !== BLOCK) body = createBlock(body);
 
     statements.push(...body.statements);
     body = createBlock(statements);
@@ -366,47 +358,51 @@ export class DestructuringTransformer extends TempVarTransformer {
 
   transformFunction_(tree, constructor) {
     stack.push([]);
-    var transformedTree = constructor === FunctionExpression ?
-        super.transformFunctionExpression(tree) :
-        super.transformFunctionDeclaration(tree);
+    var transformedTree =
+      constructor === FunctionExpression
+        ? super.transformFunctionExpression(tree)
+        : super.transformFunctionDeclaration(tree);
     var statements = stack.pop();
-    if (!statements.length)
-      return transformedTree;
+    if (!statements.length) return transformedTree;
 
     // Prepend the var statements to the block.
-    statements = prependStatements(transformedTree.functionBody.statements,
-                                   ...statements);
+    statements = prependStatements(
+      transformedTree.functionBody.statements,
+      ...statements
+    );
 
-    return new constructor(transformedTree.location,
-                           transformedTree.name,
-                           transformedTree.isGenerator,
-                           transformedTree.formalParameterList,
-                           createBlock(statements));
+    return new constructor(
+      transformedTree.location,
+      transformedTree.name,
+      transformedTree.isGenerator,
+      transformedTree.formalParameterList,
+      createBlock(statements)
+    );
   }
 
   transformSetAccessor(tree) {
     stack.push([]);
     var transformedTree = super.transformSetAccessor(tree);
     var statements = stack.pop();
-    if (!statements.length)
-      return transformedTree;
+    if (!statements.length) return transformedTree;
 
     // Prepend the var statements to the block.
     statements.push(...transformedTree.body.statements);
 
-    return new SetAccessor(transformedTree.location,
-                           transformedTree.isStatic,
-                           transformedTree.name,
-                           transformedTree.parameter,
-                           createBlock(statements));
+    return new SetAccessor(
+      transformedTree.location,
+      transformedTree.isStatic,
+      transformedTree.name,
+      transformedTree.parameter,
+      createBlock(statements)
+    );
   }
 
   transformBindingElement(tree) {
     // If this has an initializer the default parameter transformer moves the
     // pattern into the function body and it will be taken care of by the
     // variable pass.
-    if (!tree.binding.isPattern() || tree.initializer)
-      return tree;
+    if (!tree.binding.isPattern() || tree.initializer) return tree;
 
     // function f(pattern) { }
     //
@@ -417,15 +413,13 @@ export class DestructuringTransformer extends TempVarTransformer {
     // }
 
     var statements = stack[stack.length - 1];
-    var binding = this.desugarBinding_(tree.binding, statements,
-                                       VAR);
+    var binding = this.desugarBinding_(tree.binding, statements, VAR);
 
     return new BindingElement(null, binding, null);
   }
 
   transformCatch(tree) {
-    if (!tree.binding.isPattern())
-      return super.transformCatch(tree);
+    if (!tree.binding.isPattern()) return super.transformCatch(tree);
 
     // catch(pattern) {
     //
@@ -461,22 +455,26 @@ export class DestructuringTransformer extends TempVarTransformer {
     var desugaring;
     if (declarationType === null)
       desugaring = new AssignmentExpressionDesugaring(idExpr);
-    else
-      desugaring = new VariableDeclarationDesugaring(idExpr);
+    else desugaring = new VariableDeclarationDesugaring(idExpr);
 
     this.desugarPattern_(desugaring, bindingTree);
 
     if (declarationType === null) {
-      statements.push(createExpressionStatement(
-        createCommaExpression(desugaring.expressions)));
+      statements.push(
+        createExpressionStatement(createCommaExpression(desugaring.expressions))
+      );
     } else {
       statements.push(
-          createVariableStatement(
-              // Desugar more.
-              this.transformVariableDeclarationList(
-                  createVariableDeclarationList(
-                      declarationType,
-                      desugaring.declarations))));
+        createVariableStatement(
+          // Desugar more.
+          this.transformVariableDeclarationList(
+            createVariableDeclarationList(
+              declarationType,
+              desugaring.declarations
+            )
+          )
+        )
+      );
     }
 
     return binding;
@@ -487,8 +485,9 @@ export class DestructuringTransformer extends TempVarTransformer {
    * @return {boolean}
    */
   destructuringInDeclaration_(tree) {
-    return tree.declarations.some(
-        (declaration) => declaration.lvalue.isPattern());
+    return tree.declarations.some((declaration) =>
+      declaration.lvalue.isPattern()
+    );
   }
 
   /**
@@ -558,21 +557,22 @@ export class DestructuringTransformer extends TempVarTransformer {
           } else if (lvalue.isSpreadPatternElement()) {
             // Rest of the array, for example [x, ...y] = [1, 2, 3]
             desugaring.assign(
-                lvalue.lvalue,
-                createCallExpression(
-                    createMemberExpression(ARRAY, PROTOTYPE, SLICE, CALL),
-                    createArgumentList(
-                        desugaring.rvalue,
-                        createNumberLiteral(i))));
+              lvalue.lvalue,
+              createCallExpression(
+                createMemberExpression(ARRAY, PROTOTYPE, SLICE, CALL),
+                createArgumentList(desugaring.rvalue, createNumberLiteral(i))
+              )
+            );
           } else {
-            if (lvalue.initializer)
-              initializerFound = true;
+            if (lvalue.initializer) initializerFound = true;
             desugaring.assign(
-                lvalue,
-                createConditionalMemberLookupExpression(
-                    desugaring.rvalue,
-                    createNumberLiteral(i),
-                    lvalue.initializer));
+              lvalue,
+              createConditionalMemberLookupExpression(
+                desugaring.rvalue,
+                createNumberLiteral(i),
+                lvalue.initializer
+              )
+            );
           }
         }
         break;
@@ -585,32 +585,39 @@ export class DestructuringTransformer extends TempVarTransformer {
           var lookup;
           switch (field.type) {
             case BINDING_ELEMENT:
-              if (field.initializer)
-                initializerFound = true;
-              lookup = createConditionalMemberExpression(desugaring.rvalue,
-                  field.binding.identifierToken, field.initializer);
+              if (field.initializer) initializerFound = true;
+              lookup = createConditionalMemberExpression(
+                desugaring.rvalue,
+                field.binding.identifierToken,
+                field.initializer
+              );
               desugaring.assign(
-                  createIdentifierExpression(field.binding),
-                  lookup);
+                createIdentifierExpression(field.binding),
+                lookup
+              );
               break;
 
             case OBJECT_PATTERN_FIELD:
-              if (field.element.initializer)
-                initializerFound = true;
-              lookup = createConditionalMemberExpression(desugaring.rvalue,
-                  field.identifier, field.element.initializer);
+              if (field.element.initializer) initializerFound = true;
+              lookup = createConditionalMemberExpression(
+                desugaring.rvalue,
+                field.identifier,
+                field.element.initializer
+              );
               desugaring.assign(field.element, lookup);
               break;
 
             case IDENTIFIER_EXPRESSION:
               lookup = createMemberExpression(
-                  desugaring.rvalue, field.identifierToken);
+                desugaring.rvalue,
+                field.identifierToken
+              );
 
               desugaring.assign(field, lookup);
               break;
 
             default:
-              throw Error('unreachable');
+              throw Error("unreachable");
           }
         });
         break;
@@ -620,7 +627,7 @@ export class DestructuringTransformer extends TempVarTransformer {
         return this.desugarPattern_(desugaring, tree.expression);
 
       default:
-        throw new Error('unreachable');
+        throw new Error("unreachable");
     }
 
     return initializerFound;

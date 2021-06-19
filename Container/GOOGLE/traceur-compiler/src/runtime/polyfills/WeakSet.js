@@ -18,21 +18,14 @@ import {
   getPrivate,
   hasPrivate,
   setPrivate,
-} from '../private.js';
-import {
-  deleteFrozen,
-  getFrozen,
-  setFrozen,
-} from '../frozen-data.js';
-import {
-  isObject,
-  registerPolyfill
-} from './utils.js'
-import hasNativeSymbol from '../has-native-symbols.js';
+} from "../private.js";
+import { deleteFrozen, getFrozen, setFrozen } from "../frozen-data.js";
+import { isObject, registerPolyfill } from "./utils.js";
+import hasNativeSymbol from "../has-native-symbols.js";
 
-const {defineProperty, isExtensible} = Object;
+const { defineProperty, isExtensible } = Object;
 const $TypeError = TypeError;
-const {hasOwnProperty} = Object.prototype;
+const { hasOwnProperty } = Object.prototype;
 
 export class WeakSet {
   constructor() {
@@ -41,7 +34,7 @@ export class WeakSet {
   }
 
   add(value) {
-    if (!isObject(value)) throw new $TypeError('value must be an object');
+    if (!isObject(value)) throw new $TypeError("value must be an object");
     if (!isExtensible(value)) {
       setFrozen(this.frozenData_, value, value);
     } else {
@@ -68,7 +61,7 @@ export class WeakSet {
 }
 
 function needsPolyfill(global) {
-  let {WeakSet, Symbol} = global;
+  let { WeakSet, Symbol } = global;
   if (!WeakSet || !hasNativeSymbol()) {
     return true;
   }

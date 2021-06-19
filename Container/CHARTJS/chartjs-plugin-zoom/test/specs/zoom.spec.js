@@ -1,63 +1,69 @@
-describe('zoom', function() {
-  describe('auto', jasmine.fixture.specs('zoom'));
+describe("zoom", function () {
+  describe("auto", jasmine.fixture.specs("zoom"));
 
   const data = {
-    datasets: [{
-      data: [{
-        x: 1,
-        y: 3
-      }, {
-        x: 2,
-        y: 2
-      }, {
-        x: 3,
-        y: 1
-      }]
-    }]
+    datasets: [
+      {
+        data: [
+          {
+            x: 1,
+            y: 3,
+          },
+          {
+            x: 2,
+            y: 2,
+          },
+          {
+            x: 3,
+            y: 1,
+          },
+        ],
+      },
+    ],
   };
 
-  describe('with drag', function() {
-    describe('on linear scale', function() {
+  describe("with drag", function () {
+    describe("on linear scale", function () {
       let chart, scaleX, scaleY;
 
-      it('should be applied on X scale when mode = x', function() {
+      it("should be applied on X scale when mode = x", function () {
         chart = window.acquireChart({
-          type: 'line',
+          type: "line",
           data,
           options: {
             scales: {
               xScale0: {
-                id: 'xScale0',
-                type: 'linear'
+                id: "xScale0",
+                type: "linear",
               },
               yScale0: {
-                id: 'yScale0',
-                type: 'linear'
-              }
+                id: "yScale0",
+                type: "linear",
+              },
             },
             plugins: {
               zoom: {
                 zoom: {
                   drag: {
-                    enabled: true
+                    enabled: true,
                   },
-                  mode: 'x'
-                }
-              }
-            }
-          }
+                  mode: "x",
+                },
+              },
+            },
+          },
         });
 
         scaleX = chart.scales.xScale0;
         scaleY = chart.scales.yScale0;
 
-        jasmine.triggerMouseEvent(chart, 'mousedown', {
+        jasmine.triggerMouseEvent(chart, "mousedown", {
           x: scaleX.getPixelForValue(1.5),
-          y: scaleY.getPixelForValue(1.1)
+          y: scaleY.getPixelForValue(1.1),
         });
-        jasmine.triggerMouseEvent(chart, 'mouseup', {
+        jasmine.triggerMouseEvent(chart, "mouseup", {
           x: scaleX.getPixelForValue(2.8),
-          y: scaleY.getPixelForValue(1.7)
+          y: scaleY.getPixelForValue(1.7),
         });
 
         expect(scaleX.options.min).toBeCloseTo(1.5);
@@ -66,46 +72,46 @@ describe('zoom', function() {
         expect(scaleY.options.max).toBeUndefined();
       });
 
-      it('should be applied on X scale when mode = f() => x', function() {
+      it("should be applied on X scale when mode = f() => x", function () {
         chart = window.acquireChart({
-          type: 'line',
+          type: "line",
           data,
           options: {
             scales: {
               xScale0: {
-                id: 'xScale0',
-                type: 'linear'
+                id: "xScale0",
+                type: "linear",
               },
               yScale0: {
-                id: 'yScale0',
-                type: 'linear'
-              }
+                id: "yScale0",
+                type: "linear",
+              },
             },
             plugins: {
               zoom: {
                 zoom: {
                   drag: {
-                    enabled: true
+                    enabled: true,
                   },
-                  mode: function() {
-                    return 'x';
-                  }
-                }
-              }
-            }
-          }
+                  mode: function () {
+                    return "x";
+                  },
+                },
+              },
+            },
+          },
         });
 
         scaleX = chart.scales.xScale0;
         scaleY = chart.scales.yScale0;
 
-        jasmine.triggerMouseEvent(chart, 'mousedown', {
+        jasmine.triggerMouseEvent(chart, "mousedown", {
           x: scaleX.getPixelForValue(1.5),
-          y: scaleY.getPixelForValue(1.1)
+          y: scaleY.getPixelForValue(1.1),
         });
-        jasmine.triggerMouseEvent(chart, 'mouseup', {
+        jasmine.triggerMouseEvent(chart, "mouseup", {
           x: scaleX.getPixelForValue(2.8),
-          y: scaleY.getPixelForValue(1.7)
+          y: scaleY.getPixelForValue(1.7),
         });
 
         expect(scaleX.options.min).toBeCloseTo(1.5);
@@ -114,44 +120,44 @@ describe('zoom', function() {
         expect(scaleY.options.max).toBeUndefined();
       });
 
-      it('should be applied on Y scale when mode = y', function() {
+      it("should be applied on Y scale when mode = y", function () {
         chart = window.acquireChart({
-          type: 'line',
+          type: "line",
           data,
           options: {
             scales: {
               xScale0: {
-                id: 'xScale0',
-                type: 'linear'
+                id: "xScale0",
+                type: "linear",
               },
               yScale0: {
-                id: 'yScale0',
-                type: 'linear'
-              }
+                id: "yScale0",
+                type: "linear",
+              },
             },
             plugins: {
               zoom: {
                 zoom: {
                   drag: {
-                    enabled: true
+                    enabled: true,
                   },
-                  mode: 'y'
-                }
-              }
-            }
-          }
+                  mode: "y",
+                },
+              },
+            },
+          },
         });
 
         scaleX = chart.scales.xScale0;
         scaleY = chart.scales.yScale0;
 
-        jasmine.triggerMouseEvent(chart, 'mousedown', {
+        jasmine.triggerMouseEvent(chart, "mousedown", {
           x: scaleX.getPixelForValue(1.5),
-          y: scaleY.getPixelForValue(1.1)
+          y: scaleY.getPixelForValue(1.1),
         });
-        jasmine.triggerMouseEvent(chart, 'mouseup', {
+        jasmine.triggerMouseEvent(chart, "mouseup", {
           x: scaleX.getPixelForValue(2.8),
-          y: scaleY.getPixelForValue(1.7)
+          y: scaleY.getPixelForValue(1.7),
         });
 
         expect(scaleX.options.min).toBeUndefined();
@@ -160,46 +166,46 @@ describe('zoom', function() {
         expect(scaleY.options.max).toBeCloseTo(1.7);
       });
 
-      it('should be applied on Y scale when mode = f() => y', function() {
+      it("should be applied on Y scale when mode = f() => y", function () {
         chart = window.acquireChart({
-          type: 'line',
+          type: "line",
           data,
           options: {
             scales: {
               xScale0: {
-                id: 'xScale0',
-                type: 'linear'
+                id: "xScale0",
+                type: "linear",
               },
               yScale0: {
-                id: 'yScale0',
-                type: 'linear'
-              }
+                id: "yScale0",
+                type: "linear",
+              },
             },
             plugins: {
               zoom: {
                 zoom: {
                   drag: {
-                    enabled: true
+                    enabled: true,
                   },
-                  mode: function() {
-                    return 'y';
-                  }
-                }
-              }
-            }
-          }
+                  mode: function () {
+                    return "y";
+                  },
+                },
+              },
+            },
+          },
         });
 
         scaleX = chart.scales.xScale0;
         scaleY = chart.scales.yScale0;
 
-        jasmine.triggerMouseEvent(chart, 'mousedown', {
+        jasmine.triggerMouseEvent(chart, "mousedown", {
           x: scaleX.getPixelForValue(1.5),
-          y: scaleY.getPixelForValue(1.1)
+          y: scaleY.getPixelForValue(1.1),
         });
-        jasmine.triggerMouseEvent(chart, 'mouseup', {
+        jasmine.triggerMouseEvent(chart, "mouseup", {
           x: scaleX.getPixelForValue(2.8),
-          y: scaleY.getPixelForValue(1.7)
+          y: scaleY.getPixelForValue(1.7),
         });
 
         expect(scaleX.options.min).toBeUndefined();
@@ -208,44 +214,44 @@ describe('zoom', function() {
         expect(scaleY.options.max).toBeCloseTo(1.7);
       });
 
-      it('should be applied on X and Y scales when mode = xy', function() {
+      it("should be applied on X and Y scales when mode = xy", function () {
         chart = window.acquireChart({
-          type: 'line',
+          type: "line",
           data,
           options: {
             scales: {
               xScale0: {
-                id: 'xScale0',
-                type: 'linear'
+                id: "xScale0",
+                type: "linear",
               },
               yScale0: {
-                id: 'yScale0',
-                type: 'linear'
-              }
+                id: "yScale0",
+                type: "linear",
+              },
             },
             plugins: {
               zoom: {
                 zoom: {
                   drag: {
-                    enabled: true
+                    enabled: true,
                   },
-                  mode: 'xy'
-                }
-              }
-            }
-          }
+                  mode: "xy",
+                },
+              },
+            },
+          },
         });
 
         scaleX = chart.scales.xScale0;
         scaleY = chart.scales.yScale0;
 
-        jasmine.triggerMouseEvent(chart, 'mousedown', {
+        jasmine.triggerMouseEvent(chart, "mousedown", {
           x: scaleX.getPixelForValue(1.5),
-          y: scaleY.getPixelForValue(1.1)
+          y: scaleY.getPixelForValue(1.1),
         });
-        jasmine.triggerMouseEvent(chart, 'mouseup', {
+        jasmine.triggerMouseEvent(chart, "mouseup", {
           x: scaleX.getPixelForValue(2.8),
-          y: scaleY.getPixelForValue(1.7)
+          y: scaleY.getPixelForValue(1.7),
         });
 
         expect(scaleX.options.min).toBeCloseTo(1.5);
@@ -256,25 +262,27 @@ describe('zoom', function() {
     });
   });
 
-  describe('with modifierKey', function() {
-    for (const key of ['ctrl', 'alt', 'shift', 'meta']) {
+  describe("with modifierKey", function () {
+    for (const key of ["ctrl", "alt", "shift", "meta"]) {
       for (const pressed of [true, false]) {
         let chart, scaleX, scaleY;
-        it(`should ${pressed ? '' : 'not '}change ${pressed ? 'with' : 'without'} key ${key}`, async function() {
-          const rejectedSpy = jasmine.createSpy('wheelFailed');
+        it(`should ${pressed ? "" : "not "}change ${
+          pressed ? "with" : "without"
+        } key ${key}`, async function () {
+          const rejectedSpy = jasmine.createSpy("wheelFailed");
           chart = window.acquireChart({
-            type: 'line',
+            type: "line",
             data,
             options: {
               scales: {
                 x: {
-                  type: 'linear',
+                  type: "linear",
                   min: 0,
-                  max: 10
+                  max: 10,
                 },
                 y: {
-                  type: 'linear'
-                }
+                  type: "linear",
+                },
               },
               plugins: {
                 zoom: {
@@ -283,12 +291,12 @@ describe('zoom', function() {
                       enabled: true,
                       modifierKey: key,
                     },
-                    mode: 'x',
-                    onZoomRejected: rejectedSpy
-                  }
-                }
-              }
-            }
+                    mode: "x",
+                    onZoomRejected: rejectedSpy,
+                  },
+                },
+              },
+            },
           });
 
           scaleX = chart.scales.x;
@@ -300,10 +308,10 @@ describe('zoom', function() {
           const wheelEv = {
             x: scaleX.getPixelForValue(1.5),
             y: scaleY.getPixelForValue(1.1),
-            deltaY: 1
+            deltaY: 1,
           };
           if (pressed) {
-            wheelEv[key + 'Key'] = true;
+            wheelEv[key + "Key"] = true;
           }
 
           jasmine.triggerWheelEvent(chart, wheelEv);
@@ -322,26 +330,28 @@ describe('zoom', function() {
     }
   });
 
-  describe('drag with pan.modifierKey', function() {
-    for (const key of ['ctrl', 'alt', 'shift', 'meta']) {
+  describe("drag with pan.modifierKey", function () {
+    for (const key of ["ctrl", "alt", "shift", "meta"]) {
       for (const pressed of [true, false]) {
         let chart, scaleX, scaleY;
-        it(`should ${pressed ? 'not ' : ''}change ${pressed ? 'without' : 'with'} key ${key}`, async function() {
-          const rejectedSpy = jasmine.createSpy('zoomRejected');
-          const clickSpy = jasmine.createSpy('clicked');
+        it(`should ${pressed ? "not " : ""}change ${
+          pressed ? "without" : "with"
+        } key ${key}`, async function () {
+          const rejectedSpy = jasmine.createSpy("zoomRejected");
+          const clickSpy = jasmine.createSpy("clicked");
           chart = window.acquireChart({
-            type: 'line',
+            type: "line",
             data,
             options: {
               scales: {
                 x: {
-                  type: 'linear',
+                  type: "linear",
                   min: 0,
-                  max: 10
+                  max: 10,
                 },
                 y: {
-                  type: 'linear'
-                }
+                  type: "linear",
+                },
               },
               plugins: {
                 zoom: {
@@ -352,13 +362,13 @@ describe('zoom', function() {
                     drag: {
                       enabled: true,
                     },
-                    mode: 'x',
-                    onZoomRejected: rejectedSpy
-                  }
-                }
+                    mode: "x",
+                    onZoomRejected: rejectedSpy,
+                  },
+                },
               },
-              onClick: clickSpy
-            }
+              onClick: clickSpy,
+            },
           });
 
           scaleX = chart.scales.x;
@@ -371,15 +381,15 @@ describe('zoom', function() {
             x: scaleX.getPixelForValue(1.5),
             y: scaleY.getPixelForValue(1.1),
           };
-          const pt2 = {x: pt.x + 20, y: pt.y + 20};
+          const pt2 = { x: pt.x + 20, y: pt.y + 20 };
           const init = {};
           if (pressed) {
-            init[key + 'Key'] = true;
+            init[key + "Key"] = true;
           }
 
-          jasmine.dispatchEvent(chart, 'mousedown', pt, init);
-          jasmine.dispatchEvent(chart, 'mousemove', pt2, init);
-          jasmine.dispatchEvent(chart, 'mouseup', pt2, init);
+          jasmine.dispatchEvent(chart, "mousedown", pt, init);
+          jasmine.dispatchEvent(chart, "mousemove", pt2, init);
+          jasmine.dispatchEvent(chart, "mouseup", pt2, init);
 
           if (pressed) {
             expect(scaleX.options.min).toEqual(oldMinX);
@@ -396,20 +406,20 @@ describe('zoom', function() {
     }
   });
 
-  describe('with overScaleMode = y and mode = xy', function() {
+  describe("with overScaleMode = y and mode = xy", function () {
     const config = {
-      type: 'line',
+      type: "line",
       data,
       options: {
         scales: {
           x: {
-            type: 'linear',
+            type: "linear",
             min: 1,
-            max: 10
+            max: 10,
           },
           y: {
-            type: 'linear'
-          }
+            type: "linear",
+          },
         },
         plugins: {
           zoom: {
@@ -417,16 +427,16 @@ describe('zoom', function() {
               wheel: {
                 enabled: true,
               },
-              mode: 'xy',
-              overScaleMode: 'y'
-            }
-          }
-        }
-      }
+              mode: "xy",
+              overScaleMode: "y",
+            },
+          },
+        },
+      },
     };
 
-    describe('Wheel under Y scale', function() {
-      it('should be applied on Y, but not on X scales.', async function() {
+    describe("Wheel under Y scale", function () {
+      it("should be applied on Y, but not on X scales.", async function () {
         const chart = window.acquireChart(config);
 
         const scaleX = chart.scales.x;
@@ -440,7 +450,7 @@ describe('zoom', function() {
         const wheelEv = {
           x: scaleY.left + (scaleY.right - scaleY.left) / 2,
           y: scaleY.top + (scaleY.bottom - scaleY.top) / 2,
-          deltaY: 1
+          deltaY: 1,
         };
 
         await jasmine.triggerWheelEvent(chart, wheelEv);
@@ -452,8 +462,8 @@ describe('zoom', function() {
       });
     });
 
-    describe('Wheel not under Y scale', function() {
-      it('should be applied on X, but not on Y scales.', async function() {
+    describe("Wheel not under Y scale", function () {
+      it("should be applied on X, but not on Y scales.", async function () {
         const chart = window.acquireChart(config);
 
         const scaleX = chart.scales.x;
@@ -467,7 +477,7 @@ describe('zoom', function() {
         const wheelEv = {
           x: scaleX.getPixelForValue(1.5),
           y: scaleY.getPixelForValue(1.1),
-          deltaY: 1
+          deltaY: 1,
         };
 
         await jasmine.triggerWheelEvent(chart, wheelEv);
@@ -480,12 +490,12 @@ describe('zoom', function() {
     });
   });
 
-  describe('events', function() {
-    describe('wheel', function() {
-      it('should call onZoomStart', function() {
-        const startSpy = jasmine.createSpy('started');
+  describe("events", function () {
+    describe("wheel", function () {
+      it("should call onZoomStart", function () {
+        const startSpy = jasmine.createSpy("started");
         const chart = window.acquireChart({
-          type: 'scatter',
+          type: "scatter",
           data,
           options: {
             plugins: {
@@ -494,27 +504,27 @@ describe('zoom', function() {
                   wheel: {
                     enabled: true,
                   },
-                  mode: 'xy',
-                  onZoomStart: startSpy
-                }
-              }
-            }
-          }
+                  mode: "xy",
+                  onZoomStart: startSpy,
+                },
+              },
+            },
+          },
         });
         const wheelEv = {
           x: chart.scales.x.getPixelForValue(1.5),
           y: chart.scales.y.getPixelForValue(1.1),
-          deltaY: 1
+          deltaY: 1,
         };
         jasmine.triggerWheelEvent(chart, wheelEv);
         expect(startSpy).toHaveBeenCalled();
         expect(chart.scales.x.min).not.toBe(1);
       });
 
-      it('should call onZoomRejected when onZoomStart returns false', function() {
-        const rejectSpy = jasmine.createSpy('rejected');
+      it("should call onZoomRejected when onZoomStart returns false", function () {
+        const rejectSpy = jasmine.createSpy("rejected");
         const chart = window.acquireChart({
-          type: 'scatter',
+          type: "scatter",
           data,
           options: {
             plugins: {
@@ -523,27 +533,27 @@ describe('zoom', function() {
                   wheel: {
                     enabled: true,
                   },
-                  mode: 'xy',
+                  mode: "xy",
                   onZoomStart: () => false,
-                  onZoomRejected: rejectSpy
-                }
-              }
-            }
-          }
+                  onZoomRejected: rejectSpy,
+                },
+              },
+            },
+          },
         });
         const wheelEv = {
           x: chart.scales.x.getPixelForValue(1.5),
           y: chart.scales.y.getPixelForValue(1.1),
-          deltaY: 1
+          deltaY: 1,
         };
         jasmine.triggerWheelEvent(chart, wheelEv);
         expect(rejectSpy).toHaveBeenCalled();
         expect(chart.scales.x.min).toBe(1);
       });
 
-      it('should call onZoomComplete', function(done) {
+      it("should call onZoomComplete", function (done) {
         const chart = window.acquireChart({
-          type: 'scatter',
+          type: "scatter",
           data,
           options: {
             plugins: {
@@ -552,31 +562,31 @@ describe('zoom', function() {
                   wheel: {
                     enabled: true,
                   },
-                  mode: 'xy',
+                  mode: "xy",
                   onZoomComplete(ctx) {
                     expect(ctx.chart.scales.x.min).not.toBe(1);
                     done();
-                  }
-                }
-              }
-            }
-          }
+                  },
+                },
+              },
+            },
+          },
         });
         const wheelEv = {
           x: chart.scales.x.getPixelForValue(1.5),
           y: chart.scales.y.getPixelForValue(1.1),
-          deltaY: 1
+          deltaY: 1,
         };
         jasmine.triggerWheelEvent(chart, wheelEv);
       });
     });
 
-    describe('drag', function() {
-      it('should call onZoomStart, onZoom and onZoomComplete', function(done) {
-        const startSpy = jasmine.createSpy('start');
-        const zoomSpy = jasmine.createSpy('zoom');
+    describe("drag", function () {
+      it("should call onZoomStart, onZoom and onZoomComplete", function (done) {
+        const startSpy = jasmine.createSpy("start");
+        const zoomSpy = jasmine.createSpy("zoom");
         const chart = window.acquireChart({
-          type: 'scatter',
+          type: "scatter",
           data,
           options: {
             plugins: {
@@ -585,36 +595,36 @@ describe('zoom', function() {
                   drag: {
                     enabled: true,
                   },
-                  mode: 'xy',
+                  mode: "xy",
                   onZoomStart: startSpy,
                   onZoom: zoomSpy,
-                  onZoomComplete: done
-                }
-              }
-            }
-          }
+                  onZoomComplete: done,
+                },
+              },
+            },
+          },
         });
 
         const pt = {
           x: chart.scales.x.getPixelForValue(1.5),
           y: chart.scales.y.getPixelForValue(1.1),
         };
-        const pt2 = {x: pt.x + 20, y: pt.y + 20};
+        const pt2 = { x: pt.x + 20, y: pt.y + 20 };
 
-        jasmine.dispatchEvent(chart, 'mousedown', pt);
-        jasmine.dispatchEvent(chart, 'mousemove', pt2);
-        jasmine.dispatchEvent(chart, 'mouseup', pt2);
+        jasmine.dispatchEvent(chart, "mousedown", pt);
+        jasmine.dispatchEvent(chart, "mousemove", pt2);
+        jasmine.dispatchEvent(chart, "mouseup", pt2);
 
         expect(startSpy).toHaveBeenCalled();
         expect(zoomSpy).toHaveBeenCalled();
       });
 
-      it('should call onZoomRejected when onZoomStart returns false', function() {
-        const zoomSpy = jasmine.createSpy('zoom');
-        const rejectSpy = jasmine.createSpy('reject');
-        const doneSpy = jasmine.createSpy('done');
+      it("should call onZoomRejected when onZoomStart returns false", function () {
+        const zoomSpy = jasmine.createSpy("zoom");
+        const rejectSpy = jasmine.createSpy("reject");
+        const doneSpy = jasmine.createSpy("done");
         const chart = window.acquireChart({
-          type: 'scatter',
+          type: "scatter",
           data,
           options: {
             plugins: {
@@ -623,26 +633,26 @@ describe('zoom', function() {
                   drag: {
                     enabled: true,
                   },
-                  mode: 'xy',
+                  mode: "xy",
                   onZoomStart: () => false,
                   onZoom: zoomSpy,
                   onZoomComplete: doneSpy,
-                  onZoomRejected: rejectSpy
-                }
-              }
-            }
-          }
+                  onZoomRejected: rejectSpy,
+                },
+              },
+            },
+          },
         });
 
         const pt = {
           x: chart.scales.x.getPixelForValue(1.5),
           y: chart.scales.y.getPixelForValue(1.1),
         };
-        const pt2 = {x: pt.x + 20, y: pt.y + 20};
+        const pt2 = { x: pt.x + 20, y: pt.y + 20 };
 
-        jasmine.dispatchEvent(chart, 'mousedown', pt);
-        jasmine.dispatchEvent(chart, 'mousemove', pt2);
-        jasmine.dispatchEvent(chart, 'mouseup', pt2);
+        jasmine.dispatchEvent(chart, "mousedown", pt);
+        jasmine.dispatchEvent(chart, "mousemove", pt2);
+        jasmine.dispatchEvent(chart, "mouseup", pt2);
 
         expect(rejectSpy).toHaveBeenCalled();
         expect(zoomSpy).not.toHaveBeenCalled();
@@ -651,22 +661,24 @@ describe('zoom', function() {
     });
   });
 
-  describe('category scale', function() {
-    it('should zoom up to and out from single category', function() {
+  describe("category scale", function () {
+    it("should zoom up to and out from single category", function () {
       const chart = window.acquireChart({
-        type: 'bar',
+        type: "bar",
         data: {
-          labels: ['a', 'b', 'c', 'd', 'e'],
-          datasets: [{
-            data: [1, 2, 3, 2, 1]
-          }]
+          labels: ["a", "b", "c", "d", "e"],
+          datasets: [
+            {
+              data: [1, 2, 3, 2, 1],
+            },
+          ],
         },
         options: {
           scales: {
             x: {
-              min: 'b',
-              max: 'd'
-            }
+              min: "b",
+              max: "d",
+            },
           },
           plugins: {
             zoom: {
@@ -674,10 +686,10 @@ describe('zoom', function() {
                 wheel: {
                   enabled: true,
                 },
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       });
       expect(chart.scales.x.min).toBe(1);
       expect(chart.scales.x.max).toBe(3);
@@ -695,22 +707,24 @@ describe('zoom', function() {
       expect(chart.scales.x.max).toBe(3);
     });
 
-    it('should not exceed limits', function() {
+    it("should not exceed limits", function () {
       const chart = window.acquireChart({
-        type: 'bar',
+        type: "bar",
         data: {
-          labels: ['0', '1', '2', '3', '4', '5', '6'],
-          datasets: [{
-            data: [1, 2, 3, 2, 1, 0, 1]
-          }]
+          labels: ["0", "1", "2", "3", "4", "5", "6"],
+          datasets: [
+            {
+              data: [1, 2, 3, 2, 1, 0, 1],
+            },
+          ],
         },
         options: {
-          indexAxis: 'y',
+          indexAxis: "y",
           scales: {
             y: {
               min: 2,
-              max: 4
-            }
+              max: 4,
+            },
           },
           plugins: {
             zoom: {
@@ -718,18 +732,18 @@ describe('zoom', function() {
                 y: {
                   min: 1,
                   max: 5,
-                  minRange: 1
-                }
+                  minRange: 1,
+                },
               },
               zoom: {
                 wheel: {
                   enabled: true,
                 },
-                mode: 'y'
-              }
-            }
-          }
-        }
+                mode: "y",
+              },
+            },
+          },
+        },
       });
       expect(chart.scales.y.min).toBe(2);
       expect(chart.scales.y.max).toBe(4);

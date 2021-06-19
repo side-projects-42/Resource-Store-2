@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="props2js" default="build.jar" basedir=".">
+ 
+    <target name="clean" depends="-load.properties">
+        <delete dir="${build.dir}" quiet="true"/>
+    </target>
+ 
+    <target name="-load.properties">
+        <property file="ant.properties"/>
+    </target>
+ 
+    <target name="-init" depends="-load.properties">
+        <mkdir dir="${build.dir}"/>
+    </target>
+ 
+    <target name="build.classes" depends="-init">
+        <mkdir dir="${build.dir}/classes"/>
+        <javac srcdir="${src.dir}"
+               destdir="${build.dir}/classes"
+               includes="**/*.java"
+               deprecation="off"
+               debug="on"
+               source="${class.version}"
+               target="${class.version}">
+            <classpath>
+                <pathelement location="${lib.dir}/${jargs.jar}"/>
+                <pathelement location="${lib.dir}/${gson.jar}"/>
+            </classpath>
+        </javac>
+    </target>
+ 
+    <target name="build.tests" depends="-init">
+        <mkdir dir="${build.dir}/testclasses"/>
+        <javac srcdir="${tests.dir}"
+               destdir="${build.dir}/testclasses"
+               includes="**/*.java"
+               deprecation="off"
+               debug="on"
+               source="${class.version}"
+               target="${class.version}">
+            <classpath>
+                <pathelement location="${lib.dir}/${gson.jar}"/>
+                <pathelement location="${lib.dir}/${jargs.jar}"/>
+                <pathelement location="${lib.dir}/${junit.jar}"/>
+                <pathelement location="${build.dir}/classes"/>
+            </classpath>
+        </javac>
+        <copy todir="${build.dir}/testclasses/net/nczonline/web/props2js">
+            <fileset dir="${tests.dir}" includes="*.png"/>
+            <fileset dir="${tests.dir}" includes="*.css"/>
+        </copy>
+    </target>
+ 
+    <target name="build.jar" depends="build.classes">
+        <make-jar name="${props2js.name}" jar="${props2js.jar}" main="${props2js.main}">
+            <jar-files>
+                <fileset dir="${build.dir}/classes" includes="**/*.class"/>
+            </jar-files>    
+        </make-jar>
+        
+    </target>
+ 
+    <target name="test.classes" depends="build.classes,build.tests">
+	<junit printsummary="yes" fork="yes"  errorproperty="junit.failure" failureproperty="junit.failure" showoutput="true">
+
+                <jvmarg value="-Duser.dir=${res.dir}"/>
+
+	       	<!-- classpath must include all jar dependencies and classes -->
+                <classpath>
+                    <pathelement location="${build.dir}/classes"/>
+                    <pathelement location="${build.dir}/testclasses"/>
+                    <pathelement location="${lib.dir}/${gson.jar}"/>
+                    <pathelement location="${lib.dir}/${junit.jar}"/>
+                </classpath>
+
+	      	<!-- formatter to use for output -->
+        	<formatter type="plain" usefile="false"/>
+                
+		<!-- fully qualified classname of testsuite -->
+                <batchtest>
+                    <fileset dir="${build.dir}/testclasses">
+                        <include name="**/*Test.class" />
+                    </fileset>                    
+                </batchtest>
+	</junit>        
+        
+    </target>
+    
+    <macrodef name="make-jar">
+        <attribute name="jar"/>
+        <attribute name="main"/>
+        <attribute name="name"/>
+        <element name="jar-files"/>
+        <sequential>           
+            <mkdir dir="${build.dir}/@{name}-jar"/>
+            <unjar src="${lib.dir}/${jargs.jar}" dest="${build.dir}/@{name}-jar"/>
+            <unjar src="${lib.dir}/${gson.jar}" dest="${build.dir}/@{name}-jar"/>
+            <copy todir="${build.dir}/@{name}-jar">
+                <jar-files/>
+            </copy>
+            <jar destfile="${build.dir}/@{jar}" basedir="${build.dir}/@{name}-jar">
+                <manifest>
+                    <attribute name="Main-Class" value="@{main}"/>
+                </manifest>
+            </jar>       
+        </sequential>
+    </macrodef>
+
+</project>

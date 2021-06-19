@@ -12,33 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ArrayComprehensionTransformer} from
-    './ArrayComprehensionTransformer.js';
-import {ArrowFunctionTransformer} from './ArrowFunctionTransformer.js';
-import {AtNameMemberTransformer} from './AtNameMemberTransformer.js';
-import {BlockBindingTransformer} from './BlockBindingTransformer.js';
-import {CascadeExpressionTransformer} from './CascadeExpressionTransformer.js';
-import {ClassTransformer} from './ClassTransformer.js';
-import {CollectionTransformer} from './CollectionTransformer.js';
-import {DefaultParametersTransformer} from './DefaultParametersTransformer.js';
-import {DestructuringTransformer} from './DestructuringTransformer.js';
-import {ForOfTransformer} from './ForOfTransformer.js';
-import {FreeVariableChecker} from '../semantics/FreeVariableChecker.js';
-import {GeneratorComprehensionTransformer} from
-    'GeneratorComprehensionTransformer.js';
-import {GeneratorTransformPass} from './GeneratorTransformPass.js';
-import {ModuleTransformer} from './ModuleTransformer.js';
-import {ObjectLiteralTransformer} from './ObjectLiteralTransformer.js';
-import {ObjectMap} from '../util/ObjectMap.js';
-import {ParseTreeValidator} from '../syntax/ParseTreeValidator.js';
-import {PrivateNameSyntaxTransformer} from './PrivateNameSyntaxTransformer.js';
-import {PropertyNameShorthandTransformer} from
-    'PropertyNameShorthandTransformer.js';
-import {TemplateLiteralTransformer} from './TemplateLiteralTransformer.js';
-import {RestParameterTransformer} from './RestParameterTransformer.js';
-import {SpreadTransformer} from './SpreadTransformer.js';
-import {TypeTransformer} from './TypeTransformer.js';
-import {options, transformOptions} from '../options.js';
+import { ArrayComprehensionTransformer } from "./ArrayComprehensionTransformer.js";
+import { ArrowFunctionTransformer } from "./ArrowFunctionTransformer.js";
+import { AtNameMemberTransformer } from "./AtNameMemberTransformer.js";
+import { BlockBindingTransformer } from "./BlockBindingTransformer.js";
+import { CascadeExpressionTransformer } from "./CascadeExpressionTransformer.js";
+import { ClassTransformer } from "./ClassTransformer.js";
+import { CollectionTransformer } from "./CollectionTransformer.js";
+import { DefaultParametersTransformer } from "./DefaultParametersTransformer.js";
+import { DestructuringTransformer } from "./DestructuringTransformer.js";
+import { ForOfTransformer } from "./ForOfTransformer.js";
+import { FreeVariableChecker } from "../semantics/FreeVariableChecker.js";
+import { GeneratorComprehensionTransformer } from "GeneratorComprehensionTransformer.js";
+import { GeneratorTransformPass } from "./GeneratorTransformPass.js";
+import { ModuleTransformer } from "./ModuleTransformer.js";
+import { ObjectLiteralTransformer } from "./ObjectLiteralTransformer.js";
+import { ObjectMap } from "../util/ObjectMap.js";
+import { ParseTreeValidator } from "../syntax/ParseTreeValidator.js";
+import { PrivateNameSyntaxTransformer } from "./PrivateNameSyntaxTransformer.js";
+import { PropertyNameShorthandTransformer } from "PropertyNameShorthandTransformer.js";
+import { TemplateLiteralTransformer } from "./TemplateLiteralTransformer.js";
+import { RestParameterTransformer } from "./RestParameterTransformer.js";
+import { SpreadTransformer } from "./SpreadTransformer.js";
+import { TypeTransformer } from "./TypeTransformer.js";
+import { options, transformOptions } from "../options.js";
 
 /**
  * Transforms a Traceur file's ParseTree to a JS ParseTree.
@@ -81,8 +78,7 @@ export class ProgramTransformer {
    * @private
    */
   transformFileAsModule_(module, file) {
-    var result = this.transformTree_(this.project_.getParseTree(file),
-                                     module);
+    var result = this.transformTree_(this.project_.getParseTree(file), module);
     this.results_.set(file, result);
   }
 
@@ -108,8 +104,7 @@ export class ProgramTransformer {
     }
 
     function chain(enabled, func) {
-      if (!enabled)
-        return;
+      if (!enabled) return;
 
       if (!reporter.hadError()) {
         if (options.validate) {
@@ -120,109 +115,131 @@ export class ProgramTransformer {
       }
     }
 
-
     // TODO: many of these simple, local transforms could happen in the same
     // tree pass
 
     transform(transformOptions.types, TypeTransformer);
 
-    transform(transformOptions.templateLiterals,
-              TemplateLiteralTransformer,
-              identifierGenerator);
+    transform(
+      transformOptions.templateLiterals,
+      TemplateLiteralTransformer,
+      identifierGenerator
+    );
 
-    chain(transformOptions.modules,
-          () => this.transformModules_(tree, module));
+    chain(transformOptions.modules, () => this.transformModules_(tree, module));
 
-    transform(transformOptions.arrowFunctions,
-              ArrowFunctionTransformer, reporter);
+    transform(
+      transformOptions.arrowFunctions,
+      ArrowFunctionTransformer,
+      reporter
+    );
 
     // ClassTransformer needs to come before ObjectLiteralTransformer.
-    transform(transformOptions.classes,
-              ClassTransformer,
-              identifierGenerator,
-              runtimeInliner,
-              reporter);
+    transform(
+      transformOptions.classes,
+      ClassTransformer,
+      identifierGenerator,
+      runtimeInliner,
+      reporter
+    );
 
-    transform(transformOptions.propertyNameShorthand,
-              PropertyNameShorthandTransformer);
-    transform(transformOptions.propertyMethods ||
-              transformOptions.privateNameSyntax &&
-              transformOptions.privateNames,
-              ObjectLiteralTransformer,
-              identifierGenerator);
+    transform(
+      transformOptions.propertyNameShorthand,
+      PropertyNameShorthandTransformer
+    );
+    transform(
+      transformOptions.propertyMethods ||
+        (transformOptions.privateNameSyntax && transformOptions.privateNames),
+      ObjectLiteralTransformer,
+      identifierGenerator
+    );
 
     // Generator/ArrayComprehensionTransformer must come before for-of and
     // destructuring.
-    transform(transformOptions.generatorComprehension,
-              GeneratorComprehensionTransformer,
-              identifierGenerator);
-    transform(transformOptions.arrayComprehension,
-              ArrayComprehensionTransformer,
-              identifierGenerator);
+    transform(
+      transformOptions.generatorComprehension,
+      GeneratorComprehensionTransformer,
+      identifierGenerator
+    );
+    transform(
+      transformOptions.arrayComprehension,
+      ArrayComprehensionTransformer,
+      identifierGenerator
+    );
 
     // for of must come before destructuring and generator, or anything
     // that wants to use VariableBinder
-    transform(transformOptions.forOf,
-              ForOfTransformer,
-              identifierGenerator);
+    transform(transformOptions.forOf, ForOfTransformer, identifierGenerator);
 
     // rest parameters must come before generator
-    transform(transformOptions.restParameters,
-              RestParameterTransformer,
-              identifierGenerator);
+    transform(
+      transformOptions.restParameters,
+      RestParameterTransformer,
+      identifierGenerator
+    );
 
     // default parameters should come after rest parameter to get the
     // expected order in the transformed code.
-    transform(transformOptions.defaultParameters,
-              DefaultParametersTransformer);
+    transform(transformOptions.defaultParameters, DefaultParametersTransformer);
 
     // destructuring must come after for of and before block binding and
     // generator
-    transform(transformOptions.destructuring,
-              DestructuringTransformer,
-              identifierGenerator);
+    transform(
+      transformOptions.destructuring,
+      DestructuringTransformer,
+      identifierGenerator
+    );
 
     // generator must come after for of and rest parameters
-    transform(transformOptions.generators || transformOptions.deferredFunctions,
-              GeneratorTransformPass,
-              identifierGenerator,
-              runtimeInliner,
-              reporter);
+    transform(
+      transformOptions.generators || transformOptions.deferredFunctions,
+      GeneratorTransformPass,
+      identifierGenerator,
+      runtimeInliner,
+      reporter
+    );
 
-    transform(transformOptions.privateNames &&
-              transformOptions.privateNameSyntax,
-              AtNameMemberTransformer,
-              identifierGenerator);
+    transform(
+      transformOptions.privateNames && transformOptions.privateNameSyntax,
+      AtNameMemberTransformer,
+      identifierGenerator
+    );
 
-    transform(transformOptions.privateNames &&
-              transformOptions.privateNameSyntax,
-              PrivateNameSyntaxTransformer,
-              identifierGenerator);
+    transform(
+      transformOptions.privateNames && transformOptions.privateNameSyntax,
+      PrivateNameSyntaxTransformer,
+      identifierGenerator
+    );
 
-    transform(transformOptions.spread,
-              SpreadTransformer,
-              identifierGenerator,
-              runtimeInliner);
+    transform(
+      transformOptions.spread,
+      SpreadTransformer,
+      identifierGenerator,
+      runtimeInliner
+    );
 
     chain(true, () => runtimeInliner.transformAny(tree));
 
-    transform(transformOptions.blockBinding,
-              BlockBindingTransformer);
+    transform(transformOptions.blockBinding, BlockBindingTransformer);
 
     // Cascade must come before CollectionTransformer.
-    transform(transformOptions.cascadeExpression,
-              CascadeExpressionTransformer,
-              identifierGenerator,
-              reporter);
+    transform(
+      transformOptions.cascadeExpression,
+      CascadeExpressionTransformer,
+      identifierGenerator,
+      reporter
+    );
 
-    transform(transformOptions.trapMemberLookup ||
-              transformOptions.privateNames,
-              CollectionTransformer,
-              identifierGenerator);
+    transform(
+      transformOptions.trapMemberLookup || transformOptions.privateNames,
+      CollectionTransformer,
+      identifierGenerator
+    );
 
     // Issue errors for any unbound variables
-    chain(options.freeVariableChecker,
-          () => FreeVariableChecker.checkProgram(reporter, tree));
+    chain(options.freeVariableChecker, () =>
+      FreeVariableChecker.checkProgram(reporter, tree)
+    );
 
     return tree;
   }
@@ -247,7 +264,7 @@ export class ProgramTransformer {
  * @param {Project} project
  * @return {ObjectMap}
  */
-ProgramTransformer.transform = function(reporter, project) {
+ProgramTransformer.transform = function (reporter, project) {
   var transformer = new ProgramTransformer(reporter, project);
   transformer.transform_();
   return transformer.results_;
@@ -259,7 +276,7 @@ ProgramTransformer.transform = function(reporter, project) {
  * @param {SourceFile} sourceFile
  * @return {ObjectMap}
  */
-ProgramTransformer.transformFile = function(reporter, project, sourceFile) {
+ProgramTransformer.transformFile = function (reporter, project, sourceFile) {
   var transformer = new ProgramTransformer(reporter, project);
   transformer.transformFile_(sourceFile);
   return transformer.results_;
@@ -272,8 +289,12 @@ ProgramTransformer.transformFile = function(reporter, project, sourceFile) {
  * @param {SourceFile} sourceFile
  * @return {ObjectMap}
  */
-ProgramTransformer.transformFileAsModule = function(reporter, project,
-                                                    module, sourceFile) {
+ProgramTransformer.transformFileAsModule = function (
+  reporter,
+  project,
+  module,
+  sourceFile
+) {
   var transformer = new ProgramTransformer(reporter, project);
   transformer.transformFileAsModule_(module, sourceFile);
   return transformer.results_;

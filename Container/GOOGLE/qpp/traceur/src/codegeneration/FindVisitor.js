@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
 
 // Object used as a sentinel. This is thrown to abort visiting the rest of the
 // tree.
@@ -37,8 +37,7 @@ export class FindVisitor extends ParseTreeVisitor {
       this.visitAny(tree);
     } catch (ex) {
       // This uses an exception to do early exits.
-      if (ex !== foundSentinel)
-        throw ex;
+      if (ex !== foundSentinel) throw ex;
     }
   }
 
@@ -54,8 +53,7 @@ export class FindVisitor extends ParseTreeVisitor {
   set found(v) {
     if (v) {
       this.found_ = true;
-      if (!this.keepOnGoing_)
-        throw foundSentinel;
+      if (!this.keepOnGoing_) throw foundSentinel;
     }
   }
 }

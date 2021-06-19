@@ -1,0 +1,40 @@
+{
+  "projectFullName": "newrelic-experimental/helm-charts",
+  "issues": {
+    "open": 0
+  },
+  "releases": 4,
+  "latestRelease": {
+    "name": "simple-nginx-1.1.1",
+    "date": "2020-05-13T14:25:14Z"
+  },
+  "commits": 36,
+  "lastSixMonthsCommitTotal": 36,
+  "pullRequests": {
+    "open": 7
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U0MzE=",
+      "name": "Smarty",
+      "color": null
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

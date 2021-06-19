@@ -1,0 +1,219 @@
+.collection-page {
+  height: auto;
+  position: relative;
+}
+
+.featured-video-container {
+  max-width: 580px;
+  margin: 0 auto 50px;
+}
+
+.primary-body-copy {
+  max-width: 980px;
+  margin: 0 auto 80px;
+}
+
+.primary-body-copy-header {
+  font-size: 16px;
+}
+
+.primary-body-copy-description {
+  columns: 2;
+}
+
+.collection-listing-container {
+  margin-top: 100px;
+  &:before {
+    position: absolute;
+    left: 0;
+    content: "";
+    height: 100vh;
+    background-color: var(--color-neutrals-100);
+    width: 100%;
+    transform: skewY(-2deg) translateY(-70px);
+    z-index:-1;
+  }
+}
+
+.collection-listing-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px dotted var(--color-neutrals-400);
+}
+
+.collection-listing-header-section-heading {
+  line-height: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.collection-listing-header-section-description {
+  margin-bottom: 0;
+  font-size: 16px;
+  color: var(--color-neutrals-600);
+}
+
+.collection-listing {
+  position: relative;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-rows: 1fr  auto;
+  grid-gap: 16px;
+}
+
+.project {
+  border: none;
+  box-shadow: 0px 0.415088px 0.304398px rgba(19, 71, 80, 0.0224916), 0px 0.997515px 0.731511px rgba(19, 71, 80, 0.0323114), 0px 1.87823px 1.37737px rgba(19, 71, 80, 0.04), 0px 3.35045px 2.45699px rgba(19, 71, 80, 0.0476886), 0px 6.26664px 4.59554px rgba(19, 71, 80, 0.0575083), 0px 15px 11px rgba(19, 71, 80, 0.08);
+
+  &:hover {
+    border: none;
+  }
+}
+
+.collections-page {
+  .collection-listing-container {
+    margin-top: 70px;
+  }
+
+  .collection-listing-header-section {
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  .collection-listing-header-section-heading {
+    display: inline;
+    margin-right: 10px;
+  }
+
+  .collection-listing-header-section-description {
+    display: inline;
+  }
+
+  .collection-listing {
+    &:after {
+      content: "";
+      display: block;
+      width: 150px;
+      height: calc(100% + 25px);
+      position: absolute;
+      top: -1px;
+      right: -9px;
+      z-index: 400;
+      background: linear-gradient(270deg, var(--color-neutrals-100) 34.6%, rgba(244, 245, 245, 0) 78.29%);
+    }
+  }
+
+  .page-heading {
+    margin-bottom: 100px;
+  }
+}
+
+.collections-page-collection-link {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  border: none;
+
+  svg {
+    transform: scale(.75) translateY(-1.5px);
+  }
+}
+
+.collection-project-count {
+  margin: 0 2px;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+// ==============================================================
+// Responsive styles
+// ==============================================================
+@media screen and (max-width: 1200px) {
+  .collection-listing-container{
+    box-sizing: border-box;
+    padding: 0 28px;
+  }
+
+  .collections-page {
+    .collection-listing-header-section {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .collection-listing-header-section-heading {
+      display: block;
+      text-align: center;
+    }
+
+    .collection-listing-header-section-description {
+      display: block;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .primary-body-copy {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 28px;
+  }
+}
+
+@media screen and (max-width: 724px) {
+  .featured-video-container {
+    box-sizing: border-box;
+    margin-top: -20px;
+    margin-bottom: 40px;
+    width: 100%;
+    padding: 0 28px;
+  }
+
+  .primary-body-copy {
+    margin-bottom: 60px;
+  }
+
+  .primary-body-copy-description {
+    columns: 1;
+  }
+
+  .collection-listing {
+    margin-bottom: 10px;
+  }
+
+  .collection-listing-header-section {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .collection-listing-header-section-heading {
+    margin-top: 20px;
+  }
+
+  .collections-page .collection-listing:after {
+    display: none;
+  }
+
+  .collections-page div.collection-listing-container {
+    margin-top: 40px;
+
+    &:before {
+      transform: skewY(-2deg) translateY(-30px);
+    }
+  }
+
+  .collections-page .page-heading {
+    margin-bottom: 0px;
+  }
+}

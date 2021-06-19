@@ -11,15 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.instrument');
-goog.provide('wtf.trace.instrumentType');
+goog.provide("wtf.trace.instrument");
+goog.provide("wtf.trace.instrumentType");
 
-goog.require('goog.asserts');
-goog.require('wtf.data.Variable');
-goog.require('wtf.trace');
-goog.require('wtf.trace.events');
-goog.require('wtf.util');
-
+goog.require("goog.asserts");
+goog.require("wtf.data.Variable");
+goog.require("wtf.trace");
+goog.require("wtf.trace.events");
+goog.require("wtf.util");
 
 /**
  * Automatically instruments a method.
@@ -43,8 +42,13 @@ goog.require('wtf.util');
  *     This is only called if {@code opt_generator} is not provided.
  * @return {Function} The instrumented input value.
  */
-wtf.trace.instrument = function(value, signature, opt_namePrefix,
-    opt_generator, opt_pre) {
+wtf.trace.instrument = function (
+  value,
+  signature,
+  opt_namePrefix,
+  opt_generator,
+  opt_pre
+) {
   if (opt_namePrefix) {
     signature = opt_namePrefix + signature;
   }
@@ -66,7 +70,7 @@ wtf.trace.instrument = function(value, signature, opt_namePrefix,
   } else if (!argMap || !argMap.length) {
     // Simple function - no custom data.
     if (opt_pre) {
-      result = function() {
+      result = function () {
         opt_pre.call(this);
         var scope = customEvent();
         var result = value.apply(this, arguments);
@@ -74,7 +78,7 @@ wtf.trace.instrument = function(value, signature, opt_namePrefix,
         return result;
       };
     } else {
-      result = function() {
+      result = function () {
         var scope = customEvent();
         var result = value.apply(this, arguments);
         leaveScope(scope);
@@ -85,7 +89,7 @@ wtf.trace.instrument = function(value, signature, opt_namePrefix,
     // Custom arguments.
     // TODO(benvanik): optimize this function to not require the for-loop.
     var eventArgs = new Array(argMap.length);
-    result = function() {
+    result = function () {
       if (opt_pre) {
         opt_pre.call(this);
       }
@@ -101,10 +105,9 @@ wtf.trace.instrument = function(value, signature, opt_namePrefix,
 
   // Stash original method on the result - it's used by our modified goog.base
   // when searching up the prototype chain.
-  result['uninstrumented'] = value;
+  result["uninstrumented"] = value;
   return result;
 };
-
 
 /**
  * Automatically instruments an entire type.
@@ -130,12 +133,12 @@ wtf.trace.instrument = function(value, signature, opt_namePrefix,
  *     auto-instrumented.
  * @return {Function} The instrumented input value.
  */
-wtf.trace.instrumentType = function(value, constructorSignature, methodMap) {
+wtf.trace.instrumentType = function (value, constructorSignature, methodMap) {
   // Rewrite constructor. This requires changing the entire type, which is why
   // we return the result.
   var newValue = wtf.trace.instrument(value, constructorSignature);
   /** @constructor */
-  function tempCtor() {};
+  function tempCtor() {}
   tempCtor.prototype = value.prototype;
   newValue.superClass_ = value.prototype;
   newValue.prototype = new tempCtor();
@@ -151,7 +154,7 @@ wtf.trace.instrumentType = function(value, constructorSignature, methodMap) {
   }
 
   // Stash original.
-  newValue['uninstrumented'] = value;
+  newValue["uninstrumented"] = value;
 
   // Parse signature to get the type name.
   var parsedSignature = wtf.data.Variable.parseSignature(constructorSignature);
@@ -165,14 +168,16 @@ wtf.trace.instrumentType = function(value, constructorSignature, methodMap) {
       var method = proto[methodName];
       if (method) {
         proto[methodName] = wtf.trace.instrument(
-            method, methodSignature, typeName + '#');
+          method,
+          methodSignature,
+          typeName + "#"
+        );
       }
     }
   }
 
   return newValue;
 };
-
 
 /**
  * Automatically instruments the given prototype methods.
@@ -184,14 +189,19 @@ wtf.trace.instrumentType = function(value, constructorSignature, methodMap) {
  * @param {!Object.<!Function>} methodMap A mapping between method names
  *     and the methods themselves.
  */
-wtf.trace.instrumentTypeSimple = function(prefix, classPrototype, methodMap) {
+wtf.trace.instrumentTypeSimple = function (prefix, classPrototype, methodMap) {
   for (var methodName in methodMap) {
     var functionRef = methodMap[methodName];
     var functionName = wtf.util.getCompiledMemberName(
-        classPrototype, functionRef);
+      classPrototype,
+      functionRef
+    );
     if (functionName) {
       classPrototype[functionName] = wtf.trace.instrument(
-          classPrototype[functionName], methodName, prefix + '#');
+        classPrototype[functionName],
+        methodName,
+        prefix + "#"
+      );
     }
   }
 };

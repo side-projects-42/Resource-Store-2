@@ -14,50 +14,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <script>
+  var mirroring = false;
+  var activeTab;
+  var windowId;
 
-var mirroring = false;
-var activeTab;
-var windowId;
+  chrome.browserAction.onClicked.addListener(function (tab) {
+    if (mirroring) {
+      chrome.tabs.executeScript(activeTab, { code: "stopMirroring();" });
+      mirroring = false;
+      activeTab = undefined;
+      windowId = undefined;
+    } else {
+      mirroring = true;
+      windowId = tab.windowId;
+      mirrorTab(tab.id);
+    }
+  });
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-  if (mirroring) {
-    chrome.tabs.executeScript(activeTab, { code: 'stopMirroring();' });
-    mirroring = false;
-    activeTab = undefined;
-    windowId = undefined;
-  } else {
-    mirroring = true;
-    windowId = tab.windowId;
-    mirrorTab(tab.id);
+  function mirrorTab(tabId) {
+    if (tabId == activeTab) return;
+
+    if (activeTab)
+      chrome.tabs.executeScript(activeTab, { code: "stopMirroring();" });
+
+    activeTab = tabId;
+
+    chrome.tabs.executeScript(activeTab, { code: "startMirroring();" });
   }
-});
 
-function mirrorTab(tabId) {
-  if (tabId == activeTab)
-    return;
+  chrome.tabs.onActiveChanged.addListener(function (tabId, selectInfo) {
+    if (!mirroring) return;
 
-  if (activeTab)
-    chrome.tabs.executeScript(activeTab, { code: 'stopMirroring();' });
-  
-  activeTab = tabId;
+    if (selectInfo.windowId != windowId) return;
 
-  chrome.tabs.executeScript(activeTab, { code: 'startMirroring();' });
-}
+    mirrorTab(tabId);
+  });
 
-chrome.tabs.onActiveChanged.addListener(function(tabId, selectInfo) {
-  if (!mirroring)
-    return;
-  
-  if (selectInfo.windowId != windowId)
-    return;
-  
-  mirrorTab(tabId);
-});
-
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) { 
+  chrome.extension.onRequest.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
     if (!mirroring || sender.tab.id !== activeTab)
       sendResponse({ mirror: false });
-    else
-      sendResponse({ mirror: true });
+    else sendResponse({ mirror: true });
   });
 </script>

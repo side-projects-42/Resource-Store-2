@@ -12,39 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CPSTransformer} from './CPSTransformer.js';
+import { CPSTransformer } from "./CPSTransformer.js";
 import {
   BINARY_EXPRESSION,
-  YIELD_EXPRESSION
-} from '../../syntax/trees/ParseTreeType.js';
+  YIELD_EXPRESSION,
+} from "../../syntax/trees/ParseTreeType.js";
 import {
   BinaryExpression,
-  ExpressionStatement
-} from '../../syntax/trees/ParseTrees.js'
-import {FindInFunctionScope} from '../FindInFunctionScope.js'
-import {ReturnState} from './ReturnState.js';
-import ImportRuntimeTrait from '../ImportRuntimeTrait.js';
-import {YieldState} from './YieldState.js';
+  ExpressionStatement,
+} from "../../syntax/trees/ParseTrees.js";
+import { FindInFunctionScope } from "../FindInFunctionScope.js";
+import { ReturnState } from "./ReturnState.js";
+import ImportRuntimeTrait from "../ImportRuntimeTrait.js";
+import { YieldState } from "./YieldState.js";
 import {
   createIdentifierExpression as id,
   createMemberExpression,
   createUndefinedExpression,
-} from '../ParseTreeFactory.js';
+} from "../ParseTreeFactory.js";
 import {
   parseExpression,
   parseStatement,
-  parseStatements
-} from '../PlaceholderParser.js';
+  parseStatements,
+} from "../PlaceholderParser.js";
 
 /**
  * @param {ParseTree} tree Expression tree
  * @return {boolean}
  */
 function isYieldAssign(tree) {
-  return tree.type === BINARY_EXPRESSION &&
-      tree.operator.isAssignmentOperator() &&
-      tree.right.type === YIELD_EXPRESSION &&
-      tree.left.isLeftHandSideExpression();
+  return (
+    tree.type === BINARY_EXPRESSION &&
+    tree.operator.isAssignmentOperator() &&
+    tree.right.type === YIELD_EXPRESSION &&
+    tree.left.isLeftHandSideExpression()
+  );
 }
 
 class YieldFinder extends FindInFunctionScope {
@@ -71,18 +73,15 @@ function scopeContainsYield(tree) {
  * }
  */
 export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
-
   constructor(identifierGenerator, reporter, options) {
     super(identifierGenerator, reporter, options);
     this.shouldAppendThrowCloseState_ = true;
   }
 
   expressionNeedsStateMachine(tree) {
-    if (tree === null)
-      return false;
+    if (tree === null) return false;
     return scopeContainsYield(tree);
   }
-
 
   /**
    * Simple form yield expressions (direct children of an ExpressionStatement)
@@ -94,7 +93,9 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
   transformYieldExpression_(tree) {
     let expression, machine;
     if (this.expressionNeedsStateMachine(tree.expression)) {
-      ({expression, machine} = this.expressionToStateMachine(tree.expression));
+      ({ expression, machine } = this.expressionToStateMachine(
+        tree.expression
+      ));
     } else {
       expression = this.transformAny(tree.expression);
     }
@@ -105,11 +106,11 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
     let startState = this.allocateState();
     let fallThroughState = this.allocateState();
     let yieldMachine = this.stateToStateMachine_(
-        new YieldState(startState, fallThroughState, expression),
-        fallThroughState);
+      new YieldState(startState, fallThroughState, expression),
+      fallThroughState
+    );
 
-    if (machine)
-      yieldMachine = machine.append(yieldMachine);
+    if (machine) yieldMachine = machine.append(yieldMachine);
 
     // The yield expression we generated for the yield-for expression should not
     // be followed by the ThrowCloseState since the inner iterator need to
@@ -151,7 +152,7 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
     //   next.value;
     // }
 
-    let statements = parseStatements `
+    let statements = parseStatements`
         ${g} = $ctx.wrapYieldStar(${expression}[Symbol.iterator]());
         // received = void 0;
         $ctx.sent = void 0;
@@ -175,8 +176,7 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
     let yieldMachine = this.transformStatementList_(statements);
     this.shouldAppendThrowCloseState_ = shouldAppendThrowCloseState;
 
-    if (machine)
-      yieldMachine = machine.append(yieldMachine);
+    if (machine) yieldMachine = machine.append(yieldMachine);
 
     // TODO(arv): Another option is to build up the statemachine for this here
     // instead of builing the code and transforming the code into a state
@@ -190,8 +190,10 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
    * @return {ParseTree}
    */
   transformYieldExpression(tree) {
-    this.reporter.reportError(tree.location,
-        'Only \'a = yield b\' and \'var a = yield b\' currently supported.');
+    this.reporter.reportError(
+      tree.location,
+      "Only 'a = yield b' and 'var a = yield b' currently supported."
+    );
     return tree;
   }
 
@@ -203,23 +205,20 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
     this.shouldAppendThrowCloseState_ = false;
     let machine = this.transformYieldExpression_(tree.right);
     let left = this.transformAny(tree.left);
-    let sentExpression = tree.right.isYieldFor ?
-        parseExpression `$ctx.sentIgnoreThrow` :
-        parseExpression `$ctx.sent`;
+    let sentExpression = tree.right.isYieldFor
+      ? parseExpression`$ctx.sentIgnoreThrow`
+      : parseExpression`$ctx.sent`;
     let statement = new ExpressionStatement(
-        tree.location,
-        new BinaryExpression(
-            tree.location,
-            left,
-            tree.operator,
-            sentExpression));
+      tree.location,
+      new BinaryExpression(tree.location, left, tree.operator, sentExpression)
+    );
     let assignMachine = this.statementToStateMachine_(statement);
     this.shouldAppendThrowCloseState_ = shouldAppendThrowCloseState;
     return machine.append(assignMachine);
   }
 
   createThrowCloseState_() {
-    return this.statementToStateMachine_(parseStatement `$ctx.maybeThrow()`);
+    return this.statementToStateMachine_(parseStatement`$ctx.maybeThrow()`);
   }
 
   /**
@@ -235,7 +234,7 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
       return this.transformYieldAssign_(expression);
 
     if (this.expressionNeedsStateMachine(expression)) {
-       return this.expressionToStateMachine(expression).machine;
+      return this.expressionToStateMachine(expression).machine;
     }
 
     return super.transformExpressionStatement(tree);
@@ -247,8 +246,10 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
    */
   transformAwaitStatement(tree) {
     // TODO(arv): This should be handled in the parser... change to throw.
-    this.reporter.reportError(tree.location,
-        'Generator function may not have an await statement.');
+    this.reporter.reportError(
+      tree.location,
+      "Generator function may not have an await statement."
+    );
     return tree;
   }
 
@@ -260,22 +261,24 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
     let expression, machine;
 
     if (this.expressionNeedsStateMachine(tree.expression))
-      ({expression, machine} = this.expressionToStateMachine(tree.expression));
-    else
-      expression = tree.expression;
+      ({ expression, machine } = this.expressionToStateMachine(
+        tree.expression
+      ));
+    else expression = tree.expression;
 
     let startState = this.allocateState();
     let fallThroughState = this.allocateState();
     let returnMachine = this.stateToStateMachine_(
-        new ReturnState(
-            startState,
-            fallThroughState,
-            this.transformAny(expression)),
-        fallThroughState);
+      new ReturnState(
+        startState,
+        fallThroughState,
+        this.transformAny(expression)
+      ),
+      fallThroughState
+    );
 
-    if (machine)
-      return machine.append(returnMachine);
-    return returnMachine
+    if (machine) return machine.append(returnMachine);
+    return returnMachine;
   }
 
   /**
@@ -296,8 +299,9 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
    * @return {FunctionBody}
    */
   transformGeneratorBody(tree, name) {
-    let createGeneratorInstance =
-        this.getRuntimeExpression('createGeneratorInstance');
+    let createGeneratorInstance = this.getRuntimeExpression(
+      "createGeneratorInstance"
+    );
     return this.transformCpsFunctionBody(tree, createGeneratorInstance, name);
   }
 
@@ -308,9 +312,17 @@ export class GeneratorTransformer extends ImportRuntimeTrait(CPSTransformer) {
    * @param {IdentifierExpression} name
    * @return {Block}
    */
-  static transformGeneratorBody(identifierGenerator, reporter, options, body,
-                                name) {
-    return new GeneratorTransformer(identifierGenerator, reporter, options).
-        transformGeneratorBody(body, name);
+  static transformGeneratorBody(
+    identifierGenerator,
+    reporter,
+    options,
+    body,
+    name
+  ) {
+    return new GeneratorTransformer(
+      identifierGenerator,
+      reporter,
+      options
+    ).transformGeneratorBody(body, name);
   }
-};
+}

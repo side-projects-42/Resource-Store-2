@@ -1,27 +1,27 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     options: {
       scales: {
         x: {
-          labels: ['Left Label', 'Center Label', 'Right Label'],
+          labels: ["Left Label", "Center Label", "Right Label"],
           position: {
-            y: 30
+            y: 30,
           },
         },
         y: {
           display: false,
           min: -100,
           max: 100,
-        }
-      }
-    }
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 512
+      width: 512,
     },
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

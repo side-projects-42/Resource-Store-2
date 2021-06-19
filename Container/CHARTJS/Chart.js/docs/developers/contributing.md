@@ -55,10 +55,10 @@ You can create a new image-based test by following the steps below:
 - Add this file in `test/fixtures/{spec.name}/{feature-name}.json`.
 - Add a [describe line](https://github.com/chartjs/Chart.js/blob/4b421a50bfa17f73ac7aa8db7d077e674dbc148d/test/specs/plugin.filler.tests.js#L10) to the beginning of `test/specs/{spec.name}.tests.js` if it doesn't exist yet.
 - Run `npm run dev`.
-- Click the *"Debug"* button (top/right): a test should fail with the associated canvas visible.
-- Right click on the chart and *"Save image as..."* `test/fixtures/{spec.name}/{feature-name}.png` making sure not to activate the tooltip or any hover functionality
+- Click the _"Debug"_ button (top/right): a test should fail with the associated canvas visible.
+- Right click on the chart and _"Save image as..."_ `test/fixtures/{spec.name}/{feature-name}.png` making sure not to activate the tooltip or any hover functionality
 - Refresh the browser page (`CTRL+R`): test should now pass
-- Verify test relevancy by changing the feature values *slightly* in the JSON file.
+- Verify test relevancy by changing the feature values _slightly_ in the JSON file.
 
 Tests should pass in both browsers. In general, we've hidden all text in image tests since it's quite difficult to get them passing between different browsers. As a result, it is recommended to hide all scales in image-based tests. It is also recommended to disable animations. If tests still do not pass, adjust [`tolerance` and/or `threshold`](https://github.com/chartjs/Chart.js/blob/1ca0ffb5d5b6c2072176fd36fa85a58c483aa434/test/jasmine.matchers.js) at the beginning of the JSON file keeping them **as low as possible**.
 

@@ -1,4 +1,15 @@
-import {acquireChart, releaseChart, createMockContext, afterEvent, waitForResize, injectWrapperCSS, specsFromFixtures, triggerMouseEvent, addMatchers, releaseCharts} from 'chartjs-test-utils';
+import {
+  acquireChart,
+  releaseChart,
+  createMockContext,
+  afterEvent,
+  waitForResize,
+  injectWrapperCSS,
+  specsFromFixtures,
+  triggerMouseEvent,
+  addMatchers,
+  releaseCharts,
+} from "chartjs-test-utils";
 
 // force ratio=1 for tests on high-res/retina devices
 // fixes https://github.com/chartjs/Chart.js/issues/4515
@@ -13,15 +24,15 @@ window.createMockContext = createMockContext;
 injectWrapperCSS();
 
 jasmine.fixture = {
-  specs: specsFromFixtures
+  specs: specsFromFixtures,
 };
 
 jasmine.triggerMouseEvent = triggerMouseEvent;
 
-beforeEach(function() {
+beforeEach(function () {
   addMatchers();
 });
 
-afterEach(function() {
+afterEach(function () {
   releaseCharts();
 });

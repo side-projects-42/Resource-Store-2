@@ -1,12 +1,11 @@
-describe('Core helper tests', function() {
-
+describe("Core helper tests", function () {
   var helpers;
 
-  beforeAll(function() {
+  beforeAll(function () {
     helpers = window.Chart.helpers;
   });
 
-  it('should generate integer ids', function() {
+  it("should generate integer ids", function () {
     var uid = helpers.uid();
     expect(uid).toEqual(jasmine.any(Number));
     expect(helpers.uid()).toBe(uid + 1);
@@ -14,9 +13,11 @@ describe('Core helper tests', function() {
     expect(helpers.uid()).toBe(uid + 3);
   });
 
-  describe('clone', function() {
-    it('should not allow prototype pollution', function() {
-      const test = helpers.clone(JSON.parse('{"__proto__":{"polluted": true}}'));
+  describe("clone", function () {
+    it("should not allow prototype pollution", function () {
+      const test = helpers.clone(
+        JSON.parse('{"__proto__":{"polluted": true}}')
+      );
       expect(test.prototype).toBeUndefined();
       expect(Object.prototype.polluted).toBeUndefined();
     });

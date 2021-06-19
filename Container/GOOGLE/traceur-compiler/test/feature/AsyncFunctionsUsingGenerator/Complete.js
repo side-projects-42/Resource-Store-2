@@ -4,14 +4,14 @@
 
 function asyncComplete() {
   return new Promise((resolve) => {
-    resolve('complete');
+    resolve("complete");
   });
 }
 
 // ----------------------------------------------------------------------------
 
-(async function() {
+(async function () {
   var value = await asyncComplete();
-  assert.equal('complete', value);
+  assert.equal("complete", value);
   done();
 })();

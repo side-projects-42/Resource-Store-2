@@ -1,0 +1,60 @@
+{
+  "projectFullName": "newrelic/newrelic-ocoe-launch-pad",
+  "issues": {
+    "open": 0
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 13,
+  "lastSixMonthsCommitTotal": 5,
+  "contributors": 3,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 16081795,
+      "login": "sskilbred",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/16081795?v=4",
+      "htmlUrl": "https://github.com/sskilbred",
+      "contributions": 1
+    },
+    {
+      "id": 55132258,
+      "login": "jsbnr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/55132258?v=4",
+      "htmlUrl": "https://github.com/jsbnr",
+      "contributions": 8
+    },
+    {
+      "id": 43244625,
+      "login": "melissaklein24",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43244625?v=4",
+      "htmlUrl": "https://github.com/melissaklein24",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U1MzU=",
+      "name": "Dockerfile",
+      "color": "#384d54"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

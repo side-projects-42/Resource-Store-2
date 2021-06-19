@@ -1,2 +1,2 @@
-export default 'default';
-export var x = 'x';
+export default "default";
+export var x = "x";

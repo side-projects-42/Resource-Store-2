@@ -11,23 +11,21 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.sources.CallsDataSource');
+goog.provide("wtf.db.sources.CallsDataSource");
 
-goog.require('wtf');
-goog.require('wtf.data.EventFlag');
-goog.require('wtf.data.ScriptContextInfo');
-goog.require('wtf.data.formats.BinaryCalls');
-goog.require('wtf.data.formats.FileFlags');
-goog.require('wtf.db.DataSource');
-goog.require('wtf.db.EventType');
-goog.require('wtf.db.PresentationHint');
-goog.require('wtf.db.Unit');
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.DataFormat');
-goog.require('wtf.io.ReadTransport');
-goog.require('wtf.util');
-
-
+goog.require("wtf");
+goog.require("wtf.data.EventFlag");
+goog.require("wtf.data.ScriptContextInfo");
+goog.require("wtf.data.formats.BinaryCalls");
+goog.require("wtf.data.formats.FileFlags");
+goog.require("wtf.db.DataSource");
+goog.require("wtf.db.EventType");
+goog.require("wtf.db.PresentationHint");
+goog.require("wtf.db.Unit");
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.DataFormat");
+goog.require("wtf.io.ReadTransport");
+goog.require("wtf.util");
 
 /**
  * Data source that consumes data from the instrumentation wtf-call format.
@@ -40,7 +38,7 @@ goog.require('wtf.util');
  * @constructor
  * @extends {wtf.db.DataSource}
  */
-wtf.db.sources.CallsDataSource = function(db, sourceInfo, transport) {
+wtf.db.sources.CallsDataSource = function (db, sourceInfo, transport) {
   goog.base(this, db, sourceInfo);
 
   /**
@@ -74,57 +72,57 @@ wtf.db.sources.CallsDataSource = function(db, sourceInfo, transport) {
   this.transport_.setPreferredFormat(wtf.io.DataFormat.BLOB);
 
   this.transport_.addListener(
-      wtf.io.ReadTransport.EventType.RECEIVE_DATA,
-      this.dataReceived_, this);
+    wtf.io.ReadTransport.EventType.RECEIVE_DATA,
+    this.dataReceived_,
+    this
+  );
   this.transport_.addListener(
-      wtf.io.ReadTransport.EventType.ERROR,
-      this.transportErrored_, this);
+    wtf.io.ReadTransport.EventType.ERROR,
+    this.transportErrored_,
+    this
+  );
   this.transport_.addListener(
-      wtf.io.ReadTransport.EventType.END,
-      this.transportEnded_, this);
+    wtf.io.ReadTransport.EventType.END,
+    this.transportEnded_,
+    this
+  );
 };
 goog.inherits(wtf.db.sources.CallsDataSource, wtf.db.DataSource);
-
 
 /**
  * @override
  */
-wtf.db.sources.CallsDataSource.prototype.start = function() {
-  var deferred = goog.base(this, 'start');
+wtf.db.sources.CallsDataSource.prototype.start = function () {
+  var deferred = goog.base(this, "start");
 
   // Start streaming data in.
   this.transport_.resume();
   return deferred;
 };
 
-
 /**
  * Handles stream data received events.
  * @param {!wtf.io.BlobData} data Blob data.
  * @private
  */
-wtf.db.sources.CallsDataSource.prototype.dataReceived_ = function(data) {
+wtf.db.sources.CallsDataSource.prototype.dataReceived_ = function (data) {
   this.blobParts_.push(data);
 };
-
 
 /**
  * Handles stream error events.
  * @param {!Error} e Error.
  * @private
  */
-wtf.db.sources.CallsDataSource.prototype.transportErrored_ = function(e) {
-  this.error(
-      'Error loading trace data',
-      e.toString());
+wtf.db.sources.CallsDataSource.prototype.transportErrored_ = function (e) {
+  this.error("Error loading trace data", e.toString());
 };
-
 
 /**
  * Handles stream end events.
  * @private
  */
-wtf.db.sources.CallsDataSource.prototype.transportEnded_ = function() {
+wtf.db.sources.CallsDataSource.prototype.transportEnded_ = function () {
   // Stitch together all the input parts.
   var blob = wtf.io.Blob.create(this.blobParts_);
 
@@ -132,18 +130,15 @@ wtf.db.sources.CallsDataSource.prototype.transportEnded_ = function() {
   blob.readAsArrayBuffer(this.process_, this);
 };
 
-
 /**
  * Processes a single large array buffer.
  * @param {ArrayBuffer} buffer Input array buffer.
  * @private
  */
-wtf.db.sources.CallsDataSource.prototype.process_ = function(buffer) {
+wtf.db.sources.CallsDataSource.prototype.process_ = function (buffer) {
   if (!buffer) {
     // Failed!
-    this.error(
-        'Error reading data',
-        'Array buffer could not be allocated.');
+    this.error("Error reading data", "Array buffer could not be allocated.");
     return;
   }
 
@@ -154,7 +149,6 @@ wtf.db.sources.CallsDataSource.prototype.process_ = function(buffer) {
   this.end();
 };
 
-
 /**
  * Parses the source JSON string into an object.
  * NOTE: this function is exported so that jscompiler won't stupidly inline it
@@ -163,35 +157,38 @@ wtf.db.sources.CallsDataSource.prototype.process_ = function(buffer) {
  * @return {Object} Header object, if parsed.
  * @private
  */
-wtf.db.sources.CallsDataSource.prototype.parseHeaderJson_ = function(json) {
+wtf.db.sources.CallsDataSource.prototype.parseHeaderJson_ = function (json) {
   try {
     return /** @type {Object} */ (goog.global.JSON.parse(json));
   } catch (e) {
     this.error(
-        'File header invalid',
-        'An error occurred trying to parse the file header.\n' + e);
+      "File header invalid",
+      "An error occurred trying to parse the file header.\n" + e
+    );
     return null;
   }
 };
 
-
 wtf.preventInlining(wtf.db.sources.CallsDataSource.prototype.parseHeaderJson_);
-
 
 /**
  * Processes the full buffer.
  * @param {!Uint8Array} buffer Data buffer.
  * @private
  */
-wtf.db.sources.CallsDataSource.prototype.processData_ = function(buffer) {
+wtf.db.sources.CallsDataSource.prototype.processData_ = function (buffer) {
   var db = this.getDatabase();
   var eventTypeTable = db.getEventTypeTable();
 
   var i = 0;
-  var headerLength = buffer[i + 0] | (buffer[i + 1] << 8) |
-      (buffer[i + 2] << 16) | (buffer[i + 3] << 24);
+  var headerLength =
+    buffer[i + 0] |
+    (buffer[i + 1] << 8) |
+    (buffer[i + 2] << 16) |
+    (buffer[i + 3] << 24);
   var headerJson = wtf.util.convertUint8ArrayToAsciiString(
-      new Uint8Array(buffer.buffer, 4, headerLength));
+    new Uint8Array(buffer.buffer, 4, headerLength)
+  );
   i += 4 + headerLength;
   var header = this.parseHeaderJson_(headerJson);
   if (!header) {
@@ -199,23 +196,23 @@ wtf.db.sources.CallsDataSource.prototype.processData_ = function(buffer) {
   }
 
   // Read version information to ensure we support the format.
-  if (header['version'] != wtf.data.formats.BinaryCalls.VERSION) {
+  if (header["version"] != wtf.data.formats.BinaryCalls.VERSION) {
     // Format version mismatch.
     this.error(
-        'File version not supported or too old',
-        'Sorry, the parser for this file version is not available :(');
+      "File version not supported or too old",
+      "Sorry, the parser for this file version is not available :("
+    );
     return;
   }
 
   // Read context information.
-  if (!header['context']) {
+  if (!header["context"]) {
     // Bad context info or unknown context.
-    this.error(
-        'Invalid context information');
+    this.error("Invalid context information");
     return;
   }
   var contextInfo = new wtf.data.ScriptContextInfo();
-  contextInfo.parse(header['context']);
+  contextInfo.parse(header["context"]);
 
   // Read flags information.
   var flags = wtf.data.formats.FileFlags.TIMES_AS_COUNT;
@@ -223,16 +220,16 @@ wtf.db.sources.CallsDataSource.prototype.processData_ = function(buffer) {
   var timeDelay = db.computeTimeDelay(timebase);
 
   // Read metadata blob.
-  var metadata = header['metadata'];
+  var metadata = header["metadata"];
   if (!goog.isObject(metadata)) {
     metadata = {};
   }
-  var attributes = metadata['attributes'] || [];
+  var attributes = metadata["attributes"] || [];
 
   // Infer units from attributes.
   var units = wtf.db.Unit.COUNT;
   if (attributes.length) {
-    var unitsStr = attributes[0]['units'];
+    var unitsStr = attributes[0]["units"];
     units = wtf.db.Unit.parse(unitsStr);
   }
 
@@ -243,28 +240,32 @@ wtf.db.sources.CallsDataSource.prototype.processData_ = function(buffer) {
 
   // Initialize the trace source.
   // Only call when all other parsing has been successful.
-  if (!this.initialize(
+  if (
+    !this.initialize(
       contextInfo,
       flags,
       presentationHints,
       units,
       metadata,
       timebase,
-      timeDelay)) {
-    this.error(
-        'Unable to initialize data source',
-        'File corrupt or invalid.');
+      timeDelay
+    )
+  ) {
+    this.error("Unable to initialize data source", "File corrupt or invalid.");
     return;
   }
 
   // Setup some builtin event types.
   var leaveEventType = eventTypeTable.defineType(
-      wtf.db.EventType.createInstance('wtf.scope#leave()',
-          wtf.data.EventFlag.BUILTIN | wtf.data.EventFlag.INTERNAL));
+    wtf.db.EventType.createInstance(
+      "wtf.scope#leave()",
+      wtf.data.EventFlag.BUILTIN | wtf.data.EventFlag.INTERNAL
+    )
+  );
 
   // Parse all module data.
   var eventTypes = {};
-  var headerModules = header['modules'];
+  var headerModules = header["modules"];
   for (var moduleId in headerModules) {
     var headerModule = headerModules[moduleId];
 
@@ -272,7 +273,7 @@ wtf.db.sources.CallsDataSource.prototype.processData_ = function(buffer) {
     // var src = headerModule['src'];
 
     // Create all function types.
-    var fns = headerModule['fns'];
+    var fns = headerModule["fns"];
     for (var n = 0; n < fns.length; n += 4) {
       var fnId = fns[n + 0];
       var fnName = fns[n + 1];
@@ -282,7 +283,8 @@ wtf.db.sources.CallsDataSource.prototype.processData_ = function(buffer) {
       // TODO(rsturgell): Add any additional non-time attributes to the
       // eventtype (and write them in the loop below).
       eventTypes[fnId] = eventTypeTable.defineType(
-          wtf.db.EventType.createScope(fnName));
+        wtf.db.EventType.createScope(fnName)
+      );
 
       // TODO(benvanik): stash range/etc
     }
@@ -311,7 +313,7 @@ wtf.db.sources.CallsDataSource.prototype.processData_ = function(buffer) {
     var id = callBuffer[n];
     if (!implicitTime) {
       var sample = callBuffer[n + 1];
-      var delta = (prevSample >= 0) ? (sample - prevSample) : 0;
+      var delta = prevSample >= 0 ? sample - prevSample : 0;
       if (delta > 0) t += delta;
       prevSample = sample;
     }

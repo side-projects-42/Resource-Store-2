@@ -19,27 +19,30 @@ import {
   FunctionExpression,
   GetAccessor,
   Method,
-  VariableDeclaration
-} from '../syntax/trees/ParseTrees.js';
+  VariableDeclaration,
+} from "../syntax/trees/ParseTrees.js";
 import {
   IMPORT_TYPE_CLAUSE,
-  TYPE_ALIAS_DECLARATION
-} from '../syntax/trees/ParseTreeType.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+  TYPE_ALIAS_DECLARATION,
+} from "../syntax/trees/ParseTreeType.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 
 /**
  * Removes type annotations.
  */
 export class TypeTransformer extends ParseTreeTransformer {
-
   /**
    * @param {VariableDeclaration} tree
    * @return {ParseTree}
    */
   transformVariableDeclaration(tree) {
     if (tree.typeAnnotation) {
-      tree = new VariableDeclaration(tree.location, tree.lvalue, null,
-          tree.initializer);
+      tree = new VariableDeclaration(
+        tree.location,
+        tree.lvalue,
+        null,
+        tree.initializer
+      );
     }
     return super.transformVariableDeclaration(tree);
   }
@@ -60,8 +63,15 @@ export class TypeTransformer extends ParseTreeTransformer {
    */
   transformFunctionDeclaration(tree) {
     if (tree.typeAnnotation) {
-      tree = new FunctionDeclaration(tree.location, tree.name, tree.functionKind,
-          tree.parameterList, null, tree.annotations, tree.body);
+      tree = new FunctionDeclaration(
+        tree.location,
+        tree.name,
+        tree.functionKind,
+        tree.parameterList,
+        null,
+        tree.annotations,
+        tree.body
+      );
     }
 
     return super.transformFunctionDeclaration(tree);
@@ -73,8 +83,15 @@ export class TypeTransformer extends ParseTreeTransformer {
    */
   transformFunctionExpression(tree) {
     if (tree.typeAnnotation) {
-      tree = new FunctionExpression(tree.location, tree.name, tree.functionKind,
-          tree.parameterList, null, tree.annotations, tree.body);
+      tree = new FunctionExpression(
+        tree.location,
+        tree.name,
+        tree.functionKind,
+        tree.parameterList,
+        null,
+        tree.annotations,
+        tree.body
+      );
     }
 
     return super.transformFunctionExpression(tree);
@@ -86,9 +103,17 @@ export class TypeTransformer extends ParseTreeTransformer {
    */
   transformMethod(tree) {
     if (tree.typeAnnotation) {
-      tree = new Method(tree.location, tree.isStatic,
-          tree.functionKind, tree.name, tree.parameterList, null,
-          tree.annotations, tree.body, tree.debugName);
+      tree = new Method(
+        tree.location,
+        tree.isStatic,
+        tree.functionKind,
+        tree.name,
+        tree.parameterList,
+        null,
+        tree.annotations,
+        tree.body,
+        tree.debugName
+      );
     }
 
     return super.transformMethod(tree);
@@ -100,8 +125,14 @@ export class TypeTransformer extends ParseTreeTransformer {
    */
   transformGetAccessor(tree) {
     if (tree.typeAnnotation) {
-      tree = new GetAccessor(tree.location, tree.isStatic, tree.name, null,
-          tree.annotations, tree.body);
+      tree = new GetAccessor(
+        tree.location,
+        tree.isStatic,
+        tree.name,
+        null,
+        tree.annotations,
+        tree.body
+      );
     }
 
     return super.transformGetAccessor(tree);

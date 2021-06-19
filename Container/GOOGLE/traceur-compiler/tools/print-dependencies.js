@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import getDependencies from '../src/node/get-dependencies.js';
+import getDependencies from "../src/node/get-dependencies.js";
 
 function main() {
   if (process.argv.length < 3) {
-    console.error('Usage: ./tval print-deps.js paths...')
+    console.error("Usage: ./tval print-deps.js paths...");
     return;
   }
 

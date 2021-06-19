@@ -1,7 +1,6 @@
 class Empty {}
 
-class EmptyB extends Empty {
-}
+class EmptyB extends Empty {}
 
 // ----------------------------------------------------------------------------
 
@@ -9,11 +8,11 @@ var e = new Empty();
 assert.isNotNull(e);
 
 for (var element in e) {
-  assert.equal('constructor', element);
+  assert.equal("constructor", element);
 }
 
 for (var element in Empty) {
-  assert.fail('Empty contains static member : ' + element);
+  assert.fail("Empty contains static member : " + element);
 }
 
 // Instances should be different.

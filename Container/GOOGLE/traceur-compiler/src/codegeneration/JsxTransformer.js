@@ -18,16 +18,16 @@ import {
   JSX_SPREAD_ATTRIBUTE,
   JSX_TEXT,
   LITERAL_EXPRESSION,
-} from '../syntax/trees/ParseTreeType.js';
+} from "../syntax/trees/ParseTreeType.js";
 import {
   JsxText,
   LiteralExpression,
   LiteralPropertyName,
   SpreadExpression,
-} from '../syntax/trees/ParseTrees.js';
-import {LiteralToken} from '../syntax/LiteralToken.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {STRING} from '../syntax/TokenType.js';
+} from "../syntax/trees/ParseTrees.js";
+import { LiteralToken } from "../syntax/LiteralToken.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { STRING } from "../syntax/TokenType.js";
 import {
   createArgumentList,
   createIdentifierExpression,
@@ -39,10 +39,10 @@ import {
   createStringLiteral,
   createStringLiteralToken,
   createTrueLiteral,
-} from './ParseTreeFactory.js';
-import {parseExpression} from './PlaceholderParser.js';
-import {spreadProperties} from './SpreadPropertiesTransformer.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
+} from "./ParseTreeFactory.js";
+import { parseExpression } from "./PlaceholderParser.js";
+import { spreadProperties } from "./SpreadPropertiesTransformer.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
 
 /**
  * Desugars JSX expressions.
@@ -77,10 +77,10 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
     // --jsx=a.b.c -> a.b.c(tagName, opts, ...children)
     if (!this.jsxFunction_) {
       let jsx = this.options.jsx;
-      if (typeof jsx === 'string') {
+      if (typeof jsx === "string") {
         this.jsxFunction_ = parseExpression([jsx]);
       } else {
-        this.jsxFunction_ = parseExpression `React.createElement`;
+        this.jsxFunction_ = parseExpression`React.createElement`;
       }
     }
     return this.jsxFunction_;
@@ -91,7 +91,7 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
     let props = this.transformJsxAttributes_(tree);
     let children = this.transformJsxChildren_(tree.children);
     let args = createArgumentList([name, props, ...children]);
-    return parseExpression `${this.getJsxFunction_()}(${args})`;
+    return parseExpression`${this.getJsxFunction_()}(${args})`;
   }
 
   transformJsxAttributes_(tree) {
@@ -99,7 +99,7 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
     if (attrs.length === 0) {
       return createNullLiteral();
     }
-    if (tree.attributes.some(a => a.type === JSX_SPREAD_ATTRIBUTE)) {
+    if (tree.attributes.some((a) => a.type === JSX_SPREAD_ATTRIBUTE)) {
       // <a b='b' c='c' {...d} {...g} />
       // =>
       // React.createElement('a',
@@ -111,9 +111,9 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
 
   transformJsxElementName(tree) {
     if (tree.names.length === 1) {
-      let {value} = tree.names[0];
+      let { value } = tree.names[0];
       if (value[0] === value[0].toUpperCase()) {
-        return createIdentifierExpression(value);;
+        return createIdentifierExpression(value);
       }
       return createStringLiteral(value);
     }
@@ -128,18 +128,22 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
   }
 
   transformJsxAttribute(tree) {
-    let name =
-        new LiteralPropertyName(tree.name.location,
-                                jsxIdentifierToToken(tree.name));
+    let name = new LiteralPropertyName(
+      tree.name.location,
+      jsxIdentifierToToken(tree.name)
+    );
     let value;
     if (tree.value === null) {
       value = createTrueLiteral();
     } else if (tree.value.type === LITERAL_EXPRESSION) {
-      const {literalToken} = tree.value;
+      const { literalToken } = tree.value;
       const v = literalToken.value;
-      const {location} = literalToken;
-      const lit =
-          new LiteralToken(STRING, normalizeAttributeValue(v), location);
+      const { location } = literalToken;
+      const lit = new LiteralToken(
+        STRING,
+        normalizeAttributeValue(v),
+        location
+      );
       value = new LiteralExpression(location, lit);
     } else {
       value = this.transformAny(tree.value);
@@ -152,10 +156,11 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
   }
 
   transformJsxSpreadAttribute(tree) {
-    return new SpreadExpression(tree.location,
-                                this.transformAny(tree.expression));
+    return new SpreadExpression(
+      tree.location,
+      this.transformAny(tree.expression)
+    );
   }
-
 
   transformJsxText(tree) {
     return createStringLiteral(tree.value.value);
@@ -167,7 +172,7 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
     // single space. Any whitespace tabs are replaced with spaces. Strings
     // inside expressions are unaffected.
     let rv = [];
-    trees.forEach(tree => {
+    trees.forEach((tree) => {
       let newTree;
       switch (tree.type) {
         case JSX_ELEMENT:
@@ -181,13 +186,13 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
           break;
         case JSX_TEXT: {
           let s = tree.value.value;
-          s = s.replace(/\t/g, ' ');
+          s = s.replace(/\t/g, " ");
           if (!/[\n\r]/.test(s)) {
             newTree = createStringLiteral(s);
           } else {
-            s = s.replace(/^[ \t]*[\n\r]\s*/, '');
-            s = s.replace(/[ \t]*[\n\r]\s*$/, '');
-            if (s === '') {
+            s = s.replace(/^[ \t]*[\n\r]\s*/, "");
+            s = s.replace(/[ \t]*[\n\r]\s*$/, "");
+            if (s === "") {
               return;
             }
             newTree = createStringLiteral(s);
@@ -195,7 +200,7 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
           break;
         }
       }
-      rv.push(newTree)
+      rv.push(newTree);
     });
     return rv;
   }
@@ -203,7 +208,7 @@ export class JsxTransformer extends ImportRuntimeTrait(ParseTreeTransformer) {
 
 function jsxIdentifierToToken(token) {
   let value = token.value;
-  if (value.indexOf('-') !== -1) {
+  if (value.indexOf("-") !== -1) {
     return createStringLiteralToken(value);
   }
   return createIdentifierToken(value);
@@ -211,6 +216,8 @@ function jsxIdentifierToToken(token) {
 
 function normalizeAttributeValue(s) {
   return JSON.stringify(
-      s.slice(1, -1).  // remove the quotes
-      replace(/\n\s+/g, ' '));
+    s
+      .slice(1, -1) // remove the quotes
+      .replace(/\n\s+/g, " ")
+  );
 }

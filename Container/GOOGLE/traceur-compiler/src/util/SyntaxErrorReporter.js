@@ -12,17 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  ErrorReporter,
-  format
-} from './ErrorReporter.js';
+import { ErrorReporter, format } from "./ErrorReporter.js";
 
 /**
  * An implementation of the ErrorReporter that throws a SyntaxError on the
  * first reported error.
  */
 export class SyntaxErrorReporter extends ErrorReporter {
-
   /**
    * @param {SourcePosition} location
    * @param {string} message

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {FINALLY_FALL_THROUGH} from '../../syntax/PredefinedName.js';
+import { FINALLY_FALL_THROUGH } from "../../syntax/PredefinedName.js";
 import {
   createAssignStateStatement,
   createAssignmentStatement,
@@ -20,8 +20,8 @@ import {
   createCaseClause,
   createIdentifierExpression,
   createNumberLiteral,
-  createStatementList
-} from '../ParseTreeFactory.js';
+  createStatementList,
+} from "../ParseTreeFactory.js";
 
 /**
  * A State in the generator state machine.
@@ -50,8 +50,10 @@ export class State {
    * @return {CaseClause}
    */
   transformMachineState(enclosingFinally, machineEndState, reporter) {
-    return createCaseClause(createNumberLiteral(this.id),
-        this.transform(enclosingFinally, machineEndState, reporter));
+    return createCaseClause(
+      createNumberLiteral(this.id),
+      this.transform(enclosingFinally, machineEndState, reporter)
+    );
   }
 
   /**
@@ -72,8 +74,7 @@ export class State {
   transformBreakOrContinue(labelSet, breakState, continueState) {
     return this;
   }
-};
-
+}
 
 State.INVALID_STATE = -1;
 State.END_STATE = -2;
@@ -88,10 +89,11 @@ State.RETHROW_STATE = -3;
  * @param {number} fallThroughState
  * @return {Array.<ParseTree>}
  */
-State.generateJump = function(enclosingFinally, fallThroughState) {
+State.generateJump = function (enclosingFinally, fallThroughState) {
   return createStatementList(
-      State.generateAssignState(enclosingFinally, fallThroughState),
-      createBreakStatement());
+    State.generateAssignState(enclosingFinally, fallThroughState),
+    createBreakStatement()
+  );
 };
 
 /**
@@ -101,10 +103,11 @@ State.generateJump = function(enclosingFinally, fallThroughState) {
  * @param {number} destination
  * @return {Array.<ParseTree>}
  */
-State.generateJumpThroughFinally = function(finallyState, destination) {
+State.generateJumpThroughFinally = function (finallyState, destination) {
   return createStatementList(
-      State.generateAssignStateOutOfFinally_(destination, finallyState),
-      createBreakStatement());
+    State.generateAssignStateOutOfFinally_(destination, finallyState),
+    createBreakStatement()
+  );
 };
 
 /**
@@ -112,15 +115,17 @@ State.generateJumpThroughFinally = function(finallyState, destination) {
  * @param {number} fallThroughState
  * @return {Array.<ParseTree>}
  */
-State.generateAssignState = function(enclosingFinally, fallThroughState) {
+State.generateAssignState = function (enclosingFinally, fallThroughState) {
   var assignState;
   if (isFinallyExit(enclosingFinally, fallThroughState)) {
     assignState = State.generateAssignStateOutOfFinally(
-        enclosingFinally,
-        fallThroughState);
+      enclosingFinally,
+      fallThroughState
+    );
   } else {
     assignState = createStatementList(
-        createAssignStateStatement(fallThroughState));
+      createAssignStateStatement(fallThroughState)
+    );
   }
   return assignState;
 };
@@ -131,8 +136,10 @@ State.generateAssignState = function(enclosingFinally, fallThroughState) {
  * @return {boolean}
  */
 function isFinallyExit(enclosingFinally, destination) {
-  return enclosingFinally != null &&
-      enclosingFinally.tryStates.indexOf(destination) < 0;
+  return (
+    enclosingFinally != null &&
+    enclosingFinally.tryStates.indexOf(destination) < 0
+  );
 }
 
 /**
@@ -141,11 +148,14 @@ function isFinallyExit(enclosingFinally, destination) {
  * @param {number} destination
  * @return {Array.<ParseTree>}
  */
-State.generateAssignStateOutOfFinally = function(enclosingFinally,
-                                                 destination) {
+State.generateAssignStateOutOfFinally = function (
+  enclosingFinally,
+  destination
+) {
   return State.generateAssignStateOutOfFinally_(
-      destination,
-      enclosingFinally.finallyState);
+    destination,
+    enclosingFinally.finallyState
+  );
 };
 
 /**
@@ -153,14 +163,16 @@ State.generateAssignStateOutOfFinally = function(enclosingFinally,
  * @param {number} enclosingFinally
  * @return {Array.<ParseTree>}
  */
-State.generateAssignStateOutOfFinally_ = function(destination, finallyState) {
+State.generateAssignStateOutOfFinally_ = function (destination, finallyState) {
   // $state = finallyState;
   // $fallThrough = destination;
   return createStatementList(
-      createAssignStateStatement(finallyState),
-      createAssignmentStatement(
-          createIdentifierExpression(FINALLY_FALL_THROUGH),
-          createNumberLiteral(destination)));
+    createAssignStateStatement(finallyState),
+    createAssignmentStatement(
+      createIdentifierExpression(FINALLY_FALL_THROUGH),
+      createNumberLiteral(destination)
+    )
+  );
 };
 
 /**
@@ -169,7 +181,7 @@ State.generateAssignStateOutOfFinally_ = function(destination, finallyState) {
  * @param {number} oldState
  * @param {number} newState
  */
-State.replaceStateList = function(oldStates, oldState,  newState) {
+State.replaceStateList = function (oldStates, oldState, newState) {
   var states = [];
   for (var i = 0; i < oldStates.length; i++) {
     states.push(State.replaceStateId(oldStates[i], oldState, newState));
@@ -183,7 +195,7 @@ State.replaceStateList = function(oldStates, oldState,  newState) {
  * @param {number} oldState
  * @param {number} newState
  */
-State.replaceStateId = function(current, oldState, newState) {
+State.replaceStateId = function (current, oldState, newState) {
   return current == oldState ? newState : current;
 };
 
@@ -194,7 +206,7 @@ State.replaceStateId = function(current, oldState, newState) {
  * @param {number} newState
  * @return {Array.<TryState>}
  */
-State.replaceAllStates = function(exceptionBlocks, oldState, newState) {
+State.replaceAllStates = function (exceptionBlocks, oldState, newState) {
   var result = [];
   for (var i = 0; i < exceptionBlocks.length; i++) {
     result.push(exceptionBlocks[i].replaceState(oldState, newState));

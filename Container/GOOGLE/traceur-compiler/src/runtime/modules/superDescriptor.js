@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var {
-  getOwnPropertyDescriptor,
-  getPrototypeOf,
-} = Object;
+var { getOwnPropertyDescriptor, getPrototypeOf } = Object;
 
 export default function superDescriptor(homeObject, name) {
   var proto = getPrototypeOf(homeObject);
   do {
     var result = getOwnPropertyDescriptor(proto, name);
-    if (result)
-      return result;
+    if (result) return result;
     proto = getPrototypeOf(proto);
-  } while (proto)
+  } while (proto);
 
   return undefined;
 }

@@ -1,9 +1,8 @@
 // Options: --annotations
-import {Anno} from './resources/setup.js';
+import { Anno } from "./resources/setup.js";
 
 class CtorParam {
   constructor(@Anno x) {}
 }
 
-assert.deepEqual([[new Anno]], CtorParam.parameters);
-
+assert.deepEqual([[new Anno()]], CtorParam.parameters);

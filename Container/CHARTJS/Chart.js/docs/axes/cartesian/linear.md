@@ -8,14 +8,14 @@ The linear scale is used to chart numerical data. It can be placed on either the
 
 Namespace: `options.scales[scaleId]`
 
-| Name | Type | Description
-| ---- | ---- | -----------
-| `beginAtZero` | `boolean` | if true, scale will include 0 if it is not already included.
-| `grace` | `number`\|`string` | Percentage (string ending with `%`) or amount (number) for added room in the scale range above and below data. [more...](#grace)
+| Name          | Type               | Description                                                                                                                      |
+| ------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `beginAtZero` | `boolean`          | if true, scale will include 0 if it is not already included.                                                                     |
+| `grace`       | `number`\|`string` | Percentage (string ending with `%`) or amount (number) for added room in the scale range above and below data. [more...](#grace) |
 
-!!!include(axes/cartesian/_common.md)!!!
+!!!include(axes/cartesian/\_common.md)!!!
 
-!!!include(axes/_common.md)!!!
+!!!include(axes/\_common.md)!!!
 
 ## Tick Configuration
 
@@ -23,17 +23,17 @@ Namespace: `options.scales[scaleId]`
 
 Namespace: `options.scales[scaleId].ticks`
 
-| Name | Type | Scriptable | Default | Description
-| ---- | ---- | ------- | ------- | -----------
-| `count` | `number` | Yes | `undefined` | The number of ticks to generate. If specified, this overrides the automatic generation.
-| `format` | `object` | Yes | | The [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) options used by the default label formatter
-| `maxTicksLimit` | `number` | Yes | `11` | Maximum number of ticks and gridlines to show.
-| `precision` | `number` | Yes | | if defined and `stepSize` is not specified, the step size will be rounded to this many decimal places.
-| `stepSize` | `number` | Yes | | User-defined fixed step size for the scale. [more...](#step-size)
+| Name            | Type     | Scriptable | Default     | Description                                                                                                                                                               |
+| --------------- | -------- | ---------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `count`         | `number` | Yes        | `undefined` | The number of ticks to generate. If specified, this overrides the automatic generation.                                                                                   |
+| `format`        | `object` | Yes        |             | The [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) options used by the default label formatter |
+| `maxTicksLimit` | `number` | Yes        | `11`        | Maximum number of ticks and gridlines to show.                                                                                                                            |
+| `precision`     | `number` | Yes        |             | if defined and `stepSize` is not specified, the step size will be rounded to this many decimal places.                                                                    |
+| `stepSize`      | `number` | Yes        |             | User-defined fixed step size for the scale. [more...](#step-size)                                                                                                         |
 
-!!!include(axes/cartesian/_common_ticks.md)!!!
+!!!include(axes/cartesian/\_common_ticks.md)!!!
 
-!!!include(axes/_common_ticks.md)!!!
+!!!include(axes/\_common_ticks.md)!!!
 
 ## Step Size
 
@@ -43,15 +43,15 @@ This example sets up a chart with a y axis that creates ticks at `0, 0.5, 1, 1.5
 
 ```javascript
 let options = {
-    scales: {
-        y: {
-            max: 5,
-            min: 0,
-            ticks: {
-                stepSize: 0.5
-            }
-        }
-    }
+  scales: {
+    y: {
+      max: 5,
+      min: 0,
+      ticks: {
+        stepSize: 0.5,
+      },
+    },
+  },
 };
 ```
 
@@ -62,31 +62,33 @@ The value is added to the maximum data value and subtracted from the minimum dat
 
 ```js chart-editor
 // <block:setup:1>
-const labels = Utils.months({count: 7});
+const labels = Utils.months({ count: 7 });
 const data = {
-  labels: ['Positive', 'Negative'],
-  datasets: [{
-    data: [100, -50],
-    backgroundColor: 'rgb(255, 99, 132)'
-  }],
+  labels: ["Positive", "Negative"],
+  datasets: [
+    {
+      data: [100, -50],
+      backgroundColor: "rgb(255, 99, 132)",
+    },
+  ],
 };
 // </block:setup>
 
 // <block:config:0>
 const config = {
-  type: 'bar',
+  type: "bar",
   data,
   options: {
     scales: {
       y: {
-        type: 'linear',
-        grace: '5%'
-      }
+        type: "linear",
+        grace: "5%",
+      },
     },
     plugins: {
-      legend: false
-    }
-  }
+      legend: false,
+    },
+  },
 };
 // </block:config>
 

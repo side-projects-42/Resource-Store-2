@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {FindVisitor} from './FindVisitor.js';
+import { FindVisitor } from "./FindVisitor.js";
 import {
   FormalParameterList,
   FunctionExpression,
   IdentifierExpression,
-  LiteralExpression
-} from '../syntax/trees/ParseTrees.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  AT_NAME,
-  IDENTIFIER,
-  STRING
-} from '../syntax/TokenType.js';
+  LiteralExpression,
+} from "../syntax/trees/ParseTrees.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { AT_NAME, IDENTIFIER, STRING } from "../syntax/TokenType.js";
 import {
   createAssignmentExpression,
   createCommaExpression,
@@ -36,14 +32,16 @@ import {
   createObjectLiteralExpression,
   createParenExpression,
   createPropertyNameAssignment,
-  createStringLiteral
-} from './ParseTreeFactory.js';
-import {transformOptions} from '../options.js';
+  createStringLiteral,
+} from "./ParseTreeFactory.js";
+import { transformOptions } from "../options.js";
 
 function findAtNameInProperty(propertyName) {
-  return function(tree) {
-    if (transformOptions.privateNameSyntax &&
-        tree[propertyName].type === AT_NAME) {
+  return function (tree) {
+    if (
+      transformOptions.privateNameSyntax &&
+      tree[propertyName].type === AT_NAME
+    ) {
       this.found = true;
     }
   };
@@ -62,17 +60,15 @@ class AtNameFinder extends FindVisitor {
   }
 
   checkAtName_(tree) {
-    if (transformOptions.privateNameSyntax &&
-        tree.name.type === AT_NAME) {
-      return this.found = true;
+    if (transformOptions.privateNameSyntax && tree.name.type === AT_NAME) {
+      return (this.found = true);
     }
     return false;
   }
 
   visitPropertyNameAssignment(tree) {
-    if (this.checkAtName_(tree))
-      return;
-    if (getPropertyNameForToken(tree.name) === '__proto__') {
+    if (this.checkAtName_(tree)) return;
+    if (getPropertyNameForToken(tree.name) === "__proto__") {
       this.protoExpression = tree.value;
     }
   }
@@ -100,8 +96,7 @@ class AtNameFinder extends FindVisitor {
  * @return {string}
  */
 function getPropertyNameForToken(nameToken) {
-  if (nameToken.type === STRING)
-    return nameToken.processedValue;
+  if (nameToken.type === STRING) return nameToken.processedValue;
   return nameToken.value;
 }
 
@@ -165,12 +160,12 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
     switch (token.type) {
       case AT_NAME:
         return createIdentifierExpression(
-            this.identifierGenerator.getUniqueIdentifier(token.value));
+          this.identifierGenerator.getUniqueIdentifier(token.value)
+        );
       case IDENTIFIER:
         return createStringLiteral(token.value);
       default:
-        if (token.isKeyword())
-          return createStringLiteral(token.type);
+        if (token.isKeyword()) return createStringLiteral(token.type);
         return new LiteralExpression(token.location, token);
     }
   }
@@ -207,22 +202,24 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
         var name = property[0];
         var descr = property[1];
         return createDefineProperty(
-            tempVarIdentifierExpression,
-            this.getPropertyName_(name),
-            descr);
+          tempVarIdentifierExpression,
+          this.getPropertyName_(name),
+          descr
+        );
       });
 
       var protoExpression = this.transformAny(finder.protoExpression);
       var objectExpression;
       if (protoExpression)
         objectExpression = createObjectCreate(protoExpression);
-      else
-        objectExpression = createObjectLiteralExpression([]);
+      else objectExpression = createObjectLiteralExpression([]);
 
       expressions.unshift(
-          createAssignmentExpression(
-              tempVarIdentifierExpression,
-              objectExpression));
+        createAssignmentExpression(
+          tempVarIdentifierExpression,
+          objectExpression
+        )
+      );
       expressions.push(tempVarIdentifierExpression);
       return createParenExpression(createCommaExpression(expressions));
     } finally {
@@ -236,51 +233,50 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
       return super.transformPropertyNameAssignment(tree);
 
     // __proto__ is handled separately.
-    if (getPropertyNameForToken(tree.name) === '__proto__')
-      return null;
+    if (getPropertyNameForToken(tree.name) === "__proto__") return null;
 
-    return this.createProperty_(tree.name,
-        {
-          value: this.transformAny(tree.value),
-          configurable: true,
-          enumerable: true,
-          writable: true
-        });
+    return this.createProperty_(tree.name, {
+      value: this.transformAny(tree.value),
+      configurable: true,
+      enumerable: true,
+      writable: true,
+    });
   }
   transformGetAccessor(tree) {
-    if (!this.needsAtNameTransform)
-      return super.transformGetAccessor(tree);
+    if (!this.needsAtNameTransform) return super.transformGetAccessor(tree);
 
     var body = this.transformAny(tree.body);
     var func = createFunctionExpression(createEmptyParameterList(), body);
-    return this.createProperty_(tree.name,
-        {
-          get: func,
-          configurable: true,
-          enumerable: true
-        });
+    return this.createProperty_(tree.name, {
+      get: func,
+      configurable: true,
+      enumerable: true,
+    });
   }
   transformSetAccessor(tree) {
-    if (!this.needsAtNameTransform)
-      return super.transformSetAccessor(tree);
+    if (!this.needsAtNameTransform) return super.transformSetAccessor(tree);
 
     var body = this.transformAny(tree.body);
     var parameter = this.transformAny(tree.parameter);
-    var parameterList = new FormalParameterList(parameter.location,
-                                                [parameter]);
+    var parameterList = new FormalParameterList(parameter.location, [
+      parameter,
+    ]);
     var func = createFunctionExpression(parameterList, body);
-    return this.createProperty_(tree.name,
-        {
-          set: func,
-          configurable: true,
-          enumerable: true
-        });
+    return this.createProperty_(tree.name, {
+      set: func,
+      configurable: true,
+      enumerable: true,
+    });
   }
 
   transformPropertyMethodAssignment(tree) {
-    var func = new FunctionExpression(tree.location, null, tree.isGenerator,
-        this.transformAny(tree.formalParameterList),
-        this.transformAny(tree.functionBody));
+    var func = new FunctionExpression(
+      tree.location,
+      null,
+      tree.isGenerator,
+      this.transformAny(tree.formalParameterList),
+      this.transformAny(tree.functionBody)
+    );
     if (!this.needsAtNameTransform) {
       // m() { }
       //  =>
@@ -288,26 +284,24 @@ export class ObjectLiteralTransformer extends TempVarTransformer {
       return createPropertyNameAssignment(tree.name, func);
     }
 
-    return this.createProperty_(tree.name,
-        {
-          value: func,
-          configurable: true,
-          enumerable: true,
-          writable: true
-        });
+    return this.createProperty_(tree.name, {
+      value: func,
+      configurable: true,
+      enumerable: true,
+      writable: true,
+    });
   }
 
   transformPropertyNameShorthand(tree) {
     if (!this.needsAtNameTransform)
       return super.transformPropertyNameShorthand(tree);
 
-    return this.createProperty_(tree.name,
-        {
-          value: new IdentifierExpression(tree.location, tree.name),
-          configurable: true,
-          enumerable: false,
-          writable: true
-        });
+    return this.createProperty_(tree.name, {
+      value: new IdentifierExpression(tree.location, tree.name),
+      configurable: true,
+      enumerable: false,
+      writable: true,
+    });
   }
 
   /**

@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 function f(...args) {
   return this;
 }
 
-assert.equal(undefined, f `a`);
+assert.equal(undefined, f`a`);

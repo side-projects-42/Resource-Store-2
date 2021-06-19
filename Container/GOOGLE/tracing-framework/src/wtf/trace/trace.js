@@ -13,32 +13,31 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace');
-goog.provide('wtf.trace.TimeRange');
+goog.provide("wtf.trace");
+goog.provide("wtf.trace.TimeRange");
 
-goog.require('goog.asserts');
-goog.require('goog.string');
-goog.require('wtf');
-goog.require('wtf.data.EventFlag');
-goog.require('wtf.io');
-goog.require('wtf.io.WriteTransport');
-goog.require('wtf.io.cff.BinaryStreamTarget');
-goog.require('wtf.io.cff.JsonStreamTarget');
-goog.require('wtf.io.transports.BlobWriteTransport');
-goog.require('wtf.io.transports.FileWriteTransport');
-goog.require('wtf.io.transports.MemoryWriteTransport');
-goog.require('wtf.io.transports.NullWriteTransport');
-goog.require('wtf.io.transports.XhrWriteTransport');
-goog.require('wtf.trace.BuiltinEvents');
-goog.require('wtf.trace.Flow');
-goog.require('wtf.trace.Scope');
-goog.require('wtf.trace.TraceManager');
-goog.require('wtf.trace.events');
-goog.require('wtf.trace.eventtarget');
-goog.require('wtf.trace.sessions.NullSession');
-goog.require('wtf.trace.sessions.SnapshottingSession');
-goog.require('wtf.trace.util');
-
+goog.require("goog.asserts");
+goog.require("goog.string");
+goog.require("wtf");
+goog.require("wtf.data.EventFlag");
+goog.require("wtf.io");
+goog.require("wtf.io.WriteTransport");
+goog.require("wtf.io.cff.BinaryStreamTarget");
+goog.require("wtf.io.cff.JsonStreamTarget");
+goog.require("wtf.io.transports.BlobWriteTransport");
+goog.require("wtf.io.transports.FileWriteTransport");
+goog.require("wtf.io.transports.MemoryWriteTransport");
+goog.require("wtf.io.transports.NullWriteTransport");
+goog.require("wtf.io.transports.XhrWriteTransport");
+goog.require("wtf.trace.BuiltinEvents");
+goog.require("wtf.trace.Flow");
+goog.require("wtf.trace.Scope");
+goog.require("wtf.trace.TraceManager");
+goog.require("wtf.trace.events");
+goog.require("wtf.trace.eventtarget");
+goog.require("wtf.trace.sessions.NullSession");
+goog.require("wtf.trace.sessions.SnapshottingSession");
+goog.require("wtf.trace.util");
 
 /**
  * A version number indicating the API version of the tracing methods.
@@ -49,25 +48,23 @@ goog.require('wtf.trace.util');
  */
 wtf.trace.API_VERSION = 2;
 
-
 /**
  * Gets the current trace manager.
  * @return {!wtf.trace.TraceManager} Trace manager.
  */
-wtf.trace.getTraceManager = function() {
+wtf.trace.getTraceManager = function () {
   var traceManager = wtf.trace.TraceManager.getSharedInstance();
   goog.asserts.assert(traceManager);
   if (!traceManager) {
-    throw 'wtf.trace.prepare not called';
+    throw "wtf.trace.prepare not called";
   }
   return traceManager;
 };
 
-
 /**
  * Shuts down the tracing system.
  */
-wtf.trace.shutdown = function() {
+wtf.trace.shutdown = function () {
   var traceManager = wtf.trace.TraceManager.getSharedInstance();
   if (!traceManager) {
     return;
@@ -81,31 +78,31 @@ wtf.trace.shutdown = function() {
   wtf.trace.TraceManager.setSharedInstance(null);
 };
 
-
 /**
  * Adds a session event listener.
  * These are retained by the trace manager for the life of the runtime.
  * @param {!wtf.trace.ISessionListener} listener Event listener.
  */
-wtf.trace.addSessionListener = function(listener) {
+wtf.trace.addSessionListener = function (listener) {
   var traceManager = wtf.trace.getTraceManager();
   traceManager.addListener(listener);
 };
-
 
 /**
  * Gets a filename to use for a trace file.
  * @param {string=} opt_targetValue {@code wtf.trace.target} value.
  * @return {string} Filename, minus the file:// prefix.
  */
-wtf.trace.getTraceFilename = function(opt_targetValue) {
-  var targetValue = opt_targetValue || '';
+wtf.trace.getTraceFilename = function (opt_targetValue) {
+  var targetValue = opt_targetValue || "";
 
   // If the input looks like a full filename ('file://foo.bar') then use that.
   // Otherwise treat it as a prefix.
-  if (goog.string.startsWith(targetValue, 'file://') &&
-      targetValue.indexOf('.') != -1) {
-    return targetValue.replace('file://', '');
+  if (
+    goog.string.startsWith(targetValue, "file://") &&
+    targetValue.indexOf(".") != -1
+  ) {
+    return targetValue.replace("file://", "");
   } else {
     var traceManager = wtf.trace.getTraceManager();
     var contextInfo = traceManager.detectContextInfo();
@@ -113,20 +110,21 @@ wtf.trace.getTraceFilename = function(opt_targetValue) {
     // Pick a filename prefix.
     var filenamePrefix = targetValue;
     if (filenamePrefix.length) {
-      if (filenamePrefix != 'file://') {
-        filenamePrefix += '-';
+      if (filenamePrefix != "file://") {
+        filenamePrefix += "-";
       }
     } else {
-      filenamePrefix = 'file://';
+      filenamePrefix = "file://";
     }
 
     // Get full filename with date/etc.
     var filename = wtf.io.getTimedFilename(
-        filenamePrefix, contextInfo.getFilename());
-    return filename.replace('file://', '');
+      filenamePrefix,
+      contextInfo.getFilename()
+    );
+    return filename.replace("file://", "");
   }
 };
-
 
 /**
  * Creates a transport based on the given options.
@@ -138,12 +136,11 @@ wtf.trace.getTraceFilename = function(opt_targetValue) {
  * @return {!wtf.io.WriteTransport} Transport.
  * @private
  */
-wtf.trace.createTransport_ = function(options, streaming, opt_targetValue) {
+wtf.trace.createTransport_ = function (options, streaming, opt_targetValue) {
   var targetValue =
-      opt_targetValue || options.getOptionalString('wtf.trace.target');
+    opt_targetValue || options.getOptionalString("wtf.trace.target");
 
-  if (!targetValue ||
-      (goog.isString(targetValue) && !targetValue.length)) {
+  if (!targetValue || (goog.isString(targetValue) && !targetValue.length)) {
     // Nothing specified - default to memory.
     var transport = new wtf.io.transports.MemoryWriteTransport();
     transport.needsLibraryDispose = true;
@@ -153,10 +150,10 @@ wtf.trace.createTransport_ = function(options, streaming, opt_targetValue) {
     var transport = /** @type {!wtf.io.WriteTransport} */ (targetValue);
     transport.needsLibraryDispose = false;
     return transport;
-  } else if (goog.isObject(targetValue) && targetValue['write']) {
+  } else if (goog.isObject(targetValue) && targetValue["write"]) {
     // Custom transport - targetValue is an object with some write methods.
     //return new wtf.io.CustomWriteStream(targetValue);
-    throw 'Custom transport not yet supported.';
+    throw "Custom transport not yet supported.";
   } else if (goog.isArray(targetValue)) {
     // Memory target.
     // This variant will stash the resulting buffers into the given array.
@@ -168,38 +165,42 @@ wtf.trace.createTransport_ = function(options, streaming, opt_targetValue) {
 
   // If some random object give up.
   if (!goog.isString(targetValue)) {
-    throw 'Invalid transport specified.';
+    throw "Invalid transport specified.";
   }
 
   var targetUrl = /** @type {string} */ (targetValue);
-  if (targetUrl == 'null') {
+  if (targetUrl == "null") {
     // Null target; write nothing.
     return new wtf.io.transports.NullWriteTransport();
-  } else if (goog.string.startsWith(targetUrl, 'ws://')) {
+  } else if (goog.string.startsWith(targetUrl, "ws://")) {
     // WebSocket target.
     // TODO(benvanik): setup websocket target
-    throw 'WebSocket transport not yet supported.';
+    throw "WebSocket transport not yet supported.";
   } else if (
-      goog.string.startsWith(targetUrl, 'http://') ||
-      goog.string.startsWith(targetUrl, 'https://') ||
-      goog.string.startsWith(targetUrl, '//') ||
-      goog.string.startsWith(targetUrl, 'http-rel:')) {
+    goog.string.startsWith(targetUrl, "http://") ||
+    goog.string.startsWith(targetUrl, "https://") ||
+    goog.string.startsWith(targetUrl, "//") ||
+    goog.string.startsWith(targetUrl, "http-rel:")
+  ) {
     // HTTP target.
     // We use the fake protocol http-rel to specify a relative url. In
     // that case we just strip it off and take the rest as the url.
-    if (goog.string.startsWith(targetUrl, 'http-rel:')) {
-      targetUrl = targetUrl.substring('http-rel:'.length);
+    if (goog.string.startsWith(targetUrl, "http-rel:")) {
+      targetUrl = targetUrl.substring("http-rel:".length);
     }
     if (streaming) {
-      throw 'Streaming XHR transport not yet supported.';
+      throw "Streaming XHR transport not yet supported.";
       // return new wtf.io.transports.StreamingXhrWriteTransport(targetUrl);
     } else {
       var transport = new wtf.io.transports.XhrWriteTransport(
-          targetUrl, undefined, wtf.trace.getTraceFilename());
+        targetUrl,
+        undefined,
+        wtf.trace.getTraceFilename()
+      );
       transport.needsLibraryDispose = true;
       return transport;
     }
-  } else if (goog.string.startsWith(targetUrl, 'file://')) {
+  } else if (goog.string.startsWith(targetUrl, "file://")) {
     // File target.
     var targetFilename = wtf.trace.getTraceFilename(targetUrl);
     var transport;
@@ -212,9 +213,8 @@ wtf.trace.createTransport_ = function(options, streaming, opt_targetValue) {
     return transport;
   }
 
-  throw 'Invalid transport specified.';
+  throw "Invalid transport specified.";
 };
-
 
 /**
  * Creates a write stream based on the given options.
@@ -223,34 +223,39 @@ wtf.trace.createTransport_ = function(options, streaming, opt_targetValue) {
  * @return {!wtf.io.cff.StreamTarget} Stream target.
  * @private
  */
-wtf.trace.createStreamTarget_ = function(options, transport) {
+wtf.trace.createStreamTarget_ = function (options, transport) {
   // Switch based on format.
   // Note that some formats may not be ideal for certain transports.
 
   if (wtf.PROD_BUILD) {
     // JSON only in build mode.
     return new wtf.io.cff.JsonStreamTarget(
-        transport, wtf.io.cff.JsonStreamTarget.Mode.COMPLETE);
+      transport,
+      wtf.io.cff.JsonStreamTarget.Mode.COMPLETE
+    );
   } else if (wtf.MIN_BUILD) {
     // Binary only in min mode.
     return new wtf.io.cff.BinaryStreamTarget(transport);
   } else {
     // TODO(benvanik): force format based on transport type?
-    var formatValue = options.getString('wtf.trace.format', 'binary');
+    var formatValue = options.getString("wtf.trace.format", "binary");
     switch (formatValue) {
       default:
-      case 'binary':
+      case "binary":
         return new wtf.io.cff.BinaryStreamTarget(transport);
-      case 'json':
+      case "json":
         return new wtf.io.cff.JsonStreamTarget(
-            transport, wtf.io.cff.JsonStreamTarget.Mode.COMPLETE);
-      case 'partial_json':
+          transport,
+          wtf.io.cff.JsonStreamTarget.Mode.COMPLETE
+        );
+      case "partial_json":
         return new wtf.io.cff.JsonStreamTarget(
-            transport, wtf.io.cff.JsonStreamTarget.Mode.PARTIAL);
+          transport,
+          wtf.io.cff.JsonStreamTarget.Mode.PARTIAL
+        );
     }
   }
 };
-
 
 /**
  * Starts a new tracing session.
@@ -263,7 +268,7 @@ wtf.trace.createStreamTarget_ = function(options, transport) {
  *
  * @param {Object=} opt_options Options overrides.
  */
-wtf.trace.start = function(opt_options) {
+wtf.trace.start = function (opt_options) {
   // Note that prepare must have been called before.
   var traceManager = wtf.trace.getTraceManager();
 
@@ -275,24 +280,25 @@ wtf.trace.start = function(opt_options) {
 
   // Create the session.
   var session = null;
-  switch (options.getOptionalString('wtf.trace.mode')) {
-    case 'null':
-      session = new wtf.trace.sessions.NullSession(
-          traceManager, options);
+  switch (options.getOptionalString("wtf.trace.mode")) {
+    case "null":
+      session = new wtf.trace.sessions.NullSession(traceManager, options);
       break;
     default:
-    case 'snapshot':
-    case 'snapshotting':
+    case "snapshot":
+    case "snapshotting":
       session = new wtf.trace.sessions.SnapshottingSession(
-          traceManager, options);
+        traceManager,
+        options
+      );
       break;
-    case 'stream':
-    case 'streaming':
+    case "stream":
+    case "streaming":
       // var transport = wtf.trace.createTransport_(options, true);
       // var streamTarget = wtf.trace.createStreamTarget_(options, transport);
       // session = new wtf.trace.sessions.StreamingSession(
       //     traceManager, streamTarget, options);
-      throw new Error('Streaming not yet implemented');
+      throw new Error("Streaming not yet implemented");
       break;
   }
   goog.asserts.assert(session);
@@ -301,18 +307,19 @@ wtf.trace.start = function(opt_options) {
   traceManager.startSession(session);
 };
 
-
 /**
  * Takes a snapshot of the current state.
  * A session must be actively recording. This call is ignored if the session
  * does not support snapshotting.
  * @param {wtf.io.WriteTransport|*=} opt_targetValue Stream target value.
  */
-wtf.trace.snapshot = function(opt_targetValue) {
+wtf.trace.snapshot = function (opt_targetValue) {
   var traceManager = wtf.trace.getTraceManager();
   var session = traceManager.getCurrentSession();
-  if (!session ||
-      !(session instanceof wtf.trace.sessions.SnapshottingSession)) {
+  if (
+    !session ||
+    !(session instanceof wtf.trace.sessions.SnapshottingSession)
+  ) {
     return;
   }
 
@@ -320,8 +327,9 @@ wtf.trace.snapshot = function(opt_targetValue) {
     // User function for creating the stream. This isn't really supported
     // anymore.
     throw (
-        'Snapshots with custom allocator functions are no longer ' +
-        'supported. Pass in a wtf.io.Transport instead.');
+      "Snapshots with custom allocator functions are no longer " +
+      "supported. Pass in a wtf.io.Transport instead."
+    );
   }
 
   // Create transport (or reuse what was passed in).
@@ -345,7 +353,6 @@ wtf.trace.snapshot = function(opt_targetValue) {
   }
 };
 
-
 /**
  * Asynchronously snapshots all contexts.
  * This will take a snapshot of the current context as well as any dependent
@@ -360,32 +367,29 @@ wtf.trace.snapshot = function(opt_targetValue) {
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.trace.snapshotAll = function(callback, opt_scope) {
+wtf.trace.snapshotAll = function (callback, opt_scope) {
   var traceManager = wtf.trace.getTraceManager();
   traceManager.requestSnapshots(callback, opt_scope);
 };
-
 
 /**
  * Clears all data in the current session by resetting all buffers.
  * This is only valid in snapshotting sessions.
  */
-wtf.trace.reset = function() {
+wtf.trace.reset = function () {
   var traceManager = wtf.trace.getTraceManager();
   traceManager.reset();
 };
 
-
 /**
  * Stops the current session and disposes it.
  */
-wtf.trace.stop = function() {
+wtf.trace.stop = function () {
   var traceManager = wtf.trace.getTraceManager();
   traceManager.stopSession();
 };
 
 // TODO(benvanik): add an onunload to flush the session
-
 
 /**
  * Creates a new execution zone.
@@ -397,41 +401,37 @@ wtf.trace.stop = function() {
  * @param {string} location Zone location (such as URI of the script).
  * @return {!wtf.trace.Zone} Zone used for future calls.
  */
-wtf.trace.createZone = function(name, type, location) {
+wtf.trace.createZone = function (name, type, location) {
   var traceManager = wtf.trace.getTraceManager();
   return traceManager.createZone(name, type, location);
 };
-
 
 /**
  * Deletes an execution zone.
  * The zone ID may be reused.
  * @param {!wtf.trace.Zone} zone Zone returned from {@see #createZone}.
  */
-wtf.trace.deleteZone = function(zone) {
+wtf.trace.deleteZone = function (zone) {
   var traceManager = wtf.trace.getTraceManager();
   traceManager.deleteZone(zone);
 };
-
 
 /**
  * Pushes a zone.
  * @param {!wtf.trace.Zone} zone Zone returned from {@see #createZone}.
  */
-wtf.trace.pushZone = function(zone) {
+wtf.trace.pushZone = function (zone) {
   var traceManager = wtf.trace.getTraceManager();
   traceManager.pushZone(zone);
 };
 
-
 /**
  * Pops the active zone.
  */
-wtf.trace.popZone = function() {
+wtf.trace.popZone = function () {
   var traceManager = wtf.trace.getTraceManager();
   traceManager.popZone();
 };
-
 
 /**
  * Enters a scope by name.
@@ -457,7 +457,6 @@ wtf.trace.popZone = function() {
  */
 wtf.trace.enterScope = wtf.trace.BuiltinEvents.enterScope;
 
-
 /**
  * Enters a tracing implementation overhead scope.
  * This should only be used by the tracing framework and extension to indicate
@@ -466,7 +465,6 @@ wtf.trace.enterScope = wtf.trace.BuiltinEvents.enterScope;
  * @return {!wtf.trace.Scope} An initialized scope object.
  */
 wtf.trace.enterTracingScope = wtf.trace.BuiltinEvents.enterTracingScope;
-
 
 /**
  * Leaves a scope.
@@ -478,7 +476,6 @@ wtf.trace.enterTracingScope = wtf.trace.BuiltinEvents.enterTracingScope;
  * @template T
  */
 wtf.trace.leaveScope = wtf.trace.Scope.leave;
-
 
 /**
  * Appends a named argument of any type to the current scope.
@@ -514,25 +511,25 @@ wtf.trace.leaveScope = wtf.trace.Scope.leave;
  *      will be converted to an int32.
  * @param {number=} opt_time Time for the event; omit to use the current time.
  */
-wtf.trace.appendScopeData = function(name, value, opt_time) {
-  var typeName = 'any';
-  if (typeof value == 'boolean') {
-    typeName = 'bool';
-  } else if (typeof value == 'number') {
+wtf.trace.appendScopeData = function (name, value, opt_time) {
+  var typeName = "any";
+  if (typeof value == "boolean") {
+    typeName = "bool";
+  } else if (typeof value == "number") {
     // Force to a int32, for now. If this becomes a problem we can change it.
     value |= 0;
-    typeName = 'int32';
-  } else if (typeof value == 'string') {
-    typeName = 'utf8';
+    typeName = "int32";
+  } else if (typeof value == "string") {
+    typeName = "utf8";
   }
 
   // Lookup a cache entry for the name/type pair.
-  var key = name + '_' + typeName;
+  var key = name + "_" + typeName;
   var cacheEntry = wtf.trace.appendScopeDataCache_[key];
   if (!cacheEntry) {
     cacheEntry = wtf.trace.appendScopeDataCache_[key] = {
       count: 0,
-      emit: null
+      emit: null,
     };
   }
 
@@ -540,8 +537,9 @@ wtf.trace.appendScopeData = function(name, value, opt_time) {
   if (++cacheEntry.count == wtf.trace.APPEND_OPTIMIZATION_THRESHOLD_) {
     goog.asserts.assert(!cacheEntry.emit);
     cacheEntry.emit = wtf.trace.events.createInstance(
-        'wtf.scope#appendData_' + key + '(' + typeName + ' ' + name + ')',
-        wtf.data.EventFlag.INTERNAL | wtf.data.EventFlag.APPEND_SCOPE_DATA);
+      "wtf.scope#appendData_" + key + "(" + typeName + " " + name + ")",
+      wtf.data.EventFlag.INTERNAL | wtf.data.EventFlag.APPEND_SCOPE_DATA
+    );
   }
 
   if (cacheEntry.emit) {
@@ -553,7 +551,6 @@ wtf.trace.appendScopeData = function(name, value, opt_time) {
   }
 };
 
-
 /**
  * Required number of appendScopeData calls on a name/type pair before a
  * custom event is generated for it.
@@ -562,7 +559,6 @@ wtf.trace.appendScopeData = function(name, value, opt_time) {
  * @private
  */
 wtf.trace.APPEND_OPTIMIZATION_THRESHOLD_ = 100;
-
 
 /**
  * A cache of {@see wtf.trace.appendScopeData} event methods.
@@ -573,7 +569,6 @@ wtf.trace.APPEND_OPTIMIZATION_THRESHOLD_ = 100;
  * @private
  */
 wtf.trace.appendScopeDataCache_ = {};
-
 
 /**
  * Branches the flow.
@@ -586,7 +581,6 @@ wtf.trace.appendScopeDataCache_ = {};
  */
 wtf.trace.branchFlow = wtf.trace.Flow.branch;
 
-
 /**
  * Extends the flow into the current scope.
  * @param {wtf.trace.Flow} flow Flow to extend.
@@ -596,7 +590,6 @@ wtf.trace.branchFlow = wtf.trace.Flow.branch;
  */
 wtf.trace.extendFlow = wtf.trace.Flow.extend;
 
-
 /**
  * Terminates a flow.
  * @param {wtf.trace.Flow} flow Flow to extend.
@@ -605,7 +598,6 @@ wtf.trace.extendFlow = wtf.trace.Flow.extend;
  *     time.
  */
 wtf.trace.terminateFlow = wtf.trace.Flow.terminate;
-
 
 /**
  * Appends a named argument of any type to the given flow.
@@ -620,12 +612,10 @@ wtf.trace.terminateFlow = wtf.trace.Flow.terminate;
  */
 wtf.trace.appendFlowData = wtf.trace.BuiltinEvents.appendFlowData;
 
-
 /**
  * Clears the current scope flow.
  */
 wtf.trace.clearFlow = wtf.trace.Flow.clear;
-
 
 /**
  * Spans the flow across processes.
@@ -634,7 +624,6 @@ wtf.trace.clearFlow = wtf.trace.Flow.clear;
  * @return {!wtf.trace.Flow} An initialized flow object.
  */
 wtf.trace.spanFlow = wtf.trace.Flow.span;
-
 
 /**
  * Marks the stream with a named bookmark.
@@ -654,7 +643,6 @@ wtf.trace.spanFlow = wtf.trace.Flow.span;
  */
 wtf.trace.mark = wtf.trace.BuiltinEvents.mark;
 
-
 /**
  * Adds a timestamped event to the stream.
  * This is synonymous to {@code console.timeStamp}, and can be used to place
@@ -669,12 +657,10 @@ wtf.trace.mark = wtf.trace.BuiltinEvents.mark;
  */
 wtf.trace.timeStamp = wtf.trace.BuiltinEvents.timeStamp;
 
-
 /**
  * @typedef {Object|number}
  */
 wtf.trace.TimeRange;
-
 
 /**
  * Next time range ID.
@@ -682,7 +668,6 @@ wtf.trace.TimeRange;
  * @private
  */
 wtf.trace.nextTimeRange_ = 0;
-
 
 /**
  * Begins an async time range.
@@ -710,12 +695,11 @@ wtf.trace.nextTimeRange_ = 0;
  * @param {number=} opt_time Time for the stamp; omit to use the current time.
  * @return {wtf.trace.TimeRange} Time range handle.
  */
-wtf.trace.beginTimeRange = function(name, opt_value, opt_time) {
+wtf.trace.beginTimeRange = function (name, opt_value, opt_time) {
   var timeRange = wtf.trace.nextTimeRange_++;
   wtf.trace.BuiltinEvents.beginTimeRange(timeRange, name, opt_value, opt_time);
   return /** @type {wtf.trace.TimeRange} */ (timeRange);
 };
-
 
 /**
  * Ends an async time range previously started with {@see #beginTimeRange}.
@@ -723,7 +707,6 @@ wtf.trace.beginTimeRange = function(name, opt_value, opt_time) {
  * @param {number=} opt_time Time for the stamp; omit to use the current time.
  */
 wtf.trace.endTimeRange = wtf.trace.BuiltinEvents.endTimeRange;
-
 
 /**
  * Marks an event listener as being ignored, meaning that it will not show up
@@ -745,14 +728,12 @@ wtf.trace.endTimeRange = wtf.trace.BuiltinEvents.endTimeRange;
  */
 wtf.trace.ignoreListener = wtf.trace.util.ignoreListener;
 
-
 /**
  * Marks an entire tree of DOM elements as being ignored, meaning that no
  * events from them will show up in traces.
  * @param {!Element} el Root DOM element.
  */
 wtf.trace.ignoreDomTree = wtf.trace.util.ignoreDomTree;
-
 
 /**
  * Initializes on* event properties on the given DOM element and optionally
@@ -770,4 +751,4 @@ wtf.trace.ignoreDomTree = wtf.trace.util.ignoreDomTree;
  * @param {boolean=} opt_recursive Also initialize for all children.
  */
 wtf.trace.initializeDomEventProperties =
-    wtf.trace.eventtarget.initializeDomEventProperties;
+  wtf.trace.eventtarget.initializeDomEventProperties;

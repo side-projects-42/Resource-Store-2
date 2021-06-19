@@ -3,12 +3,12 @@
   <head>
     <title>WTF Test (replay)</title>
     <script>
-    (function() {
-      var src = 'replay-host.js';
-      if (window.location.search.indexOf('replay=') != -1) {
-        document.writeln('<script src="' + src + '"></scr' + 'ipt>');
-      }
-    })();
+      (function () {
+        var src = "replay-host.js";
+        if (window.location.search.indexOf("replay=") != -1) {
+          document.writeln('<script src="' + src + '"></scr' + "ipt>");
+        }
+      })();
     </script>
   </head>
   <body>
@@ -16,22 +16,32 @@
       <div id="b">
         <div id="c">
           hi
-          <div>
-            bi
-          </div>
+          <div>bi</div>
         </div>
       </div>
     </div>
     <script>
-      document.getElementById('a').addEventListener('click', function(e) {
-        console.log('a ', e);
-      }, false);
-      document.getElementById('b').addEventListener('click', function(e) {
-        console.log('b ', e);
-      }, false);
-      document.getElementById('c').addEventListener('click', function(e) {
-        console.log('c ', e);
-      }, false);
+      document.getElementById("a").addEventListener(
+        "click",
+        function (e) {
+          console.log("a ", e);
+        },
+        false
+      );
+      document.getElementById("b").addEventListener(
+        "click",
+        function (e) {
+          console.log("b ", e);
+        },
+        false
+      );
+      document.getElementById("c").addEventListener(
+        "click",
+        function (e) {
+          console.log("c ", e);
+        },
+        false
+      );
     </script>
   </body>
 </html>

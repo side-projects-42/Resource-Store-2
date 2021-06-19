@@ -1,8 +1,7 @@
 function* labelledBreakGenerator() {
   var x = 1;
   var y = 2;
-label:
-  while (true) {
+  label: while (true) {
     x++;
     while (true) {
       yield x * y;
@@ -22,7 +21,7 @@ label:
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result += String(value);
   }
@@ -31,4 +30,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('496084', accumulate(labelledBreakGenerator()));
+assert.equal("496084", accumulate(labelledBreakGenerator()));

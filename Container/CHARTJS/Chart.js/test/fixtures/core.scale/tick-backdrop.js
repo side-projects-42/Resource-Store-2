@@ -1,76 +1,76 @@
 const grid = {
-  display: false
+  display: false,
 };
 const title = {
   display: false,
 };
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     options: {
       events: [],
       scales: {
         top: {
-          type: 'linear',
-          position: 'top',
+          type: "linear",
+          position: "top",
           ticks: {
             display: true,
             showLabelBackdrop: true,
-            backdropColor: 'red',
+            backdropColor: "red",
             backdropPadding: 5,
-            align: 'start',
-            crossAlign: 'near',
+            align: "start",
+            crossAlign: "near",
           },
           grid,
-          title
+          title,
         },
         left: {
-          type: 'linear',
-          position: 'left',
+          type: "linear",
+          position: "left",
           ticks: {
             display: true,
             showLabelBackdrop: true,
-            backdropColor: 'green',
+            backdropColor: "green",
             backdropPadding: 5,
-            crossAlign: 'center',
+            crossAlign: "center",
           },
           grid,
-          title
+          title,
         },
         bottom: {
-          type: 'linear',
-          position: 'bottom',
+          type: "linear",
+          position: "bottom",
           ticks: {
             display: true,
             showLabelBackdrop: true,
-            backdropColor: 'blue',
+            backdropColor: "blue",
             backdropPadding: 5,
-            align: 'end',
-            crossAlign: 'far',
+            align: "end",
+            crossAlign: "far",
           },
           grid,
-          title
+          title,
         },
         right: {
-          type: 'linear',
-          position: 'right',
+          type: "linear",
+          position: "right",
           ticks: {
             display: true,
             showLabelBackdrop: true,
-            backdropColor: 'gray',
+            backdropColor: "gray",
             backdropPadding: 5,
           },
           grid,
-          title
+          title,
         },
-      }
-    }
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 256
+      width: 256,
     },
     spriteText: true,
-  }
+  },
 };

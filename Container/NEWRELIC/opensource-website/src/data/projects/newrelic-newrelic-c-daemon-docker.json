@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-c-daemon-docker",
+  "fullName": "newrelic/newrelic-c-daemon-docker",
+  "slug": "newrelic-newrelic-c-daemon-docker",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic C Daemon Docker",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-c-daemon-docker",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-c-daemon-docker",
+  "iconUrl": null,
+  "shortDescription": "C Daemon image",
+  "description": "New Relic C Daemon Docker Image",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "Shell",
+  "projectTags": ["sdk"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic C Daemon Docker",
+    "url": "https://github.com/newrelic/newrelic-c-daemon-docker"
+  }
+}

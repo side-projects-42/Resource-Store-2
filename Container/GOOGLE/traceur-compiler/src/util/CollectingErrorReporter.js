@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ErrorReporter} from '../util/ErrorReporter.js';
+import { ErrorReporter } from "../util/ErrorReporter.js";
 
 export class MultipleErrors extends Error {
   constructor(errors) {
     super();
-    this.message = errors ? errors.join('\n') : '';
-    this.name = 'MultipleErrors';
+    this.message = errors ? errors.join("\n") : "";
+    this.name = "MultipleErrors";
     // Access for alternative formatting.
     this.errors = errors;
   }

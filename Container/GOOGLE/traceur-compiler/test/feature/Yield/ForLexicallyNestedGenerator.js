@@ -1,9 +1,12 @@
 function* forLexicallyNestedGenerator() {
-  yield* (function*() { yield [1,2,3]; yield* [4,5,6]; })();
+  yield* (function* () {
+    yield [1, 2, 3];
+    yield* [4, 5, 6];
+  })();
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -12,4 +15,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('1,2,3456', accumulate(forLexicallyNestedGenerator()));
+assert.equal("1,2,3456", accumulate(forLexicallyNestedGenerator()));

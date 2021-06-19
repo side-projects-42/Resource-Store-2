@@ -1,0 +1,97 @@
+{
+  "projectFullName": "newrelic/nr1-nerdpack-layout-standard",
+  "issues": {
+    "open": 2
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 40,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 3,
+  "pullRequests": {
+    "open": 4
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU1NjQ3MjM5MTI=",
+      "title": "Swap out the <EmptyState /> component with the nr1-community version",
+      "url": "https://github.com/newrelic/nr1-nerdpack-layout-standard/issues/9",
+      "createdAt": "2020-02-13T14:33:54Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "danielgolden",
+        "id": "MDQ6VXNlcjgxMjk4OQ==",
+        "email": "",
+        "name": "Daniel Golden"
+      },
+      "number": 9,
+      "createdBy": "Daniel Golden"
+    },
+    {
+      "id": "MDU6SXNzdWU2MjY3NDQwODY=",
+      "title": "Upgrade layout to the latest NR1 CLI",
+      "url": "https://github.com/newrelic/nr1-nerdpack-layout-standard/issues/10",
+      "createdAt": "2020-05-28T19:08:29Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "tangollama",
+        "id": "MDQ6VXNlcjkyOTI2MQ==",
+        "email": "",
+        "name": "Joel Worrall"
+      },
+      "number": 10,
+      "createdBy": "Joel Worrall"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 2
+    },
+    {
+      "id": 58010132,
+      "login": "mmfred",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/58010132?v=4",
+      "htmlUrl": "https://github.com/mmfred",
+      "contributions": 2
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 24
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UzMDg=",
+      "name": "CSS",
+      "color": "#563d7c"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic/nr1-nerdpack-layout-standard/master/screenshots/.gitkeep"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

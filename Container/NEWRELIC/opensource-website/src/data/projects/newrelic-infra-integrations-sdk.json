@@ -1,0 +1,24 @@
+{
+  "name": "infra-integrations-sdk",
+  "fullName": "newrelic/infra-integrations-sdk",
+  "slug": "newrelic-infra-integrations-sdk",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Infrastructure Integrations SDK",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/infra-integrations-sdk",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/infra-integrations-sdk",
+  "iconUrl": null,
+  "shortDescription": "Golang template for Infrastructure integrations",
+  "description": "Build New Relic Infrastructure Integrations in this Golang SDK",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "Go",
+  "projectTags": ["template", "nri", "sdk"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Infrastructure Integrations SDK",
+    "url": "https://github.com/newrelic/infra-integrations-sdk"
+  }
+}

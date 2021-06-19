@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.Flow');
+goog.provide("wtf.trace.Flow");
 
-goog.require('wtf.trace.BuiltinEvents');
-goog.require('wtf.trace.Scope');
-
-
+goog.require("wtf.trace.BuiltinEvents");
+goog.require("wtf.trace.Scope");
 
 /**
  * Flow tracking utility.
@@ -26,7 +24,7 @@ goog.require('wtf.trace.Scope');
  *     generated.
  * @constructor
  */
-wtf.trace.Flow = function(opt_flowId) {
+wtf.trace.Flow = function (opt_flowId) {
   /**
    * Whether the flow has been terminated.
    * Once terminated, no new extend/terminate events will be written.
@@ -45,7 +43,6 @@ wtf.trace.Flow = function(opt_flowId) {
   this.flowId_ = !opt_flowId ? wtf.trace.Flow.generateId_() : opt_flowId;
 };
 
-
 /**
  * Invalid flow ID (all zeros).
  * Used to indicate no parent flow/etc.
@@ -53,7 +50,6 @@ wtf.trace.Flow = function(opt_flowId) {
  * @const
  */
 wtf.trace.Flow.INVALID_ID = 0;
-
 
 /**
  * Next flow ID.
@@ -63,39 +59,35 @@ wtf.trace.Flow.INVALID_ID = 0;
  */
 wtf.trace.Flow.nextId_ = 1;
 
-
 // Flow IDs should be unique across the app. We try to ensure that workers have
 // their own IDs by reserving the high four bits for the worker ID. (0 is used
 // by the main thread.) If an app has more than 2^4 workers or more than 2^27
 // flows, there will be collisions.
-(function() {
-  if (goog.isDef(goog.global['WTF_WORKER_ID'])) {
-    var workerId = goog.global['WTF_WORKER_ID'] + 1;
-    var highBits = workerId & 0xF;
+(function () {
+  if (goog.isDef(goog.global["WTF_WORKER_ID"])) {
+    var workerId = goog.global["WTF_WORKER_ID"] + 1;
+    var highBits = workerId & 0xf;
     wtf.trace.Flow.nextId_ = (highBits << 27) + 1;
   }
 })();
-
 
 /**
  * Generates a new semi-unique flow ID.
  * @return {number} Flow ID.
  * @private
  */
-wtf.trace.Flow.generateId_ = function() {
+wtf.trace.Flow.generateId_ = function () {
   return wtf.trace.Flow.nextId_++;
 };
-
 
 /**
  * Gets the ID of the flow.
  * This can be sent to servers/other threads/etc to track across processes.
  * @return {number} Flow ID.
  */
-wtf.trace.Flow.prototype.getId = function() {
+wtf.trace.Flow.prototype.getId = function () {
   return this.flowId_;
 };
-
 
 /**
  * Branches a flow.
@@ -108,7 +100,7 @@ wtf.trace.Flow.prototype.getId = function() {
  * @param {number=} opt_time Time for the branch; omit to use the current time.
  * @return {!wtf.trace.Flow} An initialized flow object.
  */
-wtf.trace.Flow.branch = function(name, opt_value, opt_parentFlow, opt_time) {
+wtf.trace.Flow.branch = function (name, opt_value, opt_parentFlow, opt_time) {
   // Infer parent flow, if needed.
   var parentFlow = opt_parentFlow || wtf.trace.Scope.getCurrentFlow();
   if (parentFlow && parentFlow.terminated_) {
@@ -120,11 +112,15 @@ wtf.trace.Flow.branch = function(name, opt_value, opt_parentFlow, opt_time) {
 
   // Append event.
   wtf.trace.BuiltinEvents.branchFlow(
-      flow, parentFlow, name, opt_value, opt_time);
+    flow,
+    parentFlow,
+    name,
+    opt_value,
+    opt_time
+  );
 
   return flow;
 };
-
 
 /**
  * Extends the flow.
@@ -133,7 +129,7 @@ wtf.trace.Flow.branch = function(name, opt_value, opt_parentFlow, opt_time) {
  * @param {*=} opt_value Optional data value.
  * @param {number=} opt_time Time for the event, or 0 to use the current time.
  */
-wtf.trace.Flow.extend = function(flow, name, opt_value, opt_time) {
+wtf.trace.Flow.extend = function (flow, name, opt_value, opt_time) {
   if (!flow || flow.terminated_) {
     return;
   }
@@ -145,14 +141,13 @@ wtf.trace.Flow.extend = function(flow, name, opt_value, opt_time) {
   wtf.trace.BuiltinEvents.extendFlow(flow, name, opt_value, opt_time);
 };
 
-
 /**
  * Teriminates the flow.
  * @param {wtf.trace.Flow} flow Flow to extend.
  * @param {*=} opt_value Optional data value.
  * @param {number=} opt_time Time for the event, or 0 to use the current time.
  */
-wtf.trace.Flow.terminate = function(flow, opt_value, opt_time) {
+wtf.trace.Flow.terminate = function (flow, opt_value, opt_time) {
   if (!flow || flow.terminated_) {
     return;
   }
@@ -162,14 +157,12 @@ wtf.trace.Flow.terminate = function(flow, opt_value, opt_time) {
   wtf.trace.BuiltinEvents.terminateFlow(flow, opt_value, opt_time);
 };
 
-
 /**
  * Clears the current scope flow.
  */
-wtf.trace.Flow.clear = function() {
+wtf.trace.Flow.clear = function () {
   wtf.trace.Scope.setCurrentFlow(null);
 };
-
 
 /**
  * Spans the flow across processes.
@@ -179,13 +172,13 @@ wtf.trace.Flow.clear = function() {
  * @param {number} flowId Flow ID.
  * @return {!wtf.trace.Flow} An initialized flow object.
  */
-wtf.trace.Flow.span = function(flowId) {
+wtf.trace.Flow.span = function (flowId) {
   var flow = new wtf.trace.Flow(flowId);
   return flow;
 };
 
-
 goog.exportProperty(
-    wtf.trace.Flow.prototype,
-    'getId',
-    wtf.trace.Flow.prototype.getId);
+  wtf.trace.Flow.prototype,
+  "getId",
+  wtf.trace.Flow.prototype.getId
+);

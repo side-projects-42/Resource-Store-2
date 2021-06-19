@@ -2,6 +2,6 @@
 // Copyright 2013 Google Inc. johnjbarton@google.com
 
 var server;
-ChannelPlate.ChromeBackgroundListener(function(rawPort){
+ChannelPlate.ChromeBackgroundListener(function (rawPort) {
   server = new RemoteMethodCall.Responder(XHRInBackground, rawPort);
 });

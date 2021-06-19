@@ -1,0 +1,52 @@
+{
+  "projectFullName": "newrelic/wiki-sync-action",
+  "issues": {
+    "open": 1
+  },
+  "releases": 1,
+  "latestRelease": {
+    "name": "v1.0.0",
+    "date": "2020-06-25T14:05:44Z"
+  },
+  "commits": 7,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 1,
+  "pullRequests": {
+    "open": 0
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 7
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U1MzU=",
+      "name": "Dockerfile",
+      "color": "#384d54"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxMzk=",
+      "name": "Shell",
+      "color": "#89e051"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic/wiki-sync-action/master/screenshots/screenshot-01.png",
+    "https://raw.githubusercontent.com/newrelic/wiki-sync-action/master/screenshots/screenshot-02.png"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

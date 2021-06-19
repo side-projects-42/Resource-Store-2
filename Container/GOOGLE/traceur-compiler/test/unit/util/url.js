@@ -12,51 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
-import {removeDotSegments, resolveUrl} from '../../../src/util/url.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
+import { removeDotSegments, resolveUrl } from "../../../src/util/url.js";
 
-suite('url.js', function() {
-  test('removeDotSegments', function() {
+suite("url.js", function () {
+  test("removeDotSegments", function () {
+    assert.equal("/", removeDotSegments("/"));
+    assert.equal(".", removeDotSegments("."));
+    assert.equal("./", removeDotSegments("./"));
+    assert.equal("/", removeDotSegments("/."));
+    assert.equal("/", removeDotSegments("/.."));
+    assert.equal("../", removeDotSegments("../"));
+    assert.equal("..", removeDotSegments(".."));
+    assert.equal("../..", removeDotSegments("../.."));
+    assert.equal("../../", removeDotSegments("../../"));
+    assert.equal("../a", removeDotSegments("../a"));
+    assert.equal("../a/", removeDotSegments("../a/"));
 
-    assert.equal('/', removeDotSegments('/'));
-    assert.equal('.', removeDotSegments('.'));
-    assert.equal('./', removeDotSegments('./'));
-    assert.equal('/', removeDotSegments('/.'));
-    assert.equal('/', removeDotSegments('/..'));
-    assert.equal('../', removeDotSegments('../'));
-    assert.equal('..', removeDotSegments('..'));
-    assert.equal('../..', removeDotSegments('../..'));
-    assert.equal('../../', removeDotSegments('../../'));
-    assert.equal('../a', removeDotSegments('../a'));
-    assert.equal('../a/', removeDotSegments('../a/'));
+    assert.equal(".", removeDotSegments("a/.."));
+    assert.equal("./", removeDotSegments("a/../"));
+    assert.equal("a", removeDotSegments("a/b/.."));
+    assert.equal("a/", removeDotSegments("a/b/../"));
 
-    assert.equal('.', removeDotSegments('a/..'));
-    assert.equal('./', removeDotSegments('a/../'));
-    assert.equal('a', removeDotSegments('a/b/..'));
-    assert.equal('a/', removeDotSegments('a/b/../'));
+    assert.equal("b", removeDotSegments("a/../b"));
+    assert.equal("b/", removeDotSegments("a/../b/"));
 
-    assert.equal('b', removeDotSegments('a/../b'));
-    assert.equal('b/', removeDotSegments('a/../b/'));
+    assert.equal("../b", removeDotSegments("a/../../b"));
+    assert.equal("../b/", removeDotSegments("a/../../b/"));
 
-    assert.equal('../b', removeDotSegments('a/../../b'));
-    assert.equal('../b/', removeDotSegments('a/../../b/'));
+    assert.equal("..", removeDotSegments("a/../../b/.."));
+    assert.equal("../", removeDotSegments("a/../../b/../"));
 
-    assert.equal('..', removeDotSegments('a/../../b/..'));
-    assert.equal('../', removeDotSegments('a/../../b/../'));
+    assert.equal("a/b", removeDotSegments("a/./b"));
+    assert.equal("a/b/", removeDotSegments("a/./b/"));
+    assert.equal("a/b", removeDotSegments("a/././b"));
+    assert.equal("a/b/", removeDotSegments("a/././b/"));
+    assert.equal("a/b", removeDotSegments("a/././b/."));
+    assert.equal("a/b/", removeDotSegments("a/././b/./"));
 
-    assert.equal('a/b', removeDotSegments('a/./b'));
-    assert.equal('a/b/', removeDotSegments('a/./b/'));
-    assert.equal('a/b', removeDotSegments('a/././b'));
-    assert.equal('a/b/', removeDotSegments('a/././b/'));
-    assert.equal('a/b', removeDotSegments('a/././b/.'));
-    assert.equal('a/b/', removeDotSegments('a/././b/./'));
-
-    assert.equal('b', removeDotSegments('a/./../b'));
-    assert.equal('b/', removeDotSegments('a/./../b/'));
+    assert.equal("b", removeDotSegments("a/./../b"));
+    assert.equal("b/", removeDotSegments("a/./../b/"));
   });
 
-  test('resolveUrl', function() {
-    assert.equal('/a/b/c/d', resolveUrl('/a/b/x/y/', '../../c/d'));
-    assert.equal('/a/b/c/d', resolveUrl('/a/b/x/y/', '../../////c/d'));
+  test("resolveUrl", function () {
+    assert.equal("/a/b/c/d", resolveUrl("/a/b/x/y/", "../../c/d"));
+    assert.equal("/a/b/c/d", resolveUrl("/a/b/x/y/", "../../////c/d"));
   });
 });

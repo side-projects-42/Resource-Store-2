@@ -3,6 +3,7 @@
 
 class C {
   method() {
-    with ({}) {}
+    with ({}) {
+    }
   }
 }

@@ -13,11 +13,12 @@
 
 // Get the trace URL.
 var search = window.location.search;
-if (!search || !search.length || search.indexOf('?url=') != 0) {
+if (!search || !search.length || search.indexOf("?url=") != 0) {
   throw new Error(
-      'No trace URL specified. Specify the trace URL after \'?url=\'.');
+    "No trace URL specified. Specify the trace URL after '?url='."
+  );
 }
 var traceUrl = search.substr(5);
 
-var parentElement = document.getElementById('graphicsReplayStagingArea');
+var parentElement = document.getElementById("graphicsReplayStagingArea");
 wtf.replay.graphics.setupWithUrl(traceUrl, parentElement);

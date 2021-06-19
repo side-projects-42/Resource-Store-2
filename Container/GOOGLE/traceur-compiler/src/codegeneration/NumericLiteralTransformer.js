@@ -12,24 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 import {
   LiteralExpression,
-  LiteralPropertyName
-} from '../syntax/trees/ParseTrees.js';
-import {LiteralToken} from '../syntax/LiteralToken.js';
-import {
-  NUMBER
-} from '../syntax/TokenType.js';
+  LiteralPropertyName,
+} from "../syntax/trees/ParseTrees.js";
+import { LiteralToken } from "../syntax/LiteralToken.js";
+import { NUMBER } from "../syntax/TokenType.js";
 
 function needsTransform(token) {
   return token.type === NUMBER && /^0[bBoO]/.test(token.value);
 }
 
 function transformToken(token) {
-  return new LiteralToken(NUMBER,
-                          String(token.processedValue),
-                          token.location);
+  return new LiteralToken(NUMBER, String(token.processedValue), token.location);
 }
 
 export class NumericLiteralTransformer extends ParseTreeTransformer {

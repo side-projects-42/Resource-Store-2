@@ -11,19 +11,18 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.doc.Document');
-goog.provide('wtf.doc.DocumentMode');
-goog.provide('wtf.doc.DocumentStatus');
+goog.provide("wtf.doc.Document");
+goog.provide("wtf.doc.DocumentMode");
+goog.provide("wtf.doc.DocumentStatus");
 
-goog.require('goog.events');
-goog.require('wtf.db.Database');
-goog.require('wtf.doc.CommentScope');
-goog.require('wtf.doc.Profile');
-goog.require('wtf.doc.View');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.events.SimpleEventfulList');
-goog.require('wtf.events.SimpleEventfulMap');
-
+goog.require("goog.events");
+goog.require("wtf.db.Database");
+goog.require("wtf.doc.CommentScope");
+goog.require("wtf.doc.Profile");
+goog.require("wtf.doc.View");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.events.SimpleEventfulList");
+goog.require("wtf.events.SimpleEventfulMap");
 
 /**
  * Document replication mode.
@@ -38,9 +37,8 @@ wtf.doc.DocumentMode = {
   /**
    * Document is remote (collaborating with others/etc).
    */
-  REMOTE: 1
+  REMOTE: 1,
 };
-
 
 /**
  * Document status.
@@ -55,10 +53,8 @@ wtf.doc.DocumentStatus = {
   /**
    * Document is streaming live.
    */
-  STREAMING: 1
+  STREAMING: 1,
 };
-
-
 
 /**
  * Abstract tracing document.
@@ -69,7 +65,7 @@ wtf.doc.DocumentStatus = {
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.doc.Document = function(platform) {
+wtf.doc.Document = function (platform) {
   goog.base(this);
 
   /**
@@ -136,7 +132,6 @@ wtf.doc.Document = function(platform) {
 };
 goog.inherits(wtf.doc.Document, wtf.events.EventEmitter);
 
-
 /**
  * Event types related to the object.
  * @enum {string}
@@ -145,48 +140,43 @@ wtf.doc.Document.EventType = {
   /**
    * Status changed.
    */
-  STATUS_CHANGED: goog.events.getUniqueId('status_changed')
+  STATUS_CHANGED: goog.events.getUniqueId("status_changed"),
 };
-
 
 /**
  * Gets the document replication mode.
  * @return {wtf.doc.DocumentMode} Document mode.
  */
-wtf.doc.Document.prototype.getMode = function() {
+wtf.doc.Document.prototype.getMode = function () {
   return this.mode_;
 };
-
 
 /**
  * Gets the document update status.
  * @return {wtf.doc.DocumentStatus} Document status.
  */
-wtf.doc.Document.prototype.getStatus = function() {
+wtf.doc.Document.prototype.getStatus = function () {
   return this.status_;
 };
-
 
 /**
  * Sets the status of the document.
  * @param {wtf.doc.DocumentStatus} value New status value.
  */
-wtf.doc.Document.prototype.setStatus = function(value) {
+wtf.doc.Document.prototype.setStatus = function (value) {
   if (this.status_ == value) {
     return;
   }
   this.status_ = value;
-  this.emitEvent(
-      wtf.doc.Document.EventType.STATUS_CHANGED);
+  this.emitEvent(wtf.doc.Document.EventType.STATUS_CHANGED);
 };
-
 
 /**
  * Gets the comment scope with the given name, creating it if needed.
  * @param {string} name Comment scope name.
  * @return {!wtf.doc.CommentScope} The requested comment scope.
  */
-wtf.doc.Document.prototype.getCommentScope = function(name) {
+wtf.doc.Document.prototype.getCommentScope = function (name) {
   var value = this.commentScopes_.get(name);
   if (!value) {
     value = new wtf.doc.CommentScope(name);
@@ -195,79 +185,71 @@ wtf.doc.Document.prototype.getCommentScope = function(name) {
   return /** @type {!wtf.doc.CommentScope} */ (value);
 };
 
-
 /**
  * Creates a new profile and adds it to the profile list.
  * @param {string} name Profile name.
  * @return {!wtf.doc.Profile} New profile.
  */
-wtf.doc.Document.prototype.createProfile = function(name) {
+wtf.doc.Document.prototype.createProfile = function (name) {
   var profile = new wtf.doc.Profile(name);
   this.profileList_.push(profile);
   return profile;
 };
 
-
 /**
  * Gets the profile listing.
  * @return {!wtf.events.EventfulList} Profile listing.
  */
-wtf.doc.Document.prototype.getProfileList = function() {
+wtf.doc.Document.prototype.getProfileList = function () {
   return this.profileList_;
 };
-
 
 /**
  * Gets the collaborator listing.
  * @return {!wtf.events.EventfulList} Collaborator listing.
  */
-wtf.doc.Document.prototype.getCollaboratorList = function() {
+wtf.doc.Document.prototype.getCollaboratorList = function () {
   return this.collaboratorList_;
 };
-
 
 /**
  * Creates a new view and adds it to the view list.
  * @return {!wtf.doc.View} New view.
  */
-wtf.doc.Document.prototype.createView = function() {
+wtf.doc.Document.prototype.createView = function () {
   var view = new wtf.doc.View();
   this.viewList_.push(view);
   return view;
 };
 
-
 /**
  * Gets the view listing.
  * @return {!wtf.events.EventfulList} View listing.
  */
-wtf.doc.Document.prototype.getViewList = function() {
+wtf.doc.Document.prototype.getViewList = function () {
   return this.viewList_;
 };
-
 
 /**
  * Gets the event database.
  * @return {!wtf.db.Database} Event database.
  */
-wtf.doc.Document.prototype.getDatabase = function() {
+wtf.doc.Document.prototype.getDatabase = function () {
   return this.db_;
 };
-
 
 /**
  * Begins a new event data stream.
  * @param {string} streamId Stream ID.
  * @param {string} contentType Stream content type.
  */
-wtf.doc.Document.prototype.beginEventStream = function(streamId, contentType) {
-  throw new Error('Streaming not supported yet');
+wtf.doc.Document.prototype.beginEventStream = function (streamId, contentType) {
+  throw new Error("Streaming not supported yet");
   // var readStream = new wtf.io.MemoryReadStream();
   // this.readStreams_[streamId] = readStream;
   // this.db_.addStreamingSource(readStream);
   // this.setStatus(wtf.doc.DocumentStatus.STREAMING);
 };
-
 
 /**
  * Appends streaming data to the given stream.
@@ -275,8 +257,8 @@ wtf.doc.Document.prototype.beginEventStream = function(streamId, contentType) {
  * @param {!Array.<!wtf.io.ByteArray>} datas Data content.
  * @return {boolean} True if the stream data was appended successfully.
  */
-wtf.doc.Document.prototype.appendEventStreamData = function(streamId, datas) {
-  throw new Error('Streaming not supported yet');
+wtf.doc.Document.prototype.appendEventStreamData = function (streamId, datas) {
+  throw new Error("Streaming not supported yet");
   // var readStream = this.readStreams_[streamId];
   // if (!readStream) {
   //   return false;
@@ -287,13 +269,12 @@ wtf.doc.Document.prototype.appendEventStreamData = function(streamId, datas) {
   // return true;
 };
 
-
 /**
  * Ends an event data stream.
  * @param {string} streamId Stream ID.
  */
-wtf.doc.Document.prototype.endEventStream = function(streamId) {
-  throw new Error('Streaming not supported yet');
+wtf.doc.Document.prototype.endEventStream = function (streamId) {
+  throw new Error("Streaming not supported yet");
   // var readStream = this.readStreams_[streamId];
   // if (!readStream) {
   //   return;

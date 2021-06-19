@@ -13,22 +13,17 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-var fs = require('fs');
-var path = require('path');
-var vm = require('vm');
+var fs = require("fs");
+var path = require("path");
+var vm = require("vm");
 
 // Load WTF binary. Search a few paths.
 // TODO(benvanik): look in ENV?
-var searchPaths = [
-  '.',
-  './build-out',
-  '../build-out'
-];
+var searchPaths = [".", "./build-out", "../build-out"];
 var modulePath = path.dirname(module.filename);
 var wtfPath = null;
 for (var n = 0; n < searchPaths.length; n++) {
-  var searchPath = path.join(
-      searchPaths[n], 'wtf_node_js_compiled.js');
+  var searchPath = path.join(searchPaths[n], "wtf_node_js_compiled.js");
   searchPath = path.join(modulePath, searchPath);
   if (fs.existsSync(searchPath)) {
     wtfPath = path.relative(modulePath, searchPath);
@@ -36,19 +31,19 @@ for (var n = 0; n < searchPaths.length; n++) {
   }
 }
 if (!wtfPath) {
-  console.log('Unable to find wtf_node_js_compiled.js');
+  console.log("Unable to find wtf_node_js_compiled.js");
   process.exit(-1);
   return;
 }
-var wtf = require(wtfPath.replace('.js', ''));
+var wtf = require(wtfPath.replace(".js", ""));
 
 // Load the target script file.
 var filename = path.join(process.cwd(), process.argv[2]);
-var code = fs.readFileSync(filename, 'utf8');
+var code = fs.readFileSync(filename, "utf8");
 
 // Strip the #!, if present.
-if (code[0] == '#') {
-  code = code.replace(/^#!.+\n/, '/* hash bang */\n');
+if (code[0] == "#") {
+  code = code.replace(/^#!.+\n/, "/* hash bang */\n");
 }
 
 // Setup process arguments to strip our run script.
@@ -58,9 +53,9 @@ args.splice(1, 1);
 process.argv = args;
 // TODO(benvanik): setup options from command line/etc?
 var options = {
-  'wtf.trace.session.maximumMemoryUsage': 128 * 1024 * 1024,
-  'wtf.trace.mode': 'snapshotting',
-  'wtf.trace.target': 'file://'
+  "wtf.trace.session.maximumMemoryUsage": 128 * 1024 * 1024,
+  "wtf.trace.mode": "snapshotting",
+  "wtf.trace.target": "file://",
 };
 
 // Make require relative to the input file.
@@ -70,10 +65,9 @@ function relativeRequire(name) {
   var relativePath = path.join(targetPath, name);
   try {
     return originalRequire(relativePath);
-  } catch (e) {
-  }
+  } catch (e) {}
   return originalRequire(name);
-};
+}
 
 // Create a new context to run the user code in.
 // It must have access to our globals as well as the modified require that
@@ -85,7 +79,7 @@ var context = vm.createContext({
   console: console,
   module: module,
   process: process,
-  wtf: wtf
+  wtf: wtf,
 });
 
 // Starting the tracing framework.

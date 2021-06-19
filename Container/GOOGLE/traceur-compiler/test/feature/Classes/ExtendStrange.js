@@ -1,6 +1,6 @@
 class C extends null {}
 
-var c = new C;
+var c = new C();
 assert.isTrue(c instanceof C);
 assert.isFalse(c instanceof Object);
 
@@ -20,7 +20,9 @@ class D extends null {
 // of the function.
 new D();
 
-class E extends function() { return null }() {
+class E extends (function () {
+  return null;
+})() {
   constructor(...args) {
     super(...args);
   }
@@ -30,7 +32,7 @@ class E extends function() { return null }() {
 // of the function.
 new E();
 
-function f() {};
+function f() {}
 f.prototype = null;
 
 class F extends f {
@@ -40,7 +42,6 @@ class F extends f {
 }
 
 assert.equal(1, new F().x);
-
 
 function g() {}
 function h() {}

@@ -1,10 +1,11 @@
 /**
  * @private
  */
-export function _pointInLine(p1, p2, t, mode) { // eslint-disable-line no-unused-vars
+export function _pointInLine(p1, p2, t, mode) {
+  // eslint-disable-line no-unused-vars
   return {
     x: p1.x + t * (p2.x - p1.x),
-    y: p1.y + t * (p2.y - p1.y)
+    y: p1.y + t * (p2.y - p1.y),
   };
 }
 
@@ -14,18 +15,28 @@ export function _pointInLine(p1, p2, t, mode) { // eslint-disable-line no-unused
 export function _steppedInterpolation(p1, p2, t, mode) {
   return {
     x: p1.x + t * (p2.x - p1.x),
-    y: mode === 'middle' ? t < 0.5 ? p1.y : p2.y
-    : mode === 'after' ? t < 1 ? p1.y : p2.y
-    : t > 0 ? p2.y : p1.y
+    y:
+      mode === "middle"
+        ? t < 0.5
+          ? p1.y
+          : p2.y
+        : mode === "after"
+        ? t < 1
+          ? p1.y
+          : p2.y
+        : t > 0
+        ? p2.y
+        : p1.y,
   };
 }
 
 /**
  * @private
  */
-export function _bezierInterpolation(p1, p2, t, mode) { // eslint-disable-line no-unused-vars
-  const cp1 = {x: p1.cp2x, y: p1.cp2y};
-  const cp2 = {x: p2.cp1x, y: p2.cp1y};
+export function _bezierInterpolation(p1, p2, t, mode) {
+  // eslint-disable-line no-unused-vars
+  const cp1 = { x: p1.cp2x, y: p1.cp2y };
+  const cp2 = { x: p2.cp1x, y: p2.cp1y };
   const a = _pointInLine(p1, cp1, t);
   const b = _pointInLine(cp1, cp2, t);
   const c = _pointInLine(cp2, p2, t);

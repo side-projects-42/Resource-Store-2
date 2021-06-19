@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ComprehensionTransformer} from './ComprehensionTransformer.js';
-import {parseStatement} from './PlaceholderParser.js';
+import { ComprehensionTransformer } from "./ComprehensionTransformer.js";
+import { parseStatement } from "./PlaceholderParser.js";
 
 /**
  * Generator Comprehension Transformer:
@@ -40,12 +40,10 @@ import {parseStatement} from './PlaceholderParser.js';
  *
  * with alpha renaming of this and arguments of course.
  */
-export class GeneratorComprehensionTransformer extends
-    ComprehensionTransformer {
-
+export class GeneratorComprehensionTransformer extends ComprehensionTransformer {
   transformGeneratorComprehension(tree) {
     let expression = this.transformAny(tree.expression);
-    let statement = parseStatement `yield ${expression}`;
+    let statement = parseStatement`yield ${expression}`;
     let isGenerator = true;
     return this.transformComprehension(tree, statement, isGenerator);
   }

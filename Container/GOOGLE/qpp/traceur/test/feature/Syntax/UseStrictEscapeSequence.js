@@ -1,7 +1,6 @@
 function testUseStrictEscapeSequence() {
-  'use str\x69ct';
+  "use str\x69ct";
   return this;
 }
 
 assertNotEquals(testUseStrictEscapeSequence(), undefined);
-

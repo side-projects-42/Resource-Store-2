@@ -1,0 +1,24 @@
+{
+  "name": "nri-perfmon",
+  "fullName": "newrelic/nri-perfmon",
+  "slug": "newrelic-nri-perfmon",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic integration for Windows Perfmon / WMI",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/nri-perfmon",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/nri-perfmon",
+  "iconUrl": null,
+  "shortDescription": "Perfmon/WMI queries and events",
+  "description": "Windows Perfmon/WMI query & event results to New Relic",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "C#",
+  "projectTags": ["nri", "nrlabs"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic integration for Windows Perfmon / WMI",
+    "url": "https://github.com/newrelic/nri-perfmon"
+  }
+}

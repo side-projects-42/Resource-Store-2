@@ -1,5 +1,5 @@
-import {Chart} from 'chart.js';
-import Zoom from './plugin';
+import { Chart } from "chart.js";
+import Zoom from "./plugin";
 
 Chart.register(Zoom);
 

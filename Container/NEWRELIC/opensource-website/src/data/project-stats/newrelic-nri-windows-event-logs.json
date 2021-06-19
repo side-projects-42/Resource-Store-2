@@ -1,0 +1,70 @@
+{
+  "projectFullName": "newrelic/nri-windows-event-logs",
+  "issues": {
+    "open": 4
+  },
+  "releases": 3,
+  "latestRelease": {
+    "name": "v0.2.0",
+    "date": "2019-02-28T19:47:26Z"
+  },
+  "commits": 10,
+  "lastSixMonthsCommitTotal": 0,
+  "contributors": 4,
+  "pullRequests": {
+    "open": 4
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 33189156,
+      "login": "a-james-faria",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/33189156?v=4",
+      "htmlUrl": "https://github.com/a-james-faria",
+      "contributions": 7
+    },
+    {
+      "id": 3536684,
+      "login": "sschwartzman",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3536684?v=4",
+      "htmlUrl": "https://github.com/sschwartzman",
+      "contributions": 1
+    },
+    {
+      "id": 455419,
+      "login": "jthurman42",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/455419?v=4",
+      "htmlUrl": "https://github.com/jthurman42",
+      "contributions": 1
+    },
+    {
+      "id": 3860745,
+      "login": "csandels",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3860745?v=4",
+      "htmlUrl": "https://github.com/csandels",
+      "contributions": 1
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2U0NjM=",
+      "name": "Batchfile",
+      "color": "#C1F12E"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UyNjQ=",
+      "name": "PowerShell",
+      "color": "#012456"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTA=",
+    "name": "Other",
+    "spdxId": "NOASSERTION",
+    "url": "http://choosealicense.com/licenses/other/",
+    "featured": false,
+    "key": "other"
+  }
+}

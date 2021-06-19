@@ -11,7 +11,7 @@ function* yieldUndefinedGenerator2() {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -20,5 +20,5 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('1undefined2', accumulate(yieldUndefinedGenerator1()));
-assert.equal('1undefined2', accumulate(yieldUndefinedGenerator2()));
+assert.equal("1undefined2", accumulate(yieldUndefinedGenerator1()));
+assert.equal("1undefined2", accumulate(yieldUndefinedGenerator2()));

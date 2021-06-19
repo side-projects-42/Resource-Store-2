@@ -1,9 +1,8 @@
 // Options: --annotations
-import {Anno} from './resources/setup.js';
+import { Anno } from "./resources/setup.js";
 
 class MethodParam {
   method(@Anno x) {}
 }
 
-assert.deepEqual([[new Anno]], MethodParam.prototype.method.parameters);
-
+assert.deepEqual([[new Anno()]], MethodParam.prototype.method.parameters);

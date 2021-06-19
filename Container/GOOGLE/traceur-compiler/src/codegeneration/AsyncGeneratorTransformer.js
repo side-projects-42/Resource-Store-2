@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import alphaRenameThisAndArguments from './alphaRenameThisAndArguments.js';
+import alphaRenameThisAndArguments from "./alphaRenameThisAndArguments.js";
 import {
   createArgumentList,
   createBlock,
@@ -22,23 +22,24 @@ import {
   createThisExpression,
   createVariableDeclaration,
   createVariableDeclarationList,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {parseStatement} from './PlaceholderParser.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { parseStatement } from "./PlaceholderParser.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   AwaitExpression,
   Block,
   CallExpression,
-  Catch
-} from '../syntax/trees/ParseTrees.js';
-import SkipFunctionsTransformerTrait from './SkipFunctionsTransformerTrait.js';
-import {ARGUMENTS} from '../syntax/PredefinedName.js';
-import {VAR} from '../syntax/TokenType.js';
+  Catch,
+} from "../syntax/trees/ParseTrees.js";
+import SkipFunctionsTransformerTrait from "./SkipFunctionsTransformerTrait.js";
+import { ARGUMENTS } from "../syntax/PredefinedName.js";
+import { VAR } from "../syntax/TokenType.js";
 
-export class AsyncGeneratorTransformer extends
-    SkipFunctionsTransformerTrait(ImportRuntimeTrait(TempVarTransformer)) {
+export class AsyncGeneratorTransformer extends SkipFunctionsTransformerTrait(
+  ImportRuntimeTrait(TempVarTransformer)
+) {
   constructor(identifierGenerator, reporter, options) {
     super(identifierGenerator, reporter, options);
     this.variableDeclarations_ = [];
@@ -48,20 +49,31 @@ export class AsyncGeneratorTransformer extends
   transformYieldExpression(tree) {
     let argList = createArgumentList([tree.expression]);
     if (tree.isYieldFor) {
-      return new AwaitExpression(tree.location,
-          new CallExpression(null, createMemberExpression(this.ctx_, 'yieldFor'),
-              argList));
+      return new AwaitExpression(
+        tree.location,
+        new CallExpression(
+          null,
+          createMemberExpression(this.ctx_, "yieldFor"),
+          argList
+        )
+      );
     }
-    return new CallExpression(tree.location,
-        createMemberExpression(this.ctx_, 'yield'), argList);
+    return new CallExpression(
+      tree.location,
+      createMemberExpression(this.ctx_, "yield"),
+      argList
+    );
   }
 
   transformCatch(tree) {
     let body = tree.catchBody;
-    body = new Block(body.location, [parseStatement `
+    body = new Block(body.location, [
+      parseStatement`
         if (${this.ctx_}.inReturn) {
           throw undefined;
-        }`, ...body.statements]);
+        }`,
+      ...body.statements,
+    ]);
     return new Catch(tree.location, tree.binding, body);
   }
 
@@ -75,48 +87,61 @@ export class AsyncGeneratorTransformer extends
     tree = alphaRenameThisAndArguments(this, tree);
     let statements = [];
     if (this.variableDeclarations_.length > 0) {
-      statements.push(createVariableStatement(
-          createVariableDeclarationList(VAR, this.variableDeclarations_)));
+      statements.push(
+        createVariableStatement(
+          createVariableDeclarationList(VAR, this.variableDeclarations_)
+        )
+      );
     }
     let body = createBlock(tree.statements);
-    let createAsyncGeneratorInstance =
-        this.getRuntimeExpression('createAsyncGeneratorInstance');
-    statements.push(parseStatement `
+    let createAsyncGeneratorInstance = this.getRuntimeExpression(
+      "createAsyncGeneratorInstance"
+    );
+    statements.push(parseStatement`
         return ${createAsyncGeneratorInstance}(
             async function (${this.ctx_}) {
                 ${body}
             }, ${name});`);
-      return createFunctionBody(statements);
+    return createFunctionBody(statements);
   }
 
   // alphaRenameThisAndArguments
   addTempVarForArguments() {
     let tmpVarName = this.getTempIdentifier();
-    this.variableDeclarations_.push(createVariableDeclaration(
-        tmpVarName, id(ARGUMENTS)));
+    this.variableDeclarations_.push(
+      createVariableDeclaration(tmpVarName, id(ARGUMENTS))
+    );
     return tmpVarName;
   }
 
   // alphaRenameThisAndArguments
   addTempVarForThis() {
     let tmpVarName = this.getTempIdentifier();
-    this.variableDeclarations_.push(createVariableDeclaration(
-        tmpVarName, createThisExpression()));
+    this.variableDeclarations_.push(
+      createVariableDeclaration(tmpVarName, createThisExpression())
+    );
     return tmpVarName;
   }
 
-   /**
-    * @param {UniqueIdentifierGenerator} identifierGenerator
-    * @param {ErrorReporter} reporter
-    * @param {Options} options
-    * @param {Block} body
-    * @param {IdentifierExpression} name
-    * @return {Block}
-    */
-  static transformAsyncGeneratorBody(identifierGenerator, reporter, options,
-                                     body, name) {
-    return new AsyncGeneratorTransformer(identifierGenerator, reporter,
-                                         options).
-        transformAsyncGeneratorBody_(body, name);
+  /**
+   * @param {UniqueIdentifierGenerator} identifierGenerator
+   * @param {ErrorReporter} reporter
+   * @param {Options} options
+   * @param {Block} body
+   * @param {IdentifierExpression} name
+   * @return {Block}
+   */
+  static transformAsyncGeneratorBody(
+    identifierGenerator,
+    reporter,
+    options,
+    body,
+    name
+  ) {
+    return new AsyncGeneratorTransformer(
+      identifierGenerator,
+      reporter,
+      options
+    ).transformAsyncGeneratorBody_(body, name);
   }
 }

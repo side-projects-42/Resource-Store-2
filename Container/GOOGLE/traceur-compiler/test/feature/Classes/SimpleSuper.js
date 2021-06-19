@@ -1,7 +1,13 @@
 class SuperBase {
-  m() { return 40; }
-  get x () { return this.baseX; }
-  set x (value) { this.baseX = value; }
+  m() {
+    return 40;
+  }
+  get x() {
+    return this.baseX;
+  }
+  set x(value) {
+    this.baseX = value;
+  }
   constructor() {
     this.baseC = 2;
     this.baseX = 4;
@@ -9,9 +15,15 @@ class SuperBase {
 }
 
 class SuperDerived extends SuperBase {
-  m() { return 41; }
-  superM() { return super.m(); }
-  superX() { return super.x; }
+  m() {
+    return 41;
+  }
+  superM() {
+    return super.m();
+  }
+  superX() {
+    return super.x;
+  }
   constructor() {
     super();
     this.x = 10;

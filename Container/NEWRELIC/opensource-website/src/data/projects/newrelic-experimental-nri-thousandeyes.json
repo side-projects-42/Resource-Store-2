@@ -1,0 +1,24 @@
+{
+  "name": "nri-thousandeyes",
+  "fullName": "newrelic-experimental/nri-thousandeyes",
+  "slug": "newrelic-experimental-nri-thousandeyes",
+  "owner": {
+    "login": "newrelic-experimental",
+    "type": "Organization"
+  },
+  "title": "ThousandEyes Integration",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic-experimental/nri-thousandeyes",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic-experimental/nri-thousandeyes",
+  "iconUrl": null,
+  "shortDescription": "ThousandEyes Infrastructure integration",
+  "description": "New Relic Infrastructure Integration to acquire metrics from ThousandEyes (network monitoring)",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "Java",
+  "projectTags": ["nri", "network", "nrlabs"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "ThousandEyes Integration",
+    "url": "https://github.com/newrelic-experimental/nri-thousandeyes"
+  }
+}

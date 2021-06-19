@@ -12,7 +12,6 @@
  * @externs
  */
 
-
 var gapi;
 
 gapi.auth;
@@ -20,23 +19,23 @@ gapi.auth;
 /**
  * @param {Function} callback
  */
-gapi.auth.init = function(callback) {};
+gapi.auth.init = function (callback) {};
 
 /**
  * @param {!Object} config
  * @param {Function} callback
  */
-gapi.auth.authorize = function(config, callback) {};
+gapi.auth.authorize = function (config, callback) {};
 
 /**
  * @return {gapi.auth.Token}
  */
-gapi.auth.getToken = function() {};
+gapi.auth.getToken = function () {};
 
 /**
  * @constructor
  */
-gapi.auth.Token = function() {};
+gapi.auth.Token = function () {};
 
 /**
  * @type {string}
@@ -48,16 +47,14 @@ gapi.client;
 /**
  * @param {string} apiKey
  */
-gapi.client.setApiKey = function(apiKey) {};
+gapi.client.setApiKey = function (apiKey) {};
 
 /**
  * @param {string} name
  * @param {string} version
  * @param {Function} callback
  */
-gapi.client.load = function(name, version, callback) {};
-
-
+gapi.client.load = function (name, version, callback) {};
 
 var google;
 
@@ -66,7 +63,7 @@ var google;
  * @param {string} version
  * @param {!Object} options
  */
-google.load = function(name, version, options) {};
+google.load = function (name, version, options) {};
 
 google.picker;
 
@@ -75,48 +72,49 @@ google.picker;
  * @constructor
  * @noalias
  */
-google.picker.View = function(name) {};
+google.picker.View = function (name) {};
 
-google.picker.View.prototype.setMimeTypes = function(value) {};
+google.picker.View.prototype.setMimeTypes = function (value) {};
 
 /**
  * @constructor
  * @noalias
  */
-google.picker.PickerBuilder = function() {};
+google.picker.PickerBuilder = function () {};
 /**
  * @param {string} value
  */
-google.picker.PickerBuilder.prototype.setTitle = function(value) {};
+google.picker.PickerBuilder.prototype.setTitle = function (value) {};
 /**
  * @param {string} name
  */
-google.picker.PickerBuilder.prototype.enableFeature = function(name) {};
+google.picker.PickerBuilder.prototype.enableFeature = function (name) {};
 /**
  * @param {string} value
  */
-google.picker.PickerBuilder.prototype.setAppId = function(value) {};
+google.picker.PickerBuilder.prototype.setAppId = function (value) {};
 /**
  * @param {string} value
  */
-google.picker.PickerBuilder.prototype.setSelectableMimeTypes =
-    function(value) {};
+google.picker.PickerBuilder.prototype.setSelectableMimeTypes = function (
+  value
+) {};
 /**
  * @param {Function} value
  */
-google.picker.PickerBuilder.prototype.setCallback = function(value) {};
+google.picker.PickerBuilder.prototype.setCallback = function (value) {};
 /**
  * @param {!google.picker.View} view
  */
-google.picker.PickerBuilder.prototype.addView = function(view) {};
-google.picker.PickerBuilder.prototype.build = function() {};
+google.picker.PickerBuilder.prototype.addView = function (view) {};
+google.picker.PickerBuilder.prototype.build = function () {};
 
 /**
  * @constructor
  */
-google.picker.Picker = function() {};
+google.picker.Picker = function () {};
 
 /**
  * @param {boolean} value
  */
-google.picker.Picker.prototype.setVisible = function(value) {};
+google.picker.Picker.prototype.setVisible = function (value) {};

@@ -1,0 +1,24 @@
+{
+  "name": "rusty-hog",
+  "fullName": "newrelic/rusty-hog",
+  "slug": "newrelic-rusty-hog",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Rusty Hog",
+  "supportUrl": "https://discuss.newrelic.com/t/rusty-hog-multi-platform-secret-key-scanner/90117",
+  "githubUrl": "https://github.com/newrelic/rusty-hog",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/rusty-hog",
+  "iconUrl": null,
+  "shortDescription": "Rust-based TruffleHog scanner",
+  "description": "Secret scanner built in Rust for performance",
+  "ossCategory": "community-project",
+  "primaryLanguage": "Rust",
+  "projectTags": ["tools"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Rusty Hog",
+    "url": "https://github.com/newrelic/rusty-hog"
+  }
+}

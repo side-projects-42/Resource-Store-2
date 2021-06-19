@@ -10,7 +10,7 @@ function outer() {
     };
     g();
 
-    var h = function() {
+    var h = function () {
       assert.equal(this, global);
     };
     h();

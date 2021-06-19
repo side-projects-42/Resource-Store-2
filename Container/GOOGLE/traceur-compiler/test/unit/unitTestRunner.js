@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NodeTraceurTestRunner} from '../modular/NodeTraceurTestRunner.js';
-import {BrowserTraceurTestRunner} from '../modular/BrowserTraceurTestRunner.js';
+import { NodeTraceurTestRunner } from "../modular/NodeTraceurTestRunner.js";
+import { BrowserTraceurTestRunner } from "../modular/BrowserTraceurTestRunner.js";
 
-export * from '../asserts.js';
+export * from "../asserts.js";
 
 export let unitTestRunner;
-if (typeof require === 'undefined') {
+if (typeof require === "undefined") {
   unitTestRunner = new BrowserTraceurTestRunner();
 } else {
   unitTestRunner = new NodeTraceurTestRunner();

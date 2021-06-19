@@ -18,22 +18,23 @@ second chart uses an offset in pixels and the last one a offset in percent.
 ```js chart-editor
 Utils.srand(0);
 
-const options = /* <block:options> */
-{
-  plugins: {
-    deferred: {
-      // defaults
+const options =
+  /* <block:options> */
+  {
+    plugins: {
+      deferred: {
+        // defaults
+      },
     },
-  },
-}/* </block:options> */;
+  }; /* </block:options> */
 
 module.exports = {
   config: {
-    type: 'bar',
+    type: "bar",
     options: options,
     data: Utils.generate(),
   },
-}
+};
 ```
 
 ## Offset (256 pixels)
@@ -41,22 +42,23 @@ module.exports = {
 ```js chart-editor
 Utils.srand(0);
 
-const options = /* <block:options> */
-{
-  plugins: {
-    deferred: {
-      yOffset: 256
+const options =
+  /* <block:options> */
+  {
+    plugins: {
+      deferred: {
+        yOffset: 256,
+      },
     },
-  },
-}/* </block:options> */;
+  }; /* </block:options> */
 
 module.exports = {
   config: {
-    type: 'bar',
+    type: "bar",
     options: options,
     data: Utils.generate(),
   },
-}
+};
 ```
 
 ## Offset (50 percent)
@@ -64,22 +66,23 @@ module.exports = {
 ```js chart-editor
 Utils.srand(0);
 
-const options = /* <block:options> */
-{
-  plugins: {
-    deferred: {
-      yOffset: '50%'
+const options =
+  /* <block:options> */
+  {
+    plugins: {
+      deferred: {
+        yOffset: "50%",
+      },
     },
-  },
-}/* </block:options> */;
+  }; /* </block:options> */
 
 module.exports = {
   config: {
-    type: 'bar',
+    type: "bar",
     options: options,
     data: Utils.generate(),
   },
-}
+};
 ```
 
 <div class="foot">

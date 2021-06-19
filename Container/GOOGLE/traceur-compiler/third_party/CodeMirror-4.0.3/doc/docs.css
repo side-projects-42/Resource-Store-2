@@ -1,31 +1,55 @@
 @font-face {
-  font-family: 'Source Sans Pro';
+  font-family: "Source Sans Pro";
   font-style: normal;
   font-weight: 400;
-  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(http://themes.googleusercontent.com/static/fonts/sourcesanspro/v5/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
+  src: local("Source Sans Pro"), local("SourceSansPro-Regular"),
+    url(http://themes.googleusercontent.com/static/fonts/sourcesanspro/v5/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff)
+      format("woff");
 }
 
-body, html { margin: 0; padding: 0; height: 100%; }
-section, article { display: block; padding: 0; }
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+section,
+article {
+  display: block;
+  padding: 0;
+}
 
 body {
   background: #f8f8f8;
-  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+  font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
   line-height: 1.5;
 }
 
-p { margin-top: 0; }
-
-h2, h3 {
-  font-weight: normal;
-  margin-bottom: .7em;
+p {
+  margin-top: 0;
 }
-h2 { font-size: 120%; }
-h3 { font-size: 110%; }
-article > h2:first-child, section:first-child > h2 { margin-top: 0; }
 
-a, a:visited, a:link, .quasilink {
-  color: #A21313;
+h2,
+h3 {
+  font-weight: normal;
+  margin-bottom: 0.7em;
+}
+h2 {
+  font-size: 120%;
+}
+h3 {
+  font-size: 110%;
+}
+article > h2:first-child,
+section:first-child > h2 {
+  margin-top: 0;
+}
+
+a,
+a:visited,
+a:link,
+.quasilink {
+  color: #a21313;
   text-decoration: none;
 }
 
@@ -40,7 +64,7 @@ em {
 article {
   max-width: 700px;
   margin: 0 0 0 160px;
-  border-left: 2px solid #E30808;
+  border-left: 2px solid #e30808;
   border-right: 1px solid #ddd;
   padding: 30px 50px 100px 50px;
   background: white;
@@ -58,7 +82,8 @@ article {
   box-sizing: -moz-border-box;
   box-sizing: border-box;
   overflow-y: auto;
-  left: 0; right: none;
+  left: 0;
+  right: none;
   width: 160px;
   text-align: right;
   z-index: 1;
@@ -77,7 +102,8 @@ article {
 
 #nav ul {
   display: block;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
   margin-bottom: 32px;
 }
 
@@ -106,10 +132,11 @@ article {
   padding: 0 7px 1px 11px;
 }
 
-#nav ul a.active, #nav ul a:hover {
-  border-bottom: 1px solid #E30808;
+#nav ul a.active,
+#nav ul a:hover {
+  border-bottom: 1px solid #e30808;
   margin-bottom: -1px;
-  color: #E30808;
+  color: #e30808;
 }
 
 #logo {
@@ -119,7 +146,7 @@ article {
 }
 
 section {
-  border-top: 1px solid #E30808;
+  border-top: 1px solid #e30808;
   margin: 1.5em 0;
 }
 
@@ -142,7 +169,7 @@ section.first {
 #bankinfo {
   text-align: left;
   display: none;
-  padding: 0 .5em;
+  padding: 0 0.5em;
   position: absolute;
   border: 2px solid #aaa;
   border-radius: 5px;
@@ -153,7 +180,8 @@ section.first {
 
 #bankinfo_close {
   position: absolute;
-  top: 0; right: 6px;
+  top: 0;
+  right: 6px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -167,7 +195,7 @@ section.first {
   position: relative;
   line-height: 1.9;
   color: white !important;
-  background: #A21313;
+  background: #a21313;
 }
 
 .bigbutton.right {
@@ -181,7 +209,7 @@ section.first {
 }
 
 .bigbutton:hover {
-  background: #E30808;
+  background: #e30808;
 }
 
 th {
@@ -228,5 +256,5 @@ strong {
 }
 
 .field {
-  border: 1px solid #A21313;
+  border: 1px solid #a21313;
 }

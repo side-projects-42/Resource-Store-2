@@ -13,12 +13,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-var readline = require('readline');
+var readline = require("readline");
 
-var toolRunner = require('./tool-runner');
+var toolRunner = require("./tool-runner");
 var util = toolRunner.util;
 toolRunner.launch(runTool);
-
 
 /**
  * Query tool.
@@ -35,29 +34,28 @@ function runTool(platform, args, done) {
 
   var inputFile = args[0];
   var exprArgs = args.slice(1);
-  var expr = exprArgs.join(' ').trim();
+  var expr = exprArgs.join(" ").trim();
 
-  console.log('Querying ' + inputFile + '...');
+  console.log("Querying " + inputFile + "...");
 
   // Create database for querying.
   var loadStart = wtf.now();
-  wtf.db.load(inputFile, function(db) {
+  wtf.db.load(inputFile, function (db) {
     if (db instanceof Error) {
-      console.log('ERROR: unable to open ' + inputFile, db);
+      console.log("ERROR: unable to open " + inputFile, db);
       done(1);
       return;
     }
 
     var loadDuration = wtf.now() - loadStart;
-    console.log('Database loaded in ' + loadDuration.toFixed(3) + 'ms');
-    console.log('');
+    console.log("Database loaded in " + loadDuration.toFixed(3) + "ms");
+    console.log("");
 
     queryDatabase(db, expr);
 
     done(0);
   });
-};
-
+}
 
 /**
  * Runs a REPL that queries a database.
@@ -76,11 +74,11 @@ function queryDatabase(db, expr) {
 
   var rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
-  rl.on('line', function(line) {
+  rl.on("line", function (line) {
     line = line.trim();
-    if (line == 'q' || line == 'quit') {
+    if (line == "q" || line == "quit") {
       rl.close();
       return;
     }
@@ -89,16 +87,16 @@ function queryDatabase(db, expr) {
 
     rl.prompt();
   });
-  rl.on('close', function() {
-    console.log('');
+  rl.on("close", function () {
+    console.log("");
     db.dispose();
     process.exit(0);
   });
-  rl.setPrompt('> ');
+  rl.setPrompt("> ");
   rl.prompt();
 
   function issue(expr) {
-    console.log('Expression: ' + expr);
+    console.log("Expression: " + expr);
 
     var result;
     try {
@@ -110,50 +108,53 @@ function queryDatabase(db, expr) {
 
     var xexpr = result.getCompiledExpression();
     console.log(xexpr.toString());
-    console.log('');
+    console.log("");
 
     var resultValue = result.getValue();
     if (resultValue instanceof wtf.db.EventIterator) {
       var it = resultValue;
       if (!it.getCount()) {
-        console.log('Nothing matched');
+        console.log("Nothing matched");
       } else {
-        console.log('Results: (' + it.getCount() + ' total)');
+        console.log("Results: (" + it.getCount() + " total)");
         for (; !it.done(); it.next()) {
           util.logEvent(it, zone);
         }
       }
-    } else if (typeof resultValue == 'boolean' ||
-        typeof resultValue == 'number' ||
-        typeof resultValue == 'string') {
-      console.log('Result:');
+    } else if (
+      typeof resultValue == "boolean" ||
+      typeof resultValue == "number" ||
+      typeof resultValue == "string"
+    ) {
+      console.log("Result:");
       logResult(resultValue);
     } else if (!resultValue) {
       // Note we test this after so that 0/strings/etc are handled.
-      console.log('Nothing matched');
+      console.log("Nothing matched");
     } else if (resultValue.length) {
-      console.log('Results: (' + resultValue.length + ' total)');
+      console.log("Results: (" + resultValue.length + " total)");
       for (var n = 0; n < resultValue.length; n++) {
         logResult(resultValue[n]);
       }
     } else {
-      console.log('Result:');
+      console.log("Result:");
       logResult(resultValue);
     }
 
-    console.log('');
-    console.log('Took ' + result.getDuration().toFixed(3) + 'ms');
+    console.log("");
+    console.log("Took " + result.getDuration().toFixed(3) + "ms");
   }
-};
-
+}
 
 function logResult(resultValue) {
-  if (typeof resultValue == 'boolean' ||
-      typeof resultValue == 'number' ||
-      typeof resultValue == 'string') {
+  if (
+    typeof resultValue == "boolean" ||
+    typeof resultValue == "number" ||
+    typeof resultValue == "string"
+  ) {
     console.log(resultValue);
     return;
   }
 
   console.log(resultValue.toString());
-};
+}

@@ -1,19 +1,18 @@
-
 export function fontString(pixelSize, fontStyle, fontFamily) {
-  return fontStyle + ' ' + pixelSize + 'px ' + fontFamily;
+  return fontStyle + " " + pixelSize + "px " + fontFamily;
 }
 
 /**
-* Request animation polyfill
-*/
-export const requestAnimFrame = (function() {
-  if (typeof window === 'undefined') {
-    return function(callback) {
+ * Request animation polyfill
+ */
+export const requestAnimFrame = (function () {
+  if (typeof window === "undefined") {
+    return function (callback) {
       return callback();
     };
   }
   return window.requestAnimationFrame;
-}());
+})();
 
 /**
  * Throttles calling `fn` once per animation frame
@@ -27,7 +26,7 @@ export function throttled(fn, thisArg, updateFn) {
   let ticking = false;
   let args = [];
 
-  return function(...rest) {
+  return function (...rest) {
     args = updateArgs(rest);
 
     if (!ticking) {
@@ -48,7 +47,7 @@ export function throttled(fn, thisArg, updateFn) {
  */
 export function debounce(fn, delay) {
   let timeout;
-  return function() {
+  return function () {
     if (delay) {
       clearTimeout(timeout);
       timeout = setTimeout(fn, delay);
@@ -59,13 +58,13 @@ export function debounce(fn, delay) {
   };
 }
 
-
 /**
  * Converts 'start' to 'left', 'end' to 'right' and others to 'center'
  * @param {string} align start, end, center
  * @private
  */
-export const _toLeftRightCenter = (align) => align === 'start' ? 'left' : align === 'end' ? 'right' : 'center';
+export const _toLeftRightCenter = (align) =>
+  align === "start" ? "left" : align === "end" ? "right" : "center";
 
 /**
  * Returns `start`, `end` or `(start + end) / 2` depending on `align`. Defaults to `center`
@@ -74,7 +73,8 @@ export const _toLeftRightCenter = (align) => align === 'start' ? 'left' : align 
  * @param {number} end value for end
  * @private
  */
-export const _alignStartEnd = (align, start, end) => align === 'start' ? start : align === 'end' ? end : (start + end) / 2;
+export const _alignStartEnd = (align, start, end) =>
+  align === "start" ? start : align === "end" ? end : (start + end) / 2;
 
 /**
  * Returns `left`, `right` or `(left + right) / 2` depending on `align`. Defaults to `left`
@@ -85,6 +85,10 @@ export const _alignStartEnd = (align, start, end) => align === 'start' ? start :
  * @private
  */
 export const _textX = (align, left, right, rtl) => {
-  const check = rtl ? 'left' : 'right';
-  return align === check ? right : align === 'center' ? (left + right) / 2 : left;
+  const check = rtl ? "left" : "right";
+  return align === check
+    ? right
+    : align === "center"
+    ? (left + right) / 2
+    : left;
 };

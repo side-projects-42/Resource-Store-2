@@ -11,34 +11,31 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.cff.StreamBase');
+goog.provide("wtf.io.cff.StreamBase");
 
-goog.require('goog.asserts');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.io.cff.ChunkType');
-goog.require('wtf.io.cff.PartType');
-goog.require('wtf.io.cff.chunks.EventDataChunk');
-goog.require('wtf.io.cff.chunks.FileHeaderChunk');
-goog.require('wtf.io.cff.parts.BinaryEventBufferPart');
-goog.require('wtf.io.cff.parts.BinaryResourcePart');
-goog.require('wtf.io.cff.parts.FileHeaderPart');
-goog.require('wtf.io.cff.parts.JsonEventBufferPart');
-goog.require('wtf.io.cff.parts.LegacyEventBufferPart');
-goog.require('wtf.io.cff.parts.StringResourcePart');
-goog.require('wtf.io.cff.parts.StringTablePart');
-
-
+goog.require("goog.asserts");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.io.cff.ChunkType");
+goog.require("wtf.io.cff.PartType");
+goog.require("wtf.io.cff.chunks.EventDataChunk");
+goog.require("wtf.io.cff.chunks.FileHeaderChunk");
+goog.require("wtf.io.cff.parts.BinaryEventBufferPart");
+goog.require("wtf.io.cff.parts.BinaryResourcePart");
+goog.require("wtf.io.cff.parts.FileHeaderPart");
+goog.require("wtf.io.cff.parts.JsonEventBufferPart");
+goog.require("wtf.io.cff.parts.LegacyEventBufferPart");
+goog.require("wtf.io.cff.parts.StringResourcePart");
+goog.require("wtf.io.cff.parts.StringTablePart");
 
 /**
  * Base type for the stream source and target types.
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.io.cff.StreamBase = function() {
+wtf.io.cff.StreamBase = function () {
   goog.base(this);
 };
 goog.inherits(wtf.io.cff.StreamBase, wtf.events.EventEmitter);
-
 
 /**
  * Creates a chunk of the given type.
@@ -48,18 +45,20 @@ goog.inherits(wtf.io.cff.StreamBase, wtf.events.EventEmitter);
  *     {@code null} if the chunk type was unrecognized.
  * @protected
  */
-wtf.io.cff.StreamBase.prototype.createChunkType = function(chunkId, chunkType) {
+wtf.io.cff.StreamBase.prototype.createChunkType = function (
+  chunkId,
+  chunkType
+) {
   switch (chunkType) {
     case wtf.io.cff.ChunkType.FILE_HEADER:
       return new wtf.io.cff.chunks.FileHeaderChunk(chunkId);
     case wtf.io.cff.ChunkType.EVENT_DATA:
       return new wtf.io.cff.chunks.EventDataChunk(chunkId);
     default:
-      goog.asserts.fail('Unhandled chunk type: ' + chunkType);
+      goog.asserts.fail("Unhandled chunk type: " + chunkType);
       return null;
   }
 };
-
 
 /**
  * Creates a part of the given type.
@@ -68,7 +67,7 @@ wtf.io.cff.StreamBase.prototype.createChunkType = function(chunkId, chunkType) {
  *      {@code null} if the chunk type was unrecognized.
  * @protected
  */
-wtf.io.cff.StreamBase.prototype.createPartType = function(partType) {
+wtf.io.cff.StreamBase.prototype.createPartType = function (partType) {
   switch (partType) {
     case wtf.io.cff.PartType.FILE_HEADER:
       return new wtf.io.cff.parts.FileHeaderPart();
@@ -85,7 +84,7 @@ wtf.io.cff.StreamBase.prototype.createPartType = function(partType) {
     case wtf.io.cff.PartType.STRING_RESOURCE:
       return new wtf.io.cff.parts.StringResourcePart();
     default:
-      goog.asserts.fail('Unhandled part type: ' + partType);
+      goog.asserts.fail("Unhandled part type: " + partType);
       return null;
   }
 };

@@ -1,4 +1,3 @@
-
 // Example 1. Writing an iterator over an array
 
 function iterateElements(array) {
@@ -6,10 +5,9 @@ function iterateElements(array) {
   var rv = {};
   rv[Symbol.iterator] = {
     next() {
-      if (index < array.length)
-        return {value: array[index++], done: false};
-      return {done: true};
-    }
+      if (index < array.length) return { value: array[index++], done: false };
+      return { done: true };
+    },
   };
   return rv;
 }
@@ -24,7 +22,8 @@ function* iterateElements2(array) {
 
 // precomputes a fixed set
 function fib(max) {
-  var a = 0, b = 1;
+  var a = 0,
+    b = 1;
   var results = [];
   while (b < max) {
     results.push(b);
@@ -35,7 +34,8 @@ function fib(max) {
 
 // infinite list
 function* fib2() {
-  var a = 0, b = 1;
+  var a = 0,
+    b = 1;
   while (true) {
     yield b;
     [a, b] = [b, a + b];
@@ -76,9 +76,9 @@ function* inorder1(t) {
 }
 
 // Show it off: create a tree.
-var root = tree('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+var root = tree("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 // Print the nodes of the tree in in-order.
-var result = '';
+var result = "";
 for (let x of inorder1(root)) {
   result += x;
 }
@@ -102,7 +102,7 @@ function* inorder2(node) {
 }
 
 // Exercise the non-recursive generator.
-var result = '';
+var result = "";
 for (var x of inorder2(root)) {
   result += x;
 }
@@ -125,13 +125,18 @@ function* filter(list, fun) {
 }
 
 // squares even numbers. no intermediate array is created.
-var numbers = [1,2,3,4,5,6,7,8,9,10];
+var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var squares = map(
-    filter(numbers, function(x) { return x % 2 == 0; }),
-    function(x) { return x * x; });
+  filter(numbers, function (x) {
+    return x % 2 == 0;
+  }),
+  function (x) {
+    return x * x;
+  }
+);
 
 numbers = [];
 for (let s of squares) {
   numbers.push(s);
 }
-alert(numbers.join('_'));
+alert(numbers.join("_"));

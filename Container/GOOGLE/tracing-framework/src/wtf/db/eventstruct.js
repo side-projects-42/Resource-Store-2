@@ -11,9 +11,8 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.ArgumentData');
-goog.provide('wtf.db.EventStruct');
-
+goog.provide("wtf.db.ArgumentData");
+goog.provide("wtf.db.EventStruct");
 
 /**
  * Argument data storage.
@@ -21,7 +20,6 @@ goog.provide('wtf.db.EventStruct');
  * @typedef {Object}
  */
 wtf.db.ArgumentData;
-
 
 /**
  * Event struct offsets (in uint32s).
@@ -100,5 +98,5 @@ wtf.db.EventStruct = {
   /**
    * Event size, in uint32s.
    */
-  STRUCT_SIZE: 11
+  STRUCT_SIZE: 11,
 };

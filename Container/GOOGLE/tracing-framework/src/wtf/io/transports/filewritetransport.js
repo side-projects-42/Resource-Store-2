@@ -11,12 +11,10 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.FileWriteTransport');
+goog.provide("wtf.io.transports.FileWriteTransport");
 
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.WriteTransport');
-
-
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.WriteTransport");
 
 /**
  * Write-only file transport base type.
@@ -27,7 +25,7 @@ goog.require('wtf.io.WriteTransport');
  * @constructor
  * @extends {wtf.io.WriteTransport}
  */
-wtf.io.transports.FileWriteTransport = function(filename) {
+wtf.io.transports.FileWriteTransport = function (filename) {
   goog.base(this);
 
   /**
@@ -35,7 +33,7 @@ wtf.io.transports.FileWriteTransport = function(filename) {
    * @type {!NodeFsModule}
    * @private
    */
-  this.fs_ = /** @type {!NodeFsModule} */ (require('fs'));
+  this.fs_ = /** @type {!NodeFsModule} */ (require("fs"));
 
   /**
    * Filename used when saving.
@@ -49,30 +47,30 @@ wtf.io.transports.FileWriteTransport = function(filename) {
    * @type {number}
    * @private
    */
-  this.fd_ = this.fs_.openSync(this.filename_, 'w');
+  this.fd_ = this.fs_.openSync(this.filename_, "w");
 };
 goog.inherits(wtf.io.transports.FileWriteTransport, wtf.io.WriteTransport);
-
 
 /**
  * @override
  */
-wtf.io.transports.FileWriteTransport.prototype.disposeInternal = function() {
+wtf.io.transports.FileWriteTransport.prototype.disposeInternal = function () {
   // Flush and finish.
   this.fs_.fsyncSync(this.fd_);
   this.fs_.closeSync(this.fd_);
 
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * @override
  */
-wtf.io.transports.FileWriteTransport.prototype.write = function(data) {
+wtf.io.transports.FileWriteTransport.prototype.write = function (data) {
   var nodeData;
-  if (data instanceof ArrayBuffer ||
-      data.buffer && data.buffer instanceof ArrayBuffer) {
+  if (
+    data instanceof ArrayBuffer ||
+    (data.buffer && data.buffer instanceof ArrayBuffer)
+  ) {
     var sourceData;
     if (data instanceof ArrayBuffer) {
       sourceData = new Uint8Array(data);
@@ -85,19 +83,19 @@ wtf.io.transports.FileWriteTransport.prototype.write = function(data) {
       nodeData[n] = sourceData[n];
     }
   } else if (wtf.io.Blob.isBlob(data)) {
-    nodeData = /** @type {!Buffer} */ (wtf.io.Blob.toNative(
-        /** @type {!wtf.io.Blob} */ (data)));
+    nodeData = /** @type {!Buffer} */ (
+      wtf.io.Blob.toNative(/** @type {!wtf.io.Blob} */ (data))
+    );
   } else {
-    throw new Error('Unsupported write data type.');
+    throw new Error("Unsupported write data type.");
   }
 
   this.fs_.writeSync(this.fd_, nodeData, 0, nodeData.length, null);
 };
 
-
 /**
  * @override
  */
-wtf.io.transports.FileWriteTransport.prototype.flush = function() {
+wtf.io.transports.FileWriteTransport.prototype.flush = function () {
   this.fs_.fsyncSync(this.fd_);
 };

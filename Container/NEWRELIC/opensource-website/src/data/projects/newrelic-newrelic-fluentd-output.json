@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-fluentd-output",
+  "fullName": "newrelic/newrelic-fluentd-output",
+  "slug": "newrelic-newrelic-fluentd-output",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Fluentd Output Plugin for New Relic Logs",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-fluentd-output",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-fluentd-output",
+  "iconUrl": null,
+  "shortDescription": "Fluentd to New Relic Logs",
+  "description": "A Fluentd output plugin that sends logs to New Relic",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Ruby",
+  "projectTags": ["logging"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Fluentd Output Plugin for New Relic Logs",
+    "url": "https://github.com/newrelic/newrelic-fluentd-output"
+  }
+}

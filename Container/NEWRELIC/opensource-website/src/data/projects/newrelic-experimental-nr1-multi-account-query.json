@@ -1,0 +1,24 @@
+{
+  "name": "nr1-multi-account-query",
+  "fullName": "newrelic-experimental/nr1-multi-account-query",
+  "slug": "newrelic-experimental-nr1-multi-account-query",
+  "owner": {
+    "login": "newrelic-experimental",
+    "type": "Organization"
+  },
+  "title": "Multi Account Query Tool",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic-experimental/nr1-multi-account-query",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic-experimental/nr1-multi-account-query",
+  "iconUrl": null,
+  "shortDescription": "NRQL across sub accounts",
+  "description": "Run an NRQL query across your sub accounts",
+  "ossCategory": "new-relic-experimental",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Multi Account Query Tool",
+    "url": "https://github.com/newrelic-experimental/nr1-multi-account-query"
+  }
+}

@@ -1,18 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>CodeMirror: Full Screen Editing</title>
-    <link rel="stylesheet" href="../lib/codemirror.css">
+    <link rel="stylesheet" href="../lib/codemirror.css" />
     <script src="../lib/codemirror.js"></script>
-    <link rel="stylesheet" href="../theme/night.css">
+    <link rel="stylesheet" href="../theme/night.css" />
     <script src="../mode/xml/xml.js"></script>
-    <link rel="stylesheet" href="../doc/docs.css">
+    <link rel="stylesheet" href="../doc/docs.css" />
 
     <style type="text/css">
       .CodeMirror-fullscreen {
         display: block;
         position: absolute;
-        top: 0; left: 0;
+        top: 0;
+        left: 0;
         width: 100%;
         z-index: 9999;
       }
@@ -21,7 +22,8 @@
   <body>
     <h1>CodeMirror: Full Screen Editing</h1>
 
-    <form><textarea id="code" name="code" rows="5">
+    <form>
+      <textarea id="code" name="code" rows="5">
   <dt id="option_indentWithTabs"><code>indentWithTabs (boolean)</code></dt>
   <dd>Whether, when indenting, the first N*8 spaces should be
   replaced by N tabs. Default is false.</dd>
@@ -101,46 +103,61 @@
       <dd>Do not indent the new line.</dd>
     </dl></dd>
 
-</textarea></form>
-  <script>
-    function isFullScreen(cm) {
-      return /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className);
-    }
-    function winHeight() {
-      return window.innerHeight || (document.documentElement || document.body).clientHeight;
-    }
-    function setFullScreen(cm, full) {
-      var wrap = cm.getWrapperElement(), scroll = cm.getScrollerElement();
-      if (full) {
-        wrap.className += " CodeMirror-fullscreen";
-        scroll.style.height = winHeight() + "px";
-        document.documentElement.style.overflow = "hidden";
-      } else {
-        wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "");
-        scroll.style.height = "";
-        document.documentElement.style.overflow = "";
+</textarea
+      >
+    </form>
+    <script>
+      function isFullScreen(cm) {
+        return /\bCodeMirror-fullscreen\b/.test(
+          cm.getWrapperElement().className
+        );
       }
-      cm.refresh();
-    }
-    CodeMirror.connect(window, "resize", function() {
-      var showing = document.body.getElementsByClassName("CodeMirror-fullscreen")[0];
-      if (!showing) return;
-      showing.CodeMirror.getScrollerElement().style.height = winHeight() + "px";
-    });
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      lineNumbers: true,
-      theme: "night",
-      extraKeys: {
-        "F11": function(cm) {
-          setFullScreen(cm, !isFullScreen(cm));
-        },
-        "Esc": function(cm) {
-          if (isFullScreen(cm)) setFullScreen(cm, false);
+      function winHeight() {
+        return (
+          window.innerHeight ||
+          (document.documentElement || document.body).clientHeight
+        );
+      }
+      function setFullScreen(cm, full) {
+        var wrap = cm.getWrapperElement(),
+          scroll = cm.getScrollerElement();
+        if (full) {
+          wrap.className += " CodeMirror-fullscreen";
+          scroll.style.height = winHeight() + "px";
+          document.documentElement.style.overflow = "hidden";
+        } else {
+          wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "");
+          scroll.style.height = "";
+          document.documentElement.style.overflow = "";
         }
+        cm.refresh();
       }
-    });
-  </script>
+      CodeMirror.connect(window, "resize", function () {
+        var showing = document.body.getElementsByClassName(
+          "CodeMirror-fullscreen"
+        )[0];
+        if (!showing) return;
+        showing.CodeMirror.getScrollerElement().style.height =
+          winHeight() + "px";
+      });
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        theme: "night",
+        extraKeys: {
+          F11: function (cm) {
+            setFullScreen(cm, !isFullScreen(cm));
+          },
+          Esc: function (cm) {
+            if (isFullScreen(cm)) setFullScreen(cm, false);
+          },
+        },
+      });
+    </script>
 
-    <p>Press <strong>F11</strong> when cursor is in the editor to toggle full screen editing. <strong>Esc</strong> can also be used to <i>exit</i> full screen editing.</p>
+    <p>
+      Press <strong>F11</strong> when cursor is in the editor to toggle full
+      screen editing. <strong>Esc</strong> can also be used to <i>exit</i> full
+      screen editing.
+    </p>
   </body>
 </html>

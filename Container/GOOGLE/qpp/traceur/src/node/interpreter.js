@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
-var traceur = require('./traceur.js');
+var fs = require("fs");
+var traceur = require("./traceur.js");
 
 function interpret(filename, argv, flags) {
   var execArgv = [require.main.filename].concat(flags || []);
 
   filename = fs.realpathSync(filename);
-  process.argv = ['traceur', filename].concat(argv || []);
+  process.argv = ["traceur", filename].concat(argv || []);
   process.execArgv = process.execArgv.concat(execArgv);
 
-  if (traceur.options.deferredFunctions)
-    require('./deferred.js').wrap();
+  if (traceur.options.deferredFunctions) require("./deferred.js").wrap();
 
   return traceur.require(filename);
 }

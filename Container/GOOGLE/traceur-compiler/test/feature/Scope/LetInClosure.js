@@ -2,12 +2,12 @@
 
 function letInClosure(n) {
   var l = [];
-  for (var i = 0; i < n; i ++) {
+  for (var i = 0; i < n; i++) {
     let let_i = i;
     if (i % 3 == 0) {
       continue;
     }
-    l.push(function() {
+    l.push(function () {
       return let_i;
     });
   }

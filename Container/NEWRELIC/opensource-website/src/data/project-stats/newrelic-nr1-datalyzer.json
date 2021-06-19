@@ -1,0 +1,168 @@
+{
+  "projectFullName": "newrelic/nr1-datalyzer",
+  "issues": {
+    "open": 2
+  },
+  "releases": 12,
+  "latestRelease": {
+    "name": "v0.7.1",
+    "date": "2021-04-02T17:02:53Z"
+  },
+  "commits": 206,
+  "lastSixMonthsCommitTotal": 5,
+  "contributors": 15,
+  "pullRequests": {
+    "open": 1
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU1MTQ3NTkzMzk=",
+      "title": "Save event type and account id in url state",
+      "url": "https://github.com/newrelic/nr1-datalyzer/issues/21",
+      "createdAt": "2019-10-30T15:22:35Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "cirne",
+        "id": "MDQ6VXNlcjMwNTE0",
+        "email": "",
+        "name": "Lew Cirne"
+      },
+      "number": 21,
+      "createdBy": "Lew Cirne"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 13562672,
+      "login": "jaesius",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/13562672?v=4",
+      "htmlUrl": "https://github.com/jaesius",
+      "contributions": 1
+    },
+    {
+      "id": 30514,
+      "login": "cirne",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/30514?v=4",
+      "htmlUrl": "https://github.com/cirne",
+      "contributions": 70
+    },
+    {
+      "id": 66321197,
+      "login": "nr-opensource-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66321197?v=4",
+      "htmlUrl": "https://github.com/nr-opensource-bot",
+      "contributions": 11
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 1
+    },
+    {
+      "id": 55203603,
+      "login": "austin-schaefer",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/55203603?v=4",
+      "htmlUrl": "https://github.com/austin-schaefer",
+      "contributions": 2
+    },
+    {
+      "id": 175638,
+      "login": "danielguillan",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/175638?v=4",
+      "htmlUrl": "https://github.com/danielguillan",
+      "contributions": 1
+    },
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 10
+    },
+    {
+      "id": 5214156,
+      "login": "norbertsuski",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/5214156?v=4",
+      "htmlUrl": "https://github.com/norbertsuski",
+      "contributions": 1
+    },
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 17
+    },
+    {
+      "id": 6864939,
+      "login": "jrhinehart",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6864939?v=4",
+      "htmlUrl": "https://github.com/jrhinehart",
+      "contributions": 4
+    },
+    {
+      "id": 8731013,
+      "login": "prototypicalpro",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8731013?v=4",
+      "htmlUrl": "https://github.com/prototypicalpro",
+      "contributions": 3
+    },
+    {
+      "id": 12318362,
+      "login": "lindsayculver",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/12318362?v=4",
+      "htmlUrl": "https://github.com/lindsayculver",
+      "contributions": 1
+    },
+    {
+      "id": 70179303,
+      "login": "aswanson-nr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/70179303?v=4",
+      "htmlUrl": "https://github.com/aswanson-nr",
+      "contributions": 1
+    },
+    {
+      "id": 19733683,
+      "login": "snyk-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19733683?v=4",
+      "htmlUrl": "https://github.com/snyk-bot",
+      "contributions": 3
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 16
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U2MDU=",
+      "name": "SCSS",
+      "color": "#c6538c"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic/nr1-datalyzer/master/catalog/screenshots/nr1-datalyzer-1.png",
+    "https://raw.githubusercontent.com/newrelic/nr1-datalyzer/master/catalog/screenshots/nr1-datalyzer-2.png"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

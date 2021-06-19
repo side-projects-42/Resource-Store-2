@@ -11,12 +11,12 @@ export function noop() {}
  * @returns {number}
  * @function
  */
-export const uid = (function() {
+export const uid = (function () {
   let id = 0;
-  return function() {
+  return function () {
     return id++;
   };
-}());
+})();
 
 /**
  * Returns true if `value` is neither null nor undefined, else returns false.
@@ -25,7 +25,7 @@ export const uid = (function() {
  * @since 2.7.0
  */
 export function isNullOrUndef(value) {
-  return value === null || typeof value === 'undefined';
+  return value === null || typeof value === "undefined";
 }
 
 /**
@@ -39,7 +39,7 @@ export function isArray(value) {
     return true;
   }
   const type = Object.prototype.toString.call(value);
-  if (type.substr(0, 7) === '[object' && type.substr(-6) === 'Array]') {
+  if (type.substr(0, 7) === "[object" && type.substr(-6) === "Array]") {
     return true;
   }
   return false;
@@ -52,7 +52,10 @@ export function isArray(value) {
  * @since 2.7.0
  */
 export function isObject(value) {
-  return value !== null && Object.prototype.toString.call(value) === '[object Object]';
+  return (
+    value !== null &&
+    Object.prototype.toString.call(value) === "[object Object]"
+  );
 }
 
 /**
@@ -60,10 +63,9 @@ export function isObject(value) {
  * @param {*} value  - The value to test.
  * @returns {boolean}
  */
-const isNumberFinite = (value) => (typeof value === 'number' || value instanceof Number) && isFinite(+value);
-export {
-  isNumberFinite as isFinite,
-};
+const isNumberFinite = (value) =>
+  (typeof value === "number" || value instanceof Number) && isFinite(+value);
+export { isNumberFinite as isFinite };
 
 /**
  * Returns `value` if finite, else returns `defaultValue`.
@@ -82,17 +84,17 @@ export function finiteOrDefault(value, defaultValue) {
  * @returns {*}
  */
 export function valueOrDefault(value, defaultValue) {
-  return typeof value === 'undefined' ? defaultValue : value;
+  return typeof value === "undefined" ? defaultValue : value;
 }
 
 export const toPercentage = (value, dimension) =>
-  typeof value === 'string' && value.endsWith('%') ?
-    parseFloat(value) / 100
+  typeof value === "string" && value.endsWith("%")
+    ? parseFloat(value) / 100
     : value / dimension;
 
 export const toDimension = (value, dimension) =>
-  typeof value === 'string' && value.endsWith('%') ?
-    parseFloat(value) / 100 * dimension
+  typeof value === "string" && value.endsWith("%")
+    ? (parseFloat(value) / 100) * dimension
     : +value;
 
 /**
@@ -104,7 +106,7 @@ export const toDimension = (value, dimension) =>
  * @returns {*}
  */
 export function callback(fn, args, thisArg) {
-  if (fn && typeof fn.call === 'function') {
+  if (fn && typeof fn.call === "function") {
     return fn.apply(thisArg, args);
   }
 }
@@ -193,7 +195,7 @@ export function clone(source) {
 }
 
 function isValidKey(key) {
-  return ['__proto__', 'prototype', 'constructor'].indexOf(key) === -1;
+  return ["__proto__", "prototype", "constructor"].indexOf(key) === -1;
 }
 
 /**
@@ -261,7 +263,7 @@ export function merge(target, source, options) {
  */
 export function mergeIf(target, source) {
   // eslint-disable-next-line no-use-before-define
-  return merge(target, source, {merger: _mergerIf});
+  return merge(target, source, { merger: _mergerIf });
 }
 
 /**
@@ -288,13 +290,19 @@ export function _mergerIf(key, target, source) {
  */
 export function _deprecated(scope, value, previous, current) {
   if (value !== undefined) {
-    console.warn(scope + ': "' + previous +
-			'" is deprecated. Please use "' + current + '" instead');
+    console.warn(
+      scope +
+        ': "' +
+        previous +
+        '" is deprecated. Please use "' +
+        current +
+        '" instead'
+    );
   }
 }
 
-const emptyString = '';
-const dot = '.';
+const emptyString = "";
+const dot = ".";
 function indexOfDotOrLength(key, start) {
   const idx = key.indexOf(dot, start);
   return idx === -1 ? key.length : idx;
@@ -321,10 +329,9 @@ export function _capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+export const defined = (value) => typeof value !== "undefined";
 
-export const defined = (value) => typeof value !== 'undefined';
-
-export const isFunction = (value) => typeof value === 'function';
+export const isFunction = (value) => typeof value === "function";
 
 // Adapted from https://stackoverflow.com/questions/31128855/comparing-ecma6-sets-for-equality#31129384
 export const setsEqual = (a, b) => {

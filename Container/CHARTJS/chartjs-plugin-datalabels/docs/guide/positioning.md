@@ -5,6 +5,7 @@
 An anchor point is defined by an orientation vector and a position on the data element. The orientation depends on the scale type (vertical, horizontal or radial). The position is calculated based on the `anchor` option and the orientation vector.
 
 Supported values for `anchor`:
+
 - `'center'` (default): element center
 - `'start'`: lowest element boundary
 - `'end'`: highest element boundary
@@ -13,7 +14,7 @@ Supported values for `anchor`:
 
 ## Clamping
 
-The `clamp` option, when `true`, enforces the anchor position to be calculated based on the *visible geometry* of the associated element (i.e. part inside the chart area).
+The `clamp` option, when `true`, enforces the anchor position to be calculated based on the _visible geometry_ of the associated element (i.e. part inside the chart area).
 
 ![chartjs-plugin-datalabels](../assets/clamp.png)
 
@@ -33,7 +34,7 @@ The `align` option defines the position of the label relative to the anchor poin
 - `'left'`: the label is positioned to the left of the anchor point (180°)
 - `'top'`: the label is positioned to the top of the anchor point (270°)
 
-The `offset` represents the distance (in pixels) to pull the label *away* from the anchor point. This option is **not applicable** when `align` is `'center'`. Also note that if `align` is `'start'`, the label is moved in the opposite direction. The default value is `4`.
+The `offset` represents the distance (in pixels) to pull the label _away_ from the anchor point. This option is **not applicable** when `align` is `'center'`. Also note that if `align` is `'start'`, the label is moved in the opposite direction. The default value is `4`.
 
 ![chartjs-plugin-datalabels](../assets/align.png)
 

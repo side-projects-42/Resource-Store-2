@@ -11,34 +11,31 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.ISessionListener');
-goog.provide('wtf.trace.TraceManager');
+goog.provide("wtf.trace.ISessionListener");
+goog.provide("wtf.trace.TraceManager");
 
-goog.require('goog.Disposable');
-goog.require('goog.array');
-goog.require('goog.asserts');
-goog.require('wtf');
-goog.require('wtf.data.ContextInfo');
-goog.require('wtf.data.EventFlag');
-goog.require('wtf.data.ZoneType');
-goog.require('wtf.io.cff.BinaryStreamTarget');
-goog.require('wtf.io.transports.MemoryWriteTransport');
-goog.require('wtf.timing');
-goog.require('wtf.trace.BuiltinEvents');
-goog.require('wtf.trace.EventRegistry');
-goog.require('wtf.trace.EventSessionContext');
-goog.require('wtf.trace.Zone');
-goog.require('wtf.trace.sessions.SnapshottingSession');
-goog.require('wtf.util.Options');
-
-
+goog.require("goog.Disposable");
+goog.require("goog.array");
+goog.require("goog.asserts");
+goog.require("wtf");
+goog.require("wtf.data.ContextInfo");
+goog.require("wtf.data.EventFlag");
+goog.require("wtf.data.ZoneType");
+goog.require("wtf.io.cff.BinaryStreamTarget");
+goog.require("wtf.io.transports.MemoryWriteTransport");
+goog.require("wtf.timing");
+goog.require("wtf.trace.BuiltinEvents");
+goog.require("wtf.trace.EventRegistry");
+goog.require("wtf.trace.EventSessionContext");
+goog.require("wtf.trace.Zone");
+goog.require("wtf.trace.sessions.SnapshottingSession");
+goog.require("wtf.util.Options");
 
 /**
  * Session event listener.
  * @interface
  */
-wtf.trace.ISessionListener = function() {};
-
+wtf.trace.ISessionListener = function () {};
 
 /**
  * Fired when a session is started.
@@ -46,13 +43,11 @@ wtf.trace.ISessionListener = function() {};
  */
 wtf.trace.ISessionListener.prototype.sessionStarted = goog.nullFunction;
 
-
 /**
  * Fired when a session is stopped.
  * @param {!wtf.trace.Session} session Trace session.
  */
 wtf.trace.ISessionListener.prototype.sessionStopped = goog.nullFunction;
-
 
 /**
  * Fired when a snapshot has been requested.
@@ -66,13 +61,10 @@ wtf.trace.ISessionListener.prototype.sessionStopped = goog.nullFunction;
  */
 wtf.trace.ISessionListener.prototype.requestSnapshots = goog.nullFunction;
 
-
 /**
  * Fired when the snapshot should be reset.
  */
 wtf.trace.ISessionListener.prototype.reset = goog.nullFunction;
-
-
 
 /**
  * Trace manager.
@@ -82,7 +74,7 @@ wtf.trace.ISessionListener.prototype.reset = goog.nullFunction;
  * @constructor
  * @extends {goog.Disposable}
  */
-wtf.trace.TraceManager = function(opt_options) {
+wtf.trace.TraceManager = function (opt_options) {
   goog.base(this);
 
   var options = new wtf.util.Options();
@@ -90,29 +82,29 @@ wtf.trace.TraceManager = function(opt_options) {
 
   // If we don't have an extension try to load settings from local storage.
   if (goog.global.localStorage) {
-    if (!options.getOptionalBoolean('wtf.injector', false)) {
+    if (!options.getOptionalBoolean("wtf.injector", false)) {
       // Load from local storage.
-      var value = goog.global.localStorage.getItem('__wtf_options__');
+      var value = goog.global.localStorage.getItem("__wtf_options__");
       if (value) {
         options.load(value);
       }
     } else {
       // Otherwise, remove settings from local storage so they don't conflict
       // with the extension.
-      goog.global.localStorage.removeItem('__wtf_options__');
+      goog.global.localStorage.removeItem("__wtf_options__");
     }
   }
 
   // Always prefer certain options from the user to stored ones.
   // If we don't do this, things like the injector setting will be saved.
   var OVERRIDE_KEYS = [
-    'wtf.injector',
-    'wtf.hud.app.mode',
-    'wtf.hud.app.endpoint',
-    'wtf.addons',
-    'wtf.trace.provider.chromeDebug.present',
-    'wtf.trace.provider.chromeDebug.tracing',
-    'wtf.trace.provider.firefoxDebug.present'
+    "wtf.injector",
+    "wtf.hud.app.mode",
+    "wtf.hud.app.endpoint",
+    "wtf.addons",
+    "wtf.trace.provider.chromeDebug.present",
+    "wtf.trace.provider.chromeDebug.tracing",
+    "wtf.trace.provider.firefoxDebug.present",
   ];
   for (var n = 0; n < OVERRIDE_KEYS.length; n++) {
     var key = OVERRIDE_KEYS[n];
@@ -120,8 +112,8 @@ wtf.trace.TraceManager = function(opt_options) {
   }
 
   // Mixin any global overrides, if present.
-  options.mixin(goog.global['wtf_trace_options']);
-  options.mixin(goog.global['wtf_hud_options']);
+  options.mixin(goog.global["wtf_trace_options"]);
+  options.mixin(goog.global["wtf_hud_options"]);
 
   /**
    * Global options.
@@ -181,44 +173,44 @@ wtf.trace.TraceManager = function(opt_options) {
   // Listen for newly registered events.
   var registry = wtf.trace.EventRegistry.getShared();
   registry.addListener(
-      wtf.trace.EventRegistry.EventType.EVENT_TYPE_REGISTERED,
-      this.eventTypeRegistered_, this);
+    wtf.trace.EventRegistry.EventType.EVENT_TYPE_REGISTERED,
+    this.eventTypeRegistered_,
+    this
+  );
 
   // Create the default zone.
   var defaultZone = this.createZone(
-      'Script',
-      wtf.data.ZoneType.SCRIPT,
-      wtf.NODE ? goog.global['process']['argv'][1] : goog.global.location.href);
+    "Script",
+    wtf.data.ZoneType.SCRIPT,
+    wtf.NODE ? goog.global["process"]["argv"][1] : goog.global.location.href
+  );
   this.pushZone(defaultZone);
 };
 goog.inherits(wtf.trace.TraceManager, goog.Disposable);
 
-
 /**
  * @override
  */
-wtf.trace.TraceManager.prototype.disposeInternal = function() {
+wtf.trace.TraceManager.prototype.disposeInternal = function () {
   this.stopSession();
 
   goog.disposeAll(this.providers_);
   this.providers_.length = 0;
 
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * Gets the global options, optionally combined with options overrides.
  * @param {Object=} opt_options Options overrides.
  * @return {!wtf.util.Options} Options.
  */
-wtf.trace.TraceManager.prototype.getOptions = function(opt_options) {
+wtf.trace.TraceManager.prototype.getOptions = function (opt_options) {
   // TODO(benvanik): chaining of options objects? would be nice to have events.
   var options = this.options_.clone();
   options.mixin(opt_options);
   return options;
 };
-
 
 /**
  * Detects context info.
@@ -226,16 +218,15 @@ wtf.trace.TraceManager.prototype.getOptions = function(opt_options) {
  * as window size/title/etc match the expected values.
  * @return {!wtf.data.ContextInfo} Detected context info.
  */
-wtf.trace.TraceManager.prototype.detectContextInfo = function() {
+wtf.trace.TraceManager.prototype.detectContextInfo = function () {
   return wtf.data.ContextInfo.detect();
 };
-
 
 /**
  * Adds a session event listener.
  * @param {!wtf.trace.ISessionListener} listener Event listener.
  */
-wtf.trace.TraceManager.prototype.addListener = function(listener) {
+wtf.trace.TraceManager.prototype.addListener = function (listener) {
   this.listeners_.push(listener);
 
   // If there is a session, notify the listener.
@@ -244,24 +235,21 @@ wtf.trace.TraceManager.prototype.addListener = function(listener) {
   }
 };
 
-
 /**
  * Adds a provider to the trace manager.
  * @param {!wtf.trace.Provider} provider Provider instance.
  */
-wtf.trace.TraceManager.prototype.addProvider = function(provider) {
+wtf.trace.TraceManager.prototype.addProvider = function (provider) {
   this.providers_.push(provider);
 };
-
 
 /**
  * Gets a full list of trace providers.
  * @return {!Array.<!wtf.trace.Provider>} All trace providers. Don't modify.
  */
-wtf.trace.TraceManager.prototype.getProviders = function() {
+wtf.trace.TraceManager.prototype.getProviders = function () {
   return this.providers_;
 };
-
 
 /**
  * Creates a new execution zone.
@@ -273,25 +261,34 @@ wtf.trace.TraceManager.prototype.getProviders = function() {
  * @param {string} location Zone location (such as URI of the script).
  * @return {!wtf.trace.Zone} Zone object used for future calls.
  */
-wtf.trace.TraceManager.prototype.createZone = function(name, type, location) {
+wtf.trace.TraceManager.prototype.createZone = function (name, type, location) {
   // Create definition for tracking.
   var zone = new wtf.trace.Zone(
-      this.nextZoneId_++, wtf.now(), name, type, location);
+    this.nextZoneId_++,
+    wtf.now(),
+    name,
+    type,
+    location
+  );
   this.allZones_[zone.id] = zone;
 
   // Append event.
   wtf.trace.BuiltinEvents.createZone(
-      zone.id, zone.name, zone.type, zone.location, zone.timestamp);
+    zone.id,
+    zone.name,
+    zone.type,
+    zone.location,
+    zone.timestamp
+  );
 
   return zone;
 };
-
 
 /**
  * Deletes an execution zone.
  * @param {!wtf.trace.Zone} zone Zone returned from {@see #createZone}.
  */
-wtf.trace.TraceManager.prototype.deleteZone = function(zone) {
+wtf.trace.TraceManager.prototype.deleteZone = function (zone) {
   // Should never be deleting zones that are active.
   goog.asserts.assert(!goog.array.contains(this.zoneStack_, zone));
 
@@ -301,12 +298,11 @@ wtf.trace.TraceManager.prototype.deleteZone = function(zone) {
   // NOTE: zones are never deleted.
 };
 
-
 /**
  * Appends all zones to the given buffer.
  * @param {!wtf.io.BufferView.Type} bufferView Buffer to write to.
  */
-wtf.trace.TraceManager.prototype.appendAllZones = function(bufferView) {
+wtf.trace.TraceManager.prototype.appendAllZones = function (bufferView) {
   // Note that since zone IDs are unique per stream it's ok if there are
   // multiple create events. Clients must dedupe these (and use the last created
   // time) or not show ones never referenced.
@@ -314,7 +310,13 @@ wtf.trace.TraceManager.prototype.appendAllZones = function(bufferView) {
     var zone = this.allZones_[key];
     // Note that we use 0 instead of zone.timestamp to prevent skewing traces
     wtf.trace.BuiltinEvents.createZone(
-        zone.id, zone.name, zone.type, zone.location, 0, bufferView);
+      zone.id,
+      zone.name,
+      zone.type,
+      zone.location,
+      0,
+      bufferView
+    );
   }
 
   var currentZone = this.getCurrentZone();
@@ -323,12 +325,11 @@ wtf.trace.TraceManager.prototype.appendAllZones = function(bufferView) {
   }
 };
 
-
 /**
  * Pushes a new zone as active.
  * @param {!wtf.trace.Zone} zone Zone returned from {@see #createZone}.
  */
-wtf.trace.TraceManager.prototype.pushZone = function(zone) {
+wtf.trace.TraceManager.prototype.pushZone = function (zone) {
   this.zoneStack_.push(zone);
 
   // Append event.
@@ -338,11 +339,10 @@ wtf.trace.TraceManager.prototype.pushZone = function(zone) {
   wtf.trace.BuiltinEvents.setZone(zone.id);
 };
 
-
 /**
  * Pops the current zone.
  */
-wtf.trace.TraceManager.prototype.popZone = function() {
+wtf.trace.TraceManager.prototype.popZone = function () {
   goog.asserts.assert(this.zoneStack_.length);
   this.zoneStack_.pop();
 
@@ -351,26 +351,24 @@ wtf.trace.TraceManager.prototype.popZone = function() {
   wtf.trace.BuiltinEvents.setZone(zone.id);
 };
 
-
 /**
  * Gets the current zone, if any.
  * @return {wtf.trace.Zone} Zone information, if a zone is active.
  */
-wtf.trace.TraceManager.prototype.getCurrentZone = function() {
-  return this.zoneStack_.length ?
-      this.zoneStack_[this.zoneStack_.length - 1] : null;
+wtf.trace.TraceManager.prototype.getCurrentZone = function () {
+  return this.zoneStack_.length
+    ? this.zoneStack_[this.zoneStack_.length - 1]
+    : null;
 };
-
 
 /**
  * Gets the current tracing session.
  * Only valid if a recording session has been setup.
  * @return {wtf.trace.Session} The current trace session, if any.
  */
-wtf.trace.TraceManager.prototype.getCurrentSession = function() {
+wtf.trace.TraceManager.prototype.getCurrentSession = function () {
   return this.currentSession_;
 };
-
 
 /**
  * Starts a new snapshotting session.
@@ -379,7 +377,7 @@ wtf.trace.TraceManager.prototype.getCurrentSession = function() {
  *
  * @param {!wtf.trace.Session} session New session.
  */
-wtf.trace.TraceManager.prototype.startSession = function(session) {
+wtf.trace.TraceManager.prototype.startSession = function (session) {
   goog.asserts.assert(!this.currentSession_);
 
   this.currentSession_ = session;
@@ -403,11 +401,10 @@ wtf.trace.TraceManager.prototype.startSession = function(session) {
   }
 };
 
-
 /**
  * Stops the current session.
  */
-wtf.trace.TraceManager.prototype.stopSession = function() {
+wtf.trace.TraceManager.prototype.stopSession = function () {
   // Notify listeners.
   if (this.currentSession_) {
     for (var n = 0; n < this.listeners_.length; n++) {
@@ -424,7 +421,6 @@ wtf.trace.TraceManager.prototype.stopSession = function() {
   wtf.trace.EventSessionContext.init(context, null);
 };
 
-
 // TODO(benvanik): move this out of here, or someplace else.
 /**
  * Asynchronously snapshots all contexts.
@@ -440,12 +436,16 @@ wtf.trace.TraceManager.prototype.stopSession = function() {
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.trace.TraceManager.prototype.requestSnapshots = function(
-    callback, opt_scope) {
+wtf.trace.TraceManager.prototype.requestSnapshots = function (
+  callback,
+  opt_scope
+) {
   var session = this.currentSession_;
-  if (!session ||
-      !(session instanceof wtf.trace.sessions.SnapshottingSession)) {
-    wtf.timing.setImmediate(function() {
+  if (
+    !session ||
+    !(session instanceof wtf.trace.sessions.SnapshottingSession)
+  ) {
+    wtf.timing.setImmediate(function () {
       callback.call(opt_scope, null);
     });
     return;
@@ -461,7 +461,7 @@ wtf.trace.TraceManager.prototype.requestSnapshots = function(
     goog.dispose(streamTarget);
     goog.dispose(transport);
     callback.call(opt_scope, allBuffers.length ? allBuffers : null);
-  };
+  }
 
   // Snapshot self.
   session.snapshot(streamTarget);
@@ -481,27 +481,28 @@ wtf.trace.TraceManager.prototype.requestSnapshots = function(
     if (!pendingSnapshots) {
       complete();
     }
-  };
+  }
   for (var n = 0; n < this.listeners_.length; n++) {
     var requested = this.listeners_[n].requestSnapshots(
-        session, listenerCallback);
+      session,
+      listenerCallback
+    );
     if (requested !== undefined) {
       pendingSnapshots += requested;
     }
   }
   if (!pendingSnapshots) {
     // No pending async snapshots - end next tick.
-    wtf.timing.setImmediate(function() {
+    wtf.timing.setImmediate(function () {
       complete();
     });
   }
 };
 
-
 /**
  * Resets the snapshot for all sessions.
  */
-wtf.trace.TraceManager.prototype.reset = function() {
+wtf.trace.TraceManager.prototype.reset = function () {
   var session = this.getCurrentSession();
   if (session instanceof wtf.trace.sessions.SnapshottingSession) {
     session.reset();
@@ -511,25 +512,24 @@ wtf.trace.TraceManager.prototype.reset = function() {
   }
 };
 
-
 /**
  * Handles event type registration events.
  * @param {!wtf.trace.EventType} eventType Newly registered event type.
  * @private
  */
-wtf.trace.TraceManager.prototype.eventTypeRegistered_ = function(eventType) {
+wtf.trace.TraceManager.prototype.eventTypeRegistered_ = function (eventType) {
   // If there is an active session, append the event type to the stream.
   if (this.currentSession_) {
     // Append to the stream.
     wtf.trace.BuiltinEvents.defineEvent(
-        eventType.wireId,
-        eventType.eventClass,
-        eventType.flags,
-        eventType.name,
-        eventType.getArgString());
+      eventType.wireId,
+      eventType.eventClass,
+      eventType.flags,
+      eventType.name,
+      eventType.getArgString()
+    );
   }
 };
-
 
 /**
  * Writes the event header to the given buffer.
@@ -539,8 +539,10 @@ wtf.trace.TraceManager.prototype.eventTypeRegistered_ = function(eventType) {
  * @param {boolean=} opt_all True to write all events, regardless of use.
  * @return {boolean} True if the header was written successfully.
  */
-wtf.trace.TraceManager.prototype.writeEventHeader = function(
-    bufferView, opt_all) {
+wtf.trace.TraceManager.prototype.writeEventHeader = function (
+  bufferView,
+  opt_all
+) {
   // Write event metadata.
   var registry = wtf.trace.EventRegistry.getShared();
   var eventTypes = registry.getEventTypes();
@@ -548,26 +550,28 @@ wtf.trace.TraceManager.prototype.writeEventHeader = function(
     var eventType = eventTypes[n];
 
     // Skip events that haven't been written, unless it's a builtin.
-    if (!opt_all &&
-        !(eventType.flags & wtf.data.EventFlag.BUILTIN) &&
-        !eventType.count) {
+    if (
+      !opt_all &&
+      !(eventType.flags & wtf.data.EventFlag.BUILTIN) &&
+      !eventType.count
+    ) {
       continue;
     }
 
     // Append to the header.
     wtf.trace.BuiltinEvents.defineEvent(
-        eventType.wireId,
-        eventType.eventClass,
-        eventType.flags,
-        eventType.name,
-        eventType.getArgString(),
-        undefined,
-        bufferView);
+      eventType.wireId,
+      eventType.eventClass,
+      eventType.flags,
+      eventType.name,
+      eventType.getArgString(),
+      undefined,
+      bufferView
+    );
   }
 
   return true;
 };
-
 
 /**
  * Global shared trace manager instance.
@@ -576,15 +580,13 @@ wtf.trace.TraceManager.prototype.writeEventHeader = function(
  */
 wtf.trace.TraceManager.sharedInstance_ = null;
 
-
 /**
  * Gets the current shared instance value, if any.
  * @return {wtf.trace.TraceManager} Shared instance.
  */
-wtf.trace.TraceManager.getSharedInstance = function() {
+wtf.trace.TraceManager.getSharedInstance = function () {
   return wtf.trace.TraceManager.sharedInstance_;
 };
-
 
 /**
  * Sets a new shared instance value.
@@ -592,6 +594,6 @@ wtf.trace.TraceManager.getSharedInstance = function() {
  * caller.
  * @param {wtf.trace.TraceManager} value New value, if any.
  */
-wtf.trace.TraceManager.setSharedInstance = function(value) {
+wtf.trace.TraceManager.setSharedInstance = function (value) {
   wtf.trace.TraceManager.sharedInstance_ = value;
 };

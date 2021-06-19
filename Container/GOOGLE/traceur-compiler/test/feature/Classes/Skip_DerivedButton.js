@@ -3,7 +3,7 @@
 
 class CustomButton extends HTMLButtonElement {
   constructor() {
-    this.value = 'Custom Button';
+    this.value = "Custom Button";
   }
 }
 

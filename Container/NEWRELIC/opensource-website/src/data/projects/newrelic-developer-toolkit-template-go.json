@@ -1,0 +1,24 @@
+{
+  "name": "developer-toolkit-template-go",
+  "fullName": "newrelic/developer-toolkit-template-go",
+  "slug": "newrelic-developer-toolkit-template-go",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "Developer Toolkit Template Go",
+  "supportUrl": "https://discuss.newrelic.com/t/about-the-developer-toolkit-category/90159",
+  "githubUrl": "https://github.com/newrelic/developer-toolkit-template-go",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/developer-toolkit-template-go",
+  "iconUrl": null,
+  "shortDescription": "Golang repo template",
+  "description": "Golang repo template",
+  "ossCategory": "example-code",
+  "primaryLanguage": "Makefile",
+  "projectTags": ["tools"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "Developer Toolkit Template Go",
+    "url": "https://github.com/newrelic/developer-toolkit-template-go"
+  }
+}

@@ -10,15 +10,15 @@ The following additional configuration options are provided by the radial linear
 
 Namespace: `options.scales[scaleId]`
 
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| `animate` | `boolean` | `true` | Whether to animate scaling the chart from the centre
-| `angleLines` | `object` | | Angle line configuration. [more...](#angle-line-options)
-| `beginAtZero` | `boolean` | `false` | if true, scale will include 0 if it is not already included.
-| `pointLabels` | `object` | | Point label configuration. [more...](#point-label-options)
-| `startAngle` | `number` | `0` | Starting angle of the scale. In degrees, 0 is at top.
+| Name          | Type      | Default | Description                                                  |
+| ------------- | --------- | ------- | ------------------------------------------------------------ |
+| `animate`     | `boolean` | `true`  | Whether to animate scaling the chart from the centre         |
+| `angleLines`  | `object`  |         | Angle line configuration. [more...](#angle-line-options)     |
+| `beginAtZero` | `boolean` | `false` | if true, scale will include 0 if it is not already included. |
+| `pointLabels` | `object`  |         | Point label configuration. [more...](#point-label-options)   |
+| `startAngle`  | `number`  | `0`     | Starting angle of the scale. In degrees, 0 is at top.        |
 
-!!!include(axes/_common.md)!!!
+!!!include(axes/\_common.md)!!!
 
 ## Tick Configuration
 
@@ -26,15 +26,15 @@ Namespace: `options.scales[scaleId]`
 
 Namespace: `options.scales[scaleId].ticks`
 
-| Name | Type | Scriptable | Default | Description
-| ---- | ---- | ------- | ------- | -----------
-| `count` | `number` | Yes | `undefined` | The number of ticks to generate. If specified, this overrides the automatic generation.
-| `format` | `object` | Yes | | The [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) options used by the default label formatter
-| `maxTicksLimit` | `number` | Yes | `11` | Maximum number of ticks and gridlines to show.
-| `precision` | `number` | Yes | | if defined and `stepSize` is not specified, the step size will be rounded to this many decimal places.
-| `stepSize` | `number` | Yes | | User defined fixed step size for the scale. [more...](#step-size)
+| Name            | Type     | Scriptable | Default     | Description                                                                                                                                                               |
+| --------------- | -------- | ---------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `count`         | `number` | Yes        | `undefined` | The number of ticks to generate. If specified, this overrides the automatic generation.                                                                                   |
+| `format`        | `object` | Yes        |             | The [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) options used by the default label formatter |
+| `maxTicksLimit` | `number` | Yes        | `11`        | Maximum number of ticks and gridlines to show.                                                                                                                            |
+| `precision`     | `number` | Yes        |             | if defined and `stepSize` is not specified, the step size will be rounded to this many decimal places.                                                                    |
+| `stepSize`      | `number` | Yes        |             | User defined fixed step size for the scale. [more...](#step-size)                                                                                                         |
 
-!!!include(axes/_common_ticks.md)!!!
+!!!include(axes/\_common_ticks.md)!!!
 
 The scriptable context is described in [Options](../../general/options.md#tick) section.
 
@@ -53,22 +53,24 @@ In this example, the largest positive value is 50, but the data maximum is expan
 
 ```javascript
 let chart = new Chart(ctx, {
-    type: 'radar',
-    data: {
-        datasets: [{
-            label: 'First dataset',
-            data: [0, 20, 40, 50]
-        }],
-        labels: ['January', 'February', 'March', 'April']
+  type: "radar",
+  data: {
+    datasets: [
+      {
+        label: "First dataset",
+        data: [0, 20, 40, 50],
+      },
+    ],
+    labels: ["January", "February", "March", "April"],
+  },
+  options: {
+    scales: {
+      r: {
+        suggestedMin: 50,
+        suggestedMax: 100,
+      },
     },
-    options: {
-        scales: {
-            r: {
-                suggestedMin: 50,
-                suggestedMax: 100
-            }
-        }
-    }
+  },
 });
 ```
 
@@ -82,15 +84,15 @@ This example sets up a chart with a y axis that creates ticks at `0, 0.5, 1, 1.5
 
 ```javascript
 let options = {
-    scales: {
-        r: {
-            max: 5,
-            min: 0,
-            ticks: {
-                stepSize: 0.5
-            }
-        }
-    }
+  scales: {
+    r: {
+      max: 5,
+      min: 0,
+      ticks: {
+        stepSize: 0.5,
+      },
+    },
+  },
 };
 ```
 
@@ -99,15 +101,15 @@ let options = {
 The following options are used to configure angled lines that radiate from the center of the chart to the point labels.
 Namespace: `options.scales[scaleId].angleLines`
 
-| Name | Type | Scriptable | Default | Description
-| ---- | ---- | ------- | ------- | -----------
-| `display` | `boolean` | | `true` | if true, angle lines are shown.
-| `color` | [`Color`](../../general/colors.md) | Yes | `Chart.defaults.borderColor` | Color of angled lines.
-| `lineWidth` | `number` | Yes | `1` | Width of angled lines.
-| `borderDash` | `number[]` | Yes<sup>1</sup> | `[]` | Length and spacing of dashes on angled lines. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash).
-| `borderDashOffset` | `number` | Yes | `0.0` | Offset for line dashes. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset).
+| Name               | Type                               | Scriptable      | Default                      | Description                                                                                                                                     |
+| ------------------ | ---------------------------------- | --------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `display`          | `boolean`                          |                 | `true`                       | if true, angle lines are shown.                                                                                                                 |
+| `color`            | [`Color`](../../general/colors.md) | Yes             | `Chart.defaults.borderColor` | Color of angled lines.                                                                                                                          |
+| `lineWidth`        | `number`                           | Yes             | `1`                          | Width of angled lines.                                                                                                                          |
+| `borderDash`       | `number[]`                         | Yes<sup>1</sup> | `[]`                         | Length and spacing of dashes on angled lines. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash). |
+| `borderDashOffset` | `number`                           | Yes             | `0.0`                        | Offset for line dashes. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset).                    |
 
-  1. the `borderDash` setting only accepts a static value or a function. Passing an array of arrays is not supported.
+1. the `borderDash` setting only accepts a static value or a function. Passing an array of arrays is not supported.
 
 The scriptable context is described in [Options](../../general/options.md#scale) section.
 
@@ -116,15 +118,15 @@ The scriptable context is described in [Options](../../general/options.md#scale)
 The following options are used to configure the point labels that are shown on the perimeter of the scale.
 Namespace: `options.scales[scaleId].pointLabels`
 
-| Name | Type | Scriptable | Default | Description
-| ---- | ---- | ------- | ------- | -----------
-| `backdropColor` | [`Color`](../../general/colors.md) | `true` | `undefined` | Background color of the point label.
-| `backdropPadding` | [`Padding`](../../general/padding.md) | | `2` | Padding of label backdrop.
-| `display` | `boolean` | | `true` | if true, point labels are shown.
-| `callback` | `function` | | | Callback function to transform data labels to point labels. The default implementation simply returns the current string.
-| `color` | [`Color`](../../general/colors.md) | Yes | `Chart.defaults.color` | Color of label.
-| `font` | `Font` | Yes | `Chart.defaults.font` | See [Fonts](../../general/fonts.md)
-| `padding` | `number` | Yes | 5 | Padding between chart and point labels.
+| Name              | Type                                  | Scriptable | Default                | Description                                                                                                               |
+| ----------------- | ------------------------------------- | ---------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `backdropColor`   | [`Color`](../../general/colors.md)    | `true`     | `undefined`            | Background color of the point label.                                                                                      |
+| `backdropPadding` | [`Padding`](../../general/padding.md) |            | `2`                    | Padding of label backdrop.                                                                                                |
+| `display`         | `boolean`                             |            | `true`                 | if true, point labels are shown.                                                                                          |
+| `callback`        | `function`                            |            |                        | Callback function to transform data labels to point labels. The default implementation simply returns the current string. |
+| `color`           | [`Color`](../../general/colors.md)    | Yes        | `Chart.defaults.color` | Color of label.                                                                                                           |
+| `font`            | `Font`                                | Yes        | `Chart.defaults.font`  | See [Fonts](../../general/fonts.md)                                                                                       |
+| `padding`         | `number`                              | Yes        | 5                      | Padding between chart and point labels.                                                                                   |
 
 The scriptable context is described in [Options](../../general/options.md#scale) section.
 

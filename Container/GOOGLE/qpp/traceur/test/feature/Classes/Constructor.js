@@ -9,7 +9,7 @@ class A {
   classRef() {
     return A;
   }
-};
+}
 
 var p = new Point(1, 2);
 assertEquals(1, p.x);
@@ -22,7 +22,7 @@ assertEquals(1, p.x);
 assertEquals(2, p.y);
 
 for (var element in Point) {
-  fail('Point contains static member : ' + element);
+  fail("Point contains static member : " + element);
 }
 
 // Tests to ensure that we're not binding function identifier per class

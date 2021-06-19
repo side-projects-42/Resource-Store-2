@@ -12,15 +12,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ipc');
+goog.provide("wtf.ipc");
 
-goog.require('goog.asserts');
-goog.require('goog.events.EventType');
-goog.require('wtf.ipc.MessageChannel');
-goog.require('wtf.timing');
-goog.require('wtf.trace.util');
-goog.require('wtf.util');
-
+goog.require("goog.asserts");
+goog.require("goog.events.EventType");
+goog.require("wtf.ipc.MessageChannel");
+goog.require("wtf.timing");
+goog.require("wtf.trace.util");
+goog.require("wtf.util");
 
 /**
  * Connects to the window that opened this window, if any.
@@ -30,33 +29,31 @@ goog.require('wtf.util');
  * @param {T=} opt_scope Scope for the callback.
  * @template T
  */
-wtf.ipc.connectToParentWindow = function(callback, opt_scope) {
+wtf.ipc.connectToParentWindow = function (callback, opt_scope) {
   function connectTo(sendPort) {
     var channel = null;
     if (sendPort) {
       channel = new wtf.ipc.MessageChannel(window, sendPort);
       channel.postMessage({
-        'hello': true
+        hello: true,
       });
     }
     callback.call(opt_scope, channel);
   }
 
-  var chrome = goog.global['chrome'];
-  if (chrome && chrome['runtime'] &&
-      chrome['runtime']['getBackgroundPage']) {
-    chrome['runtime']['getBackgroundPage'](function(backgroundPage) {
+  var chrome = goog.global["chrome"];
+  if (chrome && chrome["runtime"] && chrome["runtime"]["getBackgroundPage"]) {
+    chrome["runtime"]["getBackgroundPage"](function (backgroundPage) {
       connectTo(backgroundPage);
     });
   } else {
     // Connect to our opener (asynchronously for consistency with the background
     // page case). Opener my be undefined.
-    wtf.timing.setImmediate(function() {
+    wtf.timing.setImmediate(function () {
       connectTo(window.opener);
     });
   }
 };
-
 
 /**
  * Waits for a single child window to connect.
@@ -64,23 +61,28 @@ wtf.ipc.connectToParentWindow = function(callback, opt_scope) {
  * @param {T=} opt_scope Scope for the callback.
  * @template T
  */
-wtf.ipc.waitForChildWindow = function(callback, opt_scope) {
-  var boundHandler = wtf.trace.util.ignoreListener(function(e) {
-    if (e.data && e.data[wtf.ipc.MessageChannel.PACKET_TOKEN] &&
-        e.data.data && e.data.data['hello'] == true) {
+wtf.ipc.waitForChildWindow = function (callback, opt_scope) {
+  var boundHandler = wtf.trace.util.ignoreListener(function (e) {
+    if (
+      e.data &&
+      e.data[wtf.ipc.MessageChannel.PACKET_TOKEN] &&
+      e.data.data &&
+      e.data.data["hello"] == true
+    ) {
       e.stopPropagation();
       window.removeEventListener(
-          goog.events.EventType.MESSAGE, boundHandler, true);
+        goog.events.EventType.MESSAGE,
+        boundHandler,
+        true
+      );
 
       goog.asserts.assert(e.source);
       var channel = new wtf.ipc.MessageChannel(window, e.source);
       callback.call(opt_scope, channel);
     }
   });
-  window.addEventListener(
-      goog.events.EventType.MESSAGE, boundHandler, true);
+  window.addEventListener(goog.events.EventType.MESSAGE, boundHandler, true);
 };
-
 
 /**
  * Waits for a child window to connect.
@@ -89,23 +91,28 @@ wtf.ipc.waitForChildWindow = function(callback, opt_scope) {
  * @param {T=} opt_scope Scope for the callback.
  * @template T
  */
-wtf.ipc.listenForChildWindows = function(callback, opt_scope) {
-  var boundHandler = wtf.trace.util.ignoreListener(function(e) {
-    if (e.data && e.data[wtf.ipc.MessageChannel.PACKET_TOKEN] &&
-        e.data.data && e.data.data['hello'] == true) {
+wtf.ipc.listenForChildWindows = function (callback, opt_scope) {
+  var boundHandler = wtf.trace.util.ignoreListener(function (e) {
+    if (
+      e.data &&
+      e.data[wtf.ipc.MessageChannel.PACKET_TOKEN] &&
+      e.data.data &&
+      e.data.data["hello"] == true
+    ) {
       e.stopPropagation();
       window.removeEventListener(
-          goog.events.EventType.MESSAGE, boundHandler, true);
+        goog.events.EventType.MESSAGE,
+        boundHandler,
+        true
+      );
 
       goog.asserts.assert(e.source);
       var channel = new wtf.ipc.MessageChannel(window, e.source);
       callback.call(opt_scope, channel);
     }
   });
-  window.addEventListener(
-      goog.events.EventType.MESSAGE, boundHandler, true);
+  window.addEventListener(goog.events.EventType.MESSAGE, boundHandler, true);
 };
-
 
 /**
  * Gets a MessageChannel for the given window, creating it if needed.
@@ -113,9 +120,9 @@ wtf.ipc.listenForChildWindows = function(callback, opt_scope) {
  *    which this code is executing.
  * @return {!wtf.ipc.MessageChannel} Message channel.
  */
-wtf.ipc.getWindowMessageChannel = function(opt_window) {
+wtf.ipc.getWindowMessageChannel = function (opt_window) {
   var targetWindow = opt_window || window;
-  var stash = wtf.util.getGlobalCacheObject('ipc', targetWindow);
+  var stash = wtf.util.getGlobalCacheObject("ipc", targetWindow);
   if (stash.messageChannel) {
     return /** @type {!wtf.ipc.MessageChannel} */ (stash.messageChannel);
   } else {

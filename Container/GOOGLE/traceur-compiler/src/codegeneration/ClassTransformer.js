@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  CONSTRUCTOR
-} from '../syntax/PredefinedName.js';
+import { CONSTRUCTOR } from "../syntax/PredefinedName.js";
 import {
   AnonBlock,
   ClassExpression,
@@ -26,8 +24,8 @@ import {
   GetAccessor,
   Method,
   NamedExport,
-  SetAccessor
-} from '../syntax/trees/ParseTrees.js';
+  SetAccessor,
+} from "../syntax/trees/ParseTrees.js";
 import {
   CLASS_DECLARATION,
   COMPUTED_PROPERTY_NAME,
@@ -36,30 +34,25 @@ import {
   LITERAL_PROPERTY_NAME,
   METHOD,
   SET_ACCESSOR,
-} from '../syntax/trees/ParseTreeType.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  CONST,
-  LET,
-  VAR,
-  STRING
-} from '../syntax/TokenType.js';
-import {MakeStrictTransformer} from './MakeStrictTransformer.js';
-import {ParenTrait} from './ParenTrait.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
+} from "../syntax/trees/ParseTreeType.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { CONST, LET, VAR, STRING } from "../syntax/TokenType.js";
+import { MakeStrictTransformer } from "./MakeStrictTransformer.js";
+import { ParenTrait } from "./ParenTrait.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
 import {
   createBindingIdentifier,
   createIdentifierExpression as id,
   createIdentifierToken,
   createObjectLiteral,
   createVariableStatement,
-} from './ParseTreeFactory.js';
-import {hasUseStrict} from '../semantics/util.js';
+} from "./ParseTreeFactory.js";
+import { hasUseStrict } from "../semantics/util.js";
 import {
   parseExpression,
   parsePropertyDefinition,
   parseStatement,
-} from './PlaceholderParser.js';
+} from "./PlaceholderParser.js";
 
 // Maximally minimal classes
 //
@@ -92,7 +85,7 @@ import {
 function methodNameFromTree(tree) {
   // COMPUTED_PROPERTY_NAME such as [Symbol.iterator]
   if (tree.type === COMPUTED_PROPERTY_NAME) {
-    return '';
+    return "";
   }
 
   if (tree.literalToken && tree.literalToken.type === STRING) {
@@ -105,10 +98,12 @@ function methodNameFromTree(tree) {
 
 function classMethodDebugName(className, methodName, isStatic) {
   if (isStatic) {
-    return createBindingIdentifier('$__' + className + '_' + methodName);
+    return createBindingIdentifier("$__" + className + "_" + methodName);
   }
 
-  return createBindingIdentifier('$__' + className + '_prototype_' + methodName);
+  return createBindingIdentifier(
+    "$__" + className + "_prototype_" + methodName
+  );
 }
 
 function functionExpressionToDeclaration(tree, name) {
@@ -117,39 +112,68 @@ function functionExpressionToDeclaration(tree, name) {
   } else {
     name = tree.name;
   }
-  return new FunctionDeclaration(tree.location, name, tree.functionKind,
-      tree.parameterList, tree.typeAnnotation, tree.annotations, tree.body);
+  return new FunctionDeclaration(
+    tree.location,
+    name,
+    tree.functionKind,
+    tree.parameterList,
+    tree.typeAnnotation,
+    tree.annotations,
+    tree.body
+  );
 }
 
 function removeStaticModifier(tree) {
   switch (tree.type) {
     case GET_ACCESSOR:
-      return new GetAccessor(tree.location, false, tree.name,
-          tree.typeAnnotation, tree.annotations, tree.body);
+      return new GetAccessor(
+        tree.location,
+        false,
+        tree.name,
+        tree.typeAnnotation,
+        tree.annotations,
+        tree.body
+      );
     case SET_ACCESSOR:
-      return new SetAccessor(tree.location, false, tree.name,
-          tree.parameterList, tree.annotations, tree.body);
+      return new SetAccessor(
+        tree.location,
+        false,
+        tree.name,
+        tree.parameterList,
+        tree.annotations,
+        tree.body
+      );
     case METHOD:
-      return new Method(tree.location, false,
-          tree.functionKind, tree.name, tree.parameterList, tree.typeAnnotation,
-          tree.annotations, tree.body, tree.debugName);
+      return new Method(
+        tree.location,
+        false,
+        tree.functionKind,
+        tree.name,
+        tree.parameterList,
+        tree.typeAnnotation,
+        tree.annotations,
+        tree.body,
+        tree.debugName
+      );
     default:
-      throw new Error('unreachable');
+      throw new Error("unreachable");
   }
 }
 
 function isConstructor(tree) {
-  if (tree.type !== METHOD || tree.isStatic ||
-      tree.functionKind !== null) {
+  if (tree.type !== METHOD || tree.isStatic || tree.functionKind !== null) {
     return false;
   }
-  let {name} = tree;
-  return name.type === LITERAL_PROPERTY_NAME &&
-      name.literalToken.value === CONSTRUCTOR;
+  let { name } = tree;
+  return (
+    name.type === LITERAL_PROPERTY_NAME &&
+    name.literalToken.value === CONSTRUCTOR
+  );
 }
 
-export class ClassTransformer extends
-    ImportRuntimeTrait(ParenTrait(TempVarTransformer)) {
+export class ClassTransformer extends ImportRuntimeTrait(
+  ParenTrait(TempVarTransformer)
+) {
   /**
    * @param {UniqueIdentifierGenerator} identifierGenerator
    * @param {ErrorReporter} reporter
@@ -180,8 +204,7 @@ export class ClassTransformer extends
   }
 
   makeStrict_(tree) {
-    if (this.strictCount_)
-      return tree;
+    if (this.strictCount_) return tree;
 
     return MakeStrictTransformer.transformTree(tree);
   }
@@ -189,11 +212,18 @@ export class ClassTransformer extends
   transformClassDeclaration(tree) {
     // `class C {}` is equivalent to `let C = class C {};`
     // Convert to class expression and transform that instead.
-    let classExpression = new ClassExpression(tree.location, tree.name,
-        tree.superClass, tree.elements, tree.annotations, tree.typeParameters);
+    let classExpression = new ClassExpression(
+      tree.location,
+      tree.name,
+      tree.superClass,
+      tree.elements,
+      tree.annotations,
+      tree.typeParameters
+    );
     let transformed = this.transformClassExpression(classExpression);
-    let useLet = !this.options.transformOptions.blockBinding &&
-                 this.options.parseOptions.blockBinding;
+    let useLet =
+      !this.options.transformOptions.blockBinding &&
+      this.options.parseOptions.blockBinding;
     return createVariableStatement(useLet ? LET : VAR, tree.name, transformed);
   }
 
@@ -211,8 +241,9 @@ export class ClassTransformer extends
       }
       return true;
     });
-    let staticElements =
-        elements.filter((tree) => tree.isStatic).map(removeStaticModifier);
+    let staticElements = elements
+      .filter((tree) => tree.isStatic)
+      .map(removeStaticModifier);
 
     let protoObject = createObjectLiteral(protoElements);
     let staticObject = createObjectLiteral(staticElements);
@@ -220,44 +251,49 @@ export class ClassTransformer extends
     if (!constructor) {
       constructor = this.getDefaultConstructor_(tree);
     }
-    let func = new FunctionExpression(tree.location, tree.name, null,
-                                      constructor.parameterList, null,
-                                      annotations,
-                                      constructor.body);
+    let func = new FunctionExpression(
+      tree.location,
+      tree.name,
+      null,
+      constructor.parameterList,
+      null,
+      annotations,
+      constructor.body
+    );
 
     let expression;
-    let createClass = this.getRuntimeExpression('createClass');
+    let createClass = this.getRuntimeExpression("createClass");
     if (tree.name) {
       let functionStatement;
       let name = tree.name.identifierToken;
       let nameId = id(`${name}`);
 
-      if (!this.options.transformOptions.blockBinding &&
-          this.options.parseOptions.blockBinding) {
+      if (
+        !this.options.transformOptions.blockBinding &&
+        this.options.parseOptions.blockBinding
+      ) {
         functionStatement = createVariableStatement(CONST, tree.name, func);
       } else {
         functionStatement = functionExpressionToDeclaration(func, name);
       }
 
       if (superClass) {
-        expression = parseExpression `function($__super) {
+        expression = parseExpression`function($__super) {
           ${functionStatement};
           return (${createClass})(${nameId}, ${protoObject},
                                   ${staticObject}, $__super);
         }(${superClass})`;
       } else {
-        expression = parseExpression `function() {
+        expression = parseExpression`function() {
           ${functionStatement};
           return (${createClass})(${nameId}, ${protoObject}, ${staticObject});
         }()`;
       }
     } else {
       if (superClass) {
-        expression = parseExpression
-            `(${createClass})(${func}, ${protoObject}, ${staticObject}, ${superClass})`;
+        expression = parseExpression`(${createClass})(${func}, ${protoObject}, ${staticObject}, ${superClass})`;
       } else {
-        expression = parseExpression
-            `(${createClass})(${func}, ${protoObject}, ${staticObject})`;
+        expression = parseExpression`(${createClass})(${func}, ${protoObject}, ${staticObject})`;
       }
     }
 
@@ -265,8 +301,10 @@ export class ClassTransformer extends
   }
 
   transformExportDeclaration(tree) {
-    if (tree.declaration.type === EXPORT_DEFAULT &&
-        tree.declaration.expression.type === CLASS_DECLARATION) {
+    if (
+      tree.declaration.type === EXPORT_DEFAULT &&
+      tree.declaration.expression.type === CLASS_DECLARATION
+    ) {
       // export default class name {}
       // ->
       // class name {}
@@ -279,7 +317,10 @@ export class ClassTransformer extends
   transformExportDefaultClass_(tree) {
     const name = tree.expression.name.identifierToken;
     const specifier = new ExportSpecifier(
-        name.location, name, createIdentifierToken('default'));
+      name.location,
+      name,
+      createIdentifierToken("default")
+    );
     const exportTree = new ExportSpecifierSet(name.location, [specifier]);
     const named = new NamedExport(name.location, exportTree, null);
     const exp = new ExportDeclaration(name.location, named, []);
@@ -291,11 +332,11 @@ export class ClassTransformer extends
     // TODO(arv): Move this to SuperTransformer.
     if (tree.superClass) {
       let name = id(tree.name.identifierToken);
-      let superConstructor = this.getRuntimeExpression('superConstructor');
-      return parsePropertyDefinition `constructor() {
+      let superConstructor = this.getRuntimeExpression("superConstructor");
+      return parsePropertyDefinition`constructor() {
         ${superConstructor}(${name}).apply(this, arguments)
       }`;
     }
-    return parsePropertyDefinition `constructor() {}`;
+    return parsePropertyDefinition`constructor() {}`;
   }
 }

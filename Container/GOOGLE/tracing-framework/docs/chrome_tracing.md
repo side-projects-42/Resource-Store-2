@@ -27,23 +27,23 @@ Make sure all previous instances of Chromium have been closed.
 By default if you have `--remote-debugging-port` set correctly the feature will
 be enabled. If not, check the below:
 
-* On a page that has WTF embedded, open the settings with the gear icon.
-* Click 'Providers', scroll to 'Chrome Debugging'.
-* Make sure 'Enabled' is checked.
-* If `--remote-debugging-port` is set correctly then 'chrome:tracing' will be
-checked automatically.
+- On a page that has WTF embedded, open the settings with the gear icon.
+- Click 'Providers', scroll to 'Chrome Debugging'.
+- Make sure 'Enabled' is checked.
+- If `--remote-debugging-port` is set correctly then 'chrome:tracing' will be
+  checked automatically.
 
 ## Usage
 
 When supported a new icon appears in the on-page WTF HUD. It doesn't look like
 it yet, but it's a toggle button.
 
-* Load your page
-* Click once on the button to start tracing
-  * You should see a 'tracing...' status message in the top right corner
-* After a few seconds, click the button again to stop
-  * The status will change to 'waiting' while the data is being retrieved
-* Once the status disappears, snapshot or save the trace
+- Load your page
+- Click once on the button to start tracing
+  - You should see a 'tracing...' status message in the top right corner
+- After a few seconds, click the button again to stop
+  - The status will change to 'waiting' while the data is being retrieved
+- Once the status disappears, snapshot or save the trace
 
 ## Caveats
 

@@ -12,38 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-suite('parser.js', function() {
+suite("parser.js", function () {
   var errorReporter = {
-    reportError: function(position, message) {
-      throw new chai.AssertionError({message: message + ', ' + position});
-    }
+    reportError: function (position, message) {
+      throw new chai.AssertionError({ message: message + ", " + position });
+    },
   };
 
-  test('Module', function() {
-    var program = 'export var x = 42;\n' +
-                  'import * as M from \'url\';\n' +
-                  'import {z} from \'x\';\n' +
-                  'import {a as b, c} from \'M\';\n';
-    var sourceFile = new traceur.syntax.SourceFile('Name', program);
+  test("Module", function () {
+    var program =
+      "export var x = 42;\n" +
+      "import * as M from 'url';\n" +
+      "import {z} from 'x';\n" +
+      "import {a as b, c} from 'M';\n";
+    var sourceFile = new traceur.syntax.SourceFile("Name", program);
     var options = new traceur.util.Options();
     var parser = new traceur.syntax.Parser(sourceFile, errorReporter, options);
 
     parser.parseModule();
   });
 
-  test('handleComment', function() {
+  test("handleComment", function () {
     var options = new traceur.util.Options();
     options.commentCallback = true;
 
-    var program = '// AAA\n' +
-                  'var b = \'c\';\n' +
-                  '/* DDD */ function e() {}\n';
-    var sourceFile = new traceur.syntax.SourceFile('Name', program);
+    var program = "// AAA\n" + "var b = 'c';\n" + "/* DDD */ function e() {}\n";
+    var sourceFile = new traceur.syntax.SourceFile("Name", program);
     var parser = new traceur.syntax.Parser(sourceFile, errorReporter, options);
     var comments = [];
-    parser.handleComment = function(sourceRange) {
+    parser.handleComment = function (sourceRange) {
       comments.push(sourceRange);
     };
     parser.parseScript();
@@ -52,13 +51,12 @@ suite('parser.js', function() {
 
     assert.equal(comments[0].start.offset, 0);
     assert.equal(comments[0].end.offset, 7);
-    assert.equal(comments[0].toString(), '// AAA\n');
+    assert.equal(comments[0].toString(), "// AAA\n");
 
     assert.equal(comments[1].start.line, 2);
     assert.equal(comments[1].start.column, 0);
     assert.equal(comments[1].end.line, 2);
     assert.equal(comments[1].end.column, 9);
-    assert.equal(comments[1].toString(), '/* DDD */');
+    assert.equal(comments[1].toString(), "/* DDD */");
   });
-
 });

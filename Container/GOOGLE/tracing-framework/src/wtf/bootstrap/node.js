@@ -13,10 +13,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-var fs = require('fs');
-var path = require('path');
-var vm = require('vm');
-
+var fs = require("fs");
+var path = require("path");
+var vm = require("vm");
 
 /**
  * Imports the Closure Library base.js file as well as any user deps.js files.
@@ -30,8 +29,12 @@ var vm = require('vm');
  *     file in addition to the user supplied deps.
  * @return {!Object} {@code goog} namespace object.
  */
-exports.importClosureLibrary = function(depsFiles, opt_basePath, opt_baseDeps) {
-  var basePath = opt_basePath || 'third_party/closure-library/closure/goog/';
+exports.importClosureLibrary = function (
+  depsFiles,
+  opt_basePath,
+  opt_baseDeps
+) {
+  var basePath = opt_basePath || "third_party/closure-library/closure/goog/";
 
   // Stash settings on global. base.js looks for these to change behavior.
   global.CLOSURE_NO_DEPS = !(opt_baseDeps || false);
@@ -39,8 +42,8 @@ exports.importClosureLibrary = function(depsFiles, opt_basePath, opt_baseDeps) {
 
   // Windows is not a fan of the base path.
   // TODO(benvanik): check if this is an anvil issue.
-  if (process.platform == 'win32') {
-    global.CLOSURE_BASE_PATH = '';
+  if (process.platform == "win32") {
+    global.CLOSURE_BASE_PATH = "";
   }
 
   // Override the goog.importScript_ function with our own.
@@ -60,11 +63,11 @@ exports.importClosureLibrary = function(depsFiles, opt_basePath, opt_baseDeps) {
     clearTimeout: global.clearTimeout,
     setInterval: global.setInterval,
     clearInterval: global.clearInterval,
-    console: global.console
+    console: global.console,
   };
 
   // Load the library base.js file. It will merge itself into global.goog.
-  importScript(path.join(basePath, 'base.js'));
+  importScript(path.join(basePath, "base.js"));
 
   // Load any deps given.
   for (var n = 0; n < depsFiles.length; n++) {
@@ -74,18 +77,12 @@ exports.importClosureLibrary = function(depsFiles, opt_basePath, opt_baseDeps) {
   return global.goog;
 };
 
-
 /**
  * Merged directory paths that should be searched for files.
  * @const
  * @type {!Array.<string>}
  */
-var SEARCH_PATHS = [
-  'build-out',
-  'build-gen',
-  '.'
-];
-
+var SEARCH_PATHS = ["build-out", "build-gen", "."];
 
 /**
  * Checks to see if a file exists.
@@ -106,7 +103,6 @@ function fileExistsSync(path) {
   }
 }
 
-
 /**
  * Imports a Closure file.
  * This overrides the {@code goog.importScript_} method and is called by base.js
@@ -117,16 +113,16 @@ function fileExistsSync(path) {
 function importScript(src) {
   // Scan all search paths in order, trying to find the file.
   //var relPath = path.join(path.dirname(process.argv[1]) + '/', src);
-  var filePath = src;//path.relative(process.cwd(), relPath);
+  var filePath = src; //path.relative(process.cwd(), relPath);
   for (var n = 0; n < SEARCH_PATHS.length; n++) {
     var searchPath = path.join(process.cwd(), SEARCH_PATHS[n]);
     var searchFilePath = path.join(searchPath, filePath);
     if (fileExistsSync(searchFilePath)) {
-      var sourceCode = fs.readFileSync(searchFilePath, 'utf8');
+      var sourceCode = fs.readFileSync(searchFilePath, "utf8");
       try {
         vm.runInThisContext(sourceCode, searchFilePath);
       } catch (e) {
-        console.log('Error running script ' + src);
+        console.log("Error running script " + src);
         throw e;
       }
       return true;
@@ -134,6 +130,6 @@ function importScript(src) {
   }
 
   // File not found.
-  console.log('ERROR: could not find ' + src);
+  console.log("ERROR: could not find " + src);
   return false;
 }

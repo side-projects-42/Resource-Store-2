@@ -12,20 +12,18 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.db.node');
+goog.provide("wtf.db.node");
 
 /** @suppress {extraRequire} */
-goog.require('goog.debug.ErrorHandler');
+goog.require("goog.debug.ErrorHandler");
 /** @suppress {extraRequire} */
-goog.require('goog.events.EventHandler');
+goog.require("goog.events.EventHandler");
 /** @suppress {extraRequire} */
-goog.require('goog.events.EventTarget');
+goog.require("goog.events.EventTarget");
 /** @suppress {extraRequire} */
-goog.require('wtf.pal');
-
+goog.require("wtf.pal");
 
 /**
  * Placeholder function.
  */
-wtf.db.node = function() {
-};
+wtf.db.node = function () {};

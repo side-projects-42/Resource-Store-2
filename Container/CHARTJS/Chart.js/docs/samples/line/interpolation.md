@@ -12,38 +12,40 @@ const data = {
   labels: labels,
   datasets: [
     {
-      label: 'Cubic interpolation (monotone)',
+      label: "Cubic interpolation (monotone)",
       data: datapoints,
       borderColor: Utils.CHART_COLORS.red,
       fill: false,
-      cubicInterpolationMode: 'monotone',
-      tension: 0.4
-    }, {
-      label: 'Cubic interpolation',
+      cubicInterpolationMode: "monotone",
+      tension: 0.4,
+    },
+    {
+      label: "Cubic interpolation",
       data: datapoints,
       borderColor: Utils.CHART_COLORS.blue,
       fill: false,
-      tension: 0.4
-    }, {
-      label: 'Linear interpolation (default)',
+      tension: 0.4,
+    },
+    {
+      label: "Linear interpolation (default)",
       data: datapoints,
       borderColor: Utils.CHART_COLORS.green,
-      fill: false
-    }
-  ]
+      fill: false,
+    },
+  ],
 };
 // </block:setup>
 
 // <block:config:0>
 const config = {
-  type: 'line',
+  type: "line",
   data: data,
   options: {
     responsive: true,
     plugins: {
       title: {
         display: true,
-        text: 'Chart.js Line Chart - Cubic interpolation mode'
+        text: "Chart.js Line Chart - Cubic interpolation mode",
       },
     },
     interaction: {
@@ -53,19 +55,19 @@ const config = {
       x: {
         display: true,
         title: {
-          display: true
-        }
+          display: true,
+        },
       },
       y: {
         display: true,
         title: {
           display: true,
-          text: 'Value'
+          text: "Value",
         },
         suggestedMin: -10,
-        suggestedMax: 200
-      }
-    }
+        suggestedMax: 200,
+      },
+    },
   },
 };
 // </block:config>

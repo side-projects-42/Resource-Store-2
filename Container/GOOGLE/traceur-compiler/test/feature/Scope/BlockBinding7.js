@@ -2,7 +2,7 @@
 
 function blockTest() {
   {
-    let x = 'let x value';
+    let x = "let x value";
     function g() {
       return x;
     }
@@ -12,4 +12,4 @@ function blockTest() {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('let x value', blockTest()());
+assert.equal("let x value", blockTest()());

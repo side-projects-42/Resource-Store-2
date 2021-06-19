@@ -1,5 +1,5 @@
-assertEquals('24', `${ 1, 2 }${ 3, 4 }`);
-assertEquals('6', `${ 5, 6 }`);
+assertEquals("24", `${(1, 2)}${(3, 4)}`);
+assertEquals("6", `${(5, 6)}`);
 
 function templateLiteralCommaTest(callsite, x, y) {
   assertEquals(2, x);
@@ -7,4 +7,4 @@ function templateLiteralCommaTest(callsite, x, y) {
   return x + y;
 }
 
-assertEquals(6, templateLiteralCommaTest`${ 1, 2 }${ 3, 4 }`);
+assertEquals(6, templateLiteralCommaTest`${(1, 2)}${(3, 4)}`);

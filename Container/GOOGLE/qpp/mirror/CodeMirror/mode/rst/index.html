@@ -1,18 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CodeMirror: reStructuredText mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="rst.js"></script>
-    <style type="text/css">.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
-    <link rel="stylesheet" href="../../doc/docs.css">
+    <style type="text/css">
+      .CodeMirror {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+    </style>
+    <link rel="stylesheet" href="../../doc/docs.css" />
   </head>
   <body>
     <h1>CodeMirror: reStructuredText mode</h1>
 
-<form><textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
 .. This is an excerpt from Sphinx documentation: http://sphinx.pocoo.org/_sources/rest.txt
 
 .. highlightlang:: rest
@@ -501,7 +507,9 @@ There are some problems one commonly runs into while authoring reST documents:
 
 .. [1] When the default domain contains a :rst:dir:`class` directive, this directive
        will be shadowed.  Therefore, Sphinx re-exports it as :rst:dir:`rst-class`.
-</textarea></form>
+</textarea
+      >
+    </form>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
@@ -509,16 +517,13 @@ There are some problems one commonly runs into while authoring reST documents:
       });
     </script>
     <p>
-        The <code>python</code> mode will be used for highlighting blocks
-        containing Python/IPython terminal sessions: blocks starting with
-        <code>&gt;&gt;&gt;</code> (for Python) or <code>In [num]:</code> (for
-        IPython).
-
-        Further, the <code>stex</code> mode will be used for highlighting
-        blocks containing LaTex code.
+      The <code>python</code> mode will be used for highlighting blocks
+      containing Python/IPython terminal sessions: blocks starting with
+      <code>&gt;&gt;&gt;</code> (for Python) or <code>In [num]:</code> (for
+      IPython). Further, the <code>stex</code> mode will be used for
+      highlighting blocks containing LaTex code.
     </p>
 
     <p><strong>MIME types defined:</strong> <code>text/x-rst</code>.</p>
   </body>
 </html>
-

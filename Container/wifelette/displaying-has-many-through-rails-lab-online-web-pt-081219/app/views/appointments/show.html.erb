@@ -1,0 +1,7 @@
+<h1>Appointment Details</h1>
+
+<ul>
+  <li><strong>When: </strong> <%= @appointment.when %></li>
+  <li><strong>With: </strong> <%= link_to @appointment.doctor.name, @appointment.doctor %></li>
+  <li><strong>For: </strong> <%= link_to @appointment.patient.name, @appointment.patient %></li>
+</ul>

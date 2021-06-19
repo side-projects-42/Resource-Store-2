@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StringSet} from './StringSet.js';
+import { StringSet } from "./StringSet.js";
 
 function assertString(value) {
-  if (typeof value !== 'string') throw new TypeError();
+  if (typeof value !== "string") throw new TypeError();
 }
 
 export class StringMap {

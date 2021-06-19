@@ -13,7 +13,7 @@
 // limitations under the License.
 
 let chai;
-if (typeof require === 'undefined') {
+if (typeof require === "undefined") {
   // In the browwser we have no synchronous way of importing chai,
   // we have to rely on manual user include of <script>
   if (!window.chai) {
@@ -21,7 +21,7 @@ if (typeof require === 'undefined') {
   }
   chai = window.chai;
 } else {
-  chai = require('chai');
+  chai = require("chai");
 }
 
 export let assert = chai.assert;

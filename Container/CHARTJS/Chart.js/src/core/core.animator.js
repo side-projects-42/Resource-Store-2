@@ -1,4 +1,4 @@
-import {requestAnimFrame} from '../helpers/helpers.extras';
+import { requestAnimFrame } from "../helpers/helpers.extras";
 
 /**
  * @typedef { import("./core.animation").default } Animation
@@ -18,23 +18,25 @@ export class Animator {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _notify(chart, anims, date, type) {
     const callbacks = anims.listeners[type];
     const numSteps = anims.duration;
 
-    callbacks.forEach(fn => fn({
-      chart,
-      initial: anims.initial,
-      numSteps,
-      currentStep: Math.min(date - anims.start, numSteps)
-    }));
+    callbacks.forEach((fn) =>
+      fn({
+        chart,
+        initial: anims.initial,
+        numSteps,
+        currentStep: Math.min(date - anims.start, numSteps),
+      })
+    );
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _refresh() {
     const me = this;
 
@@ -54,8 +56,8 @@ export class Animator {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _update(date = Date.now()) {
     const me = this;
     let remaining = 0;
@@ -90,12 +92,12 @@ export class Animator {
 
       if (draw) {
         chart.draw();
-        me._notify(chart, anims, date, 'progress');
+        me._notify(chart, anims, date, "progress");
       }
 
       if (!items.length) {
         anims.running = false;
-        me._notify(chart, anims, date, 'complete');
+        me._notify(chart, anims, date, "complete");
         anims.initial = false;
       }
 
@@ -110,8 +112,8 @@ export class Animator {
   }
 
   /**
-	 * @private
-	 */
+   * @private
+   */
   _getAnims(chart) {
     const charts = this._charts;
     let anims = charts.get(chart);
@@ -122,8 +124,8 @@ export class Animator {
         items: [],
         listeners: {
           complete: [],
-          progress: []
-        }
+          progress: [],
+        },
       };
       charts.set(chart, anims);
     }
@@ -131,19 +133,19 @@ export class Animator {
   }
 
   /**
-	 * @param {Chart} chart
-	 * @param {string} event - event name
-	 * @param {Function} cb - callback
-	 */
+   * @param {Chart} chart
+   * @param {string} event - event name
+   * @param {Function} cb - callback
+   */
   listen(chart, event, cb) {
     this._getAnims(chart).listeners[event].push(cb);
   }
 
   /**
-	 * Add animations
-	 * @param {Chart} chart
-	 * @param {Animation[]} items - animations
-	 */
+   * Add animations
+   * @param {Chart} chart
+   * @param {Animation[]} items - animations
+   */
   add(chart, items) {
     if (!items || !items.length) {
       return;
@@ -152,17 +154,17 @@ export class Animator {
   }
 
   /**
-	 * Counts number of active animations for the chart
-	 * @param {Chart} chart
-	 */
+   * Counts number of active animations for the chart
+   * @param {Chart} chart
+   */
   has(chart) {
     return this._getAnims(chart).items.length > 0;
   }
 
   /**
-	 * Start animating (all charts)
-	 * @param {Chart} chart
-	 */
+   * Start animating (all charts)
+   * @param {Chart} chart
+   */
   start(chart) {
     const anims = this._charts.get(chart);
     if (!anims) {
@@ -170,7 +172,10 @@ export class Animator {
     }
     anims.running = true;
     anims.start = Date.now();
-    anims.duration = anims.items.reduce((acc, cur) => Math.max(acc, cur._duration), 0);
+    anims.duration = anims.items.reduce(
+      (acc, cur) => Math.max(acc, cur._duration),
+      0
+    );
     this._refresh();
   }
 
@@ -186,9 +191,9 @@ export class Animator {
   }
 
   /**
-	 * Stop all animations for the chart
-	 * @param {Chart} chart
-	 */
+   * Stop all animations for the chart
+   * @param {Chart} chart
+   */
   stop(chart) {
     const anims = this._charts.get(chart);
     if (!anims || !anims.items.length) {
@@ -201,13 +206,13 @@ export class Animator {
       items[i].cancel();
     }
     anims.items = [];
-    this._notify(chart, anims, Date.now(), 'complete');
+    this._notify(chart, anims, Date.now(), "complete");
   }
 
   /**
-	 * Remove chart from Animator
-	 * @param {Chart} chart
-	 */
+   * Remove chart from Animator
+   * @param {Chart} chart
+   */
   remove(chart) {
     return this._charts.delete(chart);
   }

@@ -7,9 +7,9 @@ class CustomBlockquote extends HTMLBlockquoteElement {
   }
 }
 
-var customBlockquote = new CustomBlockquote;
+var customBlockquote = new CustomBlockquote();
 assertEquals(42, customBlockquote.custom);
-assertEquals('BLOCKQUOTE', customBlockquote.tagName);
+assertEquals("BLOCKQUOTE", customBlockquote.tagName);
 assertTrue(customBlockquote instanceof CustomBlockquote);
 assertTrue(customBlockquote instanceof HTMLBlockquoteElement);
 assertTrue(customBlockquote instanceof HTMLQuoteElement);

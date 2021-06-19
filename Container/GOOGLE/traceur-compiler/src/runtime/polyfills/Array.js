@@ -12,11 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  entries,
-  keys,
-  values as jsValues
-} from './ArrayIterator.js';
+import { entries, keys, values as jsValues } from "./ArrayIterator.js";
 import {
   checkIterable,
   isCallable,
@@ -26,8 +22,8 @@ import {
   registerPolyfill,
   toInteger,
   toLength,
-  toObject
-} from './utils.js';
+  toObject,
+} from "./utils.js";
 
 // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-array.from
 export function from(arrLike, mapFn = undefined, thisArg = undefined) {
@@ -65,7 +61,10 @@ export function from(arrLike, mapFn = undefined, thisArg = undefined) {
 
   for (; k < len; k++) {
     if (mapping) {
-      arr[k] = typeof thisArg === 'undefined' ? mapFn(items[k], k) : mapFn.call(thisArg, items[k], k);
+      arr[k] =
+        typeof thisArg === "undefined"
+          ? mapFn(items[k], k)
+          : mapFn.call(thisArg, items[k], k);
     } else {
       arr[k] = items[k];
     }
@@ -99,8 +98,8 @@ export function fill(value, start = 0, end = undefined) {
   var fillEnd = end !== undefined ? toInteger(end) : len;
 
   // set the start and end
-  fillStart = fillStart < 0 ?
-      Math.max(len + fillStart, 0) : Math.min(fillStart, len);
+  fillStart =
+    fillStart < 0 ? Math.max(len + fillStart, 0) : Math.min(fillStart, len);
   fillEnd = fillEnd < 0 ? Math.max(len + fillEnd, 0) : Math.min(fillEnd, len);
 
   // set the values
@@ -143,32 +142,38 @@ function findHelper(self, predicate, thisArg = undefined, returnIndex = false) {
   return returnIndex ? -1 : undefined;
 }
 
-
-
 export function polyfillArray(global) {
-  var {Array, Object, Symbol} = global;
+  var { Array, Object, Symbol } = global;
   var values = jsValues;
   if (Symbol && Symbol.iterator && Array.prototype[Symbol.iterator]) {
     values = Array.prototype[Symbol.iterator];
   }
 
   maybeAddFunctions(Array.prototype, [
-    'entries', entries,
-    'keys', keys,
-    'values', values,
-    'fill', fill,
-    'find', find,
-    'findIndex', findIndex,
+    "entries",
+    entries,
+    "keys",
+    keys,
+    "values",
+    values,
+    "fill",
+    fill,
+    "find",
+    find,
+    "findIndex",
+    findIndex,
   ]);
 
-  maybeAddFunctions(Array, [
-    'from', from,
-    'of', of
-  ]);
+  maybeAddFunctions(Array, ["from", from, "of", of]);
 
   maybeAddIterator(Array.prototype, values, Symbol);
-  maybeAddIterator(Object.getPrototypeOf([].values()),
-      function() { return this; }, Symbol);
+  maybeAddIterator(
+    Object.getPrototypeOf([].values()),
+    function () {
+      return this;
+    },
+    Symbol
+  );
 }
 
 registerPolyfill(polyfillArray);

@@ -1,4 +1,4 @@
-import {Foo} from './deps/foo.js';
+import { Foo } from "./deps/foo.js";
 
-assert.equal('Foo from foo.js', Foo);
-assert(typeof Bar === 'undefined');
+assert.equal("Foo from foo.js", Foo);
+assert(typeof Bar === "undefined");

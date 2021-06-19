@@ -17,7 +17,7 @@ import {
   MEMBER_EXPRESSION,
   MEMBER_LOOKUP_EXPRESSION,
   PAREN_EXPRESSION,
-} from '../syntax/trees/ParseTreeType.js';
+} from "../syntax/trees/ParseTreeType.js";
 
 /**
  * Matches "Static Semantics: IsValidSimpleAssignmentTarget" in the spec.
@@ -28,8 +28,8 @@ export default function isValidSimpleAssignmentTarget(tree, isStrict) {
   switch (tree.type) {
     case IDENTIFIER_EXPRESSION: {
       if (!isStrict) return true;
-      let {value} = tree.identifierToken;
-      return value !== 'arguments' && value !== 'eval';
+      let { value } = tree.identifierToken;
+      return value !== "arguments" && value !== "eval";
     }
 
     case PAREN_EXPRESSION:

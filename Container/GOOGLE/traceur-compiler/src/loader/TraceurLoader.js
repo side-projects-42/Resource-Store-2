@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {isAbsolute, resolveUrl} from '../util/url.js';
-import {Loader} from './Loader.js';
-import {LoaderCompiler} from './LoaderCompiler.js';
-import {Options} from '../Options.js';
-import {systemjs} from './system-map.js';
-import {webLoader} from './webLoader.js';
-import {version} from './version.js';
-import {WebPageTranscoder} from '../WebPageTranscoder.js';
+import { isAbsolute, resolveUrl } from "../util/url.js";
+import { Loader } from "./Loader.js";
+import { LoaderCompiler } from "./LoaderCompiler.js";
+import { Options } from "../Options.js";
+import { systemjs } from "./system-map.js";
+import { webLoader } from "./webLoader.js";
+import { version } from "./version.js";
+import { WebPageTranscoder } from "../WebPageTranscoder.js";
 
 var uniqueNameCount = 0;
 
 export class TraceurLoader extends Loader {
-
   /**
    * @param {!Object=} loaderCompiler
    */
@@ -53,9 +52,12 @@ export class TraceurLoader extends Loader {
   }
 
   normalize(name, referrerName, referrerAddress) {
-    var normalizedName =
-        this.moduleStore_.normalize(name, referrerName, referrerAddress);
-    if (typeof systemjs !== 'undefined' && System.map)
+    var normalizedName = this.moduleStore_.normalize(
+      name,
+      referrerName,
+      referrerAddress
+    );
+    if (typeof systemjs !== "undefined" && System.map)
       return systemjs.applyMap(System.map, normalizedName, referrerName);
 
     return normalizedName;
@@ -77,10 +79,8 @@ export class TraceurLoader extends Loader {
       var commonChars = 0;
       for (var i = 0; i < minChars; i++) {
         var aChar = referrer[referrer.length - 1 - i];
-        if (aChar === baseURL[baseURL.length - 1 - i])
-          commonChars++;
-        else
-          break;
+        if (aChar === baseURL[baseURL.length - 1 - i]) commonChars++;
+        else break;
       }
       if (commonChars) {
         var packageName = referrer.slice(0, -commonChars);
@@ -89,7 +89,6 @@ export class TraceurLoader extends Loader {
           url = url.replace(packageName, rootDirectory);
         }
       }
-
     }
 
     if (!isAbsolute(url)) {
@@ -114,13 +113,12 @@ export class TraceurLoader extends Loader {
       } else {
         sourceName = this.baseURL + String(uniqueNameCount++);
       }
-
     }
     return sourceName;
   }
 
   nameTrace(load) {
-    var trace = '';
+    var trace = "";
     if (load.metadata.locateMap) {
       trace += this.locateMapTrace(load);
     }
@@ -128,7 +126,7 @@ export class TraceurLoader extends Loader {
     if (base) {
       trace += this.baseURLTrace(base);
     } else {
-      trace += 'No baseURL\n';
+      trace += "No baseURL\n";
     }
     return trace;
   }
@@ -139,17 +137,15 @@ export class TraceurLoader extends Loader {
   }
 
   baseURLTrace(base) {
-    return 'locate resolved against base \'' + base + '\'\n';
+    return "locate resolved against base '" + base + "'\n";
   }
 
   fetch(load) {
     return new Promise((resolve, reject) => {
-      if (!load)
-        reject(new TypeError('fetch requires argument object'));
-      else if (!load.address || typeof load.address !== 'string')
-        reject(new TypeError('fetch({address}) missing required string.'));
-      else
-        this.fileLoader_.load(load.address, resolve, reject);
+      if (!load) reject(new TypeError("fetch requires argument object"));
+      else if (!load.address || typeof load.address !== "string")
+        reject(new TypeError("fetch({address}) missing required string."));
+      else this.fileLoader_.load(load.address, resolve, reject);
     });
   }
 
@@ -158,7 +154,7 @@ export class TraceurLoader extends Loader {
     return load.source;
   }
 
-  instantiate({name, metadata, address, source, sourceMap}) {
+  instantiate({ name, metadata, address, source, sourceMap }) {
     // We don't implement instantiate but return undefinded asynchronously
     // to match es6-module-loader.
     return new Promise((resolve, reject) => {
@@ -171,14 +167,16 @@ export class TraceurLoader extends Loader {
   }
 
   /**
-    * @param {Array<string>} module names
-    * @param {Object} referrerName and address passed to normalize.
-    * @return {Promise} fulfilled with array of evaluated modules
-    */
-  importAll(names, {referrerName, address, metadata} = {}) {
-    return Promise.all(names.map((name) => {
-      return this.import(name, {referrerName, address, metadata});
-    }));
+   * @param {Array<string>} module names
+   * @param {Object} referrerName and address passed to normalize.
+   * @return {Promise} fulfilled with array of evaluated modules
+   */
+  importAll(names, { referrerName, address, metadata } = {}) {
+    return Promise.all(
+      names.map((name) => {
+        return this.import(name, { referrerName, address, metadata });
+      })
+    );
   }
 
   /**
@@ -194,17 +192,20 @@ export class TraceurLoader extends Loader {
    * @param {Object} referrerName and address passed to normalize.
    * @return {Promise} fulfilled with evaluation result.
    */
-  loadAsScript(name, {referrerName, address, metadata = {}} = {}) {
+  loadAsScript(name, { referrerName, address, metadata = {} } = {}) {
     metadata.traceurOptions = metadata.traceurOptions || {};
     metadata.traceurOptions.script = true;
-    return this.internalLoader_.load(name, referrerName, address, metadata).
-        then((load) => load.result);
+    return this.internalLoader_
+      .load(name, referrerName, address, metadata)
+      .then((load) => load.result);
   }
 
-  loadAsScriptAll(names, {referrerName, address, metadata} = {}) {
-    return Promise.all(names.map((name) => {
-      return this.loadAsScript(name, {referrerName, address, metadata});
-    }));
+  loadAsScriptAll(names, { referrerName, address, metadata } = {}) {
+    return Promise.all(
+      names.map((name) => {
+        return this.loadAsScript(name, { referrerName, address, metadata });
+      })
+    );
   }
 
   /**
@@ -222,9 +223,14 @@ export class TraceurLoader extends Loader {
    * @return {Promise} fulfilled with evaluation result.
 
    */
-  script(source, {name, referrerName, address, metadata} = {}) {
-    return this.internalLoader_.script(source, name, referrerName, address,
-        metadata);
+  script(source, { name, referrerName, address, metadata } = {}) {
+    return this.internalLoader_.script(
+      source,
+      name,
+      referrerName,
+      address,
+      metadata
+    );
   }
 
   semVerRegExp_() {
@@ -237,12 +243,12 @@ export class TraceurLoader extends Loader {
    *   all set to the first segment of the normalizedName.
    */
   semverMap(normalizedName) {
-    var slash = normalizedName.indexOf('/');
+    var slash = normalizedName.indexOf("/");
     if (slash < 0) {
       slash = normalizedName.length;
     }
     var versionPart = normalizedName.slice(0, slash);
-    var at = versionPart.indexOf('@');
+    var at = versionPart.indexOf("@");
     if (at !== -1) {
       var semver = versionPart.slice(at + 1);
       var m = this.semVerRegExp_().exec(semver);
@@ -252,13 +258,18 @@ export class TraceurLoader extends Loader {
         var packageName = versionPart.slice(0, at);
         var map = Object.create(null);
         map[packageName] = versionPart;
-        map[packageName + '@' + major] = versionPart;
-        map[packageName + '@' + major + '.' + minor] = versionPart;
+        map[packageName + "@" + major] = versionPart;
+        map[packageName + "@" + major + "." + minor] = versionPart;
         return map;
       }
-      throw new Error('semverMap found no matching semver regexp in ' + semver);
+      throw new Error("semverMap found no matching semver regexp in " + semver);
     }
-    throw new Error('semverMap expected name@semver, got ' + versionPart + ' ' + normalizedName);
+    throw new Error(
+      "semverMap expected name@semver, got " +
+        versionPart +
+        " " +
+        normalizedName
+    );
   }
 
   get version() {
@@ -280,8 +291,7 @@ export class TraceurLoader extends Loader {
    * @param {Function<Array<string>>} factory takes array of normalized names.
    */
   register(normalizedName, deps, factoryFunction) {
-    $traceurRuntime.ModuleStore.register(normalizedName, deps,
-      factoryFunction);
+    $traceurRuntime.ModuleStore.register(normalizedName, deps, factoryFunction);
   }
 
   /**
@@ -291,8 +301,11 @@ export class TraceurLoader extends Loader {
    * @param {Function<Array<string>>} factory takes array of normalized names.
    */
   registerModule(normalizedName, deps, factoryFunction) {
-    $traceurRuntime.ModuleStore.registerModule(normalizedName, deps,
-      factoryFunction);
+    $traceurRuntime.ModuleStore.registerModule(
+      normalizedName,
+      deps,
+      factoryFunction
+    );
   }
 
   /**
@@ -300,14 +313,11 @@ export class TraceurLoader extends Loader {
    * Emulates node path.dirname.
    */
   dirname(filename) {
-    var lastSlash = filename.lastIndexOf('/');
-    if (lastSlash === -1)
-      return '.';
-    if (lastSlash === 0)
-      return '/';
+    var lastSlash = filename.lastIndexOf("/");
+    if (lastSlash === -1) return ".";
+    if (lastSlash === 0) return "/";
     return filename.slice(0, lastSlash);
   }
-
 }
 
 export class BrowserTraceurLoader extends TraceurLoader {

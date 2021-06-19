@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.FileReadTransport');
+goog.provide("wtf.io.transports.FileReadTransport");
 
-goog.require('goog.asserts');
-goog.require('wtf.io.DataFormat');
-goog.require('wtf.io.ReadTransport');
-
-
+goog.require("goog.asserts");
+goog.require("wtf.io.DataFormat");
+goog.require("wtf.io.ReadTransport");
 
 /**
  * Read-only file transport base type.
@@ -26,7 +24,7 @@ goog.require('wtf.io.ReadTransport');
  * @constructor
  * @extends {wtf.io.ReadTransport}
  */
-wtf.io.transports.FileReadTransport = function(filename) {
+wtf.io.transports.FileReadTransport = function (filename) {
   goog.base(this);
 
   /**
@@ -34,7 +32,7 @@ wtf.io.transports.FileReadTransport = function(filename) {
    * @type {!NodeFsModule}
    * @private
    */
-  this.fs_ = /** @type {!NodeFsModule} */ (require('fs'));
+  this.fs_ = /** @type {!NodeFsModule} */ (require("fs"));
 
   /**
    * Source filename.
@@ -61,23 +59,21 @@ wtf.io.transports.FileReadTransport = function(filename) {
 };
 goog.inherits(wtf.io.transports.FileReadTransport, wtf.io.ReadTransport);
 
-
 /**
  * @override
  */
-wtf.io.transports.FileReadTransport.prototype.disposeInternal = function() {
+wtf.io.transports.FileReadTransport.prototype.disposeInternal = function () {
   if (this.stream_) {
     this.stream_.destroy();
   }
-  goog.base(this, 'disposeInternal');
+  goog.base(this, "disposeInternal");
 };
-
 
 /**
  * @override
  */
-wtf.io.transports.FileReadTransport.prototype.resume = function() {
-  goog.base(this, 'resume');
+wtf.io.transports.FileReadTransport.prototype.resume = function () {
+  goog.base(this, "resume");
 
   if (!this.stream_) {
     // We don't support blobs on node.
@@ -86,28 +82,28 @@ wtf.io.transports.FileReadTransport.prototype.resume = function() {
     // Create stream.
     var encoding = null;
     if (this.getPreferredFormat() == wtf.io.DataFormat.STRING) {
-      encoding = 'utf8';
+      encoding = "utf8";
     }
     this.stream_ = this.fs_.createReadStream(this.filename_, {
-      flags: 'r',
-      encoding: encoding
+      flags: "r",
+      encoding: encoding,
     });
 
     // Gather all data then convert and emit.
     var self = this;
     var offset = 0;
     var total = 0;
-    this.stream_.on('data', function(nodeData) {
+    this.stream_.on("data", function (nodeData) {
       self.emitProgressEvent(offset, total);
       this.pendingBuffers_.push(nodeData);
     });
-    this.stream_.on('end', function() {
+    this.stream_.on("end", function () {
       self.emitProgressEvent(total, total);
 
       // Combine all pending buffers.
       // TODO(benvanik): stream back as received.
       if (this.getPreferredFormat() == wtf.io.DataFormat.STRING) {
-        var combinedData = this.pendingBuffers_.join('');
+        var combinedData = this.pendingBuffers_.join("");
       } else {
         var combinedData = new Uint8Array(total);
         var offset = 0;

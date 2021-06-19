@@ -12,10 +12,9 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.hud.exports');
+goog.provide("wtf.hud.exports");
 
-goog.require('wtf.hud');
-
+goog.require("wtf.hud");
 
 /**
  * @define {boolean} Whether to enable exporting of the wtf.hud
@@ -27,25 +26,15 @@ goog.require('wtf.hud');
  */
 wtf.hud.exports.ENABLE_EXPORTS = false;
 
-
 if (wtf.hud.exports.ENABLE_EXPORTS) {
   // wtf.hud controls
+  goog.exportSymbol("wtf.hud.prepare", wtf.hud.prepare);
+  goog.exportSymbol("wtf.hud.show", wtf.hud.show);
+  goog.exportSymbol("wtf.hud.hide", wtf.hud.hide);
+  goog.exportSymbol("wtf.hud.advance", wtf.hud.advance);
+  goog.exportSymbol("wtf.hud.addButton", wtf.hud.addButton);
   goog.exportSymbol(
-      'wtf.hud.prepare',
-      wtf.hud.prepare);
-  goog.exportSymbol(
-      'wtf.hud.show',
-      wtf.hud.show);
-  goog.exportSymbol(
-      'wtf.hud.hide',
-      wtf.hud.hide);
-  goog.exportSymbol(
-      'wtf.hud.advance',
-      wtf.hud.advance);
-  goog.exportSymbol(
-      'wtf.hud.addButton',
-      wtf.hud.addButton);
-  goog.exportSymbol(
-      'wtf.hud.sendSnapshotToWindow',
-      wtf.hud.sendSnapshotToWindow);
+    "wtf.hud.sendSnapshotToWindow",
+    wtf.hud.sendSnapshotToWindow
+  );
 }

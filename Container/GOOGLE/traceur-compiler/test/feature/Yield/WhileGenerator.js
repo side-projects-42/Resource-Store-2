@@ -13,7 +13,7 @@ function* whileGenerator(max, continueValue, breakValue) {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -22,4 +22,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assert.equal('13', accumulate(whileGenerator(10, 2, 4)));
+assert.equal("13", accumulate(whileGenerator(10, 2, 4)));

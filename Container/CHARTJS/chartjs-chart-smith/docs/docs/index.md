@@ -10,12 +10,12 @@ sidebar: index
 > npm install chartjs-chart-smith
 ```
 
-To create a Smith Chart, include `chartjs-chart-smith.js` after `Chart.js` and then create the chart by setting the `type` attribute to `'smith'`. 
+To create a Smith Chart, include `chartjs-chart-smith.js` after `Chart.js` and then create the chart by setting the `type` attribute to `'smith'`.
 
 ```javascript
 var mySmithChart = new Chart({
-	type: 'smith',
-	data: dataObject
+  type: "smith",
+  data: dataObject,
 });
 ```
 
@@ -25,20 +25,26 @@ The smith chart can graph multiple datasets at once. The data for each dataset i
 
 ```javascript
 var smithChartData = {
-	datasets: [{
-		label: 'Dataset 1',
-		data: [{
-			real: 0,
-			imag: 1
-		}, {
-			real: 1,
-			imag: 1
-		}]
-	}]	
+  datasets: [
+    {
+      label: "Dataset 1",
+      data: [
+        {
+          real: 0,
+          imag: 1,
+        },
+        {
+          real: 1,
+          imag: 1,
+        },
+      ],
+    },
+  ],
 };
 ```
 
 ### Scale Configuration
+
 The smith chart scale can be configured by placing options into the config that is passed to the chart upon creation.
 
 ```javascript
@@ -48,13 +54,13 @@ new Chart({
 			display: true, // setting false will hide the scale
 			gridLines: {
 				// setting false will hide the grid lines
-				display: true, 
+				display: true,
 
 				// the color of the grid lines
-				color: rgba(0, 0, 0, 0.1), 
+				color: rgba(0, 0, 0, 0.1),
 
 				// thickness of grid lines
-				lineWidth: 1, 
+				lineWidth: 1,
 			},
 			ticks: {
 				// The color of the scale label text

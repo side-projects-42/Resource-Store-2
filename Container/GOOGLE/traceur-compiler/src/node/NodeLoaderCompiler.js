@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {LoaderCompiler} from '../loader/LoaderCompiler.js';
+import { LoaderCompiler } from "../loader/LoaderCompiler.js";
 
 export class NodeLoaderCompiler extends LoaderCompiler {
   constructor() {
@@ -23,23 +23,23 @@ export class NodeLoaderCompiler extends LoaderCompiler {
   evaluateCodeUnit(codeUnit) {
     // We cannot move these to file scope since this file is included in
     // bin/traceur.js which needs to work in a browser.
-    let {runInThisContext} = require('vm');
-    let semver = require('semver');
+    let { runInThisContext } = require("vm");
+    let semver = require("semver");
 
     let content = codeUnit.metadata.transcoded;
     let filename = codeUnit.address || codeUnit.normalizedName;
     // Node eval does not support //# sourceURL yet.
     // In node we use a low level evaluator so that the
     // sourcemap=memory mechanism can help us debug.
-    if (codeUnit.metadata.traceurOptions.sourceMaps === 'memory') {
+    if (codeUnit.metadata.traceurOptions.sourceMaps === "memory") {
       this.enableMemorySourceMaps_();
     }
 
     // Node 0.10 uses a string as the filename.
     // Node 0.12 >= uses an option object
     let options;
-    if (semver.gte(process.version, '0.12.0')) {
-      options = {filename};
+    if (semver.gte(process.version, "0.12.0")) {
+      options = { filename };
     } else {
       options = filename;
     }
@@ -52,18 +52,18 @@ export class NodeLoaderCompiler extends LoaderCompiler {
     if (this.sourceMapsInMemory_) {
       return;
     }
-    require('source-map-support').install({
-      retrieveSourceMap: function(url) {
+    require("source-map-support").install({
+      retrieveSourceMap: function (url) {
         try {
           let map = System.getSourceMap(url);
           if (map) {
-            return {url, map};
+            return { url, map };
           }
         } catch (ex) {
           // Failure in this function results in no error output.
-          console.error('retrieveSourceMap FAILED ', ex);
+          console.error("retrieveSourceMap FAILED ", ex);
         }
-      }
+      },
     });
     this.sourceMapsInMemory_ = true;
   }

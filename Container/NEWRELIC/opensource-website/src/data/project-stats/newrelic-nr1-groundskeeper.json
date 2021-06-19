@@ -1,0 +1,139 @@
+{
+  "projectFullName": "newrelic/nr1-groundskeeper",
+  "issues": {
+    "open": 5
+  },
+  "releases": 15,
+  "latestRelease": {
+    "name": "v0.10.3",
+    "date": "2021-05-07T17:20:37Z"
+  },
+  "commits": 127,
+  "lastSixMonthsCommitTotal": 24,
+  "contributors": 11,
+  "pullRequests": {
+    "open": 1
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [
+    {
+      "id": "MDU6SXNzdWU3NTc0ODkwMzk=",
+      "title": "Chore: Replace deprecated Dropdown components with Select",
+      "url": "https://github.com/newrelic/nr1-groundskeeper/issues/52",
+      "createdAt": "2020-12-05T00:23:27Z",
+      "comments": {
+        "totalCount": 0
+      },
+      "author": {
+        "login": "fightingmonk",
+        "id": "MDQ6VXNlcjQ4MjY3MQ==",
+        "email": "",
+        "name": "Jonathan Karon"
+      },
+      "number": 52,
+      "createdBy": "Jonathan Karon"
+    }
+  ],
+  "cachedContributors": [
+    {
+      "id": 1395158,
+      "login": "jpvajda",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1395158?v=4",
+      "htmlUrl": "https://github.com/jpvajda",
+      "contributions": 1
+    },
+    {
+      "id": 20293876,
+      "login": "tyreer",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/20293876?v=4",
+      "htmlUrl": "https://github.com/tyreer",
+      "contributions": 12
+    },
+    {
+      "id": 66321197,
+      "login": "nr-opensource-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/66321197?v=4",
+      "htmlUrl": "https://github.com/nr-opensource-bot",
+      "contributions": 6
+    },
+    {
+      "id": 8731013,
+      "login": "prototypicalpro",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8731013?v=4",
+      "htmlUrl": "https://github.com/prototypicalpro",
+      "contributions": 1
+    },
+    {
+      "id": 929261,
+      "login": "tangollama",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/929261?v=4",
+      "htmlUrl": "https://github.com/tangollama",
+      "contributions": 2
+    },
+    {
+      "id": 32174276,
+      "login": "semantic-release-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/32174276?v=4",
+      "htmlUrl": "https://github.com/semantic-release-bot",
+      "contributions": 1
+    },
+    {
+      "id": 482671,
+      "login": "fightingmonk",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/482671?v=4",
+      "htmlUrl": "https://github.com/fightingmonk",
+      "contributions": 21
+    },
+    {
+      "id": 197140,
+      "login": "devfreddy",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/197140?v=4",
+      "htmlUrl": "https://github.com/devfreddy",
+      "contributions": 4
+    },
+    {
+      "id": 19733683,
+      "login": "snyk-bot",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19733683?v=4",
+      "htmlUrl": "https://github.com/snyk-bot",
+      "contributions": 1
+    },
+    {
+      "id": 6722433,
+      "login": "jbeveland27",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/6722433?v=4",
+      "htmlUrl": "https://github.com/jbeveland27",
+      "contributions": 11
+    },
+    {
+      "id": 812989,
+      "login": "danielgolden",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/812989?v=4",
+      "htmlUrl": "https://github.com/danielgolden",
+      "contributions": 23
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2U2MDU=",
+      "name": "SCSS",
+      "color": "#c6538c"
+    }
+  ],
+  "screenshots": [
+    "https://raw.githubusercontent.com/newrelic/nr1-groundskeeper/master/catalog/screenshots/nr1-groundskeeper-1.png"
+  ],
+  "license": {
+    "id": "MDc6TGljZW5zZTI=",
+    "name": "Apache License 2.0",
+    "spdxId": "Apache-2.0",
+    "url": "http://choosealicense.com/licenses/apache-2.0/",
+    "featured": true,
+    "key": "apache-2.0"
+  }
+}

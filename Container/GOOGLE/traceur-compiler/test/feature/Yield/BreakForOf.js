@@ -25,15 +25,14 @@ x = 10;
   for (let i of g) {
     return;
   }
-}());
+})();
 
 assert.equal(x, 42);
 
 g = f();
 x = 20;
 
-label1:
-for (let i of g) {
+label1: for (let i of g) {
   if (i == 1) {
     continue label1;
   }
@@ -43,12 +42,9 @@ for (let i of g) {
 g = f();
 x = 30;
 
-label2:
-label3:
-for (let i of g) {
+label2: label3: for (let i of g) {
   if (i == 1) {
     continue label2;
   }
   assert.equal(x, 30);
 }
-

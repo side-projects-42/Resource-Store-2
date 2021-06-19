@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export {schedule as default} from './async.js';
+export { schedule as default } from "./async.js";

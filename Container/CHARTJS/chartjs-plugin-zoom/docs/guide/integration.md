@@ -9,15 +9,15 @@
 <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
 <script src="path/to/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.min.js"></script>
 <script>
-    var myChart = new Chart(ctx, {...});
+  var myChart = new Chart(ctx, {...});
 </script>
 ```
 
 ## Bundlers (Webpack, Rollup, etc.)
 
 ```javascript
-import { Chart } from 'chart.js';
-import zoomPlugin from 'chartjs-plugin-zoom';
+import { Chart } from "chart.js";
+import zoomPlugin from "chartjs-plugin-zoom";
 
 Chart.register(zoomPlugin);
 ```

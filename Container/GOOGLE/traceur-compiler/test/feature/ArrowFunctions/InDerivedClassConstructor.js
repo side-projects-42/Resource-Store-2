@@ -6,7 +6,7 @@ class Base {
 
 class Derived extends Base {
   constructor() {
-    super()
+    super();
     this.foo = () => {
       return this.bar();
     };

@@ -4,18 +4,16 @@ function assertThrownEquals(x, fn) {
 
 function assertThrownErrorIs(str, fn) {
   var e = assertThrows(fn);
-  if (!e instanceof Error)
-    fail('expected Error object');
+  if (!e instanceof Error) fail("expected Error object");
 
   assertEquals(str, e.message);
 }
 
-import {isStopIteration} from '@iter';
+import { isStopIteration } from "@iter";
 
 function assertThrowsStopIteration(fn) {
   var e = assertThrows(fn);
-  if (!isStopIteration(e))
-    fail('[object StopIteration] expected');
+  if (!isStopIteration(e)) fail("[object StopIteration] expected");
   return e;
 }
 
@@ -59,7 +57,7 @@ function* G6() {
     yield 1000;
     return 42;
     yield 2000;
-  } catch(e) {
+  } catch (e) {
     return 43;
   } finally {
     // TODO: Is 'return' allowed inside 'finally'?
@@ -74,7 +72,7 @@ function id(G) {
 }
 
 function wrap(G) {
-  return function*() {
+  return function* () {
     var r = yield* G();
     return r;
   };
@@ -88,13 +86,12 @@ var tests = [
   [G3, [], undefined],
   [G4, [], 42],
   [G5, [1000], 42],
-  [G6, [1000], 42]
+  [G6, [1000], 42],
 ];
 
 //-----------------------------------------------------------------------------
 
 [id, wrap].forEach((W) => {
-
   tests.forEach(([G, y, r]) => {
     var g = W(G)();
     y.forEach((x) => assertEquals(x, g.next()));
@@ -108,5 +105,4 @@ var tests = [
   g = W(G6)();
   assertEquals(1000, g.next());
   assertThrownReturnEquals(43, () => g.throw());
-
 });

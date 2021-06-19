@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StringMap} from '../../util/StringMap.js';
-import {assert} from '../../util/assert.js';
+import { StringMap } from "../../util/StringMap.js";
+import { assert } from "../../util/assert.js";
 
 export class ExportsList {
   /**
@@ -22,9 +22,8 @@ export class ExportsList {
   constructor(normalizedName) {
     this.exports_ = new StringMap();
     if (normalizedName !== null)
-      this.normalizedName = normalizedName.replace(/\\/g, '/');
-    else
-      this.normalizedName = null ;
+      this.normalizedName = normalizedName.replace(/\\/g, "/");
+    else this.normalizedName = null;
   }
 
   /**

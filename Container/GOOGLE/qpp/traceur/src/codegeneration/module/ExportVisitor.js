@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ExportSymbol} from '../../semantics/symbols/ExportSymbol.js';
-import {IDENTIFIER_EXPRESSION} from '../../syntax/trees/ParseTreeType.js';
-import {ModuleVisitor} from './ModuleVisitor.js';
+import { ExportSymbol } from "../../semantics/symbols/ExportSymbol.js";
+import { IDENTIFIER_EXPRESSION } from "../../syntax/trees/ParseTreeType.js";
+import { ModuleVisitor } from "./ModuleVisitor.js";
 
 /**
  * Visits a parse tree and adds all the module definitions.
@@ -39,11 +39,11 @@ export class ExportVisitor extends ModuleVisitor {
       return;
     }
 
-    traceur.assert(typeof name == 'string');
+    traceur.assert(typeof name == "string");
 
     var parent = this.currentModule;
     if (parent.hasExport(name)) {
-      this.reportError_(tree, 'Duplicate export declaration \'%s\'', name);
+      this.reportError_(tree, "Duplicate export declaration '%s'", name);
       this.reportRelatedError_(parent.getExport(name));
       return;
     }
@@ -83,7 +83,7 @@ export class ExportVisitor extends ModuleVisitor {
 
   visitExportStar(tree) {
     var module = this.getModuleForModuleExpression(this.relatedTree_);
-    module.getExports().forEach(({name}) => {
+    module.getExports().forEach(({ name }) => {
       this.addExport_(name, tree);
     });
   }

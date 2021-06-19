@@ -88,8 +88,8 @@ version. That's it! See below for how to actually use the instrumented page.
 
 Caveats:
 
-* Only one JavaScript file on a page can be instrumented this way right now. If
-you need more use the proxy below.
+- Only one JavaScript file on a page can be instrumented this way right now. If
+  you need more use the proxy below.
 
 ## Automatic Instrumentation
 
@@ -98,10 +98,10 @@ automatically instrument all JavaScript sources on a page automatically.
 
 Flow:
 
-* Launch the proxy server (`wtf-instrument --server`).
-* Install and enable the Chrome extension (wtf-instrument-proxy).
-* Reload the page you want to instrument.
-* Capture the calls!
+- Launch the proxy server (`wtf-instrument --server`).
+- Install and enable the Chrome extension (wtf-instrument-proxy).
+- Reload the page you want to instrument.
+- Capture the calls!
 
 ### Launching the Proxy Server
 
@@ -178,10 +178,10 @@ Drag these to your bookmarks bar to make working with instrumented pages easier.
 Err, github doesn't allow javascript: links, so you'll have to create these
 manually:
 
-* Reset Trace: `javascript:__resetTrace()`
-  * Resets recorded data to start recording fresh.
-* Save Trace: `javascript:__saveTrace()`
-  * Saves a `.wtf-calls` file with the currently recorded data.
+- Reset Trace: `javascript:__resetTrace()`
+  - Resets recorded data to start recording fresh.
+- Save Trace: `javascript:__saveTrace()`
+  - Saves a `.wtf-calls` file with the currently recorded data.
 
 ## Limitations
 

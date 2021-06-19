@@ -11,21 +11,19 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.app.nav.FpsStatsBox');
-goog.provide('wtf.app.nav.GcStatsBox');
-goog.provide('wtf.app.nav.StatsBox');
+goog.provide("wtf.app.nav.FpsStatsBox");
+goog.provide("wtf.app.nav.GcStatsBox");
+goog.provide("wtf.app.nav.StatsBox");
 
-goog.require('goog.dom.TagName');
-goog.require('goog.dom.classes');
-goog.require('goog.soy');
-goog.require('wtf.app.nav.statsbox');
-goog.require('wtf.data.ZoneType');
-goog.require('wtf.events.EventType');
-goog.require('wtf.ui.Control');
-goog.require('wtf.ui.Painter');
-goog.require('wtf.util');
-
-
+goog.require("goog.dom.TagName");
+goog.require("goog.dom.classes");
+goog.require("goog.soy");
+goog.require("wtf.app.nav.statsbox");
+goog.require("wtf.data.ZoneType");
+goog.require("wtf.events.EventType");
+goog.require("wtf.ui.Control");
+goog.require("wtf.ui.Painter");
+goog.require("wtf.util");
 
 /**
  * Statistics box base control.
@@ -37,7 +35,7 @@ goog.require('wtf.util');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.app.nav.StatsBox = function(title, db, parentElement, dom) {
+wtf.app.nav.StatsBox = function (title, db, parentElement, dom) {
   goog.base(this, parentElement, dom);
 
   /**
@@ -52,47 +50,53 @@ wtf.app.nav.StatsBox = function(title, db, parentElement, dom) {
    * @type {!Element}
    * @private
    */
-  this.table_ = this.getChildElement(goog.getCssName('numbersTable'));
+  this.table_ = this.getChildElement(goog.getCssName("numbersTable"));
 
-  dom.setTextContent(this.getChildElement(goog.getCssName('title')), title);
+  dom.setTextContent(this.getChildElement(goog.getCssName("title")), title);
 
   var canvas = /** @type {!HTMLCanvasElement} */ (
-      this.getChildElement(goog.getCssName('graphCanvas')));
+    this.getChildElement(goog.getCssName("graphCanvas"))
+  );
   var paintContext = new wtf.ui.Painter(canvas);
   this.setPaintContext(paintContext);
 
   db.addListener(
-      wtf.events.EventType.INVALIDATED, this.databaseInvalidated_, this);
+    wtf.events.EventType.INVALIDATED,
+    this.databaseInvalidated_,
+    this
+  );
   this.databaseInvalidated_();
 };
 goog.inherits(wtf.app.nav.StatsBox, wtf.ui.Control);
 
+/**
+ * @override
+ */
+wtf.app.nav.StatsBox.prototype.createDom = function (dom) {
+  return /** @type {!Element} */ (
+    goog.soy.renderAsFragment(
+      wtf.app.nav.statsbox.control,
+      undefined,
+      undefined,
+      dom
+    )
+  );
+};
 
 /**
  * @override
  */
-wtf.app.nav.StatsBox.prototype.createDom = function(dom) {
-  return /** @type {!Element} */ (goog.soy.renderAsFragment(
-      wtf.app.nav.statsbox.control, undefined, undefined, dom));
+wtf.app.nav.StatsBox.prototype.layoutInternal = function () {
+  goog.base(this, "layoutInternal");
 };
-
-
-/**
- * @override
- */
-wtf.app.nav.StatsBox.prototype.layoutInternal = function() {
-  goog.base(this, 'layoutInternal');
-};
-
 
 /**
  * Handles database invalidations.
  * @private
  */
-wtf.app.nav.StatsBox.prototype.databaseInvalidated_ = function() {
+wtf.app.nav.StatsBox.prototype.databaseInvalidated_ = function () {
   this.update();
 };
-
 
 /**
  * Updates the stats box contents.
@@ -101,7 +105,6 @@ wtf.app.nav.StatsBox.prototype.databaseInvalidated_ = function() {
  * @protected
  */
 wtf.app.nav.StatsBox.prototype.update = goog.abstractMethod;
-
 
 /**
  * @typedef {{
@@ -113,22 +116,21 @@ wtf.app.nav.StatsBox.prototype.update = goog.abstractMethod;
  */
 wtf.app.nav.StatsBox.RowType;
 
-
 /**
  * Updates the contents of the numbers table.
  * @param {!Array.<wtf.app.nav.StatsBox.RowType>} rows Row data.
  * @protected
  */
-wtf.app.nav.StatsBox.prototype.updateNumbers = function(rows) {
+wtf.app.nav.StatsBox.prototype.updateNumbers = function (rows) {
   var dom = this.getDom();
 
   // TODO(benvanik): faster clear?
-  dom.setTextContent(this.table_, '');
+  dom.setTextContent(this.table_, "");
 
   // Toggle empty mode.
-  goog.dom.classes.enable(this.table_, goog.getCssName('empty'), !rows.length);
+  goog.dom.classes.enable(this.table_, goog.getCssName("empty"), !rows.length);
   if (!rows.length) {
-    dom.setTextContent(this.table_, 'no data');
+    dom.setTextContent(this.table_, "no data");
     return;
   }
 
@@ -148,8 +150,6 @@ wtf.app.nav.StatsBox.prototype.updateNumbers = function(rows) {
   }
 };
 
-
-
 /**
  * A stats box for frames.
  * @param {!wtf.db.Database} db Database.
@@ -158,16 +158,15 @@ wtf.app.nav.StatsBox.prototype.updateNumbers = function(rows) {
  * @constructor
  * @extends {wtf.app.nav.StatsBox}
  */
-wtf.app.nav.FpsStatsBox = function(db, parentElement, dom) {
-  goog.base(this, 'FPS', db, parentElement, dom);
+wtf.app.nav.FpsStatsBox = function (db, parentElement, dom) {
+  goog.base(this, "FPS", db, parentElement, dom);
 };
 goog.inherits(wtf.app.nav.FpsStatsBox, wtf.app.nav.StatsBox);
-
 
 /**
  * @override
  */
-wtf.app.nav.FpsStatsBox.prototype.update = function() {
+wtf.app.nav.FpsStatsBox.prototype.update = function () {
   var totalCount = 0;
   var averageTime = 0;
   var averageSpan = 0;
@@ -201,31 +200,29 @@ wtf.app.nav.FpsStatsBox.prototype.update = function() {
 
   var rows = [
     {
-      key: 'Avg:',
+      key: "Avg:",
       value: (1000 / averageSpan).toFixed(0),
-      title: 'Average frames per second.'
+      title: "Average frames per second.",
     },
     {
-      key: 'Duration:',
+      key: "Duration:",
       value: wtf.util.formatSmallTime(averageTime),
-      title: 'Average time per requestAnimationFrame.'
+      title: "Average time per requestAnimationFrame.",
     },
     {
-      key: 'Span:',
+      key: "Span:",
       value: wtf.util.formatSmallTime(averageSpan),
-      title: 'Average time between frame starts.'
+      title: "Average time between frame starts.",
     },
     {
-      key: '>16ms:',
-      value: over16Count + ', ' +
-          Math.round((over16Count / totalCount) * 100) + '%',
-      title: 'Number of frames over 16ms (60fps) and % of all frames.'
-    }
+      key: ">16ms:",
+      value:
+        over16Count + ", " + Math.round((over16Count / totalCount) * 100) + "%",
+      title: "Number of frames over 16ms (60fps) and % of all frames.",
+    },
   ];
   this.updateNumbers(rows);
 };
-
-
 
 /**
  * A stats box for GC events.
@@ -235,16 +232,15 @@ wtf.app.nav.FpsStatsBox.prototype.update = function() {
  * @constructor
  * @extends {wtf.app.nav.StatsBox}
  */
-wtf.app.nav.GcStatsBox = function(db, parentElement, dom) {
-  goog.base(this, 'GC', db, parentElement, dom);
+wtf.app.nav.GcStatsBox = function (db, parentElement, dom) {
+  goog.base(this, "GC", db, parentElement, dom);
 };
 goog.inherits(wtf.app.nav.GcStatsBox, wtf.app.nav.StatsBox);
-
 
 /**
  * @override
  */
-wtf.app.nav.GcStatsBox.prototype.update = function() {
+wtf.app.nav.GcStatsBox.prototype.update = function () {
   var totalCount = 0;
   var totalDuration = 0;
   var skipCount = 0;
@@ -265,7 +261,7 @@ wtf.app.nav.GcStatsBox.prototype.update = function() {
   }
 
   // Get the GC index.
-  var index = zone.getSharedIndex(['javascript#gc']);
+  var index = zone.getSharedIndex(["javascript#gc"]);
   if (!index.getCount()) {
     this.updateNumbers([]);
     return;
@@ -303,33 +299,32 @@ wtf.app.nav.GcStatsBox.prototype.update = function() {
     }
 
     // Diff.
-    if (gap > 16.777 &&
-        gap - time < 16.777) {
+    if (gap > 16.777 && gap - time < 16.777) {
       skipCount++;
     }
   }
 
   var rows = [
     {
-      key: 'Count:',
+      key: "Count:",
       value: totalCount,
-      title: 'Total number of large garbage collects.'
+      title: "Total number of large garbage collects.",
     },
     {
-      key: 'Duration:',
+      key: "Duration:",
       value: wtf.util.formatSmallTime(totalDuration / totalCount),
-      title: 'Average duration of each garbage collect.'
+      title: "Average duration of each garbage collect.",
     },
     {
-      key: 'Total:',
+      key: "Total:",
       value: wtf.util.formatSmallTime(totalDuration),
-      title: 'Total time spent running garbage collection.'
+      title: "Total time spent running garbage collection.",
     },
     {
-      key: 'Skips:',
-      value: '~' + skipCount,
-      title: 'Number of times a frame ran over 16ms because of a GC.'
-    }
+      key: "Skips:",
+      value: "~" + skipCount,
+      title: "Number of times a frame ran over 16ms because of a GC.",
+    },
   ];
   this.updateNumbers(rows);
 };

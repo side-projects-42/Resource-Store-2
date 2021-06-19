@@ -3,8 +3,7 @@
 // Async.
 
 async function asyncValue(value) {
-  if (true)
-    return value;
+  if (true) return value;
   await asyncYield();
 }
 
@@ -18,7 +17,7 @@ function asyncTimeout(ms) {
   });
 }
 
-(async function() {
+(async function () {
   var value = await asyncValue(42);
   assert.equal(42, value);
   done();

@@ -1,0 +1,23 @@
+{
+  "name": "c-dt-example",
+  "fullName": "newrelic/c-dt-example",
+  "slug": "newrelic-c-dt-example",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "C Distributed Tracing Example",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/c-dt-example",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/c-dt-example",
+  "iconUrl": null,
+  "shortDescription": "C SDK example",
+  "description": "C SDK Distributed Tracing Example",
+  "ossCategory": "example-code",
+  "primaryLanguage": "C",
+  "projectTags": ["agent", "sdk"],
+  "website": {
+    "title": "C Distributed Tracing Example",
+    "url": "https://github.com/newrelic/c-dt-example"
+  }
+}

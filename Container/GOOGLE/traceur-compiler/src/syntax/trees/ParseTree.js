@@ -12,18 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as ParseTreeType from './ParseTreeType.js';
-import {
-  IDENTIFIER,
-  STAR,
-  STRING,
-  VAR,
-} from '../TokenType.js';
-import {Token} from '../Token.js';
-import * as utilJSON from '../../util/JSON.js';
-import {
-  ASYNC, ASYNC_STAR
-} from '../PredefinedName.js';
+import * as ParseTreeType from "./ParseTreeType.js";
+import { IDENTIFIER, STAR, STRING, VAR } from "../TokenType.js";
+import { Token } from "../Token.js";
+import * as utilJSON from "../../util/JSON.js";
+import { ASYNC, ASYNC_STAR } from "../PredefinedName.js";
 
 import {
   ARRAY_COMPREHENSION,
@@ -94,9 +87,9 @@ import {
   WHILE_STATEMENT,
   WITH_STATEMENT,
   YIELD_EXPRESSION,
-} from './ParseTreeType.js';
+} from "./ParseTreeType.js";
 
-export {ParseTreeType};
+export { ParseTreeType };
 
 /**
  * An abstract syntax tree for JavaScript parse trees.
@@ -138,7 +131,7 @@ export class ParseTree {
   isLeftHandSideExpression() {
     switch (this.type) {
       case ARRAY_PATTERN:
-      case IDENTIFIER_EXPRESSION:  // This does not handle strict mode.
+      case IDENTIFIER_EXPRESSION: // This does not handle strict mode.
       case MEMBER_EXPRESSION:
       case MEMBER_LOOKUP_EXPRESSION:
       case OBJECT_PATTERN:
@@ -224,20 +217,20 @@ export class ParseTree {
 
   /** @return {boolean} */
   isExpression() {
-    return this.isAssignmentExpression() ||
-        this.type === COMMA_EXPRESSION;
+    return this.isAssignmentExpression() || this.type === COMMA_EXPRESSION;
   }
 
   /** @return {boolean} */
   isAssignmentOrSpread() {
-    return this.isAssignmentExpression() ||
-        this.type === SPREAD_EXPRESSION;
+    return this.isAssignmentExpression() || this.type === SPREAD_EXPRESSION;
   }
 
   /** @return {boolean} */
   isRestParameter() {
-    return this.type === REST_PARAMETER ||
-        (this.type === FORMAL_PARAMETER && this.parameter.isRestParameter());
+    return (
+      this.type === REST_PARAMETER ||
+      (this.type === FORMAL_PARAMETER && this.parameter.isRestParameter())
+    );
   }
 
   /** @return {boolean} */
@@ -246,13 +239,16 @@ export class ParseTree {
   }
 
   isStatementListItem() {
-    return this.isStatement() || this.isDeclaration() ||
-        // TODO(arv): When transforming modules we can get a type-alias. Once
-        // #1995 is fixed we can change the order of these transformers and the
-        // type-alias will get removed before it gets inserted into an invalid
-        // location.
-        // https://github.com/google/traceur-compiler/issues/1995
-        this.type === TYPE_ALIAS_DECLARATION;
+    return (
+      this.isStatement() ||
+      this.isDeclaration() ||
+      // TODO(arv): When transforming modules we can get a type-alias. Once
+      // #1995 is fixed we can change the order of these transformers and the
+      // type-alias will get removed before it gets inserted into an invalid
+      // location.
+      // https://github.com/google/traceur-compiler/issues/1995
+      this.type === TYPE_ALIAS_DECLARATION
+    );
   }
 
   isStatement() {
@@ -286,7 +282,7 @@ export class ParseTree {
       case FUNCTION_DECLARATION:
       // GeneratorDeclaration is covered by FUNCTION_DECLARATION.
       case CLASS_DECLARATION:
-       return true;
+        return true;
     }
 
     return this.isLexicalDeclaration();
@@ -344,15 +340,19 @@ export class ParseTree {
   }
 
   isAsyncFunction() {
-    return this.functionKind !== null &&
-        this.functionKind.type === IDENTIFIER &&
-        this.functionKind.value === ASYNC;
+    return (
+      this.functionKind !== null &&
+      this.functionKind.type === IDENTIFIER &&
+      this.functionKind.value === ASYNC
+    );
   }
 
   isAsyncGenerator() {
-    return this.functionKind !== null &&
-        this.functionKind.type === IDENTIFIER &&
-        this.functionKind.value === ASYNC_STAR;
+    return (
+      this.functionKind !== null &&
+      this.functionKind.type === IDENTIFIER &&
+      this.functionKind.value === ASYNC_STAR
+    );
   }
 
   isType() {
@@ -363,8 +363,8 @@ export class ParseTree {
       case PREDEFINED_TYPE:
       case TYPE_NAME:
       case TYPE_REFERENCE:
-      // TODO(arv): Implement the rest.
-      // case TYPE_QUERY:
+        // TODO(arv): Implement the rest.
+        // case TYPE_QUERY:
         return true;
     }
     return false;
@@ -374,10 +374,9 @@ export class ParseTree {
     let tree = this;
     if (tree.type !== EXPRESSION_STATEMENT || !(tree = tree.expression))
       return null;
-    if (tree.type !== LITERAL_EXPRESSION   || !(tree = tree.literalToken))
+    if (tree.type !== LITERAL_EXPRESSION || !(tree = tree.literalToken))
       return null;
-    if (tree.type !== STRING)
-      return null;
+    if (tree.type !== STRING) return null;
     return tree;
   }
 
@@ -387,8 +386,7 @@ export class ParseTree {
 
   isUseStrictDirective() {
     let token = this.getDirectivePrologueStringToken_();
-    if (!token)
-      return false;
+    if (!token) return false;
     let v = token.value;
     // A Use Strict Directive may not contain an EscapeSequence or
     // LineContinuation. For example, 'use str\x69ct' is not a valid Use Strict
@@ -422,8 +420,7 @@ export class ParseTree {
         return this.literalToken.toString();
     }
 
-    throw new Error('Not yet implemented');
-
+    throw new Error("Not yet implemented");
   }
 
   /**
@@ -434,7 +431,7 @@ export class ParseTree {
    * @return {*}
    */
   static stripLocation(key, value) {
-    if (key === 'location') {
+    if (key === "location") {
       return undefined;
     }
     return value;
@@ -448,11 +445,10 @@ export class ParseTree {
    */
   static replacer(k, v) {
     if (v instanceof ParseTree || v instanceof Token) {
-      let rv = {type: v.type};
-      Object.keys(v).forEach(function(name) {
+      let rv = { type: v.type };
+      Object.keys(v).forEach(function (name) {
         // assigns 'type' again for Token, but no big deal.
-        if (name !== 'location')
-          rv[name] = v[name];
+        if (name !== "location") rv[name] = v[name];
       });
       return rv;
     }

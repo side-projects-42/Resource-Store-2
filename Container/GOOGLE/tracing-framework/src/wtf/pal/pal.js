@@ -11,13 +11,12 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.pal');
+goog.provide("wtf.pal");
 
-goog.require('wtf');
-goog.require('wtf.pal.BrowserPlatform');
-goog.require('wtf.pal.ChromePlatform');
-goog.require('wtf.pal.NodePlatform');
-
+goog.require("wtf");
+goog.require("wtf.pal.BrowserPlatform");
+goog.require("wtf.pal.ChromePlatform");
+goog.require("wtf.pal.NodePlatform");
 
 /**
  * Shared PAL singleton.
@@ -27,18 +26,16 @@ goog.require('wtf.pal.NodePlatform');
  */
 wtf.pal.sharedPlatform_ = null;
 
-
 /**
  * Gets the shared platform instance.
  * @return {!wtf.pal.IPlatform} Shared platform.
  */
-wtf.pal.getPlatform = function() {
+wtf.pal.getPlatform = function () {
   if (!wtf.pal.sharedPlatform_) {
     if (wtf.NODE) {
       wtf.pal.sharedPlatform_ = new wtf.pal.NodePlatform();
     } else {
-      if (goog.global['chrome'] &&
-          goog.global['chrome']['runtime']) {
+      if (goog.global["chrome"] && goog.global["chrome"]["runtime"]) {
         wtf.pal.sharedPlatform_ = new wtf.pal.ChromePlatform();
       } else {
         wtf.pal.sharedPlatform_ = new wtf.pal.BrowserPlatform();
@@ -48,7 +45,4 @@ wtf.pal.getPlatform = function() {
   return wtf.pal.sharedPlatform_;
 };
 
-
-goog.exportSymbol(
-    'wtf.pal.getPlatform',
-    wtf.pal.getPlatform);
+goog.exportSymbol("wtf.pal.getPlatform", wtf.pal.getPlatform);

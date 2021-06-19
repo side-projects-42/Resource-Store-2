@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-pcf-agent-tile",
+  "fullName": "newrelic/newrelic-pcf-agent-tile",
+  "slug": "newrelic-newrelic-pcf-agent-tile",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic PCF Agent Tile",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-pcf-agent-tile",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-pcf-agent-tile",
+  "iconUrl": null,
+  "shortDescription": "Pivotal Cloud Foundry Tile for New Relic",
+  "description": "Pivotal Cloud Foundry Tile to bind New Relic language agents with your application",
+  "ossCategory": "community-project",
+  "primaryLanguage": null,
+  "projectTags": ["pcf"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic PCF Agent Tile",
+    "url": "https://github.com/newrelic/newrelic-pcf-agent-tile"
+  }
+}

@@ -1,9 +1,8 @@
-import Scale from '../core/core.scale';
-import {isNullOrUndef, valueOrDefault, _limitValue} from '../helpers';
+import Scale from "../core/core.scale";
+import { isNullOrUndef, valueOrDefault, _limitValue } from "../helpers";
 
-const addIfString = (labels, raw, index) => typeof raw === 'string'
-  ? labels.push(raw) - 1
-  : isNaN(raw) ? null : index;
+const addIfString = (labels, raw, index) =>
+  typeof raw === "string" ? labels.push(raw) - 1 : isNaN(raw) ? null : index;
 
 function findOrAddLabel(labels, raw, index) {
   const first = labels.indexOf(raw);
@@ -14,10 +13,10 @@ function findOrAddLabel(labels, raw, index) {
   return first !== last ? index : first;
 }
 
-const validIndex = (index, max) => index === null ? null : _limitValue(Math.round(index), 0, max);
+const validIndex = (index, max) =>
+  index === null ? null : _limitValue(Math.round(index), 0, max);
 
 export default class CategoryScale extends Scale {
-
   constructor(cfg) {
     super(cfg);
 
@@ -31,17 +30,19 @@ export default class CategoryScale extends Scale {
       return null;
     }
     const labels = this.getLabels();
-    index = isFinite(index) && labels[index] === raw ? index
-      : findOrAddLabel(labels, raw, valueOrDefault(index, raw));
+    index =
+      isFinite(index) && labels[index] === raw
+        ? index
+        : findOrAddLabel(labels, raw, valueOrDefault(index, raw));
     return validIndex(index, labels.length - 1);
   }
 
   determineDataLimits() {
     const me = this;
-    const {minDefined, maxDefined} = me.getUserBounds();
-    let {min, max} = me.getMinMax(true);
+    const { minDefined, maxDefined } = me.getUserBounds();
+    let { min, max } = me.getMinMax(true);
 
-    if (me.options.bounds === 'ticks') {
+    if (me.options.bounds === "ticks") {
       if (!minDefined) {
         min = 0;
       }
@@ -63,13 +64,16 @@ export default class CategoryScale extends Scale {
     let labels = me.getLabels();
 
     // If we are viewing some subset of labels, slice the original array
-    labels = (min === 0 && max === labels.length - 1) ? labels : labels.slice(min, max + 1);
+    labels =
+      min === 0 && max === labels.length - 1
+        ? labels
+        : labels.slice(min, max + 1);
 
     me._valueRange = Math.max(labels.length - (offset ? 0 : 1), 1);
     me._startValue = me.min - (offset ? 0.5 : 0);
 
     for (let value = min; value <= max; value++) {
-      ticks.push({value});
+      ticks.push({ value });
     }
     return ticks;
   }
@@ -85,8 +89,8 @@ export default class CategoryScale extends Scale {
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   configure() {
     const me = this;
 
@@ -102,11 +106,13 @@ export default class CategoryScale extends Scale {
   getPixelForValue(value) {
     const me = this;
 
-    if (typeof value !== 'number') {
+    if (typeof value !== "number") {
       value = me.parse(value);
     }
 
-    return value === null ? NaN : me.getPixelForDecimal((value - me._startValue) / me._valueRange);
+    return value === null
+      ? NaN
+      : me.getPixelForDecimal((value - me._startValue) / me._valueRange);
   }
 
   // Must override base implementation because it calls getPixelForValue
@@ -122,7 +128,9 @@ export default class CategoryScale extends Scale {
 
   getValueForPixel(pixel) {
     const me = this;
-    return Math.round(me._startValue + me.getDecimalForPixel(pixel) * me._valueRange);
+    return Math.round(
+      me._startValue + me.getDecimalForPixel(pixel) * me._valueRange
+    );
   }
 
   getBasePixel() {
@@ -130,13 +138,13 @@ export default class CategoryScale extends Scale {
   }
 }
 
-CategoryScale.id = 'category';
+CategoryScale.id = "category";
 
 /**
  * @type {any}
  */
 CategoryScale.defaults = {
   ticks: {
-    callback: CategoryScale.prototype.getLabelForValue
-  }
+    callback: CategoryScale.prototype.getLabelForValue,
+  },
 };

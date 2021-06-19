@@ -14,32 +14,34 @@
 
 var observer;
 
-if (typeof WebKitMutationObserver != 'function') {
-  console.error('This example extension requires MutationObservers. ' +
-                'Try the Chrome Canary build.');
+if (typeof WebKitMutationObserver != "function") {
+  console.error(
+    "This example extension requires MutationObservers. " +
+      "Try the Chrome Canary build."
+  );
   return;
 }
 
-chrome.extension.onConnect.addListener(function(port) {
+chrome.extension.onConnect.addListener(function (port) {
   port.postMessage({ base: location.href.match(/^(.*\/)[^\/]*$/)[1] });
 
   var mirrorClient = new TreeMirrorClient(document, {
-    initialize: function(rootId, children) {
+    initialize: function (rootId, children) {
       port.postMessage({
-        f: 'initialize',
-        args: [rootId, children]
+        f: "initialize",
+        args: [rootId, children],
       });
     },
 
-    applyChanged: function(removed, addedOrMoved, attributes, text) {
+    applyChanged: function (removed, addedOrMoved, attributes, text) {
       port.postMessage({
-        f: 'applyChanged',
-        args: [removed, addedOrMoved, attributes, text]
+        f: "applyChanged",
+        args: [removed, addedOrMoved, attributes, text],
       });
-    }
+    },
   });
 
-  port.onDisconnect.addListener(function() {
+  port.onDisconnect.addListener(function () {
     mirrorClient.disconnect();
   });
 });

@@ -12,28 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
-import {LiteralExpression} from '../syntax/trees/ParseTrees.js';
-import {LiteralToken} from '../syntax/LiteralToken.js';
-import {REGULAR_EXPRESSION} from '../syntax/TokenType.js';
-import {regexpuRewritePattern} from '../outputgeneration/regexpuRewritePattern.js';
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
+import { LiteralExpression } from "../syntax/trees/ParseTrees.js";
+import { LiteralToken } from "../syntax/LiteralToken.js";
+import { REGULAR_EXPRESSION } from "../syntax/TokenType.js";
+import { regexpuRewritePattern } from "../outputgeneration/regexpuRewritePattern.js";
 
 export class RegularExpressionTransformer extends ParseTreeTransformer {
   transformLiteralExpression(tree) {
     let token = tree.literalToken;
     if (token.type === REGULAR_EXPRESSION) {
       let value = token.value;
-      let lastIndex = value.lastIndexOf('/');
+      let lastIndex = value.lastIndexOf("/");
       let pattern = value.slice(1, lastIndex);
       let flags = value.slice(lastIndex + 1);
-      if (flags.indexOf('u') !== -1) {
-        let result = '/' + regexpuRewritePattern(pattern, flags) + '/' +
-            flags.replace('u', '');
+      if (flags.indexOf("u") !== -1) {
+        let result =
+          "/" +
+          regexpuRewritePattern(pattern, flags) +
+          "/" +
+          flags.replace("u", "");
         return new LiteralExpression(
-            tree.location,
-            new LiteralToken(REGULAR_EXPRESSION,
-                             result,
-                             token.location));
+          tree.location,
+          new LiteralToken(REGULAR_EXPRESSION, result, token.location)
+        );
       }
     }
     return tree;

@@ -1,13 +1,12 @@
-import BoxAnnotation from './box';
+import BoxAnnotation from "./box";
 
 export default class EllipseAnnotation extends BoxAnnotation {
-
   inRange(x, y) {
-    return pointInEllipse({x, y}, this);
+    return pointInEllipse({ x, y }, this);
   }
 
   draw(ctx) {
-    const {width, height, options} = this;
+    const { width, height, options } = this;
     const center = this.getCenterPoint();
 
     ctx.save();
@@ -21,7 +20,15 @@ export default class EllipseAnnotation extends BoxAnnotation {
     ctx.setLineDash(options.borderDash);
     ctx.lineDashOffset = options.borderDashOffset;
 
-    ctx.ellipse(center.x, center.y, height / 2, width / 2, Math.PI / 2, 0, 2 * Math.PI);
+    ctx.ellipse(
+      center.x,
+      center.y,
+      height / 2,
+      width / 2,
+      Math.PI / 2,
+      0,
+      2 * Math.PI
+    );
 
     ctx.fill();
     ctx.stroke();
@@ -30,7 +37,7 @@ export default class EllipseAnnotation extends BoxAnnotation {
   }
 }
 
-EllipseAnnotation.id = 'ellipseAnnotation';
+EllipseAnnotation.id = "ellipseAnnotation";
 
 EllipseAnnotation.defaults = {
   display: true,
@@ -38,21 +45,21 @@ EllipseAnnotation.defaults = {
   borderDash: [],
   borderDashOffset: 0,
   borderWidth: 1,
-  xScaleID: 'x',
+  xScaleID: "x",
   xMin: undefined,
   xMax: undefined,
-  yScaleID: 'y',
+  yScaleID: "y",
   yMin: undefined,
-  yMax: undefined
+  yMax: undefined,
 };
 
 EllipseAnnotation.defaultRoutes = {
-  borderColor: 'color',
-  backgroundColor: 'color'
+  borderColor: "color",
+  backgroundColor: "color",
 };
 
 function pointInEllipse(p, ellipse) {
-  const {width, height} = ellipse;
+  const { width, height } = ellipse;
   const center = ellipse.getCenterPoint(true);
   const xRadius = width / 2;
   const yRadius = height / 2;
@@ -61,5 +68,9 @@ function pointInEllipse(p, ellipse) {
     return false;
   }
 
-  return (Math.pow(p.x - center.x, 2) / Math.pow(xRadius, 2)) + (Math.pow(p.y - center.y, 2) / Math.pow(yRadius, 2)) <= 1.0;
+  return (
+    Math.pow(p.x - center.x, 2) / Math.pow(xRadius, 2) +
+      Math.pow(p.y - center.y, 2) / Math.pow(yRadius, 2) <=
+    1.0
+  );
 }

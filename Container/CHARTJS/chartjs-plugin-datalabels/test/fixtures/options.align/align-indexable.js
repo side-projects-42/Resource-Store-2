@@ -1,14 +1,14 @@
 var labels = [];
 var inputs = [
-  'top',
-  'end',
-  'left',
-  'center',
-  'right',
-  'start',
-  'bottom',
+  "top",
+  "end",
+  "left",
+  "center",
+  "right",
+  "start",
+  "bottom",
   45,
-  -45
+  -45,
 ];
 
 for (var i = 0; i < inputs.length; ++i) {
@@ -17,39 +17,41 @@ for (var i = 0; i < inputs.length; ++i) {
 
 export default {
   config: {
-    type: 'bar',
+    type: "bar",
     data: {
       labels: labels,
-      datasets: [{
-        data: labels,
-        datalabels: {
-          backgroundColor: '#00ff77'
-        }
-      }]
+      datasets: [
+        {
+          data: labels,
+          datalabels: {
+            backgroundColor: "#00ff77",
+          },
+        },
+      ],
     },
     options: {
       layout: {
-        padding: 20
+        padding: 20,
       },
       plugins: {
         datalabels: {
           align: inputs,
-          anchor: 'start',
-          borderColor: 'black',
+          anchor: "start",
+          borderColor: "black",
           borderWidth: 2,
           font: {
-            size: 0
+            size: 0,
           },
           offset: 0,
-          padding: 8
-        }
-      }
-    }
+          padding: 8,
+        },
+      },
+    },
   },
   options: {
     canvas: {
       height: 128,
-      width: 320
-    }
-  }
+      width: 320,
+    },
+  },
 };

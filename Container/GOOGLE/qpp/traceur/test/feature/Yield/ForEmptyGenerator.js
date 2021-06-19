@@ -3,7 +3,7 @@ function* forEmptyGenerator() {
 }
 
 function accumulate(iterator) {
-  var result = '';
+  var result = "";
   for (var value of iterator) {
     result = result + String(value);
   }
@@ -12,4 +12,4 @@ function accumulate(iterator) {
 
 // ----------------------------------------------------------------------------
 
-assertEquals('', accumulate(forEmptyGenerator()));
+assertEquals("", accumulate(forEmptyGenerator()));

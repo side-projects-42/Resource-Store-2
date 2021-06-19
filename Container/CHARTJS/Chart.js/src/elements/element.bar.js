@@ -1,7 +1,7 @@
-import Element from '../core/core.element';
-import {isObject} from '../helpers';
-import {addRoundedRectPath} from '../helpers/helpers.canvas';
-import {toTRBL, toTRBLCorners} from '../helpers/helpers.options';
+import Element from "../core/core.element";
+import { isObject } from "../helpers";
+import { addRoundedRectPath } from "../helpers/helpers.canvas";
+import { toTRBL, toTRBLCorners } from "../helpers/helpers.options";
 
 /**
  * Helper function to get the bounds of the bar regardless of the orientation
@@ -11,7 +11,10 @@ import {toTRBL, toTRBLCorners} from '../helpers/helpers.options';
  * @private
  */
 function getBarBounds(bar, useFinalPosition) {
-  const {x, y, base, width, height} = bar.getProps(['x', 'y', 'base', 'width', 'height'], useFinalPosition);
+  const { x, y, base, width, height } = bar.getProps(
+    ["x", "y", "base", "width", "height"],
+    useFinalPosition
+  );
 
   let left, right, top, bottom, half;
 
@@ -29,7 +32,7 @@ function getBarBounds(bar, useFinalPosition) {
     bottom = Math.max(y, base);
   }
 
-  return {left, top, right, bottom};
+  return { left, top, right, bottom };
 }
 
 function parseBorderSkipped(bar) {
@@ -41,8 +44,8 @@ function parseBorderSkipped(bar) {
   }
 
   edge = bar.horizontal
-    ? parseEdge(edge, 'left', 'right', bar.base > bar.x)
-    : parseEdge(edge, 'bottom', 'top', bar.base < bar.y);
+    ? parseEdge(edge, "left", "right", bar.base > bar.x)
+    : parseEdge(edge, "bottom", "top", bar.base < bar.y);
 
   res[edge] = true;
   return res;
@@ -63,7 +66,7 @@ function swap(orig, v1, v2) {
 }
 
 function startEnd(v, start, end) {
-  return v === 'start' ? start : v === 'end' ? end : v;
+  return v === "start" ? start : v === "end" ? end : v;
 }
 
 function skipOrLimit(skip, value, min, max) {
@@ -79,12 +82,12 @@ function parseBorderWidth(bar, maxW, maxH) {
     t: skipOrLimit(skip.top, o.top, 0, maxH),
     r: skipOrLimit(skip.right, o.right, 0, maxW),
     b: skipOrLimit(skip.bottom, o.bottom, 0, maxH),
-    l: skipOrLimit(skip.left, o.left, 0, maxW)
+    l: skipOrLimit(skip.left, o.left, 0, maxW),
   };
 }
 
 function parseBorderRadius(bar, maxW, maxH) {
-  const {enableBorderRadius} = bar.getProps(['enableBorderRadius']);
+  const { enableBorderRadius } = bar.getProps(["enableBorderRadius"]);
   const value = bar.options.borderRadius;
   const o = toTRBLCorners(value);
   const maxR = Math.min(maxW, maxH);
@@ -95,10 +98,30 @@ function parseBorderRadius(bar, maxW, maxH) {
   const enableBorder = enableBorderRadius || isObject(value);
 
   return {
-    topLeft: skipOrLimit(!enableBorder || skip.top || skip.left, o.topLeft, 0, maxR),
-    topRight: skipOrLimit(!enableBorder || skip.top || skip.right, o.topRight, 0, maxR),
-    bottomLeft: skipOrLimit(!enableBorder || skip.bottom || skip.left, o.bottomLeft, 0, maxR),
-    bottomRight: skipOrLimit(!enableBorder || skip.bottom || skip.right, o.bottomRight, 0, maxR)
+    topLeft: skipOrLimit(
+      !enableBorder || skip.top || skip.left,
+      o.topLeft,
+      0,
+      maxR
+    ),
+    topRight: skipOrLimit(
+      !enableBorder || skip.top || skip.right,
+      o.topRight,
+      0,
+      maxR
+    ),
+    bottomLeft: skipOrLimit(
+      !enableBorder || skip.bottom || skip.left,
+      o.bottomLeft,
+      0,
+      maxR
+    ),
+    bottomRight: skipOrLimit(
+      !enableBorder || skip.bottom || skip.right,
+      o.bottomRight,
+      0,
+      maxR
+    ),
   };
 }
 
@@ -115,7 +138,7 @@ function boundingRects(bar) {
       y: bounds.top,
       w: width,
       h: height,
-      radius
+      radius,
     },
     inner: {
       x: bounds.left + border.l,
@@ -125,10 +148,16 @@ function boundingRects(bar) {
       radius: {
         topLeft: Math.max(0, radius.topLeft - Math.max(border.t, border.l)),
         topRight: Math.max(0, radius.topRight - Math.max(border.t, border.r)),
-        bottomLeft: Math.max(0, radius.bottomLeft - Math.max(border.b, border.l)),
-        bottomRight: Math.max(0, radius.bottomRight - Math.max(border.b, border.r)),
-      }
-    }
+        bottomLeft: Math.max(
+          0,
+          radius.bottomLeft - Math.max(border.b, border.l)
+        ),
+        bottomRight: Math.max(
+          0,
+          radius.bottomRight - Math.max(border.b, border.r)
+        ),
+      },
+    },
   };
 }
 
@@ -138,13 +167,17 @@ function inRange(bar, x, y, useFinalPosition) {
   const skipBoth = skipX && skipY;
   const bounds = bar && !skipBoth && getBarBounds(bar, useFinalPosition);
 
-  return bounds
-		&& (skipX || x >= bounds.left && x <= bounds.right)
-		&& (skipY || y >= bounds.top && y <= bounds.bottom);
+  return (
+    bounds &&
+    (skipX || (x >= bounds.left && x <= bounds.right)) &&
+    (skipY || (y >= bounds.top && y <= bounds.bottom))
+  );
 }
 
 function hasRadius(radius) {
-  return radius.topLeft || radius.topRight || radius.bottomLeft || radius.bottomRight;
+  return (
+    radius.topLeft || radius.topRight || radius.bottomLeft || radius.bottomRight
+  );
 }
 
 /**
@@ -157,7 +190,6 @@ function addNormalRectPath(ctx, rect) {
 }
 
 export default class BarElement extends Element {
-
   constructor(cfg) {
     super();
 
@@ -174,8 +206,10 @@ export default class BarElement extends Element {
 
   draw(ctx) {
     const options = this.options;
-    const {inner, outer} = boundingRects(this);
-    const addRectPath = hasRadius(outer.radius) ? addRoundedRectPath : addNormalRectPath;
+    const { inner, outer } = boundingRects(this);
+    const addRectPath = hasRadius(outer.radius)
+      ? addRoundedRectPath
+      : addNormalRectPath;
 
     ctx.save();
 
@@ -185,7 +219,7 @@ export default class BarElement extends Element {
       ctx.clip();
       addRectPath(ctx, inner);
       ctx.fillStyle = options.borderColor;
-      ctx.fill('evenodd');
+      ctx.fill("evenodd");
     }
 
     ctx.beginPath();
@@ -209,35 +243,38 @@ export default class BarElement extends Element {
   }
 
   getCenterPoint(useFinalPosition) {
-    const {x, y, base, horizontal} = this.getProps(['x', 'y', 'base', 'horizontal'], useFinalPosition);
+    const { x, y, base, horizontal } = this.getProps(
+      ["x", "y", "base", "horizontal"],
+      useFinalPosition
+    );
     return {
       x: horizontal ? (x + base) / 2 : x,
-      y: horizontal ? y : (y + base) / 2
+      y: horizontal ? y : (y + base) / 2,
     };
   }
 
   getRange(axis) {
-    return axis === 'x' ? this.width / 2 : this.height / 2;
+    return axis === "x" ? this.width / 2 : this.height / 2;
   }
 }
 
-BarElement.id = 'bar';
+BarElement.id = "bar";
 
 /**
  * @type {any}
  */
 BarElement.defaults = {
-  borderSkipped: 'start',
+  borderSkipped: "start",
   borderWidth: 0,
   borderRadius: 0,
   enableBorderRadius: true,
-  pointStyle: undefined
+  pointStyle: undefined,
 };
 
 /**
  * @type {any}
  */
 BarElement.defaultRoutes = {
-  backgroundColor: 'backgroundColor',
-  borderColor: 'borderColor'
+  backgroundColor: "backgroundColor",
+  borderColor: "borderColor",
 };

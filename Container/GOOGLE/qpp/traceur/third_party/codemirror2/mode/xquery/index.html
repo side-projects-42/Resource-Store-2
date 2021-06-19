@@ -1,6 +1,6 @@
-<!doctype html> 
-<html> 
-<!--
+<!DOCTYPE html>
+<html>
+  <!--
 /*
 Copyright (C) 2011 by MarkLogic Corporation
 Author: Mike Brevoort <mike@brevoort.com>
@@ -24,27 +24,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 -->
-  <head> 
-    <title>CodeMirror 2: JavaScript mode</title> 
-    <link rel="stylesheet" href="../../lib/codemirror.css"> 
-    <script src="http://codemirror.net/lib/codemirror.js"></script> 
-    <script src="xquery.js"></script> 
-    <link rel="stylesheet" href="../../doc/docs.css"> 
-    <link rel="stylesheet" href="../../theme/xq-dark.css"> 
+  <head>
+    <title>CodeMirror 2: JavaScript mode</title>
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
+    <script src="http://codemirror.net/lib/codemirror.js"></script>
+    <script src="xquery.js"></script>
+    <link rel="stylesheet" href="../../doc/docs.css" />
+    <link rel="stylesheet" href="../../theme/xq-dark.css" />
     <style type="text/css">
-			.CodeMirror {
-				border-top: 1px solid black; border-bottom: 1px solid black;
-			}
-			.CodeMirror-scroll {
-				height:400px;
-			}
-		</style> 
-  </head> 
-  <body> 
-    <h1>CodeMirror 2: XQuery mode</h1> 
+      .CodeMirror {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+      .CodeMirror-scroll {
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CodeMirror 2: XQuery mode</h1>
+
+    <div class="cm-s-default">
+      <textarea id="code" name="code">
  
-<div class="cm-s-default"> 
-	<textarea id="code" name="code"> 
 xquery version &quot;1.0-ml&quot;;
 (: this is
  : a 
@@ -200,23 +202,24 @@ declare function json:print-name-value($x as element()) as xs:string? {
 declare function json:serialize($x as element())  as xs:string {
   string-join(('{', json:print-name-value($x), '}'), &quot;&quot;)
 };
-  </textarea> 
-</div> 
- 
-    <script> 
+  </textarea
+      >
+    </div>
+
+    <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
-        theme: "xq-dark"
+        theme: "xq-dark",
       });
-    </script> 
- 
-    <p><strong>MIME types defined:</strong> <code>application/xquery</code>.</p> 
- 
-    <p>Development of the CodeMirror XQuery mode was sponsored by 
-      <a href="http://marklogic.com">MarkLogic</a> and developed by 
+    </script>
+
+    <p><strong>MIME types defined:</strong> <code>application/xquery</code>.</p>
+
+    <p>
+      Development of the CodeMirror XQuery mode was sponsored by
+      <a href="http://marklogic.com">MarkLogic</a> and developed by
       <a href="https://twitter.com/mbrevoort">Mike Brevoort</a>.
     </p>
- 
-  </body> 
+  </body>
 </html>

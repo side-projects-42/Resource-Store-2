@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {globPatterns} from '../test/modular/NodeTraceurTestRunner.js';
+import { globPatterns } from "../test/modular/NodeTraceurTestRunner.js";
 
-let express = require('express');
-let http = require('http');
-let serveIndex = require('serve-index');
+let express = require("express");
+let http = require("http");
+let serveIndex = require("serve-index");
 
 function servePathAtPort(path, port) {
   let app = express();
@@ -24,12 +24,12 @@ function servePathAtPort(path, port) {
   app.use(serveIndex(path));
   app.use(express.static(path));
   // Expand the test list based on the file system.
-  app.get('/traceurService/testGlobs', function(req, res) {
+  app.get("/traceurService/testGlobs", function (req, res) {
     let patterns = JSON.parse(req.query.patterns);
     return globPatterns(patterns).then((files) => {
       let nodeless = [];
       files.forEach((file) => {
-        if (file.indexOf('/node/') === -1) {
+        if (file.indexOf("/node/") === -1) {
           nodeless.push(file);
         }
       });
@@ -37,12 +37,12 @@ function servePathAtPort(path, port) {
     });
   });
   let server = http.createServer(app);
-  server.on('error', function(e) {
-    console.error('Port ' + port + ' did not work out');
+  server.on("error", function (e) {
+    console.error("Port " + port + " did not work out");
   });
   server.listen.apply(server, [port]);
-  console.log('serving ' + path + ' at ' + port);
+  console.log("serving " + path + " at " + port);
 }
 
-servePathAtPort(System.dirname(__moduleName) + '/..', 8099);
-servePathAtPort(System.dirname(__moduleName) + '/..', 80);
+servePathAtPort(System.dirname(__moduleName) + "/..", 8099);
+servePathAtPort(System.dirname(__moduleName) + "/..", 80);

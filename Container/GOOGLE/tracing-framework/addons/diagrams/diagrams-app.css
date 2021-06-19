@@ -18,7 +18,8 @@ svg {
   font: 10px sans-serif;
 }
 
-.axis path, .axis line {
+.axis path,
+.axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
@@ -26,7 +27,7 @@ svg {
 
 .node rect {
   cursor: move;
-  fill-opacity: .9;
+  fill-opacity: 0.9;
   shape-rendering: crispEdges;
 }
 
@@ -38,9 +39,9 @@ svg {
 .link {
   fill: none;
   stroke: #000;
-  stroke-opacity: .2;
+  stroke-opacity: 0.2;
 }
 
 .link:hover {
-  stroke-opacity: .5;
+  stroke-opacity: 0.5;
 }

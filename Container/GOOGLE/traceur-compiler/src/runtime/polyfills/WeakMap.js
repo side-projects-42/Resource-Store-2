@@ -17,23 +17,20 @@ import {
   deletePrivate,
   getPrivate,
   hasPrivate,
-  setPrivate
-} from '../private.js';
+  setPrivate,
+} from "../private.js";
 import {
   deleteFrozen,
   getFrozen,
   hasFrozen,
   setFrozen,
-} from '../frozen-data.js';
-import {
-  isObject,
-  registerPolyfill
-} from './utils.js'
-import hasNativeSymbol from '../has-native-symbols.js';
+} from "../frozen-data.js";
+import { isObject, registerPolyfill } from "./utils.js";
+import hasNativeSymbol from "../has-native-symbols.js";
 
-const {defineProperty, getOwnPropertyDescriptor, isExtensible} = Object;
+const { defineProperty, getOwnPropertyDescriptor, isExtensible } = Object;
 const $TypeError = TypeError;
-const {hasOwnProperty} = Object.prototype;
+const { hasOwnProperty } = Object.prototype;
 
 const sentinel = {};
 
@@ -44,7 +41,7 @@ export class WeakMap {
   }
 
   set(key, value) {
-    if (!isObject(key)) throw new $TypeError('key must be an object');
+    if (!isObject(key)) throw new $TypeError("key must be an object");
     if (!isExtensible(key)) {
       setFrozen(this.frozenData_, key, value);
     } else {
@@ -79,7 +76,7 @@ export class WeakMap {
 }
 
 function needsPolyfill(global) {
-  let {WeakMap, Symbol} = global;
+  let { WeakMap, Symbol } = global;
   if (!WeakMap || !hasNativeSymbol()) {
     return true;
   }

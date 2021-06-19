@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 var $Object = Object;
 var $TypeError = TypeError;
 
@@ -41,7 +40,7 @@ function getDescriptors(object) {
   return descriptors;
 }
 
-var nonEnum = {enumerable: false};
+var nonEnum = { enumerable: false };
 
 function makePropertiesNonEnumerable(object) {
   forEachPropertyKey(object, (key) => {
@@ -50,36 +49,33 @@ function makePropertiesNonEnumerable(object) {
 }
 
 export default function createClass(ctor, object, staticObject, superClass) {
-  defineProperty(object, 'constructor', {
+  defineProperty(object, "constructor", {
     value: ctor,
     configurable: true,
     enumerable: false,
-    writable: true
+    writable: true,
   });
 
   if (arguments.length > 3) {
-    if (typeof superClass === 'function')
-      ctor.__proto__ = superClass;
-    ctor.prototype = create(getProtoParent(superClass),
-                            getDescriptors(object));
+    if (typeof superClass === "function") ctor.__proto__ = superClass;
+    ctor.prototype = create(getProtoParent(superClass), getDescriptors(object));
   } else {
-    makePropertiesNonEnumerable(object)
+    makePropertiesNonEnumerable(object);
     ctor.prototype = object;
   }
-  defineProperty(ctor, 'prototype', {configurable: false, writable: false});
+  defineProperty(ctor, "prototype", { configurable: false, writable: false });
   return defineProperties(ctor, getDescriptors(staticObject));
 }
 
 function getProtoParent(superClass) {
-  if (typeof superClass === 'function') {
+  if (typeof superClass === "function") {
     var prototype = superClass.prototype;
     if ($Object(prototype) === prototype || prototype === null)
       return superClass.prototype;
-    throw new $TypeError('super prototype must be an Object or null');
+    throw new $TypeError("super prototype must be an Object or null");
   }
-  if (superClass === null)
-    return null;
+  if (superClass === null) return null;
   throw new $TypeError(
-      `Super expression must either be null or a function, not ${
-          typeof superClass}.`);
+    `Super expression must either be null or a function, not ${typeof superClass}.`
+  );
 }

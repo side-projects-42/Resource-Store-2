@@ -1,5 +1,11 @@
-var target = {a: 0, b: 2};
-var source = {a: 1, c: 3, get d() { return this.b || this.a + 64; }};
+var target = { a: 0, b: 2 };
+var source = {
+  a: 1,
+  c: 3,
+  get d() {
+    return this.b || this.a + 64;
+  },
+};
 var mixed = Object.mixin(target, source);
 
 // ----------------------------------------------------------------------------

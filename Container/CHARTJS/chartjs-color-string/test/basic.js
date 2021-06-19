@@ -1,26 +1,37 @@
 var string = require("../color-string");
 var assert = require("assert");
 
-
 assert.deepEqual(string.getRgba("#fef"), [255, 238, 255, 1]);
 assert.deepEqual(string.getRgba("#fffFEF"), [255, 255, 239, 1]);
 assert.deepEqual(string.getRgba("rgb(244, 233, 100)"), [244, 233, 100, 1]);
 assert.deepEqual(string.getRgba("rgb(100%, 30%, 90%)"), [255, 77, 229, 1]);
 assert.deepEqual(string.getRgba("transparent"), [0, 0, 0, 0]);
 assert.deepEqual(string.getHsla("hsl(240, 100%, 50.5%)"), [240, 100, 50.5, 1]);
-assert.deepEqual(string.getHsla("hsl(240deg, 100%, 50.5%)"), [240, 100, 50.5, 1]);
+assert.deepEqual(
+  string.getHsla("hsl(240deg, 100%, 50.5%)"),
+  [240, 100, 50.5, 1]
+);
 assert.deepEqual(string.getHwb("hwb(240, 100%, 50.5%)"), [240, 100, 50.5, 1]);
-assert.deepEqual(string.getHwb("hwb(240deg, 100%, 50.5%)"), [240, 100, 50.5, 1]);
+assert.deepEqual(
+  string.getHwb("hwb(240deg, 100%, 50.5%)"),
+  [240, 100, 50.5, 1]
+);
 
 // with sign
 assert.deepEqual(string.getRgba("rgb(-244, +233, -100)"), [0, 233, 0, 1]);
 assert.deepEqual(string.getHsla("hsl(+240, 100%, 50.5%)"), [240, 100, 50.5, 1]);
 assert.deepEqual(string.getRgba("rgba(200, +20, -233, -0.0)"), [200, 20, 0, 0]);
 assert.deepEqual(string.getRgba("rgba(200, +20, -233, -0.0)"), [200, 20, 0, 0]);
-assert.deepEqual(string.getHsla("hsla(+200, 100%, 50%, -0.2)"), [200, 100, 50, 0]);
+assert.deepEqual(
+  string.getHsla("hsla(+200, 100%, 50%, -0.2)"),
+  [200, 100, 50, 0]
+);
 assert.deepEqual(string.getHwb("hwb(+240, 100%, 50.5%)"), [240, 100, 50.5, 1]);
 assert.deepEqual(string.getHwb("hwb(-240deg, 100%, 50.5%)"), [0, 100, 50.5, 1]);
-assert.deepEqual(string.getHwb("hwb(-240deg, 100%, 50.5%, +0.6)"), [0, 100, 50.5, 0.6]);
+assert.deepEqual(
+  string.getHwb("hwb(-240deg, 100%, 50.5%, +0.6)"),
+  [0, 100, 50.5, 0.6]
+);
 
 //subsequent return values should not change array
 assert.deepEqual(string.getRgba("blue"), [0, 0, 255, 1]);
@@ -39,10 +50,19 @@ assert.deepEqual(string.getRgba("#fefa"), [255, 238, 255, 0.67]);
 assert.deepEqual(string.getRgba("#c814e933"), [200, 20, 233, 0.2]);
 assert.deepEqual(string.getRgba("#c814e900"), [200, 20, 233, 0]);
 assert.deepEqual(string.getRgba("#c814e9ff"), [200, 20, 233, 1]);
-assert.deepEqual(string.getRgba("rgba(200, 20, 233, 0.2)"), [200, 20, 233, 0.2]);
+assert.deepEqual(
+  string.getRgba("rgba(200, 20, 233, 0.2)"),
+  [200, 20, 233, 0.2]
+);
 assert.deepEqual(string.getRgba("rgba(200, 20, 233, 0)"), [200, 20, 233, 0]);
-assert.deepEqual(string.getRgba("rgba(100%, 30%, 90%, 0.2)"), [255, 77, 229, 0.2]);
-assert.deepEqual(string.getHsla("hsla(200, 20%, 33%, 0.2)"), [200, 20, 33, 0.2]);
+assert.deepEqual(
+  string.getRgba("rgba(100%, 30%, 90%, 0.2)"),
+  [255, 77, 229, 0.2]
+);
+assert.deepEqual(
+  string.getHsla("hsla(200, 20%, 33%, 0.2)"),
+  [200, 20, 33, 0.2]
+);
 assert.deepEqual(string.getHwb("hwb(200, 20%, 33%, 0.2)"), [200, 20, 33, 0.2]);
 
 // no alpha
@@ -55,7 +75,10 @@ assert.deepEqual(string.getHwb("hwb(400, 10%, 200%, 0)"), [360, 10, 100, 0]);
 
 // range
 assert.deepEqual(string.getRgba("rgba(300, 600, 100, 3)"), [255, 255, 100, 1]);
-assert.deepEqual(string.getRgba("rgba(8000%, 100%, 333%, 88)"), [255, 255, 255, 1]);
+assert.deepEqual(
+  string.getRgba("rgba(8000%, 100%, 333%, 88)"),
+  [255, 255, 255, 1]
+);
 assert.deepEqual(string.getHsla("hsla(400, 10%, 200%, 10)"), [360, 10, 100, 1]);
 assert.deepEqual(string.getHwb("hwb(400, 10%, 200%, 10)"), [360, 10, 100, 1]);
 
@@ -87,10 +110,22 @@ assert.equal(string.rgbaString([255, 10, 35]), "rgba(255, 10, 35, 1)");
 assert.equal(string.rgbaString([255, 10, 35, 0]), "rgba(255, 10, 35, 0)");
 
 assert.equal(string.percentString([255, 10, 35]), "rgb(100%, 4%, 14%)");
-assert.equal(string.percentString([255, 10, 35, 0.3]), "rgba(100%, 4%, 14%, 0.3)");
-assert.equal(string.percentString([255, 10, 35], 0.3), "rgba(100%, 4%, 14%, 0.3)");
-assert.equal(string.percentaString([255, 10, 35, 0.3]), "rgba(100%, 4%, 14%, 0.3)");
-assert.equal(string.percentaString([255, 10, 35], 0.3), "rgba(100%, 4%, 14%, 0.3)");
+assert.equal(
+  string.percentString([255, 10, 35, 0.3]),
+  "rgba(100%, 4%, 14%, 0.3)"
+);
+assert.equal(
+  string.percentString([255, 10, 35], 0.3),
+  "rgba(100%, 4%, 14%, 0.3)"
+);
+assert.equal(
+  string.percentaString([255, 10, 35, 0.3]),
+  "rgba(100%, 4%, 14%, 0.3)"
+);
+assert.equal(
+  string.percentaString([255, 10, 35], 0.3),
+  "rgba(100%, 4%, 14%, 0.3)"
+);
 assert.equal(string.percentaString([255, 10, 35]), "rgba(100%, 4%, 14%, 1)");
 
 assert.equal(string.hslString([280, 40, 60]), "hsl(280, 40%, 60%)");

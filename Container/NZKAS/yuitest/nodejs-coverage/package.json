@@ -1,0 +1,21 @@
+{
+    "name": "yuitest-coverage",
+    "description": "Node.js wrapper for yuitest-coverage java package",
+    "version": "0.0.6",
+    "author": "Dav Glass <davglass@gmail.com>",
+    "bugs": { "url" : "http://yuilibrary.com/projects/yuitest/newticket" },
+    "keywords": [
+        "yui", "yuitest", "codecoverage", "coverage"
+    ],
+    "main": "./lib/index.js",
+    "licenses":[
+        {
+            "type" : "BSD",
+            "url" : "http://yuilibrary.com/license/"
+        }
+    ],
+    "repository": {
+        "type":"git",
+        "url":"https://github.com/yui/yuitest"
+    }
+}

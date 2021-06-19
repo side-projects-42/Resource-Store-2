@@ -25,7 +25,7 @@ function C(obj = this) {
 
 assertEquals(0, C.length);
 
-var c = new C;
+var c = new C();
 assertEquals(c, c.obj);
 
 var c2 = new C(undefined);
@@ -35,7 +35,7 @@ var c3 = new C(42);
 assertEquals(42, c3.obj);
 
 function h(a = 1, b) {
-  return {a: a, b: b};
+  return { a: a, b: b };
 }
 
 assertEquals(1, h().a);

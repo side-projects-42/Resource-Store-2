@@ -4,11 +4,16 @@
  * @see https://github.com/chartjs/Chart.js/issues/2440#issuecomment-256461897
  */
 
-import LineElement from '../elements/element.line';
-import {_boundSegment, _boundSegments} from '../helpers/helpers.segment';
-import {clipArea, unclipArea} from '../helpers/helpers.canvas';
-import {isArray, isFinite, isObject, valueOrDefault} from '../helpers/helpers.core';
-import {TAU, _normalizeAngle} from '../helpers/helpers.math';
+import LineElement from "../elements/element.line";
+import { _boundSegment, _boundSegments } from "../helpers/helpers.segment";
+import { clipArea, unclipArea } from "../helpers/helpers.canvas";
+import {
+  isArray,
+  isFinite,
+  isObject,
+  valueOrDefault,
+} from "../helpers/helpers.core";
+import { TAU, _normalizeAngle } from "../helpers/helpers.math";
 
 /**
  * @typedef { import('../core/core.controller').default } Chart
@@ -43,7 +48,7 @@ function parseFillOption(line) {
   }
 
   if (fill === true) {
-    return 'origin';
+    return "origin";
   }
   return fill;
 }
@@ -63,7 +68,7 @@ function decodeFill(line, index, count) {
   let target = parseFloat(fill);
 
   if (isFinite(target) && Math.floor(target) === target) {
-    if (fill[0] === '-' || fill[0] === '+') {
+    if (fill[0] === "-" || fill[0] === "+") {
       target = index + target;
     }
 
@@ -74,17 +79,17 @@ function decodeFill(line, index, count) {
     return target;
   }
 
-  return ['origin', 'start', 'end', 'stack'].indexOf(fill) >= 0 && fill;
+  return ["origin", "start", "end", "stack"].indexOf(fill) >= 0 && fill;
 }
 
 function computeLinearBoundary(source) {
-  const {scale = {}, fill} = source;
+  const { scale = {}, fill } = source;
   let target = null;
   let horizontal;
 
-  if (fill === 'start') {
+  if (fill === "start") {
     target = scale.bottom;
-  } else if (fill === 'end') {
+  } else if (fill === "end") {
     target = scale.top;
   } else if (isObject(fill)) {
     target = scale.getPixelForValue(fill.value);
@@ -96,7 +101,7 @@ function computeLinearBoundary(source) {
     horizontal = scale.isHorizontal();
     return {
       x: horizontal ? target : null,
-      y: horizontal ? null : target
+      y: horizontal ? null : target,
     };
   }
 
@@ -112,25 +117,25 @@ class simpleArc {
   }
 
   pathSegment(ctx, bounds, opts) {
-    const {x, y, radius} = this;
-    bounds = bounds || {start: 0, end: TAU};
+    const { x, y, radius } = this;
+    bounds = bounds || { start: 0, end: TAU };
     ctx.arc(x, y, radius, bounds.end, bounds.start, true);
     return !opts.bounds;
   }
 
   interpolate(point) {
-    const {x, y, radius} = this;
+    const { x, y, radius } = this;
     const angle = point.angle;
     return {
       x: x + Math.cos(angle) * radius,
       y: y + Math.sin(angle) * radius,
-      angle
+      angle,
     };
   }
 }
 
 function computeCircularBoundary(source) {
-  const {scale, fill} = source;
+  const { scale, fill } = source;
   const options = scale.options;
   const length = scale.getLabels().length;
   const target = [];
@@ -138,9 +143,9 @@ function computeCircularBoundary(source) {
   const end = options.reverse ? scale.min : scale.max;
   let i, center, value;
 
-  if (fill === 'start') {
+  if (fill === "start") {
     value = start;
-  } else if (fill === 'end') {
+  } else if (fill === "end") {
     value = end;
   } else if (isObject(fill)) {
     value = fill.value;
@@ -153,7 +158,7 @@ function computeCircularBoundary(source) {
     return new simpleArc({
       x: center.x,
       y: center.y,
-      radius: scale.getDistanceFromCenterForValue(value)
+      radius: scale.getDistanceFromCenterForValue(value),
     });
   }
 
@@ -173,7 +178,7 @@ function computeBoundary(source) {
 }
 
 function findSegmentEnd(start, end, points) {
-  for (;end > start; end--) {
+  for (; end > start; end--) {
     const point = points[end];
     if (!isNaN(point.x) && !isNaN(point.y)) {
       break;
@@ -183,19 +188,19 @@ function findSegmentEnd(start, end, points) {
 }
 
 function pointsFromSegments(boundary, line) {
-  const {x = null, y = null} = boundary || {};
+  const { x = null, y = null } = boundary || {};
   const linePoints = line.points;
   const points = [];
-  line.segments.forEach(({start, end}) => {
+  line.segments.forEach(({ start, end }) => {
     end = findSegmentEnd(start, end, linePoints);
     const first = linePoints[start];
     const last = linePoints[end];
     if (y !== null) {
-      points.push({x: first.x, y});
-      points.push({x: last.x, y});
+      points.push({ x: first.x, y });
+      points.push({ x: last.x, y });
     } else if (x !== null) {
-      points.push({x, y: first.y});
-      points.push({x, y: last.y});
+      points.push({ x, y: first.y });
+      points.push({ x, y: last.y });
     }
   });
   return points;
@@ -206,12 +211,12 @@ function pointsFromSegments(boundary, line) {
  * @return {LineElement}
  */
 function buildStackLine(source) {
-  const {chart, scale, index, line} = source;
+  const { chart, scale, index, line } = source;
   const points = [];
   const segments = line.segments;
   const sourcePoints = line.points;
   const linesBelow = getLinesBelow(chart, index);
-  linesBelow.push(createBoundaryLine({x: null, y: scale.bottom}, line));
+  linesBelow.push(createBoundaryLine({ x: null, y: scale.bottom }, line));
 
   for (let i = 0; i < segments.length; i++) {
     const segment = segments[i];
@@ -219,10 +224,11 @@ function buildStackLine(source) {
       addPointsBelow(points, sourcePoints[j], linesBelow);
     }
   }
-  return new LineElement({points, options: {}});
+  return new LineElement({ points, options: {} });
 }
 
-const isLineAndNotInHideAnimation = (meta) => meta.type === 'line' && !meta.hidden;
+const isLineAndNotInHideAnimation = (meta) =>
+  meta.type === "line" && !meta.hidden;
 
 /**
  * @param {Chart} chart
@@ -254,7 +260,7 @@ function addPointsBelow(points, sourcePoint, linesBelow) {
   const postponed = [];
   for (let j = 0; j < linesBelow.length; j++) {
     const line = linesBelow[j];
-    const {first, last, point} = findPoint(line, sourcePoint, 'x');
+    const { first, last, point } = findPoint(line, sourcePoint, "x");
 
     if (!point || (first && last)) {
       continue;
@@ -301,17 +307,17 @@ function findPoint(line, sourcePoint, property) {
       break;
     }
   }
-  return {first, last, point};
+  return { first, last, point };
 }
 
 function getTarget(source) {
-  const {chart, fill, line} = source;
+  const { chart, fill, line } = source;
 
   if (isFinite(fill)) {
     return getLineByIndex(chart, fill);
   }
 
-  if (fill === 'stack') {
+  if (fill === "stack") {
     return buildStackLine(source);
   }
 
@@ -341,12 +347,14 @@ function createBoundaryLine(boundary, line) {
     points = pointsFromSegments(boundary, line);
   }
 
-  return points.length ? new LineElement({
-    points,
-    options: {tension: 0},
-    _loop,
-    _fullLoop: _loop
-  }) : null;
+  return points.length
+    ? new LineElement({
+        points,
+        options: { tension: 0 },
+        _loop,
+        _fullLoop: _loop,
+      })
+    : null;
 }
 
 function resolveTarget(sources, index, propagate) {
@@ -396,11 +404,11 @@ function getBounds(property, first, last, loop) {
   let start = first[property];
   let end = last[property];
 
-  if (property === 'angle') {
+  if (property === "angle") {
     start = _normalizeAngle(start);
     end = _normalizeAngle(end);
   }
-  return {property, start, end};
+  return { property, start, end };
 }
 
 function _getEdge(a, b, prop, fn) {
@@ -417,10 +425,15 @@ function _segments(line, target, property) {
   const parts = [];
 
   for (const segment of segments) {
-    let {start, end} = segment;
+    let { start, end } = segment;
     end = findSegmentEnd(start, end, points);
 
-    const bounds = getBounds(property, points[start], points[end], segment.loop);
+    const bounds = getBounds(
+      property,
+      points[start],
+      points[end],
+      segment.loop
+    );
 
     if (!target.segments) {
       // Special case for boundary not supporting `segments` (simpleArc)
@@ -429,7 +442,7 @@ function _segments(line, target, property) {
         source: segment,
         target: bounds,
         start: points[start],
-        end: points[end]
+        end: points[end],
       });
       continue;
     }
@@ -438,7 +451,12 @@ function _segments(line, target, property) {
     const targetSegments = _boundSegments(target, bounds);
 
     for (const tgt of targetSegments) {
-      const subBounds = getBounds(property, tpoints[tgt.start], tpoints[tgt.end], tgt.loop);
+      const subBounds = getBounds(
+        property,
+        tpoints[tgt.start],
+        tpoints[tgt.end],
+        tgt.loop
+      );
       const fillSources = _boundSegment(segment, points, subBounds);
 
       for (const fillSource of fillSources) {
@@ -446,11 +464,11 @@ function _segments(line, target, property) {
           source: fillSource,
           target: tgt,
           start: {
-            [property]: _getEdge(bounds, subBounds, 'start', Math.max)
+            [property]: _getEdge(bounds, subBounds, "start", Math.max),
           },
           end: {
-            [property]: _getEdge(bounds, subBounds, 'end', Math.min)
-          }
+            [property]: _getEdge(bounds, subBounds, "end", Math.min),
+          },
         });
       }
     }
@@ -459,9 +477,9 @@ function _segments(line, target, property) {
 }
 
 function clipBounds(ctx, scale, bounds) {
-  const {top, bottom} = scale.chart.chartArea;
-  const {property, start, end} = bounds || {};
-  if (property === 'x') {
+  const { top, bottom } = scale.chart.chartArea;
+  const { property, start, end } = bounds || {};
+  if (property === "x") {
     ctx.beginPath();
     ctx.rect(start, top, end - start, bottom - top);
     ctx.clip();
@@ -476,11 +494,11 @@ function interpolatedLineTo(ctx, target, point, property) {
 }
 
 function _fill(ctx, cfg) {
-  const {line, target, property, color, scale} = cfg;
+  const { line, target, property, color, scale } = cfg;
   const segments = _segments(line, target, property);
 
-  for (const {source: src, target: tgt, start, end} of segments) {
-    const {style: {backgroundColor = color} = {}} = src;
+  for (const { source: src, target: tgt, start, end } of segments) {
+    const { style: { backgroundColor = color } = {} } = src;
     ctx.save();
     ctx.fillStyle = backgroundColor;
 
@@ -495,53 +513,56 @@ function _fill(ctx, cfg) {
       interpolatedLineTo(ctx, target, end, property);
     }
 
-    const targetLoop = !!target.pathSegment(ctx, tgt, {move: lineLoop, reverse: true});
+    const targetLoop = !!target.pathSegment(ctx, tgt, {
+      move: lineLoop,
+      reverse: true,
+    });
     const loop = lineLoop && targetLoop;
     if (!loop) {
       interpolatedLineTo(ctx, target, start, property);
     }
 
     ctx.closePath();
-    ctx.fill(loop ? 'evenodd' : 'nonzero');
+    ctx.fill(loop ? "evenodd" : "nonzero");
 
     ctx.restore();
   }
 }
 
 function doFill(ctx, cfg) {
-  const {line, target, above, below, area, scale} = cfg;
-  const property = line._loop ? 'angle' : cfg.axis;
+  const { line, target, above, below, area, scale } = cfg;
+  const property = line._loop ? "angle" : cfg.axis;
 
   ctx.save();
 
-  if (property === 'x' && below !== above) {
+  if (property === "x" && below !== above) {
     _clip(ctx, target, area.top);
-    _fill(ctx, {line, target, color: above, scale, property});
+    _fill(ctx, { line, target, color: above, scale, property });
     ctx.restore();
     ctx.save();
     _clip(ctx, target, area.bottom);
   }
-  _fill(ctx, {line, target, color: below, scale, property});
+  _fill(ctx, { line, target, color: below, scale, property });
 
   ctx.restore();
 }
 
 function drawfill(ctx, source, area) {
   const target = getTarget(source);
-  const {line, scale, axis} = source;
+  const { line, scale, axis } = source;
   const lineOpts = line.options;
   const fillOption = lineOpts.fill;
   const color = lineOpts.backgroundColor;
-  const {above = color, below = color} = fillOption || {};
+  const { above = color, below = color } = fillOption || {};
   if (target && line.points.length) {
     clipArea(ctx, area);
-    doFill(ctx, {line, target, above, below, area, scale, axis});
+    doFill(ctx, { line, target, above, below, area, scale, axis });
     unclipArea(ctx);
   }
 }
 
 export default {
-  id: 'filler',
+  id: "filler",
 
   afterDatasetsUpdate(chart, _args, options) {
     const count = (chart.data.datasets || []).length;
@@ -580,7 +601,7 @@ export default {
   },
 
   beforeDraw(chart, _args, options) {
-    const draw = options.drawTime === 'beforeDraw';
+    const draw = options.drawTime === "beforeDraw";
     const metasets = chart.getSortedVisibleDatasetMetas();
     const area = chart.chartArea;
     for (let i = metasets.length - 1; i >= 0; --i) {
@@ -597,7 +618,7 @@ export default {
   },
 
   beforeDatasetsDraw(chart, _args, options) {
-    if (options.drawTime !== 'beforeDatasetsDraw') {
+    if (options.drawTime !== "beforeDatasetsDraw") {
       return;
     }
     const metasets = chart.getSortedVisibleDatasetMetas();
@@ -612,7 +633,11 @@ export default {
   beforeDatasetDraw(chart, args, options) {
     const source = args.meta.$filler;
 
-    if (!source || source.fill === false || options.drawTime !== 'beforeDatasetDraw') {
+    if (
+      !source ||
+      source.fill === false ||
+      options.drawTime !== "beforeDatasetDraw"
+    ) {
       return;
     }
 
@@ -621,6 +646,6 @@ export default {
 
   defaults: {
     propagate: true,
-    drawTime: 'beforeDatasetDraw'
-  }
+    drawTime: "beforeDatasetDraw",
+  },
 };

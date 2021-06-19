@@ -20,15 +20,12 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-
-(function(global) {
+(function (global) {
   // Load Chai, the assertion library.
-  global['chai'] = require('chai');
+  global["chai"] = require("chai");
 
   // Load Closure Library and the wtf deps file.
-  require('./node').importClosureLibrary([
-    'wtf_js-deps.js'
-  ]);
+  require("./node").importClosureLibrary(["wtf_js-deps.js"]);
 
-  goog.require('wtf.testing.mocha');
+  goog.require("wtf.testing.mocha");
 })(global);

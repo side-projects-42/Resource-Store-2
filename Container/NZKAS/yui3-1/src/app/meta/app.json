@@ -1,0 +1,36 @@
+{
+    "app": {
+        "use": ["model", "model-list", "router", "view"],
+
+        "submodules": {
+            "controller": {
+                "use": ["router"]
+            },
+
+            "model": {
+                "requires": ["base-build", "escape", "json-parse"]
+            },
+
+            "model-list": {
+                "requires": [
+                    "array-extras",
+                    "array-invoke",
+                    "arraylist",
+                    "base-build",
+                    "escape",
+                    "json-parse",
+                    "model"
+                ]
+            },
+
+            "router": {
+                "optional": ["querystring-parse"],
+                "requires": ["array-extras", "base-build", "history"]
+            },
+
+            "view": {
+                "requires": ["base-build", "node-event-delegate"]
+            }
+        }
+    }
+}

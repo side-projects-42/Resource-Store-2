@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  CONSTRUCTOR
-} from '../syntax/PredefinedName.js';
+import { CONSTRUCTOR } from "../syntax/PredefinedName.js";
 import {
   AnonBlock,
   ClassDeclaration,
@@ -23,14 +21,14 @@ import {
   IdentifierExpression,
   Method,
   ReturnStatement,
-} from '../syntax/trees/ParseTrees.js';
+} from "../syntax/trees/ParseTrees.js";
 import {
   GET_ACCESSOR,
   METHOD,
   PROPERTY_VARIABLE_DECLARATION,
   SET_ACCESSOR,
-} from '../syntax/trees/ParseTreeType.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+} from "../syntax/trees/ParseTreeType.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   createCommaExpression,
   createFunctionBody,
@@ -38,15 +36,15 @@ import {
   createImmediatelyInvokedFunctionExpression,
   createLiteralPropertyName,
   createRestParameter,
-} from './ParseTreeFactory.js';
+} from "./ParseTreeFactory.js";
 import {
   parsePropertyDefinition,
   parseStatement,
-} from './PlaceholderParser.js';
-import {parseExpression} from './PlaceholderParser.js';
-import {prependStatements} from './PrependStatements.js';
-import {propName} from '../staticsemantics/PropName.js';
-import {transformConstructor} from './MemberVariableConstructorTransformer.js';
+} from "./PlaceholderParser.js";
+import { parseExpression } from "./PlaceholderParser.js";
+import { prependStatements } from "./PrependStatements.js";
+import { propName } from "../staticsemantics/PropName.js";
+import { transformConstructor } from "./MemberVariableConstructorTransformer.js";
 
 /**
  * Transforms post ES6 member variable declarations to valid ES6 classes.
@@ -70,7 +68,8 @@ import {transformConstructor} from './MemberVariableConstructorTransformer.js';
 export class MemberVariableTransformer extends TempVarTransformer {
   transformClassElements_(tree) {
     let elements = [];
-    let initInstanceVars = [], initStaticVars = [];
+    let initInstanceVars = [],
+      initStaticVars = [];
     let constructor;
     let constructorIndex = 0;
 
@@ -116,8 +115,11 @@ export class MemberVariableTransformer extends TempVarTransformer {
         constructor = this.getDefaultConstructor_(tree);
       }
 
-      constructor = transformConstructor(constructor, initExpression,
-          tree.superClass);
+      constructor = transformConstructor(
+        constructor,
+        initExpression,
+        tree.superClass
+      );
     }
 
     if (constructor) {
@@ -137,22 +139,26 @@ export class MemberVariableTransformer extends TempVarTransformer {
    * @return {ParseTree}
    */
   transformClassDeclaration(tree) {
-    let {
-      elements,
-      initStaticVars,
-    } = this.transformClassElements_(tree);
+    let { elements, initStaticVars } = this.transformClassElements_(tree);
 
     let superClass = this.transformAny(tree.superClass);
-    let classDecl = new ClassDeclaration(tree.location, tree.name, superClass,
-        elements, tree.annotations, tree.typeParameters);
+    let classDecl = new ClassDeclaration(
+      tree.location,
+      tree.name,
+      superClass,
+      elements,
+      tree.annotations,
+      tree.typeParameters
+    );
 
     if (initStaticVars.length === 0) {
       return classDecl;
     }
 
-    let statements =
-        createStaticInitializerStatements(tree.name.identifierToken,
-                                          initStaticVars);
+    let statements = createStaticInitializerStatements(
+      tree.name.identifierToken,
+      initStaticVars
+    );
     statements = prependStatements(statements, classDecl);
 
     return new AnonBlock(null, statements);
@@ -165,14 +171,17 @@ export class MemberVariableTransformer extends TempVarTransformer {
    * @return {ParseTree}
    */
   transformClassExpression(tree) {
-    let {
-      elements,
-      initStaticVars,
-    } = this.transformClassElements_(tree);
+    let { elements, initStaticVars } = this.transformClassElements_(tree);
 
     let superClass = this.transformAny(tree.superClass);
-    let classExpression = new ClassExpression(tree.location, tree.name,
-        superClass, elements, tree.annotations, tree.typeParameters);
+    let classExpression = new ClassExpression(
+      tree.location,
+      tree.name,
+      superClass,
+      elements,
+      tree.annotations,
+      tree.typeParameters
+    );
 
     if (initStaticVars.length === 0) {
       return classExpression;
@@ -183,9 +192,9 @@ export class MemberVariableTransformer extends TempVarTransformer {
     let idToken = createIdentifierToken(id);
     let idExpression = new IdentifierExpression(idToken.location, idToken);
     let statements = [
-      parseStatement `let ${id} = ${classExpression}`,
+      parseStatement`let ${id} = ${classExpression}`,
       ...createStaticInitializerStatements(idToken, initStaticVars),
-      new ReturnStatement(null, idExpression)
+      new ReturnStatement(null, idExpression),
     ];
     let body = createFunctionBody(statements);
     this.popTempScope();
@@ -195,15 +204,24 @@ export class MemberVariableTransformer extends TempVarTransformer {
 
   getDefaultConstructor_(tree) {
     if (tree.superClass) {
-      let param = createRestParameter(createIdentifierToken('args'));
+      let param = createRestParameter(createIdentifierToken("args"));
       let paramList = new FormalParameterList(null, [param]);
-      let body = createFunctionBody([parseStatement `super(...args)`]);
+      let body = createFunctionBody([parseStatement`super(...args)`]);
       let name = createLiteralPropertyName(CONSTRUCTOR);
-      return new Method(tree.location, false, null, name,
-          paramList, null, [], body, null);
+      return new Method(
+        tree.location,
+        false,
+        null,
+        name,
+        paramList,
+        null,
+        [],
+        body,
+        null
+      );
     }
 
-    return parsePropertyDefinition `constructor() {}`;
+    return parsePropertyDefinition`constructor() {}`;
   }
 }
 
@@ -212,8 +230,7 @@ function createStaticInitializerStatements(idToken, initStaticMemberVars) {
   let className = new IdentifierExpression(idToken.location, idToken);
   return initStaticMemberVars.map((mv) => {
     let propName = mv.name.literalToken.value;
-    return parseStatement
-        `Object.defineProperty(${className}, ${propName}, {enumerable: true,
+    return parseStatement`Object.defineProperty(${className}, ${propName}, {enumerable: true,
         configurable: true, value: ${mv.initializer}, writable: true})`;
   });
 }
@@ -222,7 +239,7 @@ function createStaticInitializerStatements(idToken, initStaticMemberVars) {
 function getInstanceInitExpression(initInstanceVars) {
   let expressions = initInstanceVars.map((mv) => {
     let name = mv.name.literalToken;
-    return parseExpression `this.${name} = ${mv.initializer}`;
+    return parseExpression`this.${name} = ${mv.initializer}`;
   });
   return createCommaExpression(expressions);
 }

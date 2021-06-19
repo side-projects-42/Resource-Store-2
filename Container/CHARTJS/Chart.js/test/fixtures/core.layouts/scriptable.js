@@ -1,15 +1,13 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
-      datasets: [
-        {data: [10, 5, 0, 25, 78, -10]}
-      ],
-      labels: ['tick1', 'tick2', 'tick3', 'tick4', 'tick5', 'tick6']
+      datasets: [{ data: [10, 5, 0, 25, 78, -10] }],
+      labels: ["tick1", "tick2", "tick3", "tick4", "tick5", "tick6"],
     },
     options: {
       layout: {
-        padding: function(ctx) {
+        padding: function (ctx) {
           // 10% padding
           const horizontalPadding = ctx.chart.width * 0.1;
           const verticalPadding = ctx.chart.height * 0.1;
@@ -17,33 +15,33 @@ module.exports = {
             top: verticalPadding,
             right: horizontalPadding,
             bottom: verticalPadding,
-            left: horizontalPadding
+            left: horizontalPadding,
           };
-        }
+        },
       },
       plugins: {
-        legend: false
+        legend: false,
       },
       scales: {
         x: {
-          type: 'category',
+          type: "category",
           ticks: {
             maxRotation: 0,
-            autoSkip: false
-          }
+            autoSkip: false,
+          },
         },
         y: {
-          type: 'linear',
-          position: 'right'
-        }
-      }
-    }
+          type: "linear",
+          position: "right",
+        },
+      },
+    },
   },
   options: {
     spriteText: true,
     canvas: {
       height: 150,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

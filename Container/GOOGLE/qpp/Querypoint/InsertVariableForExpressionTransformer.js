@@ -14,24 +14,27 @@
 
 // Derived classes call .insertVariableFor(tree)
 
-(function() {
-  
-  'use strict';
+(function () {
+  "use strict";
 
-  var debug = DebugLogger.register('InsertVariableForExpressionTransformer', function(flag){
-    return debug = (typeof flag === 'boolean') ? flag : debug;
-  })
+  var debug = DebugLogger.register(
+    "InsertVariableForExpressionTransformer",
+    function (flag) {
+      return (debug = typeof flag === "boolean" ? flag : debug);
+    }
+  );
 
   var ParseTreeTransformer = traceur.codegeneration.ParseTreeTransformer;
   var ParseTreeType = traceur.syntax.trees.ParseTreeType;
-  
+
   var ParenExpression = traceur.syntax.trees.ParenExpression;
-  
+
   var ParseTreeFactory = traceur.codegeneration.ParseTreeFactory;
   var Trees = traceur.syntax.trees;
   var TokenType = traceur.syntax.TokenType;
 
-  var createVariableDeclarationList = ParseTreeFactory.createVariableDeclarationList;
+  var createVariableDeclarationList =
+    ParseTreeFactory.createVariableDeclarationList;
 
   var createVariableStatement = ParseTreeFactory.createVariableStatement;
   var createIdentifierExpression = ParseTreeFactory.createIdentifierExpression;
@@ -39,7 +42,7 @@
   // For dev
   var ParseTreeValidator = traceur.syntax.ParseTreeValidator;
 
-  function ValidRightHandSideTransformer(){}
+  function ValidRightHandSideTransformer() {}
 
   ValidRightHandSideTransformer.prototype = {
     __proto__: ParseTreeTransformer.prototype,
@@ -47,9 +50,9 @@
      * var xx = a, b;  is illegal, convert to
      * var xx = (a,b);
      */
-    transformCommaExpression: function(tree) {
+    transformCommaExpression: function (tree) {
       return new ParenExpression(tree.location, tree);
-    }
+    },
   };
   /**
    * @extends {ParseTreeTransformer}
@@ -60,41 +63,40 @@
     this._rhsTransformer = new ValidRightHandSideTransformer();
   }
 
-  InsertVariableForExpressionTransformer.prototype =  {
+  InsertVariableForExpressionTransformer.prototype = {
     __proto__: Querypoint.InsertingTransformer.prototype,
 
-    /* Convert an expression tree into 
-    **    a reference to a VariableStatement and its value.
-    ** Insert the VariableStatement and return a new expression with the same value as the incoming one. 
-    ** expr -> var __qp_XX = expr; __qp_XX
-    ** @param {ParseTree} tree
-    ** @return {ParseTree}
-    ** side-effect: this.insertions.length++
-    */
-    insertVariableFor: function(tree, givenTraceId) {
-      if (!tree.location || tree.doNotTransform)
-        return tree;
-      
+    /* Convert an expression tree into
+     **    a reference to a VariableStatement and its value.
+     ** Insert the VariableStatement and return a new expression with the same value as the incoming one.
+     ** expr -> var __qp_XX = expr; __qp_XX
+     ** @param {ParseTree} tree
+     ** @return {ParseTree}
+     ** side-effect: this.insertions.length++
+     */
+    insertVariableFor: function (tree, givenTraceId) {
+      if (!tree.location || tree.doNotTransform) return tree;
+
       if (!tree.isExpression()) {
-        var msg = 'Attempt to insertVariableFor a non-expression tree';
+        var msg = "Attempt to insertVariableFor a non-expression tree";
         console.error(msg, traceur.outputgeneration.TreeWriter.write(tree));
         throw new Error(msg);
       }
-      
+
       tree = this._rhsTransformer.transformAny(tree);
 
-      var traceId =  givenTraceId || this.generateIdentifier(tree);  // XX in __qp_XX
-      var varId = '__qp' + traceId;
-      
+      var traceId = givenTraceId || this.generateIdentifier(tree); // XX in __qp_XX
+      var varId = "__qp" + traceId;
+
       var loc = tree.location;
-      loc.varId = varId;        // used to write new AST nodes
-      
+      loc.varId = varId; // used to write new AST nodes
+
       var variableDeclList = createVariableDeclarationList(
-          TokenType.VAR, 
-          varId,
-          tree
-        );
-      
+        TokenType.VAR,
+        varId,
+        tree
+      );
+
       variableDeclList.declarations[0].lvalue.doNotTransform = true;
 
       // var __qp_XX = expr;
@@ -106,13 +108,20 @@
       linearExpression.doNotTransform = true;
 
       if (debug) {
-        ParseTreeValidator.validate(linearExpression); 
-        console.log('inserting ' + varId + ' for '+tree.type + ' : ' + traceur.outputgeneration.TreeWriter.write(tree));
+        ParseTreeValidator.validate(linearExpression);
+        console.log(
+          "inserting " +
+            varId +
+            " for " +
+            tree.type +
+            " : " +
+            traceur.outputgeneration.TreeWriter.write(tree)
+        );
       }
       return linearExpression;
     },
   };
-  
-  Querypoint.InsertVariableForExpressionTransformer = InsertVariableForExpressionTransformer;
 
-}());
+  Querypoint.InsertVariableForExpressionTransformer =
+    InsertVariableForExpressionTransformer;
+})();

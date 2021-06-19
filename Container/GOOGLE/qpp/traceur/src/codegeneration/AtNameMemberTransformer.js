@@ -12,21 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AtNameExpression} from '../syntax/trees/ParseTrees.js';
+import { AtNameExpression } from "../syntax/trees/ParseTrees.js";
 import {
   DELETE_PROPERTY,
   GET_PROPERTY,
   RUNTIME,
   SET_PROPERTY,
-  TRACEUR_RUNTIME
-} from '../syntax/PredefinedName.js';
-import {MEMBER_EXPRESSION} from '../syntax/trees/ParseTreeType.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  AT_NAME,
-  DELETE,
-  EQUAL
-} from '../syntax/TokenType.js';
+  TRACEUR_RUNTIME,
+} from "../syntax/PredefinedName.js";
+import { MEMBER_EXPRESSION } from "../syntax/trees/ParseTreeType.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { AT_NAME, DELETE, EQUAL } from "../syntax/TokenType.js";
 import {
   createArgumentList,
   createAssignmentExpression,
@@ -35,9 +31,9 @@ import {
   createCommaExpression,
   createIdentifierExpression,
   createMemberExpression,
-  createParenExpression
-} from './ParseTreeFactory.js';
-import {expandMemberExpression} from './OperatorExpander.js';
+  createParenExpression,
+} from "./ParseTreeFactory.js";
+import { expandMemberExpression } from "./OperatorExpander.js";
 
 /**
  * Transforms expr.@name into traceurRuntime.getProperty(expr, @name). It
@@ -48,12 +44,12 @@ import {expandMemberExpression} from './OperatorExpander.js';
  * http://wiki.ecmascript.org/doku.php?id=strawman:syntactic_support_for_private_names
  */
 export class AtNameMemberTransformer extends TempVarTransformer {
-
   transformBinaryOperator(tree) {
-    if (tree.left.type === MEMBER_EXPRESSION &&
-        tree.left.memberName.type === AT_NAME &&
-        tree.operator.isAssignmentOperator()) {
-
+    if (
+      tree.left.type === MEMBER_EXPRESSION &&
+      tree.left.memberName.type === AT_NAME &&
+      tree.operator.isAssignmentOperator()
+    ) {
       if (tree.operator.type !== EQUAL) {
         tree = expandMemberExpression(tree, this);
         return this.transformAny(tree);
@@ -61,24 +57,29 @@ export class AtNameMemberTransformer extends TempVarTransformer {
 
       var operand = this.transformAny(tree.left.operand);
       var memberName = tree.left.memberName;
-      var atNameExpression = new AtNameExpression(memberName.location,
-                                                  memberName);
+      var atNameExpression = new AtNameExpression(
+        memberName.location,
+        memberName
+      );
       var value = this.transformAny(tree.right);
 
       // operand.@name = value
       // =>
       // traceurRuntime.setProperty(operand, memberExpr, value)
       return createCallExpression(
-          createMemberExpression(TRACEUR_RUNTIME, SET_PROPERTY),
-          createArgumentList(operand, atNameExpression, value));
+        createMemberExpression(TRACEUR_RUNTIME, SET_PROPERTY),
+        createArgumentList(operand, atNameExpression, value)
+      );
     }
 
     return super.transformBinaryOperator(tree);
   }
 
   transformCallExpression(tree) {
-    if (tree.operand.type !== MEMBER_EXPRESSION ||
-        tree.operand.memberName.type !== AT_NAME)
+    if (
+      tree.operand.type !== MEMBER_EXPRESSION ||
+      tree.operand.memberName.type !== AT_NAME
+    )
       return super.transformCallExpression(tree);
 
     var operand = this.transformAny(tree.operand.operand);
@@ -91,19 +92,20 @@ export class AtNameMemberTransformer extends TempVarTransformer {
 
     var ident = createIdentifierExpression(this.addTempVar());
     var elements = tree.args.args.map(this.transformAny, this);
-    var atNameExpression = new AtNameExpression(memberName.location,
-                                                memberName);
+    var atNameExpression = new AtNameExpression(
+      memberName.location,
+      memberName
+    );
     var callExpr = createCallCall(
-        createCallExpression(
-          createMemberExpression(TRACEUR_RUNTIME, GET_PROPERTY),
-          createArgumentList(ident, atNameExpression)),
-        ident,
-        elements);
+      createCallExpression(
+        createMemberExpression(TRACEUR_RUNTIME, GET_PROPERTY),
+        createArgumentList(ident, atNameExpression)
+      ),
+      ident,
+      elements
+    );
 
-    var expressions = [
-      createAssignmentExpression(ident, operand),
-      callExpr
-    ];
+    var expressions = [createAssignmentExpression(ident, operand), callExpr];
 
     return createParenExpression(createCommaExpression(expressions));
   }
@@ -115,31 +117,39 @@ export class AtNameMemberTransformer extends TempVarTransformer {
     // operand.@name
     // =>
     // traceurRuntime.getProperty(operand, @name)
-    var atNameExpression = new AtNameExpression(tree.memberName.location,
-                                               tree.memberName);
+    var atNameExpression = new AtNameExpression(
+      tree.memberName.location,
+      tree.memberName
+    );
     return createCallExpression(
-        createMemberExpression(TRACEUR_RUNTIME, GET_PROPERTY),
-        createArgumentList(tree.operand, atNameExpression));
+      createMemberExpression(TRACEUR_RUNTIME, GET_PROPERTY),
+      createArgumentList(tree.operand, atNameExpression)
+    );
   }
 
   transformUnaryExpression(tree) {
-    if (tree.operator.type !== DELETE ||
-        tree.operand.type !== MEMBER_EXPRESSION ||
-        tree.operand.memberName.type !== AT_NAME) {
+    if (
+      tree.operator.type !== DELETE ||
+      tree.operand.type !== MEMBER_EXPRESSION ||
+      tree.operand.memberName.type !== AT_NAME
+    ) {
       return super.transformUnaryExpression(tree);
     }
 
     var operand = this.transformAny(tree.operand.operand);
     var memberName = tree.operand.memberName;
-    var atNameExpression = new AtNameExpression(memberName.location,
-                                                memberName);
+    var atNameExpression = new AtNameExpression(
+      memberName.location,
+      memberName
+    );
 
     // delete operand.@name
     // =>
     // traceurRuntime.deletePropery(operand, @name)
     return createCallExpression(
-        createMemberExpression(TRACEUR_RUNTIME, DELETE_PROPERTY),
-        createArgumentList(operand, atNameExpression));
+      createMemberExpression(TRACEUR_RUNTIME, DELETE_PROPERTY),
+      createArgumentList(operand, atNameExpression)
+    );
   }
 
   /**

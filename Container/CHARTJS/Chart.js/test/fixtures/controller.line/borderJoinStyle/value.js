@@ -1,50 +1,50 @@
 module.exports = {
   config: {
-    type: 'line',
+    type: "line",
     data: {
       labels: [0, 1, 2],
       datasets: [
         {
           // option in dataset
           data: [6, 18, 6],
-          borderColor: '#ff0000',
-          borderJoinStyle: 'round',
+          borderColor: "#ff0000",
+          borderJoinStyle: "round",
         },
         {
           // option in element (fallback)
           data: [2, 14, 2],
-          borderColor: '#0000ff',
-          borderJoinStyle: 'bevel',
+          borderColor: "#0000ff",
+          borderJoinStyle: "bevel",
         },
         {
           // option in element (fallback)
-          data: [-2, 10, -2]
-        }
-      ]
+          data: [-2, 10, -2],
+        },
+      ],
     },
     options: {
       elements: {
         line: {
-          borderColor: '#00ff00',
-          borderJoinStyle: 'miter',
+          borderColor: "#00ff00",
+          borderJoinStyle: "miter",
           borderWidth: 25,
           fill: false,
-          tension: 0
-        }
+          tension: 0,
+        },
       },
       layout: {
-        padding: 32
+        padding: 32,
       },
       scales: {
-        x: {display: false},
-        y: {display: false}
-      }
-    }
+        x: { display: false },
+        y: { display: false },
+      },
+    },
   },
   options: {
     canvas: {
       height: 256,
-      width: 512
-    }
-  }
+      width: 512,
+    },
+  },
 };

@@ -21,44 +21,46 @@ const options = {
     annotation: {
       annotations: {
         box1: {
-          drawTime: 'afterDatasetsDraw',
+          drawTime: "afterDatasetsDraw",
           display: (context, opts) => {
-            const body = document.querySelector('body');
+            const body = document.querySelector("body");
             const rect = body.getBoundingClientRect();
             return rect.width >= 1000;
           },
-          type: 'box',
+          type: "box",
           xMin: 1,
           xMax: 2,
           yMin: 50,
           yMax: 70,
-          backgroundColor: 'rgba(255, 99, 132, 0.5)'
-        }
-      }
-    }
-  }
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+      },
+    },
+  },
 };
 /* </block:options> */
 
 /* <block:config:1> */
 const config = {
-  type: 'line',
+  type: "line",
   data: {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [{
-      label: 'My First Dataset',
-      data: [65, 59, 80, 81, 56, 55, 40],
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.1
-    }]
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
   },
-  options
+  options,
 };
 /* </block:config> */
 
 module.exports = {
-  config
+  config,
 };
 ```
 
@@ -66,12 +68,12 @@ module.exports = {
 
 The `drawTime` option for an annotation determines where in the chart lifecycle the drawing occurs. Four potential options are available:
 
-| Option | Notes
-| ---- | ----
-| `'beforeDraw'` | Occurs before any drawing takes place
-| `'beforeDatasetsDraw'` | Occurs after drawing of axes, but before datasets
-| `'afterDatasetsDraw'` | Occurs after drawing of datasets but before items such as the tooltip
-| `'afterDraw'` | After other drawing is completed.
+| Option                 | Notes                                                                 |
+| ---------------------- | --------------------------------------------------------------------- |
+| `'beforeDraw'`         | Occurs before any drawing takes place                                 |
+| `'beforeDatasetsDraw'` | Occurs after drawing of axes, but before datasets                     |
+| `'afterDatasetsDraw'`  | Occurs after drawing of datasets but before items such as the tooltip |
+| `'afterDraw'`          | After other drawing is completed.                                     |
 
 ## Option Context
 
@@ -79,15 +81,15 @@ The option context is used to give contextual information when resolving options
 
 There are 2 levels of option context objects:
 
-* `chart`
-  * `annotation`
+- `chart`
+  - `annotation`
 
 The context object contains the following properties:
 
 ### chart
 
-* `chart`: the associated chart
-* `type`: `'chart'`
+- `chart`: the associated chart
+- `type`: `'chart'`
 
 The [chart](#chart) option context is provided by Chart.js. It is passed to scriptable options when resolving annotation `id`, `type` and `drawTime` or adjusting scale ranges in `afterDataLimits` hook. The options resolved at that time are `scaleID`, `xScaleID`, `yScaleID`, `value`, `endValue`, `xMin`, `xMax`, `yMin`, `yMax`, `xValue` and `yValue`.
 
@@ -95,9 +97,9 @@ The [chart](#chart) option context is provided by Chart.js. It is passed to scri
 
 In addition to [chart](#chart)
 
-* `id`: the annotation id
-* `element`: the annotation element
-* `type`: `'annotation'`
+- `id`: the annotation id
+- `element`: the annotation element
+- `type`: `'annotation'`
 
 The [annotation](#annotation) option context is passed to scriptable options in all other cases, except when resolving `id`, `type` or adjusting scale ranges. The same values resolved in `afterDataLimits` with [chart](#chart) context are again evaluated in `afterUpdate` with [annotation](#annotation) context.
 

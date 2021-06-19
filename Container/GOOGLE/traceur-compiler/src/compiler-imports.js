@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export {Compiler} from './Compiler.js';
+export { Compiler } from "./Compiler.js";
 
-import {Parser} from './syntax/Parser.js';
-import {Script} from './syntax/trees/ParseTrees.js';
-import {SourceFile} from './syntax/SourceFile.js';
+import { Parser } from "./syntax/Parser.js";
+import { Script } from "./syntax/trees/ParseTrees.js";
+import { SourceFile } from "./syntax/SourceFile.js";
 
 export let syntax = {
   Parser,
   SourceFile,
   trees: {
-    Script
-  }
+    Script,
+  },
 };
 
-import {ParseTreeMapWriter} from './outputgeneration/ParseTreeMapWriter.js';
-import {ParseTreeWriter} from './outputgeneration/ParseTreeWriter.js';
-import {regexpuRewritePattern} from './outputgeneration/regexpuRewritePattern.js';
-import {SourceMapConsumer} from './outputgeneration/SourceMapIntegration.js';
-import {SourceMapGenerator} from './outputgeneration/SourceMapIntegration.js';
-import {TreeWriter} from './outputgeneration/TreeWriter.js';
+import { ParseTreeMapWriter } from "./outputgeneration/ParseTreeMapWriter.js";
+import { ParseTreeWriter } from "./outputgeneration/ParseTreeWriter.js";
+import { regexpuRewritePattern } from "./outputgeneration/regexpuRewritePattern.js";
+import { SourceMapConsumer } from "./outputgeneration/SourceMapIntegration.js";
+import { SourceMapGenerator } from "./outputgeneration/SourceMapIntegration.js";
+import { TreeWriter } from "./outputgeneration/TreeWriter.js";
 
 export let outputgeneration = {
   ParseTreeMapWriter,
@@ -39,15 +39,20 @@ export let outputgeneration = {
   regexpuRewritePattern,
   SourceMapConsumer,
   SourceMapGenerator,
-  TreeWriter
+  TreeWriter,
 };
 
-import {AttachModuleNameTransformer} from './codegeneration/module/AttachModuleNameTransformer.js';
-import {CloneTreeTransformer} from './codegeneration/CloneTreeTransformer.js';
-import {FromOptionsTransformer} from './codegeneration/FromOptionsTransformer.js';
-import {PureES6Transformer} from './codegeneration/PureES6Transformer.js';
-import {createModuleEvaluationStatement} from './codegeneration/module/createModuleEvaluationStatement.js';
-import {parseExpression, parseModule, parseScript, parseStatement} from './codegeneration/PlaceholderParser.js';
+import { AttachModuleNameTransformer } from "./codegeneration/module/AttachModuleNameTransformer.js";
+import { CloneTreeTransformer } from "./codegeneration/CloneTreeTransformer.js";
+import { FromOptionsTransformer } from "./codegeneration/FromOptionsTransformer.js";
+import { PureES6Transformer } from "./codegeneration/PureES6Transformer.js";
+import { createModuleEvaluationStatement } from "./codegeneration/module/createModuleEvaluationStatement.js";
+import {
+  parseExpression,
+  parseModule,
+  parseScript,
+  parseStatement,
+} from "./codegeneration/PlaceholderParser.js";
 
 export let codegeneration = {
   CloneTreeTransformer,
@@ -59,6 +64,6 @@ export let codegeneration = {
   parseStatement,
   module: {
     AttachModuleNameTransformer,
-    createModuleEvaluationStatement
-  }
+    createModuleEvaluationStatement,
+  },
 };

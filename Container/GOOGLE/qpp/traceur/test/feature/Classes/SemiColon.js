@@ -1,3 +1,1 @@
-class SemiColon {
-  ;
-}
+class SemiColon {}

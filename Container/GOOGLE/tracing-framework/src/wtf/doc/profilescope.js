@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.doc.ProfileScope');
+goog.provide("wtf.doc.ProfileScope");
 
-goog.require('goog.events');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.events.SimpleEventfulMap');
-
-
+goog.require("goog.events");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.events.SimpleEventfulMap");
 
 /**
  * Profile scope.
@@ -26,7 +24,7 @@ goog.require('wtf.events.SimpleEventfulMap');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.doc.ProfileScope = function(name) {
+wtf.doc.ProfileScope = function (name) {
   goog.base(this);
 
   /**
@@ -46,7 +44,6 @@ wtf.doc.ProfileScope = function(name) {
 };
 goog.inherits(wtf.doc.ProfileScope, wtf.events.EventEmitter);
 
-
 /**
  * Event types related to the object.
  * @enum {string}
@@ -55,28 +52,25 @@ wtf.doc.ProfileScope.EventType = {
   /**
    * Properties added; receives a list of [key, newValue, oldValue].
    */
-  PROPERTIES_SET: goog.events.getUniqueId('set')
+  PROPERTIES_SET: goog.events.getUniqueId("set"),
 };
-
 
 /**
  * Gets the name of the profile scope.
  * @return {string} Scope name.
  */
-wtf.doc.ProfileScope.prototype.getName = function() {
+wtf.doc.ProfileScope.prototype.getName = function () {
   return this.name_;
 };
-
 
 /**
  * Whether the map contains a value for the given key.
  * @param {string} key Item key.
  * @return {boolean} True if the map contains a value for the key.
  */
-wtf.doc.ProfileScope.prototype.containsKey = function(key) {
+wtf.doc.ProfileScope.prototype.containsKey = function (key) {
   return this.map_.containsKey(key);
 };
-
 
 /**
  * Gets the value with the given key.
@@ -84,33 +78,30 @@ wtf.doc.ProfileScope.prototype.containsKey = function(key) {
  * @return {wtf.events.MapValueType|undefined} Value with the given key, if
  *     found.
  */
-wtf.doc.ProfileScope.prototype.get = function(key) {
+wtf.doc.ProfileScope.prototype.get = function (key) {
   return this.map_.get(key);
 };
-
 
 /**
  * Sets the value at the given key.
  * @param {string} key Item key.
  * @param {wtf.events.MapValueType} value New value.
  */
-wtf.doc.ProfileScope.prototype.set = function(key, value) {
+wtf.doc.ProfileScope.prototype.set = function (key, value) {
   this.map_.set(key, value);
 };
-
 
 /**
  * Removes the value with the given key.
  * @param {string} key Key to remove.
  */
-wtf.doc.ProfileScope.prototype.remove = function(key) {
+wtf.doc.ProfileScope.prototype.remove = function (key) {
   this.map_.remove(key);
 };
-
 
 /**
  * Clears all values in the map.
  */
-wtf.doc.ProfileScope.prototype.clear = function() {
+wtf.doc.ProfileScope.prototype.clear = function () {
   this.map_.clear();
 };

@@ -1,0 +1,26 @@
+{
+  "name": "nri-mssql",
+  "fullName": "newrelic/nri-mssql",
+  "slug": "newrelic-nri-mssql",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Infrastructure Microsoft SQL Server Integration",
+  "supportUrl": "https://discuss.newrelic.com/c/support-products-agents/new-relic-infrastructure",
+  "githubUrl": "https://github.com/newrelic/nri-mssql",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/nri-mssql",
+  "iconUrl": null,
+  "shortDescription": "Monitoring for Microsoft SQL Server databases",
+  "description": "Capture critical performance metrics and inventory reported by Microsoft SQL Server databases",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Go",
+  "projectTags": [
+    "nri"
+  ],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Infrastructure Microsoft SQL Server Integration",
+    "url": "https://github.com/newrelic/nri-mssql"
+  }
+}

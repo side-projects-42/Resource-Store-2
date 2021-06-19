@@ -3,6 +3,7 @@ id: contributing
 title: Contributing
 sidebar: contributing
 ---
+
 Contributions to Chart.js are welcome and encouraged, but please have a look through the guidelines in this document before raising an issue, or writing code for the project.
 
 ## Using issues

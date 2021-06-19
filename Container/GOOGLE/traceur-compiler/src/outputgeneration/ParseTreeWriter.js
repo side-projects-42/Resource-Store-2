@@ -19,9 +19,9 @@ import {
   IF_STATEMENT,
   LITERAL_EXPRESSION,
   POSTFIX_EXPRESSION,
-  UNARY_EXPRESSION
-} from '../syntax/trees/ParseTreeType.js';
-import {ParseTreeVisitor} from '../syntax/ParseTreeVisitor.js';
+  UNARY_EXPRESSION,
+} from "../syntax/trees/ParseTreeType.js";
+import { ParseTreeVisitor } from "../syntax/ParseTreeVisitor.js";
 import {
   AS,
   ASYNC,
@@ -32,11 +32,8 @@ import {
   ON,
   SET,
   TYPE,
-} from '../syntax/PredefinedName.js';
-import {
-  isIdentifierPart,
-  isWhitespace
-} from '../syntax/Scanner.js';
+} from "../syntax/PredefinedName.js";
+import { isIdentifierPart, isWhitespace } from "../syntax/Scanner.js";
 
 import {
   ARROW,
@@ -93,10 +90,10 @@ import {
   TRY,
   WHILE,
   WITH,
-  YIELD
-} from '../syntax/TokenType.js';
+  YIELD,
+} from "../syntax/TokenType.js";
 
-const NEW_LINE = '\n';
+const NEW_LINE = "\n";
 const LINE_LENGTH = 80;
 
 /**
@@ -106,11 +103,11 @@ export class ParseTreeWriter extends ParseTreeVisitor {
   /**
    * @param {{prettyPrint: boolean=}} options
    */
-  constructor({prettyPrint = true} = {}) {
+  constructor({ prettyPrint = true } = {}) {
     super();
     this.prettyPrint_ = prettyPrint;
-    this.result_ = '';
-    this.currentLine_ = '';
+    this.result_ = "";
+    this.currentLine_ = "";
     this.lastCode_ = -1;
 
     /**
@@ -127,7 +124,7 @@ export class ParseTreeWriter extends ParseTreeVisitor {
   toString() {
     if (this.currentLine_.length > 0) {
       this.result_ += this.currentLine_;
-      this.currentLine_ = '';
+      this.currentLine_ = "";
       this.lastCode_ = -1;
     }
 
@@ -246,16 +243,20 @@ export class ParseTreeWriter extends ParseTreeVisitor {
     let left = tree.left;
     this.visitAny(left);
     let operator = tree.operator;
-    if (left.type === POSTFIX_EXPRESSION &&
-        requiresSpaceBetween(left.operator.type, operator.type)) {
+    if (
+      left.type === POSTFIX_EXPRESSION &&
+      requiresSpaceBetween(left.operator.type, operator.type)
+    ) {
       this.writeRequiredSpace_();
     } else {
       this.writeSpace_();
     }
     this.writeToken_(operator);
     let right = tree.right;
-    if (right.type === UNARY_EXPRESSION &&
-        requiresSpaceBetween(operator.type, right.operator.type)) {
+    if (
+      right.type === UNARY_EXPRESSION &&
+      requiresSpaceBetween(operator.type, right.operator.type)
+    ) {
       this.writeRequiredSpace_();
     } else {
       this.writeSpace_();
@@ -754,14 +755,12 @@ export class ParseTreeWriter extends ParseTreeVisitor {
     if (tree.isAsyncGenerator()) {
       this.write_(ASYNC);
     }
-    if (tree.isAsyncFunction())
-      this.writeToken_(tree.functionKind);
+    if (tree.isAsyncFunction()) this.writeToken_(tree.functionKind);
     this.write_(FUNCTION);
     if (tree.isAsyncGenerator()) {
       this.write_(STAR);
     }
-    if (tree.isGenerator())
-      this.writeToken_(tree.functionKind);
+    if (tree.isGenerator()) this.writeToken_(tree.functionKind);
 
     if (tree.name) {
       this.writeSpace_();
@@ -833,8 +832,7 @@ export class ParseTreeWriter extends ParseTreeVisitor {
     this.write_(CLOSE_PAREN);
     this.visitAnyBlockOrIndent_(tree.ifClause);
     if (tree.elseClause) {
-      if (tree.ifClause.type === BLOCK)
-        this.writeSpace_();
+      if (tree.ifClause.type === BLOCK) this.writeSpace_();
       this.write_(ELSE);
       if (tree.elseClause.type === IF_STATEMENT) {
         this.writeSpace_();
@@ -892,15 +890,15 @@ export class ParseTreeWriter extends ParseTreeVisitor {
   }
 
   visitAnyIndented_(tree, indent = 1) {
-      if (this.prettyPrint_) {
-        this.indentDepth_ += indent;
-        this.writeln_();
-      }
-      this.visitAny(tree);
-      if (this.prettyPrint_) {
-        this.indentDepth_ -= indent;
-        this.writeln_();
-      }
+    if (this.prettyPrint_) {
+      this.indentDepth_ += indent;
+      this.writeln_();
+    }
+    this.visitAny(tree);
+    if (this.prettyPrint_) {
+      this.indentDepth_ -= indent;
+      this.writeln_();
+    }
   }
 
   /**
@@ -999,18 +997,18 @@ export class ParseTreeWriter extends ParseTreeVisitor {
   }
 
   visitJsxPlaceholder(tree) {
-    this.write_(OPEN_CURLY)
+    this.write_(OPEN_CURLY);
     if (tree.expression !== null) {
       this.visitAny(tree.expression);
     }
-    this.write_(CLOSE_CURLY)
+    this.write_(CLOSE_CURLY);
   }
 
   visitJsxSpreadAttribute(tree) {
-    this.write_(OPEN_CURLY)
+    this.write_(OPEN_CURLY);
     this.write_(DOT_DOT_DOT);
     this.visitAny(tree.expression);
-    this.write_(CLOSE_CURLY)
+    this.write_(CLOSE_CURLY);
   }
 
   visitJsxText(tree) {
@@ -1048,8 +1046,10 @@ export class ParseTreeWriter extends ParseTreeVisitor {
     this.visitAny(tree.operand);
     // If we have `1 .memberName` we need to ensure we add a space or the
     // generated code will not be valid.
-    if (tree.operand.type === LITERAL_EXPRESSION &&
-        tree.operand.literalToken.type === NUMBER) {
+    if (
+      tree.operand.type === LITERAL_EXPRESSION &&
+      tree.operand.literalToken.type === NUMBER
+    ) {
       if (!/\.|e|E/.test(tree.operand.literalToken.value))
         this.writeRequiredSpace_();
     }
@@ -1083,9 +1083,11 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    * @param {SyntaxErrorTree} tree
    */
   visitSyntaxErrorTree(tree) {
-    this.write_('(function() {' +
+    this.write_(
+      "(function() {" +
         `throw SyntaxError(${JSON.stringify(tree.message)});` +
-        '})()');
+        "})()"
+    );
   }
 
   visitModule(tree) {
@@ -1114,11 +1116,9 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    */
   visitObjectLiteral(tree) {
     this.writeOpenCurly_();
-    if (tree.propertyNameAndValues.length > 1)
-      this.writeln_();
+    if (tree.propertyNameAndValues.length > 1) this.writeln_();
     this.writelnList_(tree.propertyNameAndValues, COMMA);
-    if (tree.propertyNameAndValues.length > 1)
-      this.writeln_();
+    if (tree.propertyNameAndValues.length > 1) this.writeln_();
     this.writeCloseCurly_();
   }
 
@@ -1166,8 +1166,10 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    */
   visitPostfixExpression(tree) {
     this.visitAny(tree.operand);
-    if (tree.operand.type === POSTFIX_EXPRESSION &&
-        tree.operand.operator.type === tree.operator.type) {
+    if (
+      tree.operand.type === POSTFIX_EXPRESSION &&
+      tree.operand.operator.type === tree.operator.type
+    ) {
       this.writeRequiredSpace_();
     }
     this.writeToken_(tree.operator);
@@ -1197,14 +1199,11 @@ export class ParseTreeWriter extends ParseTreeVisitor {
       this.writeSpace_();
     }
 
-    if (tree.isAsyncFunction() || tree.isAsyncGenerator())
-      this.write_(ASYNC);
+    if (tree.isAsyncFunction() || tree.isAsyncGenerator()) this.write_(ASYNC);
 
-    if (tree.isGenerator() || tree.isAsyncGenerator())
-      this.write_(STAR);
+    if (tree.isGenerator() || tree.isAsyncGenerator()) this.write_(STAR);
 
-    if (tree.isAsyncGenerator())
-      this.writeSpace_();
+    if (tree.isAsyncGenerator()) this.writeSpace_();
 
     this.visitAny(tree.name);
     this.write_(OPEN_PAREN);
@@ -1290,7 +1289,7 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    * @param {TemplateSubstitution} tree
    */
   visitTemplateSubstitution(tree) {
-    this.writeRaw_('$');
+    this.writeRaw_("$");
     this.writeRaw_(OPEN_CURLY);
     this.visitAny(tree.expression);
     this.writeRaw_(CLOSE_CURLY);
@@ -1321,7 +1320,7 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    */
   visitSetAccessor(tree) {
     this.writeAnnotations_(tree.annotations);
-    if (tree.isStatic){
+    if (tree.isStatic) {
       this.write_(STATIC);
       this.writeSpace_();
     }
@@ -1355,7 +1354,7 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    * @param {StateMachine} tree
    */
   visitStateMachine(tree) {
-    throw new Error('State machines cannot be converted to source');
+    throw new Error("State machines cannot be converted to source");
   }
 
   /**
@@ -1433,7 +1432,7 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    */
   visitTypeArguments(tree) {
     this.write_(OPEN_ANGLE);
-    let {args} = tree;
+    let { args } = tree;
     this.visitAny(args[0]);
     for (let i = 1; i < args.length; i++) {
       this.write_(COMMA);
@@ -1485,8 +1484,10 @@ export class ParseTreeWriter extends ParseTreeVisitor {
     let op = tree.operator;
     this.writeToken_(op);
     let operand = tree.operand;
-    if (operand.type === UNARY_EXPRESSION &&
-        requiresSpaceBetween(op.type, operand.operator.type)) {
+    if (
+      operand.type === UNARY_EXPRESSION &&
+      requiresSpaceBetween(op.type, operand.operator.type)
+    ) {
       this.writeRequiredSpace_();
     }
     this.visitAny(operand);
@@ -1566,8 +1567,7 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    */
   visitYieldExpression(tree) {
     this.write_(YIELD);
-    if (tree.isYieldFor)
-      this.write_(STAR);
+    if (tree.isYieldFor) this.write_(STAR);
 
     if (tree.expression) {
       this.writeSpace_();
@@ -1580,9 +1580,8 @@ export class ParseTreeWriter extends ParseTreeVisitor {
   }
 
   writeln_() {
-    if (this.currentLine_)
-      this.writeCurrentln_();
-    this.currentLine_ = '';
+    if (this.currentLine_) this.writeCurrentln_();
+    this.currentLine_ = "";
     this.lastCode_ = -1;
   }
 
@@ -1595,11 +1594,9 @@ export class ParseTreeWriter extends ParseTreeVisitor {
     if (delimiter !== null) {
       this.writeList_(list, delimiter, true);
     } else {
-      if (list.length > 0)
-        this.writeln_();
-      this.writeList_(list, '', true);
-      if (list.length > 0)
-        this.writeln_();
+      if (list.length > 0) this.writeln_();
+      this.writeList_(list, "", true);
+      if (list.length > 0) this.writeln_();
     }
   }
 
@@ -1615,21 +1612,18 @@ export class ParseTreeWriter extends ParseTreeVisitor {
       if (first) {
         first = false;
       } else {
-        if (delimiter !== '') {
+        if (delimiter !== "") {
           this.write_(delimiter);
-          if (!writeNewLine)
-            this.writeSpace_();
+          if (!writeNewLine) this.writeSpace_();
         }
         if (writeNewLine) {
-          if (i === 1)
-            this.indentDepth_ += indent;
+          if (i === 1) this.indentDepth_ += indent;
           this.writeln_();
         }
       }
       this.visitAny(list[i]);
     }
-    if (writeNewLine && list.length > 1)
-      this.indentDepth_ -= indent;
+    if (writeNewLine && list.length > 1) this.indentDepth_ -= indent;
   }
 
   /**
@@ -1656,11 +1650,11 @@ export class ParseTreeWriter extends ParseTreeVisitor {
   write_(value) {
     if (this.prettyPrint_ && this.currentLine_.length === 0) {
       for (let i = 0, indent = this.indentDepth_; i < indent; i++) {
-        this.writeRaw_('  ');
+        this.writeRaw_("  ");
       }
     }
     if (this.needsSpace_(value)) {
-      this.writeRaw_(' ');
+      this.writeRaw_(" ");
     }
     this.writeRaw_(value);
   }
@@ -1677,13 +1671,13 @@ export class ParseTreeWriter extends ParseTreeVisitor {
 
   writeSpace_() {
     if (this.prettyPrint_ && !isWhitespace(this.lastCode_)) {
-      this.writeRaw_(' ');
+      this.writeRaw_(" ");
     }
   }
 
   writeRequiredSpace_() {
     if (!isWhitespace(this.lastCode_)) {
-      this.writeRaw_(' ');
+      this.writeRaw_(" ");
     }
   }
 
@@ -1702,9 +1696,8 @@ export class ParseTreeWriter extends ParseTreeVisitor {
    */
   writeAnnotations_(annotations, writeNewLine = this.prettyPrint_) {
     if (annotations.length > 0) {
-      this.writeList_(annotations, '', writeNewLine);
-      if (writeNewLine)
-        this.writeln_();
+      this.writeList_(annotations, "", writeNewLine);
+      if (writeNewLine) this.writeln_();
     }
   }
 
@@ -1715,15 +1708,19 @@ export class ParseTreeWriter extends ParseTreeVisitor {
     let lastCode = this.lastCode_;
     if (isWhitespace(lastCode)) return false;
     let firstCode = token.toString().charCodeAt(0);
-    return isIdentifierPart(firstCode) &&
-        // /m is treated as regexp flag
-        (isIdentifierPart(lastCode) || lastCode === 47);
+    return (
+      isIdentifierPart(firstCode) &&
+      // /m is treated as regexp flag
+      (isIdentifierPart(lastCode) || lastCode === 47)
+    );
   }
 }
 
 function requiresSpaceBetween(first, second) {
-  return (first === MINUS || first === MINUS_MINUS) &&
-      (second === MINUS || second === MINUS_MINUS) ||
-      (first === PLUS || first === PLUS_PLUS) &&
-      (second === PLUS || second === PLUS_PLUS);
+  return (
+    ((first === MINUS || first === MINUS_MINUS) &&
+      (second === MINUS || second === MINUS_MINUS)) ||
+    ((first === PLUS || first === PLUS_PLUS) &&
+      (second === PLUS || second === PLUS_PLUS))
+  );
 }

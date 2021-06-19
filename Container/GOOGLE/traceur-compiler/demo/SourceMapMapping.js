@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SourceMapConsumer, join}
-    from '../src/outputgeneration/SourceMapIntegration.js';
-
+import {
+  SourceMapConsumer,
+  join,
+} from "../src/outputgeneration/SourceMapIntegration.js";
 
 export class SourceMapMapping {
   /**
@@ -30,46 +31,38 @@ export class SourceMapMapping {
     var columns = columnsByLine[line];
     return {
       line: line,
-      column: columns[columns.length - 1]
+      column: columns[columns.length - 1],
     };
   }
 
   nextLineWithColumns(columnsByLine, line) {
     while (line < columnsByLine.length) {
-      if (columnsByLine[line])
-        return line;
+      if (columnsByLine[line]) return line;
       line++;
     }
   }
 
   columnIndexGreaterOrEqual(columns, column) {
-    if (!columns.length)
-      return;
+    if (!columns.length) return;
     var start = 0;
-    if (column < columns[start])
-      return start;
+    if (column < columns[start]) return start;
     var end = columns.length - 1;
-    if (column > columns[end])
-      return;
+    if (column > columns[end]) return;
 
     var middle;
     var candidate;
     function lastDupe(index) {
-      for(; index < columns.length; index++) {
-        if (columns[index] !== columns[index + 1])
-          return index;
+      for (; index < columns.length; index++) {
+        if (columns[index] !== columns[index + 1]) return index;
       }
     }
 
     while (start + 1 < end) {
       middle = Math.floor((start + end) / 2);
       candidate = columns[middle];
-      if (candidate > column)
-        end = middle;
-      else if (candidate < column)
-        start = middle;
-      else
-        return lastDupe(middle);
+      if (candidate > column) end = middle;
+      else if (candidate < column) start = middle;
+      else return lastDupe(middle);
     }
     return end;
   }
@@ -78,29 +71,27 @@ export class SourceMapMapping {
     var line = position.line;
     var columnIndex;
     line = this.nextLineWithColumns(columnsByLine, line);
-    if (typeof line !== 'number')
-      return this.lastPosition(columnsByLine);
+    if (typeof line !== "number") return this.lastPosition(columnsByLine);
     var columns = columnsByLine[line];
-    if (!columns)
-      return this.lastPosition(columnsByLine);
+    if (!columns) return this.lastPosition(columnsByLine);
 
     columnIndex = this.columnIndexGreaterOrEqual(columns, position.column);
 
     var nextColumn;
-    if (typeof columnIndex === 'number')
+    if (typeof columnIndex === "number")
       nextColumn = columnsByLine[line][columnIndex + 1];
 
-    if (typeof nextColumn !== 'number') {
+    if (typeof nextColumn !== "number") {
       // Use the first column in the next line.
       line = this.nextLineWithColumns(columnsByLine, ++line);
-      if (line)
-        nextColumn = columnsByLine[line][0];
-      if (typeof nextColumn !== 'number') // use the last col of the last line
+      if (line) nextColumn = columnsByLine[line][0];
+      if (typeof nextColumn !== "number")
+        // use the last col of the last line
         return this.lastPosition(columnsByLine);
     }
     return {
       line: line,
-      column: nextColumn
+      column: nextColumn,
     };
   }
 
@@ -112,25 +103,27 @@ export class SourceMapMapping {
     var nextPosition = this.nextPosition(position);
     return [position, nextPosition];
   }
-
 }
 
 export class OriginalSourceMapMapping extends SourceMapMapping {
   /**
    * @param {SourceMapConsumer} consumer
    * @param {string} path which source to analyze
-    */
+   */
   constructor(consumer, path) {
     super(consumer);
 
     var url = consumer.sourceRoot ? join(consumer.sourceRoot, path) : path;
-    consumer.eachMapping((mapping) => {
-      if (url && mapping.source !== url)
-        return;
-      var line = mapping.originalLine;
-      this.columnsByLine_[line] = this.columnsByLine_[line] || [];
-      this.columnsByLine_[line].push(mapping.originalColumn);
-    }, this, SourceMapConsumer.ORIGINAL_ORDER);
+    consumer.eachMapping(
+      (mapping) => {
+        if (url && mapping.source !== url) return;
+        var line = mapping.originalLine;
+        this.columnsByLine_[line] = this.columnsByLine_[line] || [];
+        this.columnsByLine_[line].push(mapping.originalColumn);
+      },
+      this,
+      SourceMapConsumer.ORIGINAL_ORDER
+    );
   }
 
   mapPositionFor(position) {
@@ -146,13 +139,16 @@ export class GeneratedSourceMapMapping extends SourceMapMapping {
   constructor(consumer, path) {
     super(consumer);
     var url = consumer.sourceRoot ? join(consumer.sourceRoot, path) : path;
-    consumer.eachMapping((mapping) => {
-      if (url && mapping.source !== url)
-        return;
-      var line = mapping.generatedLine;
-      this.columnsByLine_[line] = this.columnsByLine_[line] || [];
-      this.columnsByLine_[line].push(mapping.generatedColumn);
-    }, this, SourceMapConsumer.GENERATED_ORDER);
+    consumer.eachMapping(
+      (mapping) => {
+        if (url && mapping.source !== url) return;
+        var line = mapping.generatedLine;
+        this.columnsByLine_[line] = this.columnsByLine_[line] || [];
+        this.columnsByLine_[line].push(mapping.generatedColumn);
+      },
+      this,
+      SourceMapConsumer.GENERATED_ORDER
+    );
   }
 
   mapPositionFor(position) {

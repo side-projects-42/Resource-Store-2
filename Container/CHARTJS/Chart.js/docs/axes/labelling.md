@@ -6,14 +6,14 @@ When creating a chart, you want to tell the viewer what data they are viewing. T
 
 Namespace: `options.scales[scaleId].title`, it defines options for the scale title. Note that this only applies to cartesian axes.
 
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| `display` | `boolean` | `false` | If true, display the axis title.
-| `align` | `string` | `'center'` | Alignment of the axis title. Possible options are `'start'`, `'center'` and `'end'`
-| `text` | `string`\|`string[]` | `''` | The text for the title. (i.e. "# of People" or "Response Choices").
-| `color` | [`Color`](../general/colors.md) | `Chart.defaults.color` | Color of label.
-| `font` | `Font` | `Chart.defaults.font` | See [Fonts](../general/fonts.md)
-| `padding` | [`Padding`](../general/padding.md) | `4` | Padding to apply around scale labels. Only `top` and `bottom` are implemented.
+| Name      | Type                               | Default                | Description                                                                         |
+| --------- | ---------------------------------- | ---------------------- | ----------------------------------------------------------------------------------- |
+| `display` | `boolean`                          | `false`                | If true, display the axis title.                                                    |
+| `align`   | `string`                           | `'center'`             | Alignment of the axis title. Possible options are `'start'`, `'center'` and `'end'` |
+| `text`    | `string`\|`string[]`               | `''`                   | The text for the title. (i.e. "# of People" or "Response Choices").                 |
+| `color`   | [`Color`](../general/colors.md)    | `Chart.defaults.color` | Color of label.                                                                     |
+| `font`    | `Font`                             | `Chart.defaults.font`  | See [Fonts](../general/fonts.md)                                                    |
+| `padding` | [`Padding`](../general/padding.md) | `4`                    | Padding to apply around scale labels. Only `top` and `bottom` are implemented.      |
 
 ## Creating Custom Tick Formats
 
@@ -22,9 +22,9 @@ To do this, you need to override the `ticks.callback` method in the axis configu
 
 The method receiver 3 arguments:
 
-* `value` - the tick value in the **internal data format** of the associated scale.
-* `index` - the tick index in the ticks array.
-* `ticks` - the array containing all of the [tick objects](../api/interfaces/tick).
+- `value` - the tick value in the **internal data format** of the associated scale.
+- `index` - the tick index in the ticks array.
+- `ticks` - the array containing all of the [tick objects](../api/interfaces/tick).
 
 The call to the method is scoped to the scale. `this` inside the method is the scale object.
 
@@ -38,23 +38,23 @@ In the following example, every label of the Y-axis would be displayed with a do
 
 ```javascript
 var chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-        scales: {
-            y: {
-                ticks: {
-                    // Include a dollar sign in the ticks
-                    callback: function(value, index, values) {
-                        return '$' + value;
-                    }
-                }
-            }
-        }
-    }
+  type: "line",
+  data: data,
+  options: {
+    scales: {
+      y: {
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: function (value, index, values) {
+            return "$" + value;
+          },
+        },
+      },
+    },
+  },
 });
 ```
 
 Related samples:
 
-* [Tick configuration sample](../samples/scale-options/ticks)
+- [Tick configuration sample](../samples/scale-options/ticks)

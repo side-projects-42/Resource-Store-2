@@ -1,0 +1,22 @@
+{
+    "loader": {
+        "use": [ "loader-base", "loader-rollup", "loader-yui3" ],
+        "submodules": {
+            "loader-base": {
+                "requires": [
+                    "get"
+                ]
+            },
+            "loader-rollup": {
+                "requires": [
+                    "loader-base"
+                ]
+            },
+            "loader-yui3": {
+                "requires": [
+                    "loader-base"
+                ]
+            }
+        }
+    }
+}

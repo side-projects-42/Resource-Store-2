@@ -1,0 +1,24 @@
+{
+  "name": "nr1-observability-maps",
+  "fullName": "newrelic/nr1-observability-maps",
+  "slug": "newrelic-nr1-observability-maps",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic One Observability Maps",
+  "supportUrl": "https://discuss.newrelic.com/t/nr1-observability-maps-nerdpack/93091",
+  "githubUrl": "https://github.com/newrelic/nr1-observability-maps",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/nr1-observability-maps",
+  "iconUrl": "https://github.com/newrelic/nr1-observability-maps/blob/master/icon.png?raw=true",
+  "shortDescription": "Adhoc entity relationship visualization",
+  "description": "Create an observability map based on any of the data available in New Relic",
+  "ossCategory": "new-relic-one-catalog-project",
+  "primaryLanguage": "JavaScript",
+  "projectTags": ["nr1-app"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic One Observability Maps",
+    "url": "https://github.com/newrelic/nr1-observability-maps"
+  }
+}

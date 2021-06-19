@@ -12,26 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ARGUMENTS} from '../syntax/PredefinedName.js';
-import FindArguments from './FindArguments.js';
+import { ARGUMENTS } from "../syntax/PredefinedName.js";
+import FindArguments from "./FindArguments.js";
 import {
   FunctionBody,
   FunctionDeclaration,
   FunctionExpression,
   Method,
-  YieldExpression
-} from '../syntax/trees/ParseTrees.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
-import {ParenTrait} from './ParenTrait.js';
-import {parseStatement} from './PlaceholderParser.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
+  YieldExpression,
+} from "../syntax/trees/ParseTrees.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
+import { ParenTrait } from "./ParenTrait.js";
+import { parseStatement } from "./PlaceholderParser.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
 import {
   createIdentifierExpression,
   createNullLiteral,
-} from './ParseTreeFactory.js';
+} from "./ParseTreeFactory.js";
 
-export class AsyncToGeneratorTransformer extends
-    ImportRuntimeTrait(ParenTrait(TempVarTransformer)) {
+export class AsyncToGeneratorTransformer extends ImportRuntimeTrait(
+  ParenTrait(TempVarTransformer)
+) {
   constructor(identifierGenerator, reporter, options) {
     super(identifierGenerator, reporter, options);
     this.inAsyncFunction_ = false;
@@ -56,15 +57,22 @@ export class AsyncToGeneratorTransformer extends
     const typeAnnotation = this.transformAny(tree.typeAnnotation);
     const annotations = this.transformList(tree.annotations);
     const body = this.transformAsyncBody_(tree.body);
-    return new ctor(tree.location, tree.name, null,
-        parameterList, typeAnnotation, annotations, body);
+    return new ctor(
+      tree.location,
+      tree.name,
+      null,
+      parameterList,
+      typeAnnotation,
+      annotations,
+      body
+    );
   }
 
   transformAsyncBody_(body) {
     const inAsyncFunction = this.inAsyncFunction_;
     this.inAsyncFunction_ = true;
     body = this.transformFunctionBody(body);
-    const spawn = this.getRuntimeExpression('spawn');
+    const spawn = this.getRuntimeExpression("spawn");
     body = wrapBodyInSpawn(body, spawn);
     this.inAsyncFunction_ = inAsyncFunction;
     return body;
@@ -77,9 +85,17 @@ export class AsyncToGeneratorTransformer extends
       const typeAnnotation = this.transformAny(tree.typeAnnotation);
       const annotations = this.transformList(tree.annotations);
       const body = this.transformAsyncBody_(tree.body);
-      return new Method(tree.location, tree.isStatic, null, name,
-                        parameterList, typeAnnotation, annotations, body,
-                        tree.debugName);
+      return new Method(
+        tree.location,
+        tree.isStatic,
+        null,
+        name,
+        parameterList,
+        typeAnnotation,
+        annotations,
+        body,
+        tree.debugName
+      );
     }
     return super.transformMethod(tree);
   }
@@ -96,10 +112,9 @@ export class AsyncToGeneratorTransformer extends
 function wrapBodyInSpawn(body, spawn) {
   const visitor = new FindArguments();
   visitor.visitAny(body);
-  const argExpr = visitor.found ?
-      createIdentifierExpression(ARGUMENTS) :
-      createNullLiteral();
-  const statement = parseStatement
-      `return ${spawn}(this, ${argExpr}, function*() { ${body} });`
-  return new FunctionBody(body.location, [statement])
+  const argExpr = visitor.found
+    ? createIdentifierExpression(ARGUMENTS)
+    : createNullLiteral();
+  const statement = parseStatement`return ${spawn}(this, ${argExpr}, function*() { ${body} });`;
+  return new FunctionBody(body.location, [statement]);
 }

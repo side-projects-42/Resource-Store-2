@@ -4,48 +4,52 @@
 // <block:actions:2>
 const actions = [
   {
-    name: 'Randomize',
+    name: "Randomize",
     handler(chart) {
-      chart.data.datasets.forEach(dataset => {
-        dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
+      chart.data.datasets.forEach((dataset) => {
+        dataset.data = Utils.numbers({
+          count: chart.data.labels.length,
+          min: -100,
+          max: 100,
+        });
       });
       chart.update();
-    }
+    },
   },
 ];
 // </block:actions>
 
 // <block:setup:1>
 const DATA_COUNT = 7;
-const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };
 
-const labels = Utils.months({count: 7});
+const labels = Utils.months({ count: 7 });
 const data = {
   labels: labels,
   datasets: [
     {
-      label: 'Dataset 1',
+      label: "Dataset 1",
       data: Utils.numbers(NUMBER_CFG),
       backgroundColor: Utils.CHART_COLORS.red,
     },
     {
-      label: 'Dataset 2',
+      label: "Dataset 2",
       data: Utils.numbers(NUMBER_CFG),
       backgroundColor: Utils.CHART_COLORS.blue,
     },
     {
-      label: 'Dataset 3',
+      label: "Dataset 3",
       data: Utils.numbers(NUMBER_CFG),
       backgroundColor: Utils.CHART_COLORS.green,
     },
-  ]
+  ],
 };
 // </block:setup>
 
 // <block:config:0>
 var delayed;
 const config = {
-  type: 'bar',
+  type: "bar",
   data: data,
   options: {
     animation: {
@@ -54,7 +58,7 @@ const config = {
       },
       delay: (context) => {
         let delay = 0;
-        if (context.type === 'data' && context.mode === 'default' && !delayed) {
+        if (context.type === "data" && context.mode === "default" && !delayed) {
           delay = context.dataIndex * 300 + context.datasetIndex * 100;
         }
         return delay;
@@ -65,10 +69,10 @@ const config = {
         stacked: true,
       },
       y: {
-        stacked: true
-      }
-    }
-  }
+        stacked: true,
+      },
+    },
+  },
 };
 // </block:config>
 

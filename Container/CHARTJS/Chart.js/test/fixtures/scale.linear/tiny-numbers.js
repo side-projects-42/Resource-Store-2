@@ -2,17 +2,19 @@
 
 module.exports = {
   config: {
-    type: 'scatter',
+    type: "scatter",
     data: {
-      datasets: [{
-        data: [
-          {x: 1, y: 1.8548483304974972},
-          {x: 2, y: 1.8548483304974974},
-        ]
-      }],
+      datasets: [
+        {
+          data: [
+            { x: 1, y: 1.8548483304974972 },
+            { x: 2, y: 1.8548483304974974 },
+          ],
+        },
+      ],
     },
   },
   options: {
-    spriteText: true
-  }
+    spriteText: true,
+  },
 };

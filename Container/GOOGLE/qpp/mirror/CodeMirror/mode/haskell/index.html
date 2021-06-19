@@ -1,20 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>CodeMirror: Haskell mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <link rel="stylesheet" href="../../lib/codemirror.css" />
     <script src="../../lib/codemirror.js"></script>
     <script src="../../addon/edit/matchbrackets.js"></script>
     <script src="haskell.js"></script>
-    <link rel="stylesheet" href="../../theme/elegant.css">
-    <style type="text/css">.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
-    <link rel="stylesheet" href="../../doc/docs.css">
+    <link rel="stylesheet" href="../../theme/elegant.css" />
+    <style type="text/css">
+      .CodeMirror {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+    </style>
+    <link rel="stylesheet" href="../../doc/docs.css" />
   </head>
   <body>
     <h1>CodeMirror: Haskell mode</h1>
 
-<form><textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
 module UniquePerms (
     uniquePerms
     )
@@ -47,13 +53,15 @@ permBag bs = concatMap (\(f,cs) -> map (f:) $ permBag cs) . oneOfEach $ bs
     
     apSnd f (a,b) = (a, f b)
     mapSnd = map . apSnd
-</textarea></form>
+</textarea
+      >
+    </form>
 
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
-        theme: "elegant"
+        theme: "elegant",
       });
     </script>
 

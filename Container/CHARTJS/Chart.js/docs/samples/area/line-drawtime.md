@@ -7,15 +7,15 @@ const inputs = {
   max: 100,
   count: 8,
   decimals: 2,
-  continuity: 1
+  continuity: 1,
 };
 
 const generateLabels = () => {
-  return Utils.months({count: inputs.count});
+  return Utils.months({ count: inputs.count });
 };
 
 Utils.srand(3);
-const generateData = () => (Utils.numbers(inputs));
+const generateData = () => Utils.numbers(inputs);
 // </block:setup>
 
 // <block:data:0>
@@ -23,20 +23,20 @@ const data = {
   labels: generateLabels(),
   datasets: [
     {
-      label: 'Dataset 1',
+      label: "Dataset 1",
       data: generateData(),
       borderColor: Utils.CHART_COLORS.red,
       backgroundColor: Utils.CHART_COLORS.red,
-      fill: true
+      fill: true,
     },
     {
-      label: 'Dataset 2',
+      label: "Dataset 2",
       data: generateData(),
       borderColor: Utils.CHART_COLORS.blue,
       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue),
-      fill: true
-    }
-  ]
+      fill: true,
+    },
+  ],
 };
 // </block:data>
 
@@ -45,49 +45,49 @@ let smooth = false;
 
 const actions = [
   {
-    name: 'drawTime: beforeDatasetDraw (default)',
+    name: "drawTime: beforeDatasetDraw (default)",
     handler: (chart) => {
-      chart.options.plugins.filler.drawTime = 'beforeDatasetDraw';
+      chart.options.plugins.filler.drawTime = "beforeDatasetDraw";
       chart.update();
-    }
+    },
   },
   {
-    name: 'drawTime: beforeDatasetsDraw',
+    name: "drawTime: beforeDatasetsDraw",
     handler: (chart) => {
-      chart.options.plugins.filler.drawTime = 'beforeDatasetsDraw';
+      chart.options.plugins.filler.drawTime = "beforeDatasetsDraw";
       chart.update();
-    }
+    },
   },
   {
-    name: 'drawTime: beforeDraw',
+    name: "drawTime: beforeDraw",
     handler: (chart) => {
-      chart.options.plugins.filler.drawTime = 'beforeDraw';
+      chart.options.plugins.filler.drawTime = "beforeDraw";
       chart.update();
-    }
+    },
   },
   {
-    name: 'Randomize',
+    name: "Randomize",
     handler(chart) {
-      chart.data.datasets.forEach(dataset => {
+      chart.data.datasets.forEach((dataset) => {
         dataset.data = generateData();
       });
       chart.update();
-    }
+    },
   },
   {
-    name: 'Smooth',
+    name: "Smooth",
     handler(chart) {
       smooth = !smooth;
       chart.options.elements.line.tension = smooth ? 0.4 : 0;
       chart.update();
-    }
-  }
+    },
+  },
 ];
 // </block:actions>
 
 // <block:config:1>
 const config = {
-  type: 'line',
+  type: "line",
   data: data,
   options: {
     plugins: {
@@ -96,14 +96,14 @@ const config = {
       },
       title: {
         display: true,
-        text: (ctx) => 'drawTime: ' + ctx.chart.options.plugins.filler.drawTime
-      }
+        text: (ctx) => "drawTime: " + ctx.chart.options.plugins.filler.drawTime,
+      },
     },
-    pointBackgroundColor: '#fff',
+    pointBackgroundColor: "#fff",
     radius: 10,
     interaction: {
       intersect: false,
-    }
+    },
   },
 };
 // </block:config>

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>XHR test</title>
@@ -17,8 +17,8 @@
       // open 189.40799997653812
       // send 27.663999993819743
 
-      var startLink = document.getElementById('start');
-      startLink.onclick = function() {
+      var startLink = document.getElementById("start");
+      startLink.onclick = function () {
         var start = performance.now();
 
         var count = 2000;
@@ -29,12 +29,16 @@
         }
         var t1 = performance.now();
         for (var n = 0; n < count; n++) {
-          xhrs[n].onload = function() {
-          };
+          xhrs[n].onload = function () {};
         }
         var t2 = performance.now();
         for (var n = 0; n < count; n++) {
-          xhrs[n].open('GET', 'http://mt0.google.com/vt/vec?src=vector&x=332&y=716&z=11&hl=en&lyrs=m@207690615&output=webgl8&other=' + (count + Date.now()), true);
+          xhrs[n].open(
+            "GET",
+            "http://mt0.google.com/vt/vec?src=vector&x=332&y=716&z=11&hl=en&lyrs=m@207690615&output=webgl8&other=" +
+              (count + Date.now()),
+            true
+          );
         }
         var t3 = performance.now();
         for (var n = 0; n < count; n++) {
@@ -44,7 +48,16 @@
 
         var duration = performance.now() - start;
         console.log(duration / count);
-        console.log('new', t1 - t0, 'event', t2 - t1, 'open', t3 - t2, 'send', t4 - t3);
+        console.log(
+          "new",
+          t1 - t0,
+          "event",
+          t2 - t1,
+          "open",
+          t3 - t2,
+          "send",
+          t4 - t3
+        );
       };
     </script>
   </body>

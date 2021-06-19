@@ -1,0 +1,24 @@
+{
+  "name": "kubernetes-logging",
+  "fullName": "newrelic/kubernetes-logging",
+  "slug": "newrelic-kubernetes-logging",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Kubernetes logging",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/kubernetes-logging",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/kubernetes-logging",
+  "iconUrl": null,
+  "shortDescription": "Kubernetes logging to New Relic Logs",
+  "description": "Output adapters for Kubernetes, powered by Fluent Bit, for New Relic Logs.",
+  "ossCategory": "example-code",
+  "primaryLanguage": "Smarty",
+  "projectTags": ["k8", "logging"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Kubernetes logging",
+    "url": "https://github.com/newrelic/kubernetes-logging"
+  }
+}

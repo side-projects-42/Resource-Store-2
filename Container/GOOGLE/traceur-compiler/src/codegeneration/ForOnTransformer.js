@@ -14,11 +14,11 @@
 
 import {
   FOR_ON_STATEMENT,
-  LABELLED_STATEMENT
-} from '../syntax/trees/ParseTreeType.js';
-import ImportRuntimeTrait from './ImportRuntimeTrait.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {InnerForOnTransformer} from './InnerForOnTransformer.js';
+  LABELLED_STATEMENT,
+} from "../syntax/trees/ParseTreeType.js";
+import ImportRuntimeTrait from "./ImportRuntimeTrait.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { InnerForOnTransformer } from "./InnerForOnTransformer.js";
 
 /**
  * Transforms for-on loops into calls to async functions
@@ -71,16 +71,22 @@ export class ForOnTransformer extends ImportRuntimeTrait(TempVarTransformer) {
   }
 
   transformForOnStatement_(original, labelSet) {
-    return InnerForOnTransformer.transform(this,
-        super.transformForOnStatement(original), labelSet);
+    return InnerForOnTransformer.transform(
+      this,
+      super.transformForOnStatement(original),
+      labelSet
+    );
   }
 
   // keep track of labels in the tree
   transformLabelledStatement(tree) {
     let labelSet = [tree];
     let statement;
-    for (statement = tree.statement; statement.type === LABELLED_STATEMENT;
-        statement = statement.statement) {
+    for (
+      statement = tree.statement;
+      statement.type === LABELLED_STATEMENT;
+      statement = statement.statement
+    ) {
       labelSet.push(statement);
     }
     if (statement.type !== FOR_ON_STATEMENT) {

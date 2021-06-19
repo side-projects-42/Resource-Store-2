@@ -55,8 +55,8 @@ Once loaded, the plugin, available under the global `ChartDataLabels` property, 
 ### Module
 
 ```javascript
-import Chart from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import Chart from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 ```
 
 Once imported, the plugin needs to be [registered](#registration).
@@ -76,9 +76,10 @@ var chart = new Chart(ctx, {
   plugins: [ChartDataLabels],
   options: {
     // ...
-  }
-})
+  },
+});
 ```
+
 ::: tip
 When imported via a [`<script>` tag](#html), use the global property `ChartDataLabels`.
 :::
@@ -98,7 +99,7 @@ For example:
 ```javascript
 // Change default options for ALL charts
 Chart.helpers.merge(Chart.defaults.global.plugins.datalabels, {
-  color: '#FE777B'
+  color: "#FE777B",
 });
 
 var chart = new Chart(ctx, {
@@ -106,17 +107,19 @@ var chart = new Chart(ctx, {
     plugins: {
       // Change options for ALL labels of THIS CHART
       datalabels: {
-        color: '#36A2EB'
-      }
-    }
+        color: "#36A2EB",
+      },
+    },
   },
   data: {
-    datasets: [{
-      // Change options only for labels of THIS DATASET
-      datalabels: {
-        color: '#FFCE56'
-      }
-    }]
-  }
+    datasets: [
+      {
+        // Change options only for labels of THIS DATASET
+        datalabels: {
+          color: "#FFCE56",
+        },
+      },
+    ],
+  },
 });
 ```

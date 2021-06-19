@@ -12,43 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  CONSTRUCTOR
-} from '../syntax/PredefinedName.js';
+import { CONSTRUCTOR } from "../syntax/PredefinedName.js";
 import {
   GetAccessor,
   PropertyMethodAssignment,
-  SetAccessor
-} from '../syntax/trees/ParseTrees.js';
+  SetAccessor,
+} from "../syntax/trees/ParseTrees.js";
 import {
   GET_ACCESSOR,
   PROPERTY_METHOD_ASSIGNMENT,
-  SET_ACCESSOR
-} from '../syntax/trees/ParseTreeType.js';
-import {SuperTransformer} from './SuperTransformer.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  LET,
-  VAR
-} from '../syntax/TokenType.js';
+  SET_ACCESSOR,
+} from "../syntax/trees/ParseTreeType.js";
+import { SuperTransformer } from "./SuperTransformer.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { LET, VAR } from "../syntax/TokenType.js";
 import {
   createBlock,
   createIdentifierExpression,
   createMemberExpression,
   createObjectLiteralExpression,
   createThisExpression,
-  createVariableStatement
-} from './ParseTreeFactory.js';
-import {parseOptions} from '../options.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
+import { parseOptions } from "../options.js";
 import {
   parseExpression,
-  parsePropertyDefinition
-} from './PlaceholderParser.js';
+  parsePropertyDefinition,
+} from "./PlaceholderParser.js";
 
 // This code is more or less identical to ClassDefinitionEvaluation in the ES6
 // draft.
-var CREATE_CLASS_CODE =
-    `function(object, staticObject, protoParent, superClass, hasConstructor) {
+var CREATE_CLASS_CODE = `function(object, staticObject, protoParent, superClass, hasConstructor) {
       var ctor = object.constructor;
       if (typeof superClass === 'function')
         ctor.__proto__ = superClass;
@@ -63,8 +57,7 @@ var CREATE_CLASS_CODE =
       return ctor;
     }`;
 
-var GET_PROTO_PARENT_CODE =
-    `function(superClass) {
+var GET_PROTO_PARENT_CODE = `function(superClass) {
       if (typeof superClass === 'function') {
         var prototype = superClass.prototype;
         if (Object(prototype) === prototype || prototype === null)
@@ -75,8 +68,7 @@ var GET_PROTO_PARENT_CODE =
       throw new TypeError();
     }`;
 
-var CREATE_CLASS_NO_EXTENDS_CODE =
-    `function(object, staticObject) {
+var CREATE_CLASS_NO_EXTENDS_CODE = `function(object, staticObject) {
       var ctor = object.constructor;
       Object.defineProperty(object, 'constructor', {enumerable: false});
       ctor.prototype = object;
@@ -121,7 +113,7 @@ var CREATE_CLASS_NO_EXTENDS_CODE =
  *      }
  *   });
  */
-export class ClassTransformer extends TempVarTransformer{
+export class ClassTransformer extends TempVarTransformer {
   /**
    * @param {UniqueIdentifierGenerator} identifierGenerator
    * @param {RuntimeInliner} runtimeInliner
@@ -136,14 +128,15 @@ export class ClassTransformer extends TempVarTransformer{
   transformClassShared_(tree, name) {
     var superClass = this.transformAny(tree.superClass);
     var nameIdent = createIdentifierExpression(name);
-    var protoName = createIdentifierExpression('$__proto');
+    var protoName = createIdentifierExpression("$__proto");
     var hasConstructor = false;
-    var protoElements = [], staticElements = [];
+    var protoElements = [],
+      staticElements = [];
     // For static methods the base for super calls is the RHS of the
     // extends (or Function.prototype if there is no extends clause).
-    var staticSuperRef = superClass ?
-        createIdentifierExpression('$__super') :
-        createMemberExpression('Function', 'prototype');
+    var staticSuperRef = superClass
+      ? createIdentifierExpression("$__super")
+      : createMemberExpression("Function", "prototype");
 
     tree.elements.forEach((tree) => {
       var elements, proto;
@@ -177,8 +170,9 @@ export class ClassTransformer extends TempVarTransformer{
 
     // Create constructor if it does not already exist.
     if (!hasConstructor) {
-      protoElements.unshift(this.getDefaultConstructor_(tree, superClass,
-                                                        protoName));
+      protoElements.unshift(
+        this.getDefaultConstructor_(tree, superClass, protoName)
+      );
     }
 
     var object = createObjectLiteralExpression(protoElements);
@@ -197,7 +191,7 @@ export class ClassTransformer extends TempVarTransformer{
     // The extra parentheses around createClass_ is to make the V8 heuristic
     // ignore that part in the name to use in its stack traces.
     if (superClass) {
-      return parseExpression `function($__super) {
+      return parseExpression`function($__super) {
         'use strict';
         var $__proto = ${this.getProtoParent_}($__super);
         var ${nameIdent} =
@@ -207,7 +201,7 @@ export class ClassTransformer extends TempVarTransformer{
       }(${superClass})`;
     }
 
-    return parseExpression `function() {
+    return parseExpression`function() {
       'use strict';
       var ${nameIdent} = (${this.createClassNoExtends_})(
           ${object}, ${staticObject});
@@ -216,16 +210,18 @@ export class ClassTransformer extends TempVarTransformer{
   }
 
   get createClass_() {
-    return this.runtimeInliner_.get('createClass', CREATE_CLASS_CODE);
+    return this.runtimeInliner_.get("createClass", CREATE_CLASS_CODE);
   }
 
   get getProtoParent_() {
-    return this.runtimeInliner_.get('getProtoParent', GET_PROTO_PARENT_CODE);
+    return this.runtimeInliner_.get("getProtoParent", GET_PROTO_PARENT_CODE);
   }
 
   get createClassNoExtends_() {
-    return this.runtimeInliner_.get('createClassNoExtends',
-                                    CREATE_CLASS_NO_EXTENDS_CODE);
+    return this.runtimeInliner_.get(
+      "createClassNoExtends",
+      CREATE_CLASS_NO_EXTENDS_CODE
+    );
   }
 
   /**
@@ -238,13 +234,14 @@ export class ClassTransformer extends TempVarTransformer{
     // let <className> = ...
     // The name needs to be different from the class name but similar enough
     // that we can make sense out of our stack traces.
-    var name = '$' + tree.name.identifierToken.value;
+    var name = "$" + tree.name.identifierToken.value;
     return createVariableStatement(
-        // If we allow let in the parser; use let. This let will be transformed
-        // by the block binding transformer as needed.
-        parseOptions.blockBinding ? LET : VAR,
-        tree.name,
-        this.transformClassShared_(tree, name));
+      // If we allow let in the parser; use let. This let will be transformed
+      // by the block binding transformer as needed.
+      parseOptions.blockBinding ? LET : VAR,
+      tree.name,
+      this.transformClassShared_(tree, name)
+    );
   }
 
   transformClassExpression(tree) {
@@ -254,23 +251,33 @@ export class ClassTransformer extends TempVarTransformer{
 
   transformPropertyMethodAssignment_(tree, protoName) {
     var formalParameterList = this.transformAny(tree.formalParameterList);
-    var functionBody = this.transformSuperInBlock_(tree, tree.functionBody,
-                                                   protoName);
-    if (!tree.isStatic &&
-        formalParameterList === tree.formalParameterList &&
-        functionBody === tree.functionBody) {
+    var functionBody = this.transformSuperInBlock_(
+      tree,
+      tree.functionBody,
+      protoName
+    );
+    if (
+      !tree.isStatic &&
+      formalParameterList === tree.formalParameterList &&
+      functionBody === tree.functionBody
+    ) {
       return tree;
     }
 
     var isStatic = false;
-    return new PropertyMethodAssignment(tree.location, isStatic,
-        tree.isGenerator, tree.name, formalParameterList, functionBody);
+    return new PropertyMethodAssignment(
+      tree.location,
+      isStatic,
+      tree.isGenerator,
+      tree.name,
+      formalParameterList,
+      functionBody
+    );
   }
 
   transformGetAccessor_(tree, protoName) {
     var body = this.transformSuperInBlock_(tree, tree.body, protoName);
-    if (!tree.isStatic && body === tree.body)
-      return tree;
+    if (!tree.isStatic && body === tree.body) return tree;
     // not static
     return new GetAccessor(tree.location, false, tree.name, body);
   }
@@ -278,22 +285,30 @@ export class ClassTransformer extends TempVarTransformer{
   transformSetAccessor_(tree, protoName) {
     var parameter = this.transformAny(tree.parameter);
     var body = this.transformSuperInBlock_(tree, tree.body, protoName);
-    if (!tree.isStatic && body === tree.body)
-      return tree;
-    return new SetAccessor(tree.location, false, tree.name, parameter,
-                           body);
+    if (!tree.isStatic && body === tree.body) return tree;
+    return new SetAccessor(tree.location, false, tree.name, parameter, body);
   }
 
   transformSuperInBlock_(methodTree, tree, protoName) {
     this.pushTempVarState();
     var thisName = this.getTempIdentifier();
-    var thisDecl = createVariableStatement(VAR, thisName,
-                                           createThisExpression());
-    var superTransformer = new SuperTransformer(this, this.runtimeInliner_,
-        this.reporter_, protoName, methodTree, thisName);
+    var thisDecl = createVariableStatement(
+      VAR,
+      thisName,
+      createThisExpression()
+    );
+    var superTransformer = new SuperTransformer(
+      this,
+      this.runtimeInliner_,
+      this.reporter_,
+      protoName,
+      methodTree,
+      thisName
+    );
     // ref_1: the inner transformBlock call is key to proper super nesting.
-    var transformedTree =
-        superTransformer.transformBlock(this.transformBlock(tree));
+    var transformedTree = superTransformer.transformBlock(
+      this.transformBlock(tree)
+    );
 
     this.popTempVarState();
 
@@ -304,19 +319,25 @@ export class ClassTransformer extends TempVarTransformer{
 
   getDefaultConstructor_(tree, hasSuper, protoName) {
     // constructor(...args) { super(...args); }
-    if (!hasSuper)
-      return parsePropertyDefinition `constructor: function() {}`;
+    if (!hasSuper) return parsePropertyDefinition`constructor: function() {}`;
 
-    var superTransformer = new SuperTransformer(this, this.runtimeInliner_,
-        this.reporter_, protoName, null, null);
+    var superTransformer = new SuperTransformer(
+      this,
+      this.runtimeInliner_,
+      this.reporter_,
+      protoName,
+      null,
+      null
+    );
     var superCall = superTransformer.createSuperCallExpression(
-        createThisExpression(),
-        protoName,
-        'constructor',
-        createIdentifierExpression('arguments'));
+      createThisExpression(),
+      protoName,
+      "constructor",
+      createIdentifierExpression("arguments")
+    );
 
     // Manually handle rest+spread to remove slice.
-    return parsePropertyDefinition `constructor: function() {
+    return parsePropertyDefinition`constructor: function() {
       ${superCall};
     }`;
   }
@@ -329,7 +350,8 @@ export class ClassTransformer extends TempVarTransformer{
    * @return {Program}
    */
   static transformTree(identifierGenerator, runtimeInliner, reporter, tree) {
-    return new this(identifierGenerator, runtimeInliner, reporter).
-        transformAny(tree);
+    return new this(identifierGenerator, runtimeInliner, reporter).transformAny(
+      tree
+    );
   }
 }

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var fs = require('fs');
-var path = require('path');
+var fs = require("fs");
+var path = require("path");
 
 var generateNameForUrl = traceur.generateNameForUrl;
 var ErrorReporter = traceur.util.ErrorReporter;
@@ -29,7 +29,7 @@ var Parser = traceur.syntax.Parser;
 var Program = traceur.syntax.trees.Program;
 var ProgramTransformer = traceur.codegeneration.ProgramTransformer;
 var Project = traceur.semantics.symbols.Project;
-var SourceFile = traceur.syntax.SourceFile
+var SourceFile = traceur.syntax.SourceFile;
 var SourceMapGenerator = traceur.outputgeneration.SourceMapGenerator;
 var TreeWriter = traceur.outputgeneration.TreeWriter;
 
@@ -50,9 +50,13 @@ var resolveUrl = traceur.util.resolveUrl;
  */
 function wrapProgram(tree, url, commonPath) {
   var name = generateNameForUrl(url, commonPath);
-  return new Program(null,
-      [new ModuleDefinition(null,
-          createIdentifierToken(name), tree.programElements)]);
+  return new Program(null, [
+    new ModuleDefinition(
+      null,
+      createIdentifierToken(name),
+      tree.programElements
+    ),
+  ]);
 }
 
 /**
@@ -76,16 +80,15 @@ function ModuleRequireTransformer(url, commonPath) {
 
 ModuleRequireTransformer.prototype = {
   __proto__: ParseTreeTransformer.prototype,
-  transformModuleRequire: function(tree) {
+  transformModuleRequire: function (tree) {
     var url = tree.url.processedValue;
 
     // Don't handle builtin modules.
-    if (url.charAt(0) === '@')
-      return tree;
+    if (url.charAt(0) === "@") return tree;
     url = resolveUrl(this.url, url);
 
     return createIdentifierExpression(generateNameForUrl(url, this.commonPath));
-  }
+  },
 };
 
 var startCodeUnit;
@@ -101,63 +104,67 @@ function InlineCodeLoader(reporter, project, elements, depTarget) {
   InternalLoader.call(this, reporter, project);
   this.elements = elements;
   this.dirname = project.url;
-  this.depTarget = depTarget && path.relative('.', depTarget);
+  this.depTarget = depTarget && path.relative(".", depTarget);
   this.codeUnitList = [];
 }
 
 InlineCodeLoader.prototype = {
   __proto__: InternalLoader.prototype,
 
-  evalCodeUnit: function(codeUnit) {
+  evalCodeUnit: function (codeUnit) {
     // Don't eval. Instead append the trees to the output.
     var tree = codeUnit.transformedTree;
     this.elements.push.apply(this.elements, tree.programElements);
   },
 
-  transformCodeUnit: function(codeUnit) {
+  transformCodeUnit: function (codeUnit) {
     var transformer = new ModuleRequireTransformer(codeUnit.url, this.dirname);
     var tree = transformer.transformAny(codeUnit.tree);
     if (this.depTarget)
-      console.log('%s: %s', this.depTarget,
-                  path.relative(path.join(__dirname, '../..'), codeUnit.url));
-    if (codeUnit === startCodeUnit)
-      return tree;
+      console.log(
+        "%s: %s",
+        this.depTarget,
+        path.relative(path.join(__dirname, "../.."), codeUnit.url)
+      );
+    if (codeUnit === startCodeUnit) return tree;
     return wrapProgram(tree, codeUnit.url, this.dirname);
   },
 
-  loadTextFile: function(filename, callback, errback) {
+  loadTextFile: function (filename, callback, errback) {
     var text;
-    fs.readFile(path.resolve(this.dirname, filename), 'utf8',
-        function(err, data) {
-          if (err) {
-            errback(err);
-          } else {
-            // Ignore shebang lines
-            if (/^#!/.test(data))
-              data = '//' + data;
-            text = data;
-            callback(data);
-          }
-        });
+    fs.readFile(
+      path.resolve(this.dirname, filename),
+      "utf8",
+      function (err, data) {
+        if (err) {
+          errback(err);
+        } else {
+          // Ignore shebang lines
+          if (/^#!/.test(data)) data = "//" + data;
+          text = data;
+          callback(data);
+        }
+      }
+    );
 
     return {
       get responseText() {
         return text;
       },
-      abort: function() {}
+      abort: function () {},
     };
   },
 
-  loadTextFileSync: function(url) {
-    return fs.readFileSync(url, 'utf8');
-  }
+  loadTextFileSync: function (url) {
+    return fs.readFileSync(url, "utf8");
+  },
 };
 
 function allLoaded(url, reporter, elements) {
   var project = new Project(url);
   var programTree = new Program(null, elements);
 
-  var file = new SourceFile(project.url, '/* dummy */');
+  var file = new SourceFile(project.url, "/* dummy */");
   project.addFile(file);
   project.setParseTree(file, programTree);
 
@@ -183,9 +190,8 @@ function allLoaded(url, reporter, elements) {
  * @param {Function} errback Callback used to return errors.
  */
 function inlineAndCompile(filenames, options, reporter, callback, errback) {
-
   // The caller needs to do a chdir.
-  var basePath = './';
+  var basePath = "./";
   var depTarget = options && options.depTarget;
 
   var loadCount = 0;
@@ -197,20 +203,23 @@ function inlineAndCompile(filenames, options, reporter, callback, errback) {
     var codeUnit = loader.load(filenames[loadCount]);
     startCodeUnit = codeUnit;
 
-    codeUnit.addListener(function() {
-      loadCount++;
-      if (loadCount < filenames.length) {
-        loadNext();
-      } else if (depTarget) {
-        callback(null);
-      } else {
-        var tree = allLoaded(basePath, reporter, elements);
-        callback(tree);
+    codeUnit.addListener(
+      function () {
+        loadCount++;
+        if (loadCount < filenames.length) {
+          loadNext();
+        } else if (depTarget) {
+          callback(null);
+        } else {
+          var tree = allLoaded(basePath, reporter, elements);
+          callback(tree);
+        }
+      },
+      function () {
+        console.error(codeUnit.loader.error);
+        errback(codeUnit.loader.error);
       }
-    }, function() {
-      console.error(codeUnit.loader.error);
-      errback(codeUnit.loader.error);
-    });
+    );
   }
 
   loadNext();
@@ -218,7 +227,7 @@ function inlineAndCompile(filenames, options, reporter, callback, errback) {
 
 function inlineAndCompileSync(filenames, options, reporter) {
   // The caller needs to do a chdir.
-  var basePath = './';
+  var basePath = "./";
   var depTarget = options && options.depTarget;
 
   var loadCount = 0;
@@ -226,7 +235,7 @@ function inlineAndCompileSync(filenames, options, reporter) {
   var project = new Project(basePath);
   var loader = new InlineCodeLoader(reporter, project, elements, depTarget);
 
-  filenames.forEach(function(filename) {
+  filenames.forEach(function (filename) {
     filename = resolveUrl(basePath, filename);
     startCodeUnit = loader.getCodeUnit(filename);
     loader.loadSync(filename);

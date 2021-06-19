@@ -1,0 +1,24 @@
+{
+  "name": "nri-zookeeper",
+  "fullName": "newrelic/nri-zookeeper",
+  "slug": "newrelic-nri-zookeeper",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic integration for Zookeeper",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/nri-zookeeper",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/nri-zookeeper",
+  "iconUrl": null,
+  "shortDescription": "Monitoring for Apache Zookeeper",
+  "description": "captures critical performance metrics reported by Zookeeper nodes",
+  "ossCategory": "community-project",
+  "primaryLanguage": "Go",
+  "projectTags": ["nri", "nrlabs"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic integration for Zookeeper",
+    "url": "https://github.com/newrelic/nri-zookeeper"
+  }
+}

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {VAR} from '../syntax/TokenType.js';
-import {ModuleTransformer} from './ModuleTransformer.js';
+import { VAR } from "../syntax/TokenType.js";
+import { ModuleTransformer } from "./ModuleTransformer.js";
 import {
   createBindingIdentifier,
   createEmptyStatement,
   createFunctionBody,
   createImmediatelyInvokedFunctionExpression,
-  createVariableStatement
-} from './ParseTreeFactory.js';
+  createVariableStatement,
+} from "./ParseTreeFactory.js";
 
 let anonInlineModules = 0;
 
@@ -30,9 +30,8 @@ let anonInlineModules = 0;
  * modules since the execution is eager.
  */
 export class InlineModuleTransformer extends ModuleTransformer {
-
   wrapModule(statements) {
-    let seed = this.moduleName || 'anon_' + ++anonInlineModules;
+    let seed = this.moduleName || "anon_" + ++anonInlineModules;
     let idName = this.getTempVarNameForModuleName(seed);
 
     let body = createFunctionBody(statements);

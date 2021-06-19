@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-'use strict';
+"use strict";
 
-var Module = require('module');
-var traceur = require('./traceur.js');
-var inlineAndCompileSync = require('./inline-module.js').inlineAndCompileSync;
+var Module = require("module");
+var traceur = require("./traceur.js");
+var inlineAndCompileSync = require("./inline-module.js").inlineAndCompileSync;
 
 var TreeWriter = traceur.outputgeneration.TreeWriter;
 var ErrorReporter = traceur.util.ErrorReporter;
 
-var ext = '.traceur-compiled';
+var ext = ".traceur-compiled";
 
-Module._extensions[ext] = function(module, filename) {
+Module._extensions[ext] = function (module, filename) {
   module.filename = filename.slice(0, -ext.length);
   module._compile(module.compiledCode, module.filename);
 };
@@ -46,30 +46,26 @@ function traceurRequire(filename) {
   module.compiledCode = source;
   module.load(filename + ext);
   return module.exports;
-};
+}
 
 var filters = [];
-var originalRequireJs = Module._extensions['.js'];
+var originalRequireJs = Module._extensions[".js"];
 
 function shouldCompile(filename) {
-  if (filters.length === 0)
-    return true;
+  if (filters.length === 0) return true;
   for (var i = 0; i < filters.length; i++) {
-    if (filters[i].call(null, filename))
-      return true;
+    if (filters[i].call(null, filename)) return true;
   }
   return false;
 }
 
-traceurRequire.makeDefault = function(filter) {
-  if (!filter)
-    filters = [];
-  else
-    filters.push(filter);
+traceurRequire.makeDefault = function (filter) {
+  if (!filter) filters = [];
+  else filters.push(filter);
 
-  Module._extensions['.js'] = function(module, filename) {
+  Module._extensions[".js"] = function (module, filename) {
     if (shouldCompile(filename)) {
-      var source = compile(filename)
+      var source = compile(filename);
       return module._compile(source, filename);
     }
     return originalRequireJs(module, filename);

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ComprehensionTransformer} from './ComprehensionTransformer.js';
-import {createYieldStatement} from './ParseTreeFactory.js';
+import { ComprehensionTransformer } from "./ComprehensionTransformer.js";
+import { createYieldStatement } from "./ParseTreeFactory.js";
 
 /**
  * Generator Comprehension Transformer:
@@ -40,9 +40,7 @@ import {createYieldStatement} from './ParseTreeFactory.js';
  *
  * with alpha renaming of this and arguments of course.
  */
-export class GeneratorComprehensionTransformer extends
-    ComprehensionTransformer {
-
+export class GeneratorComprehensionTransformer extends ComprehensionTransformer {
   transformGeneratorComprehension(tree) {
     var expression = this.transformAny(tree.expression);
     var statement = createYieldStatement(expression);
@@ -56,8 +54,11 @@ export class GeneratorComprehensionTransformer extends
  * @param {ParseTree} tree
  * @return {ParseTree}
  */
-GeneratorComprehensionTransformer.transformTree =
-    function(identifierGenerator, tree) {
-  return new GeneratorComprehensionTransformer(identifierGenerator).
-      transformAny(tree);
+GeneratorComprehensionTransformer.transformTree = function (
+  identifierGenerator,
+  tree
+) {
+  return new GeneratorComprehensionTransformer(
+    identifierGenerator
+  ).transformAny(tree);
 };

@@ -5,9 +5,9 @@ Error.stackTraceLimit = Infinity;
 var stackSize;
 function recordStackSize() {
   try {
-    Error.prepareStackTrace = function(error, structuredStackTrace) {
+    Error.prepareStackTrace = function (error, structuredStackTrace) {
       return structuredStackTrace.length;
-    }
+    };
     stackSize = new Error().stack;
   } finally {
     delete Error.prepareStackTrace;
@@ -34,18 +34,18 @@ var obj = {
       recordStackSize();
     }
     return n === 0 ? m : g1(n - 1, n + m);
-  }
-}
+  },
+};
 
 var g1 = obj.g1;
-var g2 = Object.getOwnPropertyDescriptor(obj, 'g2').get;
+var g2 = Object.getOwnPropertyDescriptor(obj, "g2").get;
 
 function f(n) {
   return g1(n, 0);
 }
 
 function sum(n) {
-  return n * (n + 1) / 2;
+  return (n * (n + 1)) / 2;
 }
 
 assert.equal(f(50), sum(50));

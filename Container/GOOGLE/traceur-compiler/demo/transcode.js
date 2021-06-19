@@ -1,4 +1,4 @@
- // Copyright 2013 Traceur Authors.
+// Copyright 2013 Traceur Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {BrowserTraceurLoader} from 'traceur@0.0/src/loader/TraceurLoader.js';
-import {ErrorReporter} from 'traceur@0.0/src/util/ErrorReporter.js';
+import { BrowserTraceurLoader } from "traceur@0.0/src/loader/TraceurLoader.js";
+import { ErrorReporter } from "traceur@0.0/src/util/ErrorReporter.js";
 import {
   SourceMapGenerator,
-  SourceMapConsumer
-} from 'traceur@0.0/src/outputgeneration/SourceMapIntegration.js';
-import {webLoader} from 'traceur@0.0/src/loader/webLoader.js';
+  SourceMapConsumer,
+} from "traceur@0.0/src/outputgeneration/SourceMapIntegration.js";
+import { webLoader } from "traceur@0.0/src/loader/webLoader.js";
 
 class BatchErrorReporter extends ErrorReporter {
   constructor() {
@@ -33,34 +33,43 @@ class BatchErrorReporter extends ErrorReporter {
 export function transcode(contents, options, onSuccess, onFailure) {
   var url = location.href;
   var loadOptions = {
-    address: 'traceured.js',
+    address: "traceured.js",
     metadata: {
-      traceurOptions: options
-    }
+      traceurOptions: options,
+    },
   };
 
   var loader = new BrowserTraceurLoader();
   var load = options.script ? loader.script : loader.module;
-  load.call(loader, contents, loadOptions).
-      then(() => onSuccess(loadOptions.metadata),
-          (error) => onFailure(error, loadOptions.metadata));
+  load.call(loader, contents, loadOptions).then(
+    () => onSuccess(loadOptions.metadata),
+    (error) => onFailure(error, loadOptions.metadata)
+  );
 }
 
 export function renderSourceMap(source, sourceMap) {
   var consumer = new SourceMapConsumer(sourceMap);
-  var lines = source.split('\n');
-  var lineNumberTable = lines.map(function(line, lineNo) {
+  var lines = source.split("\n");
+  var lineNumberTable = lines.map(function (line, lineNo) {
     var generatedPosition = {
       line: lineNo + 1,
-      column: 0
+      column: 0,
     };
     var positionBegin = consumer.originalPositionFor(generatedPosition);
     generatedPosition.column = (line.length || 1) - 1;
     var positionEnd = consumer.originalPositionFor(generatedPosition);
-    var lineDotColumnBegin = positionBegin.line + '.' + positionBegin.column;
-    var lineDotColumnEnd = positionEnd.line + '.' + positionEnd.column;
-    return (lineNo + 1) + ': ' + line +
-        ' // ' + lineDotColumnBegin + ' - ' + lineDotColumnEnd;
+    var lineDotColumnBegin = positionBegin.line + "." + positionBegin.column;
+    var lineDotColumnEnd = positionEnd.line + "." + positionEnd.column;
+    return (
+      lineNo +
+      1 +
+      ": " +
+      line +
+      " // " +
+      lineDotColumnBegin +
+      " - " +
+      lineDotColumnEnd
+    );
   });
-  return 'SourceMap:\n' + lineNumberTable.join('\n');
+  return "SourceMap:\n" + lineNumberTable.join("\n");
 }

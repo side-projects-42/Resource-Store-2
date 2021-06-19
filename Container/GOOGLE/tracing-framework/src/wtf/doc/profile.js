@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.doc.Profile');
+goog.provide("wtf.doc.Profile");
 
-goog.require('wtf.doc.ProfileScope');
-goog.require('wtf.events.EventEmitter');
-goog.require('wtf.events.SimpleEventfulMap');
-
-
+goog.require("wtf.doc.ProfileScope");
+goog.require("wtf.events.EventEmitter");
+goog.require("wtf.events.SimpleEventfulMap");
 
 /**
  * Settings profile.
@@ -25,7 +23,7 @@ goog.require('wtf.events.SimpleEventfulMap');
  * @constructor
  * @extends {wtf.events.EventEmitter}
  */
-wtf.doc.Profile = function(name) {
+wtf.doc.Profile = function (name) {
   goog.base(this);
 
   /**
@@ -45,22 +43,20 @@ wtf.doc.Profile = function(name) {
 };
 goog.inherits(wtf.doc.Profile, wtf.events.EventEmitter);
 
-
 /**
  * Gets the profile name.
  * @return {string} Profile name.
  */
-wtf.doc.Profile.prototype.getName = function() {
+wtf.doc.Profile.prototype.getName = function () {
   return this.name_;
 };
-
 
 /**
  * Gets the profile scope with the given name, creating it if needed.
  * @param {string} name Profile scope name.
  * @return {!wtf.doc.ProfileScope} The requested profile scope.
  */
-wtf.doc.Profile.prototype.getScope = function(name) {
+wtf.doc.Profile.prototype.getScope = function (name) {
   var value = this.scopes_.get(name);
   if (!value) {
     value = new wtf.doc.ProfileScope(name);

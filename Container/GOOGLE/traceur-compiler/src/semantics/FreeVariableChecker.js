@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ScopeChainBuilderWithReferences} from './ScopeChainBuilderWithReferences.js';
+import { ScopeChainBuilderWithReferences } from "./ScopeChainBuilderWithReferences.js";
 
 class FreeVariableChecker extends ScopeChainBuilderWithReferences {
   constructor(reporter, global) {
@@ -29,7 +29,6 @@ class FreeVariableChecker extends ScopeChainBuilderWithReferences {
       this.reporter.reportError(tree.location, `${name} is not defined`);
     }
   }
-
 }
 
 /**

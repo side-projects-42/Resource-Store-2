@@ -1,20 +1,20 @@
 // Options: --types
 
 class Typed<T> {
-  constructor(x : number) {
+  constructor(x: number) {
     this.x_ = x;
   }
 
-  addTo(y : number) : number {
+  addTo(y: number): number {
     this.x += y;
     return this.x;
   }
 
-  get x() : number {
+  get x(): number {
     return this.x_;
   }
 
-  set x(x : number) {
+  set x(x: number) {
     this.x_ = x;
   }
 }

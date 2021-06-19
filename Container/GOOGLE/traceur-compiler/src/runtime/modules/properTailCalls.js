@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {getPrivate, setPrivate, createPrivateSymbol} from '../private.js';
+import { getPrivate, setPrivate, createPrivateSymbol } from "../private.js";
 
-var $apply = Function.prototype.call.bind(Function.prototype.apply)
+var $apply = Function.prototype.call.bind(Function.prototype.apply);
 
 var CONTINUATION_TYPE = Object.create(null);
 
@@ -39,7 +39,7 @@ function $bind(operand, thisArg, args) {
 }
 
 function $construct(func, argArray) {
-  var object = new ($bind(func, null, argArray));
+  var object = new ($bind(func, null, argArray))();
   return object; // prevent tail call
 }
 
@@ -71,7 +71,7 @@ export function construct() {
   var object;
   if (isTailRecursive(this)) {
     object = $construct(this, [createContinuation(null, null, arguments)]);
-  } else  {
+  } else {
     object = $construct(this, arguments);
   }
   return object; // prevent tail call
@@ -83,27 +83,36 @@ function setupProperTailCalls() {
   // By 19.2.3.1 and 19.2.3.3, Function.prototype.call and
   // Function.prototype.apply do proper tail calls.
 
-  Function.prototype.call = initTailRecursiveFunction(
-      function call(thisArg) {
-        var result = tailCall(function (thisArg) {
-          var argArray = [];
-          for (var i = 1; i < arguments.length; ++i) {
-            argArray[i - 1] = arguments[i];
-          }
-          var continuation = createContinuation(this, thisArg, argArray);
-          return continuation; // prevent tail call
-        }, this, arguments);
-        return result; // prevent tail call
-      });
+  Function.prototype.call = initTailRecursiveFunction(function call(thisArg) {
+    var result = tailCall(
+      function (thisArg) {
+        var argArray = [];
+        for (var i = 1; i < arguments.length; ++i) {
+          argArray[i - 1] = arguments[i];
+        }
+        var continuation = createContinuation(this, thisArg, argArray);
+        return continuation; // prevent tail call
+      },
+      this,
+      arguments
+    );
+    return result; // prevent tail call
+  });
 
-  Function.prototype.apply = initTailRecursiveFunction(
-      function apply(thisArg, argArray) {
-        var result = tailCall(function (thisArg, argArray) {
-          var continuation = createContinuation(this, thisArg, argArray);
-          return continuation; // prevent tail call
-        }, this, arguments);
-        return result; // prevent tail call
-      });
+  Function.prototype.apply = initTailRecursiveFunction(function apply(
+    thisArg,
+    argArray
+  ) {
+    var result = tailCall(
+      function (thisArg, argArray) {
+        var continuation = createContinuation(this, thisArg, argArray);
+        return continuation; // prevent tail call
+      },
+      this,
+      arguments
+    );
+    return result; // prevent tail call
+  });
 }
 
 export function initTailRecursiveFunction(func) {

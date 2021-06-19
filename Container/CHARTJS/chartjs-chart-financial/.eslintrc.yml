@@ -16,8 +16,7 @@ parserOptions:
     modules: true
     experimentalObjectRestSpread: true
 
-plugins: ['html', 'es']
-
+plugins: ["html", "es"]
 
 rules:
   class-methods-use-this: "off"

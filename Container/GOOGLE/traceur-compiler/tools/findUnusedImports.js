@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CollectingErrorReporter} from '../src/util/CollectingErrorReporter.js';
-import {Compiler} from '../src/Compiler.js';
-import {ScopeChainBuilder} from '../src/semantics/ScopeChainBuilder.js';
-import {ScopeVisitor} from '../src/semantics/ScopeVisitor.js';
+import { CollectingErrorReporter } from "../src/util/CollectingErrorReporter.js";
+import { Compiler } from "../src/Compiler.js";
+import { ScopeChainBuilder } from "../src/semantics/ScopeChainBuilder.js";
+import { ScopeVisitor } from "../src/semantics/ScopeVisitor.js";
 
 /**
  * Overrides to also keep track of imported bindings.
@@ -43,7 +43,7 @@ class FilterFoundImports extends ScopeVisitor {
 
   pushScope(tree) {
     // Override to return the cached scope.
-    return this.scope = this.scopeBuilder_.getScopeForTree(tree);
+    return (this.scope = this.scopeBuilder_.getScopeForTree(tree));
   }
 
   checkTree_(tree) {
@@ -78,20 +78,20 @@ export function findUnusedImports(filename, content) {
   filter.visitAny(tree);
 
   return Object.keys(filter.imports).map((name) => {
-    return {name, location: filter.imports[name].location};
+    return { name, location: filter.imports[name].location };
   });
 }
 
 export function main(fs) {
   if (process.argv.length < 3) {
-    console.error('Usage: node find-unused-imports paths...')
+    console.error("Usage: node find-unused-imports paths...");
     return 1;
   }
 
   var code = 0;
   for (var i = 2; i < process.argv.length; i++) {
     var path = process.argv[i];
-    var content = fs.readFileSync(path, 'utf-8');
+    var content = fs.readFileSync(path, "utf-8");
 
     var unusedImports = findUnusedImports(path, content);
     if (unusedImports.length) {

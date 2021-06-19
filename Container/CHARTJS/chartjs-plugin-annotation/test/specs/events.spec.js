@@ -1,53 +1,50 @@
-describe('Event callbacks', function() {
-
-  it('should not throw any exception', function() {
+describe("Event callbacks", function () {
+  it("should not throw any exception", function () {
     function createAndUpdateChart() {
       const config = {
-        type: 'line',
+        type: "line",
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
           datasets: [
             {
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3]
-            }
-          ]
+              label: "# of Votes",
+              data: [12, 19, 3, 5, 2, 3],
+            },
+          ],
         },
         options: {
           scales: {
             y: {
-              beginAtZero: true
-            }
+              beginAtZero: true,
+            },
           },
           plugins: {
             annotation: {
-              drawTime: 'afterDatasetsDraw',
+              drawTime: "afterDatasetsDraw",
               dblClickSpeed: 350,
               annotations: {
                 my: {
                   display: true,
-                  type: 'line',
-                  scaleID: 'y',
+                  type: "line",
+                  scaleID: "y",
                   value: 10,
-                  borderColor: 'red',
+                  borderColor: "red",
                   borderWidth: 2,
-                  click() {
-                  }
+                  click() {},
                 },
                 mydisable: {
                   display: false,
-                  type: 'line',
-                  scaleID: 'y',
+                  type: "line",
+                  scaleID: "y",
                   value: 20,
-                  borderColor: 'red',
+                  borderColor: "red",
                   borderWidth: 2,
-                  click() {
-                  }
-                }
-              }
-            }
-          }
-        }
+                  click() {},
+                },
+              },
+            },
+          },
+        },
       };
 
       var chart = acquireChart(config);

@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {suite, test, assert} from '../../unit/unitTestRunner.js';
+import { suite, test, assert } from "../../unit/unitTestRunner.js";
 
-suite('tree writer', function() {
-
-  var fs = require('fs');
-  var path = require('path');
+suite("tree writer", function () {
+  var fs = require("fs");
+  var path = require("path");
 
   function parseFileAsModule(file) {
     var parser = new traceur.syntax.Parser(file);
@@ -26,15 +25,15 @@ suite('tree writer', function() {
   }
 
   function testWriteModule(resouceName) {
-    test(resouceName, function() {
+    test(resouceName, function () {
       var fileName = path.resolve(System.dirname(__moduleName), resouceName);
-      var source = fs.readFileSync(fileName, 'utf-8');
+      var source = fs.readFileSync(fileName, "utf-8");
       var file = new traceur.syntax.SourceFile(fileName, source);
       var result = parseFileAsModule(file);
       assert.equal(result, source);
     });
   }
 
-  testWriteModule('resources/export-default.js');
-  testWriteModule('resources/export-default-class.js');
+  testWriteModule("resources/export-default.js");
+  testWriteModule("resources/export-default-class.js");
 });

@@ -1,0 +1,89 @@
+{
+  "projectFullName": "newrelic/newrelic-cordova-plugin",
+  "issues": {
+    "open": 10
+  },
+  "releases": 0,
+  "latestRelease": null,
+  "commits": 68,
+  "lastSixMonthsCommitTotal": 5,
+  "contributors": 5,
+  "pullRequests": {
+    "open": 4
+  },
+  "searchCategory": "good first issue",
+  "cachedIssues": [],
+  "cachedContributors": [
+    {
+      "id": 626480,
+      "login": "jopache",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/626480?v=4",
+      "htmlUrl": "https://github.com/jopache",
+      "contributions": 1
+    },
+    {
+      "id": 4551825,
+      "login": "bryce-buchanan",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/4551825?v=4",
+      "htmlUrl": "https://github.com/bryce-buchanan",
+      "contributions": 3
+    },
+    {
+      "id": 43554419,
+      "login": "ipiranga-atq",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/43554419?v=4",
+      "htmlUrl": "https://github.com/ipiranga-atq",
+      "contributions": 1
+    },
+    {
+      "id": 7129606,
+      "login": "rennanc",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/7129606?v=4",
+      "htmlUrl": "https://github.com/rennanc",
+      "contributions": 4
+    },
+    {
+      "id": 84047247,
+      "login": "ywang-nr",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/84047247?v=4",
+      "htmlUrl": "https://github.com/ywang-nr",
+      "contributions": 2
+    }
+  ],
+  "languages": [
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDA=",
+      "name": "JavaScript",
+      "color": "#f1e05a"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNTY=",
+      "name": "Objective-C",
+      "color": "#438eff"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxMzk=",
+      "name": "Shell",
+      "color": "#89e051"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNTg=",
+      "name": "Java",
+      "color": "#b07219"
+    },
+    {
+      "id": "MDg6TGFuZ3VhZ2UxNDU=",
+      "name": "Python",
+      "color": "#3572A5"
+    }
+  ],
+  "screenshots": [],
+  "license": {
+    "id": "MDc6TGljZW5zZTA=",
+    "name": "Other",
+    "spdxId": "NOASSERTION",
+    "url": "http://choosealicense.com/licenses/other/",
+    "featured": false,
+    "key": "other"
+  }
+}

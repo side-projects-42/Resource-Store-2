@@ -1,4 +1,5 @@
 # CodeMirror
+
 [![Build Status](https://secure.travis-ci.org/marijnh/CodeMirror.png?branch=master)](http://travis-ci.org/marijnh/CodeMirror)
 [![NPM version](https://badge.fury.io/js/codemirror.png)](http://badge.fury.io/js/codemirror)
 

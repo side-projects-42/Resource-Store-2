@@ -1,25 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>CodeMirror: Search/Replace Demo</title>
-    <link rel="stylesheet" href="../lib/codemirror.css">
+    <link rel="stylesheet" href="../lib/codemirror.css" />
     <script src="../lib/codemirror.js"></script>
     <script src="../mode/xml/xml.js"></script>
     <script src="../lib/util/dialog.js"></script>
-    <link rel="stylesheet" href="../lib/util/dialog.css">
+    <link rel="stylesheet" href="../lib/util/dialog.css" />
     <script src="../lib/util/searchcursor.js"></script>
     <script src="../lib/util/search.js"></script>
-    <link rel="stylesheet" href="../doc/docs.css">
+    <link rel="stylesheet" href="../doc/docs.css" />
 
     <style type="text/css">
-      .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
-      dt {font-family: monospace; color: #666;}
+      .CodeMirror {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+      dt {
+        font-family: monospace;
+        color: #666;
+      }
     </style>
   </head>
   <body>
     <h1>CodeMirror: Search/Replace Demo</h1>
 
-    <form><textarea id="code" name="code">
+    <form>
+      <textarea id="code" name="code">
   <dt id="option_indentWithTabs"><code>indentWithTabs (boolean)</code></dt>
   <dd>Whether, when indenting, the first N*8 spaces should be
   replaced by N tabs. Default is false.</dd>
@@ -59,25 +66,39 @@
       <dt><code>"flat"</code></dt>
       <dd>Do not indent the new line.</dd>
     </dl></dd>
-</textarea></form>
+</textarea
+      >
+    </form>
 
     <script>
-var editor = CodeMirror.fromTextArea(document.getElementById("code"), {mode: "text/html", lineNumbers: true});
-</script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: "text/html",
+        lineNumbers: true,
+      });
+    </script>
 
-    <p>Demonstration of primitive search/replace functionality. The
-    keybindings (which can be overridden by custom keymaps) are:</p>
+    <p>
+      Demonstration of primitive search/replace functionality. The keybindings
+      (which can be overridden by custom keymaps) are:
+    </p>
     <dl>
-      <dt>Ctrl-F / Cmd-F</dt><dd>Start searching</dd>
-      <dt>Ctrl-G / Cmd-G</dt><dd>Find next</dd>
-      <dt>Shift-Ctrl-G / Shift-Cmd-G</dt><dd>Find previous</dd>
-      <dt>Shift-Ctrl-F / Cmd-Option-F</dt><dd>Replace</dd>
-      <dt>Shift-Ctrl-R / Shift-Cmd-Option-F</dt><dd>Replace all</dd>
+      <dt>Ctrl-F / Cmd-F</dt>
+      <dd>Start searching</dd>
+      <dt>Ctrl-G / Cmd-G</dt>
+      <dd>Find next</dd>
+      <dt>Shift-Ctrl-G / Shift-Cmd-G</dt>
+      <dd>Find previous</dd>
+      <dt>Shift-Ctrl-F / Cmd-Option-F</dt>
+      <dd>Replace</dd>
+      <dt>Shift-Ctrl-R / Shift-Cmd-Option-F</dt>
+      <dd>Replace all</dd>
     </dl>
-    <p>Searching is enabled by
-    including <a href="../lib/util/search.js">lib/util/search.js</a>.
-    For good-looking input dialogs, you also want to include
-    <a href="../lib/util/dialog.js">lib/util/dialog.js</a>
-    and <a href="../lib/util/dialog.css">lib/util/dialog.css</a>.</p>
+    <p>
+      Searching is enabled by including
+      <a href="../lib/util/search.js">lib/util/search.js</a>. For good-looking
+      input dialogs, you also want to include
+      <a href="../lib/util/dialog.js">lib/util/dialog.js</a>
+      and <a href="../lib/util/dialog.css">lib/util/dialog.css</a>.
+    </p>
   </body>
 </html>

@@ -1,6 +1,6 @@
-import TimeScale from './scale.time';
-import {_lookup} from '../helpers/helpers.collection';
-import {isNullOrUndef} from '../helpers/helpers.core';
+import TimeScale from "./scale.time";
+import { _lookup } from "../helpers/helpers.collection";
+import { isNullOrUndef } from "../helpers/helpers.core";
 
 /**
  * Linearly interpolates the given source `val` using the table. If value is out of bounds, values
@@ -28,14 +28,15 @@ function interpolate(table, val, reverse) {
   }
 
   const span = nextSource - prevSource;
-  return span ? prevTarget + (nextTarget - prevTarget) * (val - prevSource) / span : prevTarget;
+  return span
+    ? prevTarget + ((nextTarget - prevTarget) * (val - prevSource)) / span
+    : prevTarget;
 }
 
 class TimeSeriesScale extends TimeScale {
-
   /**
-	 * @param {object} props
-	 */
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
 
@@ -46,8 +47,8 @@ class TimeSeriesScale extends TimeScale {
   }
 
   /**
-	 * @protected
-	 */
+   * @protected
+   */
   initOffsets() {
     const me = this;
     const timestamps = me._getTimestampsForTable();
@@ -57,23 +58,23 @@ class TimeSeriesScale extends TimeScale {
   }
 
   /**
-	 * Returns an array of {time, pos} objects used to interpolate a specific `time` or position
-	 * (`pos`) on the scale, by searching entries before and after the requested value. `pos` is
-	 * a decimal between 0 and 1: 0 being the start of the scale (left or top) and 1 the other
-	 * extremity (left + width or top + height). Note that it would be more optimized to directly
-	 * store pre-computed pixels, but the scale dimensions are not guaranteed at the time we need
-	 * to create the lookup table. The table ALWAYS contains at least two items: min and max.
-	 * @param {number[]} timestamps
-	 * @return {object[]}
-	 * @protected
-	 */
+   * Returns an array of {time, pos} objects used to interpolate a specific `time` or position
+   * (`pos`) on the scale, by searching entries before and after the requested value. `pos` is
+   * a decimal between 0 and 1: 0 being the start of the scale (left or top) and 1 the other
+   * extremity (left + width or top + height). Note that it would be more optimized to directly
+   * store pre-computed pixels, but the scale dimensions are not guaranteed at the time we need
+   * to create the lookup table. The table ALWAYS contains at least two items: min and max.
+   * @param {number[]} timestamps
+   * @return {object[]}
+   * @protected
+   */
   buildLookupTable(timestamps) {
     const me = this;
-    const {min, max} = me;
+    const { min, max } = me;
     if (!timestamps.length) {
       return [
-        {time: min, pos: 0},
-        {time: max, pos: 1}
+        { time: min, pos: 0 },
+        { time: max, pos: 1 },
       ];
     }
 
@@ -93,10 +94,10 @@ class TimeSeriesScale extends TimeScale {
   }
 
   /**
-	 * Returns all timestamps
-	 * @return {number[]}
-	 * @private
-	 */
+   * Returns all timestamps
+   * @return {number[]}
+   * @private
+   */
   _getTimestampsForTable() {
     const me = this;
     let timestamps = me._cache.all || [];
@@ -120,30 +121,32 @@ class TimeSeriesScale extends TimeScale {
   }
 
   /**
-	 * @param {number} value - Milliseconds since epoch (1 January 1970 00:00:00 UTC)
-	 * @param {number} [index]
-	 * @return {number}
-	 */
+   * @param {number} value - Milliseconds since epoch (1 January 1970 00:00:00 UTC)
+   * @param {number} [index]
+   * @return {number}
+   */
   getPixelForValue(value, index) {
     const me = this;
     const offsets = me._offsets;
-    const pos = me._normalized && me._maxIndex > 0 && !isNullOrUndef(index)
-      ? index / me._maxIndex : me.getDecimalForValue(value);
+    const pos =
+      me._normalized && me._maxIndex > 0 && !isNullOrUndef(index)
+        ? index / me._maxIndex
+        : me.getDecimalForValue(value);
     return me.getPixelForDecimal((offsets.start + pos) * offsets.factor);
   }
 
   /**
-	 * @param {number} value - Milliseconds since epoch (1 January 1970 00:00:00 UTC)
-	 * @return {number}
-	 */
+   * @param {number} value - Milliseconds since epoch (1 January 1970 00:00:00 UTC)
+   * @return {number}
+   */
   getDecimalForValue(value) {
     return interpolate(this._table, value) / this._maxIndex;
   }
 
   /**
-	 * @param {number} pixel
-	 * @return {number}
-	 */
+   * @param {number} pixel
+   * @return {number}
+   */
   getValueForPixel(pixel) {
     const me = this;
     const offsets = me._offsets;
@@ -152,7 +155,7 @@ class TimeSeriesScale extends TimeScale {
   }
 }
 
-TimeSeriesScale.id = 'timeseries';
+TimeSeriesScale.id = "timeseries";
 
 /**
  * @type {any}

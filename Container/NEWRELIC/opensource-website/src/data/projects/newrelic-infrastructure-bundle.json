@@ -1,0 +1,27 @@
+{
+  "name": "infrastructure-bundle",
+  "fullName": "newrelic/infrastructure-bundle",
+  "slug": "newrelic-infrastructure-bundle",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic Infrastructure Bundle",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/infrastructure-bundle",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/infrastructure-bundle",
+  "iconUrl": null,
+  "shortDescription": "Install the Infra agent",
+  "description": "New Relic Infrastructure containerised agent bundle",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Shell",
+  "projectTags": [
+    "nri",
+    "tools"
+  ],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic Infrastructure Bundle",
+    "url": "https://github.com/newrelic/infrastructure-bundle"
+  }
+}

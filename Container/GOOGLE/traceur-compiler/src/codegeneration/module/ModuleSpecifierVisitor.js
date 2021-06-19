@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ParseTreeVisitor} from '../../syntax/ParseTreeVisitor.js';
-import {StringSet} from '../../util/StringSet.js';
+import { ParseTreeVisitor } from "../../syntax/ParseTreeVisitor.js";
+import { StringSet } from "../../util/StringSet.js";
 
 // TODO(arv): This is closer to the ModuleVisitor but we don't care about
 // modules.
@@ -24,7 +24,6 @@ import {StringSet} from '../../util/StringSet.js';
  *   import * as m from "url"
  */
 export class ModuleSpecifierVisitor extends ParseTreeVisitor {
-
   constructor(options) {
     super();
     this.options_ = options;

@@ -1,0 +1,23 @@
+AllCops:
+  Include:
+    - Rakefile
+    - config.ru
+  Exclude:
+    - db/**
+    - config/**
+    - script/**
+    - spec/**
+Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Style/ParallelAssignment:
+  Enabled: false
+Layout/TrailingWhitespace:
+  Enabled: false
+Layout/TrailingBlankLines:
+  Enabled: false
+Style/ClassVars:
+  Enabled: false

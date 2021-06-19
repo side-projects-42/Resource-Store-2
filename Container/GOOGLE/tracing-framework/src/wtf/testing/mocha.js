@@ -14,37 +14,36 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.testing.mocha');
-
+goog.provide("wtf.testing.mocha");
 
 /**
  * Sets up the mocha testing framework.
  * @private
  */
-wtf.testing.mocha.setup_ = function() {
+wtf.testing.mocha.setup_ = function () {
   // Setup Chai.
-  var chai = goog.global['chai'];
-  chai['Assertion']['includeStack'] = true;
-  goog.global['assert'] = chai['assert'];
+  var chai = goog.global["chai"];
+  chai["Assertion"]["includeStack"] = true;
+  goog.global["assert"] = chai["assert"];
 
   // Note: if we wanted to augment the assertion library, this would be the
   // place to do it.
   // See: http://chaijs.com/guide/helpers/
-  var assert = goog.global['assert'];
+  var assert = goog.global["assert"];
 
   /**
    * Compares two arrays, either of which may be byte arrays.
    * @param {!wtf.io.ByteArray} a First array.
    * @param {!wtf.io.ByteArray} b Second array.
    */
-  assert.arraysEqual = function(a, b) {
+  assert.arraysEqual = function (a, b) {
     if (a.length != b.length) {
-      assert.fail(a, b, 'byte arrays differ in length');
+      assert.fail(a, b, "byte arrays differ in length");
       return;
     }
     for (var n = 0; n < a.length; n++) {
       if (a[n] != b[n]) {
-        assert.fail(a, b, 'byte arrays differ');
+        assert.fail(a, b, "byte arrays differ");
         return;
       }
     }
@@ -66,9 +65,9 @@ wtf.testing.mocha.setup_ = function() {
    *     check.
    * @return {!function()} A function that must be called after the event scope.
    */
-  assert.expectEvent = function(target, eventType, opt_eventArgs) {
+  assert.expectEvent = function (target, eventType, opt_eventArgs) {
     var didFire = false;
-    var handler = function() {
+    var handler = function () {
       target.removeListener(eventType, handler);
       if (opt_eventArgs) {
         assert.deepEqual(arguments, opt_eventArgs);
@@ -76,10 +75,10 @@ wtf.testing.mocha.setup_ = function() {
       didFire = true;
     };
     target.addListener(eventType, handler);
-    return function() {
+    return function () {
       target.removeListener(eventType, handler);
       if (!didFire) {
-        assert.fail('Event ' + eventType + ' did not fire');
+        assert.fail("Event " + eventType + " did not fire");
       }
     };
   };
@@ -97,13 +96,13 @@ wtf.testing.mocha.setup_ = function() {
    * @param {string} eventType Event type name.
    * @return {!function()} A function that must be called after the event scope.
    */
-  assert.expectNoEvent = function(target, eventType) {
-    var handler = function() {
+  assert.expectNoEvent = function (target, eventType) {
+    var handler = function () {
       target.removeListener(eventType, handler);
-      assert.fail('Event ' + eventType + ' fired when it shouldn\'t have');
+      assert.fail("Event " + eventType + " fired when it shouldn't have");
     };
     target.addListener(eventType, handler);
-    return function() {
+    return function () {
       target.removeListener(eventType, handler);
     };
   };
@@ -121,7 +120,7 @@ wtf.testing.mocha.setup_ = function() {
    * @param {!wtf.events.EventEmitter} target Event emitter.
    * @param {!Array.<!Array>} sequence A list of (event name, callback) tuples.
    */
-  assert.expectEventSequence = function(target, sequence) {
+  assert.expectEventSequence = function (target, sequence) {
     // Gather events.
     var eventList = [];
     var callbackList = [];
@@ -142,18 +141,23 @@ wtf.testing.mocha.setup_ = function() {
       var index = eventsActuallyEmitted.length;
       eventsActuallyEmitted.push(eventType);
       if (eventType != eventList[index]) {
-        assert.fail('Event ' + eventType + ' called when ' +
-            eventList[index] + ' was expected');
+        assert.fail(
+          "Event " +
+            eventType +
+            " called when " +
+            eventList[index] +
+            " was expected"
+        );
         return;
       }
       if (index >= eventList.length) {
-        assert.fail('Too many events called');
+        assert.fail("Too many events called");
         return;
       }
 
       var args = Array.prototype.slice.call(arguments, 1);
       callbackList[index].apply(null, args);
-    };
+    }
   };
 };
 

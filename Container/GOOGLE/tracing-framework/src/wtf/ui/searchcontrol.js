@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.ui.SearchControl');
+goog.provide("wtf.ui.SearchControl");
 
-goog.require('goog.dom.TagName');
-goog.require('goog.dom.classes');
-goog.require('goog.events.EventType');
-goog.require('wtf.events');
-goog.require('wtf.events.EventType');
-goog.require('wtf.ui.Control');
-
-
+goog.require("goog.dom.TagName");
+goog.require("goog.dom.classes");
+goog.require("goog.events.EventType");
+goog.require("wtf.events");
+goog.require("wtf.events.EventType");
+goog.require("wtf.ui.Control");
 
 /**
  * Search textbox control.
@@ -33,7 +31,7 @@ goog.require('wtf.ui.Control');
  * @constructor
  * @extends {wtf.ui.Control}
  */
-wtf.ui.SearchControl = function(parentElement, opt_dom) {
+wtf.ui.SearchControl = function (parentElement, opt_dom) {
   goog.base(this, parentElement, opt_dom);
 
   /**
@@ -41,7 +39,7 @@ wtf.ui.SearchControl = function(parentElement, opt_dom) {
    * @type {string}
    * @private
    */
-  this.value_ = '';
+  this.value_ = "";
 
   var el = this.getRootElement();
 
@@ -51,67 +49,86 @@ wtf.ui.SearchControl = function(parentElement, opt_dom) {
   // Manage keyboard bindings.
   var keyboard = wtf.events.getWindowKeyboard(dom);
   var keyboardSuspended = false;
-  eh.listen(el, goog.events.EventType.FOCUS, function() {
-    if (keyboardSuspended) {
-      return;
-    }
-    keyboardSuspended = true;
-    keyboard.suspend();
-  }, false);
-  eh.listen(el, goog.events.EventType.BLUR, function() {
-    if (keyboardSuspended) {
-      keyboard.resume();
-      keyboardSuspended = false;
-    }
-  }, false);
+  eh.listen(
+    el,
+    goog.events.EventType.FOCUS,
+    function () {
+      if (keyboardSuspended) {
+        return;
+      }
+      keyboardSuspended = true;
+      keyboard.suspend();
+    },
+    false
+  );
+  eh.listen(
+    el,
+    goog.events.EventType.BLUR,
+    function () {
+      if (keyboardSuspended) {
+        keyboard.resume();
+        keyboardSuspended = false;
+      }
+    },
+    false
+  );
 
   // Bind input to watch for escape/etc.
   // TODO(benvanik): handle escape to clear? globally?
-  eh.listen(el, goog.events.EventType.KEYDOWN, function(e) {
-    if (e.keyCode == 27) {
-      if (el.value.length) {
-        el.value = '';
-        this.setValue('');
-      } else {
-        el.blur();
+  eh.listen(
+    el,
+    goog.events.EventType.KEYDOWN,
+    function (e) {
+      if (e.keyCode == 27) {
+        if (el.value.length) {
+          el.value = "";
+          this.setValue("");
+        } else {
+          el.blur();
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return;
       }
-      e.preventDefault();
-      e.stopPropagation();
-      return;
-    }
-  }, true);
+    },
+    true
+  );
 
   // Watch textbox changes.
-  eh.listen(el, [
-    goog.events.EventType.CHANGE,
-    goog.events.EventType.INPUT,
-    goog.events.EventType.PASTE
-  ], function() {
-    this.setValue(el.value);
-  }, false);
+  eh.listen(
+    el,
+    [
+      goog.events.EventType.CHANGE,
+      goog.events.EventType.INPUT,
+      goog.events.EventType.PASTE,
+    ],
+    function () {
+      this.setValue(el.value);
+    },
+    false
+  );
 };
 goog.inherits(wtf.ui.SearchControl, wtf.ui.Control);
-
 
 /**
  * @override
  */
-wtf.ui.SearchControl.prototype.createDom = function(dom) {
+wtf.ui.SearchControl.prototype.createDom = function (dom) {
   var el = dom.createElement(goog.dom.TagName.INPUT);
-  el['type'] = 'text';
+  el["type"] = "text";
   goog.dom.classes.add(
-      el,
-      goog.getCssName('kTextField'),
-      goog.getCssName('kSearchField'));
+    el,
+    goog.getCssName("kTextField"),
+    goog.getCssName("kSearchField")
+  );
   return el;
 };
-
 
 /**
  * Sets whether the control is enabled.
  * @param {boolean} enabled Whether this control is enabled.
  */
-wtf.ui.SearchControl.prototype.setEnabled = function(enabled) {
+wtf.ui.SearchControl.prototype.setEnabled = function (enabled) {
   var textInputElement = this.getRootElement();
   if (enabled) {
     textInputElement.disabled = false;
@@ -120,16 +137,14 @@ wtf.ui.SearchControl.prototype.setEnabled = function(enabled) {
   }
 };
 
-
 /**
  * Sets the placeholder text.
  * @param {string} value New value.
  */
-wtf.ui.SearchControl.prototype.setPlaceholderText = function(value) {
+wtf.ui.SearchControl.prototype.setPlaceholderText = function (value) {
   var el = this.getRootElement();
   el.placeholder = value;
 };
-
 
 /**
  * Toggles error mode on the control.
@@ -137,26 +152,24 @@ wtf.ui.SearchControl.prototype.setPlaceholderText = function(value) {
  * that the contents are invalid.
  * @param {boolean} value True to enable error mode.
  */
-wtf.ui.SearchControl.prototype.toggleError = function(value) {
+wtf.ui.SearchControl.prototype.toggleError = function (value) {
   var el = this.getRootElement();
-  goog.dom.classes.enable(el, goog.getCssName('kTextFieldError'), value);
+  goog.dom.classes.enable(el, goog.getCssName("kTextFieldError"), value);
 };
-
 
 /**
  * Gets the search value.
  * @return {string} Current search value, may be '' if empty.
  */
-wtf.ui.SearchControl.prototype.getValue = function() {
+wtf.ui.SearchControl.prototype.getValue = function () {
   return this.value_;
 };
-
 
 /**
  * Sets the search value.
  * @param {string} value New search value.
  */
-wtf.ui.SearchControl.prototype.setValue = function(value) {
+wtf.ui.SearchControl.prototype.setValue = function (value) {
   if (this.value_ == value) {
     return;
   }
@@ -169,19 +182,17 @@ wtf.ui.SearchControl.prototype.setValue = function(value) {
   this.emitEvent(wtf.events.EventType.INVALIDATED, value, oldValue);
 };
 
-
 /**
  * Clears the search filter.
  */
-wtf.ui.SearchControl.prototype.clear = function() {
-  this.setValue('');
+wtf.ui.SearchControl.prototype.clear = function () {
+  this.setValue("");
 };
-
 
 /**
  * Focuses the search control.
  */
-wtf.ui.SearchControl.prototype.focus = function() {
+wtf.ui.SearchControl.prototype.focus = function () {
   var el = this.getRootElement();
   el.focus();
   el.select();

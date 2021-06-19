@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-import Chart from 'chart.js';
+import Chart from "chart.js";
 
 var helpers = Chart.helpers;
-var STUB_KEY = '$chartjs_deferred';
-var MODEL_KEY = '$deferred';
+var STUB_KEY = "$chartjs_deferred";
+var MODEL_KEY = "$deferred";
 
 /**
  * Plugin based on discussion from Chart.js issue #2745.
@@ -13,7 +13,7 @@ var MODEL_KEY = '$deferred';
 Chart.defaults.global.plugins.deferred = {
   xOffset: 0,
   yOffset: 0,
-  delay: 0
+  delay: 0,
 };
 
 function defer(fn, delay) {
@@ -28,8 +28,8 @@ function computeOffset(value, base) {
   var number = parseInt(value, 10);
   if (isNaN(number)) {
     return 0;
-  } else if (typeof value === 'string' && value.indexOf('%') !== -1) {
-    return number / 100 * base;
+  } else if (typeof value === "string" && value.indexOf("%") !== -1) {
+    return (number / 100) * base;
   }
   return number;
 }
@@ -47,10 +47,12 @@ function chartInViewport(chart) {
   var dy = computeOffset(options.yOffset || 0, rect.height);
   var dx = computeOffset(options.xOffset || 0, rect.width);
 
-  return rect.right - dx >= 0
-    && rect.bottom - dy >= 0
-    && rect.left + dx <= window.innerWidth
-    && rect.top + dy <= window.innerHeight;
+  return (
+    rect.right - dx >= 0 &&
+    rect.bottom - dy >= 0 &&
+    rect.left + dx <= window.innerWidth &&
+    rect.top + dy <= window.innerHeight
+  );
 }
 
 function onScroll(event) {
@@ -61,7 +63,7 @@ function onScroll(event) {
   }
 
   stub.ticking = true;
-  defer(function() {
+  defer(function () {
     var charts = stub.charts.slice();
     var ilen = charts.length;
     var chart, i;
@@ -82,10 +84,14 @@ function onScroll(event) {
 function isScrollable(node) {
   var type = node.nodeType;
   if (type === Node.ELEMENT_NODE) {
-    var overflowX = helpers.getStyle(node, 'overflow-x');
-    var overflowY = helpers.getStyle(node, 'overflow-y');
-    return overflowX === 'auto' || overflowX === 'scroll'
-      || overflowY === 'auto' || overflowY === 'scroll';
+    var overflowX = helpers.getStyle(node, "overflow-x");
+    var overflowY = helpers.getStyle(node, "overflow-y");
+    return (
+      overflowX === "auto" ||
+      overflowX === "scroll" ||
+      overflowY === "auto" ||
+      overflowY === "scroll"
+    );
   }
 
   return node.nodeType === Node.DOCUMENT_NODE;
@@ -101,7 +107,7 @@ function watch(chart) {
       stub = parent[STUB_KEY] || (parent[STUB_KEY] = {});
       charts = stub.charts || (stub.charts = []);
       if (charts.length === 0) {
-        helpers.addEvent(parent, 'scroll', onScroll);
+        helpers.addEvent(parent, "scroll", onScroll);
       }
 
       charts.push(chart);
@@ -113,11 +119,11 @@ function watch(chart) {
 }
 
 function unwatch(chart) {
-  chart[MODEL_KEY].elements.forEach(function(element) {
+  chart[MODEL_KEY].elements.forEach(function (element) {
     var charts = element[STUB_KEY].charts;
     charts.splice(charts.indexOf(chart), 1);
     if (!charts.length) {
-      helpers.removeEvent(element, 'scroll', onScroll);
+      helpers.removeEvent(element, "scroll", onScroll);
       delete element[STUB_KEY];
     }
   });
@@ -126,21 +132,21 @@ function unwatch(chart) {
 }
 
 Chart.plugins.register({
-  id: 'deferred',
+  id: "deferred",
 
-  beforeInit: function(chart, options) {
+  beforeInit: function (chart, options) {
     chart[MODEL_KEY] = {
       options: options,
       appeared: false,
       delayed: false,
       loaded: false,
-      elements: []
+      elements: [],
     };
 
     watch(chart);
   },
 
-  beforeDatasetsUpdate: function(chart, options) {
+  beforeDatasetsUpdate: function (chart, options) {
     var model = chart[MODEL_KEY];
     if (!model.loaded) {
       if (!model.appeared && !chartInViewport(chart)) {
@@ -154,7 +160,7 @@ Chart.plugins.register({
 
       if (options.delay > 0) {
         model.delayed = true;
-        defer(function() {
+        defer(function () {
           // Ensure the chart instance is still alive. It may have been destroyed
           // during a delay and calling `chart.update()` will fail. The most common
           // reason for such scenario is user navigation.
@@ -176,7 +182,7 @@ Chart.plugins.register({
     }
   },
 
-  destroy: function(chart) {
+  destroy: function (chart) {
     unwatch(chart);
-  }
+  },
 });

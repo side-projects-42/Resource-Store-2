@@ -11,16 +11,14 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.MemoryReadTransport');
+goog.provide("wtf.io.transports.MemoryReadTransport");
 
-goog.require('goog.asserts');
-goog.require('goog.fs.FileReader');
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.DataFormat');
-goog.require('wtf.io.ReadTransport');
-goog.require('wtf.timing');
-
-
+goog.require("goog.asserts");
+goog.require("goog.fs.FileReader");
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.DataFormat");
+goog.require("wtf.io.ReadTransport");
+goog.require("wtf.timing");
 
 /**
  * Read-only memory transport base type.
@@ -29,7 +27,7 @@ goog.require('wtf.timing');
  * @constructor
  * @extends {wtf.io.ReadTransport}
  */
-wtf.io.transports.MemoryReadTransport = function() {
+wtf.io.transports.MemoryReadTransport = function () {
   goog.base(this);
 
   /**
@@ -65,7 +63,6 @@ wtf.io.transports.MemoryReadTransport = function() {
 };
 goog.inherits(wtf.io.transports.MemoryReadTransport, wtf.io.ReadTransport);
 
-
 /**
  * Pretend this is an async transport by using timed waits between all read
  * events. This slows things down a bit but makes it easier to detect code paths
@@ -76,41 +73,39 @@ goog.inherits(wtf.io.transports.MemoryReadTransport, wtf.io.ReadTransport);
  */
 wtf.io.transports.MemoryReadTransport.PRETEND_ASYNC_ = true;
 
-
 /**
  * @override
  */
-wtf.io.transports.MemoryReadTransport.prototype.resume = function() {
-  goog.base(this, 'resume');
+wtf.io.transports.MemoryReadTransport.prototype.resume = function () {
+  goog.base(this, "resume");
   this.scheduleDispatch_();
 };
 
-
 /**
  * @override
  */
-wtf.io.transports.MemoryReadTransport.prototype.end = function() {
+wtf.io.transports.MemoryReadTransport.prototype.end = function () {
   this.pendingEnd_ = true;
   this.scheduleDispatch_();
 };
-
 
 /**
  * Adds more data to the transport.
  * The event dispatch are scheduled asynchronously.
  * @param {!wtf.io.BlobData} data Blob data.
  */
-wtf.io.transports.MemoryReadTransport.prototype.addData = function(data) {
+wtf.io.transports.MemoryReadTransport.prototype.addData = function (data) {
   // If the data is in blob form we need to convert it first.
   if (wtf.io.Blob.isBlob(data)) {
-    data = /** @type {!Blob} */ (wtf.io.Blob.toNative(
-        /** @type {!wtf.io.Blob} */ (data)));
+    data = /** @type {!Blob} */ (
+      wtf.io.Blob.toNative(/** @type {!wtf.io.Blob} */ (data))
+    );
   }
-  if (goog.global['Blob'] && data instanceof Blob) {
+  if (goog.global["Blob"] && data instanceof Blob) {
     switch (this.format) {
       case wtf.io.DataFormat.STRING:
         this.pendingAdds_++;
-        goog.fs.FileReader.readAsText(data).addCallback(function(value) {
+        goog.fs.FileReader.readAsText(data).addCallback(function (value) {
           this.pendingAdds_--;
           this.pendingData_.push(value);
           this.scheduleDispatch_();
@@ -118,36 +113,40 @@ wtf.io.transports.MemoryReadTransport.prototype.addData = function(data) {
         break;
       case wtf.io.DataFormat.ARRAY_BUFFER:
         this.pendingAdds_++;
-        goog.fs.FileReader.readAsArrayBuffer(data).addCallback(function(value) {
+        goog.fs.FileReader.readAsArrayBuffer(data).addCallback(function (
+          value
+        ) {
           this.pendingAdds_--;
           this.pendingData_.push(value);
           this.scheduleDispatch_();
-        }, this);
+        },
+        this);
         break;
       case wtf.io.DataFormat.BLOB:
         this.pendingData_.push(data);
         this.scheduleDispatch_();
         break;
       default:
-        goog.asserts.fail('Unknown data format.');
+        goog.asserts.fail("Unknown data format.");
         break;
     }
   } else {
     // TODO(benvanik): other conversion modes.
     switch (this.format) {
       case wtf.io.DataFormat.STRING:
-        goog.asserts.assert(typeof data == 'string');
+        goog.asserts.assert(typeof data == "string");
         break;
       case wtf.io.DataFormat.ARRAY_BUFFER:
         goog.asserts.assert(
-            data instanceof ArrayBuffer ||
-            (data.buffer && data.buffer instanceof ArrayBuffer));
+          data instanceof ArrayBuffer ||
+            (data.buffer && data.buffer instanceof ArrayBuffer)
+        );
         break;
       case wtf.io.DataFormat.BLOB:
         goog.asserts.assert(data instanceof Blob);
         break;
       default:
-        goog.asserts.fail('Unknown data format.');
+        goog.asserts.fail("Unknown data format.");
         break;
     }
     this.pendingData_.push(data);
@@ -155,34 +154,33 @@ wtf.io.transports.MemoryReadTransport.prototype.addData = function(data) {
   }
 };
 
-
 /**
  * Schedules an async data dispatch.
  * @private
  */
-wtf.io.transports.MemoryReadTransport.prototype.scheduleDispatch_ = function() {
-  if (this.paused) {
-    return;
-  }
-  if (this.dispatchPending_) {
-    return;
-  }
-  this.dispatchPending_ = true;
+wtf.io.transports.MemoryReadTransport.prototype.scheduleDispatch_ =
+  function () {
+    if (this.paused) {
+      return;
+    }
+    if (this.dispatchPending_) {
+      return;
+    }
+    this.dispatchPending_ = true;
 
-  // Approximate async transports.
-  if (wtf.io.transports.MemoryReadTransport.PRETEND_ASYNC_) {
-    wtf.timing.setImmediate(this.dispatch_, this);
-  } else {
-    this.dispatch_();
-  }
-};
-
+    // Approximate async transports.
+    if (wtf.io.transports.MemoryReadTransport.PRETEND_ASYNC_) {
+      wtf.timing.setImmediate(this.dispatch_, this);
+    } else {
+      this.dispatch_();
+    }
+  };
 
 /**
  * Dispatches any pending data to the target.
  * @private
  */
-wtf.io.transports.MemoryReadTransport.prototype.dispatch_ = function() {
+wtf.io.transports.MemoryReadTransport.prototype.dispatch_ = function () {
   this.dispatchPending_ = false;
   if (this.paused) {
     return;
@@ -195,9 +193,7 @@ wtf.io.transports.MemoryReadTransport.prototype.dispatch_ = function() {
     this.emitReceiveData(data);
   }
 
-  if (!this.pendingAdds_ &&
-      !this.pendingData_.length &&
-      this.pendingEnd_) {
+  if (!this.pendingAdds_ && !this.pendingData_.length && this.pendingEnd_) {
     // Done!
     goog.dispose(this);
   }

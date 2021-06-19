@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {toSource} from './toSource.js';
+import { toSource } from "./toSource.js";
 
 /**
  * Create a ParseTreeWriter configured with options, apply it to tree
@@ -24,11 +24,14 @@ import {toSource} from './toSource.js';
  * @param {string} sourceRoot the sourcemap sourceroot.
  * @return source code; optional side-effect options.generatedSourceMap set
  */
-export function write(tree, options = undefined,
-		outputName = '<TreeWriter-output>', sourceRoot = undefined) {
+export function write(
+  tree,
+  options = undefined,
+  outputName = "<TreeWriter-output>",
+  sourceRoot = undefined
+) {
   let [result, sourceMap] = toSource(tree, options, outputName, sourceRoot);
-  if (sourceMap)
-    options.generatedSourceMap = sourceMap;
+  if (sourceMap) options.generatedSourceMap = sourceMap;
   return result;
 }
 

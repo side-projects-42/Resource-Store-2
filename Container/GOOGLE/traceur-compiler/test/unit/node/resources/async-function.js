@@ -1,2 +1,2 @@
 async function foo() {}
-export {foo};
+export { foo };

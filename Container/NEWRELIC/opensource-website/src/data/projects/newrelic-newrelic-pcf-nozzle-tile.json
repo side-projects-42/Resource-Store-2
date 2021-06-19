@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-pcf-nozzle-tile",
+  "fullName": "newrelic/newrelic-pcf-nozzle-tile",
+  "slug": "newrelic-newrelic-pcf-nozzle-tile",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic PCF Nozzle Tile",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-pcf-nozzle-tile",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-pcf-nozzle-tile",
+  "iconUrl": null,
+  "shortDescription": "Pivotal Cloud Foundry Tile",
+  "description": "New Relic Firehose Nozzle for Pivotal Cloud Foundry",
+  "ossCategory": "community-project",
+  "primaryLanguage": "Go",
+  "projectTags": ["pcf"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic PCF Nozzle Tile",
+    "url": "https://github.com/newrelic/newrelic-pcf-nozzle-tile"
+  }
+}

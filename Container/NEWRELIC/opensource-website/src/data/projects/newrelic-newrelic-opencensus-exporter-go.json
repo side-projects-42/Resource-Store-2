@@ -1,0 +1,24 @@
+{
+  "name": "newrelic-opencensus-exporter-go",
+  "fullName": "newrelic/newrelic-opencensus-exporter-go",
+  "slug": "newrelic-newrelic-opencensus-exporter-go",
+  "owner": {
+    "login": "newrelic",
+    "type": "Organization"
+  },
+  "title": "New Relic OpenCensus Exporter (Go)",
+  "supportUrl": null,
+  "githubUrl": "https://github.com/newrelic/newrelic-opencensus-exporter-go",
+  "permalink": "https://opensource.newrelic.com/projects/newrelic/newrelic-opencensus-exporter-go",
+  "iconUrl": null,
+  "shortDescription": "OpenCensus stats and traces to New Relic",
+  "description": "Export OpenCensus data to New Relic in Go",
+  "ossCategory": "community-plus",
+  "primaryLanguage": "Go",
+  "projectTags": ["opentelemetry", "exporter"],
+  "acceptsContributions": true,
+  "website": {
+    "title": "New Relic OpenCensus Exporter (Go)",
+    "url": "https://github.com/newrelic/newrelic-opencensus-exporter-go"
+  }
+}

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {polyfillAll} from './utils.js'
+import { polyfillAll } from "./utils.js";
 
 // The Makefile lists the polyfills to include.
 polyfillAll(Reflect.global);
 
 // Override setupGlobals so that we can add our polyfills.
 var setupGlobals = $traceurRuntime.setupGlobals;
-$traceurRuntime.setupGlobals = function(global) {
+$traceurRuntime.setupGlobals = function (global) {
   setupGlobals(global);
   polyfillAll(global);
 };

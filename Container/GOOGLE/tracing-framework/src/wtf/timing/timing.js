@@ -11,14 +11,12 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
+goog.provide("wtf.timing");
+goog.provide("wtf.timing.RunMode");
 
-goog.provide('wtf.timing');
-goog.provide('wtf.timing.RunMode');
-
-goog.require('wtf.timing.BrowserInterval');
-goog.require('wtf.timing.RenderInterval');
-goog.require('wtf.timing.RenderTimer');
-
+goog.require("wtf.timing.BrowserInterval");
+goog.require("wtf.timing.RenderInterval");
+goog.require("wtf.timing.RenderTimer");
 
 /**
  * Number of milliseconds required to maintain ~30fps.
@@ -26,13 +24,11 @@ goog.require('wtf.timing.RenderTimer');
  */
 wtf.timing.MILLISECONDS_30HZ = 33;
 
-
 /**
  * Number of milliseconds required to maintain ~60fps.
  * @const {number}
  */
 wtf.timing.MILLISECONDS_60HZ = 16;
-
 
 /**
  * Shared render timer used for the RENDER run mode.
@@ -41,7 +37,6 @@ wtf.timing.MILLISECONDS_60HZ = 16;
  * @private
  */
 wtf.timing.renderTimer_ = null;
-
 
 /**
  * Timing run modes.
@@ -56,9 +51,8 @@ wtf.timing.RunMode = {
   /**
    * Timing used for rendering - runs at exact periods and only when visible.
    */
-  RENDERING: 1
+  RENDERING: 1,
 };
-
 
 /**
  * Starts a new interval in the given run mode.
@@ -75,7 +69,7 @@ wtf.timing.RunMode = {
  * @return {!wtf.timing.Handle} New interval handle.
  * @template T
  */
-wtf.timing.setInterval = function(runMode, delay, callback, opt_scope) {
+wtf.timing.setInterval = function (runMode, delay, callback, opt_scope) {
   var func = opt_scope ? goog.bind(callback, opt_scope) : callback;
   switch (runMode) {
     default:
@@ -89,12 +83,11 @@ wtf.timing.setInterval = function(runMode, delay, callback, opt_scope) {
   }
 };
 
-
 /**
  * Clears an active interval.
  * @param {wtf.timing.Handle} handle Interval handle to clear.
  */
-wtf.timing.clearInterval = function(handle) {
+wtf.timing.clearInterval = function (handle) {
   if (!handle) {
     return;
   }
@@ -110,7 +103,6 @@ wtf.timing.clearInterval = function(handle) {
   }
 };
 
-
 /**
  * Sets a cancellable timeout.
  * @param {number} delay Delay, in ms.
@@ -118,15 +110,18 @@ wtf.timing.clearInterval = function(handle) {
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.timing.setTimeout = (function() {
-  var setTimeout = goog.global.setTimeout['raw'] || goog.global.setTimeout;
-  return function(delay, callback, opt_scope) {
-    setTimeout.call(goog.global, function() {
-      callback.call(opt_scope);
-    }, delay);
+wtf.timing.setTimeout = (function () {
+  var setTimeout = goog.global.setTimeout["raw"] || goog.global.setTimeout;
+  return function (delay, callback, opt_scope) {
+    setTimeout.call(
+      goog.global,
+      function () {
+        callback.call(opt_scope);
+      },
+      delay
+    );
   };
 })();
-
 
 // TODO(benvanik): better setImmediate implementation
 /**
@@ -135,15 +130,18 @@ wtf.timing.setTimeout = (function() {
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.timing.setImmediate = (function() {
-  var setTimeout = goog.global.setTimeout['raw'] || goog.global.setTimeout;
-  return function(callback, opt_scope) {
-    setTimeout.call(goog.global, function() {
-      callback.call(opt_scope || goog.global);
-    }, 0);
+wtf.timing.setImmediate = (function () {
+  var setTimeout = goog.global.setTimeout["raw"] || goog.global.setTimeout;
+  return function (callback, opt_scope) {
+    setTimeout.call(
+      goog.global,
+      function () {
+        callback.call(opt_scope || goog.global);
+      },
+      0
+    );
   };
 })();
-
 
 /**
  * A list of callbacks waiting for the next frame.
@@ -152,7 +150,6 @@ wtf.timing.setImmediate = (function() {
  */
 wtf.timing.waitingFrameCallbacks_ = [];
 
-
 /**
  * Defers a call until the next frame.
  * On browsers that support it this will use {@code requestAnimationFrame}.
@@ -160,7 +157,7 @@ wtf.timing.waitingFrameCallbacks_ = [];
  * @param {T=} opt_scope Callback scope.
  * @template T
  */
-wtf.timing.deferToNextFrame = function(callback, opt_scope) {
+wtf.timing.deferToNextFrame = function (callback, opt_scope) {
   if (!wtf.timing.renderTimer_) {
     wtf.timing.renderTimer_ = new wtf.timing.RenderTimer();
   }
@@ -168,22 +165,21 @@ wtf.timing.deferToNextFrame = function(callback, opt_scope) {
   var needsRequest = wtf.timing.waitingFrameCallbacks_.length == 0;
   wtf.timing.waitingFrameCallbacks_.push({
     callback: callback,
-    scope: opt_scope || null
+    scope: opt_scope || null,
   });
   if (needsRequest) {
-    var intervalId = wtf.timing.renderTimer_.setInterval(function() {
+    var intervalId = wtf.timing.renderTimer_.setInterval(function () {
       wtf.timing.renderTimer_.clearInterval(intervalId);
       wtf.timing.runDeferredCallbacks_();
     });
   }
 };
 
-
 /**
  * Runs deferred callbacks from {@see wtf.timing.deferToNextFrame}.
  * @private
  */
-wtf.timing.runDeferredCallbacks_ = function() {
+wtf.timing.runDeferredCallbacks_ = function () {
   var waiters = wtf.timing.waitingFrameCallbacks_;
   for (var n = 0; n < waiters.length; n++) {
     var waiter = waiters[n];

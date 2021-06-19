@@ -1,8 +1,7 @@
-import { Chart, Color, Point } from 'chart.js';
+import { Chart, Color, Point } from "chart.js";
 
-
-type Mode = 'x' | 'y' | 'xy';
-type Key = 'ctrl' | 'alt' | 'shift' | 'meta';
+type Mode = "x" | "y" | "xy";
+type Key = "ctrl" | "alt" | "shift" | "meta";
 
 export interface WheelOptions {
   /**
@@ -101,9 +100,9 @@ export interface ZoomOptions {
   /**
    * Function called when wheel input occurs without modifier key
    */
-  onZoomRejected?: (context: { chart: Chart, event: Event }) => void;
+  onZoomRejected?: (context: { chart: Chart; event: Event }) => void;
 
-  onZoomStart?: (context: { chart: Chart, event: Event, point: Point }) => void;
+  onZoomStart?: (context: { chart: Chart; event: Event; point: Point }) => void;
 }
 
 /**
@@ -152,14 +151,18 @@ export interface PanOptions {
    * Function called when pan fails because modifier key was not detected.
    * event is the a hammer event that failed - see https://hammerjs.github.io/api#event-object
    */
-  onPanRejected?: (context: { chart: Chart, event: Event }) => void;
+  onPanRejected?: (context: { chart: Chart; event: Event }) => void;
 
-  onPanStart?: (context: { chart: Chart, event: Event, point: Point }) => boolean | undefined;
+  onPanStart?: (context: {
+    chart: Chart;
+    event: Event;
+    point: Point;
+  }) => boolean | undefined;
 }
 
 export interface ScaleLimits {
-  min?: number | 'original';
-  max?: number | 'original';
+  min?: number | "original";
+  max?: number | "original";
   minRange?: number;
 }
 

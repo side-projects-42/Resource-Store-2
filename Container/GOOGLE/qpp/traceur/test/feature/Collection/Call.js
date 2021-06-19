@@ -1,15 +1,15 @@
 // Options: --trap-member-lookup
 
-import elementGet from '@name';
+import elementGet from "@name";
 
 {
   var getLog = [];
   var object = {};
 
-  object[elementGet] = function(index) {
+  object[elementGet] = function (index) {
     assertEquals(object, this);
     getLog.push(index);
-    return function() {
+    return function () {
       assertEquals(object, this);
       return index;
     };
@@ -17,7 +17,7 @@ import elementGet from '@name';
 
   var tmp = {};
   function f() {}
-  var re = /regexp/
+  var re = /regexp/;
 
   assertEquals(object[0](), 0);
   assertEquals(object[null](), null);

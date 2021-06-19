@@ -14,7 +14,7 @@
 
 /* @fileoverview Configure mocha for Traceur testing. */
 
-import {Mocha6} from './Mocha6.js';
+import { Mocha6 } from "./Mocha6.js";
 
 export class TraceurTestRunner extends Mocha6 {
   constructor(mochaOptions, traceurTestOptions) {
@@ -31,19 +31,16 @@ export class TraceurTestRunner extends Mocha6 {
   applyOptions(patterns) {
     // Apply the mocha options
     var testOptions = this.getOptions();
-    if (testOptions.grep)
-      this.grep(new RegExp(testOptions.grep));
-    if (testOptions.invert)
-      this.invert();
-    if (testOptions.bail)
-      this.bail();
+    if (testOptions.grep) this.grep(new RegExp(testOptions.grep));
+    if (testOptions.invert) this.invert();
+    if (testOptions.bail) this.bail();
     this.patterns_ = patterns;
   }
 
   run() {
     let numberOfFailures = 0;
     return this.expandPatterns().then(() => {
-      return super.run()
+      return super.run();
     });
   }
-};
+}

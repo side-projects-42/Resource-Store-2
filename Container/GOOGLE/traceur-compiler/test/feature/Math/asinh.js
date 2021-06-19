@@ -1,4 +1,4 @@
-import {asinh} from '../../../src/runtime/polyfills/Math.js';
+import { asinh } from "../../../src/runtime/polyfills/Math.js";
 
 function testAsinh(asinh) {
   assert.equal(0, asinh(0));

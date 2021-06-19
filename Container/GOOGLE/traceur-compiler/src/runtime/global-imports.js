@@ -16,5 +16,5 @@
  * Import all modules that build global object,	eg for Traceur self-build.
  */
 
-import './runtime-modules.js';
-import './polyfills-imports.js';
+import "./runtime-modules.js";
+import "./polyfills-imports.js";

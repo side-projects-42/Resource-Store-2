@@ -1,5 +1,12 @@
-import {isArray, isNullOrUndef} from './helpers.core';
-import {PI, TAU, HALF_PI, QUARTER_PI, TWO_THIRDS_PI, RAD_PER_DEG} from './helpers.math';
+import { isArray, isNullOrUndef } from "./helpers.core";
+import {
+  PI,
+  TAU,
+  HALF_PI,
+  QUARTER_PI,
+  TWO_THIRDS_PI,
+  RAD_PER_DEG,
+} from "./helpers.math";
 
 /**
  * @typedef { import("../core/core.controller").default } Chart
@@ -20,10 +27,13 @@ export function toFontString(font) {
     return null;
   }
 
-  return (font.style ? font.style + ' ' : '')
-		+ (font.weight ? font.weight + ' ' : '')
-		+ font.size + 'px '
-		+ font.family;
+  return (
+    (font.style ? font.style + " " : "") +
+    (font.weight ? font.weight + " " : "") +
+    font.size +
+    "px " +
+    font.family
+  );
 }
 
 /**
@@ -46,8 +56,8 @@ export function _measureText(ctx, data, gc, longest, string) {
  */
 export function _longestText(ctx, font, arrayOfThings, cache) {
   cache = cache || {};
-  let data = cache.data = cache.data || {};
-  let gc = cache.garbageCollect = cache.garbageCollect || [];
+  let data = (cache.data = cache.data || {});
+  let gc = (cache.garbageCollect = cache.garbageCollect || []);
 
   if (cache.font !== font) {
     data = cache.data = {};
@@ -73,7 +83,11 @@ export function _longestText(ctx, font, arrayOfThings, cache) {
       for (j = 0, jlen = thing.length; j < jlen; j++) {
         nestedThing = thing[j];
         // Undefined strings and arrays should not be measured
-        if (nestedThing !== undefined && nestedThing !== null && !isArray(nestedThing)) {
+        if (
+          nestedThing !== undefined &&
+          nestedThing !== null &&
+          !isArray(nestedThing)
+        ) {
           longest = _measureText(ctx, data, gc, longest, nestedThing);
         }
       }
@@ -103,7 +117,10 @@ export function _longestText(ctx, font, arrayOfThings, cache) {
 export function _alignPixel(chart, pixel, width) {
   const devicePixelRatio = chart.currentDevicePixelRatio;
   const halfWidth = width !== 0 ? Math.max(width / 2, 0.5) : 0;
-  return Math.round((pixel - halfWidth) * devicePixelRatio) / devicePixelRatio + halfWidth;
+  return (
+    Math.round((pixel - halfWidth) * devicePixelRatio) / devicePixelRatio +
+    halfWidth
+  );
 }
 
 /**
@@ -112,7 +129,7 @@ export function _alignPixel(chart, pixel, width) {
  * @param {CanvasRenderingContext2D} [ctx]
  */
 export function clearCanvas(canvas, ctx) {
-  ctx = ctx || canvas.getContext('2d');
+  ctx = ctx || canvas.getContext("2d");
 
   ctx.save();
   // canvas.width and canvas.height do not consider the canvas transform,
@@ -129,13 +146,22 @@ export function drawPoint(ctx, options, x, y) {
   const radius = options.radius;
   let rad = (rotation || 0) * RAD_PER_DEG;
 
-  if (style && typeof style === 'object') {
+  if (style && typeof style === "object") {
     type = style.toString();
-    if (type === '[object HTMLImageElement]' || type === '[object HTMLCanvasElement]') {
+    if (
+      type === "[object HTMLImageElement]" ||
+      type === "[object HTMLCanvasElement]"
+    ) {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(rad);
-      ctx.drawImage(style, -style.width / 2, -style.height / 2, style.width, style.height);
+      ctx.drawImage(
+        style,
+        -style.width / 2,
+        -style.height / 2,
+        style.width,
+        style.height
+      );
       ctx.restore();
       return;
     }
@@ -148,90 +174,90 @@ export function drawPoint(ctx, options, x, y) {
   ctx.beginPath();
 
   switch (style) {
-  // Default includes circle
-  default:
-    ctx.arc(x, y, radius, 0, TAU);
-    ctx.closePath();
-    break;
-  case 'triangle':
-    ctx.moveTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
-    rad += TWO_THIRDS_PI;
-    ctx.lineTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
-    rad += TWO_THIRDS_PI;
-    ctx.lineTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
-    ctx.closePath();
-    break;
-  case 'rectRounded':
-    // NOTE: the rounded rect implementation changed to use `arc` instead of
-    // `quadraticCurveTo` since it generates better results when rect is
-    // almost a circle. 0.516 (instead of 0.5) produces results with visually
-    // closer proportion to the previous impl and it is inscribed in the
-    // circle with `radius`. For more details, see the following PRs:
-    // https://github.com/chartjs/Chart.js/issues/5597
-    // https://github.com/chartjs/Chart.js/issues/5858
-    cornerRadius = radius * 0.516;
-    size = radius - cornerRadius;
-    xOffset = Math.cos(rad + QUARTER_PI) * size;
-    yOffset = Math.sin(rad + QUARTER_PI) * size;
-    ctx.arc(x - xOffset, y - yOffset, cornerRadius, rad - PI, rad - HALF_PI);
-    ctx.arc(x + yOffset, y - xOffset, cornerRadius, rad - HALF_PI, rad);
-    ctx.arc(x + xOffset, y + yOffset, cornerRadius, rad, rad + HALF_PI);
-    ctx.arc(x - yOffset, y + xOffset, cornerRadius, rad + HALF_PI, rad + PI);
-    ctx.closePath();
-    break;
-  case 'rect':
-    if (!rotation) {
-      size = Math.SQRT1_2 * radius;
-      ctx.rect(x - size, y - size, 2 * size, 2 * size);
+    // Default includes circle
+    default:
+      ctx.arc(x, y, radius, 0, TAU);
+      ctx.closePath();
       break;
-    }
-    rad += QUARTER_PI;
+    case "triangle":
+      ctx.moveTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
+      rad += TWO_THIRDS_PI;
+      ctx.lineTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
+      rad += TWO_THIRDS_PI;
+      ctx.lineTo(x + Math.sin(rad) * radius, y - Math.cos(rad) * radius);
+      ctx.closePath();
+      break;
+    case "rectRounded":
+      // NOTE: the rounded rect implementation changed to use `arc` instead of
+      // `quadraticCurveTo` since it generates better results when rect is
+      // almost a circle. 0.516 (instead of 0.5) produces results with visually
+      // closer proportion to the previous impl and it is inscribed in the
+      // circle with `radius`. For more details, see the following PRs:
+      // https://github.com/chartjs/Chart.js/issues/5597
+      // https://github.com/chartjs/Chart.js/issues/5858
+      cornerRadius = radius * 0.516;
+      size = radius - cornerRadius;
+      xOffset = Math.cos(rad + QUARTER_PI) * size;
+      yOffset = Math.sin(rad + QUARTER_PI) * size;
+      ctx.arc(x - xOffset, y - yOffset, cornerRadius, rad - PI, rad - HALF_PI);
+      ctx.arc(x + yOffset, y - xOffset, cornerRadius, rad - HALF_PI, rad);
+      ctx.arc(x + xOffset, y + yOffset, cornerRadius, rad, rad + HALF_PI);
+      ctx.arc(x - yOffset, y + xOffset, cornerRadius, rad + HALF_PI, rad + PI);
+      ctx.closePath();
+      break;
+    case "rect":
+      if (!rotation) {
+        size = Math.SQRT1_2 * radius;
+        ctx.rect(x - size, y - size, 2 * size, 2 * size);
+        break;
+      }
+      rad += QUARTER_PI;
     /* falls through */
-  case 'rectRot':
-    xOffset = Math.cos(rad) * radius;
-    yOffset = Math.sin(rad) * radius;
-    ctx.moveTo(x - xOffset, y - yOffset);
-    ctx.lineTo(x + yOffset, y - xOffset);
-    ctx.lineTo(x + xOffset, y + yOffset);
-    ctx.lineTo(x - yOffset, y + xOffset);
-    ctx.closePath();
-    break;
-  case 'crossRot':
-    rad += QUARTER_PI;
+    case "rectRot":
+      xOffset = Math.cos(rad) * radius;
+      yOffset = Math.sin(rad) * radius;
+      ctx.moveTo(x - xOffset, y - yOffset);
+      ctx.lineTo(x + yOffset, y - xOffset);
+      ctx.lineTo(x + xOffset, y + yOffset);
+      ctx.lineTo(x - yOffset, y + xOffset);
+      ctx.closePath();
+      break;
+    case "crossRot":
+      rad += QUARTER_PI;
     /* falls through */
-  case 'cross':
-    xOffset = Math.cos(rad) * radius;
-    yOffset = Math.sin(rad) * radius;
-    ctx.moveTo(x - xOffset, y - yOffset);
-    ctx.lineTo(x + xOffset, y + yOffset);
-    ctx.moveTo(x + yOffset, y - xOffset);
-    ctx.lineTo(x - yOffset, y + xOffset);
-    break;
-  case 'star':
-    xOffset = Math.cos(rad) * radius;
-    yOffset = Math.sin(rad) * radius;
-    ctx.moveTo(x - xOffset, y - yOffset);
-    ctx.lineTo(x + xOffset, y + yOffset);
-    ctx.moveTo(x + yOffset, y - xOffset);
-    ctx.lineTo(x - yOffset, y + xOffset);
-    rad += QUARTER_PI;
-    xOffset = Math.cos(rad) * radius;
-    yOffset = Math.sin(rad) * radius;
-    ctx.moveTo(x - xOffset, y - yOffset);
-    ctx.lineTo(x + xOffset, y + yOffset);
-    ctx.moveTo(x + yOffset, y - xOffset);
-    ctx.lineTo(x - yOffset, y + xOffset);
-    break;
-  case 'line':
-    xOffset = Math.cos(rad) * radius;
-    yOffset = Math.sin(rad) * radius;
-    ctx.moveTo(x - xOffset, y - yOffset);
-    ctx.lineTo(x + xOffset, y + yOffset);
-    break;
-  case 'dash':
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + Math.cos(rad) * radius, y + Math.sin(rad) * radius);
-    break;
+    case "cross":
+      xOffset = Math.cos(rad) * radius;
+      yOffset = Math.sin(rad) * radius;
+      ctx.moveTo(x - xOffset, y - yOffset);
+      ctx.lineTo(x + xOffset, y + yOffset);
+      ctx.moveTo(x + yOffset, y - xOffset);
+      ctx.lineTo(x - yOffset, y + xOffset);
+      break;
+    case "star":
+      xOffset = Math.cos(rad) * radius;
+      yOffset = Math.sin(rad) * radius;
+      ctx.moveTo(x - xOffset, y - yOffset);
+      ctx.lineTo(x + xOffset, y + yOffset);
+      ctx.moveTo(x + yOffset, y - xOffset);
+      ctx.lineTo(x - yOffset, y + xOffset);
+      rad += QUARTER_PI;
+      xOffset = Math.cos(rad) * radius;
+      yOffset = Math.sin(rad) * radius;
+      ctx.moveTo(x - xOffset, y - yOffset);
+      ctx.lineTo(x + xOffset, y + yOffset);
+      ctx.moveTo(x + yOffset, y - xOffset);
+      ctx.lineTo(x - yOffset, y + xOffset);
+      break;
+    case "line":
+      xOffset = Math.cos(rad) * radius;
+      yOffset = Math.sin(rad) * radius;
+      ctx.moveTo(x - xOffset, y - yOffset);
+      ctx.lineTo(x + xOffset, y + yOffset);
+      break;
+    case "dash":
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + Math.cos(rad) * radius, y + Math.sin(rad) * radius);
+      break;
   }
 
   ctx.fill();
@@ -251,8 +277,13 @@ export function drawPoint(ctx, options, x, y) {
 export function _isPointInArea(point, area, margin) {
   margin = margin || 0.5; // margin - default is to match rounded decimals
 
-  return point && point.x > area.left - margin && point.x < area.right + margin &&
-		point.y > area.top - margin && point.y < area.bottom + margin;
+  return (
+    point &&
+    point.x > area.left - margin &&
+    point.x < area.right + margin &&
+    point.y > area.top - margin &&
+    point.y < area.bottom + margin
+  );
 }
 
 export function clipArea(ctx, area) {
@@ -273,11 +304,11 @@ export function _steppedLineTo(ctx, previous, target, flip, mode) {
   if (!previous) {
     return ctx.lineTo(target.x, target.y);
   }
-  if (mode === 'middle') {
+  if (mode === "middle") {
     const midpoint = (previous.x + target.x) / 2.0;
     ctx.lineTo(midpoint, previous.y);
     ctx.lineTo(midpoint, target.y);
-  } else if (mode === 'after' !== !!flip) {
+  } else if ((mode === "after") !== !!flip) {
     ctx.lineTo(previous.x, target.y);
   } else {
     ctx.lineTo(target.x, previous.y);
@@ -298,7 +329,8 @@ export function _bezierCurveTo(ctx, previous, target, flip) {
     flip ? target.cp2x : target.cp1x,
     flip ? target.cp2y : target.cp1y,
     target.x,
-    target.y);
+    target.y
+  );
 }
 
 /**
@@ -306,7 +338,7 @@ export function _bezierCurveTo(ctx, previous, target, flip) {
  */
 export function renderText(ctx, text, x, y, font, opts = {}) {
   const lines = isArray(text) ? text : [text];
-  const stroke = opts.strokeWidth > 0 && opts.strokeColor !== '';
+  const stroke = opts.strokeWidth > 0 && opts.strokeColor !== "";
   let i, line;
 
   ctx.save();
@@ -390,28 +422,56 @@ function decorateText(ctx, x, y, line, opts) {
  * @param {*} rect Bounding rect
  */
 export function addRoundedRectPath(ctx, rect) {
-  const {x, y, w, h, radius} = rect;
+  const { x, y, w, h, radius } = rect;
 
   // top left arc
-  ctx.arc(x + radius.topLeft, y + radius.topLeft, radius.topLeft, -HALF_PI, PI, true);
+  ctx.arc(
+    x + radius.topLeft,
+    y + radius.topLeft,
+    radius.topLeft,
+    -HALF_PI,
+    PI,
+    true
+  );
 
   // line from top left to bottom left
   ctx.lineTo(x, y + h - radius.bottomLeft);
 
   // bottom left arc
-  ctx.arc(x + radius.bottomLeft, y + h - radius.bottomLeft, radius.bottomLeft, PI, HALF_PI, true);
+  ctx.arc(
+    x + radius.bottomLeft,
+    y + h - radius.bottomLeft,
+    radius.bottomLeft,
+    PI,
+    HALF_PI,
+    true
+  );
 
   // line from bottom left to bottom right
   ctx.lineTo(x + w - radius.bottomRight, y + h);
 
   // bottom right arc
-  ctx.arc(x + w - radius.bottomRight, y + h - radius.bottomRight, radius.bottomRight, HALF_PI, 0, true);
+  ctx.arc(
+    x + w - radius.bottomRight,
+    y + h - radius.bottomRight,
+    radius.bottomRight,
+    HALF_PI,
+    0,
+    true
+  );
 
   // line from bottom right to top right
   ctx.lineTo(x + w, y + radius.topRight);
 
   // top right arc
-  ctx.arc(x + w - radius.topRight, y + radius.topRight, radius.topRight, 0, -HALF_PI, true);
+  ctx.arc(
+    x + w - radius.topRight,
+    y + radius.topRight,
+    radius.topRight,
+    0,
+    -HALF_PI,
+    true
+  );
 
   // line from top right to top left
   ctx.lineTo(x + radius.topLeft, y);

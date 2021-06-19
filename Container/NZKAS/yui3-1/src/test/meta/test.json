@@ -1,0 +1,11 @@
+{
+    "test": {
+        "requires": [
+            "event-simulate",
+            "event-custom",
+            "substitute",
+            "json-stringify"
+        ], 
+        "skinnable": true
+    }
+}

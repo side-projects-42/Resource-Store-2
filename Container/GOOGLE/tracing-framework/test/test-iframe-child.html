@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Cool App iframe</title>
@@ -8,10 +8,10 @@
       I'm an iframe!
       <a id="someLink" href="">Click!</a>
       <script>
-        var remoteScript = document.createElement('script');
-        remoteScript.src = 'test-scripts-remote.js';
-        remoteScript.onload = function() {
-          console.log('remote script loaded!');
+        var remoteScript = document.createElement("script");
+        remoteScript.src = "test-scripts-remote.js";
+        remoteScript.onload = function () {
+          console.log("remote script loaded!");
         };
         document.body.appendChild(remoteScript);
       </script>

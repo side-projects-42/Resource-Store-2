@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.io.transports.BlobReadTransport');
+goog.provide("wtf.io.transports.BlobReadTransport");
 
-goog.require('wtf.io.Blob');
-goog.require('wtf.io.DataFormat');
-goog.require('wtf.io.ReadTransport');
-
-
+goog.require("wtf.io.Blob");
+goog.require("wtf.io.DataFormat");
+goog.require("wtf.io.ReadTransport");
 
 /**
  * Read-only blob transport type.
@@ -26,7 +24,7 @@ goog.require('wtf.io.ReadTransport');
  * @constructor
  * @extends {wtf.io.ReadTransport}
  */
-wtf.io.transports.BlobReadTransport = function(blob) {
+wtf.io.transports.BlobReadTransport = function (blob) {
   goog.base(this);
 
   /**
@@ -52,12 +50,12 @@ wtf.io.transports.BlobReadTransport = function(blob) {
 
   var self = this;
   var reader = this.reader_;
-  reader.onprogress = function(e) {
+  reader.onprogress = function (e) {
     if (e.lengthComputable) {
       self.emitProgressEvent(e.loaded, e.total);
     }
   };
-  reader.onloadend = function(e) {
+  reader.onloadend = function (e) {
     self.emitProgressEvent(e.loaded, e.loaded);
     if (reader.result) {
       // Succeeded.
@@ -65,20 +63,20 @@ wtf.io.transports.BlobReadTransport = function(blob) {
     } else {
       // Failed.
       self.emitErrorEvent(
-          /** @type {Error} */ (reader['error']) ||
-          new Error('Unknown blob read error'));
+        /** @type {Error} */ (reader["error"]) ||
+          new Error("Unknown blob read error")
+      );
     }
     self.end();
   };
 };
 goog.inherits(wtf.io.transports.BlobReadTransport, wtf.io.ReadTransport);
 
-
 /**
  * @override
  */
-wtf.io.transports.BlobReadTransport.prototype.resume = function() {
-  goog.base(this, 'resume');
+wtf.io.transports.BlobReadTransport.prototype.resume = function () {
+  goog.base(this, "resume");
 
   if (!this.hasStartedRead_) {
     this.hasStartedRead_ = true;

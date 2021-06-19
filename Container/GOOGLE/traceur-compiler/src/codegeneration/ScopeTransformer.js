@@ -12,26 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  ARGUMENTS,
-  THIS
-} from '../syntax/PredefinedName.js';
-import {FindInFunctionScope} from './FindInFunctionScope.js';
-import {ParseTreeTransformer} from './ParseTreeTransformer.js';
+import { ARGUMENTS, THIS } from "../syntax/PredefinedName.js";
+import { FindInFunctionScope } from "./FindInFunctionScope.js";
+import { ParseTreeTransformer } from "./ParseTreeTransformer.js";
 import {
   FunctionDeclaration,
   FunctionExpression,
   GetAccessor,
   Method,
   SetAccessor,
-} from '../syntax/trees/ParseTrees.js';
-import {StringSet} from '../util/StringSet.js';
-import {VARIABLE_DECLARATION_LIST} from '../syntax/trees/ParseTreeType.js'
-import {VAR} from '../syntax/TokenType.js'
+} from "../syntax/trees/ParseTrees.js";
+import { StringSet } from "../util/StringSet.js";
+import { VARIABLE_DECLARATION_LIST } from "../syntax/trees/ParseTreeType.js";
+import { VAR } from "../syntax/TokenType.js";
 import {
   variablesInBlock,
-  variablesInFunction
-} from '../semantics/VariableBinder.js';
+  variablesInFunction,
+} from "../semantics/VariableBinder.js";
 
 class FindNames extends FindInFunctionScope {
   constructor(names) {
@@ -51,8 +48,11 @@ class FindNames extends FindInFunctionScope {
  */
 function getLexicalBindingNames(tree) {
   let names = new StringSet();
-  if (tree !== null && tree.type === VARIABLE_DECLARATION_LIST &&
-      tree.declarationType !== VAR) {
+  if (
+    tree !== null &&
+    tree.type === VARIABLE_DECLARATION_LIST &&
+    tree.declarationType !== VAR
+  ) {
     let visitor = new FindNames(names);
     for (let i = 0; i < tree.declarations.length; i++) {
       visitor.visitAny(tree.declarations[i].lvalue);
@@ -102,8 +102,10 @@ export class ScopeTransformer extends ParseTreeTransformer {
    * @return {ParseTree}
    */
   transformForStatement(tree) {
-    return this.sameTreeIfNameInLoopInitializer_(tree) ||
-        super.transformForStatement(tree);
+    return (
+      this.sameTreeIfNameInLoopInitializer_(tree) ||
+      super.transformForStatement(tree)
+    );
   }
 
   /**
@@ -111,8 +113,10 @@ export class ScopeTransformer extends ParseTreeTransformer {
    * @return {ParseTree}
    */
   transformForInStatement(tree) {
-    return this.sameTreeIfNameInLoopInitializer_(tree) ||
-        super.transformForInStatement(tree);
+    return (
+      this.sameTreeIfNameInLoopInitializer_(tree) ||
+      super.transformForInStatement(tree)
+    );
   }
 
   /**
@@ -120,8 +124,10 @@ export class ScopeTransformer extends ParseTreeTransformer {
    * @return {ParseTree}
    */
   transformForOfStatement(tree) {
-    return this.sameTreeIfNameInLoopInitializer_(tree) ||
-        super.transformForOfStatement(tree);
+    return (
+      this.sameTreeIfNameInLoopInitializer_(tree) ||
+      super.transformForOfStatement(tree)
+    );
   }
 
   /**
@@ -129,13 +135,14 @@ export class ScopeTransformer extends ParseTreeTransformer {
    * @return {ParseTree}
    */
   transformForOnStatement(tree) {
-    return this.sameTreeIfNameInLoopInitializer_(tree) ||
-        super.transformForOnStatement(tree);
+    return (
+      this.sameTreeIfNameInLoopInitializer_(tree) ||
+      super.transformForOnStatement(tree)
+    );
   }
 
   transformThisExpression(tree) {
-    if (this.varName_ !== THIS)
-      return tree;
+    if (this.varName_ !== THIS) return tree;
     return super.transformThisExpression(tree);
   }
 
@@ -143,7 +150,7 @@ export class ScopeTransformer extends ParseTreeTransformer {
     if (this.getDoNotRecurse(tree)) return tree;
     return {
       parameterList: this.transformAny(tree.parameterList),
-      body: this.transformAny(tree.body)
+      body: this.transformAny(tree.body),
     };
   }
 
@@ -155,16 +162,26 @@ export class ScopeTransformer extends ParseTreeTransformer {
     let name = this.transformAny(tree.name);
     let typeAnnotation = this.transformAny(tree.typeAnnotation);
     let annotations = this.transformList(tree.annotations);
-    let {parameterList, body} = this.transformParameterListAndBody_(tree);
-    if (name === tree.name && parameterList === tree.parameterList &&
-        typeAnnotation === tree.typeAnnotation &&
-        annotations === tree.annotations && body === tree.body) {
+    let { parameterList, body } = this.transformParameterListAndBody_(tree);
+    if (
+      name === tree.name &&
+      parameterList === tree.parameterList &&
+      typeAnnotation === tree.typeAnnotation &&
+      annotations === tree.annotations &&
+      body === tree.body
+    ) {
       return tree;
     }
 
-    return new FunctionDeclaration(tree.location, name, tree.functionKind,
-                                   parameterList, typeAnnotation, annotations,
-                                   body);
+    return new FunctionDeclaration(
+      tree.location,
+      name,
+      tree.functionKind,
+      parameterList,
+      typeAnnotation,
+      annotations,
+      body
+    );
   }
 
   /**
@@ -175,16 +192,26 @@ export class ScopeTransformer extends ParseTreeTransformer {
     let name = this.transformAny(tree.name);
     let typeAnnotation = this.transformAny(tree.typeAnnotation);
     let annotations = this.transformList(tree.annotations);
-    let {parameterList, body} = this.transformParameterListAndBody_(tree);
-    if (name === tree.name && parameterList === tree.parameterList &&
-        typeAnnotation === tree.typeAnnotation &&
-        annotations === tree.annotations && body === tree.body) {
+    let { parameterList, body } = this.transformParameterListAndBody_(tree);
+    if (
+      name === tree.name &&
+      parameterList === tree.parameterList &&
+      typeAnnotation === tree.typeAnnotation &&
+      annotations === tree.annotations &&
+      body === tree.body
+    ) {
       return tree;
     }
 
-    return new FunctionExpression(tree.location, name, tree.functionKind,
-                                  parameterList, typeAnnotation, annotations,
-                                  body);
+    return new FunctionExpression(
+      tree.location,
+      name,
+      tree.functionKind,
+      parameterList,
+      typeAnnotation,
+      annotations,
+      body
+    );
   }
 
   /**
@@ -195,16 +222,27 @@ export class ScopeTransformer extends ParseTreeTransformer {
     let name = this.transformAny(tree.name);
     let typeAnnotation = this.transformAny(tree.typeAnnotation);
     let annotations = this.transformList(tree.annotations);
-    let {parameterList, body} = this.transformParameterListAndBody_(tree);
-    if (name === tree.name && typeAnnotation === tree.typeAnnotation &&
-        annotations === tree.annotations &&
-        parameterList === tree.parameterList && body === tree.body) {
+    let { parameterList, body } = this.transformParameterListAndBody_(tree);
+    if (
+      name === tree.name &&
+      typeAnnotation === tree.typeAnnotation &&
+      annotations === tree.annotations &&
+      parameterList === tree.parameterList &&
+      body === tree.body
+    ) {
       return tree;
     }
-    return new Method(tree.location, tree.isStatic,
-                                        tree.functionKind, name,
-                                        parameterList, typeAnnotation,
-                                        annotations, body, tree.debugName);
+    return new Method(
+      tree.location,
+      tree.isStatic,
+      tree.functionKind,
+      name,
+      parameterList,
+      typeAnnotation,
+      annotations,
+      body,
+      tree.debugName
+    );
   }
 
   /**
@@ -215,14 +253,25 @@ export class ScopeTransformer extends ParseTreeTransformer {
     let name = this.transformAny(tree.name);
     let typeAnnotation = this.transformAny(tree.typeAnnotation);
     let annotations = this.transformList(tree.annotations);
-    let body = this.getDoNotRecurse(tree) ? tree.body :
-        this.transformAny(tree.body);
-    if (name === tree.name && typeAnnotation === tree.typeAnnotation &&
-        annotations === tree.annotations && body === tree.body) {
+    let body = this.getDoNotRecurse(tree)
+      ? tree.body
+      : this.transformAny(tree.body);
+    if (
+      name === tree.name &&
+      typeAnnotation === tree.typeAnnotation &&
+      annotations === tree.annotations &&
+      body === tree.body
+    ) {
       return tree;
     }
-    return new GetAccessor(tree.location, tree.isStatic, name, typeAnnotation,
-                           annotations, body);
+    return new GetAccessor(
+      tree.location,
+      tree.isStatic,
+      name,
+      typeAnnotation,
+      annotations,
+      body
+    );
   }
 
   /**
@@ -232,13 +281,23 @@ export class ScopeTransformer extends ParseTreeTransformer {
   transformSetAccessor(tree) {
     let name = this.transformAny(tree.name);
     let annotations = this.transformList(tree.annotations);
-    let {parameterList, body} = this.transformParameterListAndBody_(tree);
-    if (name === tree.name && annotations === tree.annotations &&
-        parameterList === tree.parameterList && body === tree.body) {
+    let { parameterList, body } = this.transformParameterListAndBody_(tree);
+    if (
+      name === tree.name &&
+      annotations === tree.annotations &&
+      parameterList === tree.parameterList &&
+      body === tree.body
+    ) {
       return tree;
     }
-    return new SetAccessor(tree.location, tree.isStatic, name, parameterList,
-                           annotations, body);
+    return new SetAccessor(
+      tree.location,
+      tree.isStatic,
+      name,
+      parameterList,
+      annotations,
+      body
+    );
   }
 
   // Do not recurse into functions if:
@@ -246,9 +305,11 @@ export class ScopeTransformer extends ParseTreeTransformer {
   //  - 'this' is implicitly bound in function bodies
   //  - this.varName_ is rebound in the new nested scope
   getDoNotRecurse(tree) {
-    return this.varName_ === ARGUMENTS ||
-        this.varName_ === THIS ||
-        variablesInFunction(tree).has(this.varName_);
+    return (
+      this.varName_ === ARGUMENTS ||
+      this.varName_ === THIS ||
+      variablesInFunction(tree).has(this.varName_)
+    );
   }
 
   /**
@@ -256,8 +317,10 @@ export class ScopeTransformer extends ParseTreeTransformer {
    * @return {ParseTree}
    */
   transformCatch(tree) {
-    if (!tree.binding.isPattern() &&
-        this.varName_ === tree.binding.identifierToken.value) {
+    if (
+      !tree.binding.isPattern() &&
+      this.varName_ === tree.binding.identifierToken.value
+    ) {
       // this.varName_ is rebound in the catch block, so don't recurse
       return tree;
     }

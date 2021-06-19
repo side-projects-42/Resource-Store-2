@@ -1,15 +1,19 @@
-var log = '';
+var log = "";
 
 class Base {
-  p() { log += '[Base]'; }
+  p() {
+    log += "[Base]";
+  }
 }
 
 class OtherBase {
-  p() { log += '[OtherBase]'; }
+  p() {
+    log += "[OtherBase]";
+  }
 }
 class Derived extends Base {
   p() {
-    log += '[Derived]';
+    log += "[Derived]";
     super.p();
     Derived.prototype.__proto__ = OtherBase.prototype;
     super.p();
@@ -17,4 +21,4 @@ class Derived extends Base {
 }
 
 new Derived().p();
-assert.equal(log, '[Derived][Base][OtherBase]');
+assert.equal(log, "[Derived][Base][OtherBase]");

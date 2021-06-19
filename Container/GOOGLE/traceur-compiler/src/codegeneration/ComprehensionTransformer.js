@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import alphaRenameThisAndArguments from './alphaRenameThisAndArguments.js';
-import {FunctionExpression} from '../syntax/trees/ParseTrees.js';
-import {TempVarTransformer} from './TempVarTransformer.js';
-import {
-  LET,
-  STAR,
-  VAR
-} from '../syntax/TokenType.js';
+import alphaRenameThisAndArguments from "./alphaRenameThisAndArguments.js";
+import { FunctionExpression } from "../syntax/trees/ParseTrees.js";
+import { TempVarTransformer } from "./TempVarTransformer.js";
+import { LET, STAR, VAR } from "../syntax/TokenType.js";
 import {
   COMPREHENSION_FOR,
-  COMPREHENSION_IF
-} from '../syntax/trees/ParseTreeType.js';
-import {Token} from '../syntax/Token.js';
+  COMPREHENSION_IF,
+} from "../syntax/trees/ParseTreeType.js";
+import { Token } from "../syntax/Token.js";
 import {
   createCallExpression,
   createEmptyParameterList,
@@ -32,8 +28,8 @@ import {
   createFunctionBody,
   createIfStatement,
   createParenExpression,
-  createVariableDeclarationList
-} from './ParseTreeFactory.js';
+  createVariableDeclarationList,
+} from "./ParseTreeFactory.js";
 
 /**
  * Base class for GeneratorComprehensionTransformer and
@@ -53,9 +49,13 @@ export class ComprehensionTransformer extends TempVarTransformer {
    * @param {ParseTree=} suffix
    * @return {ParseTree}
    */
-  transformComprehension(tree, statement, isGenerator,
-      prefix = undefined, suffix = undefined) {
-
+  transformComprehension(
+    tree,
+    statement,
+    isGenerator,
+    prefix = undefined,
+    suffix = undefined
+  ) {
     // This should really be a let but we don't support let in generators.
     // https://code.google.com/p/traceur-compiler/issues/detail?id=6
     let bindingKind = isGenerator || !this.options.blockBinding ? VAR : LET;
@@ -73,27 +73,35 @@ export class ComprehensionTransformer extends TempVarTransformer {
         case COMPREHENSION_FOR: {
           let left = this.transformAny(item.left);
           let iterator = this.transformAny(item.iterator);
-          let initializer = createVariableDeclarationList(bindingKind,
-                                                          left, null);
+          let initializer = createVariableDeclarationList(
+            bindingKind,
+            left,
+            null
+          );
           statement = createForOfStatement(initializer, iterator, statement);
           break;
         }
         default:
-          throw new Error('Unreachable.');
+          throw new Error("Unreachable.");
       }
     }
 
     statement = alphaRenameThisAndArguments(this, statement);
 
     statements.push(statement);
-    if (suffix)
-      statements.push(suffix);
+    if (suffix) statements.push(suffix);
 
     let functionKind = isGenerator ? new Token(STAR, null) : null;
 
-    let func = new FunctionExpression(null, null, functionKind,
-                                      createEmptyParameterList(), null, [],
-                                      createFunctionBody(statements));
+    let func = new FunctionExpression(
+      null,
+      null,
+      functionKind,
+      createEmptyParameterList(),
+      null,
+      [],
+      createFunctionBody(statements)
+    );
 
     return createParenExpression(createCallExpression(func));
   }

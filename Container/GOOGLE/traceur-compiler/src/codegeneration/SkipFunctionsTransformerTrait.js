@@ -19,7 +19,7 @@ import {
   GetAccessor,
   Method,
   SetAccessor,
-} from '../syntax/trees/ParseTrees.js';
+} from "../syntax/trees/ParseTrees.js";
 
 export default function SkipFunctionsTransformerTrait(ParseTreeTransformer) {
   return class SkipFunctionsTransformer extends ParseTreeTransformer {
@@ -28,10 +28,15 @@ export default function SkipFunctionsTransformerTrait(ParseTreeTransformer) {
       if (annotations === tree.annotations) {
         return tree;
       }
-      return new FunctionDeclaration(tree.location, tree.name,
-                                     tree.functionKind, tree.parameterList,
-                                     tree.typeAnnotation, annotations,
-                                     tree.body);
+      return new FunctionDeclaration(
+        tree.location,
+        tree.name,
+        tree.functionKind,
+        tree.parameterList,
+        tree.typeAnnotation,
+        annotations,
+        tree.body
+      );
     }
 
     transformFunctionExpression(tree) {
@@ -39,10 +44,15 @@ export default function SkipFunctionsTransformerTrait(ParseTreeTransformer) {
       if (annotations === tree.annotations) {
         return tree;
       }
-      return new FunctionDeclaration(tree.location, tree.name,
-                                     tree.functionKind, tree.parameterList,
-                                     tree.typeAnnotation, annotations,
-                                     tree.body);
+      return new FunctionDeclaration(
+        tree.location,
+        tree.name,
+        tree.functionKind,
+        tree.parameterList,
+        tree.typeAnnotation,
+        annotations,
+        tree.body
+      );
     }
 
     transformSetAccessor(tree) {
@@ -51,8 +61,14 @@ export default function SkipFunctionsTransformerTrait(ParseTreeTransformer) {
       if (name === tree.name && annotations === tree.annotations) {
         return tree;
       }
-      return new SetAccessor(tree.location, tree.isStatic, name,
-                             tree.parameterList, annotations, tree.body);
+      return new SetAccessor(
+        tree.location,
+        tree.isStatic,
+        name,
+        tree.parameterList,
+        annotations,
+        tree.body
+      );
     }
 
     transformGetAccessor(tree) {
@@ -61,8 +77,13 @@ export default function SkipFunctionsTransformerTrait(ParseTreeTransformer) {
       if (name === tree.name && annotations === tree.annotations) {
         return tree;
       }
-      return new GetAccessor(tree.location, tree.isStatic, name, annotations,
-                             tree.body);
+      return new GetAccessor(
+        tree.location,
+        tree.isStatic,
+        name,
+        annotations,
+        tree.body
+      );
     }
 
     transformMethod(tree) {
@@ -71,11 +92,17 @@ export default function SkipFunctionsTransformerTrait(ParseTreeTransformer) {
       if (name === tree.name && annotations === tree.annotations) {
         return tree;
       }
-      return new Method(tree.location, tree.isStatic,
-                                          tree.functionKind, name,
-                                          tree.parameterList,
-                                          tree.typeAnnotation, annotations,
-                                          tree.body, tree.debugName);
+      return new Method(
+        tree.location,
+        tree.isStatic,
+        tree.functionKind,
+        name,
+        tree.parameterList,
+        tree.typeAnnotation,
+        annotations,
+        tree.body,
+        tree.debugName
+      );
     }
 
     transformArrowFunction(tree) {

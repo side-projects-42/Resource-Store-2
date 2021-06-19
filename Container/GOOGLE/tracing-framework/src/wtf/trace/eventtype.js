@@ -11,13 +11,11 @@
  * @author benvanik@google.com (Ben Vanik)
  */
 
-goog.provide('wtf.trace.EventType');
+goog.provide("wtf.trace.EventType");
 
-goog.require('goog.asserts');
-goog.require('goog.object');
-goog.require('goog.reflect');
-
-
+goog.require("goog.asserts");
+goog.require("goog.object");
+goog.require("goog.reflect");
 
 /**
  * Event type definition.
@@ -32,7 +30,7 @@ goog.require('goog.reflect');
  *     with the event.
  * @constructor
  */
-wtf.trace.EventType = function(name, eventClass, flags, opt_args) {
+wtf.trace.EventType = function (name, eventClass, flags, opt_args) {
   /**
    * A machine-friendly name used to uniquely identify the event. It should be a
    * valid JavaScript literal (no spaces/etc).
@@ -83,15 +81,13 @@ wtf.trace.EventType = function(name, eventClass, flags, opt_args) {
   this.count = 0;
 };
 
-
 /**
  * Maximum event wire ID value.
  * @const
  * @type {number}
  * @private
  */
-wtf.trace.EventType.MAX_EVENT_WIRE_ID_ = 0xFFFF;
-
+wtf.trace.EventType.MAX_EVENT_WIRE_ID_ = 0xffff;
 
 /**
  * Next ID to assign to events.
@@ -101,21 +97,19 @@ wtf.trace.EventType.MAX_EVENT_WIRE_ID_ = 0xFFFF;
  */
 wtf.trace.EventType.nextEventWireId_ = 1;
 
-
 /**
  * Gets a pretty-formatted name for the event.
  * @return {string} Pretty-formatted name.
  */
-wtf.trace.EventType.prototype.toString = function() {
+wtf.trace.EventType.prototype.toString = function () {
   return this.name;
 };
-
 
 /**
  * Gets a serialized signature string for the arguments, if any.
  * @return {?string} Signature string (like 'uint8 foo, uint16 bar').
  */
-wtf.trace.EventType.prototype.getArgString = function() {
+wtf.trace.EventType.prototype.getArgString = function () {
   if (!this.args.length) {
     return null;
   }
@@ -123,21 +117,19 @@ wtf.trace.EventType.prototype.getArgString = function() {
   var parts = [];
   for (var n = 0; n < this.args.length; n++) {
     var arg = this.args[n];
-    parts.push(arg.typeName + ' ' + arg.name);
+    parts.push(arg.typeName + " " + arg.name);
   }
-  return parts.join(', ');
+  return parts.join(", ");
 };
-
 
 /**
  * Generates event append code bound to the given session.
  * @param {!wtf.trace.EventTypeBuilder} builder Event type builder.
  * @param {!wtf.trace.EventSessionContextType} context Event session context.
  */
-wtf.trace.EventType.prototype.generateCode = function(builder, context) {
+wtf.trace.EventType.prototype.generateCode = function (builder, context) {
   this.append = builder.generate(context, this);
 };
-
 
 /**
  * Gets an object mapping buffer member names to compiled names.
@@ -148,12 +140,12 @@ wtf.trace.EventType.prototype.generateCode = function(builder, context) {
  * </code>
  * @return {!Object.<string>} Map from usable literals to compiled names.
  */
-wtf.trace.EventType.getNameMap = function() {
+wtf.trace.EventType.getNameMap = function () {
   var reflectedNames = goog.reflect.object(wtf.trace.EventType, {
-    count: 0
+    count: 0,
   });
   reflectedNames = goog.object.transpose(reflectedNames);
   return {
-    count: reflectedNames[0]
+    count: reflectedNames[0],
   };
 };

@@ -1,4 +1,4 @@
-import {expm1} from '../../../src/runtime/polyfills/Math.js';
+import { expm1 } from "../../../src/runtime/polyfills/Math.js";
 
 function testExpm1(expm1) {
   assert.equal(Infinity, expm1(Infinity));
