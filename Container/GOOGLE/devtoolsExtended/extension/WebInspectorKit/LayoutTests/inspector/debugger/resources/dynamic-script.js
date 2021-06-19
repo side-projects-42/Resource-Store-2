@@ -1,0 +1,3 @@
+function fooDynamicScript() {}
+
+scriptLoaded();

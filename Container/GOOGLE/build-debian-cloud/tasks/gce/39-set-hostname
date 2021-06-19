@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Set the hostname from DHCP.
+chroot $imagedir ln -s /usr/share/google/set-hostname /etc/dhcp/dhclient-exit-hooks.d/set-hostname
+
+# For now provide a reasonable default for the hostname. It will be updated when the VM boots.
+echo "localhost" >> $imagedir/etc/hostname

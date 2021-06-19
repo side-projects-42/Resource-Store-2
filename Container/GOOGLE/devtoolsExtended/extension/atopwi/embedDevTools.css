@@ -1,0 +1,25 @@
+.toolbar-icon {
+  display: none !important;
+}
+
+.toolbar-item.toggleable {
+  padding-bottom: 4px;
+}
+
+body.compact #toolbar {
+  height: 24px; /* shorten the toolbar to avoid missing clicks on panel buttons */
+}
+
+body.compact #main {
+  top: 24px;
+}
+
+body.inactive #toolbar {
+  background-color: rgba(240, 235, 226, 1);
+  background-image: none !important;
+}
+
+#toolbar .close-right {
+  /* We don't need this in a popup window */
+  display: none;
+}

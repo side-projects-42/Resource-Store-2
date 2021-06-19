@@ -1,0 +1,47 @@
+<html>
+<script src="chrome-extension://ggimboaoffjaeoblofehalflljohnfbl/WebInspectorKit/Source/devtools/front_end/jsdifflib.js"></script>
+<script src="chrome-extension://ggimboaoffjaeoblofehalflljohnfbl/WebInspectorKit/Source/devtools/front_end/utilities.js"></script>
+<script src="chrome-extension://ggimboaoffjaeoblofehalflljohnfbl/WebInspectorKit/Source/devtools/front_end/DOMExtension.js"></script>
+<script src="chrome-extension://ggimboaoffjaeoblofehalflljohnfbl/WebInspectorKit/Source/devtools/front_end/treeoutline.js"></script>
+
+<link rel="stylesheet" type="text/css" href="chrome-extension://ggimboaoffjaeoblofehalflljohnfbl/WebInspectorKit/Source/devtools/front_end/inspector.css">
+<link rel="stylesheet" type="test/css" href="testRunnerPanel.css">
+
+<script src='ensureOrigin.js'></script>
+<script src='injectedForInspectorTest.js'></script>
+<script src='injectedForExtensionTest.js'></script>
+<script src="ChannelPlate/XHRInBackground.js"></script>
+<script src="ScreenShotInBackground.js"></script>
+<script src="BackgroundServerAPI.js"></script>
+<script src="ChannelPlate/ChannelPlate.js"></script>
+<script src="ChannelPlate/RemoteMethodCall.js"></script>
+<script src="knockout/knockout-2.2.0rc.debug.js"></script>
+<script src='testRunnerPanel.js'></script>
+<body>
+<p>Querypoint Debugger testRunner (<a href="hints.html">help</a>)</p>
+<table>
+	<thead><th>Debug Flags</th></thead>
+	<tbody>
+		<tr><td>
+			<select class='debugLoggers' data-bind="optionCaption: 'Populated after one run', options: availableFlags, optionsText: 'name', selectedOptions: selectedFlags" size="5" multiple="true"></select>
+		</select></td></tr>
+	</tbody>
+</table>
+
+Filter: <input id="filter" class="filterValue" type="text" size="40"></input><small><i>Click on results to pre-load filter</i></small><br>
+<button class='load'>Load</button>
+<button class='debug' >Debug</button>
+<button class='run'>Run</button>
+<button class='interrupt'>Interrupt</button>
+
+
+<span>Passed: <span id="pass">0</span></span>
+<span>Failed: <span id="fail">0</span></span>
+<span>Timeout: <span id="timedout">0</span></span>
+<span>Skipped: <span id="skip">0</span></span>
+<span>Remaining: <span id="remaining">0</span><br>
+
+<ol id="outline" style="font-size: 12px !important" class="source-code outline-disclosure"></ol>
+
+</body>
+</html>

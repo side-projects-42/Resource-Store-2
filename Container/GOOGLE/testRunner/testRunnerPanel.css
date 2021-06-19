@@ -1,0 +1,51 @@
+:focus {
+    outline: none;
+}
+
+/* TestView */
+.fail {
+    color: red;
+}
+.pass {
+    color: green;
+}
+.running {
+    font-weight: bold;
+}
+.timedout {
+    color: brown;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.state {
+  font-weight: bold;
+}
+
+/* TestRunnerPanel */
+ .interrupted .interrupt {
+  color:red;
+}
+.runningTests .run, .runningTests .debug, .runningTests .load {
+  color: silver;
+}
+.ranTests .run:before, .ranTests .debug:before {
+  content: "Re-";
+}
+.interrupted .state:after {
+  content: "interrupted";
+}
+.ranTests .state:after {
+  content: "done";
+}
+.runningTests .state:after {
+  content: "running";
+}
+ 
+iframe {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}

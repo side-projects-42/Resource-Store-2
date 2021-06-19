@@ -1,0 +1,653 @@
+<html>
+  <!-- © Copyright Beman Dawes 2012 -->
+  <!-- Distributed under the Boost Software License, Version 1.0. -->
+  <!-- See http://www.boost.org/LICENSE_1_0.txt -->
+  <head>
+    <meta name="GENERATOR" content="Microsoft FrontPage 5.0" />
+    <meta name="ProgId" content="FrontPage.Editor.Document" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Filesystem Proposal</title>
+  </head>
+
+  <body>
+    $id frontmatter=
+    <table border="0">
+      <tr>
+        <td>Document number:&nbsp;&nbsp;</td>
+        <td><span style="background-color: #ffff99">D3461=12-0151</span></td>
+      </tr>
+      <tr>
+        <td>Date:</td>
+        <td>
+          <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%Y-%m-%d" startspan -->2012-10-15<!--webbot bot="Timestamp" endspan i-checksum="12017" -->
+        </td>
+      </tr>
+      <tr>
+        <td>Project:</td>
+        <td>Programming Language C++</td>
+      </tr>
+      <tr>
+        <td valign="top">Reply-to:</td>
+        <td>Beman Dawes &lt;bdawes at acm dot org&gt;</td>
+      </tr>
+    </table>
+
+    <h1>
+      Filesystem Library Proposal (Revision 4)
+      <span style="background-color: #ffff99">DRAFT</span>
+    </h1>
+
+    <a href="#Introduction">Introduction</a><br />
+    <a href="#Library-background">Library background</a><br />
+    <a href="#Differences-Boost">Differences from Boost Filesystem</a><br />
+    <a href="#Revision-history">Revision history</a><br />
+    <a href="#TODO">TODO</a><br />
+    <a href="#TOC">Proposed Wording Table of Contents</a><br />
+    <a href="#Proposed-Wording">Proposed Wording</a><br />
+    <a href="#Acknowledgements">Acknowledgements</a><br />
+    <a href="#References">References</a>
+
+    <h2><a name="Introduction">Introduction</a></h2>
+
+    <p>
+      This paper proposes a filesystem library component suitable for a
+      <i>C++ Standard Library Technical Specification</i> or for the
+      <i>C++ Standard Library</i>. The proposed library is based on the
+      <a href="http://www.boost.org/libs/filesystem">Boost Filesystem Library</a
+      >, version 3. Proposed wording is provided. A
+      <a href="#TODO">TODO</a> list identifies remaining work to be done.
+    </p>
+
+    <p>
+      The proposal is a pure addition; no existing standard library headers are
+      modified.&nbsp; No existing code is broken by this proposal, assuming the
+      usual namespace discipline caveats. No special compiler or runtime support
+      is required, although C++11 features are used where appropriate. The
+      entire library is in a namespace within namespace <code>std</code>.
+    </p>
+
+    <h2><a name="Library-background">Library background</a></h2>
+
+    <p>
+      The Boost version of the library has been in widespread use for ten years.
+      The Dinkumware version of the library, based on
+      <a
+        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1975.html"
+      >
+        N1975</a
+      >
+      (equivalent to version 2 of the Boost library), ships with Microsoft
+      Visual C++ 2012.
+    </p>
+
+    <p>
+      The motivation and scope for a filesystem library were described in
+      <a
+        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1975.html"
+      >
+        N1975</a
+      >, and are not repeated here.
+    </p>
+
+    <h2><a name="Differences-Boost">Differences from Boost Filesystem</a></h2>
+
+    <p>
+      In the Boost library, class <code>path</code> has facilities to handle
+      narrow (i.e. <code>char</code>) character strings with encodings other
+      than the operating system's native encoding. These facilities have been
+      removed from the Filesystem library proposal. Instead, proposal
+      <a
+        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3398.html"
+        >N3398, String Interoperation Library</a
+      >, provides general facilities that also handle the class
+      <code>path</code> use cases.
+    </p>
+
+    <p>
+      Otherwise, the proposal is very similar to the Boost library. Indeed, the
+      proposed wording is generated from the same source as the Boost library's
+      reference documentation.
+    </p>
+
+    <h2><a name="Revision-history">Revision history</a></h2>
+
+    <p>
+      <span style="background-color: #ffff99">Nxxxx</span
+      ><span style="background-color: #ffff99">=12-xxxx</span>, Filesystem
+      Library Proposal (Revision 4). Changes include:
+    </p>
+
+    <ul>
+      <li>Editorial: corrections reported by Jens Maurer.</li>
+      <li>Editorial: cleanup of operating system references.</li>
+      <li>
+        Editorial: change document HTML encoding to <code>charset=utf-8</code>.
+      </li>
+      <li>
+        Reintroduce <code>codecvt</code> facilities to class
+        <code>path</code>;&nbsp; relatively minimal compared to the Boost
+        design, touching far fewer signatures, avoiding locale dependencies, and
+        providing explicit support for UTF-8. Provide UTF-8 conversion example.
+      </li>
+      <li>
+        Add <code>operator string_type() const;</code> to class
+        <code>path</code>. Microsoft and Dinkumware are already shipping this in
+        their implementations. It provides a reasonable level of interoperation
+        with standard library file steam constructors and opens without
+        modifying existing standard library classes or headers.
+      </li>
+    </ul>
+
+    <p>
+      <a
+        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3399.html"
+      >
+        N3399=12-0089</a
+      >, Filesystem Library Proposal (Revision 3). Changes include:
+    </p>
+
+    <ul>
+      <li>
+        Numerous corrections and improvements to the standardese of the proposed
+        wording, based on comments and suggestions from the Filesystem Study
+        Group, particularly Daniel Krügler and Robert Stewart.
+      </li>
+      <li>
+        Add <code>path::operator+=</code> and <code>concat</code> functions to
+        tack on things like suffixes or numbers. Suggested by Ed Smith-Rowland
+        and others.
+      </li>
+      <li>Add section tags and section numbers, per LWG discussion in Kona.</li>
+      <li>
+        Minimize use of trademarked names. Enclose uses in green highlighted
+        boxes to facilitate discussion. Apply footnote required by ISO/IEC
+        directives.
+      </li>
+      <li>
+        Introduce a definition for &quot;operating system dependent&quot;, and
+        then use it to replace &quot;implementation defined behavior&quot;
+        wherever the operating system's rules determine behavior.
+      </li>
+      <li>
+        Replace uses of&nbsp; const string return types with non-const string
+        return types, per LWG discussion in Kona.
+      </li>
+      <li>
+        Remove permission for implementations to return const string&amp; in
+        certain cases, per LWG discussion in Kona.
+      </li>
+      <li>
+        Remove path inserter and extractor dependency on Boost quoted manip
+        (Issue 7).
+      </li>
+      <li>
+        Replace use of <code>time_t</code> with <code>file_time_type</code>, a
+        typedef for <code>std::chrono::system_clock::time_point</code>, per LWG
+        discussion in Kona.
+      </li>
+      <li>
+        More consistent semantics and descriptions for return values from
+        operational functions with <code>error_code&amp;</code> arguments that
+        encounter an error.
+      </li>
+      <li>
+        <code>recursive_directory_iterator</code> specifications are now given
+        in terms of behavior only. Private &quot;for exposition only&quot;
+        members have been removed.
+      </li>
+      <li>
+        <code>recursive_directory_iterator</code> functions
+        <code> no_push_pending()</code> and <code>no_push()</code> have been
+        renamed <code> recursion_pending()</code> and
+        <code>disable_recursion_pending()</code>. Option constant name
+        <code>recurse</code> has been renamed
+        <code> follow_directory_symlinks</code>.&nbsp; These are responses to a
+        request from Ed Smith-Rowland to improve clarity by reducing negative
+        logic.
+      </li>
+      <li>
+        A <code>recursive_directory_iterator</code> option
+        <code> skip_permission_denied</code> has been added to skip directories
+        with permission denied, responding to several user requests.
+      </li>
+      <li>
+        <code>symlink_option</code> has been renamed
+        <code> directory_options</code>, since it has become more general and
+        now covers both <code>follow_directory_symlinks</code> and
+        <code>skip_permission_denied</code> options.&nbsp;
+      </li>
+      <li>Add missing semantics for <code>copy_directory</code>.</li>
+      <li>
+        Change template parameters for <code>path::string</code> and
+        <code>path::generic_string</code> to the same as
+        <code>std::basic_string</code> in response to comments from the FSG.
+      </li>
+      <li>
+        Remove <code>initial_path()</code> operational function. The
+        functionality as currently specified is trivial for a user to duplicate
+        using <code> current_path()</code>. The original spec for
+        <code>initial_path()</code> required support from the runtime library.
+        That doesn't appear to be practical, and without it the motivation for
+        the function is too weak for standardization.
+      </li>
+      <li>
+        Remove required changes to <code>&lt;fstream&gt;</code> header. The LWG
+        does not wish to require modifications existing headers. Also, the
+        Dinkumware/Microsoft version of the library has come up with a clever
+        way to make class <code>path</code> work with the existing
+        <code>&lt;fstream&gt;</code> classes constructors and open functions.
+      </li>
+      <li>
+        Remove <code>directory_entry</code> as a <code>Source</code> in
+        [path.req]. It was Boost specific and is inappropriate for the standard
+        library.
+      </li>
+      <li>
+        Change name of <code>recursive_directory_iterator::level()</code> to
+        <code> depth()</code>.
+      </li>
+      <li>
+        Change <code>enum file_type</code> to <code>enum class file_type</code>,
+        simplify constant names, supply explicit values for constant names; per
+        FSG discussions.
+      </li>
+      <li>
+        Change name of <code>copy_directory</code> function to
+        <code> create_directory</code> to more clearly reflect semantics per FSG
+        discussions.
+      </li>
+      <li>
+        Major upgrade to <code>copy_options</code> in response to FSG
+        discussions..
+      </li>
+      <li>
+        Major functionality upgrades to <code>copy()</code>and
+        <code> file_copy()</code> per FSG discussions.
+      </li>
+      <li>
+        Add path member function <code>replace_filename()</code>, suggested by
+        Robert Stewart and others.
+      </li>
+      <li>
+        Add C++11 features to both the proposal and the Boost implementation and
+        test suite:
+        <ul>
+          <li>R-value reference move semantics.</li>
+          <li><code>noexcept</code>.</li>
+          <li><code>constexpr</code>.</li>
+          <li>Scoped enums.</li>
+          <li>Range-based for statement support.</li>
+          <li>New character types.</li>
+          <li>
+            Replace explicit codecvt manipulation with a reference to
+            <code>&lt;cuchar&gt;</code> conversion facilities.
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <p>
+      <a
+        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3365.html"
+        >N3365=12-0055</a
+      >, Filesystem Library Proposal (Revision 2). Changes include:
+    </p>
+
+    <ul>
+      <li>
+        Namespaces changed to <code>std::tbd::filesystem</code> per discussion
+        in Kona.
+      </li>
+      <li>Removed references to Boost within the proposed wording.</li>
+      <li>Minor fixes to the proposed wording.</li>
+      <li>
+        Added Issue 7: How should class path inserter and extractor be
+        specified?
+      </li>
+      <li>Marked up all issues to reflect Kona LWG discussions.</li>
+    </ul>
+
+    <p>
+      <a
+        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3335.html"
+      >
+        N3335=12-0025</a
+      >, Filesystem Library for C++11/TR2 (Revision 1). Changes include:
+    </p>
+
+    <ul>
+      <li>
+        Regenerated the proposed wording from the Boost Filesystem library
+        reference documentation, using an automated process. This process
+        reduces the likelihood of inadvertent discrepancies between
+        descriptions.
+      </li>
+      <li>
+        An Issues list was added, seeded with issues raised by the LWG review of
+        N3239 at the Bloomington meeting, and private communications from LWG
+        members.
+      </li>
+      <li>
+        Namespace changed to <code>files</code> as an experiment. Made this
+        issue number 1 so the LWG can pass judgment.
+      </li>
+      <li>
+        New functions were added, suggested by David Svoboda, to generate
+        canonical paths and manage permissions.
+      </li>
+      <li>
+        More C++11 functionality was applied. This process is still incomplete,
+        however.
+      </li>
+      <li>
+        Added proposed changes to header &lt;fstream&gt;. The previous paper had
+        inadvertently supplied the wrong wording.
+      </li>
+      <li>Continued the general cleanup of wording.</li>
+    </ul>
+
+    <p>
+      <a
+        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3239.html"
+      >
+        N3239 = 11-0009</a
+      >, Filesystem Library Update for TR2 (Preliminary), reflected changes made
+      to the Boost library version 3 since the previously accepted committee
+      paper:
+    </p>
+
+    <ul>
+      <li>
+        A single class <code>path</code> handles all aspects of
+        internationalization, replacing the previous template and its
+        <code>path</code> and <code>wpath</code> instantiations. Character types
+        <code>char</code>, <code>wchar_t</code>, <code>char16_t</code>, and
+        <code>char32_t</code> are supported. This is a major simplification of
+        the path abstraction, particularly for functions that take path
+        arguments. This change was based on a suggestion by Peter Dimov.
+      </li>
+      <li>
+        Several operational functions have been added, including much better
+        symlink support, the ability to resize a file, and the ability to
+        generate a unique path.
+      </li>
+      <li>
+        Support for error reporting via <code>error_code</code> is now uniform
+        throughout the operations functions.
+      </li>
+      <li>
+        Several functions have been renamed, based on feedback from users.
+      </li>
+    </ul>
+
+    <p>
+      <a
+        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1975.html"
+      >
+        N1975 = 06-0045</a
+      >, Filesystem Library Proposal for TR2 (Revision 3), was adopted by the
+      committee in April, 2006, at the Berlin meeting. Shortly afterward the
+      Library Working Group set aside work on TR2 to concentrate on C++0x.
+    </p>
+
+    <h2><a name="TODO">TODO</a></h2>
+    <ul>
+      <li>
+        At Portland meeting, review trademarked names with Filesystem Study
+        Group and project editor.
+      </li>
+      <li>
+        Ion Todirel suggests &quot;Would be nice if path::append was variadic,
+        to improve usability&quot;.
+      </li>
+      <li>
+        Ion Todirel: Would be nice to have a make_relative. Need to review
+        similar suggestions.
+      </li>
+      <li>
+        Dinkumware/Microsoft report slightly different results for Decomposition
+        table. Rerun table. Check discrepancies.
+      </li>
+      <li>Review Nick Stoughton's email for suggestions, action items.</li>
+      <li>
+        Review Filesystem Study Group reflector messages for unresolved
+        comments, particularly in the area of Permissions.
+      </li>
+      <li>Review and resolve any pending issues in the GitHub issues list.</li>
+    </ul>
+
+    <h2>Proposed Wording <a name="TOC">Table of Contents</a></h2>
+
+    <p>
+      <a href="#Filesystem Library">1 Filesystem Library </a><br />
+      <a href="#Definitions">1.1 Definitions </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#Absolute-path">1.1.1 absolute path </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#canonical-path">1.1.2 canonical path </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#directory">1.1.3 directory </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#file">1.1.4 file </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#file-system">1.1.5 file system </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#file-system-race">1.1.6 file system race </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#filename">1.1.7 filename </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#hard-link">1.1.8 hard link </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#link">1.1.9 link </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#fs.def.native"
+        >1.1.10 native pathname format </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#NTCTS">1.1.11 NTCTS </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#operating system dependent"
+        >1.1.12 operating system dependent behavior </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#fs.def.parent">1.1.13 parent directory </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path">1.1.14 path </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#fs.def.pathname">1.1.15 pathname </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#fs.def.pathres">1.1.16 pathname resolution </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#Relative-path">1.1.17 relative path </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#symbolic-link">1.1.18 symbolic link </a><br />
+      <a href="#Conformance">1.2 Conformance </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#fs.conform.9945"
+        >1.2.1 ISO/IEC 9945 conformance </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#fs.conform.os"
+        >1.2.2 Operating system dependent behavior conformance </a
+      ><br />
+      <a href="#fs.req">1.3 Requirements </a><br />
+      <a href="#Header-filesystem-synopsis"
+        >1.4 Header <code>&lt;filesystem&gt;</code> synopsis </a
+      ><br />
+      <a href="#Error-reporting">1.5 Error reporting </a><br />
+      <a href="#class-path">1.6 Class <code>path</code> </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path.generic"
+        >1.6.1 Generic pathname format grammar </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-Conversions"
+        >1.6.2 <code>path</code> conversions </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+        href="#path-Conversions-to-native-format"
+        >1.6.2.1 <code>path</code> argument format conversions </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#path.arg.convert"
+        >1.6.2.2 <code>path</code> type and encoding conversions </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-Requirements"
+        >1.6.3 <code>path</code> Requirements </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-constructors"
+        >1.6.4 <code>path</code> constructors </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-assignments"
+        >1.6.5 <code>path</code> assignments </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-appends"
+        >1.6.6 <code><font size="4">path</font></code> appends </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-concatenation"
+        >1.6.7 <code>path</code> concatenation </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-modifiers"
+        >1.6.8 <code>path</code> modifiers </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-native-format-observers"
+        >1.6.9 <code>path</code> native format observers </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-generic-format-observers"
+        >1.6.10 <code>path</code> generic format observers </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-compare"
+        >1.6.11 <code>path</code> compare </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-decomposition"
+        >1.6.12 <code>path</code> decomposition </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-query">1.6.13 <code>path</code> query </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-iterators"
+        >1.6.14 <code>path</code> iterators </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-non-member-functions"
+        >1.6.15 <code>path</code> non-member functions </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#path-inserter-extractor"
+        >1.6.16 <code>path</code> inserter and extractor </a
+      ><br />
+      <a href="#Class-filesystem_error"
+        >1.7 Class <code>filesystem_error</code>
+      </a>
+      <br />
+      &nbsp;&nbsp;&nbsp;<a href="#filesystem_error-members"
+        >1.7.1 <code>filesystem_error</code> members </a
+      ><br />
+      <a href="#Enum-file_type">1.8 Enum class file_type </a><br />
+      <a href="#enum.copy_options">1.9 Enum class copy_options </a><br />
+      <a href="#Enum-perms">1.10 Enum perms </a><br />
+      <a href="#file_status">1.11 Class file_status </a><br />
+      &nbsp;&nbsp;&nbsp;<a href="#file_status-constructors"
+        >1.11.1 <code>file_status</code> constructors </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#file_status-observers"
+        >1.11.2 <code>file_status</code> observers </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#file_status-modifiers"
+        >1.11.3 <code>file_status</code> modifiers </a
+      ><br />
+      <a href="#Class-directory_entry"
+        >1.12 Class <code>directory_entry</code>
+      </a>
+      <br />
+      &nbsp;&nbsp;&nbsp;<a href="#directory_entry-constructors"
+        >1.12.1 <code>directory_entry </code> constructors </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#directory_entry-modifiers"
+        >1.12.2 <code>directory_entry </code> modifiers </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#directory_entry-observers"
+        >1.12.3 <code>directory_entry</code> observers </a
+      ><br />
+      <a href="#Class-directory_iterator"
+        >1.13 Class <code>directory_iterator</code> </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#directory_iterator-members"
+        >1.13.1 <code>directory_iterator</code> members </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#directory_iterator-non-member-functions"
+        >1.13.2 <code> directory_iterator</code> non-member functions </a
+      ><br />
+      <a href="#Class-recursive_directory_iterator"
+        >1.14 Class <code> recursive_directory_iterator</code> </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#directory_iterator-members"
+        >1.14.1 <code> recursive_directory_iterator</code> members </a
+      ><br />
+      &nbsp;&nbsp;&nbsp;<a href="#rec.dir.itr.nonmembers"
+        >1.14.2 <code>recursive_directory_iterator</code> non-member functions </a
+      ><br />
+      <a href="#Operational-functions">1.15 Operational functions </a><br />
+    </p>
+
+    <h2><a name="Proposed-Wording">Proposed Wording</a></h2>
+
+    <!-- generate-section-numbers=true -->
+
+    <p>
+      Gray-shaded italic text is commentary on the proposal. It is not to be
+      added to the working paper.
+    </p>
+
+    <p>
+      Green shaded text in rectangular boxes calls attention to examples and
+      notes intended to illuminate differences in behavior between operating
+      systems. Trademarked names are used, as permitted by
+      <a href="#ISO-Drafting">ISO/IEC Directives</a>, Part2, section 6.6.3
+      <i>Use of trade names and trademarks</i>. It is the belief of the proposal
+      author that these examples and notes add considerable clarity, and should
+      be retained.
+    </p>
+
+    <p>
+      <span style="font-style: italic; background-color: #e0e0e0"
+        >Start of proposed wording:</span
+      >
+    </p>
+    <h1><a name="Filesystem Library">Filesystem Library</a> [filesystem]</h1>
+
+    <p>
+      This clause describes components that perform operations on file systems
+      and their components, such as paths, regular files, and directories.
+    </p>
+
+    <p>
+      ISO/IEC 9945 contains provisions which, through referenced in this text,
+      constitute provisions of this clause. At the time of publication, the
+      editions indicated were valid. All standards are subject to revision, and
+      parties to agreements based on this clause are encouraged to investigate
+      the possibility of applying the most recent editions of the standard
+      indicated below. Members of IEC and ISO maintain registers of currently
+      valid International Standards.
+    </p>
+    <ul>
+      <li>
+        ISO/IEC 9945:2003, <i>Portable Operating System Interface (POSIX</i>®<i
+          >), part 1 (Base Definitions) and part 2 (System Interfaces)</i
+        >, both as corrected by their respective 2004 Correction 1 documents.
+      </li>
+    </ul>
+
+    <p>
+      This clause mentions commercially available operating systems for purposes
+      of exposition.<sup> <a href="#footnote"> [footnote]</a></sup>
+    </p>
+
+    <p>
+      <i
+        ><span style="background-color: #e0e0e0"
+          >This footnote is required by ISO/IEC Directives, Part2, section 6.6.3
+          Use of trade names and trademarks:</span
+        ></i
+      >
+    </p>
+
+    <p>
+      <sup>[<a name="footnote">footnote</a>]</sup> POSIX® is a registered
+      trademark of The IEEE. MAC OS® is a registered trademark of Apple Inc.
+      Windows® is a registered trademark of Microsoft Corporation. This
+      information is given for the convenience of users of this document and
+      does not constitute an endorsement by ISO or IEC of these products.
+    </p>
+
+    <p>
+      <span style="background-color: #e0e0e0"><i>End of footnote.</i></span>
+    </p>
+    <p>$endid $id wording_suffix=</p>
+    <p>
+      <span style="font-style: italic; background-color: #e0e0e0"
+        >End of Proposed wording.</span
+      >
+    </p>
+    <hr />
+    <p>$endid $id backmatter= $endid</p>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+# Modern g++/clang required from >= trusty.
+dist: trusty
+sudo: required
+
+# Only run against master branch
+branches:
+  only:
+    - master
+
+# TODO(benvanik): find a way to open a group to receive the mail
+notifications:
+  email:
+    recipients:
+      - benvanik@google.com
+      - rsturgell@google.com
+      - laurenzo@google.com
+    on_success: change
+    on_failure: change
+
+# Test under all current versions
+language: node_js
+node_js:
+  - 0.8
+  #- 0.9 # disabled until it gets less flaky
+
+# Environment variables.
+# Note that some of these are secure variables that must be set by users.
+env:
+  global:
+    # Currently expecting:
+    # - SAUCE_ACCESS_KEY=[guid from sauce]
+    # Set your own with:
+    # sudo gem install travis
+    # travis encrypt google/tracing-framework SAUCE_ACCESS_KEY=$SAUCE_ACCESS_KEY
+    - secure: "wX8PzI1jR0wLWUCpb/HC07qCXLCNxhLMm2JtTcJbU6UyHU2oYUEfvEnnwo5s\n4vXTIzlLvzRxDj/XLSlCxoUaKnPtdxDcEq2+9uH7sLt7RKKXmQgXPyLRoit2\n8shbnYsvHGJJfBnvtLFt+DNa9QgGR9LzFSsM8oHg+TLSeFpYjgM="
+
+# Fetch submodules and install all dependencies.
+before_script:
+  - sudo apt-get -qq update
+  # cpp-bindings dependencies
+  - sudo apt-get install -y g++-4.8 clang-3.8 libgtest-dev
+  # JavaScript dependencies.
+  - "./scripts/setup.sh"
+
+script:
+  # Do a full build to ensure things all work.
+  # We also lint, because I'm a pedant.
+  - "./third_party/anvil-build/anvil-local.sh build -j1 :debug :release :lint"
+  # Build :fast and run all tests.
+  - "./scripts/run-tests.sh"
+  # Run a full sauce test, if we have a key.
+  #- "./scripts/run-saucelabs.sh"
+  # Test the cpp-bindings on gcc in all threading scenarios.
+  - (cd bindings/cpp && CXX=g++-4.8 THREADING=std make clean test)
+  - (cd bindings/cpp && CXX=g++-4.8 THREADING=pthread make clean test)
+  - (cd bindings/cpp && CXX=g++-4.8 THREADING=single make clean test)
+  # Test the cpp-bindings on clang in all threading scenarios.
+  - (cd bindings/cpp && CXX=clang++-3.8 THREADING=std make clean test)
+  - (cd bindings/cpp && CXX=clang++-3.8 THREADING=pthread make clean test)
+  - (cd bindings/cpp && CXX=clang++-3.8 THREADING=single make clean test)

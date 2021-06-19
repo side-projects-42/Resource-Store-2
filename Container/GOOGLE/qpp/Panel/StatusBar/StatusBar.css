@@ -1,0 +1,76 @@
+/*
+// Google BSD license http://code.google.com/google_bsd_license.html
+// Copyright 2011 Google Inc. johnjbarton@google.com
+*/
+.statusBar {
+	height: 17px;
+    color: #272822; /* reverse from cm-s */
+	background-color: #75715E;
+	position: relative;
+	font-size: 15px;
+    
+	display: -webkit-flex;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-between;
+    
+	-webkit-flex: none;
+}
+
+.statusBar .commandLine {
+  background-color: #75715E;
+  color: #d0d0d0;
+}
+
+.statusBar .commandInput {
+  height: 17px; 
+  border-radius: 7px;
+  background-color: #75715E;
+  color: #d0d0d0;
+}
+
+.statusBar .counters {
+  background-color: #f8f8f2;
+  border-radius: 7px;
+  padding-left: 7px;
+  margin-right: 1em;
+  display: -webkit-flex;
+}
+
+.statusBar .counters span {
+  margin: auto;
+  cursor: pointer;
+  padding-right: 1ex;
+} 
+
+.statusBar .tracequeries {
+  color: rgb(113, 3, 252);
+}
+
+.statusBar .unsavedChangedFiles {
+	color: #f92672;
+}
+
+.statusBar .savedChangedFiles {
+	color: #a6e22e;
+}
+
+.statusBar .turnNumber {
+  color: rgb(26, 6, 255);
+}
+
+.statusBar .turnNumber[active='true'] {
+  background-color: black;
+}
+
+.statusBar span.changedOptionsIcon {
+  font-size: x-large; /* our funky gear unicode is too small */
+  padding-right: 0px;
+  margin-right: -4px;
+}
+
+.statusBar .changedOptions {
+  color: rgb(255, 208, 69);
+}
+
+.statusBar .centeringHack { 
+}

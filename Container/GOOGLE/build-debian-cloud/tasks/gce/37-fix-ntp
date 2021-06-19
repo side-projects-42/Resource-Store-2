@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Change NTP to use server located on the host machine instead of Debian pool
+
+configuration_file=etc/ntp.conf
+
+sed --in-place '/^server\s\+/d' $imagedir/$configuration_file
+echo "# Use server located on the host machine to avoid network traffic" >>$imagedir/$configuration_file
+echo "server metadata.google.internal iburst" >>$imagedir/$configuration_file
+

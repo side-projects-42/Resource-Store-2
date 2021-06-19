@@ -1,0 +1,23 @@
+
+{
+  "name": "testChannelPlate",
+  "version": "0.1",
+  "manifest_version": 2,
+  "minimum_chrome_version": "22",
+  "description": "Test/Demo extension for ChannelPlate",
+   "devtools_page": "test/extension/testDevtoolsPage.html",
+    "background": {
+      "scripts": ["ChannelPlate.js", "RemoteMethodCall.js", "XHRInBackground.js"] // workaround CSP
+    },
+  "permissions" :
+    [
+      "http://*/", // Cross site XHR
+      "https://*/", 
+      "experimental"  // chrome.experimental.devtools.console 
+    ],
+    "web_accessible_resources":
+    [
+      "*"
+    ],
+     "content_security_policy": "script-src 'self' chrome-extension://fkhgelnmojgnpahkeemhnbjndeeocehc chrome-extension-resource: ; object-src 'self' "
+}

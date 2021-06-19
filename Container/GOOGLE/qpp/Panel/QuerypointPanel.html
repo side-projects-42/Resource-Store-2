@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<head>
+<script src='chrome-extension://ggimboaoffjaeoblofehalflljohnfbl/WebInspectorKit/Source/devtools/front_end/devtools_extension_api.js'></script>
+
+<!-- External Libraries -->
+<script src="../keymaster/keymaster.js"></script>
+<script src="../jquery/jquery-1.8.2.js"></script>
+<script src="../knockout/knockout-2.2.0rc.debug.js"></script>
+<script src="../mirror/CodeMirror/lib/codemirror.js"></script>
+<script src="../parseuri.js"></script>
+<script src="../ChannelPlate/ChannelPlate.js"></script>
+<script src="../ChannelPlate/RemoteMethodCall.js"></script>
+<script src="../ChannelPlate/XHRInBackground.js"></script>
+
+<script src="GlobalSymbols.js"></script>
+<script src="../DebugLogger.js"></script>
+<script src="addEventFunctions.js"></script>
+<script src="../Model/PanelModel.js"></script>
+<script src="../Model/Storage.js"></script>
+
+<script src="KeyBindings.js"></script>
+<script src="URISelector.js"></script>
+<script src="ElementQueryProvider.js"></script>
+<script src="Log/LoadListViewModel.js"></script>
+<script src="Log/Turn.js"></script>
+<script src="Log/TurnViewModel.js"></script>
+<script src="Log/Recorder.js"></script>
+<script src="Log/TurnScrubberViewModel.js"></script>
+<script src="Log/Log.js"></script>
+<script src="Log/SessionViewModel.js"></script>
+
+<script src="Editors/EditorByCodeMirror.js"></script>
+<script src="StatusBar/StatusBar.js"></script>
+
+<script src="Commands.js"></script>
+<script src="Editors/EditorViewModel.js"></script>
+<script src="Editors/Editors.js"></script>
+
+<script src="LineNumberViewModel.js"></script>
+<script src="TokenViewModel.js"></script>
+<script src="ValueViewModel.js"></script>
+<script src="TraceViewModel.js"></script>
+<script src="TracesViewModel.js"></script>
+<script src="QueryViewModel.js"></script>
+<script src="TokenQueryProvider.js"></script>
+<script src="QuerypointViewModel.js"></script>
+<script src="FileViewModel.js"></script>
+<script src="FileChainViewModel.js"></script>
+<script src="QuerypointPanel.js"></script>
+<script src="OnPanelOpen.js"></script>
+
+<link rel="stylesheet" href="../mirror/CodeMirror/lib/codemirror.css">
+<link rel="stylesheet" href="../mirror/CodeMirror/theme/monokai.css">
+<link rel="stylesheet" href="QuerypointPanel.css"><!-- after codemirror.css -->
+<link rel="stylesheet" href="FileViews.css"><!-- after codemirror.css -->
+<link rel="stylesheet" href="QPOutput.css"><!-- after codemirror.css -->
+<link rel="stylesheet" href="TraceView.css"><!-- after codemirror.css -->
+<link rel="stylesheet" href="Log/turnScrubberView.css"><!-- after codemirror.css -->
+<link rel="stylesheet" href="Log/turnIndicator.css"><!-- after codemirror.css -->
+<link rel="stylesheet" href="StatusBar/StatusBar.css"><!-- after codemirror.css -->
+<script src="../mirror/CodeMirror/mode/javascript/javascript.js"></script>
+
+<script src="../test/unit/PanelTest.js"></script>
+</head>
+<body class="cm-s-monokai">
+  <div class="panelInitialization">
+    <span class="largeMessage">Reloading previous state...</span>
+    <a href="#unittest" class="unittest">start unit test instead</a>
+  </div>
+  <div class="panel">
+    <div class="sessionView">
+        <span class="helpInfo">
+          Turn Scrubber: mouseover boxes to see turn info.
+        </span>
+        <div class="onPanelOpen">
+          <div class="hint">
+            <div><button class="hint_overview">Show Overview Help</button></div>
+            <div><button class="hint_documentation">Open Documentation Page</button></div>
+            <div><button class="hint_feedback">Feedback</button></div>
+          </div>
+          <div class="IfQPNotInstalled">
+            <p>Initialize Querypoint Debugging</p>
+            <div class="initialOptions">
+              <div><button class="initialOptions_reloadWithQP">Reload Page with Querypoint Runtime</button></div>
+              <div><button class="initialOptions_noReload">Do Not Reload</button></div>
+            </div>
+            <p class="noticeThis">Then reproduce your bug</p>
+          </div>
+          <div class="IfQPInstalled">
+              <div><button class="initialOptions_reloadWithoutQP">Reload Page, remove Querypoint Runtime</button></div>
+              <div><button class="initialOptions_noReload">Do Not Reload</button></div>
+          </div>
+        </div>
+        <div class="turnView" data-bind="if: turn">
+            <p class="turnSummary">Turn<span data-bind="{text: showTurn}"></span> on load
+              <span data-bind="{text: turn().loadNumber}"></span>.</p>
+            <ul class="turnInformation">
+                <li>Function <a data-bind="text: turn().functionName, attr:{'data-url': turn().url}"></a></li>
+                <li>registered on turn <a data-bind="text: turn().registrationTurnNumber, click: switchTurn"></a>, then</li>
+                <li>triggered by <a data-bind="text: turn().eventType"></a></li>
+                <li class="hoverMenuTrigger" data-bind="if: turn().targetSelector !== 'none'"><span>on target</span>
+                  <span class="hoverMenuTrigger">
+                    <a class="eventInfo_target" data-bind="text: turn().targetSelector, event:{mouseover: highlightElement, mouseout: unhighlight}"></a>
+                    <ul class="hoverMenu eventInfo_menu">
+                    <!-- ko if: hasTargetElement -->
+                        <li class="eventInfo_target_reveal" data-bind="event: {mousedown: revealElement}"><a>Reveal</a> in Elements Panel (TODO)</li>
+                        <li class="eventInfo_target_trace" data-bind="event: {click: traceElement}"><a>Trace Writes to Element</a></li>
+                    <!-- /ko -->
+                    </ul>
+                  </span>
+                </li>
+            </ul>
+            <div class="turnChain">
+              <!-- ko if: turnChain -->
+              <div>Registered in
+                  <!-- ko foreach: turnChain -->
+                      <a data-bind="event: {mousedown: $parent.switchTurn}">Turn <span data-bind="text: turnNumber"></span></a>
+                  <!-- /ko -->
+              </div>
+              <!-- /ko -->
+              <!-- ko if: turn().registeredEntryPoints.length -->
+              <div class="registeredEntryPointsHeader">Registered Entry Points:
+                  <!-- ko foreach: turn().registeredEntryPoints -->
+                      <div class="turnList"><a data-bind="text: $data"></a></div>
+                  <!-- /ko -->
+              </div>
+              <!-- /ko -->
+              <!-- ko if: triggeredEvents -->
+              <div>Turns triggered by registered entry points
+                  <!-- ko foreach: triggeredEvents -->
+                      <div class="turnList" data-bind="event: {mousedown: $parent.switchTurn}">Turn <a data-bind="text: turnNumber"></a></div>
+                  <!-- /ko -->
+              </div>
+              <!-- /ko -->
+            </div>
+            <div class="messagesHeader" data-bind="if: messages().length">Messages In This Turn</div>
+            <div class="messages" data-bind="foreach: messages">
+                <p class="message" data-bind="text: text, attr:{severity: severity}"></p>
+            </div>
+        </div>
+        <div class="turnScrubberView">
+            <div class="loadListView">
+              <div class="loadNumber selectedLoad" title="Reload Number" data-bind="attr: {load: showLoadNumber}">
+              </div>
+          </div>
+          <div class="overviewLog">
+              <!-- ko if: sessionViewModel.loadListViewModel.currentLoadIsSelected -->
+              <!-- ko foreach: preIndicators -->
+              <div class="turnIndicator" data-bind="attr:{severity: severity, turn: turn.turnNumber}, event:{mouseover: $root.turnInfo}"> </div>
+              <!-- /ko -->
+              <div class="beginRecorded" data-bind="attr:{state:recorder.recordingState()}, event:{click: recorder.onBeginRecorded.bind(recorder) }">x</div>
+              <!-- ko foreach: recordedIndicators -->
+               <div class="turnIndicator" data-bind="attr:{severity: severity, turn: turn.turnNumber}, event:{mouseover: $root.turnInfo}"> </div>
+              <!-- /ko -->
+              <div class="endRecorded" data-bind="attr:{state:recorder.recordingState()}, event:{click: recorder.onEndRecorded.bind(recorder) }">&#9679;</div>
+              <!-- ko foreach: postIndicators -->
+              <div class="turnIndicator" data-bind="attr:{severity: severity, turn: turn.turnNumber}, event:{mouseover: $root.turnInfo}"> </div>
+              <!-- /ko -->
+              <!-- /ko -->
+          </div>
+      </div>
+    </div>
+    <div class="workSpace">
+      <div class="fileViews" data-bind="foreach: fileViewModels">
+        <div class="fileView" data-bind="attr:{name: filename, chainIndex: $index}">
+          <div class="QPOutput hoverDoorTarget" data-bind="if: hasQuerypointViewModel">
+            <div class="hoverDoorChannel" data-bind="attr: {hoverDoorAttached: querypointViewModel.hoverDoorAttach($element)}">
+              <div class="hoverDoor hoverSpacer"></div>
+              <div class="hoverDoor hoverCloser"><span>Close Tracing</span></div>
+              <div class="hoverDoor hoverOpener"><span>Open Tracing</span></div>
+            </div>
+            <span class="helpInfo">Tracing output, see tooltips for details</span>
+            <div class='hbox'>
+              <div class="tokenView vbox" >
+                <div class="scopeChain" data-bind="foreach: querypointViewModel.tokenViewModel.scopes">
+                  <div class="overflowMe" data-bind="html: scopeDeclaration"></div>
+                </div>
+                <div class="expressionView">
+                  <div class="currentExpression overflowMe" title="Current expression trace values displayed below" data-bind="html: querypointViewModel.tokenViewModel.currentExpression"></div>
+                </div>
+              </div>
+            </div>
+            <div class='hbox'>
+              <table class="traceView vbox" data-bind="attr: {hasTraceData: querypointViewModel.tracesViewModel.currentTraces() && !!querypointViewModel.tracesViewModel.currentTraces().length}">
+                <caption>Trace Data</caption>
+                <thead>
+                <tr>
+                  <th title="Function call within event turn, linked to source expression">Activation</th>
+                  <th title="Expression value during specific activation">Value</th>
+                </tr>
+                </thead>
+                <tbody class="traceBody" data-bind="foreach: {data: querypointViewModel.tracesViewModel.currentTraces, afterRender: querypointViewModel.tracesViewModel.afterRender}">
+                <tr >
+                  <td class="activation">
+                    <span class="command" data-bind="html: iconText(), attr: {title: tooltip(), 'data-url': url()}"></span>
+                    <span title="Load number" data-bind="text: loadNumber()">
+                    </span>:<span title="Event turn number, 0 means initial load" data-bind="text: turnNumber()"></span>:<span title="Function call number within turn" data-bind="text: activationNumber()"></span>
+                  </td>
+                  <td class="traceValue overflowMe" data-bind="text: value()"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class='hbox'>
+              <div class="queryView vbox">
+                <div data-bind="if: querypointViewModel.queriesViewModel.hasQueries">
+                  <div class="toolbar" data-bind="foreach: querypointViewModel.queriesViewModel.queryViewModels">
+                    <button class="command" data-bind="text: buttonName(), attr: {title: toolTip(), 'data-active': isActive}, click: activateQuery.bind($data, $parent, $data)"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class='hbox'>
+              <div class='tokenFollowControl vbox'>
+                <a class="explainTokenPanel"  data-bind="hasfocus: querypointViewModel.tokenViewModel.followTokens, attr: {'data-active': querypointViewModel.tokenViewModel.followingTokens()}" tabindex="0">
+                  <span data-active="true" data-bind="css: {hide:  !querypointViewModel.tokenViewModel.followingTokens()}">Selecting Syntax Tree; Focus Editor to Lock</span>
+                  <span data-bind="css: {hide:  querypointViewModel.tokenViewModel.followingTokens()}">Click to Select Another Syntax Tree</span>
+                </a>
+              </div>
+            </div>
+          <p class="querypointViewModel_syncState" data-bind="text: querypointViewModel.tokenViewModel.currentLocationId()">Not Yet Updated</p>
+          <!-- <div class="tracepoints">
+            <p><span data-bind="tokenViewModel.tracepoints().length"></span> tracepoints in this file</p>
+          </div> -->
+          </div>
+          <div class="fileEditor" data-bind="attr: {managedBy: editorBy($element)}">
+             <span class="helpInfo">Editors opened with ItemSelector (control+o)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="statusBar">
+      <div class="commandLine">
+        <span>&#x1433;</span><input class="commandInput" type="search" size="70" value="Eventual home of command line">
+      </div>
+      <div class="runtimeStatus" data-bind="visible: runtimeNotInstalled">QP runtime is not installed.</div>
+      <div class="counters">
+        <span
+          title="Number of active queries"
+          class="tracequeries centeringHack"
+          data-bind="text: '&#x1D5B0;' + numberOfTracequeries()"
+          ></span>
+        <span
+          title="Current load number"
+          class="currentLoadNumber centeringHack"
+          data-bind="text: currentLoadNumber()"
+          ></span>
+        <span
+          title="Current turn number"
+          class="turnNumber centeringHack"
+          data-bind="text: '&#x21f5;' + currentTurnNumber()"
+          ></span>
+        <span
+          title="Files changed and not saved"
+          class="unsavedChangedFiles centeringHack"
+          data-bind="text: '*' + unsavedEditors().length"
+          >*1</span>
+        <span
+          title="Files saved since the last reload"
+          class="savedChangedFiles centeringHack"
+          data-bind="text: '&#x2206;' + savedEditors().length"
+          > 2</span>
+        <span
+          title="Options changed from default values"
+          class="changedOptions centeringHack"
+          ><span class='changedOptionsIcon'>&#x2699;</span></span>
+        <span
+        title="Options changed from default values"
+        class="changedOptions centeringHack"
+        ><span data-bind="text: '' +'0'"></span></span>
+      </div>
+    </div>
+    <div class="splitter"></div>
+    </tbody>
+  </div>
+</body>
+</html>

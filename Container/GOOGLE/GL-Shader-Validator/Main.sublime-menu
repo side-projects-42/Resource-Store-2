@@ -1,0 +1,44 @@
+[
+  {
+    "caption": "Preferences",
+    "id": "preferences",
+    "children": [
+      {
+        "caption": "Package Settings",
+        "id": "package-settings",
+        "children": [
+          {
+            "caption": "GL Shader Validator",
+            "id": "glshadervalidator",
+            "children": [
+              {
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/GL Shader Validator/README.md"
+                },
+                "caption": "README"
+              },
+              {
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/GL Shader Validator/LICENSE"
+                },
+                "caption": "LICENSE"
+              },
+              {
+                "caption": "-"
+              },
+              {
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/GL Shader Validator/GLShaderValidator.sublime-settings"
+                },
+                "caption": "Settings - Default"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

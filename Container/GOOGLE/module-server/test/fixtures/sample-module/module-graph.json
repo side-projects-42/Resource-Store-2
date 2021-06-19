@@ -1,0 +1,60 @@
+[
+  {
+    "transitive-dependencies": [],
+    "inputs": ["[root]"],
+    "dependencies": [],
+    "name": "root"
+  },
+  {
+    "transitive-dependencies": ["root"],
+    "inputs": ["sub-app.js"],
+    "dependencies": ["root"],
+    "name": "module$sub_app"
+  },
+  {
+    "transitive-dependencies": ["root"],
+    "inputs": ["module/bar.js"],
+    "dependencies": ["root"],
+    "name": "module$module$bar"
+  },
+  {
+    "transitive-dependencies": ["root"],
+    "inputs": ["module/baz/foo.js"],
+    "dependencies": ["root"],
+    "name": "module$module$baz$foo"
+  },
+  {
+    "transitive-dependencies": [
+      "module$module$baz$foo",
+      "module$module$bar",
+      "root"
+    ],
+    "inputs": ["module/foo.js"],
+    "dependencies": ["module$module$bar", "module$module$baz$foo", "root"],
+    "name": "module$module$foo"
+  },
+  {
+    "transitive-dependencies": [
+      "module$module$foo",
+      "module$module$baz$foo",
+      "module$module$bar",
+      "root"
+    ],
+    "inputs": ["module.js"],
+    "dependencies": ["module$module$foo", "root"],
+    "name": "module$module"
+  },
+  {
+    "transitive-dependencies": [
+      "module$module",
+      "module$module$foo",
+      "module$sub_app",
+      "module$module$baz$foo",
+      "module$module$bar",
+      "root"
+    ],
+    "inputs": ["app.js"],
+    "dependencies": ["module$sub_app", "module$module", "root"],
+    "name": "module$app"
+  }
+]

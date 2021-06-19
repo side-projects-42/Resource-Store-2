@@ -1,0 +1,175 @@
+/*
+// Google BSD license http://code.google.com/google_bsd_license.html
+// Copyright 2011 Google Inc. johnjbarton@google.com
+*/
+html {
+  height: 100%;
+}
+/* apply a natural box layout model to all elements */
+* {  
+  box-sizing: border-box; 
+}
+body {
+  margin: 0px;
+  overflow: hidden; /* no scroll bar so we control */
+  -webkit-box-sizing: border-box; /* measure width & height w/o padding & border */
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.cm-s-monokai {background: #272822; color: #f8f8f2;}
+
+.hbox {
+  -webkit-flex-flow: row;
+  -webkit-flex-wrap: nowrap;
+  display: -webkit-flex;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+.vbox {
+  -webkit-flex-flow: column;
+  -webkit-flex-wrap: nowrap;
+  display: -webkit-flex;
+  width: 100%;  
+  min-width: 10ex;
+}
+
+.panel {
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  font-family: monospace;
+  border-spacing: 0px;
+  -webkit-flex-flow: column;
+  -webkit-flex-wrap: nowrap;
+  display: -webkit-flex;
+}
+
+.initialView.onPanelOpen {
+  display: block;
+}
+
+.onPanelOpen {
+    padding: 1em;
+    display: none;
+    min-height: 200px;
+    z-index: 75;
+    background-color: #272822;
+    position: absolute;
+    width: 100%;
+    color: #75715e;
+    cursor: default;
+    top: 15px;
+}
+
+.IfQPNotInstalled {
+    display: block;
+}
+
+.IfQPInstalled {
+    display: none;
+}
+
+.QPInstalled .IfQPNotInstalled {
+    display: none;
+}
+
+.QPInstalled .IfQPInstalled {
+    display: block;
+}
+
+.onPanelOpen .hint {
+    float: right;
+}
+
+.onPanelOpen .initialOptions {
+    padding-left: 1em;
+}
+
+.onPanelOpen button {
+    border-radius: 999px;
+    border-color: #75715e;
+}
+
+.onPanelOpen .noticeThis {
+    font-size: x-large;
+}
+
+.showHelp .onPanelOpen .hint_overview {
+    color: #75715e;
+    background-color: #272822;
+}
+
+.splitter {
+  border-color: #75715e;
+  border-style: solid;
+  position: relative;
+  border-width: 0 0 1px 0;
+}
+.panelInitialization {
+  margin: 0;
+  background: gray; 
+  width:      100%;
+  height:     100%; 
+  z-index:    100;
+  top:        0; 
+  left:       0; 
+  position: fixed;
+  display: table-cell;
+  vertical-align: middle; 
+  text-align: center;
+  padding: 3em;
+}
+
+.largeMessage {
+  padding: 3em;
+  font-size: xx-large;
+  font-family: arial,san-serif;
+}
+
+.unittest {
+  padding: 3em;
+  font-size: small;
+  font-family: arial, san-serif;
+  display: block;
+}
+
+.helpInfo {
+  display: none;
+}
+
+.showHelp .helpInfo {
+    z-index: 200;
+    position: absolute;
+    display: inline;
+    color: #d0d0d0;
+    background-color: #75715e;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 999px; /* any value larger than the radius of the object gives a circle */
+    width: 200px;
+} 
+
+.explainTokenPanel {
+  font-family: Lucida Grande, sans-serif;
+  font-size: smaller;
+  text-align: center;
+  margin-top: 1.5ex;
+  color: #d0d0d0;
+  border: 2px solid #75715e;
+  border-radius: 20px;
+  padding-left: 1ex;
+  padding-right: 1ex;
+}
+
+a {
+  color: -webkit-link;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a:focus, a:active {
+  background-color: rgb(33, 34, 31);
+  outline: none;
+}
+

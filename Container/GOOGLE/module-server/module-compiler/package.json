@@ -1,0 +1,28 @@
+{
+  "name": "module-compiler",
+  "version": "0.0.1",
+  "description": "Compiles JavaScript for module-server",
+  "keywords": [
+    "modules"
+  ],
+  "author": "Google Inc.",
+  "repository": {
+    "url": "https://github.com/google/module-server.git",
+    "type": "git"
+  },
+  "dependencies": {
+    "fs-watcher": "0.2.1",
+    "findit": "0.1.2",
+    "opt": "0.0.9"
+  },
+  "bin": {
+    "module-compiler": "./bin.js"
+  },
+  "bugs": {
+    "url": "https://github.com/google/module-server/issues"
+  },
+  "main": "index",
+  "engines": {
+    "node": ">= 0.8.0"
+  }
+}
