@@ -10,8 +10,8 @@
  * @description:
  * Tests to see if there are any empty `describe` tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	describe('something');
-}(this));
+	describe("something");
+})(this);

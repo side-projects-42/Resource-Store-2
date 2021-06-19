@@ -41,25 +41,27 @@ handler that will silently discard all logging events. The documentation
 provided by the class describes a more feature rich logging configuration.
 
 # Classes
-* MediaWiki.Logger.LoggerFactory: Factory for Psr.Log.LoggerInterface loggers
-* MediaWiki.Logger.Spi: Service provider interface for
+
+- MediaWiki.Logger.LoggerFactory: Factory for Psr.Log.LoggerInterface loggers
+- MediaWiki.Logger.Spi: Service provider interface for
   MediaWiki.Logger.LoggerFactory
-* MediaWiki.Logger.NullSpi: MediaWiki.Logger.Spi for creating instances that
+- MediaWiki.Logger.NullSpi: MediaWiki.Logger.Spi for creating instances that
   discard all log events
-* MediaWiki.Logger.LegacySpi: Service provider for creating
+- MediaWiki.Logger.LegacySpi: Service provider for creating
   MediaWiki.Logger.LegacyLogger instances
-* MediaWiki.Logger.LegacyLogger: PSR-3 logger that mimics the historical output
+- MediaWiki.Logger.LegacyLogger: PSR-3 logger that mimics the historical output
   and configuration of wfDebug, wfErrorLog and other global logging functions.
-* MediaWiki.Logger.MonologSpi: MediaWiki.Logger.Spi for creating instances
+- MediaWiki.Logger.MonologSpi: MediaWiki.Logger.Spi for creating instances
   backed by the monolog logging library
-* MediaWiki.Logger.Monolog.LegacyHandler: Monolog handler that replicates the
+- MediaWiki.Logger.Monolog.LegacyHandler: Monolog handler that replicates the
   udp2log and file logging functionality of wfErrorLog()
-* MediaWiki.Logger.Monolog.WikiProcessor: Monolog log processer that adds host:
+- MediaWiki.Logger.Monolog.WikiProcessor: Monolog log processer that adds host:
   wfHostname() and wiki: wfWikiID() to all records
 
 # Globals
-* $wgMWLoggerDefaultSpi: Specification for creating the default service provider
+
+- $wgMWLoggerDefaultSpi: Specification for creating the default service provider
   interface to use with LoggerFactory
 
-[PSR-3]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
-[Monolog]: https://github.com/Seldaek/monolog
+[psr-3]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
+[monolog]: https://github.com/Seldaek/monolog

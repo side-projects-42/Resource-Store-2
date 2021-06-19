@@ -1,373 +1,412 @@
-window.chrome = function() {
+window.chrome = (function () {
+  // Request that is currently causing the spinner to spin
+  var curSpinningReq = null;
 
-	// Request that is currently causing the spinner to spin
-	var curSpinningReq = null;
+  // List of functions to be called on a per-platform basis before initialize
+  var platform_initializers = [];
+  function addPlatformInitializer(fun) {
+    platform_initializers.push(fun);
+  }
 
-	// List of functions to be called on a per-platform basis before initialize
-	var platform_initializers = [];
-	function addPlatformInitializer(fun) {
-		platform_initializers.push(fun);
-	}
+  function setSpinningReq(req) {
+    curSpinningReq = req;
+    req
+      .done(function () {
+        curSpinningReq = null;
+      })
+      .fail(function () {
+        curSpinningReq = null;
+      });
+    return req;
+  }
 
-	function setSpinningReq(req) {
-		curSpinningReq = req;
-		req.done(function() {
-			curSpinningReq = null;
-		}).fail(function() {
-			curSpinningReq = null;
-		});
-		return req;
-	}
+  function showSpinner() {
+    $(".titlebar .spinner").css({ display: "block" });
+    $("#search").addClass("inProgress");
+    $("#clearSearch").css({ height: 0 });
+  }
 
-	function showSpinner() {
-		$('.titlebar .spinner').css({display:'block'});
-		$('#search').addClass('inProgress');
-		$('#clearSearch').css({height:0});
-	}
+  function hideSpinner() {
+    $("#search").removeClass("inProgress");
+    $(".titlebar .spinner").css({ display: "none" });
+    $("#clearSearch").css({ height: 30 });
+  }
 
-	function hideSpinner() {
-		$('#search').removeClass('inProgress');
-		$('.titlebar .spinner').css({display:'none'});	
-		$('#clearSearch').css({height:30});
-	}
+  function isSpinning() {
+    return $("#search").hasClass("inProgress");
+  }
 
-	function isSpinning() {
-		return $('#search').hasClass('inProgress');
-	}
+  function renderHtml(page) {
+    $("base").attr("href", page.getCanonicalUrl());
 
-	function renderHtml(page) {
+    if (l10n.isLangRTL(page.lang)) {
+      $("#content").attr("dir", "rtl");
+    } else {
+      $("#content").attr("dir", "ltr");
+    }
+    $("#main").html(page.toHtml());
 
-		$('base').attr('href', page.getCanonicalUrl());
+    chrome.initContentLinkHandlers("#main");
+    mw.mobileFrontend.references.init($("#main")[0], false, {
+      animation: "none",
+      onClickReference: onClickReference,
+    });
+    handleSectionExpansion();
+  }
 
-		if(l10n.isLangRTL(page.lang)) {
-			$("#content").attr('dir', 'rtl');
-		} else {
-			$("#content").attr('dir', 'ltr');
-		}
-		$("#main").html(page.toHtml());
+  function populateSection(sectionID) {
+    var d = $.Deferred();
+    var selector = "#content_" + sectionID;
+    var $contentBlock = $(selector);
+    if (!$contentBlock.data("populated")) {
+      app.curPage.requestSectionHtml(sectionID).done(function (sectionHtml) {
+        $contentBlock.append($(sectionHtml)).data("populated", true);
+        chrome.initContentLinkHandlers(selector);
+        mw.mobileFrontend.references.init($contentBlock[0], false, {
+          animation: "none",
+          onClickReference: onClickReference,
+        });
+        d.resolve();
+      });
+    } else {
+      d.resolve();
+    }
+    return d;
+  }
 
-		chrome.initContentLinkHandlers("#main");
-		mw.mobileFrontend.references.init($("#main")[0], false, {animation: 'none', onClickReference: onClickReference});
-		handleSectionExpansion();
-	}
+  function handleSectionExpansion() {
+    $(".section_heading").click(function () {
+      var sectionID = $(this).data("section-id");
+      chrome.populateSection(sectionID).done(function () {
+        mw.mobileFrontend.toggle.wm_toggle_section(sectionID);
+        chrome.setupScrolling("#content");
+      });
+    });
+  }
 
-	function populateSection(sectionID) {
-		var d = $.Deferred();
-		var selector = "#content_" + sectionID;
-		var $contentBlock = $(selector);
-		if(!$contentBlock.data('populated')) {
-			app.curPage.requestSectionHtml( sectionID ).done( function( sectionHtml ) {
-				$contentBlock.append( $( sectionHtml ) ).data( 'populated', true );
-				chrome.initContentLinkHandlers( selector );
-				mw.mobileFrontend.references.init( $contentBlock[0], false, { animation: 'none', onClickReference: onClickReference } );
-				d.resolve();
-			});
-		} else {
-			d.resolve();
-		}
-		return d;
-	}
+  function showNotification(text) {
+    alert(text);
+  }
 
-	function handleSectionExpansion() {
-		$(".section_heading").click(function() {
-			var sectionID = $(this).data('section-id');
-			chrome.populateSection(sectionID).done(function() {
-				mw.mobileFrontend.toggle.wm_toggle_section( sectionID );
-				chrome.setupScrolling( "#content" );
-			});
-		});
-	}
+  function confirm(text) {
+    var d = $.Deferred();
 
-	function showNotification(text) {
-		alert(text);
-	}
+    navigator.notification.confirm(
+      text,
+      function (button) {
+        d.resolve(button === 1); //Assumes first button is OK
+      },
+      ""
+    );
 
-	function confirm(text) {
-		var d = $.Deferred();
+    return d;
+  }
+  function initialize() {
+    $.each(platform_initializers, function (index, fun) {
+      fun();
+    });
+    // some reason the android browser is not recognizing the style=block when set in the CSS
+    // it only seems to recognize the style when dynamically set here or when set inline...
+    // the style needs to be explicitly set for logic used in the backButton handler
+    $("#content").css("display", "block");
 
-		navigator.notification.confirm(text, function(button) {
-			d.resolve(button === 1); //Assumes first button is OK
-		}, "");
+    var lastSearchTimeout = null; // Handle for timeout last time a key was pressed
 
-		return d;
-	}
-	function initialize() {
-		$.each(platform_initializers, function(index, fun) {
-			fun();
-		});
-		// some reason the android browser is not recognizing the style=block when set in the CSS
-		// it only seems to recognize the style when dynamically set here or when set inline...
-		// the style needs to be explicitly set for logic used in the backButton handler
-		$('#content').css('display', 'block');
+    preferencesDB.initializeDefaults(function () {
+      /* Split language string about '-' */
+      console.log("language is " + preferencesDB.get("uiLanguage"));
+      if (l10n.isLangRTL(preferencesDB.get("uiLanguage"))) {
+        $("body").attr("dir", "rtl");
+      }
 
-		var lastSearchTimeout = null; // Handle for timeout last time a key was pressed
+      app.setContentLanguage(preferencesDB.get("language"));
 
-		preferencesDB.initializeDefaults(function() {
-			/* Split language string about '-' */
-			console.log('language is ' + preferencesDB.get('uiLanguage'));
-			if(l10n.isLangRTL(preferencesDB.get('uiLanguage'))) {
-				$("body").attr('dir', 'rtl');
-			}
+      // Do localization of the initial interface
+      $(document).bind("mw-messages-ready", function () {
+        $("#mainHeader, #menu").localize();
+        updateMenuState();
+        $("#page-footer-contributors").html(
+          mw.message("page-contributors").plain()
+        );
+        $("#page-footer-license").html(mw.message("page-license").plain());
+        $("#page-footer-terms")
+          .text(mw.message("page-terms").plain())
+          .attr("href", mw.message("page-terms-url").plain())
+          .click(function (event) {
+            // Don't open inside the app. This explodes.
+            chrome.openExternalLink($(this).attr("href"));
+            event.preventDefault();
+          });
+        $("#page-footer-privacy")
+          .text(mw.message("page-privacy").plain())
+          .attr("href", mw.message("page-privacy-url").plain())
+          .click(function (event) {
+            // Don't open inside the app. This explodes.
+            chrome.openExternalLink($(this).attr("href"));
+            event.preventDefault();
+          });
+        $("#show-page-history").click(function () {
+          if (app.curPage) {
+            chrome.openExternalLink(app.curPage.getHistoryUrl());
+          }
+          return false;
+        });
+        $("#show-license-page").click(function () {
+          app.navigateTo(window.LICENSEPAGE, "en");
+          return false;
+        });
+        savedPages
+          .doMigration()
+          .done(function () {
+            chrome.loadFirstPage().done(function () {
+              $("#migrating-saved-pages-overlay").hide();
+            });
+          })
+          .fail(function () {
+            navigator.notification.alert(
+              mw.msg("migrating-saved-pages-failed"),
+              function () {
+                $("#migrating-saved-pages-overlay").hide();
+              }
+            );
+            chrome.loadFirstPage();
+          });
+      });
+      l10n.initLanguages();
 
-			app.setContentLanguage(preferencesDB.get('language'));
+      toggleMoveActions();
 
-			// Do localization of the initial interface
-			$(document).bind("mw-messages-ready", function() {
-				$('#mainHeader, #menu').localize();
-				updateMenuState();
-				$("#page-footer-contributors").html(mw.message('page-contributors').plain());
-				$("#page-footer-license").html(mw.message('page-license').plain());
-				$("#page-footer-terms")
-					.text(mw.message('page-terms').plain())
-					.attr('href', mw.message('page-terms-url').plain())
-					.click(function(event) {
-						// Don't open inside the app. This explodes.
-						chrome.openExternalLink($(this).attr('href'));
-						event.preventDefault();
-					});
-				$("#page-footer-privacy")
-					.text(mw.message('page-privacy').plain())
-					.attr('href', mw.message('page-privacy-url').plain())
-					.click(function(event) {
-						// Don't open inside the app. This explodes.
-						chrome.openExternalLink($(this).attr('href'));
-						event.preventDefault();
-					});
-				$("#show-page-history").click(function() {
-					if(app.curPage) {
-						chrome.openExternalLink(app.curPage.getHistoryUrl());
-					}
-					return false;
-				});
-				$("#show-license-page").click(function() {
-					app.navigateTo(window.LICENSEPAGE, "en");
-					return false;
-				});
-				savedPages.doMigration().done(function() {
-					chrome.loadFirstPage().done(function() {
-						$("#migrating-saved-pages-overlay").hide();
-					});
-				}).fail(function() {
-					navigator.notification.alert(mw.msg('migrating-saved-pages-failed'), function() {
-						$("#migrating-saved-pages-overlay").hide();
-					});
-					chrome.loadFirstPage();
-				});
-			});
-			l10n.initLanguages();
+      $(".titlebarIcon").bind("click", function () {
+        app.loadMainPage();
+        return false;
+      });
+      $("#searchForm")
+        .bind("submit", function () {
+          if (isSpinning()) {
+            if (curSpinningReq !== null) {
+              curSpinningReq.abort();
+              curSpinningReq = null;
+              chrome.hideSpinner();
+            }
+          } else {
+            search.performSearch($("#searchParam").val(), false);
+          }
+          return false;
+        })
+        .bind("keypress", function (event) {
+          if (event.keyCode == 13) {
+            $("#searchParam").blur();
+          } else {
+            // Wait 300ms with no keypress before starting request
+            window.clearTimeout(lastSearchTimeout);
+            lastSearchTimeout = setTimeout(function () {
+              window.search.performSearch($("#searchParam").val(), true);
+            }, 300);
+          }
+        });
+      $("#searchParam").click(function () {
+        $(this).focus(); // Seems to be needed to actually focus on the search bar
+        // Caused by the FastClick implementation
+      });
+      $("#clearSearch").bind("touchstart", function () {
+        clearSearch();
+        return false;
+      });
 
-			toggleMoveActions();
+      $(".closeButton").bind("click", showContent);
+      // Initialize Reference reveal with empty content
+      mw.mobileFrontend.references.init($("#content")[0], true, {
+        onClickReference: onClickReference,
+      });
 
-			$(".titlebarIcon").bind('click', function() {
-				app.loadMainPage();
-				return false;
-			});
-			$("#searchForm").bind('submit', function() {
-				if(isSpinning()) {
-					if(curSpinningReq !== null) {
-						curSpinningReq.abort();
-						curSpinningReq = null;
-						chrome.hideSpinner();
-					}
-				} else {
-					search.performSearch($("#searchParam").val(), false);
-				}
-				return false;
-			}).bind('keypress', function(event) {
-				if(event.keyCode == 13)
-				{
-					$("#searchParam").blur();
-				}else{
-					// Wait 300ms with no keypress before starting request
-					window.clearTimeout(lastSearchTimeout);
-					lastSearchTimeout = setTimeout(function() {
-						window.search.performSearch($("#searchParam").val(), true);
-					}, 300);
-				}
-			});
-			$("#searchParam").click(function() {
-				$(this).focus(); // Seems to be needed to actually focus on the search bar
-				// Caused by the FastClick implementation
-			});
-			$("#clearSearch").bind('touchstart', function() {
-				clearSearch();
-				return false;
-			});
+      app.setFontSize(preferencesDB.get("fontSize"));
+    });
+  }
 
-			$(".closeButton").bind('click', showContent);
-			// Initialize Reference reveal with empty content
-			mw.mobileFrontend.references.init($("#content")[0], true, {onClickReference: onClickReference} );
+  // Bind to links inside reference reveal, handle them properly
+  function onClickReference() {
+    chrome.initContentLinkHandlers("#mf-references");
+  }
 
-			app.setFontSize(preferencesDB.get('fontSize'));
-		});
+  function loadFirstPage() {
+    return app.loadMainPage();
+  }
 
-	}
+  function isTwoColumnView() {
+    // should match the CSS media queries
+    // check for goodscroll is so we don't use it on Android 2.x tablets
+    return document.width >= 640 && $("html").hasClass("goodscroll");
+  }
 
-	// Bind to links inside reference reveal, handle them properly
-	function onClickReference() {
-			chrome.initContentLinkHandlers("#mf-references");
-	}
+  function hideOverlays() {
+    $("#savedPages").hide();
+    $("#history").hide();
+    $("#searchresults").hide();
+    $("#settings").hide();
+    $("#about-page-overlay").hide();
+    $("#langlinks").hide();
+    $("html").removeClass("overlay-open");
+  }
 
-	function loadFirstPage() {
-		return app.loadMainPage();
-	}
+  function showContent() {
+    hideOverlays();
+    $("#mainHeader").show();
+    $("#content").show();
+    $("#menu").show();
+  }
 
-	function isTwoColumnView() {
-		// should match the CSS media queries
-		// check for goodscroll is so we don't use it on Android 2.x tablets
-		return (document.width >= 640) && $('html').hasClass('goodscroll');
-	}
+  function hideContent() {
+    $("#mainHeader").hide();
+    if (!isTwoColumnView()) {
+      $("#content").hide();
+      $("#menu").hide();
+    } else {
+      $("html").addClass("overlay-open");
+    }
+  }
 
-	function hideOverlays() {
-		$('#savedPages').hide();
-		$('#history').hide();
-		$('#searchresults').hide();
-		$('#settings').hide();
-		$('#about-page-overlay').hide();
-		$('#langlinks').hide();
-		$('html').removeClass('overlay-open');
-	}
+  function popupErrorMessage(xhr) {
+    if (xhr === "error") {
+      navigator.notification.alert(mw.message("error-offline-prompt").plain());
+    } else {
+      navigator.notification.alert(
+        mw.message("error-server-issue-prompt").plain()
+      );
+    }
+  }
 
-	function showContent() {
-		hideOverlays();
-		$('#mainHeader').show();
-		$('#content').show();
-		$("#menu").show();
-	}
+  function toggleMoveActions() {
+    var canGoForward = currentHistoryIndex < pageHistory.length - 1;
+    var canGoBackward = currentHistoryIndex > 0;
 
-	function hideContent() {
-		$('#mainHeader').hide();
-		if(!isTwoColumnView()) {
-			$('#content').hide();
-			$("#menu").hide();
-		} else {
-			$('html').addClass('overlay-open');
-		}
-	}
+    setMenuItemState("go-forward", canGoForward, true);
+    setMenuItemState("go-back", canGoBackward, true);
+  }
 
-	function popupErrorMessage(xhr) {
-		if(xhr === "error") {
-			navigator.notification.alert(mw.message('error-offline-prompt').plain());
-		} else {
-			navigator.notification.alert(mw.message('error-server-issue-prompt').plain());
-		}
-	}
+  function goBack() {
+    console.log(
+      "currentHistoryIndex " +
+        currentHistoryIndex +
+        " history length " +
+        pageHistory.length
+    );
 
-	function toggleMoveActions() {
-		var canGoForward = currentHistoryIndex < (pageHistory.length -1);
-		var canGoBackward = currentHistoryIndex > 0;
+    if ($("#content").css("display") == "block") {
+      // We're showing the main view
+      currentHistoryIndex -= 1;
+      chrome.showSpinner();
+      // Jumping through history is unsafe with the current urlCache system
+      // sometimes we get loaded without the fixups, and everything esplodes.
+      //window.history.go(-1);
+      if (currentHistoryIndex < 0) {
+        console.log("no more history to browse exiting...");
+        navigator.app.exitApp();
+      } else {
+        console.log(
+          "going back to item " +
+            currentHistoryIndex +
+            ": " +
+            pageHistory[currentHistoryIndex]
+        );
+        app.navigateToPage(pageHistory[currentHistoryIndex], {
+          updateHistory: false,
+        });
+      }
+    } else {
+      // We're showing one of the overlays; cancel out of it.
+      showContent();
+    }
+  }
 
-		setMenuItemState('go-forward', canGoForward, true);
-		setMenuItemState('go-back', canGoBackward, true);
-	}
+  function goForward() {
+    chrome.showSpinner();
+    console.log(pageHistory.length);
+    console.log(currentHistoryIndex);
+    if (currentHistoryIndex < pageHistory.length - 1) {
+      app.navigateToPage(pageHistory[++currentHistoryIndex], {
+        updateHistory: false,
+      });
+    } else {
+      chrome.hideSpinner();
+      toggleMoveActions();
+    }
+  }
 
-	function goBack() {
-		console.log('currentHistoryIndex '+currentHistoryIndex + ' history length '+pageHistory.length);
+  function setupFastClick(selector) {
+    $(selector).each(function (i, el) {
+      var $el = $(el);
+      if ($el.data("fastclick")) {
+        return;
+      } else {
+        $el.data("fastclick", new NoClickDelay($el[0]));
+      }
+    });
+  }
 
-		if ($('#content').css('display') == "block") {
-			// We're showing the main view
-			currentHistoryIndex -= 1;
-			chrome.showSpinner();
-			// Jumping through history is unsafe with the current urlCache system
-			// sometimes we get loaded without the fixups, and everything esplodes.
-			//window.history.go(-1);
-			if(currentHistoryIndex < 0) {
-				console.log("no more history to browse exiting...");
-				navigator.app.exitApp();
-			} else {
-				console.log('going back to item ' + currentHistoryIndex + ': ' + pageHistory[currentHistoryIndex]);
-				app.navigateToPage(pageHistory[currentHistoryIndex], {
-					updateHistory: false
-				});
-			}
-		} else {
-			// We're showing one of the overlays; cancel out of it.
-			showContent();
-		}
-	}
+  function initContentLinkHandlers(selector) {
+    $(selector)
+      .find("a")
+      .unbind("click")
+      .bind("click", function (event) {
+        var target = this,
+          url = target.href, // expanded from relative links for us
+          href = $(target).attr("href"); // unexpanded, may be relative
 
-	function goForward() {
-		chrome.showSpinner();
-		console.log(pageHistory.length);
-		console.log(currentHistoryIndex);
-		if (currentHistoryIndex < pageHistory.length - 1) {
-			app.navigateToPage(pageHistory[++currentHistoryIndex], {
-				updateHistory: false
-			});
-		} else {
-			chrome.hideSpinner();
-			toggleMoveActions();
-		}
-	}
+        event.preventDefault();
+        if (
+          url.match(
+            new RegExp("^https?://([^/]+)." + PROJECTNAME + ".org/wiki/")
+          )
+        ) {
+          // ...and load it through our intermediate cache layer.
+          app.navigateToPage(url);
+        } else {
+          // ...and open it in parent context for reals.
+          chrome.openExternalLink(url);
+        }
+      });
+  }
 
-	function setupFastClick(selector) {
-		$(selector).each(function(i, el) {
-			var $el = $(el);
-			if($el.data('fastclick')) {
-				return;
-			} else {
-				$el.data('fastclick', new NoClickDelay($el[0]));
-			}
-		});
-	}
+  function setupScrolling(selector) {
+    // Setup iScroll4 in iOS 4.x.
+    // NOOP otherwise
+  }
 
-	function initContentLinkHandlers(selector) {
-		$(selector).find('a').unbind('click').bind('click', function(event) {
-			var target = this,
-				url = target.href,             // expanded from relative links for us
-				href = $(target).attr('href'); // unexpanded, may be relative
+  function scrollTo(selector, posY) {
+    $(selector).scrollTop(posY);
+  }
 
-			event.preventDefault();
-			if (url.match(new RegExp("^https?://([^/]+)\." + PROJECTNAME + "\.org/wiki/"))) {
-				// ...and load it through our intermediate cache layer.
-				app.navigateToPage(url);
-			} else {
-				// ...and open it in parent context for reals.
-				chrome.openExternalLink(url);
-			}
-		});
-	}
-	
-	function setupScrolling(selector) {
-		// Setup iScroll4 in iOS 4.x. 
-		// NOOP otherwise
-	}
+  function openExternalLink(url) {
+    // This seems to successfully launch the native browser, and works
+    // both with the stock browser and Firefox as user's default browser
+    //document.location = url;
+    window.open(url);
+  }
 
-	function scrollTo(selector, posY) {
-		$(selector).scrollTop(posY);
-	}
-
-	function openExternalLink(url) {
-		// This seems to successfully launch the native browser, and works
-		// both with the stock browser and Firefox as user's default browser
-		//document.location = url;
-		window.open(url);
-	}
-
-	return {
-		initialize: initialize,
-		renderHtml: renderHtml,
-		loadFirstPage: loadFirstPage,
-		setSpinningReq: setSpinningReq,
-		showSpinner: showSpinner,
-		hideSpinner: hideSpinner,
-		isSpinning: isSpinning,
-		showNotification: showNotification,
-		goBack: goBack,
-		goForward: goForward,
-		hideOverlays: hideOverlays,
-		showContent: showContent,
-		hideContent: hideContent,
-		addPlatformInitializer: addPlatformInitializer,
-		popupErrorMessage: popupErrorMessage,
-		setupFastClick: setupFastClick,
-		isTwoColumnView: isTwoColumnView,
-		openExternalLink: openExternalLink,
-		toggleMoveActions: toggleMoveActions,
-		confirm: confirm,
-		setupScrolling: setupScrolling,
-		scrollTo: scrollTo,
-		populateSection: populateSection,
-		initContentLinkHandlers: initContentLinkHandlers
-	};
-}();
+  return {
+    initialize: initialize,
+    renderHtml: renderHtml,
+    loadFirstPage: loadFirstPage,
+    setSpinningReq: setSpinningReq,
+    showSpinner: showSpinner,
+    hideSpinner: hideSpinner,
+    isSpinning: isSpinning,
+    showNotification: showNotification,
+    goBack: goBack,
+    goForward: goForward,
+    hideOverlays: hideOverlays,
+    showContent: showContent,
+    hideContent: hideContent,
+    addPlatformInitializer: addPlatformInitializer,
+    popupErrorMessage: popupErrorMessage,
+    setupFastClick: setupFastClick,
+    isTwoColumnView: isTwoColumnView,
+    openExternalLink: openExternalLink,
+    toggleMoveActions: toggleMoveActions,
+    confirm: confirm,
+    setupScrolling: setupScrolling,
+    scrollTo: scrollTo,
+    populateSection: populateSection,
+    initContentLinkHandlers: initContentLinkHandlers,
+  };
+})();

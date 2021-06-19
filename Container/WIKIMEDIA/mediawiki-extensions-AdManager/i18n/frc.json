@@ -1,9 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Hangmanwa7id"
-		]
-	},
-	"admanager_labelPage": "Titres de page",
-	"admanager_labelCategory": "Noms de classe"
+  "@metadata": {
+    "authors": ["Hangmanwa7id"]
+  },
+  "admanager_labelPage": "Titres de page",
+  "admanager_labelCategory": "Noms de classe"
 }

@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Chrisportelli",
-			"Leli Forte"
-		]
+		"authors": ["Chrisportelli", "Leli Forte"]
 	},
 	"config-title": "Installazzjoni ta' MediaWiki $1",
 	"config-information": "Informazzjoni",

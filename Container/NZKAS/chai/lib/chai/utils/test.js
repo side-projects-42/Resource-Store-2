@@ -8,7 +8,7 @@
  * Module dependancies
  */
 
-var flag = require('./flag');
+var flag = require("./flag");
 
 /**
  * # test(object, expression)
@@ -20,7 +20,7 @@ var flag = require('./flag');
  */
 
 module.exports = function (obj, args) {
-  var negate = flag(obj, 'negate')
-    , expr = args[0];
+  var negate = flag(obj, "negate"),
+    expr = args[0];
   return negate ? !expr : expr;
 };

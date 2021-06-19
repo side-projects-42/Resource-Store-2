@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Sveinn í Felli"
-		]
-	},
-	"apierror-abusefilter-badsyntax": "Sían er með ranga málskipun."
+  "@metadata": {
+    "authors": ["Sveinn í Felli"]
+  },
+  "apierror-abusefilter-badsyntax": "Sían er með ranga málskipun."
 }

@@ -121,9 +121,9 @@ export const getObjectSubset = (object: any, subset: any): any => {
   ) {
     const trimmed: any = {};
     Object.keys(subset)
-      .filter(key => hasOwnProperty(object, key))
+      .filter((key) => hasOwnProperty(object, key))
       .forEach(
-        key => (trimmed[key] = getObjectSubset(object[key], subset[key])),
+        (key) => (trimmed[key] = getObjectSubset(object[key], subset[key])),
       );
 
     if (Object.keys(trimmed).length > 0) {
@@ -273,7 +273,7 @@ export const subsetEquality = (
   }
 
   return Object.keys(subset).every(
-    key =>
+    (key) =>
       object != null &&
       hasOwnProperty(object, key) &&
       equals(object[key], subset[key], [iterableEquality, subsetEquality]),
@@ -307,7 +307,7 @@ export const partition = <T>(
 ): [Array<T>, Array<T>] => {
   const result: [Array<T>, Array<T>] = [[], []];
 
-  items.forEach(item => result[predicate(item) ? 0 : 1].push(item));
+  items.forEach((item) => result[predicate(item) ? 0 : 1].push(item));
 
   return result;
 };

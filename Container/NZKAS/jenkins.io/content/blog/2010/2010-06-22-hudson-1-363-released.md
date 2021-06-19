@@ -4,19 +4,20 @@
 :nodeid: 216
 :created: 1277215200
 :tags:
-- general
-- releases
-- jenkinsci
+  - general
+  - releases
+  - jenkinsci
 :author: rtyler
 ---
+
 <img src="/sites/default/files/images/Hudson_coatofarms.gif" align="left" hspace="6"/> Last Friday the Hudson team released release **1.363** which is yet another mixed bag of enhancements and bug fixes. Along with the usual bunch of fixes, this release includes a number of localization updates courtesy of a team of Hudson community volunteers participating in the Hudson [Internationalization project](http://wiki.hudson-ci.org/display/HUDSON/Internationalization).
 
-It is also worth noting that this post is being published on Tuesday, contrary to the schedule that I operated on with Continuous Blog, I will no longer be posting release updates on Monday morning. Traditionally Hudson is released Friday afternoon (PST), meaning any potential regressions are reported early on Monday morning after our European users start to upgrade. Publishing this release announcement on Tuesday gives me more time to test out the release so I can report with greater confidence in the reliability of the update. (*Note*: This may change in the future as we push for easier RC testing capabilities within Hudson)
-
+It is also worth noting that this post is being published on Tuesday, contrary to the schedule that I operated on with Continuous Blog, I will no longer be posting release updates on Monday morning. Traditionally Hudson is released Friday afternoon (PST), meaning any potential regressions are reported early on Monday morning after our European users start to upgrade. Publishing this release announcement on Tuesday gives me more time to test out the release so I can report with greater confidence in the reliability of the update. (_Note_: This may change in the future as we push for easier RC testing capabilities within Hudson)
 
 If you're a regular reader of the Hudson Labs blog, you may also notice that this change log looks eerily similar to the [1.362 announcement](http://www.hudson-labs.org/content/hudson-1362-released) from last week. Turns out I had mistakenly taken the upcoming changes from 1.363 and reported them as fixes in 1.362; I've since updated the post regarding 1.362's change log.
 
 #### Bug Fixes
+
 <ul class=image> 
   <li class=bug> 
     Fix queue handling to close locking gap between removing job from queue and starting build,
@@ -39,6 +40,7 @@ If you're a regular reader of the Hudson Labs blog, you may also notice that thi
 </ul>
 
 #### Enhancements
+
 <ul>
   <li class=rfe> 
     Avoid pointless and harmful redirection when downloading slave.jar. 

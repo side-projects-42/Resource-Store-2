@@ -12,7 +12,7 @@ class MockStdinWatchPlugin {
   constructor({stdin, config}) {
     this._stdin = stdin;
     if (typeof this._stdin.setRawMode !== 'function') {
-      this._stdin.setRawMode = function() {};
+      this._stdin.setRawMode = function () {};
     }
     this._config = config;
   }
@@ -20,7 +20,7 @@ class MockStdinWatchPlugin {
   apply(jestHooks) {
     jestHooks.onTestRunComplete(() => {
       const {keys} = this._config.input.shift();
-      keys.forEach(key => this._stdin.emit('data', key));
+      keys.forEach((key) => this._stdin.emit('data', key));
     });
   }
 }

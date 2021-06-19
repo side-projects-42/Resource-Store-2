@@ -2,7 +2,7 @@
  * @class mw.errorLogger
  * @singleton
  */
-'use strict';
+"use strict";
 
 /**
  * Fired via mw.track when an error is not handled by local code and is caught by the
@@ -35,30 +35,32 @@
  * @fires global_error
  * @fires error_caught
  */
-function installGlobalHandler( window ) {
+function installGlobalHandler(window) {
 	// We will preserve the return value of the previous handler. window.onerror works the
 	// opposite way than normal event handlers (returning true will prevent the default
 	// action, returning false will let the browser handle the error normally, by e.g.
 	// logging to the console), so our fallback old handler needs to return false.
-	var oldHandler = window.onerror || function () {
-		return false;
-	};
+	var oldHandler =
+		window.onerror ||
+		function () {
+			return false;
+		};
 
-	window.onerror = function ( errorMessage, url, line, column, errorObject ) {
-		mw.track( 'global.error', {
+	window.onerror = function (errorMessage, url, line, column, errorObject) {
+		mw.track("global.error", {
 			errorMessage: errorMessage,
 			url: url,
 			lineNumber: line,
 			columnNumber: column,
-			stackTrace: errorObject ? errorObject.stack : '',
-			errorObject: errorObject
-		} );
+			stackTrace: errorObject ? errorObject.stack : "",
+			errorObject: errorObject,
+		});
 
-		if ( errorObject ) {
-			mw.track( 'error.uncaught', errorObject );
+		if (errorObject) {
+			mw.track("error.uncaught", errorObject);
 		}
 
-		return oldHandler.apply( this, arguments );
+		return oldHandler.apply(this, arguments);
 	};
 }
 
@@ -73,13 +75,13 @@ mw.errorLogger = {
 	 *   high level; e.g. an extension name).
 	 * @fires error_caught
 	 */
-	logError: function ( error, topic ) {
-		mw.track( topic || 'error.caught', error );
-	}
+	logError: function (error, topic) {
+		mw.track(topic || "error.caught", error);
+	},
 };
 
-if ( window.QUnit ) {
+if (window.QUnit) {
 	mw.errorLogger.installGlobalHandler = installGlobalHandler;
 } else {
-	installGlobalHandler( window );
+	installGlobalHandler(window);
 }

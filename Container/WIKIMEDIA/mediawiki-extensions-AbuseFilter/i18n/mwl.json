@@ -1,10 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Athena in Wonderland",
-			"MokaAkashiyaPT"
-		]
-	},
-	"abusefilter-disabled": "Zatibado",
-	"abusefilter-diff-info": "Anformaçones básicas"
+  "@metadata": {
+    "authors": ["Athena in Wonderland", "MokaAkashiyaPT"]
+  },
+  "abusefilter-disabled": "Zatibado",
+  "abusefilter-diff-info": "Anformaçones básicas"
 }

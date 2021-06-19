@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Masterches"
-		]
-	},
-	"abusefilter-desc": "Aplike avètisman otomatik lè genyen modifikasyon"
+  "@metadata": {
+    "authors": ["Masterches"]
+  },
+  "abusefilter-desc": "Aplike avètisman otomatik lè genyen modifikasyon"
 }

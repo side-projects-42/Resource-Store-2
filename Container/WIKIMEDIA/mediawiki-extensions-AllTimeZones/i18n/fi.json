@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Linnea"
-		]
-	},
-	"alltimezones-desc": "Näyttää kaikkien aikavyöhykkeiden päivämäärät"
+  "@metadata": {
+    "authors": ["Linnea"]
+  },
+  "alltimezones-desc": "Näyttää kaikkien aikavyöhykkeiden päivämäärät"
 }

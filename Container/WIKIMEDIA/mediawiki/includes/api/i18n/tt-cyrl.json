@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Don Alessandro",
-			"Ерней",
-			"Ильнар"
-		]
+		"authors": ["Don Alessandro", "Ерней", "Ильнар"]
 	},
 	"apihelp-feedcontributions-param-newonly": "Битләр ясау үзгәртмәләре генә күрсәтелсен.",
 	"apihelp-feedcontributions-param-hideminor": "Кече төзәтмәләрне яшерергә.",

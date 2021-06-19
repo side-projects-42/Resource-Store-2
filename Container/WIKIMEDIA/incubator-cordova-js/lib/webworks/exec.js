@@ -1,6 +1,6 @@
-var manager = require('cordova/plugin/manager'),
-    cordova = require('cordova'),
-    utils = require('cordova/utils');
+var manager = require("cordova/plugin/manager"),
+  cordova = require("cordova"),
+  utils = require("cordova/utils");
 
 /**
  * Execute a cordova command.  It is up to the native side whether this action
@@ -17,42 +17,41 @@ var manager = require('cordova/plugin/manager'),
  * @param {String[]} [args]     Zero or more arguments to pass to the method
  */
 
-module.exports = function(success, fail, service, action, args) {
-    try {
-        var v = manager.exec(success, fail, service, action, args);
+module.exports = function (success, fail, service, action, args) {
+  try {
+    var v = manager.exec(success, fail, service, action, args);
 
-        // If status is OK, then return value back to caller
-        if (v.status == cordova.callbackStatus.OK) {
-
-            // If there is a success callback, then call it now with returned value
-            if (success) {
-                try {
-                    success(v.message);
-                }
-                catch (e) {
-                    console.log("Error in success callback: "+cordova.callbackId+" = "+e);
-                }
-
-            }
-            return v.message;
-        } else if (v.status == cordova.callbackStatus.NO_RESULT) {
-
-        } else {
-            // If error, then display error
-            console.log("Error: Status="+v.status+" Message="+v.message);
-
-            // If there is a fail callback, then call it now with returned value
-            if (fail) {
-                try {
-                    fail(v.message);
-                }
-                catch (e) {
-                    console.log("Error in error callback: "+cordova.callbackId+" = "+e);
-                }
-            }
-            return null;
+    // If status is OK, then return value back to caller
+    if (v.status == cordova.callbackStatus.OK) {
+      // If there is a success callback, then call it now with returned value
+      if (success) {
+        try {
+          success(v.message);
+        } catch (e) {
+          console.log(
+            "Error in success callback: " + cordova.callbackId + " = " + e
+          );
         }
-    } catch (e) {
-        utils.alert("Error: "+e);
+      }
+      return v.message;
+    } else if (v.status == cordova.callbackStatus.NO_RESULT) {
+    } else {
+      // If error, then display error
+      console.log("Error: Status=" + v.status + " Message=" + v.message);
+
+      // If there is a fail callback, then call it now with returned value
+      if (fail) {
+        try {
+          fail(v.message);
+        } catch (e) {
+          console.log(
+            "Error in error callback: " + cordova.callbackId + " = " + e
+          );
+        }
+      }
+      return null;
     }
+  } catch (e) {
+    utils.alert("Error: " + e);
+  }
 };

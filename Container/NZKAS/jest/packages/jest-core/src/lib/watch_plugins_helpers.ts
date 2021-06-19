@@ -13,14 +13,14 @@ export const filterInteractivePlugins = (
   globalConfig: Config.GlobalConfig,
 ): Array<WatchPlugin> => {
   const usageInfos = watchPlugins.map(
-    p => p.getUsageInfo && p.getUsageInfo(globalConfig),
+    (p) => p.getUsageInfo && p.getUsageInfo(globalConfig),
   );
 
   return watchPlugins.filter((_plugin, i) => {
     const usageInfo = usageInfos[i];
     if (usageInfo) {
       const {key} = usageInfo;
-      return !usageInfos.slice(i + 1).some(u => !!u && key === u.key);
+      return !usageInfos.slice(i + 1).some((u) => !!u && key === u.key);
     }
 
     return false;
@@ -55,5 +55,5 @@ export const getSortedUsageRows = (
       }
       return 0;
     })
-    .map(p => p.getUsageInfo && p.getUsageInfo(globalConfig))
+    .map((p) => p.getUsageInfo && p.getUsageInfo(globalConfig))
     .filter(notEmpty);

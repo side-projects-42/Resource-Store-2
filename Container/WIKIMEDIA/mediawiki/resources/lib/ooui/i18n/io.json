@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Idojc",
-			"Joao Xavier"
-		]
+		"authors": ["Idojc", "Joao Xavier"]
 	},
 	"ooui-outline-control-move-down": "Movar elemento adsube",
 	"ooui-outline-control-move-up": "Movar elemento adsupere",

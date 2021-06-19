@@ -15,10 +15,7 @@
   "description": "New Relic Universal Discovery Integration",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Rust",
-  "projectTags": [
-    "nrlabs",
-    "nri"
-  ],
+  "projectTags": ["nrlabs", "nri"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic integration - Universal Discovery (nri-universal-discovery)",

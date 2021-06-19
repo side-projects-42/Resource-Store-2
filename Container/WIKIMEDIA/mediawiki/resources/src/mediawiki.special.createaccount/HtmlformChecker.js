@@ -13,15 +13,15 @@
  *  or failure of validation, and an array 'messages' to be passed to
  *  setErrors() on failure.
  */
-function HtmlformChecker( $element, validator ) {
+function HtmlformChecker($element, validator) {
 	this.validator = validator;
 	this.$element = $element;
 
-	this.$errorBox = $element.next( '.errorbox' );
-	if ( !this.$errorBox.length ) {
-		this.$errorBox = $( '<div>' );
+	this.$errorBox = $element.next(".errorbox");
+	if (!this.$errorBox.length) {
+		this.$errorBox = $("<div>");
 		this.$errorBox.hide();
-		$element.after( this.$errorBox );
+		$element.after(this.$errorBox);
 	}
 
 	this.currentValue = this.$element.val();
@@ -35,17 +35,17 @@ function HtmlformChecker( $element, validator ) {
  * @return {HtmlformChecker}
  * @chainable
  */
-HtmlformChecker.prototype.attach = function ( $extraElements ) {
+HtmlformChecker.prototype.attach = function ($extraElements) {
 	var $e = this.$element,
 		// We need to hook to all of these events to be sure we are
 		// notified of all changes to the value of an <input type=text>
 		// field.
-		events = 'keyup keydown change mouseup cut paste focus blur';
+		events = "keyup keydown change mouseup cut paste focus blur";
 
-	if ( $extraElements ) {
-		$e = $e.add( $extraElements );
+	if ($extraElements) {
+		$e = $e.add($extraElements);
 	}
-	$e.on( events, mw.util.debounce( 1000, this.validate.bind( this ) ) );
+	$e.on(events, mw.util.debounce(1000, this.validate.bind(this)));
 
 	return this;
 };
@@ -61,23 +61,23 @@ HtmlformChecker.prototype.validate = function () {
 		value = this.$element.val();
 
 	// Abort any pending requests.
-	if ( this.currentRequest && this.currentRequest.abort ) {
+	if (this.currentRequest && this.currentRequest.abort) {
 		this.currentRequest.abort();
 	}
 
-	if ( value === '' ) {
+	if (value === "") {
 		this.currentValue = value;
-		this.setErrors( true, [] );
+		this.setErrors(true, []);
 		return;
 	}
 
-	this.currentRequest = currentRequestInternal = this.validator( value )
-		.done( function ( info ) {
+	this.currentRequest = currentRequestInternal = this.validator(value)
+		.done(function (info) {
 			var forceReplacement = value !== that.currentValue;
 
 			// Another request was fired in the meantime, the result we got here is no longer current.
 			// This shouldn't happen as we abort pending requests, but you never know.
-			if ( that.currentRequest !== currentRequestInternal ) {
+			if (that.currentRequest !== currentRequestInternal) {
 				return;
 			}
 			// If we're here, then the current request has finished, avoid calling .abort() needlessly.
@@ -85,11 +85,12 @@ HtmlformChecker.prototype.validate = function () {
 
 			that.currentValue = value;
 
-			that.setErrors( info.valid, info.messages, forceReplacement );
-		} ).fail( function () {
+			that.setErrors(info.valid, info.messages, forceReplacement);
+		})
+		.fail(function () {
 			that.currentValue = null;
-			that.setErrors( true, [] );
-		} );
+			that.setErrors(true, []);
+		});
 
 	return currentRequestInternal;
 };
@@ -105,71 +106,69 @@ HtmlformChecker.prototype.validate = function () {
  * @return {HtmlformChecker}
  * @chainable
  */
-HtmlformChecker.prototype.setErrors = function ( valid, errors, forceReplacement ) {
+HtmlformChecker.prototype.setErrors = function (
+	valid,
+	errors,
+	forceReplacement
+) {
 	var $oldErrorBox,
 		showFunc,
 		$text,
 		replace,
 		$errorBox = this.$errorBox;
 
-	if ( errors.length === 0 ) {
+	if (errors.length === 0) {
 		// FIXME: Use CSS transition
 		// eslint-disable-next-line no-jquery/no-slide
-		$errorBox.slideUp( function () {
-			$errorBox
-				.removeAttr( 'class' )
-				.empty();
-		} );
+		$errorBox.slideUp(function () {
+			$errorBox.removeAttr("class").empty();
+		});
 	} else {
 		// Animate the replacement if told to by the caller (i.e. to make it visually
 		// obvious that the changed field value gives the same errorbox) or if
 		// the errorbox text changes (because it makes more sense than
 		// changing the text with no animation).
 		replace = forceReplacement;
-		if ( !replace ) {
-			$text = $( '<div>' );
+		if (!replace) {
+			$text = $("<div>");
 			// Match behavior of HTMLFormField::formatErrors()
-			if ( errors.length === 1 ) {
-				$text.append( errors[ 0 ] );
+			if (errors.length === 1) {
+				$text.append(errors[0]);
 			} else {
 				$text.append(
-					$( '<ul>' ).append(
-						errors.map( function ( e ) {
-							return $( '<li>' ).append( e );
-						} )
+					$("<ul>").append(
+						errors.map(function (e) {
+							return $("<li>").append(e);
+						})
 					)
 				);
 			}
-			if ( $text.text() !== $errorBox.text() ) {
+			if ($text.text() !== $errorBox.text()) {
 				replace = true;
 			}
 		}
 
 		$oldErrorBox = $errorBox;
-		if ( replace ) {
-			this.$errorBox = $errorBox = $( '<div>' );
+		if (replace) {
+			this.$errorBox = $errorBox = $("<div>");
 			$errorBox.hide();
-			$oldErrorBox.after( this.$errorBox );
+			$oldErrorBox.after(this.$errorBox);
 		}
 
 		showFunc = function () {
-			if ( $oldErrorBox !== $errorBox ) {
-				$oldErrorBox
-					.removeAttr( 'class' )
-					.detach();
+			if ($oldErrorBox !== $errorBox) {
+				$oldErrorBox.removeAttr("class").detach();
 			}
-			$errorBox
-				.attr( 'class', valid ? 'warningbox' : 'errorbox' )
-				.empty();
+			$errorBox.attr("class", valid ? "warningbox" : "errorbox").empty();
 			// Match behavior of HTMLFormField::formatErrors()
-			if ( errors.length === 1 ) {
-				$errorBox.append( errors[ 0 ] );
+			if (errors.length === 1) {
+				$errorBox.append(errors[0]);
 			} else {
 				$errorBox.append(
-					$( '<ul>' ).append(
-						errors.map( function ( e ) {
-							return $( '<li>' ).append( e );
-						} )
+					$("<ul>").append(
+						errors.map(function (e) {
+							return $("<li>").append(e);
+						})
 					)
 				);
 			}
@@ -180,10 +179,11 @@ HtmlformChecker.prototype.setErrors = function ( valid, errors, forceReplacement
 		if (
 			$oldErrorBox !== $errorBox &&
 			// eslint-disable-next-line no-jquery/no-class-state
-			( $oldErrorBox.hasClass( 'errorbox' ) || $oldErrorBox.hasClass( 'warningbox' ) )
+			($oldErrorBox.hasClass("errorbox") ||
+				$oldErrorBox.hasClass("warningbox"))
 		) {
 			// eslint-disable-next-line no-jquery/no-slide
-			$oldErrorBox.slideUp( showFunc );
+			$oldErrorBox.slideUp(showFunc);
 		} else {
 			showFunc();
 		}

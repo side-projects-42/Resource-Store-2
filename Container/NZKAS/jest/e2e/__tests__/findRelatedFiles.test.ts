@@ -122,7 +122,7 @@ describe('--findRelatedTests flag', () => {
       wrap(
         rest
           .split('\n')
-          .map(s => s.trim())
+          .map((s) => s.trim())
           .sort()
           .join('\n'),
       ),
@@ -174,7 +174,7 @@ describe('--findRelatedTests flag', () => {
       wrap(
         rest
           .split('\n')
-          .map(s => s.trim())
+          .map((s) => s.trim())
           .sort()
           .join('\n'),
       ),

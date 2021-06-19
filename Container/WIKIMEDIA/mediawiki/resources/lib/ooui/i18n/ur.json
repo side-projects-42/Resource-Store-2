@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"BukhariSaeed",
-			"Muhammad Shuaib",
-			"Zainab Meher"
-		]
+		"authors": ["BukhariSaeed", "Muhammad Shuaib", "Zainab Meher"]
 	},
 	"ooui-outline-control-move-down": "نیچے کھسکائیں",
 	"ooui-outline-control-move-up": "اوپر کھسکائیں",

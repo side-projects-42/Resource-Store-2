@@ -1,8 +1,8 @@
 Attending:
 
-* David Baker
-* Michael Kaiser-Nyman
-* Ricardo Mendes
+- David Baker
+- Michael Kaiser-Nyman
+- Ricardo Mendes
 
 ---
 
@@ -83,8 +83,8 @@ MKN: DB if you are passionate about trying to organize the mess, you could start
 MKN: Change highlighting (https://github.com/emberjs/guides/issues/624) - should we do this?
 
 LK: We don't really have a standard of how code snippets should look - most are always incomplete for brevity.
-    Also some continue previous examples. Some use elipses.
-    Best would be to point to a repo with the full file.
+Also some continue previous examples. Some use elipses.
+Best would be to point to a repo with the full file.
 
 MKN: Let's standardize on always using elipses except for `import Ember from 'ember'`.
 

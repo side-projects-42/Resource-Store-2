@@ -1,0 +1,12 @@
+<div class="card-header h3">
+  Current and Future Events
+</div>
+<div class="card body container-fluid">
+  <ul>
+    <% @events.each do |event| %>
+    <li><%= link_to event.name, event_path(event) %></li>
+    <% end %>
+  </ul>
+
+  <p><%= link_to "Back to All Events", events_path, class: "btn btn-primary" %></p>
+</div>

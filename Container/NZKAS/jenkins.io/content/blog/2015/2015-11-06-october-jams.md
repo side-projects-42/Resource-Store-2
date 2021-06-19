@@ -4,11 +4,12 @@
 :nodeid: 645
 :created: 1446847464
 :tags:
-- general
-- cia
-- meetup
+  - general
+  - cia
+  - meetup
 :author: alyssat
 ---
+
 <div style="float:right; margin:1em">
 <img src="http://jenkins-ci.org/sites/default/files/images/october-jams-image_0.jpeg" width=250/>
 </div>

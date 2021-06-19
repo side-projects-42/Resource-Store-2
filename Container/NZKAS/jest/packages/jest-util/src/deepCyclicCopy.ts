@@ -15,12 +15,12 @@ export type DeepCyclicCopyOptions = {
 // Node 6 does not have gOPDs, so we define a simple polyfill for it.
 if (!Object.getOwnPropertyDescriptors) {
   // @ts-ignore: polyfill
-  Object.getOwnPropertyDescriptors = obj => {
+  Object.getOwnPropertyDescriptors = (obj) => {
     const list: {[key: string]: PropertyDescriptor | undefined} = {};
 
     (Object.getOwnPropertyNames(obj) as Array<string | symbol>)
       .concat(Object.getOwnPropertySymbols(obj))
-      .forEach(key => {
+      .forEach((key) => {
         // @ts-ignore: assignment with a Symbol is OK.
         list[key] = Object.getOwnPropertyDescriptor(obj, key);
       });
@@ -59,7 +59,7 @@ function deepCyclicCopyObject<T>(
 
   cycles.set(object, newObject);
 
-  Object.keys(descriptors).forEach(key => {
+  Object.keys(descriptors).forEach((key) => {
     if (options.blacklist && options.blacklist.has(key)) {
       delete descriptors[key];
       return;
@@ -86,7 +86,7 @@ function deepCyclicCopyArray<T>(
   cycles: WeakMap<any, any>,
 ): T {
   const newArray = options.keepPrototype
-    ? new (Object.getPrototypeOf(array)).constructor(array.length)
+    ? new (Object.getPrototypeOf(array).constructor)(array.length)
     : [];
   const length = array.length;
 

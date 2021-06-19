@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Silovan"
-		]
+		"authors": ["Silovan"]
 	},
 	"config-desc": "MediaWiki-შ ინსტალატორი",
 	"config-title": "MediaWiki $1 ინსტალაცია",

@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"WikiPhoenix"
-		]
-	},
-	"activeabstract-desc": "Genererar XML-matning för Yahoos Active Abstracts-projekt"
+  "@metadata": {
+    "authors": ["WikiPhoenix"]
+  },
+  "activeabstract-desc": "Genererar XML-matning för Yahoos Active Abstracts-projekt"
 }

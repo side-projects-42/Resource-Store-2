@@ -33,71 +33,71 @@ As noted above, these should be run from the command line. Not all scripts are
 listed, as some are Wikimedia-specific, and some are not applicable to most
 installations.
 
-	changePassword.php
-	Reset the password of a specified user
+    changePassword.php
+    Reset the password of a specified user
 
-	cleanupSpam.php
-	Mass-revert insertion of linkspam
+    cleanupSpam.php
+    Mass-revert insertion of linkspam
 
-	createAndPromote.php
-	Create a user with administrator (and optionally, bureaucrat) permissions
+    createAndPromote.php
+    Create a user with administrator (and optionally, bureaucrat) permissions
 
-	deleteOldRevisions.php
-	Erase old revisions of pages from the database
+    deleteOldRevisions.php
+    Erase old revisions of pages from the database
 
-	dumpBackup.php
-	Backup dump script
+    dumpBackup.php
+    Backup dump script
 
-	edit.php
-	Edit a page to change its content
+    edit.php
+    Edit a page to change its content
 
-	findHooks.php
-	Find hooks that aren't documented in docs/hooks.txt
+    findHooks.php
+    Find hooks that aren't documented in docs/hooks.txt
 
-	importDump.php
-	XML dump importer
+    importDump.php
+    XML dump importer
 
-	importImages.php
-	Import images into the wiki
+    importImages.php
+    Import images into the wiki
 
-	moveBatch.php
-	Move a batch of pages
+    moveBatch.php
+    Move a batch of pages
 
-	namespaceDupes.php
-	Check articles name to see if they conflict with new/existing namespaces
+    namespaceDupes.php
+    Check articles name to see if they conflict with new/existing namespaces
 
-	nukePage.php
-	Wipe a page and all revisions from the database
+    nukePage.php
+    Wipe a page and all revisions from the database
 
-	reassignEdits.php
-	Reassign edits from one user to another
+    reassignEdits.php
+    Reassign edits from one user to another
 
-	rebuildImages.php
-	Update image metadata records
+    rebuildImages.php
+    Update image metadata records
 
-	rebuildmessages.php
-	Update the MediaWiki namespace after changing site language
+    rebuildmessages.php
+    Update the MediaWiki namespace after changing site language
 
-	rebuildtextindex.php
-	Rebuild the fulltext search indices
+    rebuildtextindex.php
+    Rebuild the fulltext search indices
 
-	refreshLinks.php
-	Rebuild the link tables
+    refreshLinks.php
+    Rebuild the link tables
 
-	removeUnusedAccounts.php
-	Remove user accounts which have made no edits
+    removeUnusedAccounts.php
+    Remove user accounts which have made no edits
 
-	runJobs.php
-	Immediately complete all jobs in the job queue
+    runJobs.php
+    Immediately complete all jobs in the job queue
 
-	undelete.php
-	Undelete all revisions of a page
+    undelete.php
+    Undelete all revisions of a page
 
-	update.php
-	Check and upgrade the database schema to the current version
+    update.php
+    Check and upgrade the database schema to the current version
 
-	updateRestrictions.php
-	Update pages restriction to the new schema
+    updateRestrictions.php
+    Update pages restriction to the new schema
 
-	userOptions.php
-	Change user options
+    userOptions.php
+    Change user options

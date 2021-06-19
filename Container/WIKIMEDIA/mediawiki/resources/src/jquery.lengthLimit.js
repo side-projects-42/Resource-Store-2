@@ -1,21 +1,19 @@
 /**
  * @class jQuery.plugin.lengthLimit
  */
-( function () {
-
-	var
-		eventKeys = [
-			'keyup.lengthLimit',
-			'keydown.lengthLimit',
-			'change.lengthLimit',
-			'mouseup.lengthLimit',
-			'cut.lengthLimit',
-			'paste.lengthLimit',
-			'focus.lengthLimit',
-			'blur.lengthLimit'
-		].join( ' ' ),
-		trimByteLength = require( 'mediawiki.String' ).trimByteLength,
-		trimCodePointLength = require( 'mediawiki.String' ).trimCodePointLength;
+(function () {
+	var eventKeys = [
+			"keyup.lengthLimit",
+			"keydown.lengthLimit",
+			"change.lengthLimit",
+			"mouseup.lengthLimit",
+			"cut.lengthLimit",
+			"paste.lengthLimit",
+			"focus.lengthLimit",
+			"blur.lengthLimit",
+		].join(" "),
+		trimByteLength = require("mediawiki.String").trimByteLength,
+		trimCodePointLength = require("mediawiki.String").trimCodePointLength;
 
 	/**
 	 * Utility function to trim down a string, based on byteLimit
@@ -36,28 +34,33 @@
 	 * @return {string} return.newVal
 	 * @return {boolean} return.trimmed
 	 */
-	mw.log.deprecate( $, 'trimByteLength', trimByteLength,
-		'Use require( \'mediawiki.String\' ).trimByteLength instead.', '$.trimByteLength' );
+	mw.log.deprecate(
+		$,
+		"trimByteLength",
+		trimByteLength,
+		"Use require( 'mediawiki.String' ).trimByteLength instead.",
+		"$.trimByteLength"
+	);
 
-	function lengthLimit( trimFn, limit, filterFunction ) {
+	function lengthLimit(trimFn, limit, filterFunction) {
 		var allowNativeMaxlength = trimFn === trimByteLength;
 
 		// If the first argument is the function,
 		// set filterFunction to the first argument's value and ignore the second argument.
-		if ( typeof limit === 'function' ) {
+		if (typeof limit === "function") {
 			filterFunction = limit;
 			limit = undefined;
-		// Either way, verify it is a function so we don't have to call
-		// isFunction again after this.
-		} else if ( !filterFunction || typeof filterFunction !== 'function' ) {
+			// Either way, verify it is a function so we don't have to call
+			// isFunction again after this.
+		} else if (!filterFunction || typeof filterFunction !== "function") {
 			filterFunction = undefined;
 		}
 
 		// The following is specific to each element in the collection.
-		return this.each( function ( i, el ) {
+		return this.each(function (i, el) {
 			var $el, elLimit, prevSafeVal;
 
-			$el = $( el );
+			$el = $(el);
 
 			// If no limit was passed to lengthLimit(), use the maxlength value.
 			// Can't re-use 'limit' variable because it's in the higher scope
@@ -70,24 +73,26 @@
 			// Also cast to a (primitive) number (most commonly because the maxlength
 			// attribute contains a string, but theoretically the limit parameter
 			// could be something else as well).
-			elLimit = Number( limit === undefined ? $el.attr( 'maxlength' ) : limit );
+			elLimit = Number(
+				limit === undefined ? $el.attr("maxlength") : limit
+			);
 
 			// If there is no (valid) limit passed or found in the property,
 			// skip this. The < 0 check is required for Firefox, which returns
 			// -1  (instead of undefined) for maxLength if it is not set.
-			if ( !elLimit || elLimit < 0 ) {
+			if (!elLimit || elLimit < 0) {
 				return;
 			}
 
-			if ( filterFunction ) {
+			if (filterFunction) {
 				// Save function for reference
-				$el.data( 'lengthLimit.callback', filterFunction );
+				$el.data("lengthLimit.callback", filterFunction);
 			}
 
 			// Remove old event handlers (if there are any)
-			$el.off( '.lengthLimit' );
+			$el.off(".lengthLimit");
 
-			if ( filterFunction || !allowNativeMaxlength ) {
+			if (filterFunction || !allowNativeMaxlength) {
 				// Disable the native maxLength (if there is any), because it interferes
 				// with the (differently calculated) character/byte limit.
 				// Aside from being differently calculated,
@@ -97,8 +102,7 @@
 				// undefined directly doesn't work. Instead, it can only be unset internally
 				// by the browser when removing the associated attribute (Firefox/Chrome).
 				// https://bugs.chromium.org/p/chromium/issues/detail?id=136004
-				$el.removeAttr( 'maxlength' );
-
+				$el.removeAttr("maxlength");
 			} else {
 				// For $.byteLimit only, if we don't have a callback,
 				// the byteLimit can only be lower than the native maxLength limit
@@ -106,14 +110,14 @@
 				// the native limit for efficiency when possible (it will make the while-loop below
 				// faster by there being less left to interate over). This does not work for $.codePointLimit
 				// (code units for surrogates represent half a character each).
-				$el.attr( 'maxlength', elLimit );
+				$el.attr("maxlength", elLimit);
 			}
 
 			// Safe base value, used to determine the path between the previous state
 			// and the state that triggered the event handler below - and enforce the
 			// limit approppiately (e.g. don't chop from the end if text was inserted
 			// at the beginning of the string).
-			prevSafeVal = '';
+			prevSafeVal = "";
 
 			// We need to listen to after the change has already happened because we've
 			// learned that trying to guess the new value and canceling the event
@@ -140,11 +144,11 @@
 				// value property is set, the browser needs to re-initiate the text context,
 				// which moves the cursor at the end the input, moving it away from wherever it was.
 				// This is a side-effect of limiting after the fact.
-				if ( res.trimmed === true ) {
+				if (res.trimmed === true) {
 					this.value = res.newVal;
 					// Trigger a 'change' event to let other scripts attached to this node know that the value
 					// was changed. This will also call ourselves again, but that's okay, it'll be a no-op.
-					$el.trigger( 'change' );
+					$el.trigger("change");
 				}
 				// Always adjust prevSafeVal to reflect the input value. Not doing this could cause
 				// trimFn to compare the new value to an empty string instead of the
@@ -152,15 +156,15 @@
 				prevSafeVal = res.newVal;
 			}
 
-			$el.on( eventKeys, function ( e ) {
-				if ( e.type === 'cut' || e.type === 'paste' ) {
+			$el.on(eventKeys, function (e) {
+				if (e.type === "cut" || e.type === "paste") {
 					// For 'cut'/'paste', the input value is only updated after the event handlers resolve.
-					setTimeout( enforceLimit.bind( this ) );
+					setTimeout(enforceLimit.bind(this));
 				} else {
-					enforceLimit.call( this );
+					enforceLimit.call(this);
 				}
-			} );
-		} );
+			});
+		});
 	}
 
 	/**
@@ -179,8 +183,8 @@
 	 * @return {jQuery}
 	 * @chainable
 	 */
-	$.fn.byteLimit = function ( limit, filterFunction ) {
-		return lengthLimit.call( this, trimByteLength, limit, filterFunction );
+	$.fn.byteLimit = function (limit, filterFunction) {
+		return lengthLimit.call(this, trimByteLength, limit, filterFunction);
 	};
 
 	/**
@@ -203,12 +207,17 @@
 	 * @return {jQuery}
 	 * @chainable
 	 */
-	$.fn.codePointLimit = function ( limit, filterFunction ) {
-		return lengthLimit.call( this, trimCodePointLength, limit, filterFunction );
+	$.fn.codePointLimit = function (limit, filterFunction) {
+		return lengthLimit.call(
+			this,
+			trimCodePointLength,
+			limit,
+			filterFunction
+		);
 	};
 
 	/**
 	 * @class jQuery
 	 * @mixins jQuery.plugin.lengthLimit
 	 */
-}() );
+})();

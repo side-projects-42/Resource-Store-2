@@ -45,31 +45,31 @@ http://windows.github.com/
 
 Check out the code either through the command line or GUI interface:
 
- git@github.com:wikimedia/WikipediaMobile.git
+git@github.com:wikimedia/WikipediaMobile.git
 or
- https://github.com/wikimedia/WikipediaMobile.git
+https://github.com/wikimedia/WikipediaMobile.git
 
 ### Project file layout
 
-  WikipediaMobile/
-    WikipediaMetro/
-      WikipediaMetroTest.sln - the solution (über-project)
-      WikipediaMetroTest/
-        WikipediaMetroTest.jsproj - the actual app project
-        default.html - main HTML5 document
-        about.html - secondary HTML5 document for about screen
-        css/
-          default.css
-        js/
-          default.js <- mishmash that needs some refactoring
-          wikiview.js <- helper class for semantic zoom
-          jquery-X.X.X.js
-        images/
-          ...
+WikipediaMobile/
+WikipediaMetro/
+WikipediaMetroTest.sln - the solution (über-project)
+WikipediaMetroTest/
+WikipediaMetroTest.jsproj - the actual app project
+default.html - main HTML5 document
+about.html - secondary HTML5 document for about screen
+css/
+default.css
+js/
+default.js <- mishmash that needs some refactoring
+wikiview.js <- helper class for semantic zoom
+jquery-X.X.X.js
+images/
+...
 
 Additionally, the project includes by reference a number of JavaScript and message
 properties files from the parent WikipediaMobile project -- these live under
-WikipediaMobile/assets/www/ but can be seen	under js/ and messages/ within the
+WikipediaMobile/assets/www/ but can be seen under js/ and messages/ within the
 project in Visual Studio.
 
 ### Opening the project
@@ -162,9 +162,10 @@ Select the "Details" button for the Wikipedia application.
 Select the "Create new release" button.
 
 You can change various elements of the package, of which most likely are:
-* Packages -- where you'll upload the .appxupload file
-* Description -- update at least the "Description of update" section.
-* Notes to testers -- point out anything special that should be checked
+
+- Packages -- where you'll upload the .appxupload file
+- Description -- update at least the "Description of update" section.
+- Notes to testers -- point out anything special that should be checked
 
 Once you're done, click on "Submit for certification" and... the waiting game begins.
 
@@ -199,9 +200,10 @@ designed for touch tablets, but also to work reasonably well with keyboard and m
 
 To access search, share, or settings features, open the system's "charms bar" and
 select the appropriate icon.
-* On touch devices, swipe in from the right side of the screen
-* With a mouse, hit hotcorners in the upper-right or lower-right
-* With keyboard, hit Win+C
+
+- On touch devices, swipe in from the right side of the screen
+- With a mouse, hit hotcorners in the upper-right or lower-right
+- With keyboard, hit Win+C
 
 Note that the "Devices" charm is currently not used by the Wikipedia app, but will be
 what you hit when printing support is added.
@@ -235,15 +237,17 @@ preferred style. Each column is of similar width to a mobile phone screen.
 ### App bar
 
 Additional features are available on the "app bar".
-* On touch devices, swipe in from the top or bottom of the screen
-* With a mouse, right-click in any convenient spot on the window
-* With keyboard, hit Win+Z
+
+- On touch devices, swipe in from the top or bottom of the screen
+- With a mouse, right-click in any convenient spot on the window
+- With keyboard, hit Win+Z
 
 Features available here are:
-* "Read in..." -> change language
-* "Pin to start" -> bookmark the article as a secondary tile on the Start Screen
-* "Open in browser"
-* "Find in page"
+
+- "Read in..." -> change language
+- "Pin to start" -> bookmark the article as a secondary tile on the Start Screen
+- "Open in browser"
+- "Find in page"
 
 ### Semantic Zoom
 
@@ -253,9 +257,9 @@ a column boundary.
 To see a list of sections, you can use the "semantic zoom" pattern to zoom out from
 the detail view to a grid list of sections and subsections.
 
-* On touch devices, pinch and spread fingers out (zoom out)
-* With a mouse, click the "-" box near the scroll bar. There may be another shortcut.
-* With keyboard... not sure.
+- On touch devices, pinch and spread fingers out (zoom out)
+- With a mouse, click the "-" box near the scroll bar. There may be another shortcut.
+- With keyboard... not sure.
 
 I'm a bit unsatisfied with this layout and may replace it in the future with a section
 sidebar that's more easily discoverable and avoids having to load all sections at once.
@@ -282,9 +286,10 @@ is available at http://msdn.microsoft.com/en-us/library/windows/apps/br211377.as
 See: http://msdn.microsoft.com/en-us/library/windows/apps/hh465362.aspx
 
 Windows 8/Windows RT Metro apps support three display scales:
-* 100% - tablet at 1366x768, traditional displays
-* 140% - tablet at 1920x1080
-* 180% - tablet at 2560x1440, MacBook Pro Retina display
+
+- 100% - tablet at 1366x768, traditional displays
+- 140% - tablet at 1920x1080
+- 180% - tablet at 2560x1440, MacBook Pro Retina display
 
 Note that the different tablet resolutions are _slightly different_ numbers of
 CSS pixels wide and tall, so layout is not guaranteed to be exactly the same
@@ -310,9 +315,9 @@ JPEG or PNG files, which can only hold one scale per file.
 Asset files for multiple scales can be provided by appending ".scale-XXX" to
 the base of the filename, before the extension. For instance:
 
-  splashscreen.scale-100.png
-  splashscreen.scale-140.png
-  splashscreen.scale-180.png
+splashscreen.scale-100.png
+splashscreen.scale-140.png
+splashscreen.scale-180.png
 
 Referring to just "splashscreen.png" from the application manifest or within
 an img tag or CSS background will automatically load the appropriate version

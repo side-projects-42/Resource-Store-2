@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"AlnashPiyash2",
-			"Andrewboltachev",
-			"Kotwys",
-			"Zpizza"
-		]
+		"authors": ["AlnashPiyash2", "Andrewboltachev", "Kotwys", "Zpizza"]
 	},
 	"config-title": "MediaWiki $1 пуктон",
 	"config-information": "Информация",

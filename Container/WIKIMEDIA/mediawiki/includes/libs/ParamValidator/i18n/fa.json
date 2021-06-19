@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"FarsiNevis"
-		]
+		"authors": ["FarsiNevis"]
 	},
 	"paramvalidator-badexpiry": "مقدار نامعتبر «$2» برای پارامتر انقضای «$1».",
 	"paramvalidator-badinteger": "مقدار نامعتبر «$2» برای پارامتر صحیح «$1».",

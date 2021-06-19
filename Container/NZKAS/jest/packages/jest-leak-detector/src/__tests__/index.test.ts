@@ -57,7 +57,7 @@ it('correctly checks simple leaks', () => {
 
 it('tests different objects', () => {
   const refs = [
-    function() {},
+    function () {},
     () => {},
     Object.create(null),
     [],
@@ -66,11 +66,11 @@ it('tests different objects', () => {
     {},
   ];
 
-  const detectors = refs.map(ref => new LeakDetector(ref));
+  const detectors = refs.map((ref) => new LeakDetector(ref));
 
-  detectors.forEach(detector => expect(detector.isLeaking()).toBe(true));
+  detectors.forEach((detector) => expect(detector.isLeaking()).toBe(true));
   refs.forEach((_, i) => (refs[i] = null));
-  detectors.forEach(detector => expect(detector.isLeaking()).toBe(false));
+  detectors.forEach((detector) => expect(detector.isLeaking()).toBe(false));
 });
 
 it('correctly checks more complex leaks', () => {

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <!--
 # Licensed to the Apache Software Foundation (ASF) under one
@@ -20,54 +20,54 @@
 -->
 
 <html>
-<head>
-<title>@title@</title>
-<script src='../../../lib/require.js'></script>
-<script>
-@modules@
+  <head>
+    <title>@title@</title>
+    <script src="../../../lib/require.js"></script>
+    <script>
+      @modules@
 
-//----------------------------------------------------------------------------
-var outputPre
+      //----------------------------------------------------------------------------
+      var outputPre
 
-window.addEventListener("load", onLoad, false)
+      window.addEventListener("load", onLoad, false)
 
-//----------------------------------------------------------------------------
-function onLoad() {
-    outputPre = document.getElementById("output")
+      //----------------------------------------------------------------------------
+      function onLoad() {
+          outputPre = document.getElementById("output")
 
-    if (window.parent !== window) {
-        window.parent.testsStarting("@title@")
-    }
-    
-    try {
-        require("program")
-    }
-    catch (e) {
-        print ("FAIL exception thrown: " + e)
-    }
-}
+          if (window.parent !== window) {
+              window.parent.testsStarting("@title@")
+          }
 
-//----------------------------------------------------------------------------
-function print(message, status) {
+          try {
+              require("program")
+          }
+          catch (e) {
+              print ("FAIL exception thrown: " + e)
+          }
+      }
 
-    var className
-    
-    if      (/^PASS/.exec(message)) className = "pass"
-    else if (/^FAIL/.exec(message)) className = "fail"
-    else                            className = "info"
-    
-    var line = "<div class='" + className + "'>" + message + "</div>"
-    outputPre.innerHTML += line
-    
-    if (window.parent !== window) {
-        window.parent.oneTestComplete(className, message)
-    }
-    
-}
-</script>
-</head>
-<body>
-<p>Tests generated on @date@
-<pre id="output"></pre>
-</body>
+      //----------------------------------------------------------------------------
+      function print(message, status) {
+
+          var className
+
+          if      (/^PASS/.exec(message)) className = "pass"
+          else if (/^FAIL/.exec(message)) className = "fail"
+          else                            className = "info"
+
+          var line = "<div class='" + className + "'>" + message + "</div>"
+          outputPre.innerHTML += line
+
+          if (window.parent !== window) {
+              window.parent.oneTestComplete(className, message)
+          }
+
+      }
+    </script>
+  </head>
+  <body>
+    <p>Tests generated on @date@</p>
+    <pre id="output"></pre>
+  </body>
 </html>

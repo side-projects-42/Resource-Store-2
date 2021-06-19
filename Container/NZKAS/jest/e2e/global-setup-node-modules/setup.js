@@ -13,8 +13,8 @@ const path = require('path');
 
 const DIR = path.join(os.tmpdir(), 'jest-global-setup-node-modules');
 
-module.exports = function() {
-  return new Promise(resolve => {
+module.exports = function () {
+  return new Promise((resolve) => {
     createDirectory(DIR);
     const fileId = crypto.randomBytes(20).toString('hex');
     fs.writeFileSync(path.join(DIR, fileId), `hello ${example()}`);

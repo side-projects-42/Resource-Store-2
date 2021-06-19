@@ -7,6 +7,6 @@
  * @flow
  */
 
-global.Promise = function() {
+global.Promise = function () {
   throw new Error('Booo');
 };

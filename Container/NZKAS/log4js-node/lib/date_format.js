@@ -11,7 +11,7 @@ function padWithZeros(vNumber, width) {
   }
   return numAsString;
 }
-  
+
 function addZero(vNumber) {
   return padWithZeros(vNumber, 2);
 }
@@ -24,30 +24,30 @@ function addZero(vNumber) {
 function offset(date) {
   // Difference to Greenwich time (GMT) in hours
   var os = Math.abs(date.getTimezoneOffset());
-  var h = String(Math.floor(os/60));
-  var m = String(os%60);
+  var h = String(Math.floor(os / 60));
+  var m = String(os % 60);
   if (h.length == 1) {
     h = "0" + h;
   }
   if (m.length == 1) {
     m = "0" + m;
   }
-  return date.getTimezoneOffset() < 0 ? "+"+h+m : "-"+h+m;
+  return date.getTimezoneOffset() < 0 ? "+" + h + m : "-" + h + m;
 }
 
-exports.asString = function(/*format,*/ date) {
+exports.asString = function (/*format,*/ date) {
   var format = exports.ISO8601_FORMAT;
-  if (typeof(date) === "string") {
+  if (typeof date === "string") {
     format = arguments[0];
     date = arguments[1];
   }
 
   var vDay = addZero(date.getDate());
-  var vMonth = addZero(date.getMonth()+1);
+  var vMonth = addZero(date.getMonth() + 1);
   var vYearLong = addZero(date.getFullYear());
-  var vYearShort = addZero(date.getFullYear().toString().substring(2,4));
-  var vYear = (format.indexOf("yyyy") > -1 ? vYearLong : vYearShort);
-  var vHour  = addZero(date.getHours());
+  var vYearShort = addZero(date.getFullYear().toString().substring(2, 4));
+  var vYear = format.indexOf("yyyy") > -1 ? vYearLong : vYearShort;
+  var vHour = addZero(date.getHours());
   var vMinute = addZero(date.getMinutes());
   var vSecond = addZero(date.getSeconds());
   var vMillisecond = padWithZeros(date.getMilliseconds(), 3);
@@ -62,5 +62,4 @@ exports.asString = function(/*format,*/ date) {
     .replace(/SSS/g, vMillisecond)
     .replace(/O/g, vTimeZone);
   return formatted;
-
 };

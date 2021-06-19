@@ -48,7 +48,7 @@ Here's a contrived example where we have a module that provides a summary of all
 const fs = require('fs');
 
 function summarizeFilesInDirectorySync(directory) {
-  return fs.readdirSync(directory).map(fileName => ({
+  return fs.readdirSync(directory).map((fileName) => ({
     directory,
     fileName,
   }));
@@ -116,9 +116,8 @@ describe('listFilesInDirectorySync', () => {
 
   test('includes all files in the directory in the summary', () => {
     const FileSummarizer = require('../FileSummarizer');
-    const fileSummary = FileSummarizer.summarizeFilesInDirectorySync(
-      '/path/to',
-    );
+    const fileSummary =
+      FileSummarizer.summarizeFilesInDirectorySync('/path/to');
 
     expect(fileSummary.length).toBe(2);
   });
@@ -142,7 +141,7 @@ If some code uses a method which JSDOM (the DOM implementation used by Jest) has
 In this case, mocking `matchMedia` in the test file should solve the issue:
 
 ```js
-window.matchMedia = jest.fn().mockImplementation(query => {
+window.matchMedia = jest.fn().mockImplementation((query) => {
   return {
     matches: false,
     media: query,

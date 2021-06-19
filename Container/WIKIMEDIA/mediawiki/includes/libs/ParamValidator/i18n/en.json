@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Anomie",
-			"MusikAnimal",
-			"Siebrand",
-			"Zoranzoki21"
-		]
+		"authors": ["Anomie", "MusikAnimal", "Siebrand", "Zoranzoki21"]
 	},
 
 	"paramvalidator-badbool": "Invalid value \"$2\" for boolean parameter \"$1\". Pass $3 for true, or $5 for false.",
@@ -66,5 +61,4 @@
 	"paramvalidator-help-type-string-maxchars": "Cannot be longer than $1 {{PLURAL:$1|character|characters}}.",
 	"paramvalidator-help-type-timestamp": "Type: {{PLURAL:$1|1=timestamp|2=list of timestamps}}",
 	"paramvalidator-help-type-upload": "Must be posted as a file upload using multipart/form-data."
-
 }

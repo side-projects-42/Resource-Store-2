@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Gomoko",
-			"Verdy p"
-		]
-	},
-	"akismetklik-desc": "Rejette les modifications provenant de soupçonnés pollueurs de commentaires dans la liste de pourriels d’Akismet"
+  "@metadata": {
+    "authors": ["Gomoko", "Verdy p"]
+  },
+  "akismetklik-desc": "Rejette les modifications provenant de soupçonnés pollueurs de commentaires dans la liste de pourriels d’Akismet"
 }

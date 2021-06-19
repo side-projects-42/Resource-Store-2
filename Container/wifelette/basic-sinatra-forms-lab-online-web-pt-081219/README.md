@@ -57,9 +57,9 @@ Pass the tests! Make sure you read the test output carefully!
 
 ## Resources
 
-* [Ashley William's GitHub](https://github.com/ashleygwilliams/) - [Sinatra Form Party](https://github.com/ashleygwilliams/sinatra-form-party)
+- [Ashley William's GitHub](https://github.com/ashleygwilliams/) - [Sinatra Form Party](https://github.com/ashleygwilliams/sinatra-form-party)
 
-* [Ashley William's GitHub](https://github.com/ashleygwilliams/) - [Citibike Sinatra](https://github.com/ashleygwilliams/citibike-sinatra)
+- [Ashley William's GitHub](https://github.com/ashleygwilliams/) - [Citibike Sinatra](https://github.com/ashleygwilliams/citibike-sinatra)
 
 [capybara-click_button]: http://www.rubydoc.info/gems/capybara/Capybara%2FNode%2FActions%3Aclick_button
 

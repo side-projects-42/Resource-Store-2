@@ -21,7 +21,7 @@ describe('Runtime', () => {
 
   describe('genMockFromModule', () => {
     it('does not cause side effects in the rest of the module system when generating a mock', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const testRequire = runtime.requireModule.bind(
           runtime,
           runtime.__mockRootPath,
@@ -41,7 +41,7 @@ describe('Runtime', () => {
       }));
 
     it('resolves mapped modules correctly', () =>
-      createRuntime(__filename, {moduleNameMapper}).then(runtime => {
+      createRuntime(__filename, {moduleNameMapper}).then((runtime) => {
         const root = runtime.requireModule(runtime.__mockRootPath);
         const mockModule = root.jest.genMockFromModule(
           'module/name/genMockFromModule',
@@ -52,7 +52,7 @@ describe('Runtime', () => {
   });
 
   it('creates mock objects in the right environment', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const testRequire = runtime.requireModule.bind(
         runtime,
         runtime.__mockRootPath,

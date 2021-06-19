@@ -5,172 +5,196 @@
  * Modified by John-David Dalton <http://allyoucanleet.com/>
  * Available under MIT license <http://mths.be/mit>
  */
-;(function(window, undefined) {
-
+(function (window, undefined) {
   /** Detect free variable `define` */
-  var freeDefine = typeof define == 'function' &&
-    typeof define.amd == 'object' && define.amd && define,
+  var freeDefine =
+      typeof define == "function" &&
+      typeof define.amd == "object" &&
+      define.amd &&
+      define,
+    /** Detect free variable `exports` */
+    freeExports =
+      typeof exports == "object" &&
+      exports &&
+      (typeof global == "object" &&
+        global &&
+        global == global.global &&
+        (window = global),
+      exports),
+    /** Detect free variable `require` */
+    freeRequire = typeof require == "function" && require,
+    /** Used to assign each benchmark an incrimented id */
+    counter = 0,
+    /** Used to crawl all properties regardless of enumerability */
+    getAllKeys = Object.getOwnPropertyNames,
+    /** Used to get property descriptors */
+    getDescriptor = Object.getOwnPropertyDescriptor,
+    /** Used in case an object doesn't have its own method */
+    hasOwnProperty = {}.hasOwnProperty,
+    /** Used to check if an object is extensible */
+    isExtensible =
+      Object.isExtensible ||
+      function () {
+        return true;
+      },
+    /** Used to check if an own property is enumerable */
+    propertyIsEnumerable = {}.propertyIsEnumerable,
+    /** Used to set property descriptors */
+    setDescriptor = Object.defineProperty,
+    /** Used to resolve a value's internal [[Class]] */
+    toString = {}.toString,
+    /** Used to integrity check compiled tests */
+    uid = "uid" + +new Date(),
+    /** Used to avoid infinite recursion when methods call each other */
+    calledBy = {},
+    /** Used to avoid hz of Infinity */
+    divisors = {
+      1: 4096,
+      2: 512,
+      3: 64,
+      4: 8,
+      5: 0,
+    },
+    /**
+     * T-Distribution two-tailed critical values for 95% confidence
+     * http://www.itl.nist.gov/div898/handbook/eda/section3/eda3672.htm
+     */
+    distribution = {
+      1: 12.706,
+      2: 4.303,
+      3: 3.182,
+      4: 2.776,
+      5: 2.571,
+      6: 2.447,
+      7: 2.365,
+      8: 2.306,
+      9: 2.262,
+      10: 2.228,
+      11: 2.201,
+      12: 2.179,
+      13: 2.16,
+      14: 2.145,
+      15: 2.131,
+      16: 2.12,
+      17: 2.11,
+      18: 2.101,
+      19: 2.093,
+      20: 2.086,
+      21: 2.08,
+      22: 2.074,
+      23: 2.069,
+      24: 2.064,
+      25: 2.06,
+      26: 2.056,
+      27: 2.052,
+      28: 2.048,
+      29: 2.045,
+      30: 2.042,
+      infinity: 1.96,
+    },
+    /** Used to flag environments/features */
+    has = {
+      /** Detect Adobe AIR */
+      air: isClassOf(window.runtime, "ScriptBridgingProxyObject"),
 
-  /** Detect free variable `exports` */
-  freeExports = typeof exports == 'object' && exports &&
-    (typeof global == 'object' && global && global == global.global && (window = global), exports),
+      /** Detect if `arguments` objects have the correct internal [[Class]] value */
+      argumentsClass: isClassOf(arguments, "Arguments"),
 
-  /** Detect free variable `require` */
-  freeRequire = typeof require == 'function' && require,
+      /** Detect if strings support accessing characters by index */
+      charByIndex:
+        // IE8 supports indexes on string literals but not string objects
+        Object("x")[0] == "x",
 
-  /** Used to assign each benchmark an incrimented id */
-  counter = 0,
+      /** Detect if strings have indexes as own properties */
+      charByOwnIndex:
+        // Narwhal, Rhino, RingoJS, and Opera < 10.52 support indexes on strings
+        // but don't detect them as own properties
+        hasKey("x", "0"),
 
-  /** Used to crawl all properties regardless of enumerability */
-  getAllKeys = Object.getOwnPropertyNames,
+      /** Detect if functions support decompilation */
+      decompilation: !!(function () {
+        try {
+          // Safari 2.x removes commas in object literals
+          // from Function#toString results
+          // http://webk.it/11609
+          // Firefox 3.6 and Opera 9.25 strip grouping
+          // parentheses from Function#toString results
+          // http://bugzil.la/559438
+          return (
+            Function(
+              "return (" +
+                function (x) {
+                  return { x: "" + (1 + x) + "", y: 0 };
+                } +
+                ")"
+            )()(0).x === "1"
+          );
+        } catch (e) {}
+      })(),
 
-  /** Used to get property descriptors */
-  getDescriptor = Object.getOwnPropertyDescriptor,
+      /** Detect ES5+ property descriptor API */
+      descriptors: !!(function () {
+        try {
+          var o = {};
+          return setDescriptor(o, o, o), "value" in getDescriptor(o, o);
+        } catch (e) {}
+      })(),
 
-  /** Used in case an object doesn't have its own method */
-  hasOwnProperty = {}.hasOwnProperty,
+      /** Detect ES5+ Object.getOwnPropertyNames() */
+      getAllKeys: !!(function () {
+        try {
+          return /\bvalueOf\b/.test(getAllKeys(Object.prototype));
+        } catch (e) {}
+      })(),
 
-  /** Used to check if an object is extensible */
-  isExtensible = Object.isExtensible || function() { return true; },
+      /** Detect if Java is enabled/exposed */
+      java: isClassOf(window.java, "JavaPackage"),
 
-  /** Used to check if an own property is enumerable */
-  propertyIsEnumerable = {}.propertyIsEnumerable,
+      /** Detect if the Timers API exists */
+      timeout:
+        isHostType(window, "setTimeout") && isHostType(window, "clearTimeout"),
+    },
+    /**
+     * Timer utility object used by `clock()` and `Deferred#resolve`.
+     * @private
+     * @type Object
+     */
+    timer = {
+      /**
+       * The timer namespace object or constructor.
+       * @private
+       * @memberOf timer
+       * @type Function|Object
+       */
+      ns: Date,
 
-  /** Used to set property descriptors */
-  setDescriptor = Object.defineProperty,
+      /**
+       * Starts the deferred timer.
+       * @private
+       * @memberOf timer
+       * @param {Object} deferred The deferred instance.
+       */
+      start: null, // lazy defined in `clock()`
 
-  /** Used to resolve a value's internal [[Class]] */
-  toString = {}.toString,
-
-  /** Used to integrity check compiled tests */
-  uid = 'uid' + (+new Date),
-
-  /** Used to avoid infinite recursion when methods call each other */
-  calledBy = {},
-
-  /** Used to avoid hz of Infinity */
-  divisors = {
-    '1': 4096,
-    '2': 512,
-    '3': 64,
-    '4': 8,
-    '5': 0
-  },
-
-  /**
-   * T-Distribution two-tailed critical values for 95% confidence
-   * http://www.itl.nist.gov/div898/handbook/eda/section3/eda3672.htm
-   */
-  distribution = {
-    '1':  12.706,'2':  4.303, '3':  3.182, '4':  2.776, '5':  2.571, '6':  2.447,
-    '7':  2.365, '8':  2.306, '9':  2.262, '10': 2.228, '11': 2.201, '12': 2.179,
-    '13': 2.16,  '14': 2.145, '15': 2.131, '16': 2.12,  '17': 2.11,  '18': 2.101,
-    '19': 2.093, '20': 2.086, '21': 2.08,  '22': 2.074, '23': 2.069, '24': 2.064,
-    '25': 2.06,  '26': 2.056, '27': 2.052, '28': 2.048, '29': 2.045, '30': 2.042,
-    'infinity': 1.96
-  },
-
-  /** Used to flag environments/features */
-  has = {
-
-    /** Detect Adobe AIR */
-    'air': isClassOf(window.runtime, 'ScriptBridgingProxyObject'),
-
-    /** Detect if `arguments` objects have the correct internal [[Class]] value */
-    'argumentsClass': isClassOf(arguments, 'Arguments'),
-
-    /** Detect if strings support accessing characters by index */
-    'charByIndex':
-      // IE8 supports indexes on string literals but not string objects
-      Object('x')[0] == 'x',
-
-    /** Detect if strings have indexes as own properties */
-    'charByOwnIndex':
-      // Narwhal, Rhino, RingoJS, and Opera < 10.52 support indexes on strings
-      // but don't detect them as own properties
-      hasKey('x', '0'),
-
-    /** Detect if functions support decompilation */
-    'decompilation': !!(function() {
-      try{
-        // Safari 2.x removes commas in object literals
-        // from Function#toString results
-        // http://webk.it/11609
-        // Firefox 3.6 and Opera 9.25 strip grouping
-        // parentheses from Function#toString results
-        // http://bugzil.la/559438
-        return Function(
-          'return (' + (function(x) { return { 'x': '' + (1 + x) + '', 'y': 0 }; }) + ')'
-        )()(0).x === '1';
-      } catch(e) { }
-    }()),
-
-    /** Detect ES5+ property descriptor API */
-    'descriptors' : !!(function() {
-      try {
-        var o = {};
-        return (setDescriptor(o, o, o), 'value' in getDescriptor(o, o));
-      } catch(e) { }
-    }()),
-
-    /** Detect ES5+ Object.getOwnPropertyNames() */
-    'getAllKeys': !!(function() {
-      try {
-        return /\bvalueOf\b/.test(getAllKeys(Object.prototype));
-      } catch(e) { }
-    }()),
-
-    /** Detect if Java is enabled/exposed */
-    'java': isClassOf(window.java, 'JavaPackage'),
-
-    /** Detect if the Timers API exists */
-    'timeout': isHostType(window, 'setTimeout') && isHostType(window, 'clearTimeout')
-  },
-
-  /**
-   * Timer utility object used by `clock()` and `Deferred#resolve`.
-   * @private
-   * @type Object
-   */
-  timer = {
-
-   /**
-    * The timer namespace object or constructor.
-    * @private
-    * @memberOf timer
-    * @type Function|Object
-    */
-    'ns': Date,
-
-   /**
-    * Starts the deferred timer.
-    * @private
-    * @memberOf timer
-    * @param {Object} deferred The deferred instance.
-    */
-    'start': null, // lazy defined in `clock()`
-
-   /**
-    * Stops the deferred timer.
-    * @private
-    * @memberOf timer
-    * @param {Object} deferred The deferred instance.
-    */
-    'stop': null // lazy defined in `clock()`
-  },
-
-  /** Shortcut for inverse results */
-  noArgumentsClass = !has.argumentsClass,
-  noCharByIndex = !has.charByIndex,
-  noCharByOwnIndex = !has.charByOwnIndex,
-
-  /** Math shortcuts */
-  abs   = Math.abs,
-  floor = Math.floor,
-  max   = Math.max,
-  min   = Math.min,
-  pow   = Math.pow,
-  sqrt  = Math.sqrt;
+      /**
+       * Stops the deferred timer.
+       * @private
+       * @memberOf timer
+       * @param {Object} deferred The deferred instance.
+       */
+      stop: null, // lazy defined in `clock()`
+    },
+    /** Shortcut for inverse results */
+    noArgumentsClass = !has.argumentsClass,
+    noCharByIndex = !has.charByIndex,
+    noCharByOwnIndex = !has.charByOwnIndex,
+    /** Math shortcuts */
+    abs = Math.abs,
+    floor = Math.floor,
+    max = Math.max,
+    min = Math.min,
+    pow = Math.pow,
+    sqrt = Math.sqrt;
 
   /*--------------------------------------------------------------------------*/
 
@@ -255,22 +279,19 @@
       return new Benchmark(name, fn, options);
     }
     // juggle arguments
-    if (isClassOf(name, 'Object')) {
+    if (isClassOf(name, "Object")) {
       // 1 argument (options)
       options = name;
-    }
-    else if (isClassOf(name, 'Function')) {
+    } else if (isClassOf(name, "Function")) {
       // 2 arguments (fn, options)
       options = fn;
       fn = name;
-    }
-    else if (isClassOf(fn, 'Object')) {
+    } else if (isClassOf(fn, "Object")) {
       // 2 arguments (name, options)
       options = fn;
       fn = null;
       me.name = name;
-    }
-    else {
+    } else {
       // 3 arguments (name, fn [, options])
       me.name = name;
     }
@@ -304,11 +325,11 @@
    */
   function Event(type) {
     var me = this;
-    return (me && me.constructor != Event)
+    return me && me.constructor != Event
       ? new Event(type)
-      : (type instanceof Event)
-          ? type
-          : extend(me, typeof type == 'string' ? { 'type': type } : type);
+      : type instanceof Event
+      ? type
+      : extend(me, typeof type == "string" ? { type: type } : type);
   }
 
   /**
@@ -355,7 +376,7 @@
       return new Suite(name, options);
     }
     // juggle arguments
-    if (isClassOf(name, 'Object')) {
+    if (isClassOf(name, "Object")) {
       // 1 argument (options)
       options = name;
     } else {
@@ -397,14 +418,14 @@
    */
   function concat() {
     var value,
-        j = -1,
-        length = arguments.length,
-        result = slice.call(this),
-        index = result.length;
+      j = -1,
+      length = arguments.length,
+      result = slice.call(this),
+      index = result.length;
 
     while (++j < length) {
       value = arguments[j];
-      if (isClassOf(value, 'Array')) {
+      if (isClassOf(value, "Array")) {
         for (var k = 0, l = value.length; k < l; k++, index++) {
           if (k in value) {
             result[index] = value[k];
@@ -427,12 +448,12 @@
    */
   function insert(start, deleteCount, elements) {
     var deleteEnd = start + deleteCount,
-        elementCount = elements ? elements.length : 0,
-        index = start - 1,
-        length = start + elementCount,
-        object = this,
-        result = [],
-        tail = slice.call(object, deleteEnd);
+      elementCount = elements ? elements.length : 0,
+      index = start - 1,
+      length = start + elementCount,
+      object = this,
+      result = [],
+      tail = slice.call(object, deleteEnd);
 
     // delete elements from the array
     while (++index < deleteEnd) {
@@ -450,7 +471,7 @@
     start = index--;
     length = (object.length >>> 0) - deleteCount + elementCount;
     while (++index < length) {
-      if ((index - start) in tail) {
+      if (index - start in tail) {
         object[index] = tail[index - start];
       } else {
         delete object[index];
@@ -472,11 +493,11 @@
    */
   function reverse() {
     var upperIndex,
-        value,
-        index = -1,
-        object = Object(this),
-        length = object.length >>> 0,
-        middle = floor(length / 2);
+      value,
+      index = -1,
+      object = Object(this),
+      length = object.length >>> 0,
+      middle = floor(length / 2);
 
     if (length > 1) {
       while (++index < middle) {
@@ -514,9 +535,9 @@
    */
   function slice(start, end) {
     var index = -1,
-        object = Object(this),
-        length = object.length >>> 0,
-        result = [];
+      object = Object(this),
+      length = object.length >>> 0,
+      result = [];
 
     start = toInteger(start);
     start = start < 0 ? max(length + start, 0) : min(start, length);
@@ -539,7 +560,7 @@
    */
   function splice(start, deleteCount) {
     var object = Object(this),
-        length = object.length >>> 0;
+      length = object.length >>> 0;
 
     start = toInteger(start);
     start = start < 0 ? max(length + start, 0) : min(start, length);
@@ -580,18 +601,23 @@
     options || (options = {});
     var fn = options.fn;
 
-    (!options.async && fn || function() {
-      var bench = options.benchmark,
+    (
+      (!options.async && fn) ||
+      function () {
+        var bench = options.benchmark,
           ids = bench._timerIds || (bench._timerIds = []),
           index = ids.length;
 
-      // under normal use there should only be one id at any time per benchmark
-      ids.push(setTimeout(function() {
-        ids.splice(index, 1);
-        ids.length || delete bench._timerIds;
-        fn();
-      }, bench.delay * 1e3));
-    })();
+        // under normal use there should only be one id at any time per benchmark
+        ids.push(
+          setTimeout(function () {
+            ids.splice(index, 1);
+            ids.length || delete bench._timerIds;
+            fn();
+          }, bench.delay * 1e3)
+        );
+      }
+    )();
   }
 
   /**
@@ -603,16 +629,27 @@
    */
   function createFunction() {
     // lazy defined to fork based on supported features
-    createFunction = function(args, body) {
+    createFunction = function (args, body) {
       var anchor = freeDefine ? define.amd : Benchmark,
-          prop = uid + 'createFunction';
+        prop = uid + "createFunction";
 
-      runScript((freeDefine ? 'define.amd.' : 'Benchmark.') + prop + '=function(' + args + '){' + body + '}');
+      runScript(
+        (freeDefine ? "define.amd." : "Benchmark.") +
+          prop +
+          "=function(" +
+          args +
+          "){" +
+          body +
+          "}"
+      );
       return [anchor[prop], delete anchor[prop]][0];
     };
     // fix JaegerMonkey bug
     // http://bugzil.la/639720
-    createFunction = (createFunction('', 'return"' + uid + '"') || noop)() == uid ? createFunction : Function;
+    createFunction =
+      (createFunction("", 'return"' + uid + '"') || noop)() == uid
+        ? createFunction
+        : Function;
     return createFunction.apply(null, arguments);
   }
 
@@ -627,21 +664,31 @@
    */
   function forProps() {
     var forShadowed,
-        skipSeen,
-        forArgs = true,
-        shadowed = ['constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'];
+      skipSeen,
+      forArgs = true,
+      shadowed = [
+        "constructor",
+        "hasOwnProperty",
+        "isPrototypeOf",
+        "propertyIsEnumerable",
+        "toLocaleString",
+        "toString",
+        "valueOf",
+      ];
 
-    (function(enumFlag, key) {
+    (function (enumFlag, key) {
       // must use a non-native constructor to catch the Safari 2 issue
-      function Klass() { this.valueOf = 0; };
+      function Klass() {
+        this.valueOf = 0;
+      }
       Klass.prototype.valueOf = 0;
       // check various for..in bugs
-      for (key in new Klass) {
-        enumFlag += key == 'valueOf' ? 1 : 0;
+      for (key in new Klass()) {
+        enumFlag += key == "valueOf" ? 1 : 0;
       }
       // check if `arguments` objects have non-enumerable indexes
       for (key in arguments) {
-        key == '0' && (forArgs = false);
+        key == "0" && (forArgs = false);
       }
       // Safari 2 iterates over shadowed properties twice
       // http://replay.waybackmachine.org/20090428222941/http://tobielangel.com/2007/1/29/for-in-loop-broken-in-safari/
@@ -649,39 +696,43 @@
       // IE < 9 incorrectly makes an object's properties non-enumerable if they have
       // the same name as other non-enumerable properties in its prototype chain.
       forShadowed = !enumFlag;
-    }(0));
+    })(0);
 
     // lazy define
-    forProps = function(object, callback, options) {
+    forProps = function (object, callback, options) {
       options || (options = {});
 
       var ctor,
-          key,
-          keys,
-          skipCtor,
-          done = !object,
-          result = [object, object = Object(object)][0],
-          which = options.which,
-          allFlag = which == 'all',
-          fn = callback,
-          index = -1,
-          iteratee = object,
-          length = object.length,
-          ownFlag = allFlag || which == 'own',
-          seen = {},
-          skipProto = isClassOf(object, 'Function'),
-          thisArg = options.bind;
+        key,
+        keys,
+        skipCtor,
+        done = !object,
+        result = [object, (object = Object(object))][0],
+        which = options.which,
+        allFlag = which == "all",
+        fn = callback,
+        index = -1,
+        iteratee = object,
+        length = object.length,
+        ownFlag = allFlag || which == "own",
+        seen = {},
+        skipProto = isClassOf(object, "Function"),
+        thisArg = options.bind;
 
       object = Object(object);
 
       if (thisArg !== undefined) {
-        callback = function(value, key, object) {
+        callback = function (value, key, object) {
           return fn.call(thisArg, value, key, object);
         };
       }
       // iterate all properties
       if (allFlag && has.getAllKeys) {
-        for (index = 0, keys = getAllKeys(object), length = keys.length; index < length; index++) {
+        for (
+          index = 0, keys = getAllKeys(object), length = keys.length;
+          index < length;
+          index++
+        ) {
           key = keys[index];
           if (callback(object[key], key, object) === false) {
             break;
@@ -696,22 +747,29 @@
           // incorrectly set a function's `prototype` property [[Enumerable]] value
           // to `true`. Because of this we standardize on skipping the `prototype`
           // property of functions regardless of their [[Enumerable]] value.
-          if ((done =
-              !(skipProto && key == 'prototype') &&
+          if (
+            (done =
+              !(skipProto && key == "prototype") &&
               !(skipSeen && (hasKey(seen, key) || !(seen[key] = true))) &&
-              (!ownFlag || ownFlag && hasKey(object, key)) &&
-              callback(object[key], key, object) === false)) {
+              (!ownFlag || (ownFlag && hasKey(object, key))) &&
+              callback(object[key], key, object) === false)
+          ) {
             break;
           }
         }
         // in IE < 9 strings don't support accessing characters by index
-        if (!done && (
-            forArgs && isArguments(object) ||
-            (noCharByIndex || noCharByOwnIndex) && isClassOf(object, 'String'))) {
-          noCharByIndex && (iteratee = object.split(''));
+        if (
+          !done &&
+          ((forArgs && isArguments(object)) ||
+            ((noCharByIndex || noCharByOwnIndex) &&
+              isClassOf(object, "String")))
+        ) {
+          noCharByIndex && (iteratee = object.split(""));
           while (++index < length) {
-            if ((done =
-                callback(iteratee[index], String(index), object) === false)) {
+            if (
+              (done =
+                callback(iteratee[index], String(index), object) === false)
+            ) {
               break;
             }
           }
@@ -722,12 +780,15 @@
           // non-enumerable, we manually skip the `constructor` property when we
           // think we are iterating over a `prototype` object.
           ctor = object.constructor;
-          skipCtor = ctor && ctor.prototype && ctor.prototype.constructor === ctor;
+          skipCtor =
+            ctor && ctor.prototype && ctor.prototype.constructor === ctor;
           for (index = 0; index < 7; index++) {
             key = shadowed[index];
-            if (!(skipCtor && key == 'constructor') &&
-                hasKey(object, key) &&
-                callback(object[key], key, object) === false) {
+            if (
+              !(skipCtor && key == "constructor") &&
+              hasKey(object, key) &&
+              callback(object[key], key, object) === false
+            ) {
               break;
             }
           }
@@ -756,8 +817,12 @@
    * @returns {String} The argument name.
    */
   function getFirstArgument(fn, altName) {
-    return (!hasKey(fn, 'toString') &&
-      (/^[\s(]*function[^(]*\(([^\s,)]+)/.exec(fn) || 0)[1]) || altName || '';
+    return (
+      (!hasKey(fn, "toString") &&
+        (/^[\s(]*function[^(]*\(([^\s,)]+)/.exec(fn) || 0)[1]) ||
+      altName ||
+      ""
+    );
   }
 
   /**
@@ -767,9 +832,15 @@
    * @returns {Number} The mean.
    */
   function getMean(sample) {
-    return reduce(sample, function(sum, x) {
-      return sum + x;
-    }, 0) / sample.length || 0;
+    return (
+      reduce(
+        sample,
+        function (sum, x) {
+          return sum + x;
+        },
+        0
+      ) / sample.length || 0
+    );
   }
 
   /**
@@ -786,7 +857,7 @@
     } else if (has.decompilation) {
       result = (/^[^{]+{([\s\S]*)}\s*$/.exec(fn) || 0)[1];
     }
-    return (result || '').replace(/^\s+|\s+$/g, '');
+    return (result || "").replace(/^\s+|\s+$/g, "");
   }
 
   /**
@@ -797,8 +868,8 @@
    * @returns {String} The modified string.
    */
   function interpolate(string, object) {
-    forOwn(object, function(value, key) {
-      string = string.replace(RegExp('#\\{' + key + '\\}', 'g'), value);
+    forOwn(object, function (value, key) {
+      string = string.replace(RegExp("#\\{" + key + "\\}", "g"), value);
     });
     return string;
   }
@@ -811,13 +882,15 @@
    */
   function isArguments() {
     // lazy define
-    isArguments = function(value) {
-      return toString.call(value) == '[object Arguments]';
+    isArguments = function (value) {
+      return toString.call(value) == "[object Arguments]";
     };
     if (noArgumentsClass) {
-      isArguments = function(value) {
-        return hasKey(value, 'callee') &&
-          !(propertyIsEnumerable && propertyIsEnumerable.call(value, 'callee'));
+      isArguments = function (value) {
+        return (
+          hasKey(value, "callee") &&
+          !(propertyIsEnumerable && propertyIsEnumerable.call(value, "callee"))
+        );
       };
     }
     return isArguments(arguments[0]);
@@ -831,7 +904,7 @@
    * @returns {Boolean} Returns `true` if the value is of the specified class, else `false`.
    */
   function isClassOf(value, name) {
-    return value != null && toString.call(value) == '[object ' + name + ']';
+    return value != null && toString.call(value) == "[object " + name + "]";
   }
 
   /**
@@ -844,9 +917,11 @@
    * @returns {Boolean} Returns `true` if the property value is a non-primitive, else `false`.
    */
   function isHostType(object, property) {
-    var type = object != null ? typeof object[property] : 'number';
-    return !/^(?:boolean|number|string|undefined)$/.test(type) &&
-      (type == 'object' ? !!object[property] : true);
+    var type = object != null ? typeof object[property] : "number";
+    return (
+      !/^(?:boolean|number|string|undefined)$/.test(type) &&
+      (type == "object" ? !!object[property] : true)
+    );
   }
 
   /**
@@ -857,7 +932,7 @@
    */
   function isObject(value) {
     var ctor,
-        result = !!value && toString.call(value) == '[object Object]';
+      result = !!value && toString.call(value) == "[object Object]";
 
     if (result && noArgumentsClass) {
       // avoid false positives for `arguments` objects in IE < 9
@@ -869,10 +944,10 @@
       // IE 8 node constructors are typeof "object"
       ctor = value.constructor;
       // check if the constructor is `Object` as `Object instanceof Object` is `true`
-      if ((result = isClassOf(ctor, 'Function') && ctor instanceof ctor)) {
+      if ((result = isClassOf(ctor, "Function") && ctor instanceof ctor)) {
         // assume objects created by the `Object` constructor have no inherited enumerable properties
         // (we assume there are no `Object.prototype` extensions)
-        forProps(value, function(subValue, subKey) {
+        forProps(value, function (subValue, subKey) {
           result = subKey;
         });
         // An object's own properties are iterated before inherited properties.
@@ -891,7 +966,7 @@
    * @returns {Boolean} Returns `true` if the value can be coerced, else `false`.
    */
   function isStringable(value) {
-    return hasKey(value, 'toString') || isClassOf(value, 'String');
+    return hasKey(value, "toString") || isClassOf(value, "String");
   }
 
   /**
@@ -901,7 +976,7 @@
    * @returns {Function} The new function.
    */
   function methodize(fn) {
-    return function() {
+    return function () {
       var args = [this];
       args.push.apply(args, arguments);
       return fn.apply(null, args);
@@ -925,7 +1000,7 @@
   function req(id) {
     try {
       return freeExports && freeRequire(id);
-    } catch(e) { }
+    } catch (e) {}
     return null;
   }
 
@@ -936,11 +1011,15 @@
    */
   function runScript(code) {
     var parent,
-        script,
-        sibling,
-        anchor = freeDefine ? define.amd : Benchmark,
-        prop = uid + 'runScript',
-        prefix = '(' + (freeDefine ? 'define.amd.' : 'Benchmark.') + prop + '||function(){})();';
+      script,
+      sibling,
+      anchor = freeDefine ? define.amd : Benchmark,
+      prop = uid + "runScript",
+      prefix =
+        "(" +
+        (freeDefine ? "define.amd." : "Benchmark.") +
+        prop +
+        "||function(){})();";
 
     // Non-browser environments, Firefox 2.0.0.2 (executes asynchronously),
     // and IE < 9 will error here and that's OK.
@@ -948,13 +1027,15 @@
     // We remove the inserted script *before* running the code to avoid differences
     // in the expected script element count/order of the document.
     try {
-      sibling = document.getElementsByTagName('script')[0];
+      sibling = document.getElementsByTagName("script")[0];
       parent = sibling.parentNode;
-      script = document.createElement('script');
-      anchor[prop] = function() { parent.removeChild(script); };
+      script = document.createElement("script");
+      anchor[prop] = function () {
+        parent.removeChild(script);
+      };
       script.appendChild(document.createTextNode(prefix + code));
       parent.insertBefore(script, sibling);
-    } catch(e) { }
+    } catch (e) {}
 
     delete anchor[prop];
   }
@@ -967,11 +1048,11 @@
    */
   function setOptions(bench, options) {
     options = extend({}, bench.constructor.options, options);
-    bench.options = forOwn(options, function(value, key) {
+    bench.options = forOwn(options, function (value, key) {
       if (value != null) {
         // add event listeners
         if (/^on[A-Z]/.test(key)) {
-          forEach(key.split(' '), function(key) {
+          forEach(key.split(" "), function (key) {
             bench.on(key.slice(2).toLowerCase(), value);
           });
         } else {
@@ -989,18 +1070,18 @@
    */
   function resolve() {
     var me = this,
-        bench = me.benchmark;
+      bench = me.benchmark;
 
     if (++me.cycles < bench.count) {
       (bench._host || bench).compiled.call(me, timer.ns, timer);
     } else {
       timer.stop(me);
       call({
-        'async': true,
-        'benchmark': bench,
-        'fn': function() {
-          cycle({ 'benchmark': bench, 'deferred': me });
-        }
+        async: true,
+        benchmark: bench,
+        fn: function () {
+          cycle({ benchmark: bench, deferred: me });
+        },
       });
     }
   }
@@ -1016,23 +1097,23 @@
    */
   function deepClone(value) {
     var accessor,
-        circular,
-        clone,
-        ctor,
-        data,
-        descriptor,
-        extensible,
-        key,
-        length,
-        markerKey,
-        parent,
-        result,
-        source,
-        subIndex,
-        index = -1,
-        marked = [],
-        unmarked = [],
-        queue = { '0': { 'value': value }, 'length': 1 };
+      circular,
+      clone,
+      ctor,
+      data,
+      descriptor,
+      extensible,
+      key,
+      length,
+      markerKey,
+      parent,
+      result,
+      source,
+      subIndex,
+      index = -1,
+      marked = [],
+      unmarked = [],
+      queue = { 0: { value: value }, length: 1 };
 
     /**
      * An easily detectable decorator for cloned values.
@@ -1063,7 +1144,7 @@
       }
       // add objects to the queue
       if (subValue === Object(subValue)) {
-        queue[queue.length++] = { 'key': subKey, 'parent': clone, 'source': value };
+        queue[queue.length++] = { key: subKey, parent: clone, source: value };
       }
       // assign non-objects
       else {
@@ -1084,38 +1165,43 @@
       if (value === Object(value)) {
         ctor = value.constructor;
         switch (toString.call(value)) {
-          case '[object Array]':
+          case "[object Array]":
             clone = new ctor(value.length);
             break;
 
-          case '[object Boolean]':
+          case "[object Boolean]":
             clone = new ctor(value == true);
             break;
 
-          case '[object Date]':
+          case "[object Date]":
             clone = new ctor(+value);
             break;
 
-          case '[object Object]':
-            isObject(value) && (clone = new ctor);
+          case "[object Object]":
+            isObject(value) && (clone = new ctor());
             break;
 
-          case '[object Number]':
-          case '[object String]':
+          case "[object Number]":
+          case "[object String]":
             clone = new ctor(value);
             break;
 
-          case '[object RegExp]':
-            clone = ctor(value.source,
-              (value.global     ? 'g' : '') +
-              (value.ignoreCase ? 'i' : '') +
-              (value.multiline  ? 'm' : ''));
+          case "[object RegExp]":
+            clone = ctor(
+              value.source,
+              (value.global ? "g" : "") +
+                (value.ignoreCase ? "i" : "") +
+                (value.multiline ? "m" : "")
+            );
         }
         // continue clone if `value` doesn't have an accessor descriptor
         // http://es5.github.com/#x8.10.1
-        if (clone != value &&
-            !(descriptor = source && has.descriptors && getDescriptor(source, key),
-              accessor = descriptor && (descriptor.get || descriptor.set))) {
+        if (
+          clone != value &&
+          !((descriptor =
+            source && has.descriptors && getDescriptor(source, key)),
+          (accessor = descriptor && (descriptor.get || descriptor.set)))
+        ) {
           // use an existing clone (circular reference)
           if ((extensible = isExtensible(value))) {
             markerKey = getMarkerKey(value);
@@ -1124,7 +1210,11 @@
             }
           } else {
             // for frozen/sealed objects
-            for (subIndex = 0, length = unmarked.length; subIndex < length; subIndex++) {
+            for (
+              subIndex = 0, length = unmarked.length;
+              subIndex < length;
+              subIndex++
+            ) {
               data = unmarked[subIndex];
               if (data.object === value) {
                 circular = clone = data.clone;
@@ -1136,20 +1226,27 @@
             // mark object to allow quickly detecting circular references and tie it to its clone
             if (extensible) {
               value[markerKey] = new Marker(clone);
-              marked.push({ 'key': markerKey, 'object': value });
+              marked.push({ key: markerKey, object: value });
             } else {
               // for frozen/sealed objects
-              unmarked.push({ 'clone': clone, 'object': value });
+              unmarked.push({ clone: clone, object: value });
             }
             // iterate over object properties
-            forProps(value, propCallback, { 'which': 'all' });
+            forProps(value, propCallback, { which: "all" });
           }
         }
       }
       if (parent) {
         // for custom property descriptors
-        if (accessor || (descriptor &&
-            !(descriptor.configurable && descriptor.enumerable && descriptor.writable))) {
+        if (
+          accessor ||
+          (descriptor &&
+            !(
+              descriptor.configurable &&
+              descriptor.enumerable &&
+              descriptor.writable
+            ))
+        ) {
           descriptor.value && (descriptor.value = clone);
           setDescriptor(parent, key, descriptor);
         }
@@ -1181,29 +1278,32 @@
    */
   function each(object, callback, thisArg) {
     var fn = callback,
-        index = -1,
-        result = [object, object = Object(object)][0],
-        origObject = object,
-        length = object.length,
-        isSnapshot = !!(object.snapshotItem && (length = object.snapshotLength)),
-        isSplittable = (noCharByIndex || noCharByOwnIndex) && isClassOf(object, 'String'),
-        isConvertable = isSnapshot || isSplittable || 'item' in object;
+      index = -1,
+      result = [object, (object = Object(object))][0],
+      origObject = object,
+      length = object.length,
+      isSnapshot = !!(object.snapshotItem && (length = object.snapshotLength)),
+      isSplittable =
+        (noCharByIndex || noCharByOwnIndex) && isClassOf(object, "String"),
+      isConvertable = isSnapshot || isSplittable || "item" in object;
 
     // in Opera < 10.5 `hasKey(object, 'length')` returns `false` for NodeLists
     if (length === length >>> 0) {
       if (isConvertable) {
         // the third argument of the callback is the original non-array object
-        callback = function(value, index) {
+        callback = function (value, index) {
           return fn.call(this, value, index, origObject);
         };
         // in IE < 9 strings don't support accessing characters by index
         if (isSplittable) {
-          object = object.split('');
+          object = object.split("");
         } else {
           object = [];
           while (++index < length) {
             // in Safari 2 `index in object` is always `false` for NodeLists
-            object[index] = isSnapshot ? result.snapshotItem(index) : result[index];
+            object[index] = isSnapshot
+              ? result.snapshotItem(index)
+              : result[index];
           }
         }
       }
@@ -1226,8 +1326,8 @@
     // Chrome < 14 incorrectly sets `destination` to `undefined` when we `delete arguments[0]`
     // http://code.google.com/p/v8/issues/detail?id=839
     destination = [destination, delete arguments[0]][0];
-    forEach(arguments, function(source) {
-      forProps(source, function(value, key) {
+    forEach(arguments, function (source) {
+      forProps(source, function (value, key) {
         destination[key] = value;
       });
     });
@@ -1261,23 +1361,37 @@
   function filter(array, callback, thisArg) {
     var result;
 
-    if (callback == 'successful') {
+    if (callback == "successful") {
       // callback to exclude errored or unrun benchmarks
-      callback = function(bench) { return bench.cycles; };
-    }
-    else if (callback == 'fastest' || callback == 'slowest') {
+      callback = function (bench) {
+        return bench.cycles;
+      };
+    } else if (callback == "fastest" || callback == "slowest") {
       // get successful, sort by period + margin of error, and filter fastest/slowest
-      result = filter(array, 'successful').sort(function(a, b) {
-        a = a.stats; b = b.stats;
-        return (a.mean + a.moe > b.mean + b.moe ? 1 : -1) * (callback == 'fastest' ? 1 : -1);
+      result = filter(array, "successful").sort(function (a, b) {
+        a = a.stats;
+        b = b.stats;
+        return (
+          (a.mean + a.moe > b.mean + b.moe ? 1 : -1) *
+          (callback == "fastest" ? 1 : -1)
+        );
       });
-      result = filter(result, function(bench) {
+      result = filter(result, function (bench) {
         return !result[0].compare(bench);
       });
     }
-    return result || reduce(array, function(result, value, index) {
-      return callback.call(thisArg, value, index, array) ? (result.push(value), result) : result;
-    }, []);
+    return (
+      result ||
+      reduce(
+        array,
+        function (result, value, index) {
+          return callback.call(thisArg, value, index, array)
+            ? (result.push(value), result)
+            : result;
+        },
+        []
+      )
+    );
   }
 
   /**
@@ -1292,17 +1406,16 @@
    */
   function forEach(array, callback, thisArg) {
     var fn = callback,
-        index = -1,
-        length = (array = Object(array)).length >>> 0;
+      index = -1,
+      length = (array = Object(array)).length >>> 0;
 
     if (thisArg !== undefined) {
-      callback = function(value, index, array) {
+      callback = function (value, index, array) {
         return fn.call(thisArg, value, index, array);
       };
     }
     while (++index < length) {
-      if (index in array &&
-          callback(array[index], index, array) === false) {
+      if (index in array && callback(array[index], index, array) === false) {
         break;
       }
     }
@@ -1320,7 +1433,7 @@
    * @returns {Object} Returns the object iterated over.
    */
   function forOwn(object, callback, thisArg) {
-    return forProps(object, callback, { 'bind': thisArg, 'which': 'own' });
+    return forProps(object, callback, { bind: thisArg, which: "own" });
   }
 
   /**
@@ -1331,9 +1444,11 @@
    * @returns {String} The more readable string representation.
    */
   function formatNumber(number) {
-    number = String(number).split('.');
-    return number[0].replace(/(?=(?:\d{3})+$)(?!\b)/g, ',') +
-      (number[1] ? '.' + number[1] : '');
+    number = String(number).split(".");
+    return (
+      number[0].replace(/(?=(?:\d{3})+$)(?!\b)/g, ",") +
+      (number[1] ? "." + number[1] : "")
+    );
   }
 
   /**
@@ -1346,23 +1461,31 @@
    */
   function hasKey() {
     // lazy define for worst case fallback (not as accurate)
-    hasKey = function(object, key) {
+    hasKey = function (object, key) {
       var parent = object != null && (object.constructor || Object).prototype;
-      return !!parent && key in Object(object) && !(key in parent && object[key] === parent[key]);
+      return (
+        !!parent &&
+        key in Object(object) &&
+        !(key in parent && object[key] === parent[key])
+      );
     };
     // for modern browsers
-    if (isClassOf(hasOwnProperty, 'Function')) {
-      hasKey = function(object, key) {
+    if (isClassOf(hasOwnProperty, "Function")) {
+      hasKey = function (object, key) {
         return object != null && hasOwnProperty.call(object, key);
       };
     }
     // for Safari 2
     else if ({}.__proto__ == Object.prototype) {
-      hasKey = function(object, key) {
+      hasKey = function (object, key) {
         var result = false;
         if (object != null) {
           object = Object(object);
-          object.__proto__ = [object.__proto__, object.__proto__ = null, result = key in object][0];
+          object.__proto__ = [
+            object.__proto__,
+            (object.__proto__ = null),
+            (result = key in object),
+          ][0];
         }
         return result;
       };
@@ -1381,7 +1504,7 @@
    */
   function indexOf(array, value, fromIndex) {
     var index = toInteger(fromIndex),
-        length = (array = Object(array)).length >>> 0;
+      length = (array = Object(array)).length >>> 0;
 
     index = (index < 0 ? max(0, length + index) : index) - 1;
     while (++index < length) {
@@ -1432,18 +1555,24 @@
    */
   function invoke(benches, name) {
     var args,
-        bench,
-        queued,
-        index = -1,
-        options = { 'onStart': noop, 'onCycle': noop, 'onComplete': noop },
-        result = map(benches, function(bench) { return bench; });
+      bench,
+      queued,
+      index = -1,
+      options = { onStart: noop, onCycle: noop, onComplete: noop },
+      result = map(benches, function (bench) {
+        return bench;
+      });
 
     /**
      * Checks if invoking `run` with asynchronous cycles.
      */
     function isAsync(object) {
       var async = args[0] && args[0].async;
-      return isRun(object) && (async == null ? object.options.async : async) && has.timeout;
+      return (
+        isRun(object) &&
+        (async == null ? object.options.async : async) &&
+        has.timeout
+      );
     }
 
     /**
@@ -1451,7 +1580,7 @@
      */
     function isRun(object) {
       // avoid using `instanceof` here because of IE memory leak issues with host objects
-      return Object(object).constructor == Benchmark && name == 'run';
+      return Object(object).constructor == Benchmark && name == "run";
     }
 
     /**
@@ -1467,16 +1596,18 @@
      */
     function execute() {
       var listeners,
-          sync = isSync(bench);
+        sync = isSync(bench);
 
       if (!sync) {
         // use `getNext` as a listener
-        bench.on('complete', getNext);
+        bench.on("complete", getNext);
         listeners = bench.events.complete;
         listeners.splice(0, 0, listeners.pop());
       }
       // execute method
-      result[index] = isClassOf(bench && bench[name], 'Function') ? bench[name].apply(bench, args) : undefined;
+      result[index] = isClassOf(bench && bench[name], "Function")
+        ? bench[name].apply(bench, args)
+        : undefined;
       // if synchronous return true until finished
       return sync && getNext();
     }
@@ -1486,28 +1617,29 @@
      */
     function getNext() {
       var last = bench,
-          sync = isSync(last);
+        sync = isSync(last);
 
       if (!sync) {
-        last.removeListener('complete', getNext);
-        last.emit('complete');
+        last.removeListener("complete", getNext);
+        last.emit("complete");
       }
       // choose next benchmark if not exiting early
-      if (options.onCycle.call(benches, Event('cycle'), last) !== false && raiseIndex() !== false) {
+      if (
+        options.onCycle.call(benches, Event("cycle"), last) !== false &&
+        raiseIndex() !== false
+      ) {
         bench = queued ? benches[0] : result[index];
         if (!isSync(bench)) {
-          call({ 'async': isAsync(bench), 'benchmark': bench, 'fn': execute });
-        }
-        else if (!sync) {
+          call({ async: isAsync(bench), benchmark: bench, fn: execute });
+        } else if (!sync) {
           // resume synchronous execution
-          while (execute()) { }
-        }
-        else {
+          while (execute()) {}
+        } else {
           // continue synchronous execution
           return true;
         }
       } else {
-        options.onComplete.call(benches, Event('complete'), last);
+        options.onComplete.call(benches, Event("complete"), last);
       }
       // when async the `return false` will cancel the rest of the "complete"
       // listeners because they were called above and when synchronous it will
@@ -1524,42 +1656,43 @@
       if (queued) {
         do {
           ++index > 0 && shift.call(benches);
-        } while ((length = benches.length) && !('0' in benches));
-      }
-      else {
-        while (++index < length && !(index in result)) { }
+        } while ((length = benches.length) && !("0" in benches));
+      } else {
+        while (++index < length && !(index in result)) {}
       }
       // if we reached the last index then return `false`
       return (queued ? length : index < length) ? index : (index = false);
     }
 
     // juggle arguments
-    if (isClassOf(name, 'String')) {
+    if (isClassOf(name, "String")) {
       // 2 arguments (array, name)
       args = slice.call(arguments, 2);
     } else {
       // 2 arguments (array, options)
       options = extend(options, name);
       name = options.name;
-      args = isClassOf(args = 'args' in options ? options.args : [], 'Array') ? args : [args];
+      args = isClassOf((args = "args" in options ? options.args : []), "Array")
+        ? args
+        : [args];
       queued = options.queued;
     }
     // start iterating over the array
     if (raiseIndex() !== false) {
       bench = result[index];
-      options.onStart.call(benches, Event('start'), bench);
+      options.onStart.call(benches, Event("start"), bench);
 
       // end early if the suite was aborted in an "onStart" listener
-      if (benches.aborted && benches.constructor == Suite && name == 'run') {
-        options.onCycle.call(benches, Event('cycle'), bench);
-        options.onComplete.call(benches, Event('complete'), bench);
+      if (benches.aborted && benches.constructor == Suite && name == "run") {
+        options.onCycle.call(benches, Event("cycle"), bench);
+        options.onComplete.call(benches, Event("complete"), bench);
       }
       // else start
       else {
         if (isAsync(bench)) {
-          call({ 'async': true, 'benchmark': bench, 'fn': execute });
+          call({ async: true, benchmark: bench, fn: execute });
         } else {
-          while (execute()) { }
+          while (execute()) {}
         }
       }
     }
@@ -1577,14 +1710,14 @@
    */
   function join(object, separator1, separator2) {
     var result = [],
-        length = (object = Object(object)).length,
-        arrayLike = length === length >>> 0;
+      length = (object = Object(object)).length,
+      arrayLike = length === length >>> 0;
 
-    separator2 || (separator2 = ': ');
-    each(object, function(value, key) {
+    separator2 || (separator2 = ": ");
+    each(object, function (value, key) {
       result.push(arrayLike ? value : key + separator2 + value);
     });
-    return result.join(separator1 || ',');
+    return result.join(separator1 || ",");
   }
 
   /**
@@ -1597,10 +1730,14 @@
    * @returns {Array} A new array of values returned by the callback.
    */
   function map(array, callback, thisArg) {
-    return reduce(array, function(result, value, index) {
-      result[index] = callback.call(thisArg, value, index, array);
-      return result;
-    }, Array(Object(array).length >>> 0));
+    return reduce(
+      array,
+      function (result, value, index) {
+        result[index] = callback.call(thisArg, value, index, array);
+        return result;
+      },
+      Array(Object(array).length >>> 0)
+    );
   }
 
   /**
@@ -1612,7 +1749,7 @@
    * @returns {Array} A new array of property values.
    */
   function pluck(array, property) {
-    return map(array, function(object) {
+    return map(array, function (object) {
       return object == null ? undefined : object[property];
     });
   }
@@ -1628,8 +1765,10 @@
    */
   function reduce(array, callback, accumulator) {
     var noaccum = arguments.length < 3;
-    forEach(array, function(value, index) {
-      accumulator = noaccum ? (noaccum = 0, value) : callback(accumulator, value, index, array);
+    forEach(array, function (value, index) {
+      accumulator = noaccum
+        ? ((noaccum = 0), value)
+        : callback(accumulator, value, index, array);
     });
     return accumulator;
   }
@@ -1651,8 +1790,8 @@
       delete calledBy.abortSuite;
 
       me.aborted = true;
-      !calledBy.resetSuite && invoke(me, 'abort');
-      me.emit('abort');
+      !calledBy.resetSuite && invoke(me, "abort");
+      me.emit("abort");
     }
     return me;
   }
@@ -1680,10 +1819,10 @@
    */
   function add(name, fn, options) {
     var me = this,
-        bench = Benchmark(name, fn, options);
+      bench = Benchmark(name, fn, options);
 
     me.push(bench);
-    me.emit('add', bench);
+    me.emit("add", bench);
     return me;
   }
 
@@ -1696,12 +1835,15 @@
    */
   function cloneSuite(options) {
     var me = this,
-        result = new me.constructor(extend({}, me.options, options));
+      result = new me.constructor(extend({}, me.options, options));
 
     // copy own properties
-    forOwn(me, function(value, key) {
+    forOwn(me, function (value, key) {
       if (!hasKey(result, key)) {
-        result[key] = value && isClassOf(value.clone, 'Function') ? value.clone() : deepClone(value);
+        result[key] =
+          value && isClassOf(value.clone, "Function")
+            ? value.clone()
+            : deepClone(value);
       }
     });
     return result;
@@ -1716,7 +1858,7 @@
    */
   function filterSuite(callback) {
     var me = this,
-        result = new me.constructor;
+      result = new me.constructor();
 
     result.push.apply(result, filter(me, callback));
     return result;
@@ -1730,18 +1872,17 @@
    */
   function resetSuite() {
     var me = this,
-        notAborting = !calledBy.abortSuite;
+      notAborting = !calledBy.abortSuite;
 
     if (me.running && notAborting) {
       calledBy.resetSuite = true;
       me.abort();
       delete calledBy.resetSuite;
       me.aborted = false;
-    }
-    else if (me.aborted !== false || me.running !== false) {
+    } else if (me.aborted !== false || me.running !== false) {
       me.aborted = me.running = false;
-      notAborting && invoke(me, 'reset');
-      me.emit('reset');
+      notAborting && invoke(me, "reset");
+      me.emit("reset");
     }
     return me;
   }
@@ -1762,31 +1903,31 @@
    */
   function runSuite(options) {
     var me = this,
-        benches = [];
+      benches = [];
 
     me.reset();
     me.running = true;
     options || (options = {});
 
     invoke(me, {
-      'name': 'run',
-      'args': options,
-      'queued': options.queued,
-      'onStart': function(event, bench) {
-        me.emit('start', bench);
+      name: "run",
+      args: options,
+      queued: options.queued,
+      onStart: function (event, bench) {
+        me.emit("start", bench);
       },
-      'onCycle': function(event, bench) {
+      onCycle: function (event, bench) {
         if (bench.error) {
-          me.emit('error', bench);
+          me.emit("error", bench);
         } else if (bench.cycles) {
           benches.push(bench);
         }
-        return !me.aborted && me.emit('cycle', bench);
+        return !me.aborted && me.emit("cycle", bench);
       },
-      'onComplete': function(event, bench) {
+      onComplete: function (event, bench) {
         me.running = false;
-        me.emit('complete', bench);
-      }
+        me.emit("complete", bench);
+      },
     });
     return me;
   }
@@ -1809,9 +1950,9 @@
    */
   function addListener(type, listener) {
     var me = this,
-        events = me.events || (me.events = {});
+      events = me.events || (me.events = {});
 
-    forEach(type.split(' '), function(type) {
+    forEach(type.split(" "), function (type) {
       (events[type] || (events[type] = [])).push(listener);
     });
     return me;
@@ -1825,13 +1966,13 @@
    */
   function emit(type) {
     var me = this,
-        event = Event(type),
-        args = (arguments[0] = event, arguments),
-        events = me.events,
-        listeners = events && events[event.type] || [],
-        result = true;
+      event = Event(type),
+      args = ((arguments[0] = event), arguments),
+      events = me.events,
+      listeners = (events && events[event.type]) || [],
+      result = true;
 
-    forEach(listeners.slice(), function(listener) {
+    forEach(listeners.slice(), function (listener) {
       return (result = listener.apply(me, args) !== false);
     });
     return result;
@@ -1853,11 +1994,11 @@
    */
   function removeListener(type, listener) {
     var me = this,
-        events = me.events;
+      events = me.events;
 
-    forEach(type.split(' '), function(type) {
-      var listeners = events && events[type] || [],
-          index = indexOf(listeners, listener);
+    forEach(type.split(" "), function (type) {
+      var listeners = (events && events[type]) || [],
+        index = indexOf(listeners, listener);
       if (index > -1) {
         listeners.splice(index, 1);
       }
@@ -1883,10 +2024,10 @@
    */
   function removeAllListeners(type) {
     var me = this,
-        events = me.events;
+      events = me.events;
 
-    forEach(type ? type.split(' ') : events, function(type) {
-      (events && events[type] || []).length = 0;
+    forEach(type ? type.split(" ") : events, function (type) {
+      ((events && events[type]) || []).length = 0;
     });
     return me;
   }
@@ -1912,7 +2053,7 @@
       delete calledBy.abort;
 
       me.aborted = true;
-      me.emit('abort');
+      me.emit("abort");
     }
     return me;
   }
@@ -1930,13 +2071,13 @@
    */
   function clone(options) {
     var me = this,
-        result = new me.constructor(extend({}, me, options));
+      result = new me.constructor(extend({}, me, options));
 
     // correct the `options` object
     result.options = extend({}, me.options, options);
 
     // copy own custom properties
-    forOwn(me, function(value, key) {
+    forOwn(me, function (value, key) {
       if (!hasKey(result, key)) {
         result[key] = deepClone(value);
       }
@@ -1955,15 +2096,19 @@
     // http://en.wikipedia.org/wiki/Student's_t-test
     // http://www.chem.utoronto.ca/coursenotes/analsci/StatsTutorial/12tailed.html
     var a = this.stats,
-        b = other.stats,
-        df = a.size + b.size - 2,
-        pooled = (((a.size - 1) * a.variance) + ((b.size - 1) * b.variance)) / df,
-        tstat = (a.mean - b.mean) / sqrt(pooled * (1 / a.size + 1 / b.size)),
-        near = abs(1 - a.mean / b.mean) < 0.055 && a.rme < 3 && b.rme < 3;
+      b = other.stats,
+      df = a.size + b.size - 2,
+      pooled = ((a.size - 1) * a.variance + (b.size - 1) * b.variance) / df,
+      tstat = (a.mean - b.mean) / sqrt(pooled * (1 / a.size + 1 / b.size)),
+      near = abs(1 - a.mean / b.mean) < 0.055 && a.rme < 3 && b.rme < 3;
 
     // check if the means aren't close and the t-statistic is significant
     // (a larger `mean` indicates a slower benchmark)
-    return !near && abs(tstat) > getCriticalValue(df) ? (tstat > 0 ? -1 : 1) : 0;
+    return !near && abs(tstat) > getCriticalValue(df)
+      ? tstat > 0
+        ? -1
+        : 1
+      : 0;
   }
 
   /**
@@ -1973,33 +2118,34 @@
    */
   function reset() {
     var changed,
-        pair,
-        me = this,
-        source = extend({}, me.constructor.prototype, me.options),
-        pairs = [[source, me]];
+      pair,
+      me = this,
+      source = extend({}, me.constructor.prototype, me.options),
+      pairs = [[source, me]];
 
     if (me.running && !calledBy.abort) {
       // no worries, `reset()` is called within `abort()`
       me.abort();
       me.aborted = source.aborted;
-    }
-    else {
+    } else {
       // a non-recursive solution to check if properties have changed
       // http://www.jslab.dk/articles/non.recursive.preorder.traversal.part4
       while ((pair = pairs.pop())) {
-        forOwn(pair[0], function(value, key) {
+        forOwn(pair[0], function (value, key) {
           var other = pair[1][key];
-          if (value && isClassOf(value, 'Object')) {
+          if (value && isClassOf(value, "Object")) {
             pairs.push([value, other]);
-          }
-          else if (value !== other && !(value == null || isClassOf(value, 'Function'))) {
+          } else if (
+            value !== other &&
+            !(value == null || isClassOf(value, "Function"))
+          ) {
             pair[1][key] = value;
             changed = true;
           }
         });
       }
       if (changed) {
-        me.emit('reset');
+        me.emit("reset");
       }
     }
     return me;
@@ -2013,19 +2159,28 @@
    */
   function toStringBench() {
     var me = this,
-        error = me.error,
-        hz = me.hz,
-        id = me.id,
-        stats = me.stats,
-        size = stats.size,
-        pm = has.java ? '+/-' : '\xb1',
-        result = me.name || (typeof id == 'number' ? '<Test #' + id + '>' : id);
+      error = me.error,
+      hz = me.hz,
+      id = me.id,
+      stats = me.stats,
+      size = stats.size,
+      pm = has.java ? "+/-" : "\xb1",
+      result = me.name || (typeof id == "number" ? "<Test #" + id + ">" : id);
 
     if (error) {
-      result += ': ' + join(error);
+      result += ": " + join(error);
     } else {
-      result += ' x ' + formatNumber(hz.toFixed(hz < 100 ? 2 : 0)) + ' ops/sec ' + pm +
-        stats.rme.toFixed(2) + '% (' + size + ' run' + (size == 1 ? '' : 's') + ' sampled)';
+      result +=
+        " x " +
+        formatNumber(hz.toFixed(hz < 100 ? 2 : 0)) +
+        " ops/sec " +
+        pm +
+        stats.rme.toFixed(2) +
+        "% (" +
+        size +
+        " run" +
+        (size == 1 ? "" : "s") +
+        " sampled)";
     }
     return result;
   }
@@ -2040,85 +2195,100 @@
    */
   function clock() {
     var applet,
-        options = Benchmark.options,
-        template = { 'begin': 's$=new n$', 'end': 'r$=(new n$-s$)/1e3', 'uid': uid },
-        timers = [{ 'ns': timer.ns, 'res': max(0.0015, getRes('ms')), 'unit': 'ms' }];
+      options = Benchmark.options,
+      template = { begin: "s$=new n$", end: "r$=(new n$-s$)/1e3", uid: uid },
+      timers = [{ ns: timer.ns, res: max(0.0015, getRes("ms")), unit: "ms" }];
 
     // lazy defined for hi-res timers
-    clock = function(bench) {
-      var deferred = bench instanceof Deferred && [bench, bench = bench.benchmark][0],
-          host = bench._host || bench,
-          fn = host.fn,
-          fnArg = deferred ? getFirstArgument(fn, 'deferred') : '',
-          stringable = isStringable(fn),
-          decompilable = has.decompilation || stringable,
-          source = {
-            'setup': getSource(host.setup, preprocess('m$.setup()')),
-            'fn': getSource(fn, preprocess('f$(' + fnArg + ')')),
-            'fnArg': fnArg,
-            'teardown': getSource(host.teardown, preprocess('m$.teardown()'))
-          },
-          compiled = fn.compiled,
-          count = host.count = bench.count,
-          id = host.id,
-          isEmpty = !(source.fn || stringable),
-          name = host.name || (typeof id == 'number' ? '<Test #' + id + '>' : id),
-          ns = timer.ns,
-          result = 0;
+    clock = function (bench) {
+      var deferred =
+          bench instanceof Deferred && [bench, (bench = bench.benchmark)][0],
+        host = bench._host || bench,
+        fn = host.fn,
+        fnArg = deferred ? getFirstArgument(fn, "deferred") : "",
+        stringable = isStringable(fn),
+        decompilable = has.decompilation || stringable,
+        source = {
+          setup: getSource(host.setup, preprocess("m$.setup()")),
+          fn: getSource(fn, preprocess("f$(" + fnArg + ")")),
+          fnArg: fnArg,
+          teardown: getSource(host.teardown, preprocess("m$.teardown()")),
+        },
+        compiled = fn.compiled,
+        count = (host.count = bench.count),
+        id = host.id,
+        isEmpty = !(source.fn || stringable),
+        name = host.name || (typeof id == "number" ? "<Test #" + id + ">" : id),
+        ns = timer.ns,
+        result = 0;
 
       // init `minTime` if needed
-      bench.minTime = host.minTime || (host.minTime = host.options.minTime = options.minTime);
+      bench.minTime =
+        host.minTime || (host.minTime = host.options.minTime = options.minTime);
 
       // repair nanosecond timer
       // (some Chrome builds erase the `ns` variable after millions of executions)
       if (applet) {
         try {
           ns.nanoTime();
-        } catch(e) {
+        } catch (e) {
           // use non-element to avoid issues with libs that augment them
-          ns = timer.ns = new applet.Packages.nano;
+          ns = timer.ns = new applet.Packages.nano();
         }
       }
 
-      if(!compiled) {
+      if (!compiled) {
         // compile in setup/teardown functions and the test loop
-        compiled = host.compiled = createFunction(preprocess('n$,t$'), interpolate(
-          preprocess(deferred
-            ? 'var d$=this,#{fnArg}=d$,r$=d$.resolve,m$=(m$=d$.benchmark)._host||m$,f$=m$.fn;' +
-              'if(!d$.cycles){d$.resolve=function(){d$.resolve=r$;r$.call(d$);' +
-              'if(d$.cycles==m$.count){#{teardown}\n}};#{setup}\nt$.start(d$);}#{fn}\nreturn{}'
-            : 'var r$,s$,m$=this,f$=m$.fn,i$=m$.count;#{setup}\n#{begin};' +
-              'while(i$--){#{fn}\n}#{end};#{teardown}\nreturn{time:r$,uid:"#{uid}"}'),
-          source
-        ));
+        compiled = host.compiled = createFunction(
+          preprocess("n$,t$"),
+          interpolate(
+            preprocess(
+              deferred
+                ? "var d$=this,#{fnArg}=d$,r$=d$.resolve,m$=(m$=d$.benchmark)._host||m$,f$=m$.fn;" +
+                    "if(!d$.cycles){d$.resolve=function(){d$.resolve=r$;r$.call(d$);" +
+                    "if(d$.cycles==m$.count){#{teardown}\n}};#{setup}\nt$.start(d$);}#{fn}\nreturn{}"
+                : "var r$,s$,m$=this,f$=m$.fn,i$=m$.count;#{setup}\n#{begin};" +
+                    'while(i$--){#{fn}\n}#{end};#{teardown}\nreturn{time:r$,uid:"#{uid}"}'
+            ),
+            source
+          )
+        );
 
         try {
           if (isEmpty) {
             // Firefox may remove dead code from Function#toString results
             // http://bugzil.la/536085
-            throw new Error('The test, ' + name + ', is empty. This may be the result of dead code removal.');
-          }
-          else if (!deferred) {
+            throw new Error(
+              "The test, " +
+                name +
+                ", is empty. This may be the result of dead code removal."
+            );
+          } else if (!deferred) {
             // pretest to determine if compiled code is exits early, usually by a
             // rogue `return` statement, by checking for a return object with the uid
             host.count = 1;
             compiled = (compiled.call(host, ns) || {}).uid == uid && compiled;
             host.count = count;
           }
-        } catch(e) {
+        } catch (e) {
           compiled = false;
           bench.error = e || new Error(String(e));
           host.count = count;
         }
         // fallback when a test exits early or errors during pretest
         if (decompilable && !compiled && !deferred && !isEmpty) {
-          compiled = createFunction(preprocess('n$'), interpolate(
-            preprocess((bench.error && !stringable
-              ? 'var r$,s$,m$=this,f$=m$.fn,i$=m$.count;'
-              : 'function f$(){#{fn}\n}var r$,s$,i$=this.count;'
-            ) + '#{setup}\n#{begin};while(i$--){f$()}#{end};#{teardown}\nreturn{time:r$}'),
-            source
-          ));
+          compiled = createFunction(
+            preprocess("n$"),
+            interpolate(
+              preprocess(
+                (bench.error && !stringable
+                  ? "var r$,s$,m$=this,f$=m$.fn,i$=m$.count;"
+                  : "function f$(){#{fn}\n}var r$,s$,i$=this.count;") +
+                  "#{setup}\n#{begin};while(i$--){f$()}#{end};#{teardown}\nreturn{time:r$}"
+              ),
+              source
+            )
+          );
 
           try {
             // pretest one more time to check for errors
@@ -2127,8 +2297,7 @@
             host.compiled = compiled;
             host.count = count;
             delete bench.error;
-          }
-          catch(e) {
+          } catch (e) {
             host.count = count;
             if (!bench.error) {
               host.compiled = compiled;
@@ -2151,32 +2320,30 @@
      */
     function getRes(unit) {
       var measured,
-          begin,
-          count = 30,
-          divisor = 1e3,
-          ns = timer.ns,
-          sample = [];
+        begin,
+        count = 30,
+        divisor = 1e3,
+        ns = timer.ns,
+        sample = [];
 
       // get average smallest measurable time
       while (count--) {
-        if (unit == 'us') {
+        if (unit == "us") {
           divisor = 1e6;
           if (ns.stop) {
             ns.start();
-            while (!(measured = ns.microseconds())) { }
+            while (!(measured = ns.microseconds())) {}
           } else {
             begin = timer.ns();
-            while (!(measured = ns() - begin)) { }
+            while (!(measured = ns() - begin)) {}
           }
-        }
-        else if (unit == 'ns') {
+        } else if (unit == "ns") {
           divisor = 1e9;
           begin = ns.nanoTime();
-          while (!(measured = ns.nanoTime() - begin)) { }
-        }
-        else {
-          begin = new ns;
-          while (!(measured = new ns - begin)) { }
+          while (!(measured = ns.nanoTime() - begin)) {}
+        } else {
+          begin = new ns();
+          while (!(measured = new ns() - begin)) {}
         }
         // check for broken timers (nanoTime may have issues)
         // http://alivebutsleepy.srnet.cz/unreliable-system-nanotime/
@@ -2202,68 +2369,76 @@
     /*------------------------------------------------------------------------*/
 
     // detect nanosecond support from a Java applet
-    each(window.document && document.applets || [], function(element) {
-      return !(timer.ns = applet = 'nanoTime' in element && element);
+    each((window.document && document.applets) || [], function (element) {
+      return !(timer.ns = applet = "nanoTime" in element && element);
     });
 
     // check type in case Safari returns an object instead of a number
     try {
-      if (typeof timer.ns.nanoTime() == 'number') {
-        timers.push({ 'ns': timer.ns, 'res': getRes('ns'), 'unit': 'ns' });
+      if (typeof timer.ns.nanoTime() == "number") {
+        timers.push({ ns: timer.ns, res: getRes("ns"), unit: "ns" });
       }
-    } catch(e) { }
+    } catch (e) {}
 
     // detect Chrome's microsecond timer:
     // enable benchmarking via the --enable-benchmarking command
     // line switch in at least Chrome 7 to use chrome.Interval
     try {
-      if ((timer.ns = new (window.chrome || window.chromium).Interval)) {
-        timers.push({ 'ns': timer.ns, 'res': getRes('us'), 'unit': 'us' });
+      if ((timer.ns = new (window.chrome || window.chromium).Interval())) {
+        timers.push({ ns: timer.ns, res: getRes("us"), unit: "us" });
       }
-    } catch(e) { }
+    } catch (e) {}
 
     // detect Node's microtime module:
     // npm install microtime
-    if ((timer.ns = (req('microtime') || { 'now': 0 }).now)) {
-      timers.push({ 'ns': timer.ns,  'res': getRes('us'), 'unit': 'us' });
+    if ((timer.ns = (req("microtime") || { now: 0 }).now)) {
+      timers.push({ ns: timer.ns, res: getRes("us"), unit: "us" });
     }
 
     // pick timer with highest resolution
-    timer = reduce(timers, function(timer, other) {
+    timer = reduce(timers, function (timer, other) {
       return other.res < timer.res ? other : timer;
     });
 
     // remove unused applet
-    if (timer.unit != 'ns' && applet) {
+    if (timer.unit != "ns" && applet) {
       applet = (applet.parentNode.removeChild(applet), null);
     }
     // error if there are no working timers
     if (timer.res == Infinity) {
-      throw new Error('Benchmark.js was unable to find a working timer.');
+      throw new Error("Benchmark.js was unable to find a working timer.");
     }
     // use API of chosen timer
-    if (timer.unit == 'ns') {
+    if (timer.unit == "ns") {
       extend(template, {
-        'begin': 's$=n$.nanoTime()',
-        'end': 'r$=(n$.nanoTime()-s$)/1e9'
+        begin: "s$=n$.nanoTime()",
+        end: "r$=(n$.nanoTime()-s$)/1e9",
       });
-    }
-    else if (timer.unit == 'us') {
-      extend(template, timer.ns.stop ? {
-        'begin': 's$=n$.start()',
-        'end': 'r$=n$.microseconds()/1e6'
-      } : {
-        'begin': 's$=n$()',
-        'end': 'r$=(n$()-s$)/1e6'
-      });
+    } else if (timer.unit == "us") {
+      extend(
+        template,
+        timer.ns.stop
+          ? {
+              begin: "s$=n$.start()",
+              end: "r$=n$.microseconds()/1e6",
+            }
+          : {
+              begin: "s$=n$()",
+              end: "r$=(n$()-s$)/1e6",
+            }
+      );
     }
 
     // define `timer` methods
-    timer.start = createFunction(preprocess('d$'),
-      preprocess('var n$=this.ns,#{begin};d$.timeStamp=s$'));
+    timer.start = createFunction(
+      preprocess("d$"),
+      preprocess("var n$=this.ns,#{begin};d$.timeStamp=s$")
+    );
 
-    timer.stop = createFunction(preprocess('d$'),
-      preprocess('var n$=this.ns,s$=d$.timeStamp,#{end};d$.elapsed=r$'));
+    timer.stop = createFunction(
+      preprocess("d$"),
+      preprocess("var n$=this.ns,s$=d$.timeStamp,#{end};d$.elapsed=r$")
+    );
 
     // resolve time span required to achieve a percent uncertainty of at most 1%
     // http://spiff.rit.edu/classes/phys273/uncert/uncert.html
@@ -2280,21 +2455,23 @@
     options || (options = {});
 
     var async = options.async,
-        bench = options.benchmark,
-        elapsed = 0,
-        queue = [],
-        sample = [],
-        initCount = bench.initCount;
+      bench = options.benchmark,
+      elapsed = 0,
+      queue = [],
+      sample = [],
+      initCount = bench.initCount;
 
     /**
      * Adds a number of clones to the queue.
      */
     function enqueue(count) {
       while (count--) {
-        queue.push(bench.clone({
-          '_host': bench,
-          'events': { 'start': [update], 'cycle': [update] }
-        }));
+        queue.push(
+          bench.clone({
+            _host: bench,
+            events: { start: [update], cycle: [update] },
+          })
+        );
       }
     }
 
@@ -2303,17 +2480,16 @@
      */
     function update(event) {
       var clone = this,
-          cycles = clone.cycles,
-          type = event.type;
+        cycles = clone.cycles,
+        type = event.type;
 
       if (bench.running) {
-        if (type == 'cycle') {
+        if (type == "cycle") {
           if (clone.error) {
             bench.abort();
             bench.error = clone.error;
-            bench.emit('error');
-          }
-          else {
+            bench.emit("error");
+          } else {
             // Note: the host's bench.count prop is updated in `clock()`
             bench.hz = clone.hz;
             bench.initCount = clone.initCount;
@@ -2323,8 +2499,7 @@
             }
           }
           bench.emit(type);
-        }
-        else {
+        } else {
           // reached in clone's onStart
           // Note: clone.minTime prop is inited in `clock()`
           clone.count = bench.initCount;
@@ -2339,17 +2514,20 @@
      */
     function evaluate(event, clone) {
       var mean,
-          moe,
-          rme,
-          sd,
-          sem,
-          variance,
-          now = +new Date,
-          times = bench.times,
-          done = bench.aborted,
-          maxedOut = (elapsed += now - clone.times.timeStamp) / 1e3 > bench.maxTime,
-          size = sample.push(clone.times.period),
-          varOf = function(sum, x) { return sum + pow(x - mean, 2); };
+        moe,
+        rme,
+        sd,
+        sem,
+        variance,
+        now = +new Date(),
+        times = bench.times,
+        done = bench.aborted,
+        maxedOut =
+          (elapsed += now - clone.times.timeStamp) / 1e3 > bench.maxTime,
+        size = sample.push(clone.times.period),
+        varOf = function (sum, x) {
+          return sum + pow(x - mean, 2);
+        };
 
       // exit early for aborted or unclockable tests
       if (done || clone.hz == Infinity) {
@@ -2371,13 +2549,13 @@
         rme = (moe / mean) * 100 || 0;
 
         extend(bench.stats, {
-          'moe': moe,
-          'rme': rme,
-          'sem': sem,
-          'deviation': sd,
-          'mean': mean,
-          'size': size,
-          'variance': variance
+          moe: moe,
+          rme: rme,
+          sem: sem,
+          deviation: sd,
+          mean: mean,
+          size: size,
+          variance: variance,
         });
 
         // We exit early when the elapsed time exceeds the maximum time allowed
@@ -2409,13 +2587,13 @@
     // init queue and begin
     enqueue(bench.minSamples);
     invoke(queue, {
-      'name': 'run',
-      'args': { 'async': async },
-      'queued': true,
-      'onCycle': evaluate,
-      'onComplete': function() {
-        bench.emit('complete');
-      }
+      name: "run",
+      args: { async: async },
+      queued: true,
+      onCycle: evaluate,
+      onComplete: function () {
+        bench.emit("complete");
+      },
     });
   }
 
@@ -2428,14 +2606,14 @@
     options || (options = {});
 
     var clocked,
-        divisor,
-        minTime,
-        period,
-        async = options.async,
-        bench = options.benchmark,
-        count = bench.count,
-        deferred = options.deferred,
-        times = bench.times;
+      divisor,
+      minTime,
+      period,
+      async = options.async,
+      bench = options.benchmark,
+      count = bench.count,
+      deferred = options.deferred,
+      times = bench.times;
 
     // continue, if not aborted between cycles
     if (bench.running) {
@@ -2446,7 +2624,7 @@
 
       if (bench.error) {
         bench.abort();
-        bench.emit('error');
+        bench.emit("error");
       }
     }
     // continue, if not errored
@@ -2476,7 +2654,7 @@
       }
     }
     // should we exit early?
-    if (bench.emit('cycle') === false) {
+    if (bench.emit("cycle") === false) {
       bench.abort();
     }
     // figure out what to do next
@@ -2486,19 +2664,19 @@
         (bench._host || bench).compiled.call(deferred, timer.ns, timer);
       } else {
         call({
-          'async': async,
-          'benchmark': bench,
-          'fn': function() {
-            cycle({ 'async': async, 'benchmark': bench });
-          }
+          async: async,
+          benchmark: bench,
+          fn: function () {
+            cycle({ async: async, benchmark: bench });
+          },
         });
       }
     } else {
       // fix TraceMonkey bug associated with clock fallbacks
       // http://bugzil.la/509069
-      runScript('try{' + uid + '=1;delete ' + uid + '}catch(e){}');
+      runScript("try{" + uid + "=1;delete " + uid + "}catch(e){}");
       // done
-      bench.emit('complete');
+      bench.emit("complete");
     }
   }
 
@@ -2517,7 +2695,9 @@
    */
   function run(options) {
     var me = this,
-        async = ((async = options && options.async) == null ? me.async : async) && has.timeout;
+      async =
+        ((async = options && options.async) == null ? me.async : async) &&
+        has.timeout;
 
     // set running to false so reset() won't call abort()
     me.running = false;
@@ -2525,17 +2705,17 @@
     me.running = true;
 
     me.count = me.initCount;
-    me.times.timeStamp = +new Date;
-    me.emit('start');
+    me.times.timeStamp = +new Date();
+    me.emit("start");
 
     if (me._host) {
       if (me.defer) {
         Deferred(me);
       } else {
-        cycle({ 'async': async, 'benchmark': me });
+        cycle({ async: async, benchmark: me });
       }
     } else {
-      compute({ 'async': async, 'benchmark': me });
+      compute({ async: async, benchmark: me });
     }
     return me;
   }
@@ -2543,14 +2723,13 @@
   /*--------------------------------------------------------------------------*/
 
   extend(Benchmark, {
-
     /**
      * The version number.
      * @static
      * @memberOf Benchmark
      * @type String
      */
-    'version': '0.3.0',
+    version: "0.3.0",
 
     /**
      * The default options copied by benchmark instances.
@@ -2558,42 +2737,41 @@
      * @memberOf Benchmark
      * @type Object
      */
-    'options': {
-
+    options: {
       /**
        * A flag to indicate that benchmark cycles will execute asynchronously by default.
        * @memberOf Benchmark.options
        * @type Boolean
        */
-      'async': false,
+      async: false,
 
       /**
        * A flag to indicate that the benchmark clock is deferred.
        * @memberOf Benchmark.options
        * @type Boolean
        */
-      'defer': false,
+      defer: false,
 
       /**
        * The delay between test cycles (secs).
        * @memberOf Benchmark.options
        * @type Number
        */
-      'delay': 0.005,
+      delay: 0.005,
 
       /**
        * Displayed by Benchmark#toString when a `name` is not available (auto-generated if `null`).
        * @memberOf Benchmark.options
        * @type String|Null
        */
-      'id': null,
+      id: null,
 
       /**
        * The default number of times to execute a test on a benchmark's first cycle.
        * @memberOf Benchmark.options
        * @type Number
        */
-      'initCount': 1,
+      initCount: 1,
 
       /**
        * The maximum time a benchmark is allowed to run before finishing (secs).
@@ -2601,28 +2779,28 @@
        * @memberOf Benchmark.options
        * @type Number
        */
-      'maxTime': 5,
+      maxTime: 5,
 
       /**
        * The minimum sample size required to perform statistical analysis.
        * @memberOf Benchmark.options
        * @type Number
        */
-      'minSamples': 5,
+      minSamples: 5,
 
       /**
        * The time needed to reduce the percent uncertainty of measurement to 1% (secs).
        * @memberOf Benchmark.options
        * @type Number
        */
-      'minTime': 0,
+      minTime: 0,
 
       /**
        * The name of the benchmark.
        * @memberOf Benchmark.options
        * @type String|Null
        */
-      'name': null
+      name: null,
     },
 
     /**
@@ -2632,185 +2810,184 @@
      * @memberOf Benchmark
      * @type Object
      */
-    'platform': req('platform') || window.platform || {
+    platform: req("platform") ||
+      window.platform || {
+        /**
+         * The platform description.
+         * @memberOf Benchmark.platform
+         * @type String
+         */
+        description: (window.navigator && navigator.userAgent) || null,
 
-      /**
-       * The platform description.
-       * @memberOf Benchmark.platform
-       * @type String
-       */
-      'description': window.navigator && navigator.userAgent || null,
+        /**
+         * The name of the browser layout engine.
+         * @memberOf Benchmark.platform
+         * @type String|Null
+         */
+        layout: null,
 
-      /**
-       * The name of the browser layout engine.
-       * @memberOf Benchmark.platform
-       * @type String|Null
-       */
-      'layout': null,
+        /**
+         * The name of the product hosting the browser.
+         * @memberOf Benchmark.platform
+         * @type String|Null
+         */
+        product: null,
 
-      /**
-       * The name of the product hosting the browser.
-       * @memberOf Benchmark.platform
-       * @type String|Null
-       */
-      'product': null,
+        /**
+         * The name of the browser/environment.
+         * @memberOf Benchmark.platform
+         * @type String|Null
+         */
+        name: null,
 
-      /**
-       * The name of the browser/environment.
-       * @memberOf Benchmark.platform
-       * @type String|Null
-       */
-      'name': null,
+        /**
+         * The name of the product's manufacturer.
+         * @memberOf Benchmark.platform
+         * @type String|Null
+         */
+        manufacturer: null,
 
-      /**
-       * The name of the product's manufacturer.
-       * @memberOf Benchmark.platform
-       * @type String|Null
-       */
-      'manufacturer': null,
+        /**
+         * The name of the operating system.
+         * @memberOf Benchmark.platform
+         * @type String|Null
+         */
+        os: null,
 
-      /**
-       * The name of the operating system.
-       * @memberOf Benchmark.platform
-       * @type String|Null
-       */
-      'os': null,
+        /**
+         * The alpha/beta release indicator.
+         * @memberOf Benchmark.platform
+         * @type String|Null
+         */
+        prerelease: null,
 
-      /**
-       * The alpha/beta release indicator.
-       * @memberOf Benchmark.platform
-       * @type String|Null
-       */
-      'prerelease': null,
+        /**
+         * The browser/environment version.
+         * @memberOf Benchmark.platform
+         * @type String|Null
+         */
+        version: null,
 
-      /**
-       * The browser/environment version.
-       * @memberOf Benchmark.platform
-       * @type String|Null
-       */
-      'version': null,
-
-      /**
-       * Return platform description when the platform object is coerced to a string.
-       * @memberOf Benchmark.platform
-       * @type Function
-       * @returns {String} The platform description.
-       */
-      'toString': function() {
-        return this.description || '';
-      }
-    },
+        /**
+         * Return platform description when the platform object is coerced to a string.
+         * @memberOf Benchmark.platform
+         * @type Function
+         * @returns {String} The platform description.
+         */
+        toString: function () {
+          return this.description || "";
+        },
+      },
 
     // clone objects
-    'deepClone': deepClone,
+    deepClone: deepClone,
 
     // iteration utility
-    'each': each,
+    each: each,
 
     // augment objects
-    'extend': extend,
+    extend: extend,
 
     // generic Array#filter
-    'filter': filter,
+    filter: filter,
 
     // generic Array#forEach
-    'forEach': forEach,
+    forEach: forEach,
 
     // generic own property iteration utility
-    'forOwn': forOwn,
+    forOwn: forOwn,
 
     // converts a number to a comma-separated string
-    'formatNumber': formatNumber,
+    formatNumber: formatNumber,
 
     // generic Object#hasOwnProperty
     // (trigger hasKey's lazy define before assigning it to Benchmark)
-    'hasKey': (hasKey(Benchmark, ''), hasKey),
+    hasKey: (hasKey(Benchmark, ""), hasKey),
 
     // generic Array#indexOf
-    'indexOf': indexOf,
+    indexOf: indexOf,
 
     // invokes a method on each item in an array
-    'invoke': invoke,
+    invoke: invoke,
 
     // generic Array#join for arrays and objects
-    'join': join,
+    join: join,
 
     // generic Array#map
-    'map': map,
+    map: map,
 
     // retrieves a property value from each item in an array
-    'pluck': pluck,
+    pluck: pluck,
 
     // generic Array#reduce
-    'reduce': reduce
+    reduce: reduce,
   });
 
   /*--------------------------------------------------------------------------*/
 
   extend(Benchmark.prototype, {
-
     /**
      * The number of times a test was executed.
      * @memberOf Benchmark
      * @type Number
      */
-    'count': 0,
+    count: 0,
 
     /**
      * The number of cycles performed while benchmarking.
      * @memberOf Benchmark
      * @type Number
      */
-    'cycles': 0,
+    cycles: 0,
 
     /**
      * The number of executions per second.
      * @memberOf Benchmark
      * @type Number
      */
-    'hz': 0,
+    hz: 0,
 
     /**
      * The compiled test function.
      * @memberOf Benchmark
      * @type Function|String
      */
-    'compiled': null,
+    compiled: null,
 
     /**
      * The error object if the test failed.
      * @memberOf Benchmark
      * @type Object|Null
      */
-    'error': null,
+    error: null,
 
     /**
      * The test to benchmark.
      * @memberOf Benchmark
      * @type Function|String
      */
-    'fn': null,
+    fn: null,
 
     /**
      * A flag to indicate if the benchmark is aborted.
      * @memberOf Benchmark
      * @type Boolean
      */
-    'aborted': false,
+    aborted: false,
 
     /**
      * A flag to indicate if the benchmark is running.
      * @memberOf Benchmark
      * @type Boolean
      */
-    'running': false,
+    running: false,
 
     /**
      * Alias of [`Benchmark#addListener`](#Benchmark:addListener).
      * @memberOf Benchmark, Benchmark.Suite
      * @type Function
      */
-    'on': addListener,
+    on: addListener,
 
     /**
      * Compiled into the test and executed immediately **before** the test loop.
@@ -2872,70 +3049,69 @@
      *   }())
      * }())
      */
-    'setup': noop,
+    setup: noop,
 
     /**
      * Compiled into the test and executed immediately **after** the test loop.
      * @memberOf Benchmark
      * @type Function|String
      */
-    'teardown': noop,
+    teardown: noop,
 
     /**
      * An object of stats including mean, margin or error, and standard deviation.
      * @memberOf Benchmark
      * @type Object
      */
-    'stats': {
-
+    stats: {
       /**
        * The margin of error.
        * @memberOf Benchmark#stats
        * @type Number
        */
-      'moe': 0,
+      moe: 0,
 
       /**
        * The relative margin of error (expressed as a percentage of the mean).
        * @memberOf Benchmark#stats
        * @type Number
        */
-      'rme': 0,
+      rme: 0,
 
       /**
        * The standard error of the mean.
        * @memberOf Benchmark#stats
        * @type Number
        */
-      'sem': 0,
+      sem: 0,
 
       /**
        * The sample standard deviation.
        * @memberOf Benchmark#stats
        * @type Number
        */
-      'deviation': 0,
+      deviation: 0,
 
       /**
        * The sample arithmetic mean.
        * @memberOf Benchmark#stats
        * @type Number
        */
-      'mean': 0,
+      mean: 0,
 
       /**
        * The sample size.
        * @memberOf Benchmark#stats
        * @type Number
        */
-      'size': 0,
+      size: 0,
 
       /**
        * The sample variance.
        * @memberOf Benchmark#stats
        * @type Number
        */
-      'variance': 0
+      variance: 0,
     },
 
     /**
@@ -2943,66 +3119,65 @@
      * @memberOf Benchmark
      * @type Object
      */
-    'times': {
-
+    times: {
       /**
        * The time taken to complete the last cycle (secs).
        * @memberOf Benchmark#times
        * @type Number
        */
-      'cycle': 0,
+      cycle: 0,
 
       /**
        * The time taken to complete the benchmark (secs).
        * @memberOf Benchmark#times
        * @type Number
        */
-      'elapsed': 0,
+      elapsed: 0,
 
       /**
        * The time taken to execute the test once (secs).
        * @memberOf Benchmark#times
        * @type Number
        */
-      'period': 0,
+      period: 0,
 
       /**
        * A timestamp of when the benchmark started (ms).
        * @memberOf Benchmark#times
        * @type Number
        */
-      'timeStamp': 0
+      timeStamp: 0,
     },
 
     // aborts benchmark (does not record times)
-    'abort': abort,
+    abort: abort,
 
     // registers a single listener
-    'addListener': addListener,
+    addListener: addListener,
 
     // creates a new benchmark using the same test and options
-    'clone': clone,
+    clone: clone,
 
     // compares benchmark's hertz with another
-    'compare': compare,
+    compare: compare,
 
     // executes listeners of a specified type
-    'emit': emit,
+    emit: emit,
 
     // removes all listeners of a specified type
-    'removeAllListeners': removeAllListeners,
+    removeAllListeners: removeAllListeners,
 
     // removes a single listener
-    'removeListener': removeListener,
+    removeListener: removeListener,
 
     // reset benchmark properties
-    'reset': reset,
+    reset: reset,
 
     // runs the benchmark
-    'run': run,
+    run: run,
 
     // pretty print benchmark info
-    'toString': toStringBench
+    toString: toStringBench,
   });
 
   /*--------------------------------------------------------------------------*/
@@ -3014,39 +3189,37 @@
    * @type Object
    */
   Suite.options = {
-
     /**
      * The name of the suite.
      * @memberOf Benchmark.Suite.options
      * @type String|Null
      */
-    'name': null
+    name: null,
   };
 
   /*--------------------------------------------------------------------------*/
 
   extend(Suite.prototype, {
-
     /**
      * The number of benchmarks in the suite.
      * @memberOf Benchmark.Suite
      * @type Number
      */
-    'length': 0,
+    length: 0,
 
     /**
      * A flag to indicate if the suite is aborted.
      * @memberOf Benchmark.Suite
      * @type Boolean
      */
-    'aborted': false,
+    aborted: false,
 
     /**
      * A flag to indicate if the suite is running.
      * @memberOf Benchmark.Suite
      * @type Boolean
      */
-    'running': false,
+    running: false,
 
     /**
      * An `Array#forEach` like method.
@@ -3055,7 +3228,7 @@
      * @param {Function} callback The function called per iteration.
      * @returns {Object} The suite iterated over.
      */
-    'forEach': methodize(forEach),
+    forEach: methodize(forEach),
 
     /**
      * An `Array#indexOf` like method.
@@ -3063,7 +3236,7 @@
      * @param {Mixed} value The value to search for.
      * @returns {Number} The index of the matched value or `-1`.
      */
-    'indexOf': methodize(indexOf),
+    indexOf: methodize(indexOf),
 
     /**
      * Invokes a method on all benchmarks in the suite.
@@ -3072,7 +3245,7 @@
      * @param {Mixed} [arg1, arg2, ...] Arguments to invoke the method with.
      * @returns {Array} A new array of values returned from each method invoked.
      */
-    'invoke': methodize(invoke),
+    invoke: methodize(invoke),
 
     /**
      * Converts the array to a string.
@@ -3080,7 +3253,7 @@
      * @param {String} [separator=','] A string to separate each element of the array.
      * @returns {String} The removed element.
      */
-    'join': [].join,
+    join: [].join,
 
     /**
      * An `Array#map` like method.
@@ -3088,7 +3261,7 @@
      * @param {Function} callback The function called per iteration.
      * @returns {Array} A new array of values returned by the callback.
      */
-    'map': methodize(map),
+    map: methodize(map),
 
     /**
      * Retrieves the value of a specified property from all benchmarks in the suite.
@@ -3096,21 +3269,21 @@
      * @param {String} property The property to pluck.
      * @returns {Array} A new array of property values.
      */
-    'pluck': methodize(pluck),
+    pluck: methodize(pluck),
 
     /**
      * Removes the last element of the host array and returns it.
      * @memberOf Benchmark.Suite
      * @returns {Mixed} The removed element.
      */
-    'pop': [].pop,
+    pop: [].pop,
 
     /**
      * Appends arguments to the end of the array.
      * @memberOf Benchmark.Suite
      * @returns {Number} The array length.
      */
-    'push': [].push,
+    push: [].push,
 
     /**
      * Sorts the elements of the host array.
@@ -3118,7 +3291,7 @@
      * @param {Function} [compareFn=null] A function that defines the sort order.
      * @returns {Array} The sorted host array.
      */
-    'sort': [].sort,
+    sort: [].sort,
 
     /**
      * An `Array#reduce` like method.
@@ -3127,89 +3300,88 @@
      * @param {Mixed} accumulator Initial value of the accumulator.
      * @returns {Mixed} The accumulator.
      */
-    'reduce': methodize(reduce),
+    reduce: methodize(reduce),
 
     // aborts all benchmarks in the suite
-    'abort': abortSuite,
+    abort: abortSuite,
 
     // adds a benchmark to the suite
-    'add': add,
+    add: add,
 
     // registers a single listener
-    'addListener': addListener,
+    addListener: addListener,
 
     // creates a new suite with cloned benchmarks
-    'clone': cloneSuite,
+    clone: cloneSuite,
 
     // executes listeners of a specified type
-    'emit': emit,
+    emit: emit,
 
     // creates a new suite of filtered benchmarks
-    'filter': filterSuite,
+    filter: filterSuite,
 
     // alias of addListener
-    'on': addListener,
+    on: addListener,
 
     // removes all listeners of a specified type
-    'removeAllListeners': removeAllListeners,
+    removeAllListeners: removeAllListeners,
 
     // removes a single listener
-    'removeListener': removeListener,
+    removeListener: removeListener,
 
     // resets all benchmarks in the suite
-    'reset': resetSuite,
+    reset: resetSuite,
 
     // runs all benchmarks in the suite
-    'run': runSuite,
+    run: runSuite,
 
     // array methods
-    'concat': concat,
+    concat: concat,
 
-    'reverse': reverse,
+    reverse: reverse,
 
-    'shift': shift,
+    shift: shift,
 
-    'slice': slice,
+    slice: slice,
 
-    'splice': splice,
+    splice: splice,
 
-    'unshift': unshift
+    unshift: unshift,
   });
 
   /*--------------------------------------------------------------------------*/
 
   extend(Deferred.prototype, {
-
     /**
      * The deferred benchmark instance.
      * @memberOf Benchmark.Deferred
      * @type Object
      */
-    'benchmark': null,
+    benchmark: null,
 
     /**
      * The number of deferred cycles performed while benchmarking.
      * @memberOf Benchmark.Deferred
      * @type Number
      */
-    'cycles': 0,
+    cycles: 0,
 
     /**
      * The time taken to complete the deferred benchmark (secs).
      * @memberOf Benchmark.Deferred
      * @type Number
      */
-    'elapsed': 0,
+    elapsed: 0,
 
     /**
      * A timestamp of when the deferred benchmark started (ms).
      * @memberOf Benchmark.Deferred
      * @type Number
      */
-    'timeStamp': 0,
+    timeStamp: 0,
 
     // cycles/completes the deferred benchmark
-    'resolve': resolve
+    resolve: resolve,
   });
 
   /*--------------------------------------------------------------------------*/
@@ -3219,21 +3391,21 @@
    * @memberOf Benchmark.Event
    * @type String
    */
-  Event.prototype.type = '';
+  Event.prototype.type = "";
 
   /*--------------------------------------------------------------------------*/
 
   // expose Deferred, Event and Suite
   extend(Benchmark, {
-    'Deferred': Deferred,
-    'Event': Event,
-    'Suite': Suite
+    Deferred: Deferred,
+    Event: Event,
+    Suite: Suite,
   });
 
   // expose Benchmark
   if (freeExports) {
     // in Node.js or RingoJS v0.8.0+
-    if (typeof module == 'object' && module && module.exports == freeExports) {
+    if (typeof module == "object" && module && module.exports == freeExports) {
       (module.exports = Benchmark).Benchmark = Benchmark;
     }
     // in Narwhal or RingoJS v0.7.0-
@@ -3243,7 +3415,7 @@
   }
   // via curl.js or RequireJS
   else if (freeDefine) {
-    define('benchmark', function() {
+    define("benchmark", function () {
       return Benchmark;
     });
   }
@@ -3251,11 +3423,11 @@
   else {
     // use square bracket notation so Closure Compiler won't munge `Benchmark`
     // http://code.google.com/closure/compiler/docs/api-tutorial3.html#export
-    window['Benchmark'] = Benchmark;
+    window["Benchmark"] = Benchmark;
   }
 
   // trigger clock's lazy define early to avoid a security error
   if (has.air) {
-    clock({ 'fn': noop, 'count': 1, 'options': {} });
+    clock({ fn: noop, count: 1, options: {} });
   }
-}(this));
+})(this);

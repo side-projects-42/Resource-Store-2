@@ -15,10 +15,7 @@
   "description": "This New Relic standalone integration polls the Apache Spark REST API for metrics and pushes them into New Relic using Metrics API It uses the New Relic Telemetry sdk for go",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Go",
-  "projectTags": [
-    "nrlabs",
-    "nri"
-  ],
+  "projectTags": ["nrlabs", "nri"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic integration for Apache Spark",

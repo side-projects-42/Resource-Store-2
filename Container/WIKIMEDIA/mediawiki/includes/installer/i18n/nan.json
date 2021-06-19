@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Asd1346",
-			"Ianbu",
-			"Yoxem",
-			"唐吉訶德的侍從"
-		]
+		"authors": ["Asd1346", "Ianbu", "Yoxem", "唐吉訶德的侍從"]
 	},
 	"config-desc": "MediaWiki的安裝程式",
 	"config-title": "MediaWiki $1的安裝",

@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Sociologist"
-		]
+		"authors": ["Sociologist"]
 	},
 	"config-admin-password-blank": "Administrator hisob yozuvi uchun maxfiy soʻz kiriting.",
 	"mainpagetext": "'''MediaWiki muvaffaqiyatli o'rnatildi.'''",

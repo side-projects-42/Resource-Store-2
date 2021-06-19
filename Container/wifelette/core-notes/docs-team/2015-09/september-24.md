@@ -2,11 +2,11 @@
 
 ## Attendees
 
-* MKN - Michael
-* LS - Leah
-* TD - Tom
-* RM - Locks / Ricardo
-* BM - Brendan McLoughlin
+- MKN - Michael
+- LS - Leah
+- TD - Tom
+- RM - Locks / Ricardo
+- BM - Brendan McLoughlin
 
 **MKN**: Things are in good shape for our next ship date. Just the Initialized Snafu. There’s a reform to the registry and no docs for it. There’s someone who said they’re on it and will open a PR over the weekend (@dgeb).
 

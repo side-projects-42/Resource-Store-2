@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Adam-Yourist",
-			"ElizaMag",
-			"Tusholi",
-			"Умар"
-		]
+		"authors": ["Adam-Yourist", "ElizaMag", "Tusholi", "Умар"]
 	},
 	"config-desc": "MediaWiki инсталлятор",
 	"config-title": "MediaWiki $1 дӏоттаер",

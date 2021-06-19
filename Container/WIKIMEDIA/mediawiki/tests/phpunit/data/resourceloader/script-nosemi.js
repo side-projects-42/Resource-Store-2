@@ -1,2 +1,2 @@
 /* eslint-disable */
-mw.foo()
+mw.foo();

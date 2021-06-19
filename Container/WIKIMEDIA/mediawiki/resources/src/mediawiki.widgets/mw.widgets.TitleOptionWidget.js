@@ -4,8 +4,7 @@
  * @copyright 2011-2015 MediaWiki Widgets Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * Creates a mw.widgets.TitleOptionWidget object.
 	 *
@@ -25,84 +24,99 @@
 	 * @cfg {string} [query] Matching query string to highlight
 	 * @cfg {Function} [compare] String comparison function for query highlighting
 	 */
-	mw.widgets.TitleOptionWidget = function MwWidgetsTitleOptionWidget( config ) {
+	mw.widgets.TitleOptionWidget = function MwWidgetsTitleOptionWidget(config) {
 		var icon;
 
-		if ( !config.showImages ) {
+		if (!config.showImages) {
 			icon = null;
-		} else if ( config.missing ) {
-			icon = 'articleNotFound';
-		} else if ( config.redirect ) {
-			icon = 'articleRedirect';
-		} else if ( config.disambiguation ) {
-			icon = 'articleDisambiguation';
+		} else if (config.missing) {
+			icon = "articleNotFound";
+		} else if (config.redirect) {
+			icon = "articleRedirect";
+		} else if (config.disambiguation) {
+			icon = "articleDisambiguation";
 		} else {
-			icon = 'article';
+			icon = "article";
 		}
 
 		// Config initialization
-		config = $.extend( {
-			icon: icon,
-			label: config.data,
-			autoFitLabel: false,
-			$label: $( '<a>' )
-		}, config );
+		config = $.extend(
+			{
+				icon: icon,
+				label: config.data,
+				autoFitLabel: false,
+				$label: $("<a>"),
+			},
+			config
+		);
 
 		// Parent constructor
-		mw.widgets.TitleOptionWidget.parent.call( this, config );
+		mw.widgets.TitleOptionWidget.parent.call(this, config);
 
 		// Remove check icon
 		this.checkIcon.$element.remove();
 
 		// Initialization
-		this.$label.attr( 'href', config.url );
-		this.$element.addClass( 'mw-widget-titleOptionWidget' );
+		this.$label.attr("href", config.url);
+		this.$element.addClass("mw-widget-titleOptionWidget");
 
 		// OOUI OptionWidgets make an effort to not be tab accessible, but
 		// adding a link inside them would undo that. So, explicitly make it
 		// not tabbable.
-		this.$label.attr( 'tabindex', '-1' );
+		this.$label.attr("tabindex", "-1");
 
 		// Allow opening the link in new tab, but not regular navigation.
-		this.$label.on( 'click', function ( e ) {
+		this.$label.on("click", function (e) {
 			// Don't interfere with special clicks (e.g. to open in new tab)
-			if ( !( e.which !== 1 || e.altKey || e.ctrlKey || e.shiftKey || e.metaKey ) ) {
+			if (
+				!(
+					e.which !== 1 ||
+					e.altKey ||
+					e.ctrlKey ||
+					e.shiftKey ||
+					e.metaKey
+				)
+			) {
 				e.preventDefault();
 			}
-		} );
+		});
 
 		// Highlight matching parts of link suggestion
-		if ( config.query ) {
-			this.setHighlightedQuery( config.data, config.query, config.compare, true );
+		if (config.query) {
+			this.setHighlightedQuery(
+				config.data,
+				config.query,
+				config.compare,
+				true
+			);
 		}
-		this.$label.attr( 'title', config.data );
+		this.$label.attr("title", config.data);
 
-		if ( config.missing ) {
-			this.$label.addClass( 'new' );
-		} else if ( config.redirect ) {
-			this.$label.addClass( 'mw-redirect' );
-		} else if ( config.disambiguation ) {
-			this.$label.addClass( 'mw-disambig' );
+		if (config.missing) {
+			this.$label.addClass("new");
+		} else if (config.redirect) {
+			this.$label.addClass("mw-redirect");
+		} else if (config.disambiguation) {
+			this.$label.addClass("mw-disambig");
 		}
 
-		if ( config.showImages && config.imageUrl ) {
+		if (config.showImages && config.imageUrl) {
 			this.$icon
-				.addClass( 'mw-widget-titleOptionWidget-hasImage' )
-				.css( 'background-image', 'url(' + config.imageUrl + ')' );
+				.addClass("mw-widget-titleOptionWidget-hasImage")
+				.css("background-image", "url(" + config.imageUrl + ")");
 		}
 
-		if ( config.description ) {
+		if (config.description) {
 			this.$element.append(
-				$( '<span>' )
-					.addClass( 'mw-widget-titleOptionWidget-description' )
-					.text( config.description )
-					.attr( 'title', config.description )
+				$("<span>")
+					.addClass("mw-widget-titleOptionWidget-description")
+					.text(config.description)
+					.attr("title", config.description)
 			);
 		}
 	};
 
 	/* Setup */
 
-	OO.inheritClass( mw.widgets.TitleOptionWidget, OO.ui.MenuOptionWidget );
-
-}() );
+	OO.inheritClass(mw.widgets.TitleOptionWidget, OO.ui.MenuOptionWidget);
+})();

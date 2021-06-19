@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Jagwar"
-		]
-	},
-	"akismetklik-desc": "Mandà ireo fiovana avy amin'ireo heverina fa mpandoto resaka eo amin'ny lisitra maintin'i Akismet"
+  "@metadata": {
+    "authors": ["Jagwar"]
+  },
+  "akismetklik-desc": "Mandà ireo fiovana avy amin'ireo heverina fa mpandoto resaka eo amin'ny lisitra maintin'i Akismet"
 }

@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"9.sinistra",
-			"Dr Lotus Black",
-			"Ninjastrikers"
-		]
+		"authors": ["9.sinistra", "Dr Lotus Black", "Ninjastrikers"]
 	},
 	"apihelp-block-summary": "အသုံးပြုသူကို ပိတ်ပင်ရန်",
 	"apihelp-block-param-reason": "ပိတ်ပင်တားဆီးရသည့် အကြောင်းရင်း",

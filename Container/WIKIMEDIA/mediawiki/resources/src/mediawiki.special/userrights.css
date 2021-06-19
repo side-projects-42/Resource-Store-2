@@ -25,7 +25,7 @@
 }
 
 /* Dynamically show/hide the expiry selection underneath each checkbox */
-input.mw-userrights-groupcheckbox:not( :checked ) ~ .mw-userrights-nested {
+input.mw-userrights-groupcheckbox:not(:checked) ~ .mw-userrights-nested {
 	display: none;
 }
 

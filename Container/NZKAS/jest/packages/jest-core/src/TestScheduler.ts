@@ -74,7 +74,7 @@ export default class TestScheduler {
     const onStart = this._dispatcher.onTestStart.bind(this._dispatcher);
     const timings: Array<number> = [];
     const contexts = new Set();
-    tests.forEach(test => {
+    tests.forEach((test) => {
       contexts.add(test.context);
       if (test.duration) {
         timings.push(test.duration);
@@ -145,7 +145,7 @@ export default class TestScheduler {
     };
 
     const updateSnapshotState = () => {
-      contexts.forEach(context => {
+      contexts.forEach((context) => {
         const status = snapshot.cleanup(
           context.hasteFS,
           this._globalConfig.updateSnapshot,
@@ -250,7 +250,7 @@ export default class TestScheduler {
     return (
       !reporters ||
       !!reporters.find(
-        reporter => this._getReporterProps(reporter).path === 'default',
+        (reporter) => this._getReporterProps(reporter).path === 'default',
       )
     );
   }
@@ -307,7 +307,7 @@ export default class TestScheduler {
   private _addCustomReporters(
     reporters: Array<string | Config.ReporterConfig>,
   ) {
-    reporters.forEach(reporter => {
+    reporters.forEach((reporter) => {
       const {options, path} = this._getReporterProps(reporter);
 
       if (path === 'default') return;
@@ -330,9 +330,10 @@ export default class TestScheduler {
    * Get properties of a reporter in an object
    * to make dealing with them less painful.
    */
-  private _getReporterProps(
-    reporter: string | Config.ReporterConfig,
-  ): {path: string; options: {[key: string]: unknown}} {
+  private _getReporterProps(reporter: string | Config.ReporterConfig): {
+    path: string;
+    options: {[key: string]: unknown};
+  } {
     if (typeof reporter === 'string') {
       return {options: this._options, path: reporter};
     } else if (Array.isArray(reporter)) {

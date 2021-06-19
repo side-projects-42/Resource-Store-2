@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Snævar",
-			"Sveinn í Felli",
-			"Þjarkur"
-		]
+		"authors": ["Snævar", "Sveinn í Felli", "Þjarkur"]
 	},
 	"config-desc": "Uppsetningarforrit fyrir MediaWiki",
 	"config-title": "MediaWiki $1 uppsetning",

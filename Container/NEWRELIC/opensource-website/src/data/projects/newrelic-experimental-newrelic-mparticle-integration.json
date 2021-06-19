@@ -15,9 +15,7 @@
   "description": "Integration from mParticle to New Relic via an AWS Lambda function",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Java",
-  "projectTags": [
-    "nrlabs"
-  ],
+  "projectTags": ["nrlabs"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic integration for mParticle",

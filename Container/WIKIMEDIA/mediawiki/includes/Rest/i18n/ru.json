@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Katunchik",
-			"Megakott",
-			"Okras",
-			"Vlad5250"
-		]
+		"authors": ["Katunchik", "Megakott", "Okras", "Vlad5250"]
 	},
 	"rest-prefix-mismatch": "Запрашиваемый путь ($1) не найден внутри корневого пути REST API ($2)",
 	"rest-wrong-method": "Метод запроса ($1) не был {{{{PLURAL:$3|}}|разрешенным методом для этого пути|одним из разрешенных методов для этого пути}} ($2)",

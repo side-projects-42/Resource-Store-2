@@ -261,7 +261,7 @@
   - *1
 - - type: Span
     traceId: 52c1aea7663d6247fb77b55d62ac6162
-    guid: '0379de302a36ad6d'
+    guid: "0379de302a36ad6d"
     transactionId: e664b098a38e009b
     sampled: true
     priority: 1.333906
@@ -281,7 +281,7 @@
     timestamp: 1586870680698
     duration: 0.0
     name: Middleware/Rack/ActionDispatch::Session::CookieStore/call
-    parentId: '0379de302a36ad6d'
+    parentId: "0379de302a36ad6d"
     category: generic
   - *1
   - *1
@@ -441,4 +441,3 @@
     category: generic
   - *1
   - *1
-

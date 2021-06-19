@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Suyog",
-			"V.narsikar"
-		]
+		"authors": ["Suyog", "V.narsikar"]
 	},
 	"config-desc": "मिडियाविकि करीता उभारक(ईन्स्टॉलर)",
 	"config-title": "मिडियाविकि $1 उभारणी",

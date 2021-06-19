@@ -1,10 +1,9 @@
 {
-    "en": {
-        "foo": "foo",
-        "bar": "bar"
-    },
-    "de": {
-        "foo": "Foo"
-    }
+  "en": {
+    "foo": "foo",
+    "bar": "bar"
+  },
+  "de": {
+    "foo": "Foo"
+  }
 }
-

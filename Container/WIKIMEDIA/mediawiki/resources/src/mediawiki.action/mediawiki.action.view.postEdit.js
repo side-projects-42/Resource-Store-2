@@ -1,5 +1,5 @@
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
 	/**
 	 * Fired after an edit was successfully saved.
@@ -22,65 +22,69 @@
 	 * @member mw.hook
 	 */
 
-	var postEdit = mw.config.get( 'wgPostEdit' );
+	var postEdit = mw.config.get("wgPostEdit");
 
-	function showConfirmation( data ) {
+	function showConfirmation(data) {
 		var $container, $popup, $content, timeoutId;
 
 		function fadeOutConfirmation() {
-			$popup.addClass( 'postedit-faded' );
-			setTimeout( function () {
+			$popup.addClass("postedit-faded");
+			setTimeout(function () {
 				$container.remove();
-				mw.hook( 'postEdit.afterRemoval' ).fire();
-			}, 250 );
+				mw.hook("postEdit.afterRemoval").fire();
+			}, 250);
 		}
 
 		data = data || {};
 
-		if ( data.message === undefined ) {
-			data.message = $.parseHTML( mw.message(
-				mw.config.get( 'wgEditSubmitButtonLabelPublish' ) ?
-					'postedit-confirmation-published' :
-					'postedit-confirmation-saved',
-				data.user || mw.user
-			).escaped() );
+		if (data.message === undefined) {
+			data.message = $.parseHTML(
+				mw
+					.message(
+						mw.config.get("wgEditSubmitButtonLabelPublish")
+							? "postedit-confirmation-published"
+							: "postedit-confirmation-saved",
+						data.user || mw.user
+					)
+					.escaped()
+			);
 		}
 
-		$content = $( '<div>' ).addClass( 'postedit-icon postedit-icon-checkmark postedit-content' );
-		if ( typeof data.message === 'string' ) {
-			$content.text( data.message );
-		} else if ( typeof data.message === 'object' ) {
-			$content.append( data.message );
+		$content = $("<div>").addClass(
+			"postedit-icon postedit-icon-checkmark postedit-content"
+		);
+		if (typeof data.message === "string") {
+			$content.text(data.message);
+		} else if (typeof data.message === "object") {
+			$content.append(data.message);
 		}
 
-		$popup = $( '<div>' ).addClass( 'postedit mw-notification' ).append( $content )
-			.on( 'click', function () {
-				clearTimeout( timeoutId );
+		$popup = $("<div>")
+			.addClass("postedit mw-notification")
+			.append($content)
+			.on("click", function () {
+				clearTimeout(timeoutId);
 				fadeOutConfirmation();
-			} );
+			});
 
-		$container = $( '<div>' ).addClass( 'postedit-container' ).append( $popup );
-		timeoutId = setTimeout( fadeOutConfirmation, 3000 );
+		$container = $("<div>").addClass("postedit-container").append($popup);
+		timeoutId = setTimeout(fadeOutConfirmation, 3000);
 
-		$( document.body ).prepend( $container );
+		$(document.body).prepend($container);
 	}
 
 	// JS-only flag that allows another module providing a hook handler to suppress the default one.
-	if ( !mw.config.get( 'wgPostEditConfirmationDisabled' ) ) {
-		mw.hook( 'postEdit' ).add( showConfirmation );
+	if (!mw.config.get("wgPostEditConfirmationDisabled")) {
+		mw.hook("postEdit").add(showConfirmation);
 	}
 
-	if ( postEdit ) {
-		mw.hook( 'postEdit' ).fire( {
+	if (postEdit) {
+		mw.hook("postEdit").fire({
 			// The following messages can be used here:
 			// * postedit-confirmation-saved
 			// * postedit-confirmation-created
 			// * postedit-confirmation-restored
-			message: mw.msg(
-				'postedit-confirmation-' + postEdit,
-				mw.user
-			)
-		} );
+			message: mw.msg("postedit-confirmation-" + postEdit, mw.user),
+		});
 	}
-
-}() );
+})();

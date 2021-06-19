@@ -18,11 +18,11 @@ beforeEach(() => cleanup(DIR));
 afterAll(() => cleanup(DIR));
 
 expect.addSnapshotSerializer({
-  print: val => val.replace(/\[s\[u/g, '\n'),
-  test: val => typeof val === 'string' && val.includes('[s[u'),
+  print: (val) => val.replace(/\[s\[u/g, '\n'),
+  test: (val) => typeof val === 'string' && val.includes('[s[u'),
 });
 
-const setupFiles = input => {
+const setupFiles = (input) => {
   writeFiles(DIR, {
     '__tests__/__snapshots__/bar.spec.js.snap': `// Jest Snapshot v1, https://goo.gl/fbAQLP
 

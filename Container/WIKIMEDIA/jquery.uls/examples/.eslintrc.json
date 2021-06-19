@@ -1,17 +1,12 @@
 {
-	"root": true,
-	"extends": [
-		"wikimedia/client",
-		"wikimedia/jquery"
-	],
-	"rules": {
-		"no-jquery/no-global-selector": "off"
-	},
-	"plugins": [
-		"html"
-	],
-	"settings": {
-		"html/indent": "+tab",
-		"html/report-bad-indent": "error"
-	}
+  "root": true,
+  "extends": ["wikimedia/client", "wikimedia/jquery"],
+  "rules": {
+    "no-jquery/no-global-selector": "off"
+  },
+  "plugins": ["html"],
+  "settings": {
+    "html/indent": "+tab",
+    "html/report-bad-indent": "error"
+  }
 }

@@ -1,3 +1,3 @@
 /* eslint-disable */
-mw.foo()
+mw.foo();
 // mw.bar();

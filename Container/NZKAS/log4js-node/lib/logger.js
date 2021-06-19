@@ -1,8 +1,8 @@
 "use strict";
-var levels = require('./levels')
-, util = require('util')
-, events = require('events')
-, DEFAULT_CATEGORY = '[default]';
+var levels = require("./levels"),
+  util = require("util"),
+  events = require("events"),
+  DEFAULT_CATEGORY = "[default]";
 
 var logWritesEnabled = true;
 
@@ -15,7 +15,7 @@ var logWritesEnabled = true;
  * @param {Log4js.Logger} logger the associated logger
  * @author Seth Chisamore
  */
-function LoggingEvent (categoryName, level, data, logger) {
+function LoggingEvent(categoryName, level, data, logger) {
   this.startTime = new Date();
   this.categoryName = categoryName;
   this.data = data;
@@ -30,9 +30,9 @@ function LoggingEvent (categoryName, level, data, logger) {
  * @param name name of category to log to
  * @author Stephan Strittmatter
  */
-function Logger (name, level) {
+function Logger(name, level) {
   this.category = name || DEFAULT_CATEGORY;
-  
+
   if (level) {
     this.setLevel(level);
   }
@@ -41,44 +41,44 @@ util.inherits(Logger, events.EventEmitter);
 Logger.DEFAULT_CATEGORY = DEFAULT_CATEGORY;
 Logger.prototype.level = levels.TRACE;
 
-Logger.prototype.setLevel = function(level) {
+Logger.prototype.setLevel = function (level) {
   this.level = levels.toLevel(level, this.level || levels.TRACE);
 };
 
-Logger.prototype.removeLevel = function() {
+Logger.prototype.removeLevel = function () {
   delete this.level;
 };
 
-Logger.prototype.log = function() {
-  var args = Array.prototype.slice.call(arguments)
-  , logLevel = levels.toLevel(args.shift())
-  , loggingEvent;
+Logger.prototype.log = function () {
+  var args = Array.prototype.slice.call(arguments),
+    logLevel = levels.toLevel(args.shift()),
+    loggingEvent;
   if (this.isLevelEnabled(logLevel)) {
     loggingEvent = new LoggingEvent(this.category, logLevel, args, this);
     this.emit("log", loggingEvent);
   }
 };
 
-Logger.prototype.isLevelEnabled = function(otherLevel) {
+Logger.prototype.isLevelEnabled = function (otherLevel) {
   return this.level.isLessThanOrEqualTo(otherLevel);
 };
 
-['Trace','Debug','Info','Warn','Error','Fatal', 'Mark'].forEach(
-  function(levelString) {
-    var level = levels.toLevel(levelString);
-    Logger.prototype['is'+levelString+'Enabled'] = function() {
-      return this.isLevelEnabled(level);
-    };
-    
-    Logger.prototype[levelString.toLowerCase()] = function () {
-      if (logWritesEnabled && this.isLevelEnabled(level)) {
-        var args = Array.prototype.slice.call(arguments);
-        args.unshift(level);
-        Logger.prototype.log.apply(this, args);
-      }
-    };
-  }
-);
+["Trace", "Debug", "Info", "Warn", "Error", "Fatal", "Mark"].forEach(function (
+  levelString
+) {
+  var level = levels.toLevel(levelString);
+  Logger.prototype["is" + levelString + "Enabled"] = function () {
+    return this.isLevelEnabled(level);
+  };
+
+  Logger.prototype[levelString.toLowerCase()] = function () {
+    if (logWritesEnabled && this.isLevelEnabled(level)) {
+      var args = Array.prototype.slice.call(arguments);
+      args.unshift(level);
+      Logger.prototype.log.apply(this, args);
+    }
+  };
+});
 
 /**
  * Disable all log writes.

@@ -15,19 +15,19 @@ The default environment provides PHP, Apache, Xdebug and a SQLite database.
 More documentation as well as example overrides and configuration recipes
 are available at [mediawiki.org/wiki/MediaWiki-Docker][mw-docker].
 
-Support is available on the [Libera IRC network][Libera] at `#mediawiki`
+Support is available on the [Libera IRC network][libera] at `#mediawiki`
 and on Wikimedia Phabricator at [#MediaWiki-Docker][mw-docker-phab].
 
 [mw-docker]: https://www.mediawiki.org/wiki/MediaWiki-Docker
 [mw-docker-phab]: https://phabricator.wikimedia.org/project/profile/3094/
-[Libera]: https://libera.chat/
+[libera]: https://libera.chat/
 
 ### Requirements
 
 You'll need a locally running Docker and Docker Compose:
 
-  - [Docker installation instructions][docker-install]
-  - [Docker Compose installation instructions][docker-compose]
+- [Docker installation instructions][docker-install]
+- [Docker Compose installation instructions][docker-compose]
 
 [docker-install]: https://docs.docker.com/install/
 [docker-compose]: https://docs.docker.com/compose/install/
@@ -36,11 +36,11 @@ You'll need a locally running Docker and Docker Compose:
 
 **Linux users**
 
-* We recommend installing `docker-compose` by [downloading the binary
+- We recommend installing `docker-compose` by [downloading the binary
   release][dc-release]. You can also use `pip`, your OS package manager, or
   even run it in a container, but downloading the binary release is the easiest
   method.
-* Follow the instructions to ["Manage Docker as a non-root user"][dc-non-root]
+- Follow the instructions to ["Manage Docker as a non-root user"][dc-non-root]
 
 [dc-release]: https://docs.docker.com/compose/install/#install-compose-on-linux-systems
 [dc-non-root]: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
@@ -66,7 +66,7 @@ XHPROF_ENABLE=true
 Next, create a `docker-compose.override.yml` containing the following:
 
 ```yaml
-version: '3.7'
+version: "3.7"
 services:
   # These lines ensure file ownership is set to your host user/group
   mediawiki:
@@ -189,8 +189,7 @@ followed by `docker-compose up -d` for changes to take effect.
 #### Installing extra packages
 
 If you need root on the container to install packages for troubleshooting,
-you can open a shell as root with `docker-compose exec --user root mediawiki
-bash`.
+you can open a shell as root with `docker-compose exec --user root mediawiki bash`.
 
 #### Use Vector skin
 
@@ -212,7 +211,7 @@ By default, you will need to set `XDEBUG_TRIGGER=1` in the GET/POST, or as an
 environment variable, to turn on Xdebug for a request.
 
 You can also install a browser extension for controlling whether Xdebug is
-active.  See the [official Xdebug Step Debugging][step-debug], particularly the
+active. See the [official Xdebug Step Debugging][step-debug], particularly the
 "Activating Step Debugging" section, for more details.
 
 [step-debug]: https://xdebug.org/docs/step_debug
@@ -224,7 +223,7 @@ If you wish to run Xdebug on every request, you can set
 XDEBUG_CONFIG=start_with_request=yes
 ```
 
-You can pass any of Xdebug's configuration values in this variable.  For example:
+You can pass any of Xdebug's configuration values in this variable. For example:
 
 ```
 XDEBUG_CONFIG=client_host=192.168.42.34 client_port=9000 log=/tmp/xdebug.log
@@ -238,11 +237,11 @@ documentation](https://xdebug.org/docs/all_settings) for available settings.
 ###### Xdebug ports
 
 Older versions of Xdebug used port 9000, which could conflict with php-fpm
-running on the host.  This document used to recommend a workaround of telling
+running on the host. This document used to recommend a workaround of telling
 your IDE to listen on a different port (e.g. 9009) and setting
 `XDEBUG_CONFIG=remote_port=9009` in your `.env`.
 
-Xdebug 3.x now uses the `client_port` value, which defaults to 9003.  This
+Xdebug 3.x now uses the `client_port` value, which defaults to 9003. This
 should no longer conflict with local php-fpm installations, but you may need
 to change the settings in your IDE or debugger.
 
@@ -254,7 +253,7 @@ should allow Xdebug work for Docker for Mac/Windows.
 On Linux, you need to create a `docker-compose.override.yml` file with the following
 contents:
 
-``` lang=yaml
+```lang=yaml
 version: '3.7'
 services:
   mediawiki:
@@ -264,12 +263,12 @@ services:
 
 With the latest version of Docker on Linux hosts, this _should_ work
 transparently as long as you're using the recommended
-`docker-compose.override.yml`.  If it doesn't, first check `docker version` to
+`docker-compose.override.yml`. If it doesn't, first check `docker version` to
 make sure you're running Docker 20.10.2 or above, and `docker-compose version`
 to make sure it's 1.27.4 or above.
 
 If Xdebug still doesn't work, try specifying the hostname or IP address of your
-host. The IP address works more reliably.  You can obtain it by running e.g.
+host. The IP address works more reliably. You can obtain it by running e.g.
 `ip -4 addr show docker0` and copying the IP address into the config in `.env`,
 like `XDEBUG_CONFIG=remote_host=172.17.0.1`
 

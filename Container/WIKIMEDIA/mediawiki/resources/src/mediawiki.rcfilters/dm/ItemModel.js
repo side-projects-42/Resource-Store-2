@@ -22,20 +22,20 @@
  *  added and considered in the view.
  * @cfg {string} [defaultHighlightColor=null] If set, highlight this filter by default with this color
  */
-var ItemModel = function MwRcfiltersDmItemModel( param, config ) {
+var ItemModel = function MwRcfiltersDmItemModel(param, config) {
 	config = config || {};
 
 	// Mixin constructor
-	OO.EventEmitter.call( this );
+	OO.EventEmitter.call(this);
 
 	this.param = param;
-	this.namePrefix = config.namePrefix || 'item_';
+	this.namePrefix = config.namePrefix || "item_";
 	this.name = this.namePrefix + param;
 
 	this.label = config.label || this.name;
 	this.labelPrefixKey = config.labelPrefixKey;
-	this.description = config.description || '';
-	this.setValue( config.value || config.selected );
+	this.description = config.description || "";
+	this.setValue(config.value || config.selected);
 
 	this.identifiers = config.identifiers || [];
 
@@ -46,8 +46,8 @@ var ItemModel = function MwRcfiltersDmItemModel( param, config ) {
 
 /* Initialization */
 
-OO.initClass( ItemModel );
-OO.mixinClass( ItemModel, OO.EventEmitter );
+OO.initClass(ItemModel);
+OO.mixinClass(ItemModel, OO.EventEmitter);
 
 /* Events */
 
@@ -66,7 +66,7 @@ OO.mixinClass( ItemModel, OO.EventEmitter );
  */
 ItemModel.prototype.getState = function () {
 	return {
-		selected: this.isSelected()
+		selected: this.isSelected(),
 	};
 };
 
@@ -85,16 +85,15 @@ ItemModel.prototype.getName = function () {
  * @param {boolean} inverted Whether this item should be considered inverted
  * @return {string|null} Message key, or null if no message
  */
-ItemModel.prototype.getLabelMessageKey = function ( inverted ) {
-	if ( this.labelPrefixKey ) {
-		if ( typeof this.labelPrefixKey === 'string' ) {
+ItemModel.prototype.getLabelMessageKey = function (inverted) {
+	if (this.labelPrefixKey) {
+		if (typeof this.labelPrefixKey === "string") {
 			return this.labelPrefixKey;
 		}
 		return this.labelPrefixKey[
 			// Only use inverted-prefix if the item is selected
 			// Highlight-only an inverted item makes no sense
-			inverted && this.isSelected() ?
-				'inverted' : 'default'
+			inverted && this.isSelected() ? "inverted" : "default"
 		];
 	}
 	return null;
@@ -161,9 +160,9 @@ ItemModel.prototype.isSelected = function () {
  * @param {boolean} [isSelected] Filter is selected
  * @fires update
  */
-ItemModel.prototype.toggleSelected = function ( isSelected ) {
+ItemModel.prototype.toggleSelected = function (isSelected) {
 	isSelected = isSelected === undefined ? !this.isSelected() : isSelected;
-	this.setValue( isSelected );
+	this.setValue(isSelected);
 };
 
 /**
@@ -181,8 +180,8 @@ ItemModel.prototype.getValue = function () {
  * @param {*} value
  * @return {*}
  */
-ItemModel.prototype.coerceValue = function ( value ) {
-	return this.getGroupModel().getType() === 'any_value' ? value : !!value;
+ItemModel.prototype.coerceValue = function (value) {
+	return this.getGroupModel().getType() === "any_value" ? value : !!value;
 };
 
 /**
@@ -190,11 +189,11 @@ ItemModel.prototype.coerceValue = function ( value ) {
  *
  * @param {*} newValue
  */
-ItemModel.prototype.setValue = function ( newValue ) {
-	newValue = this.coerceValue( newValue );
-	if ( this.value !== newValue ) {
+ItemModel.prototype.setValue = function (newValue) {
+	newValue = this.coerceValue(newValue);
+	if (this.value !== newValue) {
 		this.value = newValue;
-		this.emit( 'update' );
+		this.emit("update");
 	}
 };
 
@@ -203,18 +202,18 @@ ItemModel.prototype.setValue = function ( newValue ) {
  *
  * @param {string|null} highlightColor
  */
-ItemModel.prototype.setHighlightColor = function ( highlightColor ) {
-	if ( !this.isHighlightSupported() ) {
+ItemModel.prototype.setHighlightColor = function (highlightColor) {
+	if (!this.isHighlightSupported()) {
 		return;
 	}
 	// If the highlight color on the item and in the parameter is null/undefined, return early.
-	if ( !this.highlightColor && !highlightColor ) {
+	if (!this.highlightColor && !highlightColor) {
 		return;
 	}
 
-	if ( this.highlightColor !== highlightColor ) {
+	if (this.highlightColor !== highlightColor) {
 		this.highlightColor = highlightColor;
-		this.emit( 'update' );
+		this.emit("update");
 	}
 };
 
@@ -222,7 +221,7 @@ ItemModel.prototype.setHighlightColor = function ( highlightColor ) {
  * Clear the highlight color
  */
 ItemModel.prototype.clearHighlightColor = function () {
-	this.setHighlightColor( null );
+	this.setHighlightColor(null);
 };
 
 /**

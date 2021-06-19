@@ -2,25 +2,24 @@
 
 #### Topics
 
-* https://github.com/emberjs/guides/pull/422 (do we include 3rd party resources in guides or not?)
-* Where/how do we officially surface great 3rd party resources like http://emberobserver.com/ and http://www.emberaddons.com/ ?
+- https://github.com/emberjs/guides/pull/422 (do we include 3rd party resources in guides or not?)
+- Where/how do we officially surface great 3rd party resources like http://emberobserver.com/ and http://www.emberaddons.com/ ?
 
 ##### Go/No-go Features:
 
-* ember-routing-core-outlet (kill it with liquid fire)
-* ember-routing-route-configured-query-params
-* ember-debug-handlers - Previously 'go'ed
-* ember-registry-container-reform
+- ember-routing-core-outlet (kill it with liquid fire)
+- ember-routing-route-configured-query-params
+- ember-debug-handlers - Previously 'go'ed
+- ember-registry-container-reform
 
 ##### Important Issues:
 
-* https://github.com/emberjs/ember.js/pull/11315 - Changing layout in the
-* https://github.com/emberjs/ember.js/pull/11225 - Two way bindings with setter CP's are not working.
+- https://github.com/emberjs/ember.js/pull/11315 - Changing layout in the
+- https://github.com/emberjs/ember.js/pull/11225 - Two way bindings with setter CP's are not working.
 
 #### Minutes
 
 Attendees: Matt, Robert, Tom, Yehuda, Kris, ?
-
 
 RJ: remove ember-routing-core-outlet feature, not used by liquid-fire any longer)
 
@@ -30,7 +29,7 @@ RJ: ember-debug-handlers - go'ed
 
 RJ: ember-registry-container-reform - go'ed with the caveat that `lookupFactory` should be underscored.
 
-YK: Seeing the routable component implementation really helps understand the problem space, and lets us start looking forward to the next stages.  No go'ed for 2.1, but no specific negatives.
+YK: Seeing the routable component implementation really helps understand the problem space, and lets us start looking forward to the next stages. No go'ed for 2.1, but no specific negatives.
 
 MB: Re: 3rd party resources, the main challenge seems to be maintainability. We have low visibility into the content behind a link, and it would be easy to forget to check the content for accuracy after a year or so. Instead we should put effort into encouraging and building up unofficial resources
 

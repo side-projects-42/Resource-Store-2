@@ -9,12 +9,12 @@
 Now that you are integrating `ActiveRecord` into Rails, we must should note that
 we can make bits of code run whenever something happens in our model: like when
 it's created (but not yet saved to the database), saved to the database, or
-even deleted.  Everything we cover here is called "Active Record Lifecycle
+even deleted. Everything we cover here is called "Active Record Lifecycle
 Callbacks". Many people just call them callbacks. It's a bit shorter.
 
 Take a look at the blog app that is included. Be sure to run the migrations
 before you start learning from Rails (we do this with `rake db:migrate`)! We
-have a `Post` model and a few views.  The `Post` `belongs_to` an `Author`.
+have a `Post` model and a few views. The `Post` `belongs_to` an `Author`.
 
 Note also that in the `Post` model you'll notice a **validation** to make sure
 that post titles are in title case. Title case means every word starts with a
@@ -34,7 +34,7 @@ end
 
 To make sure that all of our `Post`s have the correctly-formatted title, we're
 going to run `make_title_case` during the first of the available lifecycle
-"points:" `before_save`.  Our validation and lifecycle callback will make sure
+"points:" `before_save`. Our validation and lifecycle callback will make sure
 our posts are always title-cased.
 
 We write lifecycle callbacks similarly to how you use `has_many` or `validates`
@@ -77,8 +77,7 @@ p = Post.create(title: "testing")
 # => #<Post id: nil, title: "testing", description: nil, created_at: nil, updated_at: nil, post_status: nil, author_id: nil>
 ```
 
-Wait! There was no `INSERT` SQL command issued. In fact, we see the `rollback
-transaction` line. That means that it didn't actually save to the database. If
+Wait! There was no `INSERT` SQL command issued. In fact, we see the `rollback transaction` line. That means that it didn't actually save to the database. If
 we do `p.valid?` right now it will return `false`.
 
 This feels surprising. Most of the time when we have this feeling while
@@ -91,7 +90,7 @@ missed that subtlety.
 
 Let's change our callback to the `before_validation` callback. This one happens
 **before** validation. That means that first our `before_validation` code
-works, which title cases the title, *then* the validation runs, which passes!
+works, which title cases the title, _then_ the validation runs, which passes!
 Here is the final code:
 
 ```ruby
@@ -133,7 +132,6 @@ no validation weirdness, and we don't want to email the user if the Post is
 invalid. That would be just mean! So if you had some method called
 `email_author_about_post` you would modify your `Post` model to look like this:
 
-
 ```ruby
 class Post < ActiveRecord::Base
 
@@ -173,7 +171,6 @@ This means not every time the object is persisted, just when it is **new**.
 
 For more information on all of the callbacks available to you, check out [this
 amazing rails guide][callbacks]
-
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/activerecord-lifecycle-reading'>ActiveRecord Lifecycle Methods</a> on Learn.co and start learning to code for free.</p>
 

@@ -4,10 +4,11 @@
 :nodeid: 152
 :created: 1265097807
 :tags:
-- core
-- feedback
+  - core
+  - feedback
 :author: rtyler
 ---
+
 Hello and welcome to "Continuous Blog", the official Hudson weblog! If you
 don't mind me saying so, I think its arrival is long overdue. Since Hudson
 started in November of 2006, there hasn't been a central "voice" for the
@@ -17,16 +18,15 @@ with **hundreds** of plugins and thousands of users around the world.
 nice Java-based extensible continuous integration server has grown up into
 fantastic tool with a great community around it.
 
-
 ### Goals for this weblog
+
 I think it is important to set out a couple of goals for this weblog, some simple items that should help guide the content and discussion around Continuous Blog and its future.
 
 Continuous Blog should:
 
-* Help advocate the use of Hudson to the larger internet community
-* Be a central source for tutorials and helpful information to Hudson users of all skill-levels
-* Recognize the numerous contributors to the Hudson project for their efforts
-
+- Help advocate the use of Hudson to the larger internet community
+- Be a central source for tutorials and helpful information to Hudson users of all skill-levels
+- Recognize the numerous contributors to the Hudson project for their efforts
 
 ### What to expect
 

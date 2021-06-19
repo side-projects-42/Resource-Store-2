@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Daud I.F. Argana"
-		]
-	},
-	"activeabstract-desc": "Menghasilkan umpan XML untuk proyek Active Abstracts Yahoo"
+  "@metadata": {
+    "authors": ["Daud I.F. Argana"]
+  },
+  "activeabstract-desc": "Menghasilkan umpan XML untuk proyek Active Abstracts Yahoo"
 }

@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fulup",
-			"Y-M D"
-		]
+		"authors": ["Fulup", "Y-M D"]
 	},
 	"apihelp-main-param-action": "Peseurt ober kas da benn.",
 	"apihelp-main-param-format": "Furmad an ezvont.",

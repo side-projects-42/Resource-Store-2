@@ -1,7 +1,7 @@
 body {
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   font-size: 76%;
-  background: #2A2A2A;
+  background: #2a2a2a;
   margin: 0;
   padding: 0;
 }
@@ -11,14 +11,14 @@ body {
 }
 
 a {
-  color: #2D5385;
+  color: #2d5385;
 }
 
 #main {
-  background-color: #FFF;
+  background-color: #fff;
   width: 700px;
   margin: 0 auto;
-  border: 5px #CCC;
+  border: 5px #ccc;
   border-left-style: solid;
   border-right-style: solid;
   padding: 0 1em;
@@ -33,7 +33,7 @@ a {
 #header h1 {
   margin: 0;
   padding: 0;
-  color: #2D5385;
+  color: #2d5385;
 }
 
 #header h1 a {
@@ -63,12 +63,12 @@ a {
 }
 
 dl {
-  background-color: #DDD;
+  background-color: #ddd;
   padding: 1em;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
 }
 dl .pronunciation {
-  color: #C00;
+  color: #c00;
 }
 dl .description {
   text-transform: uppercase;

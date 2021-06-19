@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"01miki10"
-		]
-	},
-	"activeabstract-desc": "Luo XML-syötteen Yahoon Active Abstracts -projektista"
+  "@metadata": {
+    "authors": ["01miki10"]
+  },
+  "activeabstract-desc": "Luo XML-syötteen Yahoon Active Abstracts -projektista"
 }

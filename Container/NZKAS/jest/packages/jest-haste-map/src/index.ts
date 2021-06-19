@@ -135,7 +135,7 @@ const escapePathSeparator = (string: string) =>
 
 const getWhiteList = (list: Array<string> | undefined): RegExp | null => {
   if (list && list.length) {
-    const newList = list.map(item =>
+    const newList = list.map((item) =>
       escapePathSeparator(item.replace(/(\/)/g, path.sep)),
     );
     return new RegExp(
@@ -305,7 +305,7 @@ class HasteMap extends EventEmitter {
       VERSION,
       this._options.name,
       this._options.roots
-        .map(root => fastPath.relative(options.rootDir, root))
+        .map((root) => fastPath.relative(options.rootDir, root))
         .join(':'),
       this._options.extensions.join(':'),
       this._options.platforms.join(':'),
@@ -761,7 +761,7 @@ class HasteMap extends EventEmitter {
             `  ` +
             error,
         );
-        return nodeCrawl(crawlerOptions).catch(e => {
+        return nodeCrawl(crawlerOptions).catch((e) => {
           throw new Error(
             `Crawler retry failed:\n` +
               `  Original error: ${error.message}\n` +
@@ -810,7 +810,7 @@ class HasteMap extends EventEmitter {
       // @ts-ignore: TODO how? "Cannot use 'new' with an expression whose type lacks a call or construct signature."
       const watcher = new Watcher(root, {
         dot: false,
-        glob: extensions.map(extension => '**/*.' + extension),
+        glob: extensions.map((extension) => '**/*.' + extension),
         ignored: ignorePattern,
       });
 
@@ -859,7 +859,7 @@ class HasteMap extends EventEmitter {
       if (
         (stat && stat.isDirectory()) ||
         this._ignore(filePath) ||
-        !extensions.some(extension => filePath.endsWith(extension))
+        !extensions.some((extension) => filePath.endsWith(extension))
       ) {
         return;
       }
@@ -869,7 +869,7 @@ class HasteMap extends EventEmitter {
           // If we get duplicate events for the same file, ignore them.
           if (
             eventsQueue.find(
-              event =>
+              (event) =>
                 event.type === type &&
                 event.filePath === filePath &&
                 ((!event.stat && !stat) ||
@@ -978,7 +978,7 @@ class HasteMap extends EventEmitter {
 
     this._changeInterval = setInterval(emitChange, CHANGE_INTERVAL);
     return Promise.all(this._options.roots.map(createWatcher)).then(
-      watchers => {
+      (watchers) => {
         this._watchers = watchers;
       },
     );
@@ -1049,7 +1049,7 @@ class HasteMap extends EventEmitter {
 
     return Promise.all(
       this._watchers.map(
-        watcher => new Promise(resolve => watcher.close(resolve)),
+        (watcher) => new Promise((resolve) => watcher.close(resolve)),
       ),
     ).then(() => {
       this._watchers = [];

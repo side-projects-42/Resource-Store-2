@@ -1,8 +1,8 @@
 Attending:
 
-* David Baker
-* Michael Kaiser-Nyman
-* Ricardo Mendes
+- David Baker
+- Michael Kaiser-Nyman
+- Ricardo Mendes
 
 ---
 
@@ -10,7 +10,7 @@ MKN: Style updates look good!
 
 RM: not much left, mainly cross-browser testing. Let's merge, deploy to staging, and get people to try it out.
 
-MKN: Let's throw this at the Slack channels and ask the front-end peeps who have been helping out 
+MKN: Let's throw this at the Slack channels and ask the front-end peeps who have been helping out
 
 ---
 

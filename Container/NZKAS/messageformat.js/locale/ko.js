@@ -1,1 +1,3 @@
-MessageFormat.locale.ko=function(n){return "other"}
+MessageFormat.locale.ko = function (n) {
+  return "other";
+};

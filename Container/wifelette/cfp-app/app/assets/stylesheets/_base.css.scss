@@ -12,7 +12,7 @@ body {
 .alert-viewer-mode {
   padding: 10px 0;
   margin-bottom: 20px;
-  background-color: lighten(#E69400, 25%);
+  background-color: lighten(#e69400, 25%);
   text-align: center;
 }
 
@@ -33,14 +33,15 @@ body {
 .speaker {
   margin-top: 2em;
 }
-.speaker img, .speaker-image {
+.speaker img,
+.speaker-image {
   margin: 0 0.5em 0.8em 0;
 }
 .tag-list input {
   vertical-align: top;
 }
 .participant {
-  margin-bottom:1em;
+  margin-bottom: 1em;
 }
 
 h4 {
@@ -79,7 +80,7 @@ h3.tags {
 }
 
 .navbar-inverse .navbar-nav > li > a.review_nav {
-  color: #E6E600;
+  color: #e6e600;
 }
 
 .navbar-inverse .navbar-nav > li > a.review_nav:hover,
@@ -91,7 +92,7 @@ h3.tags {
 }
 
 .navbar-inverse .navbar-nav > li > a.organize_nav {
-  color: #E69400;
+  color: #e69400;
 }
 
 .navbar-inverse .navbar-nav > li > a.organize_nav:hover,
@@ -163,7 +164,10 @@ h3.tags {
     padding: 3px;
     height: inherit;
   }
-  td, th { text-align: center; }
+  td,
+  th {
+    text-align: center;
+  }
 }
 
 // Back Button
@@ -191,7 +195,9 @@ h3.tags {
 
   li {
     display: block;
-    &:first-child { padding-left: 5px; }
+    &:first-child {
+      padding-left: 5px;
+    }
     padding-bottom: 3px;
   }
 }
@@ -202,7 +208,6 @@ h3.tags {
     list-style-type: disc;
   }
 }
-
 
 //datepicker
 .ui-datepicker {

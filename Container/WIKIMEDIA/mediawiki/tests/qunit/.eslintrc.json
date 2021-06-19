@@ -1,8 +1,5 @@
 {
-	"extends": [
-		"wikimedia/qunit",
-		"../../.eslintrc.json"
-	],
+	"extends": ["wikimedia/qunit", "../../.eslintrc.json"],
 	"globals": {
 		"sinon": "readonly"
 	},

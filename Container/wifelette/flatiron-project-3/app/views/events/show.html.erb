@@ -1,0 +1,42 @@
+<div class="card-header h3">
+  <%= @event.name %>
+</div>
+<div class="card body container-fluid">
+
+  <h5>Start Date </h5>
+  <p><%= prettydate(@event.start_date) %></p>
+  <h5>End Date </h5>
+  <p><%= prettydate(@event.end_date) %></p>
+  <h5>Location </h5>
+  <%= @event.location %></p>
+
+  <p><%= link_to "Edit Event", edit_event_path, class: "btn btn-warning" %></p>
+  <p><%= button_to "Delete Event", @event, method: :delete, class: "btn btn-danger" %></p>
+
+  <hr>
+
+  <h3>Packages</h3>
+
+  <table class="table table-striped table-hover table-sm">
+    <tr>
+      <thead class="thead-light">
+        <th>Package</th>
+        <th>Price</th>
+        <th>Perks</th>
+      </thead>
+    </tr>
+    <% @event.packages.sort_by(&:price).reverse.each do |pkg| %>
+    <tr>
+      <td><%= link_to pkg.name, event_package_path(@event, pkg) %></td>
+      <td><%= in_money(pkg.price) %></td>
+      <td><%= pkg.perks.count %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <p><%= link_to "Create New Package", new_event_package_path(@event), class: "btn btn-success" %></p>
+
+  <hr>
+
+  <p><%= link_to "Back to All Events", events_path, class: "btn btn-primary" %></p>
+</div>

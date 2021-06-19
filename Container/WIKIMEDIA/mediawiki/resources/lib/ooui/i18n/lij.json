@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Giromin Cangiaxo"
-		]
+		"authors": ["Giromin Cangiaxo"]
 	},
 	"ooui-outline-control-move-down": "Mescia dabasso",
 	"ooui-outline-control-move-up": "Mescia de d'ato",

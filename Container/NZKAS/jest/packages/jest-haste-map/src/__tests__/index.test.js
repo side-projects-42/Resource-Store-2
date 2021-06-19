@@ -10,10 +10,7 @@ import crypto from 'crypto';
 import {skipSuiteOnWindows} from '@jest/test-utils';
 
 function mockHashContents(contents) {
-  return crypto
-    .createHash('sha1')
-    .update(contents)
-    .digest('hex');
+  return crypto.createHash('sha1').update(contents).digest('hex');
 }
 
 jest.mock('child_process', () => ({
@@ -22,7 +19,7 @@ jest.mock('child_process', () => ({
 }));
 
 jest.mock('jest-worker', () =>
-  jest.fn(worker => {
+  jest.fn((worker) => {
     mockWorker = jest.fn((...args) => require(worker).worker(...args));
     mockEnd = jest.fn();
 
@@ -35,7 +32,7 @@ jest.mock('jest-worker', () =>
 
 jest.mock('../crawlers/node');
 jest.mock('../crawlers/watchman', () =>
-  jest.fn(options => {
+  jest.fn((options) => {
     const path = require('path');
 
     const {data, ignore, rootDir, roots, computeSha1} = options;
@@ -68,10 +65,10 @@ jest.mock('../crawlers/watchman', () =>
   }),
 );
 
-const mockWatcherConstructor = jest.fn(root => {
+const mockWatcherConstructor = jest.fn((root) => {
   const EventEmitter = require('events').EventEmitter;
   mockEmitters[root] = new EventEmitter();
-  mockEmitters[root].close = jest.fn(callback => callback());
+  mockEmitters[root].close = jest.fn((callback) => callback());
   setTimeout(() => mockEmitters[root].emit('ready'), 0);
   return mockEmitters[root];
 });
@@ -110,12 +107,13 @@ jest.mock('graceful-fs', () => ({
 jest.mock('fs', () => require('graceful-fs'));
 
 const cacheFilePath = '/cache-file';
-const object = data => Object.assign(Object.create(null), data);
-const createMap = obj => new Map(Object.keys(obj).map(key => [key, obj[key]]));
+const object = (data) => Object.assign(Object.create(null), data);
+const createMap = (obj) =>
+  new Map(Object.keys(obj).map((key) => [key, obj[key]]));
 
 // Jest toEqual does not match Map instances from different contexts
 // This normalizes them for the uses cases in this test
-const useBuitinsInContext = value => {
+const useBuitinsInContext = (value) => {
   const stringTag = Object.prototype.toString.call(value);
   switch (stringTag) {
     case '[object Map]':
@@ -172,10 +170,7 @@ describe('HasteMap', () => {
         // Melon!
       `,
       '/project/video/video.mp4': Buffer.from([
-        0xfa,
-        0xce,
-        0xb0,
-        0x0c,
+        0xfa, 0xce, 0xb0, 0x0c,
       ]).toString(),
     });
     mockClocks = createMap({
@@ -401,11 +396,11 @@ describe('HasteMap', () => {
   });
 
   describe('builds a haste map on a fresh cache with SHA-1s', () => {
-    [false, true].forEach(useWatchman => {
+    [false, true].forEach((useWatchman) => {
       it('uses watchman: ' + useWatchman, async () => {
         const node = require('../crawlers/node');
 
-        node.mockImplementation(options => {
+        node.mockImplementation((options) => {
           const {data} = options;
 
           // The node crawler returns "null" for the SHA-1.
@@ -597,7 +592,7 @@ describe('HasteMap', () => {
 
     return new HasteMap({throwOnModuleCollision: true, ...defaultConfig})
       .build()
-      .catch(err => {
+      .catch((err) => {
         expect(err).toMatchSnapshot();
       });
   });
@@ -986,7 +981,7 @@ describe('HasteMap', () => {
     const watchman = require('../crawlers/watchman');
     const mockImpl = watchman.getMockImplementation();
     // Wrap the watchman mock and add an invalid file to the file list.
-    watchman.mockImplementation(options =>
+    watchman.mockImplementation((options) =>
       mockImpl(options).then(() => {
         const {data} = options;
         data.files.set('fruits/invalid/file.js', ['', 34, 44, 0, []]);
@@ -1083,7 +1078,7 @@ describe('HasteMap', () => {
     watchman.mockImplementation(() => {
       throw new Error('watchman error');
     });
-    node.mockImplementation(options => {
+    node.mockImplementation((options) => {
       const {data} = options;
       data.files = createMap({
         'fruits/Banana.js': ['', 32, 42, 0, [], null],
@@ -1117,7 +1112,7 @@ describe('HasteMap', () => {
     watchman.mockImplementation(() =>
       Promise.reject(new Error('watchman error')),
     );
-    node.mockImplementation(options => {
+    node.mockImplementation((options) => {
       const {data} = options;
       data.files = createMap({
         'fruits/Banana.js': ['', 32, 42, 0, [], null],
@@ -1156,7 +1151,7 @@ describe('HasteMap', () => {
 
     return new HasteMap(defaultConfig).build().then(
       () => expect(() => {}).toThrow(),
-      error => {
+      (error) => {
         expect(error.message).toEqual(
           'Crawler retry failed:\n' +
             '  Original error: watchman error\n' +
@@ -1195,7 +1190,7 @@ describe('HasteMap', () => {
       });
     }
 
-    hm_it('provides a new set of hasteHS and moduleMap', async hm => {
+    hm_it('provides a new set of hasteHS and moduleMap', async (hm) => {
       const initialResult = await hm.build();
       const filePath = '/project/fruits/Banana.js';
       expect(initialResult.hasteFS.getModuleName(filePath)).toBeDefined();
@@ -1225,7 +1220,7 @@ describe('HasteMap', () => {
       size: 55,
     };
 
-    hm_it('handles several change events at once', async hm => {
+    hm_it('handles several change events at once', async (hm) => {
       mockFs['/project/fruits/Tomato.js'] = `
         // Tomato!
       `;
@@ -1253,7 +1248,7 @@ describe('HasteMap', () => {
       expect(moduleMap.getModule('Pear')).toBe('/project/fruits/Pear.js');
     });
 
-    hm_it('does not emit duplicate change events', async hm => {
+    hm_it('does not emit duplicate change events', async (hm) => {
       const e = mockEmitters['/project/fruits'];
       e.emit('all', 'change', 'tomato.js', '/project/fruits', MOCK_STAT_FILE);
       e.emit('all', 'change', 'tomato.js', '/project/fruits', MOCK_STAT_FILE);
@@ -1263,7 +1258,7 @@ describe('HasteMap', () => {
 
     hm_it(
       'emits a change even if a file in node_modules has changed',
-      async hm => {
+      async (hm) => {
         const e = mockEmitters['/project/fruits'];
         e.emit(
           'all',
@@ -1284,7 +1279,7 @@ describe('HasteMap', () => {
 
     hm_it(
       'correctly tracks changes to both platform-specific versions of a single module name',
-      async hm => {
+      async (hm) => {
         const {moduleMap: initMM} = await hm.build();
         expect(initMM.getModule('Orange', 'ios')).toBeTruthy();
         expect(initMM.getModule('Orange', 'android')).toBeTruthy();
@@ -1363,9 +1358,8 @@ describe('HasteMap', () => {
           moduleMap.getModule('Pear');
           throw new Error('should be unreachable');
         } catch (error) {
-          const {
-            DuplicateHasteCandidatesError,
-          } = require('../ModuleMap').default;
+          const {DuplicateHasteCandidatesError} =
+            require('../ModuleMap').default;
           expect(error).toBeInstanceOf(DuplicateHasteCandidatesError);
           expect(error.hasteName).toBe('Pear');
           expect(error.platform).toBe('g');
@@ -1382,7 +1376,7 @@ describe('HasteMap', () => {
 
       hm_it(
         'recovers when the oldest version of the duplicates is fixed',
-        async hm => {
+        async (hm) => {
           await setupDuplicates(hm);
           mockFs['/project/fruits/Pear.js'] = null;
           mockFs['/project/fruits/Pear2.js'] = `
@@ -1399,7 +1393,7 @@ describe('HasteMap', () => {
         },
       );
 
-      hm_it('recovers when the most recent duplicate is fixed', async hm => {
+      hm_it('recovers when the most recent duplicate is fixed', async (hm) => {
         await setupDuplicates(hm);
         mockFs['/project/fruits/another/Pear.js'] = null;
         mockFs['/project/fruits/another/Pear2.js'] = `
@@ -1427,7 +1421,7 @@ describe('HasteMap', () => {
         );
       });
 
-      hm_it('ignore directories', async hm => {
+      hm_it('ignore directories', async (hm) => {
         const e = mockEmitters['/project/fruits'];
         e.emit(
           'all',

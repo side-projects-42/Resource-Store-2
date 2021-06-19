@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Anakmalaysia",
-			"Macofe",
-			"SNN95",
-			"Tofeiku"
-		]
+		"authors": ["Anakmalaysia", "Macofe", "SNN95", "Tofeiku"]
 	},
 	"apihelp-main-param-action": "Tindakan mana untuk dilakukan.",
 	"apihelp-main-param-format": "Format output.",

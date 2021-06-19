@@ -1,9 +1,9 @@
 // This is (almost) directly from Node.js utils
 // https://github.com/joyent/node/blob/f8c335d0caf47f16d31413f89aa28eda3878e3aa/lib/util.js
 
-var getName = require('./getName');
-var getProperties = require('./getProperties');
-var getEnumerableProperties = require('./getEnumerableProperties');
+var getName = require("./getName");
+var getProperties = require("./getProperties");
+var getEnumerableProperties = require("./getEnumerableProperties");
 
 module.exports = inspect;
 
@@ -22,16 +22,18 @@ function inspect(obj, showHidden, depth, colors) {
   var ctx = {
     showHidden: showHidden,
     seen: [],
-    stylize: function (str) { return str; }
+    stylize: function (str) {
+      return str;
+    },
   };
-  return formatValue(ctx, obj, (typeof depth === 'undefined' ? 2 : depth));
+  return formatValue(ctx, obj, typeof depth === "undefined" ? 2 : depth);
 }
 
 // https://gist.github.com/1044128/
-var getOuterHTML = function(element) {
-  if ('outerHTML' in element) return element.outerHTML;
+var getOuterHTML = function (element) {
+  if ("outerHTML" in element) return element.outerHTML;
   var ns = "http://www.w3.org/1999/xhtml";
-  var container = document.createElementNS(ns, '_');
+  var container = document.createElementNS(ns, "_");
   var elemProto = (window.HTMLElement || window.Element).prototype;
   var xmlSerializer = new XMLSerializer();
   var html;
@@ -39,34 +41,39 @@ var getOuterHTML = function(element) {
     return xmlSerializer.serializeToString(element);
   } else {
     container.appendChild(element.cloneNode(false));
-    html = container.innerHTML.replace('><', '>' + element.innerHTML + '<');
-    container.innerHTML = '';
+    html = container.innerHTML.replace("><", ">" + element.innerHTML + "<");
+    container.innerHTML = "";
     return html;
   }
 };
 
 // Returns true if object is a DOM element.
 var isDOMElement = function (object) {
-  if (typeof HTMLElement === 'object') {
+  if (typeof HTMLElement === "object") {
     return object instanceof HTMLElement;
   } else {
-    return object &&
-      typeof object === 'object' &&
+    return (
+      object &&
+      typeof object === "object" &&
       object.nodeType === 1 &&
-      typeof object.nodeName === 'string';
+      typeof object.nodeName === "string"
+    );
   }
 };
 
 function formatValue(ctx, value, recurseTimes) {
   // Provide a hook for user-specified inspect functions.
   // Check that value is an object with an inspect function on it
-  if (value && typeof value.inspect === 'function' &&
-      // Filter out the util module, it's inspect function is special
-      value.inspect !== exports.inspect &&
-      // Also filter out any prototype objects using the circular check.
-      !(value.constructor && value.constructor.prototype === value)) {
+  if (
+    value &&
+    typeof value.inspect === "function" &&
+    // Filter out the util module, it's inspect function is special
+    value.inspect !== exports.inspect &&
+    // Also filter out any prototype objects using the circular check.
+    !(value.constructor && value.constructor.prototype === value)
+  ) {
     var ret = value.inspect(recurseTimes);
-    if (typeof ret !== 'string') {
+    if (typeof ret !== "string") {
       ret = formatValue(ctx, ret, recurseTimes);
     }
     return ret;
@@ -90,49 +97,55 @@ function formatValue(ctx, value, recurseTimes) {
   // Some type of object without properties can be shortcutted.
   // In IE, errors have a single `stack` property, or if they are vanilla `Error`,
   // a `stack` plus `description` property; ignore those for consistency.
-  if (keys.length === 0 || (isError(value) && (
-      (keys.length === 1 && keys[0] === 'stack') ||
-      (keys.length === 2 && keys[0] === 'description' && keys[1] === 'stack')
-     ))) {
-    if (typeof value === 'function') {
+  if (
+    keys.length === 0 ||
+    (isError(value) &&
+      ((keys.length === 1 && keys[0] === "stack") ||
+        (keys.length === 2 &&
+          keys[0] === "description" &&
+          keys[1] === "stack")))
+  ) {
+    if (typeof value === "function") {
       var name = getName(value);
-      var nameSuffix = name ? ': ' + name : '';
-      return ctx.stylize('[Function' + nameSuffix + ']', 'special');
+      var nameSuffix = name ? ": " + name : "";
+      return ctx.stylize("[Function" + nameSuffix + "]", "special");
     }
     if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+      return ctx.stylize(RegExp.prototype.toString.call(value), "regexp");
     }
     if (isDate(value)) {
-      return ctx.stylize(Date.prototype.toUTCString.call(value), 'date');
+      return ctx.stylize(Date.prototype.toUTCString.call(value), "date");
     }
     if (isError(value)) {
       return formatError(value);
     }
   }
 
-  var base = '', array = false, braces = ['{', '}'];
+  var base = "",
+    array = false,
+    braces = ["{", "}"];
 
   // Make Array say that they are Array
   if (isArray(value)) {
     array = true;
-    braces = ['[', ']'];
+    braces = ["[", "]"];
   }
 
   // Make functions say that they are functions
-  if (typeof value === 'function') {
+  if (typeof value === "function") {
     var name = getName(value);
-    var nameSuffix = name ? ': ' + name : '';
-    base = ' [Function' + nameSuffix + ']';
+    var nameSuffix = name ? ": " + name : "";
+    base = " [Function" + nameSuffix + "]";
   }
 
   // Make RegExps say that they are RegExps
   if (isRegExp(value)) {
-    base = ' ' + RegExp.prototype.toString.call(value);
+    base = " " + RegExp.prototype.toString.call(value);
   }
 
   // Make dates with properties first say the date
   if (isDate(value)) {
-    base = ' ' + Date.prototype.toUTCString.call(value);
+    base = " " + Date.prototype.toUTCString.call(value);
   }
 
   // Make error with message first say the error
@@ -146,9 +159,9 @@ function formatValue(ctx, value, recurseTimes) {
 
   if (recurseTimes < 0) {
     if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+      return ctx.stylize(RegExp.prototype.toString.call(value), "regexp");
     } else {
-      return ctx.stylize('[Object]', 'special');
+      return ctx.stylize("[Object]", "special");
     }
   }
 
@@ -158,7 +171,7 @@ function formatValue(ctx, value, recurseTimes) {
   if (array) {
     output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
   } else {
-    output = keys.map(function(key) {
+    output = keys.map(function (key) {
       return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
     });
   }
@@ -168,73 +181,75 @@ function formatValue(ctx, value, recurseTimes) {
   return reduceToSingleString(output, base, braces);
 }
 
-
 function formatPrimitive(ctx, value) {
   switch (typeof value) {
-    case 'undefined':
-      return ctx.stylize('undefined', 'undefined');
+    case "undefined":
+      return ctx.stylize("undefined", "undefined");
 
-    case 'string':
-      var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-                                               .replace(/'/g, "\\'")
-                                               .replace(/\\"/g, '"') + '\'';
-      return ctx.stylize(simple, 'string');
+    case "string":
+      var simple =
+        "'" +
+        JSON.stringify(value)
+          .replace(/^"|"$/g, "")
+          .replace(/'/g, "\\'")
+          .replace(/\\"/g, '"') +
+        "'";
+      return ctx.stylize(simple, "string");
 
-    case 'number':
-      return ctx.stylize('' + value, 'number');
+    case "number":
+      return ctx.stylize("" + value, "number");
 
-    case 'boolean':
-      return ctx.stylize('' + value, 'boolean');
+    case "boolean":
+      return ctx.stylize("" + value, "boolean");
   }
   // For some reason typeof null is "object", so special case here.
   if (value === null) {
-    return ctx.stylize('null', 'null');
+    return ctx.stylize("null", "null");
   }
 }
 
-
 function formatError(value) {
-  return '[' + Error.prototype.toString.call(value) + ']';
+  return "[" + Error.prototype.toString.call(value) + "]";
 }
-
 
 function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
   var output = [];
   for (var i = 0, l = value.length; i < l; ++i) {
     if (Object.prototype.hasOwnProperty.call(value, String(i))) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          String(i), true));
+      output.push(
+        formatProperty(ctx, value, recurseTimes, visibleKeys, String(i), true)
+      );
     } else {
-      output.push('');
+      output.push("");
     }
   }
-  keys.forEach(function(key) {
+  keys.forEach(function (key) {
     if (!key.match(/^\d+$/)) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          key, true));
+      output.push(
+        formatProperty(ctx, value, recurseTimes, visibleKeys, key, true)
+      );
     }
   });
   return output;
 }
-
 
 function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
   var name, str;
   if (value.__lookupGetter__) {
     if (value.__lookupGetter__(key)) {
       if (value.__lookupSetter__(key)) {
-        str = ctx.stylize('[Getter/Setter]', 'special');
+        str = ctx.stylize("[Getter/Setter]", "special");
       } else {
-        str = ctx.stylize('[Getter]', 'special');
+        str = ctx.stylize("[Getter]", "special");
       }
     } else {
       if (value.__lookupSetter__(key)) {
-        str = ctx.stylize('[Setter]', 'special');
+        str = ctx.stylize("[Setter]", "special");
       }
     }
   }
   if (visibleKeys.indexOf(key) < 0) {
-    name = '[' + key + ']';
+    name = "[" + key + "]";
   }
   if (!str) {
     if (ctx.seen.indexOf(value[key]) < 0) {
@@ -243,76 +258,89 @@ function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
       } else {
         str = formatValue(ctx, value[key], recurseTimes - 1);
       }
-      if (str.indexOf('\n') > -1) {
+      if (str.indexOf("\n") > -1) {
         if (array) {
-          str = str.split('\n').map(function(line) {
-            return '  ' + line;
-          }).join('\n').substr(2);
+          str = str
+            .split("\n")
+            .map(function (line) {
+              return "  " + line;
+            })
+            .join("\n")
+            .substr(2);
         } else {
-          str = '\n' + str.split('\n').map(function(line) {
-            return '   ' + line;
-          }).join('\n');
+          str =
+            "\n" +
+            str
+              .split("\n")
+              .map(function (line) {
+                return "   " + line;
+              })
+              .join("\n");
         }
       }
     } else {
-      str = ctx.stylize('[Circular]', 'special');
+      str = ctx.stylize("[Circular]", "special");
     }
   }
-  if (typeof name === 'undefined') {
+  if (typeof name === "undefined") {
     if (array && key.match(/^\d+$/)) {
       return str;
     }
-    name = JSON.stringify('' + key);
+    name = JSON.stringify("" + key);
     if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
       name = name.substr(1, name.length - 2);
-      name = ctx.stylize(name, 'name');
+      name = ctx.stylize(name, "name");
     } else {
-      name = name.replace(/'/g, "\\'")
-                 .replace(/\\"/g, '"')
-                 .replace(/(^"|"$)/g, "'");
-      name = ctx.stylize(name, 'string');
+      name = name
+        .replace(/'/g, "\\'")
+        .replace(/\\"/g, '"')
+        .replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, "string");
     }
   }
 
-  return name + ': ' + str;
+  return name + ": " + str;
 }
-
 
 function reduceToSingleString(output, base, braces) {
   var numLinesEst = 0;
-  var length = output.reduce(function(prev, cur) {
+  var length = output.reduce(function (prev, cur) {
     numLinesEst++;
-    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    if (cur.indexOf("\n") >= 0) numLinesEst++;
     return prev + cur.length + 1;
   }, 0);
 
   if (length > 60) {
-    return braces[0] +
-           (base === '' ? '' : base + '\n ') +
-           ' ' +
-           output.join(',\n  ') +
-           ' ' +
-           braces[1];
+    return (
+      braces[0] +
+      (base === "" ? "" : base + "\n ") +
+      " " +
+      output.join(",\n  ") +
+      " " +
+      braces[1]
+    );
   }
 
-  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+  return braces[0] + base + " " + output.join(", ") + " " + braces[1];
 }
 
 function isArray(ar) {
-  return Array.isArray(ar) ||
-         (typeof ar === 'object' && objectToString(ar) === '[object Array]');
+  return (
+    Array.isArray(ar) ||
+    (typeof ar === "object" && objectToString(ar) === "[object Array]")
+  );
 }
 
 function isRegExp(re) {
-  return typeof re === 'object' && objectToString(re) === '[object RegExp]';
+  return typeof re === "object" && objectToString(re) === "[object RegExp]";
 }
 
 function isDate(d) {
-  return typeof d === 'object' && objectToString(d) === '[object Date]';
+  return typeof d === "object" && objectToString(d) === "[object Date]";
 }
 
 function isError(e) {
-  return typeof e === 'object' && objectToString(e) === '[object Error]';
+  return typeof e === "object" && objectToString(e) === "[object Error]";
 }
 
 function objectToString(o) {

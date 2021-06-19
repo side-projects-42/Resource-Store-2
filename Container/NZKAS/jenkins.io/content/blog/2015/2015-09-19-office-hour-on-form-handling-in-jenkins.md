@@ -4,10 +4,11 @@
 :nodeid: 626
 :created: 1442716589
 :tags:
-- general
-- office hours
+  - general
+  - office hours
 :author: daniel-beck
 ---
+
 **Update: This week's office hour has been canceled.**
 
 [This Wednesday, Sep 23, at 11 am PDT](http://www.timeanddate.com/worldclock/fixedtime.html?msg=Jenkins+Office+Hours&iso=20150923T11&p1=283&ah=1) I will host another office hour on [Stapler](http://stapler.kohsuke.org/), the web framework used in Jenkins. This time, I'll show you how structured form submission in Jenkins works, and how Stapler can help you with it.

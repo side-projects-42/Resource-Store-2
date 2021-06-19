@@ -35,7 +35,7 @@ beforeEach(() => {
   Function,
   () => {},
   function namedFuntction() {},
-].forEach(type => {
+].forEach((type) => {
   test(`supports any(${fnNameFor(type)})`, () => {
     const result = prettyFormat(expect.any(type), options);
     expect(result).toEqual(`Any<${fnNameFor(type)}>`);

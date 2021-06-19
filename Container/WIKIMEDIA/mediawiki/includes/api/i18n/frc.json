@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Hangmanwa7id",
-			"Macofe"
-		]
+		"authors": ["Hangmanwa7id", "Macofe"]
 	},
 	"apihelp-block-summary": "Bloquer un useur.",
 	"apihelp-delete-summary": "Effacer une page.",

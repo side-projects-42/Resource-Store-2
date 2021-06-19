@@ -1,15 +1,15 @@
 /* global mw */
-mw.requestIdleCallbackInternal = function ( callback ) {
-	setTimeout( function () {
+mw.requestIdleCallbackInternal = function (callback) {
+	setTimeout(function () {
 		var start = mw.now();
-		callback( {
+		callback({
 			didTimeout: false,
 			timeRemaining: function () {
 				// Hard a target maximum busy time of 50 milliseconds
-				return Math.max( 0, 50 - ( mw.now() - start ) );
-			}
-		} );
-	}, 1 );
+				return Math.max(0, 50 - (mw.now() - start));
+			},
+		});
+	}, 1);
 };
 
 /**
@@ -42,10 +42,10 @@ mw.requestIdleCallbackInternal = function ( callback ) {
  *  immediate execution after this amount of time (in milliseconds) if it didn't run
  *  by that time.
  */
-mw.requestIdleCallback = window.requestIdleCallback ?
-	// Bind because it throws TypeError if context is not window
-	window.requestIdleCallback.bind( window ) :
-	mw.requestIdleCallbackInternal;
+mw.requestIdleCallback = window.requestIdleCallback
+	? // Bind because it throws TypeError if context is not window
+	  window.requestIdleCallback.bind(window)
+	: mw.requestIdleCallbackInternal;
 // Note: Polyfill was previously disabled due to
 // https://bugs.chromium.org/p/chromium/issues/detail?id=647870
 // See also <http://codepen.io/Krinkle/full/XNGEvv>

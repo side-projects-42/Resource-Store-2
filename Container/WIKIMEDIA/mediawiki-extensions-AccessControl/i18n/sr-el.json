@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Milicevic01"
-		]
-	},
-	"accesscontrol-info": "Ovo je zaštićena stranica."
+  "@metadata": {
+    "authors": ["Milicevic01"]
+  },
+  "accesscontrol-info": "Ovo je zaštićena stranica."
 }

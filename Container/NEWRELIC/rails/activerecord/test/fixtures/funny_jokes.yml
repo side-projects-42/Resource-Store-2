@@ -5,6 +5,5 @@ a_joke:
 another_joke:
   id: 2
   name: |
-       The \n Aristocrats
-       Ate the candy
-
+    The \n Aristocrats
+    Ate the candy

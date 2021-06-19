@@ -5,10 +5,7 @@
 	"additionalProperties": false,
 	"patternProperties": {
 		"^@": {
-			"type": [
-				"string",
-				"array"
-			],
+			"type": ["string", "array"],
 			"description": "Arbitrary notes, ignored by the parser."
 		}
 	},
@@ -33,10 +30,7 @@
 			"default": "other"
 		},
 		"author": {
-			"type": [
-				"string",
-				"array"
-			],
+			"type": ["string", "array"],
 			"description": "Extension's authors.",
 			"items": {
 				"type": "string"
@@ -205,10 +199,7 @@
 									"description": "Scripts to include in specific language contexts (mapping of language code to file path(s))",
 									"patternProperties": {
 										"^[a-zA-Z0-9-]{2,}$": {
-											"type": [
-												"string",
-												"array"
-											],
+											"type": ["string", "array"],
 											"items": {
 												"type": "string"
 											}
@@ -220,10 +211,7 @@
 									"description": "Scripts to include in specific skin contexts (mapping of skin name to script(s)",
 									"patternProperties": {
 										".+": {
-											"type": [
-												"string",
-												"array"
-											],
+											"type": ["string", "array"],
 											"items": {
 												"type": "string"
 											}
@@ -263,10 +251,7 @@
 									"description": "Styles to include in specific skin contexts (mapping of skin name to style(s))",
 									"patternProperties": {
 										".+": {
-											"type": [
-												"string",
-												"array"
-											],
+											"type": ["string", "array"],
 											"items": {
 												"type": "string"
 											}
@@ -291,10 +276,7 @@
 								"position": {
 									"type": "string",
 									"description": "Position on the page to load this module at",
-									"enum": [
-										"bottom",
-										"top"
-									]
+									"enum": ["bottom", "top"]
 								},
 								"templates": {
 									"type": ["object", "array"],
@@ -341,10 +323,7 @@
 								"position": {
 									"type": "string",
 									"description": "Position on the page to load this module at",
-									"enum": [
-										"bottom",
-										"top"
-									]
+									"enum": ["bottom", "top"]
 								},
 								"targets": {
 									"type": ["string", "array"],
@@ -408,10 +387,7 @@
 									"type": "object"
 								},
 								"position": {
-									"enum": [
-										"top",
-										"bottom"
-									]
+									"enum": ["top", "bottom"]
 								}
 							}
 						},
@@ -753,10 +729,7 @@
 			"description": "Plugins for media file type handling. Each entry in the array maps a MIME type to a PHP class name."
 		},
 		"ExtensionFunctions": {
-			"type": [
-				"array",
-				"string"
-			],
+			"type": ["array", "string"],
 			"description": "Function to call after setup has finished",
 			"items": {
 				"type": "string"
@@ -825,9 +798,7 @@
 								"description": "The deprecation acknowledgement flag for the handler. If this is true, calls will be filtered if the relevant hook is deprecated."
 							}
 						},
-						"required": [
-							"handler"
-						]
+						"required": ["handler"]
 					},
 					{
 						"type": "array",
@@ -851,9 +822,7 @@
 											"description": "The deprecation acknowledgement flag for the handler. If this is true, calls will be filtered if the relevant hook is deprecated."
 										}
 									},
-									"required": [
-										"handler"
-									]
+									"required": ["handler"]
 								}
 							]
 						}
@@ -902,16 +871,14 @@
 					},
 					"component": {
 						"type": "string",
-						"description" : "The component to which the deprecated version relates. If omitted, the extension name will be used."
+						"description": "The component to which the deprecated version relates. If omitted, the extension name will be used."
 					},
 					"silent": {
 						"type": "boolean",
 						"description": "If true, no warning is raised when the hook is called or when a handler is declared. However, call filtering is still activated."
 					}
 				},
-				"required": [
-					"deprecatedVersion"
-				]
+				"required": ["deprecatedVersion"]
 			}
 		},
 		"JobClasses": {
@@ -977,7 +944,7 @@
 		},
 		"ValidSkinNames": {
 			"type": "object",
-			"description":  "Mapping of skin canonical names to PHP class name using the Object Factory specification. Or historically, the human readable name of the skin."
+			"description": "Mapping of skin canonical names to PHP class name using the Object Factory specification. Or historically, the human readable name of the skin."
 		},
 		"FeedClasses": {
 			"type": "object",
@@ -1004,7 +971,7 @@
 							"description": "Path to style files. '{module}' will be replaced with the module's name."
 						},
 						"images": {
-							"type": [ "string", "null" ],
+							"type": ["string", "null"],
 							"description": "Path to images (optional). '{module}' will be replaced with the module's name."
 						}
 					}
@@ -1038,10 +1005,7 @@
 			}
 		},
 		"callback": {
-			"type": [
-				"array",
-				"string"
-			],
+			"type": ["array", "string"],
 			"description": "A function to be called right after MediaWiki processes this file"
 		},
 		"config_prefix": {
@@ -1221,7 +1185,7 @@
 			}
 		},
 		"attributes": {
-			"description":"Registration information for other extensions",
+			"description": "Registration information for other extensions",
 			"type": "object",
 			"patternProperties": {
 				".*": {

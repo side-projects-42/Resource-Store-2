@@ -11,17 +11,17 @@ A unified JavaScript layer for [Apache Cordova](http://incubator.apache.org/proj
       |-lib
       |  |-cordova.js
       |  | Common Cordova stuff such as callback handling and
-      |  | window/document add/removeEventListener hijacking 
-      |  | 
+      |  | window/document add/removeEventListener hijacking
+      |  |
       |  |-common/
       |  | Contains the common-across-platforms base modules
       |  |
       |  |-common/builder.js
-      |  | Injects in our classes onto window and navigator (or wherever else 
+      |  | Injects in our classes onto window and navigator (or wherever else
       |  | is needed)
       |  |
       |  |-common/channel.js
-      |  | A pub/sub implementation to handle custom framework events 
+      |  | A pub/sub implementation to handle custom framework events
       |  |
       |  |-common/common.js
       |  | Common locations to add Cordova objects to browser globals.
@@ -47,7 +47,7 @@ A unified JavaScript layer for [Apache Cordova](http://incubator.apache.org/proj
       |  | Code to bootstrap the Cordova platform, inject APIs and fire events
       |  |
       |  |-scripts/require.js
-      |  | Our own module definition and require implementation. 
+      |  | Our own module definition and require implementation.
       |  |
       |  |-<platform>/
       |  | Contains the platform-specific base modules.
@@ -55,7 +55,7 @@ A unified JavaScript layer for [Apache Cordova](http://incubator.apache.org/proj
       |  |-<platform>/plugin/<platform>
       |  | Contains the platform-specific plugin modules.
 
-The way the resulting `cordova.<platform>.js` files will be built is by combining the scripts in the `lib/scripts` directory with modules from the `lib/common` and `lib/<platform>` directories.  For cases where there is the same named module in `lib/common` and `lib/<platform>/plugin/<platform>`, the `lib/<platform>` version wins.  For instance, every `lib/<platform>` includes an `exec.js`, and there is also a version in `lib/common`, so the `lib/<platform>` version will always be used.  In fact, the `lib/common` one will throw errors, so if you build a new platform and forget `exec.js`, the resulting `cordova.<platform>.js` file will also throw errors.
+The way the resulting `cordova.<platform>.js` files will be built is by combining the scripts in the `lib/scripts` directory with modules from the `lib/common` and `lib/<platform>` directories. For cases where there is the same named module in `lib/common` and `lib/<platform>/plugin/<platform>`, the `lib/<platform>` version wins. For instance, every `lib/<platform>` includes an `exec.js`, and there is also a version in `lib/common`, so the `lib/<platform>` version will always be used. In fact, the `lib/common` one will throw errors, so if you build a new platform and forget `exec.js`, the resulting `cordova.<platform>.js` file will also throw errors.
 
 # Building
 
@@ -90,8 +90,7 @@ This will run the `build`, `hint` and `test` tasks by default. All of the availa
 ## Known Issues
 
 - On Mac OS 10.7.3, there were issues with the contextify module not
-    being able to build properly when using node v0.6.10 and running `npm
-	install`. Using node v0.6.6 works, though.
+  being able to build properly when using node v0.6.10 and running `npm install`. Using node v0.6.6 works, though.
 - On Windows, when you run `npm install`, you may get errors regarding
   contextify. This is necessary for running the tests. Make sure you
   are running node v0.6.15 at the least (and npm v1.1.16 which should
@@ -108,12 +107,12 @@ The Cordova native-to-webview bridge is initialized in `lib/scripts/bootstrap.js
 
     cordova.require('cordova/channel).onNativeReady.fire()
 
-The `boot` method does all the work.  First, it grabs the common platform definition (under `lib/common/common.js`) and injects all of the objects defined there onto `window` and other global namespaces. Next, it grabs all of the platform-specific object definitions (as defined under `lib/<platform>/platform.js`) and overrides those onto `window`. Finally, it calls the platform-specific `initialize` function (located in the platform definition). At this point, Cordova is fully initialized and ready to roll. Last thing we do is wait for the `DOMContentLoaded` event to fire to make sure the page has loaded properly. Once that is done, Cordova fires the `deviceready` event where you can safely attach functions that consume the Cordova APIs.
+The `boot` method does all the work. First, it grabs the common platform definition (under `lib/common/common.js`) and injects all of the objects defined there onto `window` and other global namespaces. Next, it grabs all of the platform-specific object definitions (as defined under `lib/<platform>/platform.js`) and overrides those onto `window`. Finally, it calls the platform-specific `initialize` function (located in the platform definition). At this point, Cordova is fully initialized and ready to roll. Last thing we do is wait for the `DOMContentLoaded` event to fire to make sure the page has loaded properly. Once that is done, Cordova fires the `deviceready` event where you can safely attach functions that consume the Cordova APIs.
 
 # Testing
 
 Tests run in node or the browser. To run the tests in node:
-    
+
     jake test
 
 To run them in the browser:
@@ -160,35 +159,38 @@ and then load the unpacked extension in chrome in the pkg/chromium folder. Use t
    `lib/<platform>` folder you created in step 1. The `exec` method has the following method
    signature: `function(success, fail, service, action, args)`, with the
    following parameters:
-  - `success`: a success function callback
-  - `fail`: a failure function callback
-  - `service`: a string identifier that the platform can resolve to a
-    native class
-  - `action`: a string identifier that the platform can resolve to a
-    specific method inside the class pointed to by `service`
-  - `args`: an array of parameters to pass to the native method invoked
-    by the `exec` call
-   It is required that new platform additions be as consistent as
-   possible with the existing `service` and `action` labels.
+
+- `success`: a success function callback
+- `fail`: a failure function callback
+- `service`: a string identifier that the platform can resolve to a
+  native class
+- `action`: a string identifier that the platform can resolve to a
+  specific method inside the class pointed to by `service`
+- `args`: an array of parameters to pass to the native method invoked
+  by the `exec` call
+  It is required that new platform additions be as consistent as
+  possible with the existing `service` and `action` labels.
+
 2. Define your platform definition object and name it platform.js. Drop this into the `lib/<platform>` folder. This file should contain a JSON object with the following properties:
-    - `id`: a string representing the platform. This should be the same
-      name the .js file has
-    - `objects`: the property names defined as children of this property
-      are injected into `window`, and also *overrides any existing
-      properties*. Each property can have the following
-      child properties:
-      - `path`: a string representing the module ID that will define
-        this object. For example, the file `lib/plugin/accelerometer.js`
-        can be accessed as `"cordova/plugin/accelerometer"`. More details on how
-        the module IDs are defined are above under the "How It Works" section.
-      - `children`: in a recursive fashion, can have `path` and
-        `children` properties of its own that are defined as children of
-        the parent property object
-    - `merges`: similar to the above `objects` property, this one will
-      not clobber existing objects, instead it will recursively merge
-      this object into the specific target
-    - `initialize`: a function that fires immediately after the `objects` (see above) are defined in the global scope
-   
+
+   - `id`: a string representing the platform. This should be the same
+     name the .js file has
+   - `objects`: the property names defined as children of this property
+     are injected into `window`, and also _overrides any existing
+     properties_. Each property can have the following
+     child properties:
+     - `path`: a string representing the module ID that will define
+       this object. For example, the file `lib/plugin/accelerometer.js`
+       can be accessed as `"cordova/plugin/accelerometer"`. More details on how
+       the module IDs are defined are above under the "How It Works" section.
+     - `children`: in a recursive fashion, can have `path` and
+       `children` properties of its own that are defined as children of
+       the parent property object
+   - `merges`: similar to the above `objects` property, this one will
+     not clobber existing objects, instead it will recursively merge
+     this object into the specific target
+   - `initialize`: a function that fires immediately after the `objects` (see above) are defined in the global scope
+
    The following is a simple example of a platform definition:
 
     <pre>

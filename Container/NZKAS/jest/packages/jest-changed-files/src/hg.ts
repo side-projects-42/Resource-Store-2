@@ -33,11 +33,11 @@ const adapter: SCMAdapter = {
 
     return result.stdout
       .split('\n')
-      .filter(s => s !== '')
-      .map(changedPath => path.resolve(cwd, changedPath));
+      .filter((s) => s !== '')
+      .map((changedPath) => path.resolve(cwd, changedPath));
   },
 
-  getRoot: async cwd => {
+  getRoot: async (cwd) => {
     try {
       const result = await execa('hg', ['root'], {cwd, env});
 

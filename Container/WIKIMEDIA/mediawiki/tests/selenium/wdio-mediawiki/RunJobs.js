@@ -1,42 +1,44 @@
-'use strict';
+"use strict";
 
-const MWBot = require( 'mwbot' );
-const Page = require( './Page' );
+const MWBot = require("mwbot");
+const Page = require("./Page");
 const MAINPAGE_REQUESTS_MAX_RUNS = 10; // (arbitrary) safe-guard against endless execution
 
 function getJobCount() {
-	const bot = new MWBot( {
-		apiUrl: `${browser.config.baseUrl}/api.php`
-	} );
-	return bot.request( {
-		action: 'query',
-		meta: 'siteinfo',
-		siprop: 'statistics'
-	} ).then( ( response ) => response.query.statistics.jobs );
+	const bot = new MWBot({
+		apiUrl: `${browser.config.baseUrl}/api.php`,
+	});
+	return bot
+		.request({
+			action: "query",
+			meta: "siteinfo",
+			siprop: "statistics",
+		})
+		.then((response) => response.query.statistics.jobs);
 }
 
-function log( message ) {
-	process.stdout.write( `RunJobs ${message}\n` );
+function log(message) {
+	process.stdout.write(`RunJobs ${message}\n`);
 }
 
-function runThroughMainPageRequests( runCount = 1 ) {
+function runThroughMainPageRequests(runCount = 1) {
 	const page = new Page();
-	log( `through requests to the main page (run ${runCount}).` );
+	log(`through requests to the main page (run ${runCount}).`);
 
-	page.openTitle( '' );
+	page.openTitle("");
 
-	return getJobCount().then( ( jobCount ) => {
-		if ( jobCount === 0 ) {
-			log( 'found no more queued jobs.' );
+	return getJobCount().then((jobCount) => {
+		if (jobCount === 0) {
+			log("found no more queued jobs.");
 			return;
 		}
-		log( `detected ${jobCount} more queued job(s).` );
-		if ( runCount >= MAINPAGE_REQUESTS_MAX_RUNS ) {
-			log( 'stopping requests to the main page due to reached limit.' );
+		log(`detected ${jobCount} more queued job(s).`);
+		if (runCount >= MAINPAGE_REQUESTS_MAX_RUNS) {
+			log("stopping requests to the main page due to reached limit.");
 			return;
 		}
-		return runThroughMainPageRequests( ++runCount );
-	} );
+		return runThroughMainPageRequests(++runCount);
+	});
 }
 
 /**
@@ -60,11 +62,10 @@ function runThroughMainPageRequests( runCount = 1 ) {
  * of $wgJobRunRate per request.
  */
 class RunJobs {
-
 	static run() {
-		browser.call( () => {
+		browser.call(() => {
 			return runThroughMainPageRequests();
-		} );
+		});
 	}
 }
 

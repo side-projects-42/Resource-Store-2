@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Joao Xavier",
-			"Lakaoso",
-			"Wyvernoid"
-		]
+		"authors": ["Joao Xavier", "Lakaoso", "Wyvernoid"]
 	},
 	"config-desc": "L'instalilo di MediaWiki",
 	"config-title": "Instalo di MediaWiki $1",

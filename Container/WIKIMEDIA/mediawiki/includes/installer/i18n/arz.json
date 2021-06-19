@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ghaly",
-			"Meno25"
-		]
+		"authors": ["Ghaly", "Meno25"]
 	},
 	"config-your-language": "اللغه بتاعتك:",
 	"config-your-language-help": " إختار لغة البرنامج بتاعتك:",

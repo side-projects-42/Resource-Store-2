@@ -6,9 +6,8 @@
  * @author Moriel Schottlender, 2015
  * @since 1.19
  */
-( function () {
-
-	var FeedbackDialog = require( './FeedbackDialog.js' );
+(function () {
+	var FeedbackDialog = require("./FeedbackDialog.js");
 
 	/**
 	 * This is a way of getting simple feedback from users. It's useful
@@ -51,33 +50,44 @@
 	 * @cfg {string|jQuery} [useragentCheckboxMessage] Supply a custom message for the useragent checkbox.
 	 *  defaults to the message 'feedback-terms'.
 	 */
-	mw.Feedback = function MwFeedback( config ) {
+	mw.Feedback = function MwFeedback(config) {
 		config = config || {};
 
-		this.dialogTitleMessageKey = config.dialogTitleMessageKey || 'feedback-dialog-title';
+		this.dialogTitleMessageKey =
+			config.dialogTitleMessageKey || "feedback-dialog-title";
 
 		// Feedback page title
-		this.feedbackPageTitle = config.title || new mw.Title( 'Feedback' );
+		this.feedbackPageTitle = config.title || new mw.Title("Feedback");
 
-		this.messagePosterPromise = mw.messagePoster.factory.create( this.feedbackPageTitle, config.apiUrl );
-		this.foreignApi = config.apiUrl ? new mw.ForeignApi( config.apiUrl ) : null;
+		this.messagePosterPromise = mw.messagePoster.factory.create(
+			this.feedbackPageTitle,
+			config.apiUrl
+		);
+		this.foreignApi = config.apiUrl
+			? new mw.ForeignApi(config.apiUrl)
+			: null;
 
 		// Links
-		this.bugsTaskSubmissionLink = config.bugsLink || '//phabricator.wikimedia.org/maniphest/task/edit/form/1/';
-		this.bugsTaskListLink = config.bugsListLink || '//phabricator.wikimedia.org/maniphest/query/advanced';
+		this.bugsTaskSubmissionLink =
+			config.bugsLink ||
+			"//phabricator.wikimedia.org/maniphest/task/edit/form/1/";
+		this.bugsTaskListLink =
+			config.bugsListLink ||
+			"//phabricator.wikimedia.org/maniphest/query/advanced";
 
 		// Terms of use
 		this.useragentCheckboxShow = !!config.showUseragentCheckbox;
 		this.useragentCheckboxMandatory = !!config.useragentCheckboxMandatory;
-		this.useragentCheckboxMessage = config.useragentCheckboxMessage ||
-			$( '<p>' ).append( mw.msg( 'feedback-terms' ) );
+		this.useragentCheckboxMessage =
+			config.useragentCheckboxMessage ||
+			$("<p>").append(mw.msg("feedback-terms"));
 
 		// Message dialog
 		this.thankYouDialog = new OO.ui.MessageDialog();
 	};
 
 	/* Initialize */
-	OO.initClass( mw.Feedback );
+	OO.initClass(mw.Feedback);
 
 	/**
 	 * mw.Feedback Dialog
@@ -103,30 +113,34 @@
 	 * @param {string} feedbackPageName
 	 * @param {string} feedbackPageUrl
 	 */
-	mw.Feedback.prototype.onDialogSubmit = function ( status, feedbackPageName, feedbackPageUrl ) {
+	mw.Feedback.prototype.onDialogSubmit = function (
+		status,
+		feedbackPageName,
+		feedbackPageUrl
+	) {
 		var dialogConfig;
 
-		if ( status !== 'submitted' ) {
+		if (status !== "submitted") {
 			return;
 		}
 
 		dialogConfig = {
-			title: mw.msg( 'feedback-thanks-title' ),
-			message: $( '<span>' ).msg(
-				'feedback-thanks',
+			title: mw.msg("feedback-thanks-title"),
+			message: $("<span>").msg(
+				"feedback-thanks",
 				feedbackPageName,
-				$( '<a>' ).attr( {
-					target: '_blank',
-					href: feedbackPageUrl
-				} )
+				$("<a>").attr({
+					target: "_blank",
+					href: feedbackPageUrl,
+				})
 			),
 			actions: [
 				{
-					action: 'accept',
-					label: mw.msg( 'feedback-close' ),
-					flags: 'primary'
-				}
-			]
+					action: "accept",
+					label: mw.msg("feedback-close"),
+					flags: "primary",
+				},
+			],
 		};
 
 		// Show the message dialog
@@ -143,20 +157,23 @@
 	 * @param {string} [contents.subject] The subject of the feedback, as plaintext
 	 * @param {string} [contents.message] The content of the feedback, as wikitext
 	 */
-	mw.Feedback.prototype.launch = function ( contents ) {
+	mw.Feedback.prototype.launch = function (contents) {
 		// Dialog
-		if ( !this.constructor.static.dialog ) {
+		if (!this.constructor.static.dialog) {
 			this.constructor.static.dialog = new mw.Feedback.Dialog();
-			this.constructor.static.dialog.connect( this, { submit: 'onDialogSubmit' } );
+			this.constructor.static.dialog.connect(this, {
+				submit: "onDialogSubmit",
+			});
 		}
-		if ( !this.constructor.static.windowManager ) {
+		if (!this.constructor.static.windowManager) {
 			this.constructor.static.windowManager = new OO.ui.WindowManager();
-			this.constructor.static.windowManager.addWindows( [
+			this.constructor.static.windowManager.addWindows([
 				this.constructor.static.dialog,
-				this.thankYouDialog
-			] );
-			$( document.body )
-				.append( this.constructor.static.windowManager.$element );
+				this.thankYouDialog,
+			]);
+			$(document.body).append(
+				this.constructor.static.windowManager.$element
+			);
 		}
 		// Open the dialog
 		this.constructor.static.windowManager.openWindow(
@@ -165,7 +182,7 @@
 				// The following messages are used here
 				// * feedback-dialog-title
 				// * config.dialogTitleMessageKey ...
-				title: mw.msg( this.dialogTitleMessageKey ),
+				title: mw.msg(this.dialogTitleMessageKey),
 				foreignApi: this.foreignApi,
 				settings: {
 					messagePosterPromise: this.messagePosterPromise,
@@ -176,12 +193,11 @@
 					useragentCheckbox: {
 						show: this.useragentCheckboxShow,
 						mandatory: this.useragentCheckboxMandatory,
-						message: this.useragentCheckboxMessage
-					}
+						message: this.useragentCheckboxMessage,
+					},
 				},
-				contents: contents
+				contents: contents,
 			}
 		);
 	};
-
-}() );
+})();

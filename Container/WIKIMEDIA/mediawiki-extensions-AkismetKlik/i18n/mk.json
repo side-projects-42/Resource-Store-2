@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Bjankuloski06"
-		]
-	},
-	"akismetklik-desc": "Отфрла уредувања од осомничени спамери заведени на црниот список на Akismet"
+  "@metadata": {
+    "authors": ["Bjankuloski06"]
+  },
+  "akismetklik-desc": "Отфрла уредувања од осомничени спамери заведени на црниот список на Akismet"
 }

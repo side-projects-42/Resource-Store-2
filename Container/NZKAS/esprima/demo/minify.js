@@ -27,129 +27,131 @@
 /*global require:true */
 
 function id(i) {
-    return document.getElementById(i);
+  return document.getElementById(i);
 }
 
 function createPipeline() {
-    var passes, pipeline, inputs, i, el, optimizer;
+  var passes, pipeline, inputs, i, el, optimizer;
 
-    passes = {
-        'eliminate-dead-code': 'pass/dead-code-elimination',
-        'fold-constant': 'pass/tree-based-constant-folding',
-        'remove-unreachable-branch': 'pass/remove-unreachable-branch',
-        'remove-unused-vars': 'pass/drop-variable-definition'
-    };
+  passes = {
+    "eliminate-dead-code": "pass/dead-code-elimination",
+    "fold-constant": "pass/tree-based-constant-folding",
+    "remove-unreachable-branch": "pass/remove-unreachable-branch",
+    "remove-unused-vars": "pass/drop-variable-definition",
+  };
 
-    pipeline = [
-        'pass/hoist-variable-to-arguments',
-        'pass/transform-dynamic-to-static-property-access',
-        'pass/transform-dynamic-to-static-property-definition',
-        'pass/transform-immediate-function-call',
-        'pass/transform-logical-association',
-        'pass/reordering-function-declarations',
-        'pass/remove-unused-label',
-        'pass/remove-empty-statement',
-        'pass/remove-wasted-blocks',
-        'pass/transform-to-compound-assignment',
-        'pass/transform-to-sequence-expression',
-        'pass/transform-branch-to-expression',
-        'pass/transform-typeof-undefined',
-        'pass/reduce-sequence-expression',
-        'pass/reduce-branch-jump',
-        'pass/reduce-multiple-if-statements',
-        'pass/dead-code-elimination',
-        'pass/remove-side-effect-free-expressions',
-        'pass/remove-context-sensitive-expressions',
-        'pass/tree-based-constant-folding',
-        'pass/drop-variable-definition',
-        'pass/remove-unreachable-branch'
-    ];
+  pipeline = [
+    "pass/hoist-variable-to-arguments",
+    "pass/transform-dynamic-to-static-property-access",
+    "pass/transform-dynamic-to-static-property-definition",
+    "pass/transform-immediate-function-call",
+    "pass/transform-logical-association",
+    "pass/reordering-function-declarations",
+    "pass/remove-unused-label",
+    "pass/remove-empty-statement",
+    "pass/remove-wasted-blocks",
+    "pass/transform-to-compound-assignment",
+    "pass/transform-to-sequence-expression",
+    "pass/transform-branch-to-expression",
+    "pass/transform-typeof-undefined",
+    "pass/reduce-sequence-expression",
+    "pass/reduce-branch-jump",
+    "pass/reduce-multiple-if-statements",
+    "pass/dead-code-elimination",
+    "pass/remove-side-effect-free-expressions",
+    "pass/remove-context-sensitive-expressions",
+    "pass/tree-based-constant-folding",
+    "pass/drop-variable-definition",
+    "pass/remove-unreachable-branch",
+  ];
 
-    inputs = document.getElementsByTagName('input');
-    for (i = 0; i < inputs.length; i += 1) {
-        el = inputs[i];
-        optimizer = passes[el.id];
-        if (optimizer && el.checked === false) {
-            pipeline.splice(pipeline.indexOf(optimizer), 1);
-        }
+  inputs = document.getElementsByTagName("input");
+  for (i = 0; i < inputs.length; i += 1) {
+    el = inputs[i];
+    optimizer = passes[el.id];
+    if (optimizer && el.checked === false) {
+      pipeline.splice(pipeline.indexOf(optimizer), 1);
     }
+  }
 
-    pipeline = pipeline.map(window.esmangle.require);
-    pipeline = [pipeline];
-    pipeline.push({
-        once: true,
-        pass: [
-            'post/transform-static-to-dynamic-property-access',
-            'post/transform-infinity',
-            'post/rewrite-boolean',
-            'post/rewrite-conditional-expression'
-        ].map(window.esmangle.require)
-    });
+  pipeline = pipeline.map(window.esmangle.require);
+  pipeline = [pipeline];
+  pipeline.push({
+    once: true,
+    pass: [
+      "post/transform-static-to-dynamic-property-access",
+      "post/transform-infinity",
+      "post/rewrite-boolean",
+      "post/rewrite-conditional-expression",
+    ].map(window.esmangle.require),
+  });
 
-    return pipeline;
+  return pipeline;
 }
 
 function obfuscate(syntax) {
-    var result = window.esmangle.optimize(syntax, createPipeline());
+  var result = window.esmangle.optimize(syntax, createPipeline());
 
-    if (id('mangle').checked) {
-        result = window.esmangle.mangle(result);
-    }
+  if (id("mangle").checked) {
+    result = window.esmangle.mangle(result);
+  }
 
-    return result;
+  return result;
 }
 
 function minify() {
-    var code, syntax, option, str, before, after;
+  var code, syntax, option, str, before, after;
 
-    if (typeof window.editor === 'undefined') {
-        code = document.getElementById('editor').value;
+  if (typeof window.editor === "undefined") {
+    code = document.getElementById("editor").value;
+  } else {
+    code = window.editor.getText();
+    window.editor.removeAllErrorMarkers();
+  }
+
+  option = {
+    format: {
+      indent: {
+        style: "",
+      },
+      quotes: "auto",
+      compact: true,
+    },
+  };
+
+  str = "";
+
+  try {
+    before = code.length;
+    syntax = window.esprima.parse(code, { raw: true, loc: true });
+    syntax = obfuscate(syntax);
+    code = window.escodegen.generate(syntax, option);
+    after = code.length;
+    if (before > after) {
+      str = "No error. Minifying " + before + " bytes to " + after + " bytes.";
+      window.editor.setText(code);
     } else {
-        code = window.editor.getText();
-        window.editor.removeAllErrorMarkers();
+      str = "Can not minify further, code is already optimized.";
     }
-
-    option = {
-        format: {
-            indent: {
-                style: ''
-            },
-            quotes: 'auto',
-            compact: true
-        }
-    };
-
-    str = '';
-
-    try {
-        before = code.length;
-        syntax = window.esprima.parse(code, { raw: true, loc: true });
-        syntax = obfuscate(syntax);
-        code = window.escodegen.generate(syntax, option);
-        after = code.length;
-        if (before > after) {
-            str = 'No error. Minifying ' + before + ' bytes to ' + after + ' bytes.';
-            window.editor.setText(code);
-        } else {
-            str = 'Can not minify further, code is already optimized.';
-        }
-    } catch (e) {
-        window.editor.addErrorMarker(e.index, e.description);
-        str = e.toString();
-    } finally {
-        document.getElementById('info').innerHTML = str;
-    }
+  } catch (e) {
+    window.editor.addErrorMarker(e.index, e.description);
+    str = e.toString();
+  } finally {
+    document.getElementById("info").innerHTML = str;
+  }
 }
 
 window.onload = function () {
-    document.getElementById('minify').onclick = minify;
-    try {
-        require(['custom/editor'], function (editor) {
-            window.editor = editor({ parent: 'editor', lang: 'js', wrapMode: true });
-            window.editor.getTextView().getModel().addEventListener("Changed", function () {
-                document.getElementById('info').innerHTML = 'Ready.';
-            });
+  document.getElementById("minify").onclick = minify;
+  try {
+    require(["custom/editor"], function (editor) {
+      window.editor = editor({ parent: "editor", lang: "js", wrapMode: true });
+      window.editor
+        .getTextView()
+        .getModel()
+        .addEventListener("Changed", function () {
+          document.getElementById("info").innerHTML = "Ready.";
         });
-    } catch (e) {
-    }
+    });
+  } catch (e) {}
 };

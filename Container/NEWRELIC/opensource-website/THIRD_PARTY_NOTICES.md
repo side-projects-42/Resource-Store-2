@@ -14,59 +14,58 @@ code, the source code can be found at [https://github.com/newrelic/opensource-we
 
 **[dependencies](#dependencies)**
 
-* [@emotion/core](#emotioncore)
-* [@emotion/styled](#emotionstyled)
-* [@mdx-js/mdx](#mdx-jsmdx)
-* [@mdx-js/react](#mdx-jsreact)
-* [@newrelic/gatsby-theme-newrelic](#newrelicgatsby-theme-newrelic)
-* [@splitsoftware/splitio-react](#splitsoftwaresplitio-react)
-* [date-fns](#date-fns)
-* [feather-icons](#feather-icons)
-* [gatsby-image](#gatsby-image)
-* [gatsby-plugin-manifest](#gatsby-plugin-manifest)
-* [gatsby-plugin-mdx](#gatsby-plugin-mdx)
-* [gatsby-plugin-offline](#gatsby-plugin-offline)
-* [gatsby-plugin-sass](#gatsby-plugin-sass)
-* [gatsby-plugin-sharp](#gatsby-plugin-sharp)
-* [gatsby-remark-copy-linked-files](#gatsby-remark-copy-linked-files)
-* [gatsby-remark-images](#gatsby-remark-images)
-* [gatsby-source-filesystem](#gatsby-source-filesystem)
-* [gatsby-transformer-json](#gatsby-transformer-json)
-* [gatsby](#gatsby)
-* [js-cookie](#js-cookie)
-* [js-search](#js-search)
-* [lodash](#lodash)
-* [marked](#marked)
-* [node-sass](#node-sass)
-* [prism-react-renderer](#prism-react-renderer)
-* [prop-types](#prop-types)
-* [react-dom](#react-dom)
-* [react-feather](#react-feather)
-* [react-helmet](#react-helmet)
-* [react-images](#react-images)
-* [react-live](#react-live)
-* [react-modal-image](#react-modal-image)
-* [react](#react)
-* [unist-util-visit](#unist-util-visit)
-* [use-dark-mode](#use-dark-mode)
-* [uuid](#uuid)
+- [@emotion/core](#emotioncore)
+- [@emotion/styled](#emotionstyled)
+- [@mdx-js/mdx](#mdx-jsmdx)
+- [@mdx-js/react](#mdx-jsreact)
+- [@newrelic/gatsby-theme-newrelic](#newrelicgatsby-theme-newrelic)
+- [@splitsoftware/splitio-react](#splitsoftwaresplitio-react)
+- [date-fns](#date-fns)
+- [feather-icons](#feather-icons)
+- [gatsby-image](#gatsby-image)
+- [gatsby-plugin-manifest](#gatsby-plugin-manifest)
+- [gatsby-plugin-mdx](#gatsby-plugin-mdx)
+- [gatsby-plugin-offline](#gatsby-plugin-offline)
+- [gatsby-plugin-sass](#gatsby-plugin-sass)
+- [gatsby-plugin-sharp](#gatsby-plugin-sharp)
+- [gatsby-remark-copy-linked-files](#gatsby-remark-copy-linked-files)
+- [gatsby-remark-images](#gatsby-remark-images)
+- [gatsby-source-filesystem](#gatsby-source-filesystem)
+- [gatsby-transformer-json](#gatsby-transformer-json)
+- [gatsby](#gatsby)
+- [js-cookie](#js-cookie)
+- [js-search](#js-search)
+- [lodash](#lodash)
+- [marked](#marked)
+- [node-sass](#node-sass)
+- [prism-react-renderer](#prism-react-renderer)
+- [prop-types](#prop-types)
+- [react-dom](#react-dom)
+- [react-feather](#react-feather)
+- [react-helmet](#react-helmet)
+- [react-images](#react-images)
+- [react-live](#react-live)
+- [react-modal-image](#react-modal-image)
+- [react](#react)
+- [unist-util-visit](#unist-util-visit)
+- [use-dark-mode](#use-dark-mode)
+- [uuid](#uuid)
 
 **[devDependencies](#devDependencies)**
 
-* [@newrelic/eslint-plugin-newrelic](#newreliceslint-plugin-newrelic)
-* [@semantic-release/changelog](#semantic-releasechangelog)
-* [@semantic-release/git](#semantic-releasegit)
-* [@testing-library/jest-dom](#testing-libraryjest-dom)
-* [@testing-library/react](#testing-libraryreact)
-* [babel-jest](#babel-jest)
-* [babel-preset-gatsby](#babel-preset-gatsby)
-* [eslint](#eslint)
-* [identity-obj-proxy](#identity-obj-proxy)
-* [jest-emotion](#jest-emotion)
-* [jest](#jest)
-* [prettier](#prettier)
-* [react-test-renderer](#react-test-renderer)
-
+- [@newrelic/eslint-plugin-newrelic](#newreliceslint-plugin-newrelic)
+- [@semantic-release/changelog](#semantic-releasechangelog)
+- [@semantic-release/git](#semantic-releasegit)
+- [@testing-library/jest-dom](#testing-libraryjest-dom)
+- [@testing-library/react](#testing-libraryreact)
+- [babel-jest](#babel-jest)
+- [babel-preset-gatsby](#babel-preset-gatsby)
+- [eslint](#eslint)
+- [identity-obj-proxy](#identity-obj-proxy)
+- [jest-emotion](#jest-emotion)
+- [jest](#jest)
+- [prettier](#prettier)
+- [react-test-renderer](#react-test-renderer)
 
 ## dependencies
 
@@ -1256,7 +1255,6 @@ SOFTWARE.
 
 ```
 
-
 ## devDependencies
 
 ### @newrelic/eslint-plugin-newrelic
@@ -1799,4 +1797,3 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ```
-

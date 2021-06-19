@@ -4,15 +4,16 @@
 :nodeid: 504
 :created: 1409243908
 :tags:
-- development
-- meetup
-- plugins
-- screencast
-- tutorial
-- pipeline
-- workflow
+  - development
+  - meetup
+  - plugins
+  - screencast
+  - tutorial
+  - pipeline
+  - workflow
 :author: kohsuke
 ---
+
 Jesse and I will walk through the source code of [the workflow plugin](https://github.com/jenkinsci/workflow-plugin), highlights key abstractions and extension points, and discuss how they are put together.
 
 If you are interested in developing or retrofitting plugins to work with workflows, I think you'll find this session interesting.

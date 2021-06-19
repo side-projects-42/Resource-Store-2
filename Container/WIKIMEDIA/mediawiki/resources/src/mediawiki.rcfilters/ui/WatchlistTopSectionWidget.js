@@ -1,4 +1,4 @@
-var MarkSeenButtonWidget = require( './MarkSeenButtonWidget.js' ),
+var MarkSeenButtonWidget = require("./MarkSeenButtonWidget.js"),
 	WatchlistTopSectionWidget;
 /**
  * Top section (between page title and filters) on Special:Watchlist
@@ -14,7 +14,11 @@ var MarkSeenButtonWidget = require( './MarkSeenButtonWidget.js' ),
  * @param {Object} [config] Configuration object
  */
 WatchlistTopSectionWidget = function MwRcfiltersUiWatchlistTopSectionWidget(
-	controller, changesListModel, savedLinksListWidget, $watchlistDetails, config
+	controller,
+	changesListModel,
+	savedLinksListWidget,
+	$watchlistDetails,
+	config
 ) {
 	var editWatchlistButton,
 		markSeenButton,
@@ -24,63 +28,70 @@ WatchlistTopSectionWidget = function MwRcfiltersUiWatchlistTopSectionWidget(
 	config = config || {};
 
 	// Parent
-	WatchlistTopSectionWidget.parent.call( this, config );
+	WatchlistTopSectionWidget.parent.call(this, config);
 
-	editWatchlistButton = new OO.ui.ButtonWidget( {
-		label: mw.msg( 'rcfilters-watchlist-edit-watchlist-button' ),
-		icon: 'edit',
-		href: require( '../config.json' ).StructuredChangeFiltersEditWatchlistUrl
-	} );
-	markSeenButton = new MarkSeenButtonWidget( controller, changesListModel );
+	editWatchlistButton = new OO.ui.ButtonWidget({
+		label: mw.msg("rcfilters-watchlist-edit-watchlist-button"),
+		icon: "edit",
+		href: require("../config.json").StructuredChangeFiltersEditWatchlistUrl,
+	});
+	markSeenButton = new MarkSeenButtonWidget(controller, changesListModel);
 
-	$topTable = $( '<div>' )
-		.addClass( 'mw-rcfilters-ui-table' )
+	$topTable = $("<div>")
+		.addClass("mw-rcfilters-ui-table")
 		.append(
-			$( '<div>' )
-				.addClass( 'mw-rcfilters-ui-row' )
+			$("<div>")
+				.addClass("mw-rcfilters-ui-row")
 				.append(
-					$( '<div>' )
-						.addClass( 'mw-rcfilters-ui-cell' )
-						.addClass( 'mw-rcfilters-ui-watchlistTopSectionWidget-watchlistDetails' )
-						.append( $watchlistDetails )
+					$("<div>")
+						.addClass("mw-rcfilters-ui-cell")
+						.addClass(
+							"mw-rcfilters-ui-watchlistTopSectionWidget-watchlistDetails"
+						)
+						.append($watchlistDetails)
 				)
 				.append(
-					$( '<div>' )
-						.addClass( 'mw-rcfilters-ui-cell' )
-						.addClass( 'mw-rcfilters-ui-watchlistTopSectionWidget-editWatchlistButton' )
-						.append( editWatchlistButton.$element )
+					$("<div>")
+						.addClass("mw-rcfilters-ui-cell")
+						.addClass(
+							"mw-rcfilters-ui-watchlistTopSectionWidget-editWatchlistButton"
+						)
+						.append(editWatchlistButton.$element)
 				)
 		);
 
-	$bottomTable = $( '<div>' )
-		.addClass( 'mw-rcfilters-ui-table' )
-		.addClass( 'mw-rcfilters-ui-watchlistTopSectionWidget-savedLinksTable' )
+	$bottomTable = $("<div>")
+		.addClass("mw-rcfilters-ui-table")
+		.addClass("mw-rcfilters-ui-watchlistTopSectionWidget-savedLinksTable")
 		.append(
-			$( '<div>' )
-				.addClass( 'mw-rcfilters-ui-row' )
+			$("<div>")
+				.addClass("mw-rcfilters-ui-row")
 				.append(
-					$( '<div>' )
-						.addClass( 'mw-rcfilters-ui-cell' )
-						.append( markSeenButton.$element )
+					$("<div>")
+						.addClass("mw-rcfilters-ui-cell")
+						.append(markSeenButton.$element)
 				)
 				.append(
-					$( '<div>' )
-						.addClass( 'mw-rcfilters-ui-cell' )
-						.addClass( 'mw-rcfilters-ui-watchlistTopSectionWidget-savedLinks' )
-						.append( savedLinksListWidget.$element )
+					$("<div>")
+						.addClass("mw-rcfilters-ui-cell")
+						.addClass(
+							"mw-rcfilters-ui-watchlistTopSectionWidget-savedLinks"
+						)
+						.append(savedLinksListWidget.$element)
 				)
 		);
 
-	$separator = $( '<div>' )
-		.addClass( 'mw-rcfilters-ui-watchlistTopSectionWidget-separator' );
+	$separator = $("<div>").addClass(
+		"mw-rcfilters-ui-watchlistTopSectionWidget-separator"
+	);
 
 	this.$element
-		.addClass( 'mw-rcfilters-ui-watchlistTopSectionWidget' )
-		.append( $topTable, $separator, $bottomTable );
+		.addClass("mw-rcfilters-ui-watchlistTopSectionWidget")
+		.append($topTable, $separator, $bottomTable);
 };
 
 /* Initialization */
 
-OO.inheritClass( WatchlistTopSectionWidget, OO.ui.Widget );
+OO.inheritClass(WatchlistTopSectionWidget, OO.ui.Widget);
 
 module.exports = WatchlistTopSectionWidget;

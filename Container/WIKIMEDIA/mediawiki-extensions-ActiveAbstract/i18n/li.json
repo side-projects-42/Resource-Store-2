@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Ooswesthoesbes"
-		]
-	},
-	"activeabstract-desc": "Genereer XML-feed veur 't Active Abstracts-projèk van Yahoo"
+  "@metadata": {
+    "authors": ["Ooswesthoesbes"]
+  },
+  "activeabstract-desc": "Genereer XML-feed veur 't Active Abstracts-projèk van Yahoo"
 }

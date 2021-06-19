@@ -37,15 +37,16 @@
 			},
 			{
 				"name": "API",
-				"classes": [ "mw.Api*", "mw.ForeignApi*", "mw.Rest*", "mw.ForeignRest*" ]
+				"classes": [
+					"mw.Api*",
+					"mw.ForeignApi*",
+					"mw.Rest*",
+					"mw.ForeignRest*"
+				]
 			},
 			{
 				"name": "Language",
-				"classes": [
-					"mw.language*",
-					"mw.cldr",
-					"mw.jqueryMsg"
-				]
+				"classes": ["mw.language*", "mw.cldr", "mw.jqueryMsg"]
 			},
 			{
 				"name": "Interfaces",
@@ -60,23 +61,15 @@
 			},
 			{
 				"name": "Widgets",
-				"classes": [
-					"mw.widgets*"
-				]
+				"classes": ["mw.widgets*"]
 			},
 			{
 				"name": "Special",
-				"classes": [
-					"mw.special*"
-				]
+				"classes": ["mw.special*"]
 			},
 			{
 				"name": "Development",
-				"classes": [
-					"mw.log",
-					"mw.inspect",
-					"mw.Debug"
-				]
+				"classes": ["mw.log", "mw.inspect", "mw.Debug"]
 			}
 		]
 	},
@@ -98,9 +91,7 @@
 		"groups": [
 			{
 				"name": "Plugins",
-				"classes": [
-					"Vue"
-				]
+				"classes": ["Vue"]
 			}
 		]
 	},
@@ -120,18 +111,32 @@
 			},
 			{
 				"name": "OOUI",
-				"classes": [
-					"OO.ui",
-					"OO.ui.*"
-				]
+				"classes": ["OO.ui", "OO.ui.*"]
 			},
 			{
 				"name": "jQuery",
-				"classes": [ "jQuery", "jQuery.Event", "jQuery.Callbacks", "jQuery.Promise", "jQuery.Deferred", "jQuery.jqXHR", "QUnit" ]
+				"classes": [
+					"jQuery",
+					"jQuery.Event",
+					"jQuery.Callbacks",
+					"jQuery.Promise",
+					"jQuery.Deferred",
+					"jQuery.jqXHR",
+					"QUnit"
+				]
 			},
 			{
 				"name": "JavaScript",
-				"classes": [ "Array", "Boolean", "Date", "Function", "Number", "Object", "RegExp", "String" ]
+				"classes": [
+					"Array",
+					"Boolean",
+					"Date",
+					"Function",
+					"Number",
+					"Object",
+					"RegExp",
+					"String"
+				]
 			}
 		]
 	}

@@ -39,7 +39,7 @@
  */
 .filehistory a img,
 #file img:hover {
-	background: url( images/checker.svg ) repeat;
+	background: url(images/checker.svg) repeat;
 }
 
 /*

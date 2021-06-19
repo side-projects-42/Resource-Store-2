@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 services:
   wsexport:
     build:
@@ -9,7 +9,7 @@ services:
     ports:
       - "8888:8080"
     extra_hosts:
-      - "host.docker.internal:host-gateway"  
+      - "host.docker.internal:host-gateway"
     volumes:
       - ../:/var/www/html:cached
       - ./apache/000-default.conf:/etc/apache2/sites-available/000-default.conf:cached

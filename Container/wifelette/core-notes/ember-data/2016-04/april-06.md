@@ -27,7 +27,7 @@
 
 ---
 
-### `backgroundReload` also for `query` 
+### `backgroundReload` also for `query`
 
 ##### Summary
 
@@ -60,7 +60,6 @@
 - current PR replaces `Ember.Date.parse` with native `Date.parse` and adds a deprecation
 
 ##### Discussion
-
 
 ##### Resolution
 

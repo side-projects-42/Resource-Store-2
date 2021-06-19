@@ -23,7 +23,7 @@ class customError extends Error {
   }
 }
 
-['toThrowError', 'toThrow'].forEach(toThrow => {
+['toThrowError', 'toThrow'].forEach((toThrow) => {
   describe(toThrow, () => {
     class Err extends customError {}
     class Err2 extends customError {}

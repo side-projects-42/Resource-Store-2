@@ -94,4 +94,3 @@ GC: last week we had to revert our build for ember-cli, still not sure why
 SP: yeah just upgrade ember-cli and npm shinkwrap --dev with npm 3, and things should work
 
 SP: feature.json needs to be in the babel cache for ember builds. Rob was going to do this, I’ll maybe take a look.
-

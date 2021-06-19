@@ -2,7 +2,7 @@
 
 # messageformat.js
 
-The experience and subtlety of your program's text can be important. MessageFormat (PluralFormat + SelectFormat) is a mechanism for handling both *pluralization* and *gender* in your applications. It can also lead to much better translations, as it was built by [ICU](http://icu-project.org/apiref/icu4j/com/ibm/icu/text/MessageFormat.html) to help solve those two problems for all known [CLDR](http://cldr.unicode.org/) languages - likely all the ones you care about.
+The experience and subtlety of your program's text can be important. MessageFormat (PluralFormat + SelectFormat) is a mechanism for handling both _pluralization_ and _gender_ in your applications. It can also lead to much better translations, as it was built by [ICU](http://icu-project.org/apiref/icu4j/com/ibm/icu/text/MessageFormat.html) to help solve those two problems for all known [CLDR](http://cldr.unicode.org/) languages - likely all the ones you care about.
 
 There is a good slide-deck on [Plural and Gender in Translated Messages](https://docs.google.com/presentation/d/1ZyN8-0VXmod5hbHveq-M1AeQ61Ga3BmVuahZjbmbBxo/pub?start=false&loop=false&delayms=3000#slide=id.g1bc43a82_2_14) by Markus Scherer and Mark Davis. But, again, remember that many of these problems apply even if you're only outputting english.
 
@@ -26,11 +26,9 @@ A progression of strings in programs:
 
 These are generally unacceptable in this day and age. Not to mention the problem expands when you consider languages with 6 different pluralization rules. You may be using something like Gettext to solve this across multiple languages, but even Gettext falls flat.
 
-
 ## What does it look like?
 
 ICU bills the format as easy to read and write. It may be _more_ easy to read and write, but I'd still suggest a tool for non-programmers. It looks a lot like Java's `ChoiceFormat` - but is different in a few significant ways, most notably its addition of the `plural` keyword, and more friendly `select` syntax.
-
 
 ```
 {GENDER, select,
@@ -81,20 +79,21 @@ There is very little that needs to be repeated (until gender modifies more than 
 
 ## Features
 
-* Handles arbitrary nesting of pluralization and select rules.
-* Works on the server and the client.
-* No i18n necessary - you can use it for just well-formed english sentences. `UX++;`
-* Speed: Compiles messages to JavaScript code.
-  * This is great for speed. Message formatting is just string concatenation.
-  * Run a precompiler at build time and remove the need for most of the library. `filesize--;`
-* Compatible with other languages that support MessageFormat
-* Very whitespace tolerant.
-* Supports unicode characters
-* Most translation companies are beginning to be exposed to translations like this, even if it's not their core business.
+- Handles arbitrary nesting of pluralization and select rules.
+- Works on the server and the client.
+- No i18n necessary - you can use it for just well-formed english sentences. `UX++;`
+- Speed: Compiles messages to JavaScript code.
+  - This is great for speed. Message formatting is just string concatenation.
+  - Run a precompiler at build time and remove the need for most of the library. `filesize--;`
+- Compatible with other languages that support MessageFormat
+- Very whitespace tolerant.
+- Supports unicode characters
+- Most translation companies are beginning to be exposed to translations like this, even if it's not their core business.
 
 ## Install
 
 ### Node
+
 ```javascript
 > npm install messageformat
 
@@ -102,11 +101,13 @@ var MessageFormat = require('messageformat');
 ```
 
 ### Browser
+
 ```html
 <script src="/path/to/messageformat-v0.x.x.js"></script>
 ```
 
 ### Adding Provided Locales
+
 ```html
 <!-- after the messageformat.js include, but before you need to use the locale -->
 <script src="/path/to/messageformat/locales/xx_xx.js"></script>
@@ -115,6 +116,7 @@ var MessageFormat = require('messageformat');
 TODO:: In node, we can automatically pull in all known locales for you.
 
 ### Adding Custom locales
+
 ```javascript
 // Any time after MessageFormat is included
 MessageFormat.locale["locale_name"] = function () { ... };
@@ -140,11 +142,9 @@ You **really** should take advantage of this. It is _much_ faster than parsing i
 I will eventually release a Handlebars and Require.js (r.js) plugin to do this automatically, but if you would like to output the raw javascript function, the following does that:
 
 ```javascript
-var mf = new MessageFormat('en');
+var mf = new MessageFormat("en");
 var js_string_represenation = mf.precompile(
-  mf.parse(
-    'Your {NUM, plural, one{message} other{messages}} go here.'
-  )
+  mf.parse("Your {NUM, plural, one{message} other{messages}} go here.")
 );
 
 // This returns an unnamed - unreferenced function that needs to be passed the
@@ -175,7 +175,6 @@ This tool is in early stage. It was tested on Linux and Windows, but if you find
 
 If your prefer looking at an example [go there](https://github.com/SlexAxton/messageformat.js/tree/master/example/en).
 
-
 `messageformat` will read every JSON files in `inputdir` and compile them to `output`.
 
 When using the CLI, the following commands will works exactly the same:
@@ -197,7 +196,6 @@ Take a look at the example [inputdir](https://github.com/SlexAxton/messageformat
 
 A watch mode is available with the `--watch` or `-w` option.
 
-
 #### The JSON messageformat files
 
 The original JSON files are simple objects, with a key and a messageformat string as value, like [this one](messageformat.js/blob/master/example/en/sub/folder/plural.json):
@@ -207,7 +205,6 @@ The original JSON files are simple objects, with a key and a messageformat strin
     }
 
 The CLI walks into `inputdir` recursively so you can structure your messageformat with [dirs and subdirs](messageformat.js/tree/master/example/en).
-
 
 #### In the browser
 
@@ -237,7 +234,6 @@ Subdirectories messageformat are available in the `window.i18n` namespace, prefi
     * test: [ Function ]
 
 `sub/folder` is the path, `plural` is the name of [the JSON file](messageformat.js/blob/master/example/en/sub/folder/plural.json), `test` is the key used.
-
 
 A working example is available [here](messageformat.js/tree/master/example).
 
@@ -348,12 +344,12 @@ var message = mf.compile('There {NUM_RESULTS, plural, one{is one result} other{a
 
 ICU declares the 6 named keys that CLDR defines for their plural form data. Those are:
 
-* zero
-* one
-* two
-* few
-* many
-* other (**required**)
+- zero
+- one
+- two
+- few
+- many
+- other (**required**)
 
 All of them are fairly straight-forward, but do remember, that for some languages, they are more loose "guidelines" than they are exact.
 
@@ -498,8 +494,8 @@ Most Gettext tools will look up the Plural Forms for a given locale for you. Thi
 
 ## TODO
 
-* Create a tool to help translators understand and use this format.
-* Template integration - I specifically want to make a build time handlebars.js plugin to build this logic into the template builds.
+- Create a tool to help translators understand and use this format.
+- Template integration - I specifically want to make a build time handlebars.js plugin to build this logic into the template builds.
 
 ## License
 
@@ -507,19 +503,18 @@ You may use this software under the WTFPL.
 
 You may contribute to this software under the Dojo CLA - <http://dojofoundation.org/about/cla>
 
-
 ## Author
 
-* Alex Sexton - [@SlexAxton](http://twitter.com/SlexAxton) - <http://alexsexton.com/>
+- Alex Sexton - [@SlexAxton](http://twitter.com/SlexAxton) - <http://alexsexton.com/>
 
 ## Major Contributors
 
-* Eemeli Aro - [@eemeli](https://github.com/eemeli)
+- Eemeli Aro - [@eemeli](https://github.com/eemeli)
 
 ## Credits
 
 Thanks to:
 
-* [Bazaarvoice](https://github.com/Bazaarvoice) - my employer - for letting me do cool stuff like this.
-* Google has an implementation that is similar in Google Closure, I tried to vet my code against many of their tests.
-* Norbert Lindenberg for showing me how good it can be.
+- [Bazaarvoice](https://github.com/Bazaarvoice) - my employer - for letting me do cool stuff like this.
+- Google has an implementation that is similar in Google Closure, I tried to vet my code against many of their tests.
+- Norbert Lindenberg for showing me how good it can be.

@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"David1010",
-			"Irus"
-		]
+		"authors": ["David1010", "Irus"]
 	},
 	"apihelp-edit-example-edit": "გვერდის რედაქტირება.",
 	"apihelp-login-param-name": "მომხმარებლის სახელი",

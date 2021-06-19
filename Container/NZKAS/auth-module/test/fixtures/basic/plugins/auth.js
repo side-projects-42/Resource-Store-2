@@ -1,3 +1,3 @@
 export default function ({ $auth }) {
-  $auth._custom_plugin = true
+  $auth._custom_plugin = true;
 }

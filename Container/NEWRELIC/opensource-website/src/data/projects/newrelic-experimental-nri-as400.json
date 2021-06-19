@@ -15,10 +15,7 @@
   "description": "iSeries / AS400 monitoring solution for New Relic Infrastructure.",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Java",
-  "projectTags": [
-    "nrlabs",
-    "nri"
-  ],
+  "projectTags": ["nrlabs", "nri"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic integration for AS/400",

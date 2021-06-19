@@ -6,6 +6,6 @@
  * @description
  * Loads build tasks with the provided configuration
  */
-'use strict';
+"use strict";
 
-module.exports = require('gulp-factory-loader')(__dirname, __filename);
+module.exports = require("gulp-factory-loader")(__dirname, __filename);

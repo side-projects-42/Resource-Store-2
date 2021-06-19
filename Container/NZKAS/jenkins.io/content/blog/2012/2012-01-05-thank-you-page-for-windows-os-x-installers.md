@@ -4,10 +4,11 @@
 :nodeid: 368
 :created: 1325782800
 :tags:
-- infrastructure
-- core
+  - infrastructure
+  - core
 :author: kohsuke
 ---
+
 I've tweaked the website so that downloading the Windows and Mac installers will navigate the browser to "thank you/what's next" page. These pages have links to Wiki that educate the users on where/how the installer will run Jenkins.
 
 Hopefully this makes it little easier for new users to get started on Jenkins. I've tested the new mechanism with IE, Safari, and Firefox, but if you notice a problem, please let us know.

@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Jose77",
-			"Meno25",
-			"Nemo bis",
-			"Protostar"
-		]
+		"authors": ["Jose77", "Meno25", "Nemo bis", "Protostar"]
 	},
 	"tog-underline": "Link ùndarlaintin",
 	"tog-hideminor": "Haid dhi lili chenjdèm na dhi resènt chenj list",

@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Dutchy45",
-			"LongJohn nl",
-			"Mainframe98"
-		]
+		"authors": ["Dutchy45", "LongJohn nl", "Mainframe98"]
 	},
 	"rest-wrong-method": "De requestmethode ($1) is {{PLURAL:$3|niet de toegestane methode voor dit pad|een van de toegestane methoden voor dit pad}} ($2)",
 	"rest-nonexistent-title": "De opgegeven titel ($1) bestaat niet",

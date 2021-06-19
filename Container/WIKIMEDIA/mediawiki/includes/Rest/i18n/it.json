@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Beta16"
-		]
+		"authors": ["Beta16"]
 	},
 	"rest-nonexistent-title": "Il titolo indicato ($1) non esiste",
 	"rest-nonexistent-revision": "La versione richiesta ($1) non esiste.",

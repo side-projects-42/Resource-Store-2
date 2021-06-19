@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Joetaras"
-		]
+		"authors": ["Joetaras"]
 	},
 	"config-desc": "'U 'nstallatore de MediaUicchi",
 	"config-title": "Installazzione de MediaUicchi $1",

@@ -17,9 +17,7 @@
   "description": "Allows you to monitor your Go applications with New Relic",
   "ossCategory": "community-plus",
   "primaryLanguage": "Go",
-  "projectTags": [
-    "agent"
-  ],
+  "projectTags": ["agent"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Go Agent",

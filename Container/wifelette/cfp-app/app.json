@@ -1,15 +1,8 @@
 {
   "name": "CFP-App",
   "description": "Conference call for proposal management application by Ruby Central",
-  "keywords": [
-    "cfp",
-    "proposals",
-    "conference"
-  ],
-  "addons": [
-    "sendgrid:starter",
-    "heroku-postgresql"
-  ],
+  "keywords": ["cfp", "proposals", "conference"],
+  "addons": ["sendgrid:starter", "heroku-postgresql"],
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
   },

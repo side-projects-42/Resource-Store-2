@@ -16,7 +16,7 @@ describe('Runtime requireActual', () => {
   });
 
   it('requires node module when manual mock exists', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireActual(
         runtime.__mockRootPath,
         'mocked-node-module',

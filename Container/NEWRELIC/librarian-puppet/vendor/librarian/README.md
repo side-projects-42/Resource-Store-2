@@ -1,5 +1,4 @@
-Librarian [![Build Status](https://secure.travis-ci.org/applicationsonline/librarian.png)](http://travis-ci.org/applicationsonline/librarian)
-=========
+# Librarian [![Build Status](https://secure.travis-ci.org/applicationsonline/librarian.png)](http://travis-ci.org/applicationsonline/librarian)
 
 Librarian is a framework for writing bundlers, which are tools that resolve,
 fetch, install, and isolate a project's dependencies, in Ruby.
@@ -17,8 +16,7 @@ install them, and isolate them in your project.
 A bundler written with Librarian will be similar in kind to [Bundler](http://gembundler.com),
 the bundler for Ruby gems that many modern Rails applications use.
 
-Librarian-Chef
----------------
+## Librarian-Chef
 
 Librarian-Chef is a tool that helps you manage the cookbooks that your chef-repo
 depends on. Here are some more details.
@@ -38,10 +36,10 @@ remote or local to your machine, and it can deal with cookbooks released to and
 hosted on a private cookbooks server.
 
 Librarian-Chef is not primarily intended for dealing with the cookbooks you are
-actively working on *within* your infrastructure repository. In such a case, you
+actively working on _within_ your infrastructure repository. In such a case, you
 can still use Librarian-Chef, but it is likely unnecessary.
 
-Librarian-Chef *takes over* your `cookbooks/` directory and manages it for you
+Librarian-Chef _takes over_ your `cookbooks/` directory and manages it for you
 based on your `Cheffile`. Your `Cheffile` becomes the authoritative source for
 the cookbooks your infrastructure repository depends on. You should not modify
 the contents of your `cookbooks/` directory when using Librarian-Chef. If you
@@ -73,7 +71,7 @@ Here's an example `Cheffile`:
 
 Here's how it works:
 
-We start off by declaring the *default source* for this `Cheffile`.
+We start off by declaring the _default source_ for this `Cheffile`.
 
     site "http://community.opscode.com/api/v1"
 
@@ -198,8 +196,7 @@ dependencies.
 This command writes the complete resolution into `Cheffile.lock`.
 
 This command then copies all of the fetched cookbooks into your `cookbooks/`
-directory, overwriting whatever was there before. You can then use `knife
-cookbook upload -all` to upload the cookbooks to your chef-server, if you are
+directory, overwriting whatever was there before. You can then use `knife cookbook upload -all` to upload the cookbooks to your chef-server, if you are
 using the client-server model.
 
 Check your `Cheffile` and `Cheffile.lock` into version control:
@@ -261,9 +258,9 @@ Upload the cookbooks to your chef-server:
 Configuration comes from three sources with the following highest-to-lowest
 precedence:
 
-* The local config (`./.librarian/chef/config`)
-* The environment
-* The global config (`~/.librarian/chef/config`)
+- The local config (`./.librarian/chef/config`)
+- The environment
+- The global config (`~/.librarian/chef/config`)
 
 You can inspect the final configuration with:
 
@@ -304,24 +301,24 @@ and transforming it: replace hyphens (`-`) with underscores (`_`) and periods
 
 Configuration affects how various commands operate.
 
-* The `path` config sets the cookbooks directory to install to. If a relative
+- The `path` config sets the cookbooks directory to install to. If a relative
   path, it is relative to the directory containing the `Cheffile`. The
   equivalent environment variable is `LIBRARIAN_CHEF_PATH`.
 
-* The `install.strip-dot-git` config causes the `.git/` directory to be stripped
+- The `install.strip-dot-git` config causes the `.git/` directory to be stripped
   out when installing cookbooks from a git source. This must be set to exactly
   "1" to cause this behavior. The equivalent environment variable is
   `LIBRARIAN_CHEF_INSTALL__STRIP_DOT_GIT`.
 
 Configuration can be set by passing specific options to other commands.
 
-* The `path` config can be set at the local level by passing the `--path` option
+- The `path` config can be set at the local level by passing the `--path` option
   to the `install` command. It can be unset at the local level by passing the
   `--no-path` option to the `install` command. Note that if this is set at the
   environment or global level then, even if `--no-path` is given as an option,
   the environment or global config will be used.
 
-* The `install.strip-dot-git` config can be set at the local level by passing
+- The `install.strip-dot-git` config can be set at the local level by passing
   the `--strip-dot-git` option to the `install` command. It can be unset at the
   local level by passing the `--no-strip-dot-git` option.
 
@@ -335,27 +332,26 @@ Stick the following in your `knife.rb`:
     cookbook_path Librarian::Chef.install_path,
                   "/path/to/chef-repo/site-cookbooks"
 
-In the above, do *not* to include the path to your `cookbooks/` directory. If
+In the above, do _not_ to include the path to your `cookbooks/` directory. If
 you have additional cookbooks directories in your chef-repo that you use for
 vendored cookbooks (where you use the `:path =>` source in your `Cheffile`),
-make sure *not* to include the paths to those additional cookbooks directories
+make sure _not_ to include the paths to those additional cookbooks directories
 either.
 
 You still need to include your `site-cookbooks/` directory in the above list.
 
 What this integration does is whenever you use any `knife` command, it will:
 
-* Enforce that your `Cheffile` and `Cheffile.lock` are in sync
-* Install the resolved cookbooks to a temporary directory
-* Configure Knife to look in the temporary directory for the installed cookbooks
+- Enforce that your `Cheffile` and `Cheffile.lock` are in sync
+- Install the resolved cookbooks to a temporary directory
+- Configure Knife to look in the temporary directory for the installed cookbooks
   and not in the normal `cookbooks/` directory.
 
 When you use this integration, any changes you make to anything in the
 `cookbooks/` directory will be ignored by Knife, because Knife won't look in
 that directory for your cookbooks.
 
-How to Contribute
------------------
+## How to Contribute
 
 ### Running the tests
 
@@ -392,8 +388,7 @@ Please include relevant `Cheffile` and `Cheffile.lock` files. Please run the
 `librarian-chef` commands in verbose mode by using the `--verbose` flag, and
 include the verbose output in the bug report as well.
 
-License
--------
+## License
 
 Written by Jay Feldblum.
 

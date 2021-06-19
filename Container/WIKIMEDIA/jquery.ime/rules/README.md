@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD010 -->
-jQuery.ime Input method specification
-=====================================
+
+# jQuery.ime Input method specification
 
 Input methods are defined in javascript files. An input method is a javascript
 object and it is passed to `$.ime.register()` method to register with `jquery.ime`
@@ -13,8 +13,7 @@ loaded first. This is done through configurations in `jquery.ime.inputmethods.js
 
 For examples on reuse, see the rules "nb-normforms" or "hi-inscript".
 
-Metadata fields
----------------
+## Metadata fields
 
 id: A mandatory unique identifier that represents the input method.
 eg: `"hindi-inscript"`
@@ -40,8 +39,7 @@ license: An optional string containing licence information. Eg: `"CC-BY-SA"` or
 
 version: An optional string containing version information.
 
-Input method definition
------------------------
+## Input method definition
 
 patterns: A regular expression table that maps the original inputs to the
 target language.
@@ -50,23 +48,24 @@ eg:
 
 ```javascript
 patterns: [
-		[ 'q', '/' ],
-		[ 'w', '\'' ],
-		[ 'e', 'ק' ],
-		[ 'r', 'ר' ],
-		[ 't', 'א' ],
-		[ 'y', 'ט' ],
-		[ 'u', 'ו' ],
-		[ 'i', 'ן' ],
-		[ 'o', 'ם' ],
-		[ 'p', 'פ' ]
-		// ...
-		// These characters are mirrored in RTL languages
-		[ '\\(', ')' ],
-		[ '\\)', '(' ],
-		[ '\\[', ']' ],
-		[ '\\]', '[' ]
-	]
+  ["q", "/"],
+  ["w", "'"],
+  ["e", "ק"],
+  ["r", "ר"],
+  ["t", "א"],
+  ["y", "ט"],
+  ["u", "ו"],
+  ["i", "ן"],
+  ["o", "ם"],
+  ["p", "פ"][
+    // ...
+    // These characters are mirrored in RTL languages
+    ("\\(", ")")
+  ],
+  ["\\)", "("],
+  ["\\[", "]"],
+  ["\\]", "["],
+];
 ```
 
 Any valid regular expression is possible as first element of each array item.
@@ -82,9 +81,14 @@ The second member of the pattern can be a function as well.
 eg:
 
 ```javascript
-patterns: [ [ '[a-z]', function ( $1 ) {
-			return $1.toUpperCase();
-		} ] ]
+patterns: [
+  [
+    "[a-z]",
+    function ($1) {
+      return $1.toUpperCase();
+    },
+  ],
+];
 ```
 
 This rule replace all key strokes to its upper case character.
@@ -104,7 +108,7 @@ text based on the previously typed characters.
 eg:
 
 ```javascript
-	[ 'ൿh', 'c', 'ച്' ]
+["ൿh", "c", "ച്"];
 ```
 
 Note that this pattern definition has 3 members, the middle one is the context.
@@ -129,8 +133,7 @@ the patterns.
 
 This field is optional and default value is 1.
 
-Examples
---------
+## Examples
 
 For complete examples, please refer the existing input method definitions.
 

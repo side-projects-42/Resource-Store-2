@@ -23,7 +23,7 @@ const {
 } = require('../asymmetricMatchers');
 
 test('Any.asymmetricMatch()', () => {
-  const Thing = function() {};
+  const Thing = function () {};
 
   [
     any(String).asymmetricMatch('jest'),
@@ -33,7 +33,7 @@ test('Any.asymmetricMatch()', () => {
     any(Object).asymmetricMatch({}),
     any(Array).asymmetricMatch([]),
     any(Thing).asymmetricMatch(new Thing()),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toBe(true);
   });
 });
@@ -54,7 +54,7 @@ test('Anything matches any type', () => {
     anything().asymmetricMatch(true),
     anything().asymmetricMatch({}),
     anything().asymmetricMatch([]),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toBe(true);
   });
 });
@@ -63,7 +63,7 @@ test('Anything does not match null and undefined', () => {
   [
     anything().asymmetricMatch(null),
     anything().asymmetricMatch(undefined),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toBe(false);
   });
 });
@@ -78,7 +78,7 @@ test('ArrayContaining matches', () => {
     arrayContaining(['foo']).asymmetricMatch(['foo']),
     arrayContaining(['foo']).asymmetricMatch(['foo', 'bar']),
     arrayContaining([]).asymmetricMatch({}),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toEqual(true);
   });
 });
@@ -103,7 +103,7 @@ test('ArrayNotContaining does not match', () => {
     arrayNotContaining(['foo']).asymmetricMatch(['foo']),
     arrayNotContaining(['foo']).asymmetricMatch(['foo', 'bar']),
     arrayNotContaining([]).asymmetricMatch({}),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toEqual(false);
   });
 });
@@ -122,7 +122,7 @@ test('ObjectContaining matches', () => {
     objectContaining({first: objectContaining({second: {}})}).asymmetricMatch({
       first: {second: {}},
     }),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toEqual(true);
   });
 });
@@ -132,7 +132,7 @@ test('ObjectContaining does not match', () => {
     objectContaining({foo: 'foo'}).asymmetricMatch({bar: 'bar'}),
     objectContaining({foo: 'foo'}).asymmetricMatch({foo: 'foox'}),
     objectContaining({foo: undefined}).asymmetricMatch({}),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toEqual(false);
   });
 });
@@ -170,7 +170,7 @@ test('ObjectNotContaining matches', () => {
     objectNotContaining({foo: 'foo'}).asymmetricMatch({bar: 'bar'}),
     objectNotContaining({foo: 'foo'}).asymmetricMatch({foo: 'foox'}),
     objectNotContaining({foo: undefined}).asymmetricMatch({}),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toEqual(true);
   });
 });
@@ -185,7 +185,7 @@ test('ObjectNotContaining does not match', () => {
     objectNotContaining({
       first: objectNotContaining({second: {}}),
     }).asymmetricMatch({first: {second: {}}}),
-  ].forEach(test => {
+  ].forEach((test) => {
     jestExpect(test).toEqual(false);
   });
 });

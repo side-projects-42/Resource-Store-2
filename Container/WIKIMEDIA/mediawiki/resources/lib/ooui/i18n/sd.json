@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Mehtab ahmed"
-		]
+		"authors": ["Mehtab ahmed"]
 	},
 	"ooui-outline-control-move-down": "شيءِ کي هيٺ چوريو",
 	"ooui-outline-control-move-up": "شيءِ کي مٿي چوريو",

@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Nickthijssen1994",
-			"Siebrand"
-		]
-	},
-	"akismetklik-desc": "Voorkomt bewerkingen van vermoedelijke spammers die in de spamlijst van Akismet staan"
+  "@metadata": {
+    "authors": ["Nickthijssen1994", "Siebrand"]
+  },
+  "akismetklik-desc": "Voorkomt bewerkingen van vermoedelijke spammers die in de spamlijst van Akismet staan"
 }

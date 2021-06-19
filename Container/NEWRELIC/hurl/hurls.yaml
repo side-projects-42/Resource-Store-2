@@ -5,7 +5,7 @@ Twilio API (view account):
   auth: basic
   username: account_sid_here
   password: auth_token_here
-          
+
 Twitter API (public timeline):
   url: http://twitter.com/statuses/public_timeline.json
   method: GET

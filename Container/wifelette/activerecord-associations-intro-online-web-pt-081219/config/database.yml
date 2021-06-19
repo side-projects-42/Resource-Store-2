@@ -1,2 +1,2 @@
-adapter: 'sqlite3'
-database: 'db/playlister.db'
+adapter: "sqlite3"
+database: "db/playlister.db"

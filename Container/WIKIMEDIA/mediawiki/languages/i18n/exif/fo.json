@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Diupwijk",
-			"EileenSanda",
-			"Spacebirdy"
-		]
+		"authors": ["Diupwijk", "EileenSanda", "Spacebirdy"]
 	},
 	"exif-imagewidth": "Breidd",
 	"exif-imagelength": "Hædd",

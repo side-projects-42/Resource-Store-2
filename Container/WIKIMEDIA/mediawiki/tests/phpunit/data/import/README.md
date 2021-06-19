@@ -13,4 +13,4 @@ the comparison, and causes all subsequent content of the file to be ignored.
 The behavior of the <test:data> and <test:end/> tags is controlled by DumpAsserter::assertDOM().
 
 The names of these files, the data they contain, as well as the names of the
-variables used, are defined by test cases, such as ImportExportTest. 
+variables used, are defined by test cases, such as ImportExportTest.

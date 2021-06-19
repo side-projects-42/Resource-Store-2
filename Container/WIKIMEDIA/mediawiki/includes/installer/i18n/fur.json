@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Tocaibon"
-		]
+		"authors": ["Tocaibon"]
 	},
 	"config-desc": "Program di instalazion di Mediawiki",
 	"config-title": "Instalazion MediaWiki $1",

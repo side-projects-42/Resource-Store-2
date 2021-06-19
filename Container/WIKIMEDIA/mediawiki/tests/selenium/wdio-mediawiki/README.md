@@ -8,7 +8,7 @@ A plugin for [WebdriverIO](http://webdriver.io/) providing utilities to simplify
 
 The `Page` class is a base class for following the [Page Objects Pattern](http://webdriver.io/guide/testrunner/pageobjects.html).
 
-* `openTitle( title [, Object query [, string fragment ] ] )`
+- `openTitle( title [, Object query [, string fragment ] ] )`
 
 The convention is for implementations to extend this class and provide an `open()` method
 that calls `super.openTitle()`, as well as add various getters for elements on the page.
@@ -22,18 +22,18 @@ Utilities to interact with the MediaWiki API. Uses the [mwbot](https://github.co
 Actions are performed logged-in using `browser.config.mwUser` and `browser.config.mwPwd`,
 which typically come from `MEDIAWIKI_USER` and `MEDIAWIKI_PASSWORD` environment variables.
 
-* `bot([string username [, string password [, string baseUrl ] ] ])`
-* `createAccount(MWBot bot, string username, string password)`
-* `blockUser(MWBot bot, [ string username [, string expiry ] ])`
-* `unblockUser(MWBot bot, [ string username ])`
+- `bot([string username [, string password [, string baseUrl ] ] ])`
+- `createAccount(MWBot bot, string username, string password)`
+- `blockUser(MWBot bot, [ string username [, string expiry ] ])`
+- `unblockUser(MWBot bot, [ string username ])`
 
 Example:
 
 ```js
 bot = await Api.bot();
-await bot.edit( 'Some page', 'Some initial content' );
-await bot.edit( 'Some page', 'Some other content', 'Optional edit reason here' );
-await bot.delete( 'Some page', 'Some deletion reason here' );
+await bot.edit("Some page", "Some initial content");
+await bot.edit("Some page", "Some other content", "Optional edit reason here");
+await bot.delete("Some page", "Some deletion reason here");
 ```
 
 ### RunJobs
@@ -45,8 +45,8 @@ making assertions that depend on its outcome.
 
 `Util` is a collection of popular utility methods.
 
-* `getTestString([ string prefix ])`
-* `waitForModuleState(string moduleName [, string moduleStatus [, number timeout ] ])`
+- `getTestString([ string prefix ])`
+- `waitForModuleState(string moduleName [, string moduleStatus [, number timeout ] ])`
 
 ## Versioning
 

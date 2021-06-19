@@ -1,9 +1,6 @@
 /*jslint evil: true */
 /*jshint boss: true */
 
-if (e = 1)
-    doSomething();
+if ((e = 1)) doSomething();
 
-eval('function() {}');
-
-
+eval("function() {}");

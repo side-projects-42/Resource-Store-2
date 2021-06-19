@@ -6,30 +6,35 @@ const toJson = require('./to-json');
 let prefix;
 const coloredOutput = false;
 
-const createMsg = (type = '') => (color, ...args) => {
-  const stringifiedArgs = args.map((arg) => {
-    if (arg instanceof Error) {
-      const remainingProps = R.omit(['message', 'stack'], arg);
-      return R.isEmpty(remainingProps)
-        ? `${arg.message}\n${arg.stack}`
-        : `${arg.message}\n${arg.stack}\nAdditional error props: ${toJson(
-            remainingProps
-          )}`;
+const createMsg =
+  (type = '') =>
+  (color, ...args) => {
+    const stringifiedArgs = args.map((arg) => {
+      if (arg instanceof Error) {
+        const remainingProps = R.omit(['message', 'stack'], arg);
+        return R.isEmpty(remainingProps)
+          ? `${arg.message}\n${arg.stack}`
+          : `${arg.message}\n${arg.stack}\nAdditional error props: ${toJson(
+              remainingProps
+            )}`;
+      }
+      const logStr = typeof arg === 'object' ? toJson(arg) : arg;
+      return logStr;
+    });
+
+    const typePrefix = type ? `[${type}]` : '';
+
+    if (prefix) {
+      const formattedPrefix = `[${prefix}]`;
+
+      return chalk[color](
+        `${formattedPrefix}${typePrefix}`,
+        ...stringifiedArgs
+      );
     }
-    const logStr = typeof arg === 'object' ? toJson(arg) : arg;
-    return logStr;
-  });
 
-  const typePrefix = type ? `[${type}]` : '';
-
-  if (prefix) {
-    const formattedPrefix = `[${prefix}]`;
-
-    return chalk[color](`${formattedPrefix}${typePrefix}`, ...stringifiedArgs);
-  }
-
-  return chalk[color](typePrefix, ...stringifiedArgs);
-};
+    return chalk[color](typePrefix, ...stringifiedArgs);
+  };
 
 /* eslint-disable no-console */
 const log = {

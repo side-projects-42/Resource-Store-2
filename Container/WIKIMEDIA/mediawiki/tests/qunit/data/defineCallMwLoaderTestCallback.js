@@ -1,1 +1,1 @@
-module.exports = 'Defined.';
+module.exports = "Defined.";

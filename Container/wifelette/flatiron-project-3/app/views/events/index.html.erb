@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-header h3 d-sm-flex align-items-center justify-content-between">
+    Events
+    <a href="<%= perks_path %>" class="btn btn-secondary btn-icon-split">
+      <span class="icon text-white-50">⚙️</span>
+      <span class="text">Manage Perks</span>
+    </a>
+  </div>
+
+  <div class="body container-fluid">
+    <%= form_tag events_url, method: :get do %>
+    <label>Search Events:</label><br>
+    <%= text_field_tag :name, params[:name] %><br><br>
+    <%= submit_tag "Search", name: nil, class: "btn btn-secondary" %><br>
+    <% end %>
+  </div>
+
+  <% if @events %>
+  <div class="body container-fluid">
+    <h3>Search Results</h3>
+    <ul>
+      <% @events.each do |event| %>
+      <li>
+        <%= link_to event.name, event_path(event) %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <% else %>
+  <div class="body container-fluid">
+    <h3><%= link_to "Current and Future", current_path %></h3>
+    <ul>
+      <% @events_current.each do |event| %>
+      <li><%= link_to event.name, event_path(event) %></li>
+      <% end %>
+    </ul>
+
+    <% if @events_past.any? %>
+    <h3><%= link_to "Past", past_path %></h3>
+    <ul>
+      <% @events_past.each do |event| %>
+      <li><%= link_to event.name, event_path(event) %></li>
+      <% end %>
+    </ul>
+    <% end %>
+
+    <p><%= link_to "Create a New Event", new_event_path, class: "btn btn-success" %></p>
+  </div>
+  <% end %>
+</div>

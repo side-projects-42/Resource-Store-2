@@ -315,7 +315,7 @@ Testing.`;
       'Internet Explorer',
     ];
 
-    browsers.forEach(browser => {
+    browsers.forEach((browser) => {
       const li = document.createElement('li');
       li.textContent = browser;
       fragment.appendChild(li);

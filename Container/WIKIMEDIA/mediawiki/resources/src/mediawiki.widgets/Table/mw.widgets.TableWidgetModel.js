@@ -21,27 +21,33 @@
  * @cfg {boolean} [allowRowInsertion=true] Allow row insertion. Defaults to true.
  * @cfg {boolean} [allowRowDeletion=true] Allow row deletion. Defaults to true.
  */
-mw.widgets.TableWidgetModel = function MwWidgetsTableWidgetModel( config ) {
+mw.widgets.TableWidgetModel = function MwWidgetsTableWidgetModel(config) {
 	config = config || {};
 
 	// Mixin constructors
-	OO.EventEmitter.call( this, config );
+	OO.EventEmitter.call(this, config);
 
 	this.data = config.data || [];
 	this.validate = config.validate;
-	this.showHeaders = ( config.showHeaders !== undefined ) ? !!config.showHeaders : true;
-	this.showRowLabels = ( config.showRowLabels !== undefined ) ? !!config.showRowLabels : true;
-	this.allowRowInsertion = ( config.allowRowInsertion !== undefined ) ?
-		!!config.allowRowInsertion : true;
-	this.allowRowDeletion = ( config.allowRowDeletion !== undefined ) ?
-		!!config.allowRowDeletion : true;
+	this.showHeaders =
+		config.showHeaders !== undefined ? !!config.showHeaders : true;
+	this.showRowLabels =
+		config.showRowLabels !== undefined ? !!config.showRowLabels : true;
+	this.allowRowInsertion =
+		config.allowRowInsertion !== undefined
+			? !!config.allowRowInsertion
+			: true;
+	this.allowRowDeletion =
+		config.allowRowDeletion !== undefined
+			? !!config.allowRowDeletion
+			: true;
 
-	this.initializeProps( config.rows, config.cols );
+	this.initializeProps(config.rows, config.cols);
 };
 
 /* Inheritance */
 
-OO.mixinClass( mw.widgets.TableWidgetModel, OO.EventEmitter );
+OO.mixinClass(mw.widgets.TableWidgetModel, OO.EventEmitter);
 
 /* Static Methods */
 
@@ -55,20 +61,24 @@ OO.mixinClass( mw.widgets.TableWidgetModel, OO.EventEmitter );
  * @return {Object|null} An object containing the `key`, `index` and `label`
  * properties of the row/column. Returns `null` if the row/column can't be found.
  */
-mw.widgets.TableWidgetModel.static.getEntryFromPropsTable = function ( handle, table ) {
+mw.widgets.TableWidgetModel.static.getEntryFromPropsTable = function (
+	handle,
+	table
+) {
 	var row = null,
-		i, len;
+		i,
+		len;
 
-	if ( typeof handle === 'string' ) {
-		for ( i = 0, len = table.length; i < len; i++ ) {
-			if ( table[ i ].key === handle ) {
-				row = table[ i ];
+	if (typeof handle === "string") {
+		for (i = 0, len = table.length; i < len; i++) {
+			if (table[i].key === handle) {
+				row = table[i];
 				break;
 			}
 		}
-	} else if ( typeof handle === 'number' ) {
-		if ( handle < table.length ) {
-			row = table[ handle ];
+	} else if (typeof handle === "number") {
+		if (handle < table.length) {
+			row = table[handle];
 		}
 	}
 
@@ -145,7 +155,10 @@ mw.widgets.TableWidgetModel.static.getEntryFromPropsTable = function ( handle, t
  * @param {Array} rowProps The initial row props
  * @param {Array} colProps The initial column props
  */
-mw.widgets.TableWidgetModel.prototype.initializeProps = function ( rowProps, colProps ) {
+mw.widgets.TableWidgetModel.prototype.initializeProps = function (
+	rowProps,
+	colProps
+) {
 	// FIXME: Account for extra data with missing row/col metadata
 
 	var i, len;
@@ -153,23 +166,23 @@ mw.widgets.TableWidgetModel.prototype.initializeProps = function ( rowProps, col
 	this.rows = [];
 	this.cols = [];
 
-	if ( Array.isArray( rowProps ) ) {
-		for ( i = 0, len = rowProps.length; i < len; i++ ) {
-			this.rows.push( {
+	if (Array.isArray(rowProps)) {
+		for (i = 0, len = rowProps.length; i < len; i++) {
+			this.rows.push({
 				index: i,
-				key: rowProps[ i ].key,
-				label: rowProps[ i ].label
-			} );
+				key: rowProps[i].key,
+				label: rowProps[i].label,
+			});
 		}
 	}
 
-	if ( Array.isArray( colProps ) ) {
-		for ( i = 0, len = colProps.length; i < len; i++ ) {
-			this.cols.push( {
+	if (Array.isArray(colProps)) {
+		for (i = 0, len = colProps.length; i < len; i++) {
+			this.cols.push({
 				index: i,
-				key: colProps[ i ].key,
-				label: colProps[ i ].label
-			} );
+				key: colProps[i].key,
+				label: colProps[i].label,
+			});
 		}
 	}
 };
@@ -194,14 +207,14 @@ mw.widgets.TableWidgetModel.prototype.setupTable = function () {
 mw.widgets.TableWidgetModel.prototype.verifyData = function () {
 	var i, j, rowLen, colLen;
 
-	for ( i = 0, rowLen = this.rows.length; i < rowLen; i++ ) {
-		if ( this.data[ i ] === undefined ) {
-			this.data.push( [] );
+	for (i = 0, rowLen = this.rows.length; i < rowLen; i++) {
+		if (this.data[i] === undefined) {
+			this.data.push([]);
 		}
 
-		for ( j = 0, colLen = this.cols.length; j < colLen; j++ ) {
-			if ( this.data[ i ][ j ] === undefined ) {
-				this.data[ i ].push( '' );
+		for (j = 0, colLen = this.cols.length; j < colLen; j++) {
+			if (this.data[i][j] === undefined) {
+				this.data[i].push("");
 			}
 		}
 	}
@@ -216,8 +229,14 @@ mw.widgets.TableWidgetModel.prototype.verifyData = function () {
 mw.widgets.TableWidgetModel.prototype.buildTable = function () {
 	var i, len;
 
-	for ( i = 0, len = this.rows.length; i < len; i++ ) {
-		this.emit( 'insertRow', this.data[ i ], i, this.rows[ i ].key, this.rows[ i ].label );
+	for (i = 0, len = this.rows.length; i < len; i++) {
+		this.emit(
+			"insertRow",
+			this.data[i],
+			i,
+			this.rows[i].key,
+			this.rows[i].label
+		);
 	}
 };
 
@@ -241,27 +260,30 @@ mw.widgets.TableWidgetModel.prototype.refreshTable = function () {
  * @param {Mixed} value The new value
  * @fires valueChange
  */
-mw.widgets.TableWidgetModel.prototype.setValue = function ( row, col, value ) {
+mw.widgets.TableWidgetModel.prototype.setValue = function (row, col, value) {
 	var rowIndex, colIndex;
 
-	if ( typeof row === 'number' ) {
+	if (typeof row === "number") {
 		rowIndex = row;
-	} else if ( typeof row === 'string' ) {
-		rowIndex = this.getRowProperties( row ).index;
+	} else if (typeof row === "string") {
+		rowIndex = this.getRowProperties(row).index;
 	}
 
-	if ( typeof col === 'number' ) {
+	if (typeof col === "number") {
 		colIndex = col;
-	} else if ( typeof col === 'string' ) {
-		colIndex = this.getColumnProperties( col ).index;
+	} else if (typeof col === "string") {
+		colIndex = this.getColumnProperties(col).index;
 	}
 
-	if ( typeof rowIndex === 'number' && typeof colIndex === 'number' &&
-		this.data[ rowIndex ] !== undefined && this.data[ rowIndex ][ colIndex ] !== undefined &&
-		this.data[ rowIndex ][ colIndex ] !== value ) {
-
-		this.data[ rowIndex ][ colIndex ] = value;
-		this.emit( 'valueChange', rowIndex, colIndex, value );
+	if (
+		typeof rowIndex === "number" &&
+		typeof colIndex === "number" &&
+		this.data[rowIndex] !== undefined &&
+		this.data[rowIndex][colIndex] !== undefined &&
+		this.data[rowIndex][colIndex] !== value
+	) {
+		this.data[rowIndex][colIndex] = value;
+		this.emit("valueChange", rowIndex, colIndex, value);
 	}
 };
 
@@ -270,8 +292,8 @@ mw.widgets.TableWidgetModel.prototype.setValue = function ( row, col, value ) {
  *
  * @param {Array} data The new table data
  */
-mw.widgets.TableWidgetModel.prototype.setData = function ( data ) {
-	if ( Array.isArray( data ) ) {
+mw.widgets.TableWidgetModel.prototype.setData = function (data) {
+	if (Array.isArray(data)) {
 		this.data = data;
 
 		this.verifyData();
@@ -292,38 +314,49 @@ mw.widgets.TableWidgetModel.prototype.setData = function ( data ) {
  * If unset or set to null, the key will be used if there is one.
  * @fires insertRow
  */
-mw.widgets.TableWidgetModel.prototype.insertRow = function ( data, index, key, label ) {
-	var insertIndex = ( typeof index === 'number' ) ? index : this.rows.length,
+mw.widgets.TableWidgetModel.prototype.insertRow = function (
+	data,
+	index,
+	key,
+	label
+) {
+	var insertIndex = typeof index === "number" ? index : this.rows.length,
 		newRowData = [],
-		insertData, insertDataCell, i, len;
+		insertData,
+		insertDataCell,
+		i,
+		len;
 
 	// Add the new row metadata
-	this.rows.splice( insertIndex, 0, {
+	this.rows.splice(insertIndex, 0, {
 		index: insertIndex,
 		key: key || undefined,
-		label: label || undefined
-	} );
+		label: label || undefined,
+	});
 
 	// Add the new row data
-	insertData = ( Array.isArray( data ) ) ? data : [];
+	insertData = Array.isArray(data) ? data : [];
 	// Ensure that all columns of data for this row have been supplied,
 	// otherwise fill the remaining data with empty strings
-	for ( i = 0, len = this.cols.length; i < len; i++ ) {
-		insertDataCell = '';
-		if ( typeof insertData[ i ] === 'string' || typeof insertData[ i ] === 'number' ) {
-			insertDataCell = insertData[ i ];
+	for (i = 0, len = this.cols.length; i < len; i++) {
+		insertDataCell = "";
+		if (
+			typeof insertData[i] === "string" ||
+			typeof insertData[i] === "number"
+		) {
+			insertDataCell = insertData[i];
 		}
 
-		newRowData.push( insertDataCell );
+		newRowData.push(insertDataCell);
 	}
-	this.data.splice( insertIndex, 0, newRowData );
+	this.data.splice(insertIndex, 0, newRowData);
 
 	// Update all indexes in following rows
-	for ( i = insertIndex + 1, len = this.rows.length; i < len; i++ ) {
-		this.rows[ i ].index++;
+	for (i = insertIndex + 1, len = this.rows.length; i < len; i++) {
+		this.rows[i].index++;
 	}
 
-	this.emit( 'insertRow', data, insertIndex, key, label );
+	this.emit("insertRow", data, insertIndex, key, label);
 };
 
 /**
@@ -339,36 +372,47 @@ mw.widgets.TableWidgetModel.prototype.insertRow = function ( data, index, key, l
  * If unset or set to null, the key will be used if there is one.
  * @fires insertColumn
  */
-mw.widgets.TableWidgetModel.prototype.insertColumn = function ( data, index, key, label ) {
-	var insertIndex = ( typeof index === 'number' ) ? index : this.cols.length,
-		insertDataCell, insertData, i, len;
+mw.widgets.TableWidgetModel.prototype.insertColumn = function (
+	data,
+	index,
+	key,
+	label
+) {
+	var insertIndex = typeof index === "number" ? index : this.cols.length,
+		insertDataCell,
+		insertData,
+		i,
+		len;
 
 	// Add the new column metadata
-	this.cols.splice( insertIndex, 0, {
+	this.cols.splice(insertIndex, 0, {
 		index: insertIndex,
 		key: key || undefined,
-		label: label || undefined
-	} );
+		label: label || undefined,
+	});
 
 	// Add the new column data
-	insertData = ( Array.isArray( data ) ) ? data : [];
+	insertData = Array.isArray(data) ? data : [];
 	// Ensure that all rows of data for this column have been supplied,
 	// otherwise fill the remaining data with empty strings
-	for ( i = 0, len = this.rows.length; i < len; i++ ) {
-		insertDataCell = '';
-		if ( typeof insertData[ i ] === 'string' || typeof insertData[ i ] === 'number' ) {
-			insertDataCell = insertData[ i ];
+	for (i = 0, len = this.rows.length; i < len; i++) {
+		insertDataCell = "";
+		if (
+			typeof insertData[i] === "string" ||
+			typeof insertData[i] === "number"
+		) {
+			insertDataCell = insertData[i];
 		}
 
-		this.data[ i ].splice( insertIndex, 0, insertDataCell );
+		this.data[i].splice(insertIndex, 0, insertDataCell);
 	}
 
 	// Update all indexes in following cols
-	for ( i = insertIndex + 1, len = this.cols.length; i < len; i++ ) {
-		this.cols[ i ].index++;
+	for (i = insertIndex + 1, len = this.cols.length; i < len; i++) {
+		this.cols[i].index++;
 	}
 
-	this.emit( 'insertColumn', data, index, key, label );
+	this.emit("insertColumn", data, index, key, label);
 };
 
 /**
@@ -378,24 +422,25 @@ mw.widgets.TableWidgetModel.prototype.insertColumn = function ( data, index, key
  * @param {number|string} handle The key or numerical index of the row to remove
  * @fires removeRow
  */
-mw.widgets.TableWidgetModel.prototype.removeRow = function ( handle ) {
-	var rowProps = this.getRowProperties( handle ),
-		i, len;
+mw.widgets.TableWidgetModel.prototype.removeRow = function (handle) {
+	var rowProps = this.getRowProperties(handle),
+		i,
+		len;
 
 	// Exit early if the row couldn't be found
-	if ( rowProps === null ) {
+	if (rowProps === null) {
 		return;
 	}
 
-	this.rows.splice( rowProps.index, 1 );
-	this.data.splice( rowProps.index, 1 );
+	this.rows.splice(rowProps.index, 1);
+	this.data.splice(rowProps.index, 1);
 
 	// Update all indexes in following rows
-	for ( i = rowProps.index, len = this.rows.length; i < len; i++ ) {
-		this.rows[ i ].index--;
+	for (i = rowProps.index, len = this.rows.length; i < len; i++) {
+		this.rows[i].index--;
 	}
 
-	this.emit( 'removeRow', rowProps.index, rowProps.key );
+	this.emit("removeRow", rowProps.index, rowProps.key);
 };
 
 /**
@@ -405,27 +450,28 @@ mw.widgets.TableWidgetModel.prototype.removeRow = function ( handle ) {
  * @param {number|string} handle The key or numerical index of the column to remove
  * @fires removeColumn
  */
-mw.widgets.TableWidgetModel.prototype.removeColumn = function ( handle ) {
-	var colProps = this.getColumnProperties( handle ),
-		i, len;
+mw.widgets.TableWidgetModel.prototype.removeColumn = function (handle) {
+	var colProps = this.getColumnProperties(handle),
+		i,
+		len;
 
 	// Exit early if the column couldn't be found
-	if ( colProps === null ) {
+	if (colProps === null) {
 		return;
 	}
 
-	this.cols.splice( colProps.index, 1 );
+	this.cols.splice(colProps.index, 1);
 
-	for ( i = 0, len = this.data.length; i < len; i++ ) {
-		this.data[ i ].splice( colProps.index, 1 );
+	for (i = 0, len = this.data.length; i < len; i++) {
+		this.data[i].splice(colProps.index, 1);
 	}
 
 	// Update all indexes in following columns
-	for ( i = colProps.index, len = this.cols.length; i < len; i++ ) {
-		this.cols[ i ].index--;
+	for (i = colProps.index, len = this.cols.length; i < len; i++) {
+		this.cols[i].index--;
 	}
 
-	this.emit( 'removeColumn', colProps.index, colProps.key );
+	this.emit("removeColumn", colProps.index, colProps.key);
 };
 
 /**
@@ -437,7 +483,7 @@ mw.widgets.TableWidgetModel.prototype.clear = function () {
 	this.data = [];
 	this.verifyData();
 
-	this.emit( 'clear', false );
+	this.emit("clear", false);
 };
 
 /**
@@ -450,7 +496,7 @@ mw.widgets.TableWidgetModel.prototype.clearWithProperties = function () {
 	this.rows = [];
 	this.cols = [];
 
-	this.emit( 'clear', true );
+	this.emit("clear", true);
 };
 
 /**
@@ -463,7 +509,7 @@ mw.widgets.TableWidgetModel.prototype.getTableProperties = function () {
 		showHeaders: this.showHeaders,
 		showRowLabels: this.showRowLabels,
 		allowRowInsertion: this.allowRowInsertion,
-		allowRowDeletion: this.allowRowDeletion
+		allowRowDeletion: this.allowRowDeletion,
 	};
 };
 
@@ -483,8 +529,11 @@ mw.widgets.TableWidgetModel.prototype.getValidationPattern = function () {
  * @return {Object|null} An object containing the `key`, `index` and `label` properties of the row.
  * Returns `null` if the row can't be found.
  */
-mw.widgets.TableWidgetModel.prototype.getRowProperties = function ( handle ) {
-	return mw.widgets.TableWidgetModel.static.getEntryFromPropsTable( handle, this.rows );
+mw.widgets.TableWidgetModel.prototype.getRowProperties = function (handle) {
+	return mw.widgets.TableWidgetModel.static.getEntryFromPropsTable(
+		handle,
+		this.rows
+	);
 };
 
 /**
@@ -504,8 +553,11 @@ mw.widgets.TableWidgetModel.prototype.getAllRowProperties = function () {
  *  `label` properties of the column.
  * Returns `null` if the column can't be found.
  */
-mw.widgets.TableWidgetModel.prototype.getColumnProperties = function ( handle ) {
-	return mw.widgets.TableWidgetModel.static.getEntryFromPropsTable( handle, this.cols );
+mw.widgets.TableWidgetModel.prototype.getColumnProperties = function (handle) {
+	return mw.widgets.TableWidgetModel.static.getEntryFromPropsTable(
+		handle,
+		this.cols
+	);
 };
 
 /**

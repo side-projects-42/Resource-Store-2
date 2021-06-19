@@ -22,7 +22,7 @@
 
 ### Lag Release Thoughts
 
-- Doesn't necessarily need to be tightly coupled. 
+- Doesn't necessarily need to be tightly coupled.
 - We could solve with communication.
 - Releasing in sync couples everything and we don't necessarily know that all things aren't broken.
 - But blog & docs should wait on Ember CLI regardless.

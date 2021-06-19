@@ -201,7 +201,7 @@ function keys(
   isArray: boolean,
   hasKey: (obj: object, key: string) => boolean,
 ) {
-  var allKeys = (function(o) {
+  var allKeys = (function (o) {
     var keys = [];
     for (var key in o) {
       if (hasKey(o, key)) {
@@ -211,7 +211,7 @@ function keys(
     return keys.concat(
       (Object.getOwnPropertySymbols(o) as Array<any>).filter(
         //$FlowFixMe Jest complains about nullability, but we know for sure that property 'symbol' does exist.
-        symbol =>
+        (symbol) =>
           (Object.getOwnPropertyDescriptor(o, symbol) as any).enumerable,
       ),
     );

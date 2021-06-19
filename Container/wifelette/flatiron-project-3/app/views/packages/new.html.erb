@@ -1,0 +1,9 @@
+<div class="card-header h3">
+  Create a New Package
+</div>
+<div class="card body container-fluid">
+
+  <%= render 'form', package: @package %>
+
+  <p><%= link_to "Back to Event", event_path(@event), class: "btn btn-primary" %></p>
+</div>

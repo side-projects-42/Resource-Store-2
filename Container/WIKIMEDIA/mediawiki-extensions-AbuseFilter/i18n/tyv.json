@@ -1,9 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Agilight"
-		]
-	},
-	"abusefilter-topnav-log": "Буруу ажыглалдар журналы",
-	"abusefilter-diff-info": "Кол медээлел"
+  "@metadata": {
+    "authors": ["Agilight"]
+  },
+  "abusefilter-topnav-log": "Буруу ажыглалдар журналы",
+  "abusefilter-diff-info": "Кол медээлел"
 }

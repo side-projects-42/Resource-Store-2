@@ -94,7 +94,7 @@ Finally we can shut down mongodb server
 
 ```js
 // teardown.js
-module.exports = async function() {
+module.exports = async function () {
   await global.__MONGOD__.stop();
 };
 ```

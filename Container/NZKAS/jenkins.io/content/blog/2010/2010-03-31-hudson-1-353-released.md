@@ -4,14 +4,14 @@
 :nodeid: 164
 :created: 1270038000
 :tags:
-- development
-- feedback
-- just for fun
-- links
+  - development
+  - feedback
+  - just for fun
+  - links
 :author: rtyler
 ---
-<img src="http://agentdero.cachefly.net/continuousblog/hudson_soap.jpg" align="left" width="170" hspace="4" vspace="4"/> This week's release comes slightly later than usual and is mostly a clean-up of a few bugs. Due to a problem with the Kohsuke's [GitHub mirror](http://github.com/kohsuke/hudson) of Hudson's core, I can't mine the commits for interesting information as per usual so you'll just have to trust that Hudson 1.353 is chock full of good, wholesome bug fixes. If the problem persists next week, I'll find a better way to dig up information on particularly releases that doesn't depend on the GitHub mirror.
 
+<img src="http://agentdero.cachefly.net/continuousblog/hudson_soap.jpg" align="left" width="170" hspace="4" vspace="4"/> This week's release comes slightly later than usual and is mostly a clean-up of a few bugs. Due to a problem with the Kohsuke's [GitHub mirror](http://github.com/kohsuke/hudson) of Hudson's core, I can't mine the commits for interesting information as per usual so you'll just have to trust that Hudson 1.353 is chock full of good, wholesome bug fixes. If the problem persists next week, I'll find a better way to dig up information on particularly releases that doesn't depend on the GitHub mirror.
 
 <br clear="all"/>
 #### Bugs fixed
@@ -31,18 +31,19 @@
 
     Fixed the handling of verifying that the POM path entered for Maven projects exists.
     (<a href="http://issues.hudson-ci.org/browse/HUDSON-4693">issue 4693</a>)
+
 </ul>
 
 #### Enhancements
+
 <ul>
   <li class=rfe>
     Added link to builds in buildTimeTrend
     (<a href="http://issues.hudson-ci.org/browse/HUDSON-3993">issue 3993</a>)
 </ul>
 
-
-----
+---
 
 You can go grab the [latest .war file](http://hudson-ci.org/latest/hudson.war) straight from `hudson-ci.org` or if you're using a native package, use your package manager to upgrade.
 
-----
+---

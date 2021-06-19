@@ -17,7 +17,7 @@ describe('Runtime', () => {
 
   describe('jest.fn', () => {
     it('creates mock functions', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const root = runtime.requireModule(runtime.__mockRootPath);
         const mock = root.jest.fn();
         expect(mock._isMockFunction).toBe(true);
@@ -26,9 +26,9 @@ describe('Runtime', () => {
       }));
 
     it('creates mock functions with mock implementations', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const root = runtime.requireModule(runtime.__mockRootPath);
-        const mock = root.jest.fn(string => string + ' implementation');
+        const mock = root.jest.fn((string) => string + ' implementation');
         expect(mock._isMockFunction).toBe(true);
         const value = mock('mock');
         expect(value).toEqual('mock implementation');
@@ -38,7 +38,7 @@ describe('Runtime', () => {
 
   describe('jest.isMockFunction', () => {
     it('recognizes a mocked function', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const root = runtime.requireModule(runtime.__mockRootPath);
         const mock = root.jest.fn();
         expect(root.jest.isMockFunction(() => {})).toBe(false);
@@ -48,7 +48,7 @@ describe('Runtime', () => {
 
   describe('jest.clearAllMocks', () => {
     it('clears all mocks', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const root = runtime.requireModule(runtime.__mockRootPath);
 
         const mock1 = root.jest.fn();

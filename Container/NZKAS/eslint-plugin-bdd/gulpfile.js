@@ -6,43 +6,34 @@
  * @description
  * Loads all the build tasks for this project with the desired configuration
  */
-'use strict';
+"use strict";
 
-require('./build')(require('gulp'), {
-	path: '.',
+require("./build")(require("gulp"), {
+	path: ".",
 
 	files: {
-		all: [
-			'<%= config.path %>/**/*'
-		],
+		all: ["<%= config.path %>/**/*"],
 
-		js: [
-			'<%= config.path %>/**/*.js',
-			'!./node_modules/**'
-		],
+		js: ["<%= config.path %>/**/*.js", "!./node_modules/**"],
 
-		eslintrc: '<%= config.path %>/.eslintrc'
+		eslintrc: "<%= config.path %>/.eslintrc",
 	},
 
 	src: {
-		path: '<%= config.path %>/src',
+		path: "<%= config.path %>/src",
 
-		files: [
-			'<%= src.path %>/**/*'
-		]
+		files: ["<%= src.path %>/**/*"],
 	},
 
 	tests: {
-		path: '<%= config.path %>/tests',
+		path: "<%= config.path %>/tests",
 
 		files: {
-			all: [
-				'<%= tests.path %>/**/*'
-			],
+			all: ["<%= tests.path %>/**/*"],
 
-			runner: '<%= tests.path %>/runner.js'
+			runner: "<%= tests.path %>/runner.js",
 		},
 
-		reporter: 'spec'
-	}
+		reporter: "spec",
+	},
 });

@@ -20,9 +20,9 @@ If you have plugins that need to access `$auth`, you can use `auth.plugins` opti
 ```js
 export default function ({ $auth }) {
   if (!$auth.loggedIn) {
-    return
+    return;
   }
 
-  const username = $auth.user.username
+  const username = $auth.user.username;
 }
 ```

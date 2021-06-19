@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Gazeb",
-			"HalanTul"
-		]
+		"authors": ["Gazeb", "HalanTul"]
 	},
 	"ooui-outline-control-move-down": "Аллара түһэрэн биэр",
 	"ooui-outline-control-move-up": "Үөһэ таһааран биэр",

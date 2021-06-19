@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"GreenZeb",
-			"Papuass",
-			"Silraks"
-		]
+		"authors": ["GreenZeb", "Papuass", "Silraks"]
 	},
 	"config-information": "Informācija",
 	"config-your-language": "Jūsu valoda:",

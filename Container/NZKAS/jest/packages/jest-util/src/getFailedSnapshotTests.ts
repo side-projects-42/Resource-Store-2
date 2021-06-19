@@ -14,7 +14,7 @@ function getFailedSnapshotTests(testResults: AggregatedResult) {
     return failedTestPaths;
   }
 
-  testResults.testResults.forEach(testResult => {
+  testResults.testResults.forEach((testResult) => {
     if (testResult.snapshot && testResult.snapshot.unmatched) {
       failedTestPaths.push(testResult.testFilePath);
     }

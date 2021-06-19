@@ -1,4 +1,4 @@
-@import 'mediawiki.mixins.less';
+@import "mediawiki.mixins.less";
 
 /* stylelint-disable selector-class-pattern */
 // OOUIHTMLForm styles
@@ -18,7 +18,9 @@
 		font-size: 100%; // Override MediaWiki's generic `legend` styling
 	}
 
-	.oo-ui-fieldLayout.oo-ui-labelElement > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-header {
+	.oo-ui-fieldLayout.oo-ui-labelElement
+		> .oo-ui-fieldLayout-body
+		> .oo-ui-fieldLayout-header {
 		line-height: 16 / @ooui-font-size-browser / @ooui-font-size-base;
 	}
 
@@ -53,7 +55,7 @@
 			padding-bottom: 0;
 		}
 
-		tbody tr:nth-child( even ) td {
+		tbody tr:nth-child(even) td {
 			background-color: #f8f9fa;
 		}
 
@@ -66,7 +68,9 @@
 			margin-top: 0;
 		}
 
-		.oo-ui-fieldLayout.oo-ui-labelElement > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-header {
+		.oo-ui-fieldLayout.oo-ui-labelElement
+			> .oo-ui-fieldLayout-body
+			> .oo-ui-fieldLayout-header {
 			padding-bottom: 0;
 		}
 	}
@@ -83,7 +87,9 @@
 	}
 
 	// Reduce label distance in flatlist
-	&.oo-ui-fieldLayout.oo-ui-labelElement > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-header {
+	&.oo-ui-fieldLayout.oo-ui-labelElement
+		> .oo-ui-fieldLayout-body
+		> .oo-ui-fieldLayout-header {
 		padding-bottom: 0;
 	}
 }

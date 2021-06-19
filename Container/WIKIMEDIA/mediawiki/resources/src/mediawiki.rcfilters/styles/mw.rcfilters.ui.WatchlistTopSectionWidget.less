@@ -1,4 +1,4 @@
-@import 'mediawiki.ui/variables.less';
+@import "mediawiki.ui/variables.less";
 
 .mw-rcfilters-ui-watchlistTopSectionWidget {
 	&-watchlistDetails {
@@ -17,7 +17,7 @@
 
 // On small screens, remove the table properties from the
 // top section. T225127#5518870
-@media screen and ( max-width: @width-breakpoint-tablet ) {
+@media screen and (max-width: @width-breakpoint-tablet) {
 	.mw-rcfilters-ui-watchlistTopSectionWidget {
 		.mw-rcfilters-ui-table,
 		.mw-rcfilters-ui-row,
@@ -37,9 +37,8 @@
 }
 
 // styles that should only kick in for tablet mode:
-@media screen and ( min-width: @width-breakpoint-tablet ) {
+@media screen and (min-width: @width-breakpoint-tablet) {
 	.mw-rcfilters-ui-watchlistTopSectionWidget {
-
 		// T235535
 		&-editWatchlistButton {
 			vertical-align: bottom;

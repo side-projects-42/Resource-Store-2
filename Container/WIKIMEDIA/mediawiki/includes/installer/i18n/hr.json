@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Bugoslav",
-			"Vrhnje"
-		]
+		"authors": ["Bugoslav", "Vrhnje"]
 	},
 	"config-information": "Informacije",
 	"config-your-language": "Vaš jezik:",

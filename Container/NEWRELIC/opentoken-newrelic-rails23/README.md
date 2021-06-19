@@ -17,13 +17,13 @@ attributes = OpenToken.decode 'opentoken-hashed-string'
 attributes = { 'subject' => 'foo', 'bar' => 'bak' }
 token = OpenToken.encode attributes, OpenToken::Cipher::AES_128_CBC
 ```
-  
+
 ## Contributing
- 
-* Fork the project
-* Fix the issue
-* Add tests
-* Send me a pull request. Bonus points for topic branches.
+
+- Fork the project
+- Fix the issue
+- Add tests
+- Send me a pull request. Bonus points for topic branches.
 
 see CONTRIBUTORS.txt for complete list of contributors.
 

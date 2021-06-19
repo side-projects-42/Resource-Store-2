@@ -1,6 +1,6 @@
 /* general */
 body {
-  font: 1em "lucida Grande",arial,sans-serif;
+  font: 1em "lucida Grande", arial, sans-serif;
   background: #fff url(/img/rainbow.png) repeat;
   color: #333;
 }
@@ -9,7 +9,7 @@ p {
 }
 a {
   text-decoration: none;
-  color: #26B3CF;
+  color: #26b3cf;
 }
 a:hover {
   text-decoration: underline;
@@ -32,14 +32,14 @@ label {
   font-size: 16px;
 }
 select,
-input[type=text],
-input[type=password],
+input[type="text"],
+input[type="password"],
 textarea {
-  -x-system-font:none;
-  color:#333;
-  font: 1em "lucida Grande",arial,sans-serif;
+  -x-system-font: none;
+  color: #333;
+  font: 1em "lucida Grande", arial, sans-serif;
   font-size: 16px;
-  font-size-adjust:none;
+  font-size-adjust: none;
   font-stretch: normal;
   font-style: normal;
   font-variant: normal;
@@ -53,15 +53,15 @@ textarea {
 select.form-alpha {
   width: 290px;
 }
-input[type=text].form-alpha {
+input[type="text"].form-alpha {
   width: 280px;
 }
-.facebox input[type=text],
-.facebox input[type=password] {
+.facebox input[type="text"],
+.facebox input[type="password"] {
   width: 380px;
 }
-input[type=text].form-beta,
-input[type=password].form-beta {
+input[type="text"].form-beta,
+input[type="password"].form-beta {
   width: 444px;
 }
 .form-beta {
@@ -125,7 +125,7 @@ img.delete {
 }
 #header {
   padding: 20px 50px 5px 50px;
-  border-bottom: 5px solid #26B3CF;
+  border-bottom: 5px solid #26b3cf;
   margin-bottom: 30px;
 }
 #nav {
@@ -137,7 +137,7 @@ a.nav-item {
 }
 #footer {
   margin-top: 60px;
-  background-color: #26B3CF;
+  background-color: #26b3cf;
   padding: 4px 50px;
   text-align: right;
 }
@@ -184,7 +184,7 @@ a.nav-item {
 }
 .flash-notice {
   padding: 6px 6px 6px 36px;
-  background: #86EF9E url(/img/message-info.png) 6px 50% no-repeat;
+  background: #86ef9e url(/img/message-info.png) 6px 50% no-repeat;
 }
 /* help text */
 #help-text {
@@ -223,7 +223,7 @@ ul.examples li.baconfile {
 }
 .tab-current,
 .toggle-reqres-link:hover {
-  background-color: #26B3CF;
+  background-color: #26b3cf;
   color: #fff;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -240,7 +240,7 @@ ul.examples li.baconfile {
   padding: 2px;
   min-height: 60px;
   overflow-y: auto;
-  font-family:'Bitstream Vera Sans Mono','Courier',monospace;
+  font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
   font-size: 14px;
 }
 /* saved archives page */
@@ -264,7 +264,7 @@ td.date {
 }
 /* stats */
 #stats h2 {
-  color: #26B3CF;
+  color: #26b3cf;
   margin-bottom: 6px;
 }
 #stats table {

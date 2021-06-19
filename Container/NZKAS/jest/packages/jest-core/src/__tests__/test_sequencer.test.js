@@ -24,7 +24,7 @@ const context = {
     name: 'test',
   },
   hasteFS: {
-    getSize: path => path.length,
+    getSize: (path) => path.length,
   },
 };
 
@@ -35,12 +35,12 @@ const secondContext = {
     name: 'test2',
   },
   hasteFS: {
-    getSize: path => path.length,
+    getSize: (path) => path.length,
   },
 };
 
-const toTests = paths =>
-  paths.map(path => ({
+const toTests = (paths) =>
+  paths.map((path) => ({
     context,
     duration: undefined,
     path,
@@ -208,7 +208,7 @@ test('writes the cache based on the results', () => {
 });
 
 test('works with multiple contexts', () => {
-  fs.readFileSync = jest.fn(cacheName =>
+  fs.readFileSync = jest.fn((cacheName) =>
     cacheName.startsWith(path.sep + 'cache' + path.sep)
       ? JSON.stringify({
           '/test-a.js': [SUCCESS, 5],

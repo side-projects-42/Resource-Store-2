@@ -4,10 +4,10 @@
  * @since 1.32
  */
 /* global mw */
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
-	var moduleTimes = Object.create( null );
+	var moduleTimes = Object.create(null);
 
 	/**
 	 * Private hooks inserted into mw.loader code if MediaWiki configuration
@@ -21,29 +21,31 @@
 	 * @singleton
 	 */
 	mw.loader.profiler = {
-		onExecuteStart: function ( moduleName ) {
+		onExecuteStart: function (moduleName) {
 			var time = performance.now();
-			if ( moduleTimes[ moduleName ] ) {
-				throw new Error( 'Unexpected perf record for "' + moduleName + '".' );
+			if (moduleTimes[moduleName]) {
+				throw new Error(
+					'Unexpected perf record for "' + moduleName + '".'
+				);
 			}
-			moduleTimes[ moduleName ] = {
+			moduleTimes[moduleName] = {
 				executeStart: time,
 				executeEnd: null,
 				scriptStart: null,
-				scriptEnd: null
+				scriptEnd: null,
 			};
 		},
-		onExecuteEnd: function ( moduleName ) {
+		onExecuteEnd: function (moduleName) {
 			var time = performance.now();
-			moduleTimes[ moduleName ].executeEnd = time;
+			moduleTimes[moduleName].executeEnd = time;
 		},
-		onScriptStart: function ( moduleName ) {
+		onScriptStart: function (moduleName) {
 			var time = performance.now();
-			moduleTimes[ moduleName ].scriptStart = time;
+			moduleTimes[moduleName].scriptStart = time;
 		},
-		onScriptEnd: function ( moduleName ) {
+		onScriptEnd: function (moduleName) {
 			var time = performance.now();
-			moduleTimes[ moduleName ].scriptEnd = time;
+			moduleTimes[moduleName].scriptEnd = time;
 		},
 
 		/**
@@ -54,15 +56,18 @@
 		 * @return {Object|null}
 		 * @throws {Error} If the perf record is incomplete.
 		 */
-		getProfile: function ( moduleName ) {
+		getProfile: function (moduleName) {
 			var times, key, execute, script, total;
-			times = moduleTimes[ moduleName ];
-			if ( !times ) {
+			times = moduleTimes[moduleName];
+			if (!times) {
 				return null;
 			}
-			for ( key in times ) {
-				if ( times[ key ] === null ) {
-					throw new Error( 'Incomplete perf record for "' + moduleName + '".', times );
+			for (key in times) {
+				if (times[key] === null) {
+					throw new Error(
+						'Incomplete perf record for "' + moduleName + '".',
+						times
+					);
 				}
 			}
 			execute = times.executeEnd - times.executeStart;
@@ -72,9 +77,8 @@
 				name: moduleName,
 				execute: execute,
 				script: script,
-				total: total
+				total: total,
 			};
-		}
+		},
 	};
-
-}() );
+})();

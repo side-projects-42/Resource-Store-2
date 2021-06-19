@@ -1,5 +1,4 @@
-jquery.webfonts
-===============
+# jquery.webfonts
 
 jQuery based webfonts extension. This is a project by Wikimedia foundation's [Language Engineering team](http://wikimediafoundation.org/wiki/Language_Engineering_team)
 
@@ -11,16 +10,16 @@ a font repository and apply on html elements.
 
 ## Features
 
-* Flexible font repository. The extension can work with any font repository
-file system.
-See [more..](https://github.com/wikimedia/jquery.webfonts/wiki/Font-Repository)
-* Provides many APIs to customize and extend.
-See [more...](https://github.com/wikimedia/jquery.webfonts/wiki/API)
-* Applies font based on the html `lang` attribute of the elements
-* Make sure the font defined using `font-family` style for any elements,
-either using inline css or external css' available for the reader without
-any extra code.
-See [Examples](https://github.com/wikimedia/jquery.webfonts/wiki/Examples)
+- Flexible font repository. The extension can work with any font repository
+  file system.
+  See [more..](https://github.com/wikimedia/jquery.webfonts/wiki/Font-Repository)
+- Provides many APIs to customize and extend.
+  See [more...](https://github.com/wikimedia/jquery.webfonts/wiki/API)
+- Applies font based on the html `lang` attribute of the elements
+- Make sure the font defined using `font-family` style for any elements,
+  either using inline css or external css' available for the reader without
+  any extra code.
+  See [Examples](https://github.com/wikimedia/jquery.webfonts/wiki/Examples)
 
 For examples, API, and usage information, please visit
 [wiki](https://github.com/wikimedia/jquery.webfonts/wiki)
@@ -28,18 +27,25 @@ For examples, API, and usage information, please visit
 ## Test
 
 If you have python installed, run
+
 ```bash
 python -m SimpleHTTPServer
 ```
+
 or, In case you have python3
+
 ```bash
 python3 -m http.server
 ```
+
 or, with PHP
+
 ```bash
 php -S localhost:8000
 ```
+
 and, you can run tests from
+
 ```
 http://localhost:8000/tests/
 ```

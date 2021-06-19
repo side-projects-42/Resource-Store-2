@@ -8,14 +8,14 @@
 /* Generate interpuncts */
 .hlist {
 	dt:after {
-		content: '@{msg-colon-separator}';
+		content: "@{msg-colon-separator}";
 	}
 
 	dd,
 	li {
 		&:after {
 			/* @todo FIXME: Hard coded " .". Is there a message for this? Should there be? */
-			content: ' ·';
+			content: " ·";
 			font-weight: bold;
 		}
 	}
@@ -32,18 +32,18 @@
 		dt,
 		li {
 			&:first-child:before {
-				content: '@{msg-parentheses-start}';
+				content: "@{msg-parentheses-start}";
 				font-weight: normal;
 			}
 
 			&:last-child:after {
-				content: '@{msg-parentheses-end}';
+				content: "@{msg-parentheses-end}";
 				font-weight: normal;
 			}
 		}
 
 		ol > li:first-child:before {
-			content: '@{msg-parentheses-start}' counter( list-item ) ' ';
+			content: "@{msg-parentheses-start}" counter(list-item) " ";
 		}
 	}
 
@@ -55,7 +55,7 @@
 			counter-increment: list-item;
 
 			&:before {
-				content: counter( list-item ) ' ';
+				content: counter(list-item) " ";
 			}
 		}
 	}

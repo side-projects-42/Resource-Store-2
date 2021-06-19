@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Semina x"
-		]
+		"authors": ["Semina x"]
 	},
 	"rest-permission-denied-title": "Korisnik nema pravo da pročita naslov ($1)",
 	"rest-permission-denied-revision": "Korisnik nema pristup zatraženoj reviziji ($1).",

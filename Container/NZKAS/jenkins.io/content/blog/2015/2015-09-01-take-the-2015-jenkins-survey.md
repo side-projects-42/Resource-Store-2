@@ -4,11 +4,12 @@
 :nodeid: 622
 :created: 1441150476
 :tags:
-- general
-- news
-- jenkinsci
+  - general
+  - news
+  - jenkinsci
 :author: kohsuke
 ---
+
 <p>Just as in past years, <a href="https://www.surveymonkey.com/s/Jenkins2015">we are running a survey</a> this year, to get some objective insights into what our users would like to see in the Jenkins project. Obviously, the developers in the project deal with individual bug reports and feature requests all the time, but sometimes those day-to-day issues distract you from a bigger picture.</p>
 
 <p>This year, we kept some of the questions the same, so that we can see the trend over time. But we also wanted to bring in some questions around how you are using Jenkins and what other technologies you leverage such as Linux containers and cloud services.</p>

@@ -1,5 +1,4 @@
-Wikimedia Internationalization Library
-======================================
+# Wikimedia Internationalization Library
 
 This library provides interfaces and value objects for internationalization (i18n)
 of applications in PHP.
@@ -7,8 +6,7 @@ of applications in PHP.
 It is based on the i18n code used in MediaWiki, and is also intended to be
 compatible with [jQuery.i18n], a JavaScript i18n library.
 
-Concepts
---------
+## Concepts
 
 Any text string that is needed in an application is a **message**. This might
 be something like a button label, a sentence, or a longer text. Each message is
@@ -28,8 +26,7 @@ The library itself imposes few restrictions on all of these concepts; this
 document contains recommendations to help various implementations operate in
 compatible ways.
 
-Usage
------
+## Usage
 
 <pre lang="php">
 use Wikimedia\Message\MessageValue;
@@ -53,8 +50,7 @@ $messageFormatter = $serviceContainter->get( 'MessageFormatterFactory' )->getTex
 $output = $messageFormatter->format( $message );
 </pre>
 
-Class Overview
---------------
+## Class Overview
 
 ### Messages
 
@@ -115,8 +111,8 @@ generate the output string:
      to fall back to appropriate other languages. Details of the fallback are
      unspecified here.
    - If no translation can be found in any fallback language, a string should
-	 be returned that indicates at minimum the message key that was unable to
-	 be found.
+     be returned that indicates at minimum the message key that was unable to
+     be found.
 2. Replace placeholders with parameter values.
    - Note that placeholders must not be replaced recursively. That is, if a
      parameter's value contains text that looks like a placeholder, it must not
@@ -134,8 +130,7 @@ generate the output string:
 5. Replace any opaque representations from step 2 with the actual values of
    the corresponding parameters.
 
-Guidelines for Interoperability
--------------------------------
+## Guidelines for Interoperability
 
 Besides allowing for libraries to safely supply their own translations for
 every app using them, and apps to easily use libraries' translations instead of
@@ -180,7 +175,7 @@ certain guidelines for interoperability:
   named "ApplePicker" should prefix its message keys with "applepicker-".
 - Common values needing translation, such as names of months and weekdays,
   should not be prefixed by each library. Libraries needing these should use
-  keys from the [Common Locale Data Repository][CLDR] and document this
+  keys from the [Common Locale Data Repository][cldr] and document this
   requirement, and environments should provide these messages.
 
 ### Message format
@@ -217,7 +212,7 @@ $count is a number, which may have been formatted with ParamType::NUM.
 The number of forms and which count corresponds to which form depend on the
 language, for example English uses `{{PLURAL:$1|one|other}}` while Arabic uses
 `{{PLURAL:$1|zero|one|two|few|many|other}}`. Details are defined in
-[CLDR][CLDR plurals].
+[CLDR][cldr plurals].
 
 It is not possible to "skip" positions while still suppling later ones. If too
 few values are supplied, the final form is repeated for subsequent positions.
@@ -247,7 +242,7 @@ is normally used in its place.
 
 If no mapping for $term to $form exists, $term should be returned unchanged.
 
-See [jQuery.i18n § Grammar][jQuery.i18n grammar] for details.
+See [jQuery.i18n § Grammar][jquery.i18n grammar] for details.
 
 #### BIDI
 
@@ -264,7 +259,7 @@ formatting) after, or do something equivalent for the target output format.
 
 Code intending its messages to be used by externally-defined formatters should
 supply the translations as described by
-[jQuery.i18n § Message File Format][jQuery.i18n file format].
+[jQuery.i18n § Message File Format][jquery.i18n file format].
 
 In brief, the base directory of the library should contain a directory named
 "i18n". This directory should contain JSON files named by code such as
@@ -272,20 +267,15 @@ In brief, the base directory of the library should contain a directory named
 
 ```json
 {
-    "@metadata": {
-        "authors": [
-            "Alice",
-            "Bob",
-            "Carol",
-            "David"
-        ],
-        "last-updated": "2012-09-21"
-    },
-    "appname-title": "Example Application",
-    "appname-sub-title": "An example application",
-    "appname-header-introduction": "Introduction",
-    "appname-about": "About this application",
-    "appname-footer": "Footer text"
+  "@metadata": {
+    "authors": ["Alice", "Bob", "Carol", "David"],
+    "last-updated": "2012-09-21"
+  },
+  "appname-title": "Example Application",
+  "appname-sub-title": "An example application",
+  "appname-header-introduction": "Introduction",
+  "appname-about": "About this application",
+  "appname-footer": "Footer text"
 }
 ```
 
@@ -303,13 +293,13 @@ output when passed to `json_encode()`.
 Libraries producing MessageValues in other contexts should consider whether the
 same applies to those contexts.
 
-
 ---
-[jQuery.i18n]: https://github.com/wikimedia/jquery.i18n
-[BCP 47]: https://tools.ietf.org/rfc/bcp/bcp47.txt
-[CLDR]: http://cldr.unicode.org/
-[CLDR plurals]: https://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
-[jQuery.i18n grammar]: https://github.com/wikimedia/jquery.i18n#grammar
-[jQuery.i18n file format]: https://github.com/wikimedia/jquery.i18n#message-file-format
+
+[jquery.i18n]: https://github.com/wikimedia/jquery.i18n
+[bcp 47]: https://tools.ietf.org/rfc/bcp/bcp47.txt
+[cldr]: http://cldr.unicode.org/
+[cldr plurals]: https://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
+[jquery.i18n grammar]: https://github.com/wikimedia/jquery.i18n#grammar
+[jquery.i18n file format]: https://github.com/wikimedia/jquery.i18n#message-file-format
 [translatewiki.net]: https://translatewiki.net/wiki/Translating:New_project
-[T-V]: https://en.wikipedia.org/wiki/T%E2%80%93V_distinction
+[t-v]: https://en.wikipedia.org/wiki/T%E2%80%93V_distinction

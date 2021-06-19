@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Gleki",
-			"Jadinegara",
-			"Meursault2004",
-			"NoiX180",
-			"Pras"
-		]
+		"authors": ["Gleki", "Jadinegara", "Meursault2004", "NoiX180", "Pras"]
 	},
 	"ooui-outline-control-move-down": "Lih barang mangisor",
 	"ooui-outline-control-move-up": "Lih barangé munggah",

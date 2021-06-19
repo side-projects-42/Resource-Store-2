@@ -40,7 +40,7 @@ let's create PR and get more input on basic template
 
 ##### Discussion
 
-bmac: I'm surprised this doesn't error already. This has been a lesser know limitation of Ember Data for a while because Ember Data wants to only have 1 record instance for each  type/id combination.
+bmac: I'm surprised this doesn't error already. This has been a lesser know limitation of Ember Data for a while because Ember Data wants to only have 1 record instance for each type/id combination.
 
 pangratz: the references RFC might have a solution for this aka `store.push` returns a `RecordReference` and not a `DS.Model`
 

@@ -7,25 +7,41 @@
 			{
 				"name": "ct_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "ct_rc_id",
 				"comment": "RCID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_log_id",
 				"comment": "LOGID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_rev_id",
 				"comment": "REVID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_tag",
@@ -37,7 +53,11 @@
 				"name": "ct_params",
 				"comment": "Parameters for the tag; used by some extensions",
 				"type": "blob",
-				"options": { "length": 65530, "notnull": false, "default": null }
+				"options": {
+					"length": 65530,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_tag_id",
@@ -47,26 +67,50 @@
 			}
 		],
 		"indexes": [
-			{ "name": "change_tag_rc_tag_id", "columns": [ "ct_rc_id", "ct_tag_id" ], "unique": true },
-			{ "name": "change_tag_log_tag_id", "columns": [ "ct_log_id", "ct_tag_id" ], "unique": true },
-			{ "name": "change_tag_rev_tag_id", "columns": [ "ct_rev_id", "ct_tag_id" ], "unique": true },
-			{ "name": "change_tag_rc_tag_nonuniq", "columns": [ "ct_rc_id", "ct_tag" ], "unique": true },
-			{ "name": "change_tag_log_tag_nonuniq", "columns": [ "ct_log_id", "ct_tag" ], "unique": true },
-			{ "name": "change_tag_rev_tag_nonuniq", "columns": [ "ct_rev_id", "ct_tag" ], "unique": true },
+			{
+				"name": "change_tag_rc_tag_id",
+				"columns": ["ct_rc_id", "ct_tag_id"],
+				"unique": true
+			},
+			{
+				"name": "change_tag_log_tag_id",
+				"columns": ["ct_log_id", "ct_tag_id"],
+				"unique": true
+			},
+			{
+				"name": "change_tag_rev_tag_id",
+				"columns": ["ct_rev_id", "ct_tag_id"],
+				"unique": true
+			},
+			{
+				"name": "change_tag_rc_tag_nonuniq",
+				"columns": ["ct_rc_id", "ct_tag"],
+				"unique": true
+			},
+			{
+				"name": "change_tag_log_tag_nonuniq",
+				"columns": ["ct_log_id", "ct_tag"],
+				"unique": true
+			},
+			{
+				"name": "change_tag_rev_tag_nonuniq",
+				"columns": ["ct_rev_id", "ct_tag"],
+				"unique": true
+			},
 			{
 				"name": "change_tag_tag_id",
 				"comment": "Covering index, so we can pull all the info only out of the index.",
-				"columns": [ "ct_tag", "ct_rc_id", "ct_rev_id", "ct_log_id" ],
+				"columns": ["ct_tag", "ct_rc_id", "ct_rev_id", "ct_log_id"],
 				"unique": false
 			},
 			{
 				"name": "change_tag_tag_id_id",
 				"comment": "Covering index, so we can pull all the info only out of the index.",
-				"columns": [ "ct_tag_id", "ct_rc_id", "ct_rev_id", "ct_log_id" ],
+				"columns": ["ct_tag_id", "ct_rc_id", "ct_rev_id", "ct_log_id"],
 				"unique": false
 			}
 		],
-		"pk": [ "ct_id" ]
+		"pk": ["ct_id"]
 	},
 	"after": {
 		"name": "change_tag",
@@ -75,31 +119,51 @@
 			{
 				"name": "ct_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "ct_rc_id",
 				"comment": "RCID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_log_id",
 				"comment": "LOGID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_rev_id",
 				"comment": "REVID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_params",
 				"comment": "Parameters for the tag; used by some extensions",
 				"type": "blob",
-				"options": { "length": 65530, "notnull": false, "default": null }
+				"options": {
+					"length": 65530,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_tag_id",
@@ -109,16 +173,28 @@
 			}
 		],
 		"indexes": [
-			{ "name": "change_tag_rc_tag_id", "columns": [ "ct_rc_id", "ct_tag_id" ], "unique": true },
-			{ "name": "change_tag_log_tag_id", "columns": [ "ct_log_id", "ct_tag_id" ], "unique": true },
-			{ "name": "change_tag_rev_tag_id", "columns": [ "ct_rev_id", "ct_tag_id" ], "unique": true },
+			{
+				"name": "change_tag_rc_tag_id",
+				"columns": ["ct_rc_id", "ct_tag_id"],
+				"unique": true
+			},
+			{
+				"name": "change_tag_log_tag_id",
+				"columns": ["ct_log_id", "ct_tag_id"],
+				"unique": true
+			},
+			{
+				"name": "change_tag_rev_tag_id",
+				"columns": ["ct_rev_id", "ct_tag_id"],
+				"unique": true
+			},
 			{
 				"name": "change_tag_tag_id_id",
 				"comment": "Covering index, so we can pull all the info only out of the index.",
-				"columns": [ "ct_tag_id", "ct_rc_id", "ct_rev_id", "ct_log_id" ],
+				"columns": ["ct_tag_id", "ct_rc_id", "ct_rev_id", "ct_log_id"],
 				"unique": false
 			}
 		],
-		"pk": [ "ct_id" ]
+		"pk": ["ct_id"]
 	}
 }

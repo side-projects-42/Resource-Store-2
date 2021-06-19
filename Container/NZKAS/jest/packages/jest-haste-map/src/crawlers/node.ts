@@ -38,7 +38,7 @@ function find(
         callback(result);
         return;
       }
-      names.forEach(file => {
+      names.forEach((file) => {
         file = path.join(directory, file);
         if (ignore(file)) {
           return;
@@ -107,19 +107,19 @@ function findNative(
     );
   }
   child.stdout.setEncoding('utf-8');
-  child.stdout.on('data', data => (stdout += data));
+  child.stdout.on('data', (data) => (stdout += data));
 
   child.stdout.on('close', () => {
     const lines = stdout
       .trim()
       .split('\n')
-      .filter(x => !ignore(x));
+      .filter((x) => !ignore(x));
     const result: Result = [];
     let count = lines.length;
     if (!count) {
       callback([]);
     } else {
-      lines.forEach(path => {
+      lines.forEach((path) => {
         fs.stat(path, (err, stat) => {
           if (!err && stat) {
             result.push([path, stat.mtime.getTime(), stat.size]);
@@ -133,9 +133,7 @@ function findNative(
   });
 }
 
-export = function nodeCrawl(
-  options: CrawlerOptions,
-): Promise<{
+export = function nodeCrawl(options: CrawlerOptions): Promise<{
   removedFiles: FileData;
   hasteMap: InternalHasteMap;
 }> {
@@ -143,20 +141,14 @@ export = function nodeCrawl(
     throw new Error(`Option 'mapper' isn't supported by the Node crawler`);
   }
 
-  const {
-    data,
-    extensions,
-    forceNodeFilesystemAPI,
-    ignore,
-    rootDir,
-    roots,
-  } = options;
+  const {data, extensions, forceNodeFilesystemAPI, ignore, rootDir, roots} =
+    options;
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const callback = (list: Result) => {
       const files = new Map();
       const removedFiles = new Map(data.files);
-      list.forEach(fileData => {
+      list.forEach((fileData) => {
         const [filePath, mtime, size] = fileData;
         const relativeFilePath = fastPath.relative(rootDir, filePath);
         const existingFile = data.files.get(relativeFilePath);

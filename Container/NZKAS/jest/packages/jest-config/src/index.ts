@@ -227,9 +227,13 @@ const ensureNoDuplicateConfigs = (
         String(configPath),
       )}:
 
-  Project 1: ${chalk.bold(projects[parsedConfigs.findIndex(x => x === config)])}
+  Project 1: ${chalk.bold(
+    projects[parsedConfigs.findIndex((x) => x === config)],
+  )}
   Project 2: ${chalk.bold(
-    projects[parsedConfigs.findIndex(x => x === configPathMap.get(configPath))],
+    projects[
+      parsedConfigs.findIndex((x) => x === configPathMap.get(configPath))
+    ],
   )}
 
 This usually means that your ${chalk.bold(
@@ -290,7 +294,7 @@ export function readConfigs(
 
   if (projects.length > 1) {
     const parsedConfigs = projects
-      .filter(root => {
+      .filter((root) => {
         // Ignore globbed files that cannot be `require`d.
         if (
           typeof root === 'string' &&

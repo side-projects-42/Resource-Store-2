@@ -1,0 +1,32 @@
+{
+  "git.ignoreLimitWarning": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true
+  },
+  "todo-tree.general.tags": ["BUG", "HACK", "FIXME", "TODO", "FYI"],
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "icon": "pin",
+      "foreground": "cyan",
+      "type": "whole-line",
+      "fontStyle": "italics"
+    },
+    "FIXME": {
+      "icon": "tools",
+      "foreground": "green", // Color of the word FIXME in the file
+      "type": "whole-line", // Controls how much should be highlighted—just the tag or the whole word
+      "fontStyle": "italics"
+    },
+    "FYI": {
+      "icon": "light-bulb",
+      "foreground": "yellow",
+      "type": "whole-line",
+      "fontStyle": "italics"
+    }
+  }
+}

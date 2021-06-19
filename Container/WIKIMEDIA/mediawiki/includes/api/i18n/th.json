@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Aefgh39622",
-			"Patsagorn Y."
-		]
+		"authors": ["Aefgh39622", "Patsagorn Y."]
 	},
 	"apihelp-main-param-action": "การกระทำที่ต้องการให้ดำเนินการ",
 	"apihelp-main-param-format": "รูปแบบของผลลัพธ์",

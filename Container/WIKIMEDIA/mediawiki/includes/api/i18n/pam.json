@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Leeheonjin",
-			"Macofe"
-		]
+		"authors": ["Leeheonjin", "Macofe"]
 	},
 	"apihelp-delete-summary": "Buran ya ing bulung.",
 	"apihelp-delete-example-simple": "Buran ya ing <kbd>Main Page</kbd>.",

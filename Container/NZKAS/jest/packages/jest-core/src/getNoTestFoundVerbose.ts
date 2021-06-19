@@ -9,11 +9,11 @@ export default function getNoTestFoundVerbose(
   testRunData: TestRunData,
   globalConfig: Config.GlobalConfig,
 ): string {
-  const individualResults = testRunData.map(testRun => {
+  const individualResults = testRunData.map((testRun) => {
     const stats = testRun.matches.stats || ({} as Stats);
     const config = testRun.context.config;
     const statsMessage = (Object.keys(stats) as Array<keyof Stats>)
-      .map(key => {
+      .map((key) => {
         if (key === 'roots' && config.roots.length === 1) {
           return null;
         }
@@ -25,7 +25,7 @@ export default function getNoTestFoundVerbose(
         }
         return null;
       })
-      .filter(line => line)
+      .filter((line) => line)
       .join('\n');
 
     return testRun.matches.total
@@ -42,7 +42,7 @@ export default function getNoTestFoundVerbose(
 
   if (globalConfig.runTestsByPath) {
     dataMessage = `Files: ${globalConfig.nonFlagArgs
-      .map(p => `"${p}"`)
+      .map((p) => `"${p}"`)
       .join(', ')}`;
   } else {
     dataMessage = `Pattern: ${chalk.yellow(

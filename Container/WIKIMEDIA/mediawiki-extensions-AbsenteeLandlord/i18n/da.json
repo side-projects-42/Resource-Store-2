@@ -1,10 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Jan Friberg",
-			"MGA73"
-		]
-	},
-	"absenteelandlord-reason": "Databasen er låst automatisk på grund af inaktivitet fra administratorerne.",
-	"absenteelandlord-desc": "Låser automatisk databasen hvis administratorerne er inaktive for et vist tidsrum"
+  "@metadata": {
+    "authors": ["Jan Friberg", "MGA73"]
+  },
+  "absenteelandlord-reason": "Databasen er låst automatisk på grund af inaktivitet fra administratorerne.",
+  "absenteelandlord-desc": "Låser automatisk databasen hvis administratorerne er inaktive for et vist tidsrum"
 }

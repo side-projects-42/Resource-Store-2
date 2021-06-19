@@ -12,7 +12,7 @@ For more information or to download plugins, view the [documentation](http://cha
 ### Related Projects
 
 - [chaijs / assertion-error](https://github.com/chaijs/assertion-error): Custom `Error` constructor thrown upon an assertion failing.
-- [chaijs / deep-eql](https://github.com/chaijs/deep-eql): Improved deep equality testing for Node.js and the browser. 
+- [chaijs / deep-eql](https://github.com/chaijs/deep-eql): Improved deep equality testing for Node.js and the browser.
 
 ### Contributors
 

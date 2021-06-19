@@ -4,27 +4,27 @@
 :nodeid: 414
 :created: 1356483600
 :tags:
-- general
-- meetup
+  - general
+  - meetup
 :author: kohsuke
 ---
+
 <div style="float:right; margin:1em">
 <a href="http://en.wikipedia.org/wiki/Seoul">
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Changdeokgung-Injeongjeon.jpg/220px-Changdeokgung-Injeongjeon.jpg">
 </a></div>
 
-우리는 2013년 1월25일 저녁에 Jenkins meet-up을 삼성전자와 함께 준비하고 있습니다. 
-Meet-up은 서초사옥에서 진행될 예정이며 추후 변경될 수 있습니다. 
+우리는 2013년 1월25일 저녁에 Jenkins meet-up을 삼성전자와 함께 준비하고 있습니다.
+Meet-up은 서초사옥에서 진행될 예정이며 추후 변경될 수 있습니다.
 발표자는 일본 커뮤니티에서 활동중인 Cactuman과 삼성이고 Groovy script를 이용한 job 일괄설정
 에 대해서 발표할 예정입니다.
 
-Jenkins를 설치한 통계를 통해 저희도 한국에 많은 사용자가 있다는것을 알고 있었습니다. 
+Jenkins를 설치한 통계를 통해 저희도 한국에 많은 사용자가 있다는것을 알고 있었습니다.
 지금까지는 메인 Jenkins community에서 컨택하는데 실패했었지만 이번에 그런 상황이 해결된것에 너무 흥분됩니다.
 
-이번 meet-up에 참가할 의사가 있으면 <a href="http://www.meetup.com/jenkinsmeetup/events/90236092/">meetup.com</a> 에 회답해 주시면 됩니다. 
-참가비는 없으며 우리는 Jenkins,plugin 들과 함께한 경험들(간단한 주제를 포함)을 한국의 Jenkins user와 
+이번 meet-up에 참가할 의사가 있으면 <a href="http://www.meetup.com/jenkinsmeetup/events/90236092/">meetup.com</a> 에 회답해 주시면 됩니다.
+참가비는 없으며 우리는 Jenkins,plugin 들과 함께한 경험들(간단한 주제를 포함)을 한국의 Jenkins user와
 공유 할 더 많은 발표자를 찾고 있습니다.
-
 
 여러분의 많은 참가를 기대합니다.
 

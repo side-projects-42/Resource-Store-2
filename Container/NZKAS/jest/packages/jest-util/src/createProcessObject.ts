@@ -68,7 +68,7 @@ function createProcessEnv(): NodeJS.ProcessEnv {
   return Object.assign(proxy, process.env);
 }
 
-export default function() {
+export default function () {
   const process = require('process');
   const newProcess = deepCyclicCopy(process, {
     blacklist: BLACKLIST,

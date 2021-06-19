@@ -19,10 +19,10 @@ export type TestRunData = Array<{
   };
 }>;
 
-type TestPathCaseStats = Record<keyof (TestPathCases), number>;
+type TestPathCaseStats = Record<keyof TestPathCases, number>;
 
 export type TestPathCaseWithPathPatternStats = Record<
-  keyof (TestPathCasesWithPathPattern),
+  keyof TestPathCasesWithPathPattern,
   number
 >;
 
@@ -44,8 +44,6 @@ export type FilterResult = {
   message: string;
 };
 
-export type Filter = (
-  testPaths: Array<string>,
-) => Promise<{
+export type Filter = (testPaths: Array<string>) => Promise<{
   filtered: Array<FilterResult>;
 }>;

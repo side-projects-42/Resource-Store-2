@@ -10,7 +10,7 @@ import isPromise from '../isPromise';
 describe('not a Promise: ', () => {
   test.each([undefined, null, true, 42, '1337', Symbol(), [], {}])(
     '%p',
-    value => {
+    (value) => {
       expect(isPromise(value)).toBe(false);
     },
   );

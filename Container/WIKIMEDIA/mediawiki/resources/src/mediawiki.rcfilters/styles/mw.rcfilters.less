@@ -1,6 +1,6 @@
-@import 'mediawiki.mixins.animation.less';
-@import 'mediawiki.ui/variables.less';
-@import 'mw.rcfilters.mixins.less';
+@import "mediawiki.mixins.animation.less";
+@import "mediawiki.ui/variables.less";
+@import "mw.rcfilters.mixins.less";
 
 @rcfilters-spinner-size: 12px;
 @rcfilters-head-min-height: 210px;
@@ -41,7 +41,7 @@
 	.mw-recentchanges-toplinks {
 		padding-left: 0.5em;
 
-		&:not( .mw-recentchanges-toplinks-collapsed ) {
+		&:not(.mw-recentchanges-toplinks-collapsed) {
 			margin-top: -1px; // Make up for `border` to prevent link movement
 			margin-left: -1px;
 			margin-bottom: 0.5em;
@@ -61,7 +61,7 @@
 		/* stylelint-enable declaration-no-important */
 	}
 
-	body:not( .mw-rcfilters-ui-initialized ) {
+	body:not(.mw-rcfilters-ui-initialized) {
 		.mw-recentchanges-toplinks.mw-recentchanges-toplinks-collapsed {
 			// Similar to the watchlist-details hack, we are going to make this float left
 			// while loading to prevent jumpiness in the min-height calculation
@@ -119,7 +119,7 @@
 		& .mw-rcfilters-spinner-bounce,
 		&:before,
 		&:after {
-			content: '';
+			content: "";
 			background-color: @color-primary;
 			display: block;
 			float: left;
@@ -140,16 +140,20 @@
 		}
 	}
 
-	body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-spinner {
+	body:not(.mw-rcfilters-ui-initialized) .mw-rcfilters-spinner {
 		display: block;
 		// When initializing, display the spinner on top of the area where the UI will appear
-		margin-top: -( @rcfilters-head-min-height + @rcfilters-head-margin-bottom ) / 1.5;
+		margin-top: -(
+				@rcfilters-head-min-height + @rcfilters-head-margin-bottom
+			) / 1.5;
 	}
 
 	body.mw-rcfilters-ui-loading .mw-rcfilters-spinner {
 		display: block;
 		// When loading new results, display the spinner on top of the results area
-		margin-top: -( @rcfilters-head-min-height + @rcfilters-head-margin-bottom ) / 8;
+		margin-top: -(
+				@rcfilters-head-min-height + @rcfilters-head-margin-bottom
+			) / 8;
 	}
 
 	#contentSub,
@@ -173,7 +177,7 @@
 		// for the .mw-rcfilters-ui-watchlistTopSectionWidget-editWatchlistButton
 		// in mw.rcfilters.ui.WatchlistTopSectionWidget.less
 		/* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-		width: ~'calc( 100% - 20em )';
+		width: ~"calc( 100% - 20em )";
 	}
 }
 
@@ -183,7 +187,7 @@
 
 // on smaller screen, set .watchlistDetail to full width
 // so that the spinner doesn't appear beside it. T225127#5518870
-@media screen and ( max-width: @width-breakpoint-tablet ) {
+@media screen and (max-width: @width-breakpoint-tablet) {
 	.client-js {
 		/* stylelint-disable-next-line selector-class-pattern */
 		.watchlistDetails {
@@ -198,13 +202,13 @@
 	0%,
 	50%,
 	100% {
-		-webkit-transform: scale( 0.625 );
+		-webkit-transform: scale(0.625);
 	}
 
 	// equals 320ms
 	20% {
 		opacity: 0.87;
-		-webkit-transform: scale( 1 );
+		-webkit-transform: scale(1);
 	}
 }
 
@@ -212,11 +216,12 @@
 	0%,
 	50%,
 	100% {
-		transform: scale( 0.625 );
+		transform: scale(0.625);
 	}
 
-	20% { // equals 320ms
+	20% {
+		// equals 320ms
 		opacity: 0.87;
-		transform: scale( 1 );
+		transform: scale(1);
 	}
 }

@@ -36,13 +36,13 @@ afterAll(() => {
 });
 
 test('can find things', () => {
-  return globalDatabase.find('thing', {}, results => {
+  return globalDatabase.find('thing', {}, (results) => {
     expect(results.length).toBeGreaterThan(0);
   });
 });
 
 test('can insert a thing', () => {
-  return globalDatabase.insert('thing', makeThing(), response => {
+  return globalDatabase.insert('thing', makeThing(), (response) => {
     expect(response.success).toBeTruthy();
   });
 });
@@ -76,13 +76,13 @@ afterEach(() => {
 });
 
 test('can find things', () => {
-  return globalDatabase.find('thing', {}, results => {
+  return globalDatabase.find('thing', {}, (results) => {
     expect(results.length).toBeGreaterThan(0);
   });
 });
 
 test('can insert a thing', () => {
-  return globalDatabase.insert('thing', makeThing(), response => {
+  return globalDatabase.insert('thing', makeThing(), (response) => {
     expect(response.success).toBeTruthy();
   });
 });
@@ -118,7 +118,7 @@ beforeAll(() => {
 // Since we only set up the database once in this example, it's important
 // that our tests don't modify it.
 test('can find things', () => {
-  return globalDatabase.find('thing', {}, results => {
+  return globalDatabase.find('thing', {}, (results) => {
     expect(results.length).toBeGreaterThan(0);
   });
 });
@@ -152,13 +152,13 @@ beforeEach(() => {
 });
 
 test('can find things', () => {
-  return globalDatabase.find('thing', {}, results => {
+  return globalDatabase.find('thing', {}, (results) => {
     expect(results.length).toBeGreaterThan(0);
   });
 });
 
 test('can insert a thing', () => {
-  return globalDatabase.insert('thing', makeThing(), response => {
+  return globalDatabase.insert('thing', makeThing(), (response) => {
     expect(response.success).toBeTruthy();
   });
 });
@@ -196,7 +196,7 @@ This isn't required - you can just write the `test` blocks directly at the top l
 You can also nest `describe` blocks if you have a hierarchy of tests:
 
 ```js
-const binaryStringToNumber = binString => {
+const binaryStringToNumber = (binString) => {
   if (!/^[01]+$/.test(binString)) {
     throw new CustomError('Not a binary number.');
   }
@@ -287,7 +287,7 @@ For example, let's say `fetchBeverageList()` returns a promise that is supposed 
 
 ```js
 test('has lemon in it', () => {
-  return fetchBeverageList().then(list => {
+  return fetchBeverageList().then((list) => {
     expect(list).toContain('lemon');
   });
 });

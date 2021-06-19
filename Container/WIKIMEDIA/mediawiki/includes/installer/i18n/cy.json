@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Lloffiwr",
-			"Robin Owain",
-			"Xxglennxx"
-		]
+		"authors": ["Lloffiwr", "Robin Owain", "Xxglennxx"]
 	},
 	"config-desc": "Y gosodwr ar gyfer MediaWiki",
 	"config-title": "Gosod MediaWiki $1",

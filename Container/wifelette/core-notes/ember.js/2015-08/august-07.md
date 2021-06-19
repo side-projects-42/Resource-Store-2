@@ -1,44 +1,43 @@
 # Ember Meeting Agenda 2015-08-07
 
-
-
 ### Attendees
 
 Robert, Yehuda, Stefan, Peter, Matt, Martin, Kris, Erik, Trek, Leah
 
 ### Agenda
 
-* Angle bracket update - @wycats
-* 1.13.7 Update / Blockers - @rwjblue
-* Deprecations needed for 1.13.7
-* Ship 2.0. Like now. - @wycats
+- Angle bracket update - @wycats
+- 1.13.7 Update / Blockers - @rwjblue
+- Deprecations needed for 1.13.7
+- Ship 2.0. Like now. - @wycats
 
 ### 2.0 Release Plan
 
-* Blog Post
-* What is left?
-* Messaging 2.0-2.2 and the potential instability early in 2.x
+- Blog Post
+- What is left?
+- Messaging 2.0-2.2 and the potential instability early in 2.x
 
 ### Deprecations for 1.13.7
+
 - [ ] Deprecate block usage of unbound in 1.13 ([emberjs/ember.js#11965](https://github.com/emberjs/ember.js/pull/11965)). Should be PR'ed directly to stable.
 - [ ] Deprecate multiple arguments being passed to unbound in 1.13 ([emberjs/ember.js#11965](https://github.com/emberjs/ember.js/pull/11965)). Should be PR'ed directly to stable.
-- [x]  Deprecate using `@each` as a "leaf" ([emberjs/ember.js#11990](https://github.com/emberjs/ember.js/pull/11990))
+- [x] Deprecate using `@each` as a "leaf" ([emberjs/ember.js#11990](https://github.com/emberjs/ember.js/pull/11990))
 - [ ] Should swap `@each` with `[]` when used as leaf on a declarative observer or dependency key
 - [x] `{{with foo controller="bar" as |baz|}}` [emberjs/ember.js#12000](https://github.com/emberjs/ember.js/pull/12000)
-- [x]  Deprecate using Ember.TrackedArray https://github.com/emberjs/ember.js/pull/11993
-- [x]  Deprecate using Ember.SubArray https://github.com/emberjs/ember.js/pull/11993
+- [x] Deprecate using Ember.TrackedArray https://github.com/emberjs/ember.js/pull/11993
+- [x] Deprecate using Ember.SubArray https://github.com/emberjs/ember.js/pull/11993
 - [ ] Deprecate using `.render` with a component or view [emberjs/ember.js#11515](https://github.com/emberjs/ember.js/issues/11515)
 
 # Synchronous Observation Related Things
 
 - [ ] addArrayObserver, removeArrayObserver (all that should remain is the `"[]:change"` event)
-- [ ] willChange support in ember-runtime/mixins/array 
+- [ ] willChange support in ember-runtime/mixins/array
 - [ ] willChange support in ember-runtime/mixins/enumerable
 - [ ] willChange support in ember-runtime/system/array_proxy
 
 ### Minutes
 
-SP: Much work has been going into performance with ember-cli.  Some great changes at the caching-writer / sourcemap-concat stages.
+SP: Much work has been going into performance with ember-cli. Some great changes at the caching-writer / sourcemap-concat stages.
 
 YK: Angle brackets is going well, we expect to be mergeable early next week. We have a checklist of seven items.
 
@@ -116,7 +115,7 @@ KS: would it stomp without a setter
 
 YK: no it throws, but not with the error we would want, so we would need to install the one we want
 
-EF: I feel strongly we should use .set 
+EF: I feel strongly we should use .set
 
 MM: agreed
 
@@ -156,7 +155,7 @@ YK: so we need to talk about messaging the early 2.0 section. Basically the
 
 MB: We can message that 2.0 is the "garbage collection" release.
 
-RJ: Looking at file size charts across versions of Ember is error prone.  Many versions released between 1.8 and 2.0.0 had various issues that make analysis hard.
+RJ: Looking at file size charts across versions of Ember is error prone. Many versions released between 1.8 and 2.0.0 had various issues that make analysis hard.
 
 SP: I have a PR that may have the ability to make execution time much less, and JS execution time is much more important that actual file size.
 

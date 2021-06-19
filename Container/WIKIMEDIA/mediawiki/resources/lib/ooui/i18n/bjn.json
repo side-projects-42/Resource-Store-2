@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ezagren"
-		]
+		"authors": ["Ezagren"]
 	},
 	"ooui-outline-control-move-down": "Pindahakan butir ka bawah",
 	"ooui-outline-control-move-up": "Pindahakan butir ka atas",

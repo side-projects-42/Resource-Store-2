@@ -1,3 +1,3 @@
-'use strict';
+"use strict";
 
-module.exports = require('./inject')(require('acorn'));
+module.exports = require("./inject")(require("acorn"));

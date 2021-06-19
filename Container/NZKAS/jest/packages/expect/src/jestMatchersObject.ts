@@ -44,7 +44,7 @@ export const setMatchers = (
   isInternal: boolean,
   expect: Expect,
 ) => {
-  Object.keys(matchers).forEach(key => {
+  Object.keys(matchers).forEach((key) => {
     const matcher = matchers[key];
     Object.defineProperty(matcher, INTERNAL_MATCHER_FLAG, {
       value: isInternal,

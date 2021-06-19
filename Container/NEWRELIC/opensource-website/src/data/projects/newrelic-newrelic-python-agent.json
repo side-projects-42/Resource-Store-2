@@ -17,9 +17,7 @@
   "description": "The official New Relic agent for Python",
   "ossCategory": "community-plus",
   "primaryLanguage": "Python",
-  "projectTags": [
-    "agent"
-  ],
+  "projectTags": ["agent"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Python Agent",

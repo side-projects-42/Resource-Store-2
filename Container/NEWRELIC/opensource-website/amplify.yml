@@ -4,7 +4,7 @@ frontend:
     preBuild:
       commands:
         - nvm use $VERSION_NODE_12
-        -  yarn install --frozen-lockfile
+        - yarn install --frozen-lockfile
     build:
       commands:
         - |

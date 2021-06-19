@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Mikel Ibaiba"
-		]
-	},
-	"activeabstract-desc": "Yahoo-ren proiektu abstraktu aktiboetarako XML elikadura sortu."
+  "@metadata": {
+    "authors": ["Mikel Ibaiba"]
+  },
+  "activeabstract-desc": "Yahoo-ren proiektu abstraktu aktiboetarako XML elikadura sortu."
 }

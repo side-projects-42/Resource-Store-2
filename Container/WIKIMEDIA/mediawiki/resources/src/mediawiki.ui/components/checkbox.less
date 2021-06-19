@@ -1,5 +1,5 @@
-@import 'mediawiki.mixins.less';
-@import 'mediawiki.ui/variables.less';
+@import "mediawiki.mixins.less";
+@import "mediawiki.ui/variables.less";
 
 // Checkbox
 //
@@ -37,7 +37,7 @@
 		vertical-align: middle;
 	}
 
-	[ type='checkbox' ] {
+	[type="checkbox"] {
 		display: table-cell;
 		position: relative;
 		// Ensure the invisible input takes up the required `width` & `height`
@@ -58,7 +58,7 @@
 
 		// Pseudo `:before` element of the label after the checkbox now looks like a checkbox
 		& + label:before {
-			content: '';
+			content: "";
 			background-color: #fff;
 			background-origin: border-box;
 			background-position: center center;
@@ -71,14 +71,14 @@
 			left: 0;
 			width: @size-input-binary;
 			height: @size-input-binary;
-			margin-top: -( @size-input-binary / 2 );
+			margin-top: -(@size-input-binary / 2);
 			border: 1px solid @colorGray7;
 			border-radius: @border-radius-base;
 		}
 
 		// Apply a checkmark on the pseudo `:before` element when the input is checked.
 		&:checked + label:before {
-			background-image: url( images/checkbox-checked.svg );
+			background-image: url(images/checkbox-checked.svg);
 			background-size: 90% 90%;
 		}
 
@@ -91,7 +91,7 @@
 
 			& + label:before {
 				cursor: pointer;
-				.transition( ~'background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms' );
+				.transition( ~"background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms" );
 			}
 
 			// `:focus` has to come first, otherwise a specificity race with `:hover:focus` etc is necessary

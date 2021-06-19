@@ -1,9 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Renan"
-		]
-	},
-	"addthis": "Distribuer",
-	"addthis-desc": "Addir li [http://www.addthis.com utensile AddThis] in li barre lateral e monstrar un barre de utensiles in li chefes (<i>headers</i>) del págines quel posse esser reproductet ucunc per insertion del marcation <nowiki><addthis /></nowiki>"
+  "@metadata": {
+    "authors": ["Renan"]
+  },
+  "addthis": "Distribuer",
+  "addthis-desc": "Addir li [http://www.addthis.com utensile AddThis] in li barre lateral e monstrar un barre de utensiles in li chefes (<i>headers</i>) del págines quel posse esser reproductet ucunc per insertion del marcation <nowiki><addthis /></nowiki>"
 }

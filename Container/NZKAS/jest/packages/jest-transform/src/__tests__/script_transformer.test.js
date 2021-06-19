@@ -24,7 +24,7 @@ jest
 
         throw new Error(`Cannot read path '${path}'.`);
       }),
-      statSync: path => ({
+      statSync: (path) => ({
         isFile: () => !!mockFs[path],
         mtime: {getTime: () => 42, toString: () => '42'},
       }),
@@ -44,7 +44,7 @@ jest
 jest.mock(
   'test_preprocessor',
   () => {
-    const escapeStrings = str => str.replace(/'/, `'`);
+    const escapeStrings = (str) => str.replace(/'/, `'`);
 
     return {
       getCacheKey: jest.fn((content, filename, configStr) => 'ab'),
@@ -146,7 +146,7 @@ describe('ScriptTransformer', () => {
   const reset = () => {
     jest.resetModules();
 
-    object = data => Object.assign(Object.create(null), data);
+    object = (data) => Object.assign(Object.create(null), data);
 
     vm = require('vm');
 
@@ -178,12 +178,12 @@ describe('ScriptTransformer', () => {
     });
 
     fs.unlinkSync = jest.fn();
-    fs.statSync = jest.fn(path => ({
+    fs.statSync = jest.fn((path) => ({
       isFile: () => !!mockFs[path],
       mtime: {getTime: () => 42, toString: () => '42'},
     }));
 
-    fs.existsSync = jest.fn(path => !!mockFs[path]);
+    fs.existsSync = jest.fn((path) => !!mockFs[path]);
 
     writeFileAtomic = require('write-file-atomic');
 

@@ -3,10 +3,10 @@ const { SCREENSHOT_FOLDERS } = require('../../shared/constants');
 const fetchAllPages = require('../github/fetch-all-pages');
 
 // rate limiting cost of this query is ~1
-const reposForOrgQuery = ({ org, paginationLimit, timeRange, screenshots }) => (
-  endCursor
-) => ({
-  query: /* GraphQL */ `
+const reposForOrgQuery =
+  ({ org, paginationLimit, timeRange, screenshots }) =>
+  (endCursor) => ({
+    query: /* GraphQL */ `
     query reposForOrg($endCursor: String) {
       repos: search(query: "org:${org} fork:false archived:false is:public", type: REPOSITORY, first: ${paginationLimit}, after: $endCursor) {
         repositoryCount
@@ -132,10 +132,10 @@ const reposForOrgQuery = ({ org, paginationLimit, timeRange, screenshots }) => (
       }
     }
   `,
-  variables: {
-    endCursor,
-  },
-});
+    variables: {
+      endCursor,
+    },
+  });
 
 /**
  * Gets the date one month ago, accounting for different month lengths
@@ -172,26 +172,30 @@ const screenshotsQuery = Object.entries(SCREENSHOT_FOLDERS).reduce(
   ''
 );
 
-const getAllReposForOrg = (github) => async ({
-  org,
-  paginationLimit,
-  timeRange = getDateOneMonthAgo(),
-  screenshots = screenshotsQuery,
-}) => {
-  const { results: allRepos } = await fetchAllPages(github, {
-    createQuery: reposForOrgQuery({
-      org,
-      paginationLimit,
-      timeRange,
-      screenshots,
-    }),
-    resultSelector: get('repos'),
-  });
+const getAllReposForOrg =
+  (github) =>
+  async ({
+    org,
+    paginationLimit,
+    timeRange = getDateOneMonthAgo(),
+    screenshots = screenshotsQuery,
+  }) => {
+    const { results: allRepos } = await fetchAllPages(github, {
+      createQuery: reposForOrgQuery({
+        org,
+        paginationLimit,
+        timeRange,
+        screenshots,
+      }),
+      resultSelector: get('repos'),
+    });
 
-  const repos = allRepos.filter((repo) => repo && !repo.archived && !repo.fork);
+    const repos = allRepos.filter(
+      (repo) => repo && !repo.archived && !repo.fork
+    );
 
-  // return just the string representing the repo name
-  return { repos };
-};
+    // return just the string representing the repo name
+    return { repos };
+  };
 
 module.exports = getAllReposForOrg;

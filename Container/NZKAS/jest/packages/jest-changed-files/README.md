@@ -39,7 +39,7 @@ import {getChangedFilesForRoots} from 'jest-changed-files';
 getChangedFilesForRoots(['/path/to/test'], {
   lastCommit: true,
   withAncestor: true,
-}).then(files => {
+}).then((files) => {
   /*
   {
     repos: [],
@@ -52,7 +52,7 @@ getChangedFilesForRoots(['/path/to/test'], {
 ```javascript
 import {findRepos} from 'jest-changed-files';
 
-findRepos(['/path/to/test']).then(repos => {
+findRepos(['/path/to/test']).then((repos) => {
   /*
   {
     git: Set<Path>,

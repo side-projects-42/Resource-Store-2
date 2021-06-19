@@ -1,5 +1,5 @@
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
 	var addons, nested;
 
@@ -14,12 +14,12 @@
 	 * @param {Object} localEnv
 	 * @return {Object}
 	 */
-	function makeSafeEnv( localEnv ) {
-		var wrap = localEnv ? Object.create( localEnv ) : {};
-		if ( wrap.setup ) {
+	function makeSafeEnv(localEnv) {
+		var wrap = localEnv ? Object.create(localEnv) : {};
+		if (wrap.setup) {
 			wrap.beforeEach = wrap.beforeEach || wrap.setup;
 		}
-		if ( wrap.teardown ) {
+		if (wrap.teardown) {
 			wrap.afterEach = wrap.afterEach || wrap.teardown;
 		}
 		return wrap;
@@ -32,10 +32,13 @@
 	 * or 'data/test.php?foo=bar').
 	 * @return {string} Such as 'data/foo.js?131031765087663960'
 	 */
-	QUnit.fixurl = function ( value ) {
-		return value + ( /\?/.test( value ) ? '&' : '?' ) +
-			String( new Date().getTime() ) +
-			String( parseInt( Math.random() * 100000, 10 ) );
+	QUnit.fixurl = function (value) {
+		return (
+			value +
+			(/\?/.test(value) ? "&" : "?") +
+			String(new Date().getTime()) +
+			String(parseInt(Math.random() * 100000, 10))
+		);
 	};
 
 	// For each test that is asynchronous, allow this time to pass before
@@ -49,91 +52,91 @@
 	$.fx.speeds._default = 0;
 
 	// Add a checkbox to QUnit header to toggle MediaWiki ResourceLoader debug mode.
-	QUnit.config.urlConfig.push( {
-		id: 'debug',
-		label: 'Enable ResourceLoaderDebug',
-		tooltip: 'Enable debug mode in ResourceLoader',
-		value: 'true'
-	} );
+	QUnit.config.urlConfig.push({
+		id: "debug",
+		label: "Enable ResourceLoaderDebug",
+		tooltip: "Enable debug mode in ResourceLoader",
+		value: "true",
+	});
 
 	// SinonJS
 	//
 	// Glue code for nicer integration with QUnit setup/teardown
 	// Inspired by http://sinonjs.org/releases/sinon-qunit-1.0.0.js
-	sinon.assert.fail = function ( msg ) {
-		QUnit.assert.ok( false, msg );
+	sinon.assert.fail = function (msg) {
+		QUnit.assert.ok(false, msg);
 	};
-	sinon.assert.pass = function ( msg ) {
-		QUnit.assert.ok( true, msg );
+	sinon.assert.pass = function (msg) {
+		QUnit.assert.ok(true, msg);
 	};
 	sinon.config = {
 		injectIntoThis: true,
 		injectInto: null,
-		properties: [ 'spy', 'stub', 'mock', 'sandbox' ],
+		properties: ["spy", "stub", "mock", "sandbox"],
 		// Don't fake timers by default
 		useFakeTimers: false,
-		useFakeServer: false
+		useFakeServer: false,
 	};
 	// Extend QUnit.module with:
 	// - Add support for QUnit 1.x 'setup' and 'teardown' hooks
 	// - Add a Sinon sandbox to the test context.
 	// - Add a test fixture to the test context.
-	( function () {
+	(function () {
 		var orgModule = QUnit.module;
-		QUnit.module = function ( name, localEnv, executeNow ) {
+		QUnit.module = function (name, localEnv, executeNow) {
 			var orgExecute, orgBeforeEach, orgAfterEach;
-			if ( nested ) {
+			if (nested) {
 				// In a nested module, don't re-add our hooks, QUnit does that already.
-				return orgModule.apply( this, arguments );
+				return orgModule.apply(this, arguments);
 			}
-			if ( arguments.length === 2 && typeof localEnv === 'function' ) {
+			if (arguments.length === 2 && typeof localEnv === "function") {
 				executeNow = localEnv;
 				localEnv = undefined;
 			}
-			if ( executeNow ) {
+			if (executeNow) {
 				// Wrap executeNow() so that we can detect nested modules
 				orgExecute = executeNow;
 				executeNow = function () {
 					var ret;
 					nested = true;
-					ret = orgExecute.apply( this, arguments );
+					ret = orgExecute.apply(this, arguments);
 					nested = false;
 					return ret;
 				};
 			}
 
-			localEnv = makeSafeEnv( localEnv );
+			localEnv = makeSafeEnv(localEnv);
 			orgBeforeEach = localEnv.beforeEach;
 			orgAfterEach = localEnv.afterEach;
 
 			localEnv.beforeEach = function () {
 				// Sinon sandbox
-				var config = sinon.getConfig( sinon.config );
+				var config = sinon.getConfig(sinon.config);
 				config.injectInto = this;
-				sinon.sandbox.create( config );
+				sinon.sandbox.create(config);
 
 				// Fixture element
-				this.fixture = document.createElement( 'div' );
-				this.fixture.id = 'qunit-fixture';
-				document.body.appendChild( this.fixture );
+				this.fixture = document.createElement("div");
+				this.fixture.id = "qunit-fixture";
+				document.body.appendChild(this.fixture);
 
-				if ( orgBeforeEach ) {
-					return orgBeforeEach.apply( this, arguments );
+				if (orgBeforeEach) {
+					return orgBeforeEach.apply(this, arguments);
 				}
 			};
 			localEnv.afterEach = function () {
 				var ret;
-				if ( orgAfterEach ) {
-					ret = orgAfterEach.apply( this, arguments );
+				if (orgAfterEach) {
+					ret = orgAfterEach.apply(this, arguments);
 				}
 				this.sandbox.verifyAndRestore();
-				this.fixture.parentNode.removeChild( this.fixture );
+				this.fixture.parentNode.removeChild(this.fixture);
 				return ret;
 			};
 
-			return orgModule( name, localEnv, executeNow );
+			return orgModule(name, localEnv, executeNow);
 		};
-	}() );
+	})();
 
 	/**
 	 * Reset mw.config and others to a fresh copy of the live config for each test,
@@ -143,8 +146,11 @@
 	 * @example (see test suite at the bottom of this file)
 	 * </code>
 	 */
-	QUnit.newMwEnvironment = ( function () {
-		var warn, error, liveConfig, liveMessages,
+	QUnit.newMwEnvironment = (function () {
+		var warn,
+			error,
+			liveConfig,
+			liveMessages,
 			MwMap = mw.config.constructor, // internal use only
 			ajaxRequests = [];
 
@@ -152,7 +158,7 @@
 		liveMessages = mw.messages;
 
 		function suppressWarnings() {
-			if ( warn === undefined ) {
+			if (warn === undefined) {
 				warn = mw.log.warn;
 				error = mw.log.error;
 				mw.log.warn = mw.log.error = function () {};
@@ -161,14 +167,14 @@
 
 		function restoreWarnings() {
 			// Guard against calls not balanced with suppressWarnings()
-			if ( warn !== undefined ) {
+			if (warn !== undefined) {
 				mw.log.warn = warn;
 				mw.log.error = error;
 				warn = error = undefined;
 			}
 		}
 
-		function freshConfigCopy( custom ) {
+		function freshConfigCopy(custom) {
 			var copy;
 			// Tests should mock all factors that directly influence the tested code.
 			// For backwards compatibility though we set mw.config to a fresh copy of the live
@@ -179,14 +185,14 @@
 			// NOTE: It is important that we suppress warnings because extend() will also access
 			// deprecated properties and trigger deprecation warnings from mw.log#deprecate.
 			suppressWarnings();
-			copy = $.extend( {}, liveConfig.get(), custom );
+			copy = $.extend({}, liveConfig.get(), custom);
 			restoreWarnings();
 
 			return copy;
 		}
 
-		function freshMessagesCopy( custom ) {
-			return $.extend( /* deep */true, {}, liveMessages.get(), custom );
+		function freshMessagesCopy(custom) {
+			return $.extend(/* deep */ true, {}, liveMessages.get(), custom);
 		}
 
 		/**
@@ -194,14 +200,14 @@
 		 * @param {jQuery.jqXHR} jqXHR
 		 * @param {Object} ajaxOptions
 		 */
-		function trackAjax( event, jqXHR, ajaxOptions ) {
-			ajaxRequests.push( { xhr: jqXHR, options: ajaxOptions } );
+		function trackAjax(event, jqXHR, ajaxOptions) {
+			ajaxRequests.push({ xhr: jqXHR, options: ajaxOptions });
 		}
 
-		return function ( orgEnv ) {
+		return function (orgEnv) {
 			var localEnv, orgBeforeEach, orgAfterEach;
 
-			localEnv = makeSafeEnv( orgEnv );
+			localEnv = makeSafeEnv(orgEnv);
 			// MediaWiki env testing
 			localEnv.config = localEnv.config || {};
 			localEnv.messages = localEnv.messages || {};
@@ -212,33 +218,33 @@
 			localEnv.beforeEach = function () {
 				// Greetings, mock environment!
 				mw.config = new MwMap();
-				mw.config.set( freshConfigCopy( localEnv.config ) );
+				mw.config.set(freshConfigCopy(localEnv.config));
 				mw.messages = new MwMap();
-				mw.messages.set( freshMessagesCopy( localEnv.messages ) );
+				mw.messages.set(freshMessagesCopy(localEnv.messages));
 				// Update reference to mw.messages
-				mw.jqueryMsg.setParserDefaults( {
-					messages: mw.messages
-				} );
+				mw.jqueryMsg.setParserDefaults({
+					messages: mw.messages,
+				});
 
 				this.suppressWarnings = suppressWarnings;
 				this.restoreWarnings = restoreWarnings;
 
 				// Start tracking ajax requests
-				$( document ).on( 'ajaxSend', trackAjax );
+				$(document).on("ajaxSend", trackAjax);
 
-				if ( orgBeforeEach ) {
-					return orgBeforeEach.apply( this, arguments );
+				if (orgBeforeEach) {
+					return orgBeforeEach.apply(this, arguments);
 				}
 			};
 			localEnv.afterEach = function () {
 				var timers, pending, $activeLen, ret;
 
-				if ( orgAfterEach ) {
-					ret = orgAfterEach.apply( this, arguments );
+				if (orgAfterEach) {
+					ret = orgAfterEach.apply(this, arguments);
 				}
 
 				// Stop tracking ajax requests
-				$( document ).off( 'ajaxSend', trackAjax );
+				$(document).off("ajaxSend", trackAjax);
 
 				// As a convenience feature, automatically restore warnings if they're
 				// still suppressed by the end of the test.
@@ -248,59 +254,80 @@
 				mw.config = liveConfig;
 				mw.messages = liveMessages;
 				// Restore reference to mw.messages
-				mw.jqueryMsg.setParserDefaults( {
-					messages: liveMessages
-				} );
+				mw.jqueryMsg.setParserDefaults({
+					messages: liveMessages,
+				});
 
 				// Tests should use fake timers or wait for animations to complete
 				// Check for incomplete animations/requests/etc and throw if there are any.
-				if ( $.timers && $.timers.length !== 0 ) {
+				if ($.timers && $.timers.length !== 0) {
 					timers = $.timers.length;
 					// eslint-disable-next-line no-jquery/no-each-util
-					$.each( $.timers, function ( i, timer ) {
-						var node = timer.elem, attribs = {};
+					$.each($.timers, function (i, timer) {
+						var node = timer.elem,
+							attribs = {};
 						// eslint-disable-next-line no-jquery/no-each-util
-						$.each( node.attributes, function ( j, attrib ) {
-							attribs[ attrib.name ] = attrib.value;
-						} );
-						mw.log.warn( 'Unfinished animation #' + i + ' in ' + timer.queue + ' queue on ' +
-							mw.html.element( node.nodeName.toLowerCase(), attribs )
+						$.each(node.attributes, function (j, attrib) {
+							attribs[attrib.name] = attrib.value;
+						});
+						mw.log.warn(
+							"Unfinished animation #" +
+								i +
+								" in " +
+								timer.queue +
+								" queue on " +
+								mw.html.element(
+									node.nodeName.toLowerCase(),
+									attribs
+								)
 						);
-					} );
+					});
 					// Force animations to stop to give the next test a clean start
 					$.timers = [];
 					$.fx.stop();
 
-					throw new Error( 'Unfinished animations: ' + timers );
+					throw new Error("Unfinished animations: " + timers);
 				}
 
 				// Test should use fake XHR, wait for requests, or call abort()
 				$activeLen = $.active;
-				if ( $activeLen !== undefined && $activeLen !== 0 ) {
-					pending = ajaxRequests.filter( function ( ajax ) {
-						return ajax.xhr.state() === 'pending';
-					} );
-					if ( pending.length !== $activeLen ) {
-						mw.log.warn( 'Pending requests does not match jQuery.active count' );
+				if ($activeLen !== undefined && $activeLen !== 0) {
+					pending = ajaxRequests.filter(function (ajax) {
+						return ajax.xhr.state() === "pending";
+					});
+					if (pending.length !== $activeLen) {
+						mw.log.warn(
+							"Pending requests does not match jQuery.active count"
+						);
 					}
 					// Force requests to stop to give the next test a clean start
-					ajaxRequests.forEach( function ( ajax, i ) {
+					ajaxRequests.forEach(function (ajax, i) {
 						mw.log.warn(
-							'AJAX request #' + i + ' (state: ' + ajax.xhr.state() + ')',
+							"AJAX request #" +
+								i +
+								" (state: " +
+								ajax.xhr.state() +
+								")",
 							ajax.options
 						);
 						ajax.xhr.abort();
-					} );
+					});
 					ajaxRequests = [];
 
-					throw new Error( 'Pending AJAX requests: ' + pending.length + ' (active: ' + $activeLen + ')' );
+					throw new Error(
+						"Pending AJAX requests: " +
+							pending.length +
+							" (active: " +
+							$activeLen +
+							")"
+					);
 				}
 
 				return ret;
 			};
 			return localEnv;
 		};
-	}() );
+	})();
 
 	// $.when stops as soon as one fails, which makes sense in most
 	// practical scenarios, but not in a unit test where we really do
@@ -309,16 +336,16 @@
 		var altPromises = [];
 
 		// eslint-disable-next-line no-jquery/no-each-util
-		$.each( arguments, function ( i, arg ) {
+		$.each(arguments, function (i, arg) {
 			var alt = $.Deferred();
-			altPromises.push( alt );
+			altPromises.push(alt);
 
 			// Whether this one fails or not, forwards it to
 			// the 'done' (resolve) callback of the alternative promise.
-			arg.always( alt.resolve );
-		} );
+			arg.always(alt.resolve);
+		});
 
-		return $.when.apply( $, altPromises );
+		return $.when.apply($, altPromises);
 	};
 
 	/**
@@ -329,26 +356,31 @@
 	 * @param {Node} node
 	 * @return {Object|string} Plain JavaScript value representing the node.
 	 */
-	function getDomStructure( node ) {
+	function getDomStructure(node) {
 		var processedChildren, attribs;
-		if ( node.nodeType === Node.ELEMENT_NODE ) {
+		if (node.nodeType === Node.ELEMENT_NODE) {
 			processedChildren = [];
-			$( node ).contents().each( function ( i, el ) {
-				if ( el.nodeType === Node.ELEMENT_NODE || el.nodeType === Node.TEXT_NODE ) {
-					processedChildren.push( getDomStructure( el ) );
-				}
-			} );
+			$(node)
+				.contents()
+				.each(function (i, el) {
+					if (
+						el.nodeType === Node.ELEMENT_NODE ||
+						el.nodeType === Node.TEXT_NODE
+					) {
+						processedChildren.push(getDomStructure(el));
+					}
+				});
 
 			attribs = {};
 			// eslint-disable-next-line no-jquery/no-each-util
-			$.each( node.attributes, function ( i, attrib ) {
-				attribs[ attrib.name ] = attrib.value;
-			} );
+			$.each(node.attributes, function (i, attrib) {
+				attribs[attrib.name] = attrib.value;
+			});
 
 			return {
 				tagName: node.tagName,
 				attributes: attribs,
-				contents: processedChildren
+				contents: processedChildren,
 			};
 		} else {
 			// Should be text node
@@ -362,9 +394,9 @@
 	 * @param {string} html HTML markup for one or more nodes.
 	 * @return {Object}
 	 */
-	function getHtmlStructure( html ) {
-		var el = $( '<div>' ).append( html )[ 0 ];
-		return getDomStructure( el );
+	function getHtmlStructure(html) {
+		var el = $("<div>").append(html)[0];
+		return getDomStructure(el);
 	}
 
 	/**
@@ -372,65 +404,64 @@
 	 */
 	// Define the add-ons
 	addons = {
-
 		// Expect boolean true
-		assertTrue: function ( actual, message ) {
-			this.pushResult( {
+		assertTrue: function (actual, message) {
+			this.pushResult({
 				result: actual === true,
 				actual: actual,
 				expected: true,
-				message: message
-			} );
+				message: message,
+			});
 		},
 
 		// Expect boolean false
-		assertFalse: function ( actual, message ) {
-			this.pushResult( {
+		assertFalse: function (actual, message) {
+			this.pushResult({
 				result: actual === false,
 				actual: actual,
 				expected: false,
-				message: message
-			} );
+				message: message,
+			});
 		},
 
 		// Expect numerical value less than X
-		lt: function ( actual, expected, message ) {
-			this.pushResult( {
+		lt: function (actual, expected, message) {
+			this.pushResult({
 				result: actual < expected,
 				actual: actual,
-				expected: 'less than ' + expected,
-				message: message
-			} );
+				expected: "less than " + expected,
+				message: message,
+			});
 		},
 
 		// Expect numerical value less than or equal to X
-		ltOrEq: function ( actual, expected, message ) {
-			this.pushResult( {
+		ltOrEq: function (actual, expected, message) {
+			this.pushResult({
 				result: actual <= expected,
 				actual: actual,
-				expected: 'less than or equal to ' + expected,
-				message: message
-			} );
+				expected: "less than or equal to " + expected,
+				message: message,
+			});
 		},
 
 		// Expect numerical value greater than X
-		gt: function ( actual, expected, message ) {
-			this.pushResult( {
+		gt: function (actual, expected, message) {
+			this.pushResult({
 				result: actual > expected,
 				actual: actual,
-				expected: 'greater than ' + expected,
-				message: message
-			} );
+				expected: "greater than " + expected,
+				message: message,
+			});
 		},
 
 		// Expect numerical value greater than or equal to X
-		gtOrEq: function ( actual, expected, message ) {
-			this.pushResult( {
+		gtOrEq: function (actual, expected, message) {
+			this.pushResult({
 				result: actual >= true,
 				actual: actual,
-				expected: 'greater than or equal to ' + expected,
-				message: message
-			} );
+				expected: "greater than or equal to " + expected,
+				message: message,
+			});
 		},
 
 		/**
@@ -440,14 +471,14 @@
 		 * @param {Object} expectedStruct
 		 * @param {string} message Assertion message.
 		 */
-		domEqual: function ( actual, expectedStruct, message ) {
-			var actualStruct = getDomStructure( actual );
-			this.pushResult( {
-				result: QUnit.equiv( actualStruct, expectedStruct ),
+		domEqual: function (actual, expectedStruct, message) {
+			var actualStruct = getDomStructure(actual);
+			this.pushResult({
+				result: QUnit.equiv(actualStruct, expectedStruct),
 				actual: actualStruct,
 				expected: expectedStruct,
-				message: message
-			} );
+				message: message,
+			});
 		},
 
 		/**
@@ -457,15 +488,15 @@
 		 * @param {string} expectedHtml Expected HTML markup
 		 * @param {string} message Assertion message.
 		 */
-		htmlEqual: function ( actualHtml, expectedHtml, message ) {
-			var actual = getHtmlStructure( actualHtml ),
-				expected = getHtmlStructure( expectedHtml );
-			this.pushResult( {
-				result: QUnit.equiv( actual, expected ),
+		htmlEqual: function (actualHtml, expectedHtml, message) {
+			var actual = getHtmlStructure(actualHtml),
+				expected = getHtmlStructure(expectedHtml);
+			this.pushResult({
+				result: QUnit.equiv(actual, expected),
 				actual: actual,
 				expected: expected,
-				message: message
-			} );
+				message: message,
+			});
 		},
 
 		/**
@@ -475,153 +506,190 @@
 		 * @param {string} expectedHtml Expected HTML markup.
 		 * @param {string} message Assertion message.
 		 */
-		notHtmlEqual: function ( actualHtml, expectedHtml, message ) {
-			var actual = getHtmlStructure( actualHtml ),
-				expected = getHtmlStructure( expectedHtml );
+		notHtmlEqual: function (actualHtml, expectedHtml, message) {
+			var actual = getHtmlStructure(actualHtml),
+				expected = getHtmlStructure(expectedHtml);
 
-			this.pushResult( {
-				result: !QUnit.equiv( actual, expected ),
+			this.pushResult({
+				result: !QUnit.equiv(actual, expected),
 				actual: actual,
 				expected: expected,
 				message: message,
-				negative: true
-			} );
-		}
+				negative: true,
+			});
+		},
 	};
 
-	$.extend( QUnit.assert, addons );
+	$.extend(QUnit.assert, addons);
 
 	/**
 	 * Small test suite to confirm proper functionality of the utilities and
 	 * initializations defined above in this file.
 	 */
-	QUnit.module( 'testrunner', QUnit.newMwEnvironment( {
-		setup: function () {
-			this.mwHtmlLive = mw.html;
-			mw.html = {
-				escape: function () {
-					return 'mocked';
-				}
-			};
-		},
-		teardown: function () {
-			mw.html = this.mwHtmlLive;
-		},
-		config: {
-			testVar: 'foo'
-		},
-		messages: {
-			testMsg: 'Foo.'
-		}
-	} ) );
+	QUnit.module(
+		"testrunner",
+		QUnit.newMwEnvironment({
+			setup: function () {
+				this.mwHtmlLive = mw.html;
+				mw.html = {
+					escape: function () {
+						return "mocked";
+					},
+				};
+			},
+			teardown: function () {
+				mw.html = this.mwHtmlLive;
+			},
+			config: {
+				testVar: "foo",
+			},
+			messages: {
+				testMsg: "Foo.",
+			},
+		})
+	);
 
-	QUnit.test( 'Setup', function ( assert ) {
-		assert.strictEqual( mw.html.escape( 'foo' ), 'mocked', 'setup() callback was ran.' );
-		assert.strictEqual( mw.config.get( 'testVar' ), 'foo', 'config object applied' );
-		assert.strictEqual( mw.messages.get( 'testMsg' ), 'Foo.', 'messages object applied' );
+	QUnit.test("Setup", function (assert) {
+		assert.strictEqual(
+			mw.html.escape("foo"),
+			"mocked",
+			"setup() callback was ran."
+		);
+		assert.strictEqual(
+			mw.config.get("testVar"),
+			"foo",
+			"config object applied"
+		);
+		assert.strictEqual(
+			mw.messages.get("testMsg"),
+			"Foo.",
+			"messages object applied"
+		);
 
-		mw.config.set( 'testVar', 'bar' );
-		mw.messages.set( 'testMsg', 'Bar.' );
-	} );
+		mw.config.set("testVar", "bar");
+		mw.messages.set("testMsg", "Bar.");
+	});
 
-	QUnit.test( 'Teardown', function ( assert ) {
-		assert.strictEqual( mw.config.get( 'testVar' ), 'foo', 'config object restored and re-applied after test()' );
-		assert.strictEqual( mw.messages.get( 'testMsg' ), 'Foo.', 'messages object restored and re-applied after test()' );
-	} );
+	QUnit.test("Teardown", function (assert) {
+		assert.strictEqual(
+			mw.config.get("testVar"),
+			"foo",
+			"config object restored and re-applied after test()"
+		);
+		assert.strictEqual(
+			mw.messages.get("testMsg"),
+			"Foo.",
+			"messages object restored and re-applied after test()"
+		);
+	});
 
-	QUnit.test( 'Loader status', function ( assert ) {
-		var i, len, state,
+	QUnit.test("Loader status", function (assert) {
+		var i,
+			len,
+			state,
 			modules = mw.loader.getModuleNames(),
 			error = [],
 			missing = [];
 
-		for ( i = 0, len = modules.length; i < len; i++ ) {
-			state = mw.loader.getState( modules[ i ] );
-			if ( state === 'error' ) {
-				error.push( modules[ i ] );
-			} else if ( state === 'missing' ) {
-				missing.push( modules[ i ] );
+		for (i = 0, len = modules.length; i < len; i++) {
+			state = mw.loader.getState(modules[i]);
+			if (state === "error") {
+				error.push(modules[i]);
+			} else if (state === "missing") {
+				missing.push(modules[i]);
 			}
 		}
 
-		assert.deepEqual( error, [], 'Modules in error state' );
-		assert.deepEqual( missing, [], 'Modules in missing state' );
-	} );
+		assert.deepEqual(error, [], "Modules in error state");
+		assert.deepEqual(missing, [], "Modules in missing state");
+	});
 
-	QUnit.test( 'assert.htmlEqual', function ( assert ) {
+	QUnit.test("assert.htmlEqual", function (assert) {
 		assert.htmlEqual(
 			'<div><p class="some classes" data-length="10">Child paragraph with <a href="http://example.com">A link</a></p>Regular text<span>A span</span></div>',
-			'<div><p data-length=\'10\'  class=\'some classes\'>Child paragraph with <a href=\'http://example.com\' >A link</a></p>Regular text<span>A span</span></div>',
-			'Attribute order, spacing and quotation marks (equal)'
+			"<div><p data-length='10'  class='some classes'>Child paragraph with <a href='http://example.com' >A link</a></p>Regular text<span>A span</span></div>",
+			"Attribute order, spacing and quotation marks (equal)"
 		);
 
 		assert.notHtmlEqual(
 			'<div><p class="some classes" data-length="10">Child paragraph with <a href="http://example.com">A link</a></p>Regular text<span>A span</span></div>',
-			'<div><p data-length=\'10\'  class=\'some more classes\'>Child paragraph with <a href=\'http://example.com\' >A link</a></p>Regular text<span>A span</span></div>',
-			'Attribute order, spacing and quotation marks (not equal)'
+			"<div><p data-length='10'  class='some more classes'>Child paragraph with <a href='http://example.com' >A link</a></p>Regular text<span>A span</span></div>",
+			"Attribute order, spacing and quotation marks (not equal)"
 		);
 
 		assert.htmlEqual(
 			'<label for="firstname" accesskey="f" class="important">First</label><input id="firstname" /><label for="lastname" accesskey="l" class="minor">Last</label><input id="lastname" />',
 			'<label for="firstname" accesskey="f" class="important">First</label><input id="firstname" /><label for="lastname" accesskey="l" class="minor">Last</label><input id="lastname" />',
-			'Multiple root nodes (equal)'
+			"Multiple root nodes (equal)"
 		);
 
 		assert.notHtmlEqual(
 			'<label for="firstname" accesskey="f" class="important">First</label><input id="firstname" /><label for="lastname" accesskey="l" class="minor">Last</label><input id="lastname" />',
 			'<label for="firstname" accesskey="f" class="important">First</label><input id="firstname" /><label for="lastname" accesskey="l" class="important" >Last</label><input id="lastname" />',
-			'Multiple root nodes (not equal, last label node is different)'
+			"Multiple root nodes (not equal, last label node is different)"
 		);
 
 		assert.htmlEqual(
-			'fo&quot;o<br/>b&gt;ar',
+			"fo&quot;o<br/>b&gt;ar",
 			'fo"o<br/>b>ar',
-			'Extra escaping is equal'
+			"Extra escaping is equal"
 		);
 		assert.notHtmlEqual(
-			'foo&lt;br/&gt;bar',
-			'foo<br/>bar',
-			'Text escaping (not equal)'
+			"foo&lt;br/&gt;bar",
+			"foo<br/>bar",
+			"Text escaping (not equal)"
 		);
 
 		assert.htmlEqual(
 			'foo<a href="http://example.com">example</a>bar',
 			'foo<a href="http://example.com">example</a>bar',
-			'Outer text nodes are compared (equal)'
+			"Outer text nodes are compared (equal)"
 		);
 
 		assert.notHtmlEqual(
 			'foo<a href="http://example.com">example</a>bar',
 			'foo<a href="http://example.com">example</a>quux',
-			'Outer text nodes are compared (last text node different)'
+			"Outer text nodes are compared (last text node different)"
 		);
-	} );
+	});
 
-	QUnit.module( 'testrunner-after', QUnit.newMwEnvironment() );
+	QUnit.module("testrunner-after", QUnit.newMwEnvironment());
 
-	QUnit.test( 'Teardown', function ( assert ) {
-		assert.strictEqual( mw.html.escape( '<' ), '&lt;', 'teardown() callback was ran.' );
-		assert.strictEqual( mw.config.get( 'testVar' ), null, 'config object restored to live in next module()' );
-		assert.strictEqual( mw.messages.get( 'testMsg' ), null, 'messages object restored to live in next module()' );
-	} );
+	QUnit.test("Teardown", function (assert) {
+		assert.strictEqual(
+			mw.html.escape("<"),
+			"&lt;",
+			"teardown() callback was ran."
+		);
+		assert.strictEqual(
+			mw.config.get("testVar"),
+			null,
+			"config object restored to live in next module()"
+		);
+		assert.strictEqual(
+			mw.messages.get("testMsg"),
+			null,
+			"messages object restored to live in next module()"
+		);
+	});
 
-	QUnit.module( 'testrunner-each', {
+	QUnit.module("testrunner-each", {
 		beforeEach: function () {
 			this.mwHtmlLive = mw.html;
 		},
 		afterEach: function () {
 			mw.html = this.mwHtmlLive;
-		}
-	} );
-	QUnit.test( 'beforeEach', function ( assert ) {
-		assert.ok( this.mwHtmlLive, 'setup() ran' );
+		},
+	});
+	QUnit.test("beforeEach", function (assert) {
+		assert.ok(this.mwHtmlLive, "setup() ran");
 		mw.html = null;
-	} );
-	QUnit.test( 'afterEach', function ( assert ) {
-		assert.strictEqual( mw.html.escape( '<' ), '&lt;', 'afterEach() ran' );
-	} );
+	});
+	QUnit.test("afterEach", function (assert) {
+		assert.strictEqual(mw.html.escape("<"), "&lt;", "afterEach() ran");
+	});
 
-	QUnit.module( 'testrunner-each-compat', {
+	QUnit.module("testrunner-each-compat", {
 		// eslint-disable-next-line qunit/no-setup-teardown
 		setup: function () {
 			this.mwHtmlLive = mw.html;
@@ -629,51 +697,50 @@
 		// eslint-disable-next-line qunit/no-setup-teardown
 		teardown: function () {
 			mw.html = this.mwHtmlLive;
-		}
-	} );
-	QUnit.test( 'setup', function ( assert ) {
-		assert.ok( this.mwHtmlLive, 'setup() ran' );
+		},
+	});
+	QUnit.test("setup", function (assert) {
+		assert.ok(this.mwHtmlLive, "setup() ran");
 		mw.html = null;
-	} );
-	QUnit.test( 'teardown', function ( assert ) {
-		assert.strictEqual( mw.html.escape( '<' ), '&lt;', 'teardown() ran' );
-	} );
+	});
+	QUnit.test("teardown", function (assert) {
+		assert.strictEqual(mw.html.escape("<"), "&lt;", "teardown() ran");
+	});
 
 	// Regression test for 'this.sandbox undefined' error, fixed by
 	// ensuring Sinon setup/teardown is not re-run on inner module.
-	QUnit.module( 'testrunner-nested', function () {
-		QUnit.module( 'testrunner-nested-inner', function () {
-			QUnit.test( 'Dummy', function ( assert ) {
-				assert.ok( true, 'Nested modules supported' );
-			} );
-		} );
-	} );
+	QUnit.module("testrunner-nested", function () {
+		QUnit.module("testrunner-nested-inner", function () {
+			QUnit.test("Dummy", function (assert) {
+				assert.ok(true, "Nested modules supported");
+			});
+		});
+	});
 
-	QUnit.module( 'testrunner-hooks-outer', function () {
+	QUnit.module("testrunner-hooks-outer", function () {
 		var beforeHookWasExecuted = false,
 			afterHookWasExecuted = false;
-		QUnit.module( 'testrunner-hooks', {
+		QUnit.module("testrunner-hooks", {
 			before: function () {
 				beforeHookWasExecuted = true;
 
 				// This way we can be sure that module `testrunner-hook-after` will always
 				// be executed after module `testrunner-hooks`
-				QUnit.module( 'testrunner-hooks-after' );
+				QUnit.module("testrunner-hooks-after");
 				QUnit.test(
-					'`after` hook for module `testrunner-hooks` was executed',
-					function ( assert ) {
-						assert.ok( afterHookWasExecuted );
+					"`after` hook for module `testrunner-hooks` was executed",
+					function (assert) {
+						assert.ok(afterHookWasExecuted);
 					}
 				);
 			},
 			after: function () {
 				afterHookWasExecuted = true;
-			}
-		} );
+			},
+		});
 
-		QUnit.test( '`before` hook was executed', function ( assert ) {
-			assert.ok( beforeHookWasExecuted );
-		} );
-	} );
-
-}() );
+		QUnit.test("`before` hook was executed", function (assert) {
+			assert.ok(beforeHookWasExecuted);
+		});
+	});
+})();

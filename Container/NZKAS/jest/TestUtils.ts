@@ -125,7 +125,9 @@ export const makeGlobalConfig = (
   overrides: Partial<Config.GlobalConfig> = {},
 ): Config.GlobalConfig => {
   const overridesKeys = new Set(Object.keys(overrides));
-  Object.keys(DEFAULT_GLOBAL_CONFIG).forEach(key => overridesKeys.delete(key));
+  Object.keys(DEFAULT_GLOBAL_CONFIG).forEach((key) =>
+    overridesKeys.delete(key),
+  );
 
   if (overridesKeys.size > 0) {
     throw new Error(`
@@ -141,7 +143,9 @@ export const makeProjectConfig = (
   overrides: Partial<Config.ProjectConfig> = {},
 ): Config.ProjectConfig => {
   const overridesKeys = new Set(Object.keys(overrides));
-  Object.keys(DEFAULT_PROJECT_CONFIG).forEach(key => overridesKeys.delete(key));
+  Object.keys(DEFAULT_PROJECT_CONFIG).forEach((key) =>
+    overridesKeys.delete(key),
+  );
 
   if (overridesKeys.size > 0) {
     throw new Error(`

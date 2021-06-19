@@ -5,11 +5,13 @@
 Add the phonegap-toast.jar to your project in Eclipse. Right click on libs and select Build Path > Configure Build Path. Choose Java Build Path and select the Libraries tab. Click add Jars and select phonegap-toast.jar. If you are building an Android project from the command line jar files found in libs are automatically compiled in.
 
 Add the PhoneGap Toast Plugin JS file along side your other assets and import.
+
 <pre>
 	&lt;script type="text/javascript" charset="utf-8" src="phonegap-toast.js"&gt;&lt;/script&gt;
 </pre>
 
 Then you can use the plugin like so:
+
 <pre>
 	window.plugins.ToastPlugin.show_long('Epic!');
 </pre>
@@ -23,7 +25,7 @@ or
 The long vs short correspond to the Android options: (http://developer.android.com/reference/android/widget/Toast.html#LENGTH_LONG)
 (http://developer.android.com/reference/android/widget/Toast.html#LENGTH_SHORT)
 
-## Licence ##
+## Licence
 
 The MIT License
 

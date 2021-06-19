@@ -1,5 +1,4 @@
-module.exports = ( function () {
-
+module.exports = (function () {
 	/**
 	 * Create an object like mw.Api, but automatically handling everything required to communicate
 	 * with another MediaWiki wiki via cross-origin requests (CORS).
@@ -43,34 +42,35 @@ module.exports = ( function () {
 	 * @author Bartosz Dziewoński
 	 * @author Jon Robson
 	 */
-	function CoreForeignApi( url, options ) {
-		if ( !url || $.isPlainObject( url ) ) {
-			throw new Error( 'mw.ForeignApi() requires a `url` parameter' );
+	function CoreForeignApi(url, options) {
+		if (!url || $.isPlainObject(url)) {
+			throw new Error("mw.ForeignApi() requires a `url` parameter");
 		}
 
-		this.apiUrl = String( url );
+		this.apiUrl = String(url);
 		this.anonymous = options && options.anonymous;
 
-		options = $.extend( /* deep= */ true,
+		options = $.extend(
+			/* deep= */ true,
 			{
 				ajax: {
 					url: this.apiUrl,
 					xhrFields: {
-						withCredentials: !this.anonymous
-					}
+						withCredentials: !this.anonymous,
+					},
 				},
 				parameters: {
-					origin: this.getOrigin()
-				}
+					origin: this.getOrigin(),
+				},
 			},
 			options
 		);
 
 		// Call parent constructor
-		CoreForeignApi.parent.call( this, options );
+		CoreForeignApi.parent.call(this, options);
 	}
 
-	OO.inheritClass( CoreForeignApi, mw.Api );
+	OO.inheritClass(CoreForeignApi, mw.Api);
 
 	/**
 	 * Return the origin to use for API requests, in the required format (protocol, host and port, if
@@ -81,19 +81,19 @@ module.exports = ( function () {
 	 */
 	CoreForeignApi.prototype.getOrigin = function () {
 		var origin, apiUri, apiOrigin;
-		if ( this.anonymous ) {
-			return '*';
+		if (this.anonymous) {
+			return "*";
 		}
 
 		// eslint-disable-next-line compat/compat
-		origin = location.protocol + '//' + location.hostname;
-		if ( location.port ) {
-			origin += ':' + location.port;
+		origin = location.protocol + "//" + location.hostname;
+		if (location.port) {
+			origin += ":" + location.port;
 		}
 
-		apiUri = new mw.Uri( this.apiUrl );
-		apiOrigin = apiUri.protocol + '://' + apiUri.getAuthority();
-		if ( origin === apiOrigin ) {
+		apiUri = new mw.Uri(this.apiUrl);
+		apiOrigin = apiUri.protocol + "://" + apiUri.getAuthority();
+		if (origin === apiOrigin) {
 			// requests are not cross-origin, omit parameter
 			return undefined;
 		}
@@ -104,24 +104,32 @@ module.exports = ( function () {
 	/**
 	 * @inheritdoc
 	 */
-	CoreForeignApi.prototype.ajax = function ( parameters, ajaxOptions ) {
+	CoreForeignApi.prototype.ajax = function (parameters, ajaxOptions) {
 		var url, origin, newAjaxOptions;
 
 		// 'origin' query parameter must be part of the request URI, and not just POST request body
-		if ( ajaxOptions.type === 'POST' ) {
-			url = ( ajaxOptions && ajaxOptions.url ) || this.defaults.ajax.url;
-			origin = ( parameters && parameters.origin ) || this.defaults.parameters.origin;
-			if ( origin !== undefined ) {
-				url += ( url.indexOf( '?' ) !== -1 ? '&' : '?' ) +
-					'origin=' + encodeURIComponent( origin );
+		if (ajaxOptions.type === "POST") {
+			url = (ajaxOptions && ajaxOptions.url) || this.defaults.ajax.url;
+			origin =
+				(parameters && parameters.origin) ||
+				this.defaults.parameters.origin;
+			if (origin !== undefined) {
+				url +=
+					(url.indexOf("?") !== -1 ? "&" : "?") +
+					"origin=" +
+					encodeURIComponent(origin);
 			}
-			newAjaxOptions = $.extend( {}, ajaxOptions, { url: url } );
+			newAjaxOptions = $.extend({}, ajaxOptions, { url: url });
 		} else {
 			newAjaxOptions = ajaxOptions;
 		}
 
-		return CoreForeignApi.parent.prototype.ajax.call( this, parameters, newAjaxOptions );
+		return CoreForeignApi.parent.prototype.ajax.call(
+			this,
+			parameters,
+			newAjaxOptions
+		);
 	};
 
 	return CoreForeignApi;
-}() );
+})();

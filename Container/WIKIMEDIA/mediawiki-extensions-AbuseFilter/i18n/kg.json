@@ -1,10 +1,8 @@
 {
-	"@metadata": {
-		"authors": [
-			"Rkupsala"
-		]
-	},
-	"abusefilter-examine-user": "Sadi:",
-	"abusefilter-examine-title": "Nkûmbu ya mukânda:",
-	"abusefilter-examine-submit": "Sosa"
+  "@metadata": {
+    "authors": ["Rkupsala"]
+  },
+  "abusefilter-examine-user": "Sadi:",
+  "abusefilter-examine-title": "Nkûmbu ya mukânda:",
+  "abusefilter-examine-submit": "Sosa"
 }

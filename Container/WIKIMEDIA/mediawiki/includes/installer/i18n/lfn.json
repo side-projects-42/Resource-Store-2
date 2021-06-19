@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Mafcadio",
-			"Robin van der Vliet"
-		]
+		"authors": ["Mafcadio", "Robin van der Vliet"]
 	},
 	"config-page-language": "Lingua",
 	"config-ns-generic": "Projeta",

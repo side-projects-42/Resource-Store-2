@@ -30,9 +30,7 @@ function WatchmanError(error: Error): Error {
   return error;
 }
 
-export = async function watchmanCrawl(
-  options: CrawlerOptions,
-): Promise<{
+export = async function watchmanCrawl(options: CrawlerOptions): Promise<{
   changedFiles?: FileData;
   removedFiles: FileData;
   hasteMap: InternalHasteMap;
@@ -42,13 +40,13 @@ export = async function watchmanCrawl(
   const defaultWatchExpression = [
     'allof',
     ['type', 'f'],
-    ['anyof', ...extensions.map(extension => ['suffix', extension])],
+    ['anyof', ...extensions.map((extension) => ['suffix', extension])],
   ];
   const clocks = data.clocks;
   const client = new watchman.Client();
 
   let clientError;
-  client.on('error', error => (clientError = WatchmanError(error)));
+  client.on('error', (error) => (clientError = WatchmanError(error)));
 
   // TODO: type better than `any`
   const cmd = (...args: Array<any>): Promise<any> =>
@@ -71,7 +69,7 @@ export = async function watchmanCrawl(
   ): Promise<WatchmanRoots> {
     const watchmanRoots = new Map();
     await Promise.all(
-      roots.map(async root => {
+      roots.map(async (root) => {
         const response = await cmd('watch-project', root);
         const existing = watchmanRoots.get(response.watch);
         // A root can only be filtered if it was never seen with a
@@ -108,7 +106,7 @@ export = async function watchmanCrawl(
           if (directoryFilters.length > 0) {
             expression.push([
               'anyof',
-              ...directoryFilters.map(dir => ['dirname', dir]),
+              ...directoryFilters.map((dir) => ['dirname', dir]),
             ]);
 
             for (const directory of directoryFilters) {

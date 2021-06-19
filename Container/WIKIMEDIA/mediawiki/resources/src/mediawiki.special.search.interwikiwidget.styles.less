@@ -1,8 +1,8 @@
 /* Interwiki search results */
 /* ======================== */
 
-@import 'mediawiki.ui/variables.less';
-@import 'mediawiki.mixins.less';
+@import "mediawiki.ui/variables.less";
+@import "mediawiki.mixins.less";
 
 /* stylelint-disable selector-class-pattern */
 
@@ -32,11 +32,12 @@
 	}
 
 	.iw-result:after,
-	.iw-result__content:after { /* Clearfix */
+	.iw-result__content:after {
+		/* Clearfix */
 		visibility: hidden;
 		display: block;
 		font-size: 0;
-		content: ' ';
+		content: " ";
 		clear: both;
 		height: 0;
 	}
@@ -68,8 +69,8 @@
 	}
 
 	/* Second and third images are small */
-	.iw-result__mini-gallery:nth-child( 2 ),
-	.iw-result__mini-gallery:nth-child( 3 ) {
+	.iw-result__mini-gallery:nth-child(2),
+	.iw-result__mini-gallery:nth-child(3) {
 		width: 50%;
 		height: 100px;
 	}
@@ -95,7 +96,7 @@
 		color: #fff;
 		font-size: 0.8em;
 		padding: 0.5em;
-		background-color: rgba( 0, 0, 0, 0.5 );
+		background-color: rgba(0, 0, 0, 0.5);
 	}
 
 	.iw-result__mini-gallery__image:hover > .iw-result__mini-gallery__caption {
@@ -103,7 +104,7 @@
 	}
 
 	/* Tablet and up */
-	@media only screen and ( min-width: @width-breakpoint-tablet ) {
+	@media only screen and (min-width: @width-breakpoint-tablet) {
 		#mw-interwiki-results {
 			width: 30%;
 			display: inline-block; /* Used to align interwiki sidebar with the top of the main search results */

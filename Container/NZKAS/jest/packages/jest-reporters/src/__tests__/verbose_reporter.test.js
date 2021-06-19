@@ -7,7 +7,7 @@
 
 'use strict';
 
-const wrap = obj => ({suites: obj, tests: [], title: ''});
+const wrap = (obj) => ({suites: obj, tests: [], title: ''});
 
 let groupTestsBySuites;
 

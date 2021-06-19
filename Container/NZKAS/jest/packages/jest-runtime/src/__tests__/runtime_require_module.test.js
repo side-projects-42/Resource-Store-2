@@ -19,7 +19,7 @@ describe('Runtime requireModule', () => {
   });
 
   it('finds haste modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'RegularModule',
@@ -28,7 +28,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('provides `module` to modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'RegularModule',
@@ -45,7 +45,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('provides `module.parent` to modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'RequireRegularModule',
@@ -62,7 +62,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('`module.parent` should be undefined for entrypoints', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'RegularModule',
@@ -71,7 +71,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('resolve module.parent.require correctly', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'inner_parent_module',
@@ -80,7 +80,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('resolve module.parent.filename correctly', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'inner_parent_module',
@@ -92,7 +92,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('provides `module.loaded` to modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'RegularModule',
@@ -105,7 +105,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('provides `module.filename` to modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'RegularModule',
@@ -119,38 +119,38 @@ describe('Runtime requireModule', () => {
     const altModuleDir = 'bower_components';
     const moduleDirectories = ['node_modules', altModuleDir];
 
-    return createRuntime(__filename, {moduleDirectories}).then(runtime => {
+    return createRuntime(__filename, {moduleDirectories}).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'RegularModule',
       );
       expect(exports.paths.length).toBeGreaterThan(0);
-      exports.paths.forEach(path => {
-        expect(moduleDirectories.some(dir => path.endsWith(dir))).toBe(true);
+      exports.paths.forEach((path) => {
+        expect(moduleDirectories.some((dir) => path.endsWith(dir))).toBe(true);
       });
     });
   });
   it('provides `require.main` to modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       runtime._moduleRegistry[__filename] = module;
       [
         './test_root/modules_with_main/export_main.js',
         './test_root/modules_with_main/re_export_main.js',
-      ].forEach(modulePath => {
+      ].forEach((modulePath) => {
         const mainModule = runtime.requireModule(__filename, modulePath);
         expect(mainModule).toBe(module);
       });
     }));
 
   it('throws on non-existent haste modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       expect(() => {
         runtime.requireModule(runtime.__mockRootPath, 'DoesntExist');
       }).toThrow(new Error("Cannot find module 'DoesntExist' from 'root.js'"));
     }));
 
   it('finds relative-path modules without file extension', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         './RegularModule',
@@ -159,7 +159,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('finds relative-path modules with file extension', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         './RegularModule.js',
@@ -168,7 +168,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('throws on non-existent relative-path modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       expect(() => {
         runtime.requireModule(runtime.__mockRootPath, './DoesntExist');
       }).toThrow(
@@ -177,14 +177,14 @@ describe('Runtime requireModule', () => {
     }));
 
   it('finds node core built-in modules', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       expect(() => {
         runtime.requireModule(runtime.__mockRootPath, 'fs');
       }).not.toThrow();
     }));
 
   it('finds and loads JSON files without file extension', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         './JSONFile',
@@ -193,7 +193,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('finds and loads JSON files with file extension', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         './JSONFile.json',
@@ -202,7 +202,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('requires a JSON file twice successfully', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports1 = runtime.requireModule(
         runtime.__mockRootPath,
         './JSONFile.json',
@@ -217,7 +217,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('provides manual mock when real module doesnt exist', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         'ExclusivelyManualMock',
@@ -228,7 +228,7 @@ describe('Runtime requireModule', () => {
   it(`doesn't override real modules with manual mocks when explicitly unmocked`, () =>
     createRuntime(__filename, {
       automock: true,
-    }).then(runtime => {
+    }).then((runtime) => {
       const root = runtime.requireModule(runtime.__mockRootPath, './root.js');
       root.jest.resetModuleRegistry();
       root.jest.unmock('ManuallyMocked');
@@ -240,7 +240,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('resolves haste packages properly', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const hastePackage = runtime.requireModule(
         runtime.__mockRootPath,
         'haste-package/core/module',
@@ -256,7 +256,7 @@ describe('Runtime requireModule', () => {
       haste: {
         providesModuleNodeModules: ['not-a-haste-package'],
       },
-    }).then(runtime => {
+    }).then((runtime) => {
       const hastePackage = runtime.requireModule(
         runtime.__mockRootPath,
         'not-a-haste-package',
@@ -266,7 +266,7 @@ describe('Runtime requireModule', () => {
 
   it('resolves platform extensions based on the default platform', () =>
     Promise.all([
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const exports = runtime.requireModule(
           runtime.__mockRootPath,
           'Platform',
@@ -279,7 +279,7 @@ describe('Runtime requireModule', () => {
           defaultPlatform: 'ios',
           platforms: ['ios', 'android'],
         },
-      }).then(runtime => {
+      }).then((runtime) => {
         const exports = runtime.requireModule(
           runtime.__mockRootPath,
           'Platform',
@@ -291,7 +291,7 @@ describe('Runtime requireModule', () => {
         haste: {
           platforms: ['ios', 'android'],
         },
-      }).then(runtime => {
+      }).then((runtime) => {
         const exports = runtime.requireModule(
           runtime.__mockRootPath,
           'Platform',
@@ -304,7 +304,7 @@ describe('Runtime requireModule', () => {
           defaultPlatform: 'android',
           platforms: ['ios', 'android'],
         },
-      }).then(runtime => {
+      }).then((runtime) => {
         const exports = runtime.requireModule(
           runtime.__mockRootPath,
           'Platform',
@@ -317,7 +317,7 @@ describe('Runtime requireModule', () => {
           defaultPlatform: 'windows',
           platforms: ['ios', 'android', 'native', 'windows'],
         },
-      }).then(runtime => {
+      }).then((runtime) => {
         const exports = runtime.requireModule(
           runtime.__mockRootPath,
           'Platform',
@@ -330,7 +330,7 @@ describe('Runtime requireModule', () => {
     ]));
 
   it('finds modules encoded in UTF-8 *with BOM*', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         './utf8_with_bom.js',
@@ -339,7 +339,7 @@ describe('Runtime requireModule', () => {
     }));
 
   it('finds and loads JSON files encoded in UTF-8 *with BOM*', () =>
-    createRuntime(__filename).then(runtime => {
+    createRuntime(__filename).then((runtime) => {
       const exports = runtime.requireModule(
         runtime.__mockRootPath,
         './utf8_with_bom.json',

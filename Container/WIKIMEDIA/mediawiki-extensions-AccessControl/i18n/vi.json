@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Nguyên Lê"
-		]
-	},
-	"accesscontrol-info": "Trang này đang bị khóa."
+  "@metadata": {
+    "authors": ["Nguyên Lê"]
+  },
+  "accesscontrol-info": "Trang này đang bị khóa."
 }

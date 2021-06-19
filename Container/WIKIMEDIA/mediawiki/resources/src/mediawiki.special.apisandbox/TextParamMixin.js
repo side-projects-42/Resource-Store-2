@@ -26,11 +26,11 @@ TextParamMixin.prototype.getApiValue = function () {
 /**
  * @param {Mixed|undefined} newValue
  */
-TextParamMixin.prototype.setApiValue = function ( newValue ) {
-	if ( newValue === undefined ) {
+TextParamMixin.prototype.setApiValue = function (newValue) {
+	if (newValue === undefined) {
 		newValue = this.paramInfo.default;
 	}
-	this.setValue( newValue );
+	this.setValue(newValue);
 };
 
 /**
@@ -41,17 +41,24 @@ TextParamMixin.prototype.setApiValue = function ( newValue ) {
  * @param {boolean} shouldSuppressErrors
  * @return {jQuery.Promise}
  */
-TextParamMixin.prototype.apiCheckValid = function ( shouldSuppressErrors ) {
+TextParamMixin.prototype.apiCheckValid = function (shouldSuppressErrors) {
 	var that = this;
-	return this.getValidity().then( function () {
-		return $.Deferred().resolve( true ).promise();
-	}, function () {
-		return $.Deferred().resolve( false ).promise();
-	} ).done( function ( ok ) {
-		ok = ok || shouldSuppressErrors;
-		that.setIcon( ok ? null : 'alert' );
-		that.setTitle( ok ? '' : mw.message( 'apisandbox-alert-field' ).plain() );
-	} );
+	return this.getValidity()
+		.then(
+			function () {
+				return $.Deferred().resolve(true).promise();
+			},
+			function () {
+				return $.Deferred().resolve(false).promise();
+			}
+		)
+		.done(function (ok) {
+			ok = ok || shouldSuppressErrors;
+			that.setIcon(ok ? null : "alert");
+			that.setTitle(
+				ok ? "" : mw.message("apisandbox-alert-field").plain()
+			);
+		});
 };
 
 module.exports = TextParamMixin;

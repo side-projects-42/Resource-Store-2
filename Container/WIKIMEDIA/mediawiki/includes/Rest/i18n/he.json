@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Amire80",
-			"Guycn2",
-			"Rotemliss"
-		]
+		"authors": ["Amire80", "Guycn2", "Rotemliss"]
 	},
 	"rest-prefix-mismatch": "הנתיב המבוקש ($1) לא היה בתוך נתיב השורש ($2) של ה־REST API",
 	"rest-wrong-method": "שיטת הבקשה ($1) לא הייתה {{PLURAL:$3|השיטה המותרת עבור נתיב זה|אחת השיטות המותרות עבור נתיב זה}} ($2)",

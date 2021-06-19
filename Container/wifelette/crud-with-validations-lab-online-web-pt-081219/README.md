@@ -31,7 +31,7 @@ Use the `resource` generator, **not** the `scaffold` generator
 
 3.  Render the list of songs in an HTML table.
 
-4.  Build views that connect to each other using route helpers. 
+4.  Build views that connect to each other using route helpers.
 
 5.  Use `form_for` to build forms with pre-fill and error list features. (_Hint:
     Try using a partial to cut down on copy/pasting!_)

@@ -16,60 +16,61 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- 
+
 // open "http://search.npmjs.org/#/grunt" ; sudo npm -g install grunt
 
-var child_process = require("child_process")
+var child_process = require("child_process");
 
 //------------------------------------------------------------------------------
 // list of source files to watch
 //------------------------------------------------------------------------------
 var sourceFiles = [
-    "build/**/*.js", 
-    "grunt.js",
-    "Jakefile",
-    "lib/**/*.js",
-    "test/**/*.js"
-]
+  "build/**/*.js",
+  "grunt.js",
+  "Jakefile",
+  "lib/**/*.js",
+  "test/**/*.js",
+];
 
 //------------------------------------------------------------------------------
 var gruntConfig = {
-    watch: {
-        jake: {
-            files: sourceFiles,
-            tasks: ["jake"]
-        }
-    }
-}
+  watch: {
+    jake: {
+      files: sourceFiles,
+      tasks: ["jake"],
+    },
+  },
+};
 
 //------------------------------------------------------------------------------
 // run "jake"
 //------------------------------------------------------------------------------
 function jakeTask(grunt) {
-    var done = this.async()
-    var make = child_process.spawn('jake')
-    
-    make.stdout.on("data", function(data) {
-        grunt.log.write("" + data)
-    })
-    
-    make.stderr.on("data", function(data) {
-        grunt.log.error("" + data)
-    })
-    
-    make.on("exit", function(code) {
-        if (code === 0) return done(true)
-        
-        grunt.log.writeln("error running jake", code)
-        return done(false)
-    })
+  var done = this.async();
+  var make = child_process.spawn("jake");
+
+  make.stdout.on("data", function (data) {
+    grunt.log.write("" + data);
+  });
+
+  make.stderr.on("data", function (data) {
+    grunt.log.error("" + data);
+  });
+
+  make.on("exit", function (code) {
+    if (code === 0) return done(true);
+
+    grunt.log.writeln("error running jake", code);
+    return done(false);
+  });
 }
 
 //------------------------------------------------------------------------------
-module.exports = function(grunt) {
-    grunt.initConfig(gruntConfig)
-    
-    grunt.registerTask("default", "watch")
-    grunt.registerTask("jake", "run jake", function(){jakeTask.call(this,grunt)}
-    )
-}
+module.exports = function (grunt) {
+  grunt.initConfig(gruntConfig);
+
+  grunt.registerTask("default", "watch");
+  grunt.registerTask("jake", "run jake", function () {
+    jakeTask.call(this, grunt);
+  });
+};

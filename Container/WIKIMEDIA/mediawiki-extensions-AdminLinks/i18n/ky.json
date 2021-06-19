@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Growingup"
-		]
-	},
-	"adminlinks_users": "Катышуучулар"
+  "@metadata": {
+    "authors": ["Growingup"]
+  },
+  "adminlinks_users": "Катышуучулар"
 }

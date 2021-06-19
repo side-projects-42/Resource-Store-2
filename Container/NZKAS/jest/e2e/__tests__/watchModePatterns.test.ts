@@ -18,11 +18,11 @@ beforeEach(() => cleanup(DIR));
 afterAll(() => cleanup(DIR));
 
 expect.addSnapshotSerializer({
-  print: val => val.replace(/\[s\[u/g, '\n'),
-  test: val => typeof val === 'string' && val.includes('[s[u'),
+  print: (val) => val.replace(/\[s\[u/g, '\n'),
+  test: (val) => typeof val === 'string' && val.includes('[s[u'),
 });
 
-const setupFiles = input => {
+const setupFiles = (input) => {
   writeFiles(DIR, {
     '__tests__/bar.spec.js': `
       test('bar 1', () => { expect('bar').toBe('bar'); });

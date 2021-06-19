@@ -1,9 +1,11 @@
-YUI.add('error', function(Y) {
+YUI.add(
+  "error",
+  function (Y) {
     //This file contains a syntax error...
 
     if (baz.foo) {
-        //This should error
+      //This should error
     }
-
-
-}, '1.0.1');
+  },
+  "1.0.1"
+);

@@ -8,12 +8,10 @@
  * @description:
  * Tests that there are no focus tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	describe('something', function () {
-		it('should do stuff', function () {
-
-		});
+	describe("something", function () {
+		it("should do stuff", function () {});
 	});
-}(this));
+})(this);

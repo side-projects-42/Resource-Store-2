@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Dark Eagle"
-		]
-	},
-	"adminlinks_users": "Lītuotuoji"
+  "@metadata": {
+    "authors": ["Dark Eagle"]
+  },
+  "adminlinks_users": "Lītuotuoji"
 }

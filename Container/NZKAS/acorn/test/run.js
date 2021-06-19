@@ -1,4 +1,4 @@
-(function() {
+(function () {
   var driver, acorn;
 
   if (typeof require !== "undefined") {
@@ -6,14 +6,14 @@
     require("./tests.js");
     require("./tests-harmony.js");
     require("./tests-es7.js");
-    acorn = require("../dist/acorn")
-    require("../dist/acorn_loose")
+    acorn = require("../dist/acorn");
+    require("../dist/acorn_loose");
   } else {
     driver = window;
     acorn = window.acorn;
   }
 
-  var htmlLog = typeof document === "object" && document.getElementById('log');
+  var htmlLog = typeof document === "object" && document.getElementById("log");
   var htmlGroup = htmlLog;
 
   function group(name) {
@@ -48,26 +48,30 @@
     if (typeof console === "object") console.log(title, message);
   }
 
-  var stats, modes = {
-    Normal: {
-      config: {
-        parse: acorn.parse
-      }
-    },
-    Loose: {
-      config: {
-        parse: acorn.parse_dammit,
-        loose: true,
-        filter: function (test) {
-          var opts = test.options || {};
-          return opts.loose !== false;
-        }
-      }
-    }
-  };
+  var stats,
+    modes = {
+      Normal: {
+        config: {
+          parse: acorn.parse,
+        },
+      },
+      Loose: {
+        config: {
+          parse: acorn.parse_dammit,
+          loose: true,
+          filter: function (test) {
+            var opts = test.options || {};
+            return opts.loose !== false;
+          },
+        },
+      },
+    };
 
   function report(state, code, message) {
-    if (state != "ok") {++stats.failed; log(code, message);}
+    if (state != "ok") {
+      ++stats.failed;
+      log(code, message);
+    }
     ++stats.testsRun;
   }
 
@@ -76,21 +80,27 @@
   for (var name in modes) {
     group(name);
     var mode = modes[name];
-    stats = mode.stats = {testsRun: 0, failed: 0};
-    var t0 = +new Date;
+    stats = mode.stats = { testsRun: 0, failed: 0 };
+    var t0 = +new Date();
     driver.runTests(mode.config, report);
-    mode.stats.duration = +new Date - t0;
+    mode.stats.duration = +new Date() - t0;
     groupEnd();
   }
 
   groupEnd();
 
   function outputStats(name, stats) {
-    log(name + ":", stats.testsRun + " tests run in " + stats.duration + "ms; " +
-      (stats.failed ? stats.failed + " failures." : "all passed."));
+    log(
+      name + ":",
+      stats.testsRun +
+        " tests run in " +
+        stats.duration +
+        "ms; " +
+        (stats.failed ? stats.failed + " failures." : "all passed.")
+    );
   }
 
-  var total = {testsRun: 0, failed: 0, duration: 0};
+  var total = { testsRun: 0, failed: 0, duration: 0 };
 
   group("Stats");
 
@@ -105,7 +115,7 @@
   groupEnd();
 
   if (total.failed && typeof process === "object") {
-    process.stdout.write("", function() {
+    process.stdout.write("", function () {
       process.exit(1);
     });
   }

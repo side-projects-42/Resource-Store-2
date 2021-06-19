@@ -1,4 +1,4 @@
-@import 'mediawiki.skin.variables.less';
+@import "mediawiki.skin.variables.less";
 
 /*!
  * OOUI definitions used by the existing CSS (will make it easier to put this
@@ -60,8 +60,10 @@
 @padding-vertical-base: 6px;
 // All paddings holding icons need `em`s due to font-size derived icon scaling.
 @padding-top-button-clear: 28 / @ooui-font-size-browser / @ooui-font-size-base; // As it's inside an input, we need to reduce from borders surrounding.
-@padding-start-input-text-icon: 6 / @ooui-font-size-browser / @ooui-font-size-base;
-@padding-start-input-text-icon-label: 32 / @ooui-font-size-browser / @ooui-font-size-base;
+@padding-start-input-text-icon: 6 / @ooui-font-size-browser /
+	@ooui-font-size-base;
+@padding-start-input-text-icon-label: 32 / @ooui-font-size-browser /
+	@ooui-font-size-base;
 @padding-start-button-clear: 4 / @ooui-font-size-browser / @ooui-font-size-base;
 
 @border-base: 1px solid #a2a9b1;
@@ -71,20 +73,23 @@
 @border-color-erroneous: @color-erroneous;
 
 @box-shadow-base--focus: inset 0 0 0 1px @color-progressive;
-@box-shadow-dialog: 0 2px 2px 0 rgba( 0, 0, 0, 0.25 );
+@box-shadow-dialog: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
 @box-shadow-widget: inset 0 0 0 1px transparent;
 @box-shadow-erroneous--focus: inset 0 0 0 1px @color-erroneous;
 
 // `line-height` has to be relative/in `em` to enable user override in browser settings.
-@line-height-widget-base: unit( 18 / @ooui-font-size-browser / @ooui-font-size-base, @ooui-unit ); // equals `18px` at base `font-size: 14px;
+@line-height-widget-base: unit(
+	18 / @ooui-font-size-browser / @ooui-font-size-base,
+	@ooui-unit
+); // equals `18px` at base `font-size: 14px;
 
 @text-shadow-base: 0 1px 1px @color-base--inverted; // 'coined' effect
 @text-shadow-base--disabled: @text-shadow-base;
 
 @opacity-base--disabled: 0.51;
 
-@transition-base:             @transition-duration-base;
-@transition-ease-medium:      @transition-duration-medium;
+@transition-base: @transition-duration-base;
+@transition-ease-medium: @transition-duration-medium;
 // Transitions > Durations
-@transition-duration-base:    100ms;
-@transition-duration-medium:  250ms;
+@transition-duration-base: 100ms;
+@transition-duration-medium: 250ms;

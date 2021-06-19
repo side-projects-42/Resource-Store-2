@@ -36,6 +36,7 @@
 ##### Discussion / Resolution
 
 - write RFC
+
   - enumerate use cases and edge cases
 
 - create draft
@@ -51,14 +52,14 @@
   it's not included in `2.7`
 - e.g. how can we support `xhr.setRequestHeader` after we got credentials
 
-``` js
+```js
 hash.beforeSend = (xhr) => {
-  this.get("session").authorize(authorizer, hash => {
+  this.get("session").authorize(authorizer, (hash) => {
     Object.keys(hash).forEach((key) => {
       xhr.setRequestHeader(key, hash[key]);
     });
-  })
-}
+  });
+};
 ```
 
 ##### Discussion / Resolution

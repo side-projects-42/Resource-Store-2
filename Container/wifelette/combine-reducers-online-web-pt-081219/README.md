@@ -56,7 +56,7 @@ now, let's write a single reducer to manage both of these resources.
 export default function bookApp(
   state = {
     authors: [],
-    books: []
+    books: [],
   },
   action
 ) {
@@ -66,30 +66,33 @@ export default function bookApp(
       return {
         ...state,
         authors: [...state.authors],
-        books: [...state.books, action.book]
+        books: [...state.books, action.book],
       };
 
     case "REMOVE_BOOK":
-      idx = state.books.findIndex(book => book.id === action.id);
+      idx = state.books.findIndex((book) => book.id === action.id);
       return {
         ...state,
         authors: [...state.authors],
-        books: [...state.books.slice(0, idx), ...state.books.slice(idx + 1)]
+        books: [...state.books.slice(0, idx), ...state.books.slice(idx + 1)],
       };
 
     case "ADD_AUTHOR":
       return {
         ...state,
         books: [...state.books],
-        authors: [...state.authors, action.author]
+        authors: [...state.authors, action.author],
       };
 
     case "REMOVE_AUTHOR":
-      idx = state.authors.findIndex(author => author.id === action.id);
+      idx = state.authors.findIndex((author) => author.id === action.id);
       return {
         ...state,
         books: [...state.books],
-        authors: [...state.authors.slice(0, idx), ...state.authors.slice(idx + 1)]
+        authors: [
+          ...state.authors.slice(0, idx),
+          ...state.authors.slice(idx + 1),
+        ],
       };
 
     default:
@@ -107,17 +110,17 @@ application, we can keep our code organized as our applications get more
 complicated.
 
 > **NOTE:** You may have noticed something in the reducer example: when we
-update one part of `state`, we're still using the spread operator _on other
-parts_. For example, in the `"ADD_AUTHOR"` case, we add `action.author` to the
-`authors` array, but **we also use the spread operator to create a new `book`
-array**. This is because both `Object.assign()` and the spread operator only
-create shallow copies of objects. If we leave out `books: [...state.books]`,
-and just write the following:
+> update one part of `state`, we're still using the spread operator _on other
+> parts_. For example, in the `"ADD_AUTHOR"` case, we add `action.author` to the
+> `authors` array, but **we also use the spread operator to create a new `book`
+> array**. This is because both `Object.assign()` and the spread operator only
+> create shallow copies of objects. If we leave out `books: [...state.books]`,
+> and just write the following:
 
 ```js
 return {
-        ...state,
-        authors: [...state.authors, action.author]
+  ...state,
+  authors: [...state.authors, action.author],
 };
 ```
 
@@ -128,7 +131,7 @@ documentation][] goes into further detail on the benefits of immutability, [disc
 this exact issue][], and [provides further examples][] of how to properly use the
 spread operator to deeply copy nested data.
 
-[The official redux documentation]: https://redux.js.org/faq/immutable-data#what-are-the-benefits-of-immutability
+[the official redux documentation]: https://redux.js.org/faq/immutable-data#what-are-the-benefits-of-immutability
 [discusses this exact issue]: https://redux.js.org/faq/immutable-data#accidental-object-mutation
 [provides further examples]: https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
 
@@ -144,7 +147,7 @@ import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
   authors: authorsReducer,
-  books: booksReducer
+  books: booksReducer,
 });
 
 export default rootReducer;
@@ -156,7 +159,7 @@ function booksReducer(state = [], action) {
       return [...state, action.book];
 
     case "REMOVE_BOOK":
-      idx = state.findIndex(book => book.id  === action.id)
+      idx = state.findIndex((book) => book.id === action.id);
       return [...state.slice(0, idx), ...state.slice(idx + 1)];
 
     default:
@@ -171,7 +174,7 @@ function authorsReducer(state = [], action) {
       return [...state, action.author];
 
     case "REMOVE_AUTHOR":
-      idx = state.findIndex(author => author.id  === action.id)
+      idx = state.findIndex((author) => author.id === action.id);
       return [...state.slice(0, idx), ...state.slice(idx + 1)];
 
     default:
@@ -188,7 +191,7 @@ import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
   authors: authorsReducer,
-  books: booksReducer
+  books: booksReducer,
 });
 
 export default rootReducer;
@@ -239,7 +242,7 @@ function authorsReducer(state = [], action) {
       return [...state, action.author];
 
     case "REMOVE_AUTHOR":
-      idx = state.findIndex(author => author.id === action.id);
+      idx = state.findIndex((author) => author.id === action.id);
       return [...state.slice(0, idx), ...state.slice(idx + 1)];
 
     default:
@@ -291,7 +294,7 @@ function booksReducer(state = [], action) {
       return [...state, action.book];
 
     case "REMOVE_BOOK":
-      idx = state.findIndex(book => book.id === action.id);
+      idx = state.findIndex((book) => book.id === action.id);
       return [...state.slice(0, idx), ...state.slice(idx + 1)];
 
     default:
@@ -313,12 +316,12 @@ function authorsReducer(state = [], action) {
       return [...state, action.author];
 
     case "REMOVE_AUTHOR":
-      idx = state.findIndex(book => book.id === action.id);
+      idx = state.findIndex((book) => book.id === action.id);
       return [...state.slice(0, idx), ...state.slice(idx + 1)];
 
     case "ADD_BOOK":
       let existingAuthor = state.filter(
-        author => author.authorName === action.book.authorName
+        (author) => author.authorName === action.book.authorName
       );
       if (existingAuthor.length > 0) {
         return state;
@@ -332,12 +335,12 @@ function authorsReducer(state = [], action) {
 }
 ```
 
-In the new "ADD_BOOK" case, we're checking to see if an authorName matches with
+In the new "ADD*BOOK" case, we're checking to see if an authorName matches with
 the name dispatches from the BookInput component. If the name already exists,
 state is returned unchanged. If the name is not present, it is added to the
 author array. Use the example above to modify the `manageAuthorsAndBooks`
 reducer and you can see the effect. We have two separate forms, one for adding
-just authors, and one that adds books _and_ authors.
+just authors, and one that adds books \_and* authors.
 
 **Note:** We're using a useful package, `uuid`, to handle unique ID generation.
 With this refactor, since we are creating an author ID from within the reducer

@@ -12,12 +12,10 @@
  * @description:
  * Tests to see if there are any `describeXYZ.skip` tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	describeAnimal.skip('lion', function () {
-		it('should do stuff', function () {
-
-		});
+	describeAnimal.skip("lion", function () {
+		it("should do stuff", function () {});
 	});
-}(this));
+})(this);

@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Nischay Nahata"
-		]
-	},
-	"alltimezones-desc": "Adds a tag to show dates in all time zones"
+  "@metadata": {
+    "authors": ["Nischay Nahata"]
+  },
+  "alltimezones-desc": "Adds a tag to show dates in all time zones"
 }

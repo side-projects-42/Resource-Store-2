@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Hamilton Abreu"
-		]
-	},
-	"activeabstract-desc": "Gerar um feed XML para o projeto Active Abstracts do Yahoo"
+  "@metadata": {
+    "authors": ["Hamilton Abreu"]
+  },
+  "activeabstract-desc": "Gerar um feed XML para o projeto Active Abstracts do Yahoo"
 }

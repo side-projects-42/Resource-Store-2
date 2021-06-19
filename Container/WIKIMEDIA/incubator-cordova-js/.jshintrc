@@ -5,7 +5,6 @@
   // Maximum errors before stopping.
   "maxerr": 50,
 
-
   // Predefined globals
   // If the standard browser globals should be predefined.
   "browser": true,
@@ -28,15 +27,22 @@
   "dojo": false,
 
   // Custom predefined globals.
-  "predef": ["jasmine", "blackberry", "define", "alert", "prompt", "org", "deviceapis", "Osp"],
-
+  "predef": [
+    "jasmine",
+    "blackberry",
+    "define",
+    "alert",
+    "prompt",
+    "org",
+    "deviceapis",
+    "Osp"
+  ],
 
   // Development
   // If debugger statements should be allowed.
   "debug": false,
   // If logging globals should be predefined (console, alert, etc.).
   "devel": false,
-
 
   // ECMAScript 5
   // If ES5 syntax should be allowed.
@@ -45,7 +51,6 @@
   "strict": false,
   // If global "use strict"; should be allowed (also enables strict).
   "globalstrict": false,
-
 
   // The Good Parts
   // If automatic semicolon insertion should be tolerated.
@@ -114,7 +119,6 @@
   "funcscope": false,
   // If es.next specific syntax should be allowed.
   "esnext": false,
-
 
   // Style preferences
   // If constructor names must be capitalized.

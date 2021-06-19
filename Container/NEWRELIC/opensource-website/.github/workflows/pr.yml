@@ -206,7 +206,7 @@ jobs:
             ${{ runner.os }}-${{ env.cache-name }}-
 
       - name: Install dependencies
-        run:  yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: Run Jest
         run: yarn run test

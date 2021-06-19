@@ -1,7 +1,4 @@
 {
-	"root": true,
-	"extends": [
-		"wikimedia/client-es5",
-		"wikimedia/mediawiki"
-	]
+  "root": true,
+  "extends": ["wikimedia/client-es5", "wikimedia/mediawiki"]
 }

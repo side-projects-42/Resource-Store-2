@@ -22,7 +22,7 @@ describe.each([['beforeEach'], ['beforeAll'], ['afterEach'], ['afterAll']])(
       [undefined],
     ])(
       `${fn} throws an error when %p is provided as a first argument to it`,
-      el => {
+      (el) => {
         expect(() => {
           global[fn](el);
         }).toThrowError(

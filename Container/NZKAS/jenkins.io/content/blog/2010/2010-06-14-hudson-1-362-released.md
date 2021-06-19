@@ -4,15 +4,17 @@
 :nodeid: 214
 :created: 1276527600
 :tags:
-- general
-- core
-- releases
-- jenkinsci
+  - general
+  - core
+  - releases
+  - jenkinsci
 :author: rtyler
 ---
+
 <img src="/sites/default/files/images/hudson.gif" height="150" align="right"/> The 1.362 release of Hudson has a few bug-fixes and a few minor enhancements, all together a good stabilization release. Not too much interesting to discuss so straight on to the changelog!
 
 #### Bugs
+
 <ul class=image>
   <li class=bug> 
     Restored optional container-based authentication for CLI.
@@ -23,6 +25,7 @@
 </ul>
 
 #### Enhancements
+
 <ul>
   <li class=rfe> 
     Add setting so job views may show only enabled or disabled jobs.
@@ -43,7 +46,7 @@
 
 You can go grab the [latest .war file](http://ftp.osuosl.org/pub/hudson/war/1.362/hudson.war) straight from our [OSL mirror](http://www.osuosl.org) or if you're using a native package, use your package manager to upgrade.
 
-----
+---
 
 <br clear="all"/>
 <small>Image courtesy of [Hudson's Grill](http://hudsonsgrill.com/)</small>

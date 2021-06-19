@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"KhayR",
-			"Seb35",
-			"Ерней",
-			"Ильнар"
-		]
+		"authors": ["KhayR", "Seb35", "Ерней", "Ильнар"]
 	},
 	"config-desc": "MediaWiki урнаштыручы",
 	"config-title": "MediaWiki $1 урнаштыруы",

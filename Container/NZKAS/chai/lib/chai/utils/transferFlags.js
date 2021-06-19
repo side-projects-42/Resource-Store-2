@@ -36,8 +36,10 @@ module.exports = function (assertion, object, includeAll) {
   includeAll = arguments.length === 3 ? includeAll : true;
 
   for (var flag in flags) {
-    if (includeAll ||
-        (flag !== 'object' && flag !== 'ssfi' && flag != 'message')) {
+    if (
+      includeAll ||
+      (flag !== "object" && flag !== "ssfi" && flag != "message")
+    ) {
       object.__flags[flag] = flags[flag];
     }
   }

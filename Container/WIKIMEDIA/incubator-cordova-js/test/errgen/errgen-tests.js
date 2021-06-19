@@ -17,70 +17,72 @@
  * under the License.
  */
 
-document.addEventListener("deviceready", onDeviceReady, false)
+document.addEventListener("deviceready", onDeviceReady, false);
 
 //------------------------------------------------------------------------------
 function onDeviceReady() {
-    // TODO: finish the tests
-    testAccelerometer();
-    testCamera();
-    // testCapture();
-    testCompass();
-    // testConnection();
-    // testContacts();
-    // testDevice();
-    // testEvents();
-    // testFile();
-    // testGeolocation();
-    // testMedia();
-    // testNotification();
-    // testStorage();
+  // TODO: finish the tests
+  testAccelerometer();
+  testCamera();
+  // testCapture();
+  testCompass();
+  // testConnection();
+  // testContacts();
+  // testDevice();
+  // testEvents();
+  // testFile();
+  // testGeolocation();
+  // testMedia();
+  // testNotification();
+  // testStorage();
 }
 
 //------------------------------------------------------------------------------
 function getSuccessCB(api) {
-    return function() {
-        reportFailure(api + ": success callback was called") 
-    }
+  return function () {
+    reportFailure(api + ": success callback was called");
+  };
 }
 
 //------------------------------------------------------------------------------
 function getErrorCB(api) {
-    return function() {
-        reportSuccess(api + ": error callback was called") 
-    }
+  return function () {
+    reportSuccess(api + ": error callback was called");
+  };
 }
 
 //------------------------------------------------------------------------------
 function testAPI(receiver, func, args) {
-    if (!args) args = []
-    var origArgs = args
-    
-    var receiverObject = eval(receiver)
-    var funcObject     = receiverObject[func]
-    
-    var api = receiver + "." + func
-    
-    args.unshift(getErrorCB(api))
-    args.unshift(getSuccessCB(api))
-    
-    return funcObject.apply(receiverObject, origArgs)
+  if (!args) args = [];
+  var origArgs = args;
+
+  var receiverObject = eval(receiver);
+  var funcObject = receiverObject[func];
+
+  var api = receiver + "." + func;
+
+  args.unshift(getErrorCB(api));
+  args.unshift(getSuccessCB(api));
+
+  return funcObject.apply(receiverObject, origArgs);
 }
 
 //------------------------------------------------------------------------------
 function testAccelerometer() {
-    testAPI("navigator.accelerometer", "getCurrentAcceleration")
+  testAPI("navigator.accelerometer", "getCurrentAcceleration");
 }
 
 //------------------------------------------------------------------------------
 function testCamera() {
-    testAPI("navigator.camera", "getPicture", [{
-        quality:         100,
-        destinationType: Camera.DestinationType.FILE_URI
-    }])
+  testAPI("navigator.camera", "getPicture", [
+    {
+      quality: 100,
+      destinationType: Camera.DestinationType.FILE_URI,
+    },
+  ]);
 }
 
 //------------------------------------------------------------------------------
 function testCompass() {
-    testAPI("navigator.compass", "getCurrentHeading")
+  testAPI("navigator.compass", "getCurrentHeading");
 }

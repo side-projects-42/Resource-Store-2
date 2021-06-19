@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Kly",
-			"Xiplus"
-		]
+		"authors": ["Kly", "Xiplus"]
 	},
 	"rest-prefix-mismatch": "請求的路徑（$1）不在REST API的根路徑（$2）內",
 	"rest-wrong-method": "請求的方法（$1）不是{{PLURAL:$3|此路徑允許的方法|此路徑允許的方法之一}}（$2）",

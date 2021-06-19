@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Şeyx Şamil"
-		]
-	},
-	"addthis": "Paylaş"
+  "@metadata": {
+    "authors": ["Şeyx Şamil"]
+  },
+  "addthis": "Paylaş"
 }

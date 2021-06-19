@@ -1,1 +1,1 @@
-return typeof fetch === 'function';
+return typeof fetch === "function";

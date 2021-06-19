@@ -1,104 +1,103 @@
-var Promise = require( "es6-promise" ).Promise,
-	fs = require( "fs" ),
-	execFile = require( "child_process" ).execFile,
-	mkdirp = require( "mkdirp" );
+var Promise = require("es6-promise").Promise,
+  fs = require("fs"),
+  execFile = require("child_process").execFile,
+  mkdirp = require("mkdirp");
 
-module.exports = function( Repo ) {
+module.exports = function (Repo) {
+  Repo.prototype.fetch = function (remote, ref) {
+    var repo = this;
 
-Repo.prototype.fetch = function( remote, ref ) {
-	var repo = this;
+    // Prior to the first fetch, we don't know if the repo has been cloned.
+    // Running simultaneous fetches is fine, even for the same branch. However,
+    // we cannot do anything until the repo has been fully cloned or the fetch
+    // will fail since the repo doesn't fully exist.
+    if (!repo.hasCloned) {
+      repo.hasCloned = repo.clone();
+    }
 
-	// Prior to the first fetch, we don't know if the repo has been cloned.
-	// Running simultaneous fetches is fine, even for the same branch. However,
-	// we cannot do anything until the repo has been fully cloned or the fetch
-	// will fail since the repo doesn't fully exist.
-	if ( !repo.hasCloned ) {
-		repo.hasCloned = repo.clone();
-	}
+    return repo.hasCloned.then(function () {
+      return repo._fetch(remote, ref);
+    });
+  };
 
-	return repo.hasCloned
-		.then( function() {
-			return repo._fetch( remote, ref );
-		} );
-};
+  Repo.prototype.clone = function () {
+    var repo = this;
 
-Repo.prototype.clone = function() {
-	var repo = this;
+    return repo.exists().then(function (exists) {
+      if (!exists) {
+        return repo._clone();
+      }
+    });
+  };
 
-	return repo.exists()
-		.then( function( exists ) {
-			if ( !exists ) {
-				return repo._clone();
-			}
-		} );
-};
+  Repo.prototype.exists = function () {
+    var repo = this;
+    return new Promise(function (resolve, reject) {
+      fs.stat(repo.path, function (error) {
+        // Repo already exists
+        if (!error) {
+          repo.debug("local repo already exists");
+          return resolve(true);
+        }
 
-Repo.prototype.exists = function() {
-	var repo = this;
-	return new Promise( function( resolve, reject ) {
-		fs.stat( repo.path, function( error ) {
+        // Error other than repo not existing
+        if (error.code !== "ENOENT") {
+          repo.debug("error checking if a local repo exists", error);
+          return reject(error);
+        }
 
-			// Repo already exists
-			if ( !error ) {
-				repo.debug( "local repo already exists" );
-				return resolve( true );
-			}
+        repo.debug("local repo does not yet exist");
+        resolve(false);
+      });
+    });
+  };
 
-			// Error other than repo not existing
-			if ( error.code !== "ENOENT" ) {
-				repo.debug( "error checking if a local repo exists", error );
-				return reject( error );
-			}
+  Repo.prototype._clone = function () {
+    var repo = this;
 
-			repo.debug( "local repo does not yet exist" );
-			resolve( false );
-		} );
-	} );
-};
+    repo.debug("cloning repo");
+    return new Promise(function (resolve, reject) {
+      // Ensure the path exists before trying to clone
+      mkdirp(repo.path, "0755", function (error) {
+        if (error) {
+          repo.debug("error creating path", error);
+          return reject(error);
+        }
 
-Repo.prototype._clone = function() {
-	var repo = this;
+        execFile("git", ["clone", repo.remoteUrl, repo.path], function (error) {
+          if (error) {
+            repo.debug("error cloning " + repo.remoteUrl, error);
+            return reject(error);
+          }
 
-	repo.debug( "cloning repo" );
-	return new Promise( function( resolve, reject ) {
+          repo.debug("successfully cloned repo");
+          resolve();
+        });
+      });
+    });
+  };
 
-		// Ensure the path exists before trying to clone
-		mkdirp( repo.path, "0755", function( error ) {
-			if ( error ) {
-				repo.debug( "error creating path", error );
-				return reject( error );
-			}
+  Repo.prototype._fetch = function (remote, ref) {
+    var repo = this;
 
-			execFile( "git", [ "clone", repo.remoteUrl, repo.path ], function( error ) {
-				if ( error ) {
-					repo.debug( "error cloning " + repo.remoteUrl, error );
-					return reject( error );
-				}
+    repo.debug("fetching " + remote + " " + ref);
+    return new Promise(function (resolve, reject) {
+      execFile(
+        "git",
+        ["fetch", remote, ref],
+        {
+          cwd: repo.path,
+        },
+        function (error) {
+          if (error) {
+            repo.debug("error fetching " + remote + " " + ref, error);
+            return reject(error);
+          }
 
-				repo.debug( "successfully cloned repo" );
-				resolve();
-			} );
-		} );
-	} );
-};
-
-Repo.prototype._fetch = function( remote, ref ) {
-	var repo = this;
-
-	repo.debug( "fetching " + remote + " " + ref );
-	return new Promise( function( resolve, reject ) {
-		execFile( "git", [ "fetch", remote, ref ], {
-			cwd: repo.path
-		}, function( error ) {
-			if ( error ) {
-				repo.debug( "error fetching " + remote + " " + ref, error );
-				return reject( error );
-			}
-
-			repo.debug( "successfully fetched " + remote + " " + ref );
-			resolve();
-		} );
-	} );
-};
-
+          repo.debug("successfully fetched " + remote + " " + ref);
+          resolve();
+        }
+      );
+    });
+  };
 };

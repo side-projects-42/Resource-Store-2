@@ -28,14 +28,12 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import Component from 'nuxt-class-component'
-import AuthMixin from '~/mixins/auth'
+import Vue from "vue";
+import Component from "nuxt-class-component";
+import AuthMixin from "~/mixins/auth";
 
 @Component({
-  mixins: [AuthMixin]
+  mixins: [AuthMixin],
 })
-export default class Default extends Vue {
-
-}
+export default class Default extends Vue {}
 </script>

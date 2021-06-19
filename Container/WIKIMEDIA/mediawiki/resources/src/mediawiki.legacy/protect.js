@@ -1,5 +1,5 @@
-( function () {
-	var config = require( './config.json' );
+(function () {
+	var config = require("./config.json");
 
 	/**
 	 * Get a list of all protection selectors on the page
@@ -7,7 +7,7 @@
 	 * @return {jQuery}
 	 */
 	function getLevelSelectors() {
-		return $( 'select[id ^= mwProtect-level-]' );
+		return $("select[id ^= mwProtect-level-]");
 	}
 
 	/**
@@ -16,7 +16,7 @@
 	 * @return {jQuery}
 	 */
 	function getExpiryInputs() {
-		return $( 'input[id ^= mwProtect-][id $= -expires]' );
+		return $("input[id ^= mwProtect-][id $= -expires]");
 	}
 
 	/**
@@ -25,7 +25,7 @@
 	 * @return {jQuery}
 	 */
 	function getExpirySelectors() {
-		return $( 'select[id ^= mwProtectExpirySelection-]' );
+		return $("select[id ^= mwProtectExpirySelection-]");
 	}
 
 	/**
@@ -33,13 +33,13 @@
 	 *
 	 * @param {boolean} val Enable?
 	 */
-	function toggleUnchainedInputs( val ) {
+	function toggleUnchainedInputs(val) {
 		var setDisabled = function () {
 			this.disabled = !val;
 		};
-		getLevelSelectors().slice( 1 ).each( setDisabled );
-		getExpiryInputs().slice( 1 ).each( setDisabled );
-		getExpirySelectors().slice( 1 ).each( setDisabled );
+		getLevelSelectors().slice(1).each(setDisabled);
+		getExpiryInputs().slice(1).each(setDisabled);
+		getExpirySelectors().slice(1).each(setDisabled);
 	}
 
 	/**
@@ -48,22 +48,25 @@
 	 * @param {string} level
 	 * @return {boolean}
 	 */
-	function isCascadeableLevel( level ) {
-		return config.CascadingRestrictionLevels.indexOf( level ) !== -1;
+	function isCascadeableLevel(level) {
+		return config.CascadingRestrictionLevels.indexOf(level) !== -1;
 	}
 
 	/**
 	 * Sets the disabled attribute on the cascade checkbox depending on the current selected levels
 	 */
 	function updateCascadeCheckbox() {
-		getLevelSelectors().each( function () {
-			if ( !isCascadeableLevel( $( this ).val() ) ) {
-				$( '#mwProtect-cascade' ).prop( { checked: false, disabled: true } );
+		getLevelSelectors().each(function () {
+			if (!isCascadeableLevel($(this).val())) {
+				$("#mwProtect-cascade").prop({
+					checked: false,
+					disabled: true,
+				});
 				return false;
 			} else {
-				$( '#mwProtect-cascade' ).prop( 'disabled', false );
+				$("#mwProtect-cascade").prop("disabled", false);
 			}
-		} );
+		});
 	}
 
 	/**
@@ -73,13 +76,15 @@
 	 * @param {string} attrName
 	 * @return {boolean}
 	 */
-	function matchAttribute( objects, attrName ) {
+	function matchAttribute(objects, attrName) {
 		// eslint-disable-next-line no-jquery/no-map-util
-		return $.map( objects, function ( object ) {
-			return object[ attrName ];
-		} ).filter( function ( item, index, a ) {
-			return index === a.indexOf( item );
-		} ).length === 1;
+		return (
+			$.map(objects, function (object) {
+				return object[attrName];
+			}).filter(function (item, index, a) {
+				return index === a.indexOf(item);
+			}).length === 1
+		);
 	}
 
 	/**
@@ -88,9 +93,11 @@
 	 * @return {boolean}
 	 */
 	function areAllTypesMatching() {
-		return matchAttribute( getLevelSelectors(), 'selectedIndex' ) &&
-			matchAttribute( getExpirySelectors(), 'selectedIndex' ) &&
-			matchAttribute( getExpiryInputs(), 'value' );
+		return (
+			matchAttribute(getLevelSelectors(), "selectedIndex") &&
+			matchAttribute(getExpirySelectors(), "selectedIndex") &&
+			matchAttribute(getExpiryInputs(), "value")
+		);
 	}
 
 	/**
@@ -99,10 +106,8 @@
 	 * @return {boolean}
 	 */
 	function isUnchained() {
-		var element = document.getElementById( 'mwProtectUnchained' );
-		return element ?
-			element.checked :
-			true; // No control, so we need to let the user set both levels
+		var element = document.getElementById("mwProtectUnchained");
+		return element ? element.checked : true; // No control, so we need to let the user set both levels
 	}
 
 	/**
@@ -111,9 +116,12 @@
 	 * @return {number}
 	 */
 	function getMaxLevel() {
-		return Math.max.apply( Math, getLevelSelectors().map( function () {
-			return this.selectedIndex;
-		} ) );
+		return Math.max.apply(
+			Math,
+			getLevelSelectors().map(function () {
+				return this.selectedIndex;
+			})
+		);
 	}
 
 	/**
@@ -121,8 +129,8 @@
 	 *
 	 * @param {number} index Protection level
 	 */
-	function setAllSelectors( index ) {
-		getLevelSelectors().prop( 'selectedIndex', index );
+	function setAllSelectors(index) {
+		getLevelSelectors().prop("selectedIndex", index);
 	}
 
 	/**
@@ -131,9 +139,9 @@
 	 *
 	 * @param {Event} event Level selector that changed
 	 */
-	function updateLevels( event ) {
-		if ( !isUnchained() ) {
-			setAllSelectors( event.target.selectedIndex );
+	function updateLevels(event) {
+		if (!isUnchained()) {
+			setAllSelectors(event.target.selectedIndex);
 		}
 		updateCascadeCheckbox();
 	}
@@ -144,14 +152,20 @@
 	 *
 	 * @param {Event} event Expiry input that changed
 	 */
-	function updateExpiry( event ) {
-		if ( !isUnchained() ) {
-			getExpiryInputs().val( event.target.value );
+	function updateExpiry(event) {
+		if (!isUnchained()) {
+			getExpiryInputs().val(event.target.value);
 		}
-		if ( isUnchained() ) {
-			$( '#' + event.target.id.replace( /^mwProtect-(\w+)-expires$/, 'mwProtectExpirySelection-$1' ) ).val( 'othertime' );
+		if (isUnchained()) {
+			$(
+				"#" +
+					event.target.id.replace(
+						/^mwProtect-(\w+)-expires$/,
+						"mwProtectExpirySelection-$1"
+					)
+			).val("othertime");
 		} else {
-			getExpirySelectors().val( 'othertime' );
+			getExpirySelectors().val("othertime");
 		}
 	}
 
@@ -161,10 +175,10 @@
 	 *
 	 * @param {Event} event Expiry selector that changed
 	 */
-	function updateExpiryList( event ) {
-		if ( !isUnchained() ) {
-			getExpirySelectors().val( event.target.value );
-			getExpiryInputs().val( '' );
+	function updateExpiryList(event) {
+		if (!isUnchained()) {
+			getExpirySelectors().val(event.target.value);
+			getExpiryInputs().val("");
 		}
 	}
 
@@ -173,9 +187,9 @@
 	 * when the user changes the "unlock move permissions" checkbox
 	 */
 	function onChainClick() {
-		toggleUnchainedInputs( isUnchained() );
-		if ( !isUnchained() ) {
-			setAllSelectors( getMaxLevel() );
+		toggleUnchainedInputs(isUnchained());
+		if (!isUnchained()) {
+			setAllSelectors(getMaxLevel());
 		}
 		updateCascadeCheckbox();
 	}
@@ -185,42 +199,46 @@
 	 * on the protection form
 	 */
 	function init() {
-		var $cell = $( '<td>' ),
-			$row = $( '<tr>' ).append( $cell );
+		var $cell = $("<td>"),
+			$row = $("<tr>").append($cell);
 
-		if ( !$( '#mwProtectSet' ).length ) {
+		if (!$("#mwProtectSet").length) {
 			return;
 		}
 
-		$( 'form#mw-Protect-Form' ).on( 'submit', toggleUnchainedInputs.bind( this, true ) );
-		getExpirySelectors().on( 'change', updateExpiryList );
-		getExpiryInputs().on( 'input change', updateExpiry );
-		getLevelSelectors().on( 'change', updateLevels );
+		$("form#mw-Protect-Form").on(
+			"submit",
+			toggleUnchainedInputs.bind(this, true)
+		);
+		getExpirySelectors().on("change", updateExpiryList);
+		getExpiryInputs().on("input change", updateExpiry);
+		getLevelSelectors().on("change", updateLevels);
 
-		$( '#mwProtectSet > tbody > tr' ).first().after( $row );
+		$("#mwProtectSet > tbody > tr").first().after($row);
 
 		// If there is only one protection type, there is nothing to chain
-		if ( $( '[id ^= mw-protect-table-]' ).length > 1 ) {
+		if ($("[id ^= mw-protect-table-]").length > 1) {
 			$cell.append(
-				$( '<input>' )
-					.attr( { id: 'mwProtectUnchained', type: 'checkbox' } )
-					.on( 'click', onChainClick )
-					.prop( 'checked', !areAllTypesMatching() ),
-				document.createTextNode( ' ' ),
-				$( '<label>' )
-					.attr( 'for', 'mwProtectUnchained' )
-					.text( mw.msg( 'protect-unchain-permissions' ) )
+				$("<input>")
+					.attr({ id: "mwProtectUnchained", type: "checkbox" })
+					.on("click", onChainClick)
+					.prop("checked", !areAllTypesMatching()),
+				document.createTextNode(" "),
+				$("<label>")
+					.attr("for", "mwProtectUnchained")
+					.text(mw.msg("protect-unchain-permissions"))
 			);
 
-			toggleUnchainedInputs( !areAllTypesMatching() );
+			toggleUnchainedInputs(!areAllTypesMatching());
 		}
 
 		// Arbitrary 75 to leave some space for the autogenerated null edit's summary
-		$( '#mwProtect-reason' ).codePointLimit( mw.config.get( 'wgCommentCodePointLimit' ) - 75 );
+		$("#mwProtect-reason").codePointLimit(
+			mw.config.get("wgCommentCodePointLimit") - 75
+		);
 
 		updateCascadeCheckbox();
 	}
 
-	$( init );
-
-}() );
+	$(init);
+})();

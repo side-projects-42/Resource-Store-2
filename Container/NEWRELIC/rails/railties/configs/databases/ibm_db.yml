@@ -23,10 +23,10 @@
 #   http://rubyibm.rubyforge.org/docs/adapter/0.9.0/rdoc/classes/ActiveRecord/ConnectionAdapters/IBM_DBAdapter.html
 
 development:
-  adapter:     ibm_db
-  username:    db2inst1
+  adapter: ibm_db
+  username: db2inst1
   password:
-  database:    <%= app_name[0,4] %>_dev
+  database: <%= app_name[0,4] %>_dev
   #schema:      db2inst1
   #host:        localhost
   #port:        50000
@@ -36,10 +36,10 @@ development:
   #workstation: my_workstation
 
 test:
-  adapter:     ibm_db
-  username:    db2inst1
+  adapter: ibm_db
+  username: db2inst1
   password:
-  database:    <%= app_name[0,4] %>_tst
+  database: <%= app_name[0,4] %>_tst
   #schema:      db2inst1
   #host:        localhost
   #port:        50000
@@ -49,10 +49,10 @@ test:
   #workstation: my_workstation
 
 production:
-  adapter:     ibm_db
-  username:    db2inst1
+  adapter: ibm_db
+  username: db2inst1
   password:
-  database:    <%= app_name[0,4] %>_prd
+  database: <%= app_name[0,4] %>_prd
   #schema:      db2inst1
   #host:        localhost
   #port:        50000

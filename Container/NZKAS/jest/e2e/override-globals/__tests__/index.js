@@ -15,7 +15,7 @@ describe('parent', () => {
   });
 
   describe('child', () => {
-    it('works well', done => {
+    it('works well', (done) => {
       // A timeout to guarantee it doesn't finish after 0 ms
       setTimeout(() => {
         try {

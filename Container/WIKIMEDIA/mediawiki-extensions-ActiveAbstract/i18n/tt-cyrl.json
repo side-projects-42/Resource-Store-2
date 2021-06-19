@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Ильнар"
-		]
-	},
-	"activeabstract-desc": "Yahoo's Active Abstracts проеты өчен XML-фид булдыру"
+  "@metadata": {
+    "authors": ["Ильнар"]
+  },
+  "activeabstract-desc": "Yahoo's Active Abstracts проеты өчен XML-фид булдыру"
 }

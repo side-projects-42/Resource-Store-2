@@ -49,15 +49,15 @@ export const linkJestPackage = (packageName: string, cwd: Config.Path) => {
   fs.symlinkSync(packagePath, destination, 'dir');
 };
 
-export const makeTemplate = (
-  str: string,
-): ((values?: Array<any>) => string) => (values?: Array<any>) =>
-  str.replace(/\$(\d+)/g, (_match, number) => {
-    if (!Array.isArray(values)) {
-      throw new Error('Array of values must be passed to the template.');
-    }
-    return values[number - 1];
-  });
+export const makeTemplate =
+  (str: string): ((values?: Array<any>) => string) =>
+  (values?: Array<any>) =>
+    str.replace(/\$(\d+)/g, (_match, number) => {
+      if (!Array.isArray(values)) {
+        throw new Error('Array of values must be passed to the template.');
+      }
+      return values[number - 1];
+    });
 
 export const cleanup = (directory: string) => rimraf.sync(directory);
 
@@ -76,7 +76,7 @@ export const writeFiles = (
   files: {[filename: string]: string},
 ) => {
   createDirectory(directory);
-  Object.keys(files).forEach(fileOrPath => {
+  Object.keys(files).forEach((fileOrPath) => {
     const dirname = path.dirname(fileOrPath);
 
     if (dirname !== '/') {
@@ -95,7 +95,7 @@ export const copyDir = (src: string, dest: string) => {
     if (!fs.existsSync(dest)) {
       fs.mkdirSync(dest);
     }
-    fs.readdirSync(src).map(filePath =>
+    fs.readdirSync(src).map((filePath) =>
       copyDir(path.join(src, filePath), path.join(dest, filePath)),
     );
   } else {
@@ -113,7 +113,7 @@ export const sortLines = (output: string) =>
   output
     .split('\n')
     .sort()
-    .map(str => str.trim())
+    .map((str) => str.trim())
     .filter(Boolean)
     .join('\n');
 
@@ -195,7 +195,8 @@ export const extractSortedSummary = (stdout: string) => {
 export const extractSummaries = (
   stdout: string,
 ): Array<{rest: string; summary: string}> => {
-  const regex = /Test Suites:.*\nTests.*\nSnapshots.*\nTime.*(\nRan all test suites)*.*\n*$/gm;
+  const regex =
+    /Test Suites:.*\nTests.*\nSnapshots.*\nTime.*(\nRan all test suites)*.*\n*$/gm;
 
   let match = regex.exec(stdout);
   const matches: Array<RegExpExecArray> = [];

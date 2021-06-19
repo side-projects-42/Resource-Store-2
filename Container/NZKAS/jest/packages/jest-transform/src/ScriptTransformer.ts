@@ -41,10 +41,8 @@ const {version: VERSION} = require('../package.json');
 // This data structure is used to avoid recalculating some data every time that
 // we need to transform a file. Since ScriptTransformer is instantiated for each
 // file we need to keep this object in the local scope of this module.
-const projectCaches: WeakMap<
-  Config.ProjectConfig,
-  ProjectCache
-> = new WeakMap();
+const projectCaches: WeakMap<Config.ProjectConfig, ProjectCache> =
+  new WeakMap();
 
 // To reset the cache for specific changesets (rather than package version).
 const CACHE_VERSION = '1';
@@ -441,10 +439,7 @@ const stripShebang = (content: string) => {
  * could get corrupted, out-of-sync, etc.
  */
 function writeCodeCacheFile(cachePath: Config.Path, code: string) {
-  const checksum = crypto
-    .createHash('md5')
-    .update(code)
-    .digest('hex');
+  const checksum = crypto.createHash('md5').update(code).digest('hex');
   writeCacheFile(cachePath, checksum + '\n' + code);
 }
 
@@ -460,10 +455,7 @@ function readCodeCacheFile(cachePath: Config.Path): string | null {
     return null;
   }
   const code = content.substr(33);
-  const checksum = crypto
-    .createHash('md5')
-    .update(code)
-    .digest('hex');
+  const checksum = crypto.createHash('md5').update(code).digest('hex');
   if (checksum === content.substr(0, 32)) {
     return code;
   }

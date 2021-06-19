@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ykhwong"
-		]
+		"authors": ["Ykhwong"]
 	},
 	"rest-no-match": "요청된 상대 경로($1)는 알려진 핸들러와 일치하지 않습니다",
 	"rest-nonexistent-title": "지정한 주제($1)가 존재하지 않습니다.",

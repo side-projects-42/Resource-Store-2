@@ -11,9 +11,8 @@ import {BaseWatchPlugin, JestHookSubscriber} from 'jest-watcher';
 import SnapshotInteractiveMode from '../SnapshotInteractiveMode';
 
 class UpdateSnapshotInteractivePlugin extends BaseWatchPlugin {
-  private _snapshotInteractiveMode: SnapshotInteractiveMode = new SnapshotInteractiveMode(
-    this._stdout,
-  );
+  private _snapshotInteractiveMode: SnapshotInteractiveMode =
+    new SnapshotInteractiveMode(this._stdout);
   private _failedSnapshotTestAssertions: Array<AssertionLocation> = [];
   isInternal: true = true;
 
@@ -25,9 +24,9 @@ class UpdateSnapshotInteractivePlugin extends BaseWatchPlugin {
       return failedTestPaths;
     }
 
-    testResults.testResults.forEach(testResult => {
+    testResults.testResults.forEach((testResult) => {
       if (testResult.snapshot && testResult.snapshot.unmatched) {
-        testResult.testResults.forEach(result => {
+        testResult.testResults.forEach((result) => {
           if (result.status === 'failed') {
             failedTestPaths.push({
               fullName: result.fullName,
@@ -42,10 +41,9 @@ class UpdateSnapshotInteractivePlugin extends BaseWatchPlugin {
   }
 
   apply(hooks: JestHookSubscriber) {
-    hooks.onTestRunComplete(results => {
-      this._failedSnapshotTestAssertions = this.getFailedSnapshotTestAssertions(
-        results,
-      );
+    hooks.onTestRunComplete((results) => {
+      this._failedSnapshotTestAssertions =
+        this.getFailedSnapshotTestAssertions(results);
       if (this._snapshotInteractiveMode.isActive()) {
         this._snapshotInteractiveMode.updateWithResults(results);
       }
@@ -63,7 +61,7 @@ class UpdateSnapshotInteractivePlugin extends BaseWatchPlugin {
     updateConfigAndRun: Function,
   ): Promise<void> {
     if (this._failedSnapshotTestAssertions.length) {
-      return new Promise(res => {
+      return new Promise((res) => {
         this._snapshotInteractiveMode.run(
           this._failedSnapshotTestAssertions,
           (assertion, shouldUpdateSnapshot) => {

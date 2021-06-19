@@ -12,8 +12,8 @@ const consoleDir = path.resolve(__dirname, '../console');
 const eachDir = path.resolve(__dirname, '../each');
 
 expect.addSnapshotSerializer({
-  print: value => value,
-  test: received => typeof received === 'string',
+  print: (value) => value,
+  test: (received) => typeof received === 'string',
 });
 
 test('works with passing tests', () => {

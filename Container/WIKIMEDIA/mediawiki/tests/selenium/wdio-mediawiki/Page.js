@@ -1,12 +1,11 @@
-'use strict';
+"use strict";
 
-const querystring = require( 'querystring' );
+const querystring = require("querystring");
 
 /**
  * Based on http://webdriver.io/guide/testrunner/pageobjects.html
  */
 class Page {
-
 	/**
 	 * Navigate the browser to a given page.
 	 *
@@ -17,12 +16,13 @@ class Page {
 	 * @param {string} [fragment] Fragment parameter
 	 * @return {void} This method runs a browser command.
 	 */
-	openTitle( title, query = {}, fragment = '' ) {
+	openTitle(title, query = {}, fragment = "") {
 		query.title = title;
 		browser.url(
-			browser.config.baseUrl + '/index.php?' +
-			querystring.stringify( query ) +
-			( fragment ? ( '#' + fragment ) : '' )
+			browser.config.baseUrl +
+				"/index.php?" +
+				querystring.stringify(query) +
+				(fragment ? "#" + fragment : "")
 		);
 	}
 }

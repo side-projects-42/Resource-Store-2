@@ -6,10 +6,10 @@
  * @class mw.Api.plugin.messages
  * @since 1.27
  */
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
-	$.extend( mw.Api.prototype, {
+	$.extend(mw.Api.prototype, {
 		/**
 		 * Get a set of messages.
 		 *
@@ -17,25 +17,30 @@
 		 * @param {Object} [options] Additional parameters for the API call
 		 * @return {jQuery.Promise}
 		 */
-		getMessages: function ( messages, options ) {
+		getMessages: function (messages, options) {
 			options = options || {};
-			return this.get( $.extend( {
-				action: 'query',
-				meta: 'allmessages',
-				ammessages: messages,
-				amlang: mw.config.get( 'wgUserLanguage' ),
-				formatversion: 2
-			}, options ) ).then( function ( data ) {
+			return this.get(
+				$.extend(
+					{
+						action: "query",
+						meta: "allmessages",
+						ammessages: messages,
+						amlang: mw.config.get("wgUserLanguage"),
+						formatversion: 2,
+					},
+					options
+				)
+			).then(function (data) {
 				var result = {};
 
-				data.query.allmessages.forEach( function ( obj ) {
-					if ( !obj.missing ) {
-						result[ obj.name ] = obj.content;
+				data.query.allmessages.forEach(function (obj) {
+					if (!obj.missing) {
+						result[obj.name] = obj.content;
 					}
-				} );
+				});
 
 				return result;
-			} );
+			});
 		},
 
 		/**
@@ -45,8 +50,10 @@
 		 * @param {Object} [options] Additional parameters for the API call
 		 * @return {jQuery.Promise}
 		 */
-		loadMessages: function ( messages, options ) {
-			return this.getMessages( messages, options ).then( mw.messages.set.bind( mw.messages ) );
+		loadMessages: function (messages, options) {
+			return this.getMessages(messages, options).then(
+				mw.messages.set.bind(mw.messages)
+			);
 		},
 
 		/**
@@ -57,23 +64,22 @@
 		 * @param {Object} [options] Additional parameters for the API call
 		 * @return {jQuery.Promise}
 		 */
-		loadMessagesIfMissing: function ( messages, options ) {
-			var missing = messages.filter( function ( msg ) {
+		loadMessagesIfMissing: function (messages, options) {
+			var missing = messages.filter(function (msg) {
 				// eslint-disable-next-line mediawiki/msg-doc
-				return !mw.message( msg ).exists();
-			} );
+				return !mw.message(msg).exists();
+			});
 
-			if ( missing.length === 0 ) {
+			if (missing.length === 0) {
 				return $.Deferred().resolve();
 			}
 
-			return this.loadMessages( missing, options );
-		}
-	} );
+			return this.loadMessages(missing, options);
+		},
+	});
 
 	/**
 	 * @class mw.Api
 	 * @mixins mw.Api.plugin.messages
 	 */
-
-}() );
+})();

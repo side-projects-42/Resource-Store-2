@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Red Winged Duck",
-			"Renessaince",
-			"Vlad5250",
-			"W"
-		]
+		"authors": ["Red Winged Duck", "Renessaince", "Vlad5250", "W"]
 	},
 	"apihelp-main-extended-description": "<div class=\"hlist plainlinks api-main-links\">\n* [[mw:Special:MyLanguage/API:Main_page|Дакумэнтацыя]]\n* [[mw:Special:MyLanguage/API:Etiquette|Этыкет & кіраўніцтва карыстаньня]]\n* [[mw:Special:MyLanguage/API:FAQ|Частыя пытаньні]]\n* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-api Рассылка]\n* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce API-аб’явы]\n* [https://phabricator.wikimedia.org/maniphest/query/GebfyV4uCaLd/#R Памылкі і запыты]\n</div>\n<strong>Статус:</strong> MediaWiki API — сфармаваны і стабільны інтэрфэйс, які актыўна падтрымліваецца і паляпшаецца. І хаця мы імкнемся гэтага пазьбягаць, але часам нам трэба ўносіць істотныя зьмены; падпісвайцеся на [https://lists.wikimedia.org/pipermail/mediawiki-api-announce/ рассылку mediawiki-api-announce] дзеля паведамленьняў пра абнаўленьні.\n\n<strong>Памылковыя запыты:</strong> калі да API дасылаюцца памылковыя запыты, HTTP-загаловак будзе дасланы з ключом «MediaWiki-API-Error», а потым значэньне загалоўку і код памылкі будуць выстаўленыя на аднолькавае значэньне. Дзеля дадатковай інфармацыі глядзіце [[mw:Special:MyLanguage/API:Errors_and_warnings|API: Памылкі і папярэджаньні]].\n\n<p class=\"mw-apisandbox-link\"><strong>Тэставаньне:</strong> для зручнасьці праверкі API-запытаў, глядзіце [[Special:ApiSandbox]].</p>",
 	"apihelp-main-param-action": "Дзеяньне для выкананьня.",

@@ -1,11 +1,11 @@
 while (true) {
-    var x = function () {};
+  var x = function () {};
 }
 
 for (var i = 0; i < 5; i++) {
-    var y = function () {};
+  var y = function () {};
 }
 
 while (true) {
-    function z() {}
+  function z() {}
 }

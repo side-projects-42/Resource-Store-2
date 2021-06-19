@@ -88,7 +88,6 @@ by specifying the path to the agent you want to test against by passing the `-A`
 flag to the `runner` script, or by setting the `AGENT_PATH` environment variable
 when using the rake task.
 
-
 ## Writing tests
 
 Performance tests are written in the style of `test/unit`: create a `.rb` file
@@ -121,7 +120,7 @@ done using `IO.popen` rather than `Process.fork` in order to maintain
 compatibility with JRuby.
 
 Additionally, when operating in this mode, the `newrelic_rpm` gem will not be
-loaded until *after* the fork call. This means that your **test cases must be
+loaded until _after_ the fork call. This means that your **test cases must be
 loadable (though not necessarily runnable) without the `newrelic_rpm` gem
 available**.
 

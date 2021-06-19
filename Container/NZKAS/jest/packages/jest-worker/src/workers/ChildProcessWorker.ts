@@ -71,7 +71,7 @@ export default class ChildProcessWorker implements WorkerInterface {
         ...forceColor,
       } as NodeJS.ProcessEnv,
       // Suppress --debug / --inspect flags while preserving others (like --harmony).
-      execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
+      execArgv: process.execArgv.filter((v) => !/^--(debug|inspect)/.test(v)),
       silent: true,
       ...this._options.forkOptions,
     });

@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Geitost"
-		]
-	},
-	"right-override-antispoof": "Die Benutzernamens-Ähnlichkeitsprüfung ausser Kraft setzen."
+  "@metadata": {
+    "authors": ["Geitost"]
+  },
+  "right-override-antispoof": "Die Benutzernamens-Ähnlichkeitsprüfung ausser Kraft setzen."
 }

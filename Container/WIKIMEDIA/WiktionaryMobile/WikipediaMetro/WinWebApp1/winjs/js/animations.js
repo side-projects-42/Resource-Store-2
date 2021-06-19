@@ -1,7 +1,7 @@
 /// <loc filename="metadata\animations_loc_oam.xml" format="messagebundle" />
 /// <reference path='base.js' />
 /// <reference path='ui.js' />
- 
+
 /*
   © Microsoft. All rights reserved.
 
@@ -10,375 +10,458 @@
   Build: 6.2.8100.0 
   Version: 0.5 
 */
- 
 
 WinJS.Namespace.define("WinJS.UI", {});
 
 (function (WinJS) {
-var thisWinUI = WinJS.UI;  
-var mstransform = "-ms-transform";
+  var thisWinUI = WinJS.UI;
+  var mstransform = "-ms-transform";
 
-var OffsetArray = WinJS.Class.define (function (offset, defOffset) {
-    // Constructor 
-    if (Array.isArray(offset) && offset.length > 0) {
+  var OffsetArray = WinJS.Class.define(
+    function (offset, defOffset) {
+      // Constructor
+      if (Array.isArray(offset) && offset.length > 0) {
         this.offsetArray = offset;
-    } else if (offset && offset.hasOwnProperty("top") && offset.hasOwnProperty("left")) {
+      } else if (
+        offset &&
+        offset.hasOwnProperty("top") &&
+        offset.hasOwnProperty("left")
+      ) {
         this.offsetArray = [offset];
-    } else if (defOffset) {
+      } else if (defOffset) {
         this.offsetArray = defOffset;
-    } else {
+      } else {
         this.offsetArray = [{ top: "0px", left: "11px" }]; // Default to 11 pixel from the left
-    }
-}, { // Public Members
-    getOffset: function (i) {
+      }
+    },
+    {
+      // Public Members
+      getOffset: function (i) {
         if (i >= this.offsetArray.length) {
-            i = this.offsetArray.length - 1;
-        };
+          i = this.offsetArray.length - 1;
+        }
         return this.offsetArray[i];
+      },
     }
-});
+  );
 
-function makeArray(elements)
-{
-    if (Array.isArray(elements) || elements instanceof NodeList || elements instanceof HTMLCollection) {
-        return elements;
+  function makeArray(elements) {
+    if (
+      Array.isArray(elements) ||
+      elements instanceof NodeList ||
+      elements instanceof HTMLCollection
+    ) {
+      return elements;
     } else if (elements) {
-        return [elements];
+      return [elements];
     } else {
-        return [];
+      return [];
     }
-}
+  }
 
-function collectOffsetArray(element, offsetArray) {
+  function collectOffsetArray(element, offsetArray) {
     var elemArray = makeArray(element);
     for (var i = 0; i < elemArray.length; i++) {
-        offsetArray.push({
-            top: elemArray[i].offsetTop, 
-            left: elemArray[i].offsetLeft
-        });
+      offsetArray.push({
+        top: elemArray[i].offsetTop,
+        left: elemArray[i].offsetLeft,
+      });
     }
-}
+  }
 
-function staggerDelay(delay, delayFactor, delayCap) {
+  function staggerDelay(delay, delayFactor, delayCap) {
     return function (i, initialDelay) {
-        var ret = initialDelay;
-        for (var j = 0; j < i; j++) {
-            delay *= delayFactor;
-            ret += delay;
-        }
-        if (delayCap) {
-            ret = Math.min(ret, delayCap);
-        }
-        return ret;
+      var ret = initialDelay;
+      for (var j = 0; j < i; j++) {
+        delay *= delayFactor;
+        ret += delay;
+      }
+      if (delayCap) {
+        ret = Math.min(ret, delayCap);
+      }
+      return ret;
     };
-}
+  }
 
-function getRelativeOffset(offsetArray1, offsetArray2) {
+  function getRelativeOffset(offsetArray1, offsetArray2) {
     for (var i = 0; i < offsetArray1.length; i++) {
-        offsetArray1[i].top -= offsetArray2[i].top;
-        offsetArray1[i].left -= offsetArray2[i].left;
+      offsetArray1[i].top -= offsetArray2[i].top;
+      offsetArray1[i].left -= offsetArray2[i].left;
     }
-}
+  }
 
-function setTransform(elem, transform){
+  function setTransform(elem, transform) {
     if (elem.style.msTranform !== transform) {
-        elem.style.msTransform = transform;
-        return true;
+      elem.style.msTransform = transform;
+      return true;
     } else {
-        return false;
+      return false;
     }
-}
+  }
 
-function setOffsetTranslateScale(elem, offset, scale) {
-    return setTransform(elem, scale + "translateX(" + offset.left + ") translateY(" + offset.top + ")");
-}
+  function setOffsetTranslateScale(elem, offset, scale) {
+    return setTransform(
+      elem,
+      scale + "translateX(" + offset.left + ") translateY(" + offset.top + ")"
+    );
+  }
 
-function clearTransitionTransform(elem) {
-    if (elem.style.msTransform === ""){
-        return false;
+  function clearTransitionTransform(elem) {
+    if (elem.style.msTransform === "") {
+      return false;
     } else {
-        elem.style.msTransform = "";
-        return true;
+      elem.style.msTransform = "";
+      return true;
     }
-}
+  }
 
-function setOpacityCallback(opacity) {
+  function setOpacityCallback(opacity) {
     return function (elem) {
-        if (elem.style.opacity === opacity) {
-            return false;
-        } else {
-            elem.style.opacity = opacity;
-            return true;
-        }
+      if (elem.style.opacity === opacity) {
+        return false;
+      } else {
+        elem.style.opacity = opacity;
+        return true;
+      }
     };
-}
+  }
 
-function animTranslate2DTransform(usedStyle, elemArray, offsetArray, transition) {
+  function animTranslate2DTransform(
+    usedStyle,
+    elemArray,
+    offsetArray,
+    transition
+  ) {
     var forceLayout = usedStyle.width;
     var newOffsetArray = [];
     collectOffsetArray(elemArray, newOffsetArray);
     getRelativeOffset(offsetArray, newOffsetArray);
     for (var i = 0; i < elemArray.length; i++) {
-        if (offsetArray[i].top !== 0 || offsetArray[i].left !== 0) {
-            setTransform(elemArray[i], "translateX(" + offsetArray[i].left + "px) translateY(" + offsetArray[i].top + "px)");
-        }
+      if (offsetArray[i].top !== 0 || offsetArray[i].left !== 0) {
+        setTransform(
+          elemArray[i],
+          "translateX(" +
+            offsetArray[i].left +
+            "px) translateY(" +
+            offsetArray[i].top +
+            "px)"
+        );
+      }
     }
     forceLayout = usedStyle.width;
     return thisWinUI.executeTransition(elemArray, transition);
-}
+  }
 
-function translateCallback(offsetArray){
-    return function (i) { 
-        var offset = offsetArray.getOffset(i);
-        return mstransform + ":translate(" + offset.left + "," + offset.top + ")";
+  function translateCallback(offsetArray) {
+    return function (i) {
+      var offset = offsetArray.getOffset(i);
+      return mstransform + ":translate(" + offset.left + "," + offset.top + ")";
     };
-}
+  }
 
-function layoutTranstion(LayoutTransition, target, affected)
-{
+  function layoutTranstion(LayoutTransition, target, affected) {
     var offsetArray = [];
     var targetArray = makeArray(target);
     var affectedArray = makeArray(affected);
     collectOffsetArray(affectedArray, offsetArray);
-    var layoutTransition = new LayoutTransition(targetArray, affectedArray, offsetArray);
+    var layoutTransition = new LayoutTransition(
+      targetArray,
+      affectedArray,
+      offsetArray
+    );
     return layoutTransition;
-}
+  }
 
-var ExpandAnimation = WinJS.Class.define ( function (revealedArray, affectedArray, offsetArray) {
-    // Constructor 
-    this.revealedArray = revealedArray;
-    this.affectedArray = affectedArray;
-    this.offsetArray = offsetArray;
-},{ // Public Members
-    execute: function () {
+  var ExpandAnimation = WinJS.Class.define(
+    function (revealedArray, affectedArray, offsetArray) {
+      // Constructor
+      this.revealedArray = revealedArray;
+      this.affectedArray = affectedArray;
+      this.offsetArray = offsetArray;
+    },
+    {
+      // Public Members
+      execute: function () {
         var usedStyle = window.getComputedStyle(this.revealedArray[0], null);
-        var promise1 = thisWinUI.executeAnimation(this.revealedArray, 
-            { name: "e_r",
-            delay: 200,
-            duration: 167,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: "opacity: 0",
-            to: "opacity: 1"}
-        );
+        var promise1 = thisWinUI.executeAnimation(this.revealedArray, {
+          name: "e_r",
+          delay: 200,
+          duration: 167,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          from: "opacity: 0",
+          to: "opacity: 1",
+        });
         var promise2 = animTranslate2DTransform(
-            usedStyle, 
-            this.affectedArray, 
-            this.offsetArray,
-            {name: mstransform,
+          usedStyle,
+          this.affectedArray,
+          this.offsetArray,
+          {
+            name: mstransform,
             delay: 0,
             duration: 367,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
+            transition: clearTransitionTransform,
+          }
         );
         return WinJS.Promise.join([promise1, promise2]);
+      },
     }
-});
+  );
 
-var CollapseAnimation = WinJS.Class.define ( function (hiddenArray, affectedArray, offsetArray) {
-    // Constructor 
-    this.hiddenArray = hiddenArray;
-    this.affectedArray = affectedArray;
-    this.offsetArray = offsetArray;
-},{ // Public Members
-    execute: function () {
+  var CollapseAnimation = WinJS.Class.define(
+    function (hiddenArray, affectedArray, offsetArray) {
+      // Constructor
+      this.hiddenArray = hiddenArray;
+      this.affectedArray = affectedArray;
+      this.offsetArray = offsetArray;
+    },
+    {
+      // Public Members
+      execute: function () {
         var usedStyle = window.getComputedStyle(this.hiddenArray[0], null);
-        var promise1 = thisWinUI.executeAnimation(this.hiddenArray, 
-            { name: "collapse",
-            delay: 0,
-            duration: 167,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: "opacity: 1",
-            to: "opacity : 0"}
-        );
+        var promise1 = thisWinUI.executeAnimation(this.hiddenArray, {
+          name: "collapse",
+          delay: 0,
+          duration: 167,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          from: "opacity: 1",
+          to: "opacity : 0",
+        });
         var promise2 = animTranslate2DTransform(
-            usedStyle, 
-            this.affectedArray, 
-            this.offsetArray,
-            {name: mstransform,
+          usedStyle,
+          this.affectedArray,
+          this.offsetArray,
+          {
+            name: mstransform,
             delay: 167,
-            duration: 367, 
+            duration: 367,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
+            transition: clearTransitionTransform,
+          }
         );
         return WinJS.Promise.join([promise1, promise2]);
+      },
     }
-});
+  );
 
-var RepositionAnimation = WinJS.Class.define ( function (target, elementArray, offsetArray) {
-    // Constructor 
-    this.elementArray = elementArray;
-    this.offsetArray = offsetArray;
-},{ // Public Members
-    execute: function () {
+  var RepositionAnimation = WinJS.Class.define(
+    function (target, elementArray, offsetArray) {
+      // Constructor
+      this.elementArray = elementArray;
+      this.offsetArray = offsetArray;
+    },
+    {
+      // Public Members
+      execute: function () {
         var usedStyle = window.getComputedStyle(this.elementArray[0], null);
         return animTranslate2DTransform(
-            usedStyle,
-            this.elementArray,
-            this.offsetArray,
-            {name: mstransform,
-            delay : 0,
+          usedStyle,
+          this.elementArray,
+          this.offsetArray,
+          {
+            name: mstransform,
+            delay: 0,
             stagger: staggerDelay(33, 1, 250),
-            duration : 367, 
+            duration: 367,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
+            transition: clearTransitionTransform,
+          }
         );
+      },
     }
-});
+  );
 
-var AddToListAnimation = WinJS.Class.define ( function (addedArray, affectedArray, offsetArray) {
-    // Constructor 
-    this.addedArray = addedArray;
-    this.affectedArray = affectedArray;
-    this.offsetArray = offsetArray;
-},{ // Public Members
-    execute: function () {
+  var AddToListAnimation = WinJS.Class.define(
+    function (addedArray, affectedArray, offsetArray) {
+      // Constructor
+      this.addedArray = addedArray;
+      this.affectedArray = affectedArray;
+      this.offsetArray = offsetArray;
+    },
+    {
+      // Public Members
+      execute: function () {
         var usedStyle = window.getComputedStyle(this.addedArray[0], null);
-        var promise1 = thisWinUI.executeAnimation(this.addedArray, 
-            [{name: "a_s",
+        var promise1 = thisWinUI.executeAnimation(this.addedArray, [
+          {
+            name: "a_s",
             delay: 167,
             duration: 367,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
             from: mstransform + ":scale(0.85, 0.85)",
-            to: mstransform + ":scale(1.0, 1.0)"},
-            {name: "a_o",
+            to: mstransform + ":scale(1.0, 1.0)",
+          },
+          {
+            name: "a_o",
             delay: 167,
             duration: 167,
             timing: "linear",
             from: "opacity: 0",
-            to: "opacity: 1"}]
-        );
+            to: "opacity: 1",
+          },
+        ]);
         var promise2 = animTranslate2DTransform(
-            usedStyle, 
-            this.affectedArray, 
-            this.offsetArray,
-            {name: mstransform,
+          usedStyle,
+          this.affectedArray,
+          this.offsetArray,
+          {
+            name: mstransform,
             delay: 0,
             duration: 500,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
+            transition: clearTransitionTransform,
+          }
         );
         return WinJS.Promise.join([promise1, promise2]);
+      },
     }
-});
+  );
 
-var DeleteFromListAnimation = WinJS.Class.define ( function (deletedArray, remaningArray, offsetArray) {
-    // Constructor 
-    this.deletedArray = deletedArray;
-    this.remaningArray = remaningArray;
-    this.offsetArray = offsetArray;
-},{ // Public Members
-    execute: function () {
+  var DeleteFromListAnimation = WinJS.Class.define(
+    function (deletedArray, remaningArray, offsetArray) {
+      // Constructor
+      this.deletedArray = deletedArray;
+      this.remaningArray = remaningArray;
+      this.offsetArray = offsetArray;
+    },
+    {
+      // Public Members
+      execute: function () {
         var usedStyle = window.getComputedStyle(this.deletedArray[0], null);
-        var promise1 = thisWinUI.executeAnimation(this.deletedArray, 
-            [{name: "d_s",
+        var promise1 = thisWinUI.executeAnimation(this.deletedArray, [
+          {
+            name: "d_s",
             delay: 0,
             duration: 367,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
             from: mstransform + ":scale(1.0, 1.0)",
-            to: mstransform + ":scale(0.85, 0.85)"},
-            {name: "d_o",
+            to: mstransform + ":scale(0.85, 0.85)",
+          },
+          {
+            name: "d_o",
             delay: 0,
             duration: 167,
             timing: "linear",
             from: "opacity: 1",
-            to: "opacity: 0"}]
-        );
+            to: "opacity: 0",
+          },
+        ]);
         var promise2 = animTranslate2DTransform(
-            usedStyle, 
-            this.remaningArray, 
-            this.offsetArray,
-            {name: mstransform,
+          usedStyle,
+          this.remaningArray,
+          this.offsetArray,
+          {
+            name: mstransform,
             delay: 167,
             duration: 500,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
+            transition: clearTransitionTransform,
+          }
         );
         return WinJS.Promise.join([promise1, promise2]);
+      },
     }
-});
+  );
 
-var AddToSearchListAnimation = WinJS.Class.define ( function (addedArray, affectedArray, offsetArray) {
-    // Constructor 
-    this.addedArray = addedArray;
-    this.affectedArray = affectedArray;
-    this.offsetArray = offsetArray;
-},{ // Public Members
-    execute: function () {
+  var AddToSearchListAnimation = WinJS.Class.define(
+    function (addedArray, affectedArray, offsetArray) {
+      // Constructor
+      this.addedArray = addedArray;
+      this.affectedArray = affectedArray;
+      this.offsetArray = offsetArray;
+    },
+    {
+      // Public Members
+      execute: function () {
         var usedStyle = window.getComputedStyle(this.addedArray[0], null);
-        var promise1 = thisWinUI.executeAnimation(this.addedArray, 
-            {name: "as_o",
-            delay: 0,
-            duration: 50,
-            timing: "linear",
-            from: "opacity: 0",
-            to: "opacity: 1"}
-        );
+        var promise1 = thisWinUI.executeAnimation(this.addedArray, {
+          name: "as_o",
+          delay: 0,
+          duration: 50,
+          timing: "linear",
+          from: "opacity: 0",
+          to: "opacity: 1",
+        });
         var promise2 = animTranslate2DTransform(
-            usedStyle, 
-            this.affectedArray, 
-            this.offsetArray,
-            {name: mstransform,
+          usedStyle,
+          this.affectedArray,
+          this.offsetArray,
+          {
+            name: mstransform,
             delay: 0,
             duration: 300,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
+            transition: clearTransitionTransform,
+          }
         );
         return WinJS.Promise.join([promise1, promise2]);
+      },
     }
-});
+  );
 
-var DeleteFromSearchListAnimation = WinJS.Class.define ( function (deletedArray, remaningArray, offsetArray) {
-    // Constructor 
-    this.deletedArray = deletedArray;
-    this.remaningArray = remaningArray;
-    this.offsetArray = offsetArray;
-},{ // Public Members
-    execute: function () {
+  var DeleteFromSearchListAnimation = WinJS.Class.define(
+    function (deletedArray, remaningArray, offsetArray) {
+      // Constructor
+      this.deletedArray = deletedArray;
+      this.remaningArray = remaningArray;
+      this.offsetArray = offsetArray;
+    },
+    {
+      // Public Members
+      execute: function () {
         var usedStyle = window.getComputedStyle(this.deletedArray[0], null);
-        var promise1 = thisWinUI.executeAnimation(this.deletedArray, 
-            {name: "ds_o",
-            delay: 0,
-            duration: 50,
-            timing: "linear",
-            from: "opacity: 1",
-            to: "opacity: 0"}
-        );
+        var promise1 = thisWinUI.executeAnimation(this.deletedArray, {
+          name: "ds_o",
+          delay: 0,
+          duration: 50,
+          timing: "linear",
+          from: "opacity: 1",
+          to: "opacity: 0",
+        });
         var promise2 = animTranslate2DTransform(
-            usedStyle, 
-            this.remaningArray, 
-            this.offsetArray,
-            {name: mstransform,
+          usedStyle,
+          this.remaningArray,
+          this.offsetArray,
+          {
+            name: mstransform,
             delay: 0,
             duration: 300,
             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
+            transition: clearTransitionTransform,
+          }
         );
         return WinJS.Promise.join([promise1, promise2]);
+      },
     }
-});
+  );
 
-var PeekAnimation = WinJS.Class.define ( function (target, elementArray, offsetArray) {
-    // Constructor 
-    this.elementArray = elementArray;
-    this.offsetArray = offsetArray;
-},{ // Public Members
-    execute: function () {
+  var PeekAnimation = WinJS.Class.define(
+    function (target, elementArray, offsetArray) {
+      // Constructor
+      this.elementArray = elementArray;
+      this.offsetArray = offsetArray;
+    },
+    {
+      // Public Members
+      execute: function () {
         var usedStyle = window.getComputedStyle(this.elementArray[0], null);
         return animTranslate2DTransform(
-            usedStyle,
-            this.elementArray,
-            this.offsetArray,
-            {name: mstransform,
-            delay : 0,
-            duration : 2000, 
-            timing : "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
+          usedStyle,
+          this.elementArray,
+          this.offsetArray,
+          {
+            name: mstransform,
+            delay: 0,
+            duration: 2000,
+            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+            transition: clearTransitionTransform,
+          }
         );
+      },
     }
-});
+  );
 
-WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
-
+  WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// <summary locid="1">
     /// expand animation. The usage pattern is
     /// Call this function before expand the element, do real work to expand,
@@ -394,8 +477,8 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// ExpandAnimation object
     /// </returns>
     createExpandAnimation: function (revealed, affected) {
-        return layoutTranstion(ExpandAnimation, revealed, affected);
-        },
+      return layoutTranstion(ExpandAnimation, revealed, affected);
+    },
 
     /// <summary locid="5">
     /// Collapse clicked, set the element's style.display to "none", animate affected elements
@@ -410,7 +493,7 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// Promise object to track when transition is done
     /// </returns>
     createCollapseAnimation: function (hidden, affected) {
-        return layoutTranstion(CollapseAnimation, hidden, affected);
+      return layoutTranstion(CollapseAnimation, hidden, affected);
     },
 
     /// <summary locid="9">
@@ -425,7 +508,7 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// RepositionAnimation object
     /// </returns>
     createRepositionAnimation: function (element) {
-        return layoutTranstion(RepositionAnimation, null, element);
+      return layoutTranstion(RepositionAnimation, null, element);
     },
 
     /// <summary locid="12">
@@ -438,14 +521,13 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// Promise object to track when transition is done
     /// </returns>
     fadeIn: function (shown) {
-        return thisWinUI.executeTransition(
-            shown,
-            {name: "opacity",
-            delay: 0,
-            duration: 167,
-            timing: "linear",
-            transition: setOpacityCallback(1)}
-        );
+      return thisWinUI.executeTransition(shown, {
+        name: "opacity",
+        delay: 0,
+        duration: 167,
+        timing: "linear",
+        transition: setOpacityCallback(1),
+      });
     },
 
     /// <summary locid="14">
@@ -458,14 +540,13 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// Promise object to track when transition is done
     /// </returns>
     fadeOut: function (hidden) {
-        return thisWinUI.executeTransition(
-            hidden,
-            {name: "opacity",
-            delay: 0,
-            duration: 167,
-            timing: "linear",
-            transition: setOpacityCallback(0)}
-        );
+      return thisWinUI.executeTransition(hidden, {
+        name: "opacity",
+        delay: 0,
+        duration: 167,
+        timing: "linear",
+        transition: setOpacityCallback(0),
+      });
     },
 
     /// <summary locid="15">
@@ -483,8 +564,8 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// AddToListAnimation object
     /// </returns>
     createAddToListAnimation: function (added, affected) {
-        return layoutTranstion(AddToListAnimation, added, affected);
-        },
+      return layoutTranstion(AddToListAnimation, added, affected);
+    },
 
     /// <summary locid="19">
     /// remove from list animation. The usage pattern is
@@ -501,8 +582,8 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// CreateDeleteFromList object
     /// </returns>
     createDeleteFromListAnimation: function (deleted, remaining) {
-        return layoutTranstion(DeleteFromListAnimation, deleted, remaining);
-        },
+      return layoutTranstion(DeleteFromListAnimation, deleted, remaining);
+    },
 
     /// <summary locid="23">
     /// similiar to AddToList, just faster to fit the search filtering
@@ -519,8 +600,8 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// AddToListAnimation object
     /// </returns>
     createAddToSearchListAnimation: function (added, affected) {
-        return layoutTranstion(AddToSearchListAnimation, added, affected);
-        },
+      return layoutTranstion(AddToSearchListAnimation, added, affected);
+    },
 
     /// <summary locid="24">
     /// similiar to remove from list animation, just faster to fit search filtering. The usage pattern is
@@ -537,8 +618,8 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// ExpandAnimation object
     /// </returns>
     createDeleteFromSearchListAnimation: function (deleted, remaining) {
-        return layoutTranstion(DeleteFromSearchListAnimation, deleted, remaining);
-        },
+      return layoutTranstion(DeleteFromSearchListAnimation, deleted, remaining);
+    },
 
     /// <summary locid="25">
     /// Show Edge UI, slide in from the edge for UI objects like appbar
@@ -553,16 +634,15 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     showEdgeUI: function (element, offset) {
-        var offsetArray = new OffsetArray(offset);
-        return thisWinUI.executeAnimation(element, 
-            {name: "showEdgeUI",
-            delay: 0,
-            duration: 367,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"
-            }
-        );
+      var offsetArray = new OffsetArray(offset);
+      return thisWinUI.executeAnimation(element, {
+        name: "showEdgeUI",
+        delay: 0,
+        duration: 367,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        fromCallback: translateCallback(offsetArray),
+        to: mstransform + ":translate(0px, 0px)",
+      });
     },
 
     /// <summary locid="29">
@@ -578,16 +658,15 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     showPanel: function (element, offset) {
-        var offsetArray = new OffsetArray(offset);
-        return thisWinUI.executeAnimation(element, 
-            {name: "showPanel",
-            delay: 0,
-            duration: 733,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"
-            }
-        );
+      var offsetArray = new OffsetArray(offset);
+      return thisWinUI.executeAnimation(element, {
+        name: "showPanel",
+        delay: 0,
+        duration: 733,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        fromCallback: translateCallback(offsetArray),
+        to: mstransform + ":translate(0px, 0px)",
+      });
     },
 
     /// <summary locid="31">
@@ -603,16 +682,15 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     hideEdgeUI: function (element, offset) {
-        var offsetArray = new OffsetArray(offset);
-        return thisWinUI.executeAnimation(element, 
-            {name: "hideEdgeUI",
-            delay: 0,
-            duration: 367,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: mstransform + ":translate(0px, 0px)",
-            toCallback: translateCallback(offsetArray)
-            }
-        );
+      var offsetArray = new OffsetArray(offset);
+      return thisWinUI.executeAnimation(element, {
+        name: "hideEdgeUI",
+        delay: 0,
+        duration: 367,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        from: mstransform + ":translate(0px, 0px)",
+        toCallback: translateCallback(offsetArray),
+      });
     },
 
     /// <summary locid="34">
@@ -628,16 +706,15 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     hidePanel: function (element, offset) {
-        var offsetArray = new OffsetArray(offset);
-        return thisWinUI.executeAnimation(element, 
-            {name: "hidePanel",
-            delay: 0,
-            duration: 733,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: mstransform + ":translate(0px, 0px)",
-            toCallback: translateCallback(offsetArray)
-            }
-        );
+      var offsetArray = new OffsetArray(offset);
+      return thisWinUI.executeAnimation(element, {
+        name: "hidePanel",
+        delay: 0,
+        duration: 733,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        from: mstransform + ":translate(0px, 0px)",
+        toCallback: translateCallback(offsetArray),
+      });
     },
 
     /// <summary locid="35">
@@ -653,22 +730,25 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     showPopup: function (element, offset) {
-        var offsetArray = new OffsetArray(offset,[{ top: "50px", left: "0px" }]);
-        return thisWinUI.executeAnimation(
-            element,
-            [{ name: "sp_o",
-            delay: 83,
-            duration: 83,
-            timing: "linear",
-            from: "opacity: 0",
-            to: "opacity : 1"},
-            {  name: " sp_t", 
-            delay: 0,
-            duration: 367, 
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"}]
-        );
+      var offsetArray = new OffsetArray(offset, [{ top: "50px", left: "0px" }]);
+      return thisWinUI.executeAnimation(element, [
+        {
+          name: "sp_o",
+          delay: 83,
+          duration: 83,
+          timing: "linear",
+          from: "opacity: 0",
+          to: "opacity : 1",
+        },
+        {
+          name: " sp_t",
+          delay: 0,
+          duration: 367,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          fromCallback: translateCallback(offsetArray),
+          to: mstransform + ":translate(0px, 0px)",
+        },
+      ]);
     },
 
     /// <summary locid="38">
@@ -681,15 +761,14 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     hidePopup: function (element) {
-        return thisWinUI.executeAnimation(
-            element, 
-            {name: "hp_o",
-            delay: 0,
-            duration: 83,
-            timing: "linear",
-            from: "opacity: 1",
-            to: "opacity : 0"}
-        );
+      return thisWinUI.executeAnimation(element, {
+        name: "hp_o",
+        delay: 0,
+        duration: 83,
+        timing: "linear",
+        from: "opacity: 1",
+        to: "opacity : 0",
+      });
     },
 
     /// <summary locid="40">
@@ -702,14 +781,15 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     pointerDown: function (element) {
-       return thisWinUI.executeTransition(
-            element,
-            {name: mstransform,
-            delay: 0,
-            duration: 167,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: function (elem) {return setTransform(elem, "scale(0.95, 0.95)");}}
-        );
+      return thisWinUI.executeTransition(element, {
+        name: mstransform,
+        delay: 0,
+        duration: 167,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: function (elem) {
+          return setTransform(elem, "scale(0.95, 0.95)");
+        },
+      });
     },
 
     /// <summary locid="42">
@@ -722,14 +802,13 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     pointerUp: function (element) {
-       return thisWinUI.executeTransition(
-            element, 
-            {name: mstransform,
-            delay: 0,
-            duration: 167,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
-        );
+      return thisWinUI.executeTransition(element, {
+        name: mstransform,
+        delay: 0,
+        duration: 167,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: clearTransitionTransform,
+      });
     },
 
     /// <summary locid="44">
@@ -745,28 +824,34 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     dragSourceStart: function (dragSource, affected) {
-        var promise1 = thisWinUI.executeTransition(
-            dragSource,
-            [{name: mstransform,
-            delay: 0,
-            duration: 240, 
-            timing : "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: function (elem) { return setTransform(elem, "scale(1.05 , 1.05)");}},
-            {name: "opacity",
-            delay: 0,
-            duration: 240,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: setOpacityCallback(0.65)}]
-            );
-        var promise2 = thisWinUI.executeTransition(
-            affected, 
-            {name: mstransform,
-            delay: 0,
-            duration: 240, 
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: function (elem) { return setTransform(elem, "scale(.95, .95)");}}
-            );
-        return WinJS.Promise.join([promise1, promise2]);
+      var promise1 = thisWinUI.executeTransition(dragSource, [
+        {
+          name: mstransform,
+          delay: 0,
+          duration: 240,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          transition: function (elem) {
+            return setTransform(elem, "scale(1.05 , 1.05)");
+          },
+        },
+        {
+          name: "opacity",
+          delay: 0,
+          duration: 240,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          transition: setOpacityCallback(0.65),
+        },
+      ]);
+      var promise2 = thisWinUI.executeTransition(affected, {
+        name: mstransform,
+        delay: 0,
+        duration: 240,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: function (elem) {
+          return setTransform(elem, "scale(.95, .95)");
+        },
+      });
+      return WinJS.Promise.join([promise1, promise2]);
     },
 
     /// <summary locid="47">
@@ -785,42 +870,43 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     dragSourceEnd: function (dragSource, offset, affected) {
-        var flexOffset = new OffsetArray(offset);
-        var affectedArray = makeArray(affected);
-// optimization, no promise object to scale to 1.0
-        thisWinUI.executeTransition(
-            dragSource,
-            [{name: mstransform,
-            delay: 0,
-            duration : 500, 
-            timing : "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform},
-            {name: "opacity",
-            delay: 0,
-            duration: 500,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: setOpacityCallback(1.0)}]
-        );
+      var flexOffset = new OffsetArray(offset);
+      var affectedArray = makeArray(affected);
+      // optimization, no promise object to scale to 1.0
+      thisWinUI.executeTransition(dragSource, [
+        {
+          name: mstransform,
+          delay: 0,
+          duration: 500,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          transition: clearTransitionTransform,
+        },
+        {
+          name: "opacity",
+          delay: 0,
+          duration: 500,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          transition: setOpacityCallback(1.0),
+        },
+      ]);
 
-        var promise1 = thisWinUI.executeAnimation(
-            dragSource,
-            {name: " dragEnd",
-            delay: 0,
-            duration: 500,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(flexOffset),
-            to: mstransform + ":translate(0px, 0px)"}
-        );
+      var promise1 = thisWinUI.executeAnimation(dragSource, {
+        name: " dragEnd",
+        delay: 0,
+        duration: 500,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        fromCallback: translateCallback(flexOffset),
+        to: mstransform + ":translate(0px, 0px)",
+      });
 
-       var promise2 = thisWinUI.executeTransition(
-            affectedArray,
-            {name: mstransform,
-            delay : 0,
-            duration : 500, 
-            timing : "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
-        );
-        return WinJS.Promise.join([promise1, promise2]);
+      var promise2 = thisWinUI.executeTransition(affectedArray, {
+        name: mstransform,
+        delay: 0,
+        duration: 500,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: clearTransitionTransform,
+      });
+      return WinJS.Promise.join([promise1, promise2]);
     },
 
     /// <summary locid="49">
@@ -839,31 +925,33 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     transitionContent: function (incoming, offset, outgoing) {
-        var offsetArray = new OffsetArray(offset,[{ top: "0px", left: "40px" }]);
-        var promise1 = thisWinUI.executeAnimation(
-            incoming, 
-            [{name: "opacity",
-            delay: 160,
-            duration: 400,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: "opacity: 0.0",
-            to: "opacity : 1.0"},
-            {name: mstransform,
-            delay: 0,
-            duration: 1000,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"}]
-        );
-        var promise2 = thisWinUI.executeTransition(
-            outgoing,
-            {name: "opacity",
-            delay: 150,
-            duration: 80,
-            timing: "linear",
-            transition: setOpacityCallback(0)}
-        ); 
-        return WinJS.Promise.join([promise1, promise2]);
+      var offsetArray = new OffsetArray(offset, [{ top: "0px", left: "40px" }]);
+      var promise1 = thisWinUI.executeAnimation(incoming, [
+        {
+          name: "opacity",
+          delay: 160,
+          duration: 400,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          from: "opacity: 0.0",
+          to: "opacity : 1.0",
+        },
+        {
+          name: mstransform,
+          delay: 0,
+          duration: 1000,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          fromCallback: translateCallback(offsetArray),
+          to: mstransform + ":translate(0px, 0px)",
+        },
+      ]);
+      var promise2 = thisWinUI.executeTransition(outgoing, {
+        name: "opacity",
+        delay: 150,
+        duration: 80,
+        timing: "linear",
+        transition: setOpacityCallback(0),
+      });
+      return WinJS.Promise.join([promise1, promise2]);
     },
 
     /// <summary locid="53">
@@ -888,37 +976,37 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     reveal: function (background, content, offset, outline, tapped) {
-        var offsetArray = new OffsetArray(offset,[{ top: "0px", left: "-10px" }]);
-        var promise1 = thisWinUI.executeAnimation(
-            content, 
-            {name: "reveal_content",
-            delay: 0,
-            duration: 450,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"
-            }
-        );
+      var offsetArray = new OffsetArray(offset, [
+        { top: "0px", left: "-10px" },
+      ]);
+      var promise1 = thisWinUI.executeAnimation(content, {
+        name: "reveal_content",
+        delay: 0,
+        duration: 450,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        fromCallback: translateCallback(offsetArray),
+        to: mstransform + ":translate(0px, 0px)",
+      });
 
-        var promise2 = thisWinUI.executeTransition(
-            outline,
-            {name: "opacity",
-            delay: 0,
-            duration: 50,
-            timing: "linear",
-            transition: setOpacityCallback(1)}
-        );
+      var promise2 = thisWinUI.executeTransition(outline, {
+        name: "opacity",
+        delay: 0,
+        duration: 50,
+        timing: "linear",
+        transition: setOpacityCallback(1),
+      });
 
-        var promise3 = thisWinUI.executeTransition(
-            tapped, 
-            {name: mstransform,
-             delay: 0,
-             duration: 200,
-             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-             transition: function (elem) { return setTransform(elem, "scale(1.05 , 1.05)");}}
-        );
+      var promise3 = thisWinUI.executeTransition(tapped, {
+        name: mstransform,
+        delay: 0,
+        duration: 200,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: function (elem) {
+          return setTransform(elem, "scale(1.05 , 1.05)");
+        },
+      });
 
-        return WinJS.Promise.join([promise1, promise2, promise3]);
+      return WinJS.Promise.join([promise1, promise2, promise3]);
     },
 
     /// <summary locid="59">
@@ -943,37 +1031,33 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     hide: function (background, content, offset, outline, tapped) {
-        var offsetArray = new OffsetArray(offset,[{ top: "0px", left: "10px" }]);
-        var promise1 = thisWinUI.executeAnimation(
-            content, 
-            {name: "hide_content",
-            delay: 0,
-            duration: 200,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"
-            }
-        );
+      var offsetArray = new OffsetArray(offset, [{ top: "0px", left: "10px" }]);
+      var promise1 = thisWinUI.executeAnimation(content, {
+        name: "hide_content",
+        delay: 0,
+        duration: 200,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        fromCallback: translateCallback(offsetArray),
+        to: mstransform + ":translate(0px, 0px)",
+      });
 
-        var promise2 = thisWinUI.executeTransition(
-            outline,
-            {name: "opacity",
-            delay: 0,
-            duration: 50,
-            timing: "linear",
-            transition: setOpacityCallback(0)}
-        );
+      var promise2 = thisWinUI.executeTransition(outline, {
+        name: "opacity",
+        delay: 0,
+        duration: 50,
+        timing: "linear",
+        transition: setOpacityCallback(0),
+      });
 
-        var promise3 = thisWinUI.executeTransition(
-            tapped, 
-            {name: mstransform,
-             delay: 0,
-             duration: 100,
-             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-             transition: clearTransitionTransform}
-        );
+      var promise3 = thisWinUI.executeTransition(tapped, {
+        name: mstransform,
+        delay: 0,
+        duration: 100,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: clearTransitionTransform,
+      });
 
-        return WinJS.Promise.join([promise1, promise2, promise3]);
+      return WinJS.Promise.join([promise1, promise2, promise3]);
     },
 
     /// <summary locid="63">
@@ -986,15 +1070,25 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     dragBetweenEnter: function (target, offset) {
-        var flexOffset = new OffsetArray(offset,[{ top: "-40px", left: "0px" }, { top: "40px", left: "0px" }]);
-        return thisWinUI.executeTransition(
-            target,
-            {name: mstransform,
-            delay: 0,
-            duration: 60,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transitionCallback: function (i) { return function (elem) { return setOffsetTranslateScale(elem, flexOffset.getOffset(i), "scale(.95, .95)");};} }
-        );
+      var flexOffset = new OffsetArray(offset, [
+        { top: "-40px", left: "0px" },
+        { top: "40px", left: "0px" },
+      ]);
+      return thisWinUI.executeTransition(target, {
+        name: mstransform,
+        delay: 0,
+        duration: 60,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transitionCallback: function (i) {
+          return function (elem) {
+            return setOffsetTranslateScale(
+              elem,
+              flexOffset.getOffset(i),
+              "scale(.95, .95)"
+            );
+          };
+        },
+      });
     },
 
     /// <summary locid="65">
@@ -1007,14 +1101,15 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     dragBetweenLeave: function (target) {
-        return thisWinUI.executeTransition(
-            target, 
-            {name: mstransform,
-            delay: 0,
-            duration: 60,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: function (elem) { return setTransform(elem, "scale(.95, .95)");}}
-        );
+      return thisWinUI.executeTransition(target, {
+        name: mstransform,
+        delay: 0,
+        duration: 60,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: function (elem) {
+          return setTransform(elem, "scale(.95, .95)");
+        },
+      });
     },
 
     /// <summary locid="67">
@@ -1030,25 +1125,23 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     crossSlideSelect: function (selected, selection) {
-        var promise1 = thisWinUI.executeTransition(
-            selected,
-            {name: mstransform,
-            delay: 0,
-            duration: 300,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
-        );
+      var promise1 = thisWinUI.executeTransition(selected, {
+        name: mstransform,
+        delay: 0,
+        duration: 300,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: clearTransitionTransform,
+      });
 
-        var promise2 = thisWinUI.executeAnimation(
-            selection, 
-            {name: "cs_selection",
-             delay: 0,
-             duration: 300,
-             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-             from: "opacity: 0.0",
-             to: "opacity : 1.0"}
-        );
-        return WinJS.Promise.join([promise1, promise2]);
+      var promise2 = thisWinUI.executeAnimation(selection, {
+        name: "cs_selection",
+        delay: 0,
+        duration: 300,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        from: "opacity: 0.0",
+        to: "opacity : 1.0",
+      });
+      return WinJS.Promise.join([promise1, promise2]);
     },
 
     /// <summary locid="70">
@@ -1064,25 +1157,23 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     crossSlideDeselect: function (deselected, selection) {
-        var promise1 = thisWinUI.executeTransition(
-            deselected,
-            {name: mstransform,
-            delay: 0,
-            duration: 300,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            transition: clearTransitionTransform}
-        );
+      var promise1 = thisWinUI.executeTransition(deselected, {
+        name: mstransform,
+        delay: 0,
+        duration: 300,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        transition: clearTransitionTransform,
+      });
 
-        var promise2 = thisWinUI.executeAnimation(
-            selection, 
-            {name: "cs_deselection",
-             delay: 0,
-             duration: 300,
-             timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-             from: "opacity: 1.0",
-             to: "opacity : 0.0"}
-        );
-        return WinJS.Promise.join([promise1, promise2]);
+      var promise2 = thisWinUI.executeAnimation(selection, {
+        name: "cs_deselection",
+        delay: 0,
+        duration: 300,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        from: "opacity: 1.0",
+        to: "opacity : 0.0",
+      });
+      return WinJS.Promise.join([promise1, promise2]);
     },
 
     /// <summary locid="72">
@@ -1098,16 +1189,17 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     crossSlideReveal: function (target, offset) {
-        var offsetArray = new OffsetArray(offset,[{ top: "-10px", left: "0px" }]);
-        return thisWinUI.executeAnimation(target, 
-            {name: "cs_reveal",
-            delay: 0,
-            duration: 500,
-            timing: "linear",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"
-            }
-        );
+      var offsetArray = new OffsetArray(offset, [
+        { top: "-10px", left: "0px" },
+      ]);
+      return thisWinUI.executeAnimation(target, {
+        name: "cs_reveal",
+        delay: 0,
+        duration: 500,
+        timing: "linear",
+        fromCallback: translateCallback(offsetArray),
+        to: mstransform + ":translate(0px, 0px)",
+      });
     },
 
     /// <summary locid="74">
@@ -1123,24 +1215,30 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     enterPage: function (element, offset) {
-        var offsetArray = new OffsetArray(offset,[{ top: "0px", left: "100px" }]);
-        var promise = thisWinUI.executeAnimation(element, 
-            [{name: "ep_o",
-            delay: 0,
-            stagger: staggerDelay(83, 1, 250),
-            duration: 330, 
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: "opacity: 0",
-            to: "opacity : 1"},
-            {name: "eo_t",
-            delay: 0,
-            stagger: staggerDelay(83, 1, 250),
-            duration: 1000, 
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"}]
-        );
-        return promise;
+      var offsetArray = new OffsetArray(offset, [
+        { top: "0px", left: "100px" },
+      ]);
+      var promise = thisWinUI.executeAnimation(element, [
+        {
+          name: "ep_o",
+          delay: 0,
+          stagger: staggerDelay(83, 1, 250),
+          duration: 330,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          from: "opacity: 0",
+          to: "opacity : 1",
+        },
+        {
+          name: "eo_t",
+          delay: 0,
+          stagger: staggerDelay(83, 1, 250),
+          duration: 1000,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          fromCallback: translateCallback(offsetArray),
+          to: mstransform + ":translate(0px, 0px)",
+        },
+      ]);
+      return promise;
     },
 
     /// <summary locid="75">
@@ -1159,34 +1257,39 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     transitionPage: function (incoming, offset, outgoing) {
-        var offsetArray = new OffsetArray(offset,[{ top: "0px", left: "100px" }]);
-        var promise1 = thisWinUI.executeAnimation(incoming, 
-            [{name: "tp_o",
-            delay: 83,
-            stagger: staggerDelay(83, 1, 250),
-            duration: 330, 
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: "opacity: 0",
-            to: "opacity : 1"},
-            {name: "tp_t",
-            delay: 83,
-            stagger: staggerDelay(83, 1, 250),
-            duration: 1000, 
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(offsetArray),
-            to: mstransform + ":translate(0px, 0px)"}]
-        );
+      var offsetArray = new OffsetArray(offset, [
+        { top: "0px", left: "100px" },
+      ]);
+      var promise1 = thisWinUI.executeAnimation(incoming, [
+        {
+          name: "tp_o",
+          delay: 83,
+          stagger: staggerDelay(83, 1, 250),
+          duration: 330,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          from: "opacity: 0",
+          to: "opacity : 1",
+        },
+        {
+          name: "tp_t",
+          delay: 83,
+          stagger: staggerDelay(83, 1, 250),
+          duration: 1000,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          fromCallback: translateCallback(offsetArray),
+          to: mstransform + ":translate(0px, 0px)",
+        },
+      ]);
 
-        var promise2 = thisWinUI.executeAnimation(
-            outgoing, 
-            { name: "tp_o2",
-            delay: 0,
-            duration: 160,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: "opacity: 1",
-            to: "opacity : 0"}
-        );
-    return WinJS.Promise.join([promise1, promise2]);
+      var promise2 = thisWinUI.executeAnimation(outgoing, {
+        name: "tp_o2",
+        delay: 0,
+        duration: 160,
+        timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+        from: "opacity: 1",
+        to: "opacity : 0",
+      });
+      return WinJS.Promise.join([promise1, promise2]);
     },
 
     /// <summary locid="77">
@@ -1202,24 +1305,22 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     crossFade: function (incoming, outgoing) {
-        var promise1 = thisWinUI.executeTransition(
-            incoming,
-            {name: "opacity",
-            delay: 0,
-            duration: 167,
-            timing: "linear",
-            transition: setOpacityCallback(1)}
-        );
+      var promise1 = thisWinUI.executeTransition(incoming, {
+        name: "opacity",
+        delay: 0,
+        duration: 167,
+        timing: "linear",
+        transition: setOpacityCallback(1),
+      });
 
-        var promise2 = thisWinUI.executeTransition(
-            outgoing,
-            {name: "opacity",
-            delay: 0,
-            duration: 167,
-            timing: "linear",
-            transition: setOpacityCallback(0)}
-        );
-    return WinJS.Promise.join([promise1, promise2]);
+      var promise2 = thisWinUI.executeTransition(outgoing, {
+        name: "opacity",
+        delay: 0,
+        duration: 167,
+        timing: "linear",
+        transition: setOpacityCallback(0),
+      });
+      return WinJS.Promise.join([promise1, promise2]);
     },
 
     /// <summary locid="80">
@@ -1234,7 +1335,7 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// PeekAnimation object
     /// </returns>
     createPeekAnimation: function (element) {
-        return layoutTranstion(PeekAnimation, null, element);
+      return layoutTranstion(PeekAnimation, null, element);
     },
 
     /// <summary locid="83">
@@ -1256,41 +1357,49 @@ WinJS.Namespace.defineWithParent(thisWinUI, "Animation", {
     /// promise object
     /// </returns>
     updateBadge: function (incoming, inOffset, outgoing, outOffset) {
-        var inOffsetArray = new OffsetArray(inOffset,[{ top: "24px", left: "0px" }]);
-        var outOffsetArray = new OffsetArray(outOffset,[{ top: "-24px", left: "0px" }]);
-        var promise1 = thisWinUI.executeAnimation(
-            incoming, 
-            [{name: "ub_o",
-            delay: 0,
-            duration: 367,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: "opacity: 0.0",
-            to: "opacity : 1.0"},
-            {name: "ub_t",
-            delay: 0,
-            duration: 1333,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            fromCallback: translateCallback(inOffsetArray),
-            to: mstransform + ":translate(0px, 0px)"}]
-        ); 
-        var promise2 = thisWinUI.executeAnimation(
-            outgoing,
-            [{name: "ub_o2",
-            delay: 0,
-            duration: 167,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: "opacity: 1.0",
-            to: "opacity : 0.0"},
-            {name: "ub_t2",
-            delay: 0,
-            duration: 367,
-            timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
-            from: mstransform + ":translate(0px, 0px)",
-            toCallback: translateCallback(outOffsetArray)}]
-        ); 
-        return WinJS.Promise.join([promise1, promise2]);
-    }
-});
-
+      var inOffsetArray = new OffsetArray(inOffset, [
+        { top: "24px", left: "0px" },
+      ]);
+      var outOffsetArray = new OffsetArray(outOffset, [
+        { top: "-24px", left: "0px" },
+      ]);
+      var promise1 = thisWinUI.executeAnimation(incoming, [
+        {
+          name: "ub_o",
+          delay: 0,
+          duration: 367,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          from: "opacity: 0.0",
+          to: "opacity : 1.0",
+        },
+        {
+          name: "ub_t",
+          delay: 0,
+          duration: 1333,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          fromCallback: translateCallback(inOffsetArray),
+          to: mstransform + ":translate(0px, 0px)",
+        },
+      ]);
+      var promise2 = thisWinUI.executeAnimation(outgoing, [
+        {
+          name: "ub_o2",
+          delay: 0,
+          duration: 167,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          from: "opacity: 1.0",
+          to: "opacity : 0.0",
+        },
+        {
+          name: "ub_t2",
+          delay: 0,
+          duration: 367,
+          timing: "cubic-bezier(0.1, 0.9, 0.2, 1)",
+          from: mstransform + ":translate(0px, 0px)",
+          toCallback: translateCallback(outOffsetArray),
+        },
+      ]);
+      return WinJS.Promise.join([promise1, promise2]);
+    },
+  });
 })(WinJS);
-

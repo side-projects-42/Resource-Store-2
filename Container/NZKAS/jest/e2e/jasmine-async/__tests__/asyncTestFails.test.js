@@ -9,7 +9,7 @@
 
 'use strict';
 
-it('async test fails', done => {
+it('async test fails', (done) => {
   setTimeout(() => {
     expect(false).toBeTruthy();
     done();

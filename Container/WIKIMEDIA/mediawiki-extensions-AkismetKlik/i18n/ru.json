@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"DCamer",
-			"Okras"
-		]
-	},
-	"akismetklik-desc": "Отвергает правки подозреваемых в спаме комментариев на основе антиспам-списка Akismet"
+  "@metadata": {
+    "authors": ["DCamer", "Okras"]
+  },
+  "akismetklik-desc": "Отвергает правки подозреваемых в спаме комментариев на основе антиспам-списка Akismet"
 }

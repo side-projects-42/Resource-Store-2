@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"פוילישער"
-		]
-	},
-	"ajaxpoll-no-vote": "זײַט אזוי גוט שטימען אונטן"
+  "@metadata": {
+    "authors": ["פוילישער"]
+  },
+  "ajaxpoll-no-vote": "זײַט אזוי גוט שטימען אונטן"
 }

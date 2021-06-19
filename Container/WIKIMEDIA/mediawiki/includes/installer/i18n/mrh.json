@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Chhithai",
-			"Laitei",
-			"Teitei Para"
-		]
+		"authors": ["Chhithai", "Laitei", "Teitei Para"]
 	},
 	"config-desc": "MediaWiki châta paziahna",
 	"config-title": "MediaWiki $1 paziahna",

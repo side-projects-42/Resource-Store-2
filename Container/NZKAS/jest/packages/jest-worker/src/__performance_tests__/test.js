@@ -17,7 +17,7 @@ const JestWorker = require('../../build').default;
 assert(process.argv[2], 'Pass a child method name');
 assert(process.argv[3], 'Pass the number of iteratitons');
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const method = process.argv[2];
 const calls = +process.argv[3];
 const threads = 6;

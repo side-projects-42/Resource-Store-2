@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Avjoska",
-			"Pikne",
-			"Suwa"
-		]
+		"authors": ["Avjoska", "Pikne", "Suwa"]
 	},
 	"ooui-outline-control-move-down": "Liiguta üksust allapoole",
 	"ooui-outline-control-move-up": "Liiguta üksust ülespoole",

@@ -1,5 +1,4 @@
-Tests in jquery.ime
-===================
+# Tests in jquery.ime
 
 jquery.ime has a simple, but powerful, QUnit-based testing framework.
 
@@ -26,24 +25,24 @@ Here's an example test block for a layout:
 
 Let's analyze it:
 
-* `description`: This is the human-readable description of a block of tests
-that will appear when you run them in QUnit.
-* `tests`: These are the actual tests. Make sure to add a comma after each test
-except the last one, as it usually is with JavaScript. See below for more
-details about the tests.
-* `inputmethod`: This is the name of the scheme. It is the same as the id field
-in the scheme description. It must also appear in the id field in the $input
-line.
+- `description`: This is the human-readable description of a block of tests
+  that will appear when you run them in QUnit.
+- `tests`: These are the actual tests. Make sure to add a comma after each test
+  except the last one, as it usually is with JavaScript. See below for more
+  details about the tests.
+- `inputmethod`: This is the name of the scheme. It is the same as the id field
+  in the scheme description. It must also appear in the id field in the $input
+  line.
 
 Each test consists of:
 
-* `input`: The characters which are expected to be typed. This is either a
-string (for non-extended input) or an array of arrays (see below).
-* `output`: This is the expected result: the string that is supposed to appear
-after the input string is typed. In the first case, it is expected that typing
-'ka' will yield the Amharic letter 'ካ' and in the second case it is expected
-that typing 'dW' will yield 'ዷ'.
-* `description`: This is a description of the test that will appear in QUnit.
+- `input`: The characters which are expected to be typed. This is either a
+  string (for non-extended input) or an array of arrays (see below).
+- `output`: This is the expected result: the string that is supposed to appear
+  after the input string is typed. In the first case, it is expected that typing
+  'ka' will yield the Amharic letter 'ካ' and in the second case it is expected
+  that typing 'dW' will yield 'ዷ'.
+- `description`: This is a description of the test that will appear in QUnit.
 
 For extended keys specify the characters like this:
 

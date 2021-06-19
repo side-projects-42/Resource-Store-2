@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Aursani",
-			"Mehtab ahmed",
-			"Sindhu"
-		]
+		"authors": ["Aursani", "Mehtab ahmed", "Sindhu"]
 	},
 	"config-desc": "ميڊياوڪيءَ لاءِ تنصيبڪار",
 	"config-title": "ميڊياوڪي $1 تنصيب",

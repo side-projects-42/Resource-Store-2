@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Lezgia"
-		]
+		"authors": ["Lezgia"]
 	},
 	"config-desc": "Инстайлер MediaWiki-диз",
 	"config-title": "Эцигун $1 MediaWiki",

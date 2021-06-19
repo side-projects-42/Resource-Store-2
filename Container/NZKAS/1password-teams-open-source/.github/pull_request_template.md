@@ -2,11 +2,11 @@
 
 **1Password Teams url**: myteam.1password.com (create the account before applying).
 
-**Project name**:  
+**Project name**:
 
 **Short description**:
 
-**Project age**: 
+**Project age**:
 
 **Number of core contributors**:
 
@@ -20,10 +20,9 @@
 
 **License url**: A copy of the license terms and conditions for your software.
 
-
 ## Tell us about yourself
 
-**Name**: 
+**Name**:
 
 **Email**:
 

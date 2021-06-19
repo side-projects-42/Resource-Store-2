@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Tobi 406"
-		]
+		"authors": ["Tobi 406"]
 	},
 	"rest-prefix-mismatch": "Der angeforderte Pfad ($1) kannte nicht innerhalb des REST-API-Root-Pfades ($2) gefunden werden",
 	"rest-wrong-method": "Die angeforderte Methode ($1) war keine {{PLURAL:$3|erlaubte Methode für diesen Pfad|der erlaubten Methoden für diesen Pfas}} ($2)",

@@ -19,7 +19,7 @@ describe('Runtime', () => {
     it('installs source maps if available', () => {
       expect.assertions(1);
 
-      return createRuntime(__filename).then(runtime => {
+      return createRuntime(__filename).then((runtime) => {
         const sum = runtime.requireModule(
           runtime.__mockRootPath,
           './sourcemaps/out/throwing-mapped-fn.js',

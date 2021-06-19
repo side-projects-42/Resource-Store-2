@@ -1,14 +1,13 @@
-FileRepo Architecture {#filerepoarch}
-=====================
+# FileRepo Architecture {#filerepoarch}
 
 Some quick notes on the file/repository architecture.
 
 Functionality is, as always, driven by data model.
 
-* The repository object stores configuration information about a file storage
+- The repository object stores configuration information about a file storage
   method.
 
-* The file object is a process-local cache of information about a particular
+- The file object is a process-local cache of information about a particular
   file.
 
 Thus the file object is the primary public entry point for obtaining information

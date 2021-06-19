@@ -6,10 +6,10 @@ Leah Silber, Trek Glowacki, Edward Faulkner, Matt Beale, Kris Selden, Yehuda Kat
 
 ### Agenda
 
-* `Ember.GlimmerComponent` - Time is running out to hit 2.2, where are we at?
-* Upgrade Blocking Issues (re: [#12296](https://github.com/emberjs/ember.js/issues/12296))
-* EmberCamp Updates
-* Large Issue with "Trust of Test Suite" -- https://github.com/emberjs/ember.js/pull/12318
+- `Ember.GlimmerComponent` - Time is running out to hit 2.2, where are we at?
+- Upgrade Blocking Issues (re: [#12296](https://github.com/emberjs/ember.js/issues/12296))
+- EmberCamp Updates
+- Large Issue with "Trust of Test Suite" -- https://github.com/emberjs/ember.js/pull/12318
 
 ### Minutes
 
@@ -25,7 +25,7 @@ LS: LS will file an issue in the EmberCLI repo to get the new logo up there. She
 
 RJ: Glimmer Components... where are you?
 
-YK: Godfrey has been working. He's found a bunch of questions while writing the docs—which is why you write docs first. Tl;DR YK will be back on Monday and will work through these questions with people who are motivated and interested. Expect a GH Issue soon. 
+YK: Godfrey has been working. He's found a bunch of questions while writing the docs—which is why you write docs first. Tl;DR YK will be back on Monday and will work through these questions with people who are motivated and interested. Expect a GH Issue soon.
 
 RJ: How has the refactor for HTMLBars and morph-range been going?
 
@@ -35,12 +35,12 @@ YK: Very well! The project has been focused on trying to allow us to specialize 
 
 notable points:
 
-* faster rendering
-* faster re-rendering
-* more specialized internals (should help reduce bugs)
-* Ember vs HTMLBars misalignments will be improved, TL;DR make HTMLBars do more of the work when it knows best.
-* better tests (more aligned with how ember uses HTMLBars)
-* will help \w rehydration
+- faster rendering
+- faster re-rendering
+- more specialized internals (should help reduce bugs)
+- Ember vs HTMLBars misalignments will be improved, TL;DR make HTMLBars do more of the work when it knows best.
+- better tests (more aligned with how ember uses HTMLBars)
+- will help \w rehydration
 
 ---
 
@@ -58,17 +58,17 @@ blocking issues (without reasonable work-around) should be labeled as "Upgrade H
 
 this messages our intent correctly:
 
-* will accept reasonable backport
-* want to minimize upgrade pains
+- will accept reasonable backport
+- want to minimize upgrade pains
 
 RJ: We absolutely need to message that we care and are willing to accept backport PR's, but I am not in favor of keeping these issues open forever.
 
-SP: We can set a time-frame, and age them out when that threshold is met. That threshold should be largely based on the ability for our community to upgrade.  Rationale being, a small fix may make the difference between a successful upgrade or painful transition. 
+SP: We can set a time-frame, and age them out when that threshold is met. That threshold should be largely based on the ability for our community to upgrade. Rationale being, a small fix may make the difference between a successful upgrade or painful transition.
 
 RJ: We can try it for a time, but I am unlikely to continue to work issue triage on a regular basis.
 
 SP: feel free to ignore issues branded as such then.
 
-----
+---
 
-#emberjs 
+#emberjs

@@ -1,4 +1,4 @@
-@import 'mediawiki.mixins.less';
+@import "mediawiki.mixins.less";
 
 // OOUIHTMLForm styles
 @ooui-font-size-browser: 16; // assumed browser default of `16px`
@@ -7,7 +7,9 @@
 @ooui-spacing-small: 8 / @ooui-font-size-browser / @ooui-font-size-base; // equals `0.57142857em`≈`8px`
 @ooui-spacing-medium: 12 / @ooui-font-size-browser / @ooui-font-size-base; // equals `0.8571429em`≈`12px`
 
-.client-js .mw-collapsibleFieldsetLayout.mw-collapsible .oo-ui-fieldsetLayout-header {
+.client-js
+	.mw-collapsibleFieldsetLayout.mw-collapsible
+	.oo-ui-fieldsetLayout-header {
 	// Push legend up when JS is on, to increase clickable area.
 	margin-top: -@ooui-spacing-small;
 	margin-bottom: @ooui-spacing-small;
@@ -22,7 +24,9 @@
 }
 
 // Trigger only when collapsible & JS is available via `.mw-collapsed`.
-.client-js .mw-collapsibleFieldsetLayout.mw-collapsed .oo-ui-fieldsetLayout-header {
+.client-js
+	.mw-collapsibleFieldsetLayout.mw-collapsed
+	.oo-ui-fieldsetLayout-header {
 	min-height: 30px;
 	// Negative margin to match the reduced distance on the top caused by the previous rule.
 	margin-bottom: -@ooui-spacing-medium;

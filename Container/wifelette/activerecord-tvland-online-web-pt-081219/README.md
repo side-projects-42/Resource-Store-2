@@ -24,7 +24,7 @@ these existing tables as per the guidelines below.
 
 The tests in this lab are run for each model/migration - actor, character,
 network (solution already provided), and show. Because of this, when run, you
-will see _all the tests_ for the Actor model first, then _all the tests for
+will see _all the tests_ for the Actor model first, then \_all the tests for
 Character, etc... the tricky thing here is that **you will not be able to pass
 all the tests for Actor until the migrations for other models are working**.
 
@@ -53,31 +53,31 @@ or a model configured.
   instance, if we had an actor, Peter Dinklage, a character, Tyrion Lannister,
   and a show, Game of Thrones, we with
 
-    ```ruby
-    peter = Actor.new(:first_name => "Peter", :last_name => "Dinklage")
-    tyrion = Character.new(:name => "Tyrion Lannister")
-    tyrion.actor = peter
-    thrones = Show.new(:name => "Game of Thrones")
-    tyrion.show = thrones
-    tyrion.save
-    ```
+  ```ruby
+  peter = Actor.new(:first_name => "Peter", :last_name => "Dinklage")
+  tyrion = Character.new(:name => "Tyrion Lannister")
+  tyrion.actor = peter
+  thrones = Show.new(:name => "Game of Thrones")
+  tyrion.show = thrones
+  tyrion.save
+  ```
 
   And then, when we run `peter.list_roles`, we would get an Array containing a
   string with both the character and the show:
 
-    ```ruby
-    ['Tyrion Lannister - Game of Thrones']
-    ```
+  ```ruby
+  ['Tyrion Lannister - Game of Thrones']
+  ```
 
 - Define a method in the `Character` class, `#say_that_thing_you_say`, using a
   given character's catchphrase. Using Tyrion as an example again, the returned
   string should look like the following:
 
-    ```ruby
-    tyrion.catchphrase = 'A Lannister always pays his debts'
-    tyrion.say_that_thing_you_say
-    #=> 'Tyrion Lannister always says: A Lannister always pays his debts'
-    ```
+  ```ruby
+  tyrion.catchphrase = 'A Lannister always pays his debts'
+  tyrion.say_that_thing_you_say
+  #=> 'Tyrion Lannister always says: A Lannister always pays his debts'
+  ```
 
 - Define a method in the `Show` class called `#actors_list` that returns an
   Array of the full names of each actor associated with the a show. Remember,

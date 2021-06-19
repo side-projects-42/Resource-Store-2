@@ -15,10 +15,7 @@
   "description": "Provides instrumentation for Vertx EventBus and Verticles",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Java",
-  "projectTags": [
-    "nrlabs",
-    "instrumentation"
-  ],
+  "projectTags": ["nrlabs", "instrumentation"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Java Instrumentation for Vert.x Event Bus",

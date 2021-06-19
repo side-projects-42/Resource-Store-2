@@ -1,11 +1,11 @@
-var a = new function () {
-    var secret = 1234;
+var a = new (function () {
+  var secret = 1234;
 
-    function getSecret() {
-        return secret;
-    }
+  function getSecret() {
+    return secret;
+  }
 
-    this.secret = getSecret();
-};
+  this.secret = getSecret();
+})();
 
-var b = new Date;
+var b = new Date();

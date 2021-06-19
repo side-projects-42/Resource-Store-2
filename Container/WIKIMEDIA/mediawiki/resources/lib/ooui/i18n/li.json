@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ooswesthoesbes",
-			"Pahles"
-		]
+		"authors": ["Ooswesthoesbes", "Pahles"]
 	},
 	"ooui-outline-control-move-down": "Item nao ónger verplaatse",
 	"ooui-outline-control-move-up": "Item nao bove verplaetse",

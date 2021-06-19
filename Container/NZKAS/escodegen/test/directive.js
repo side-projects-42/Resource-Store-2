@@ -22,199 +22,231 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-'use strict';
+"use strict";
 
-var fs = require('fs'),
-    path = require('path'),
-    root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
-    esprima = require('./3rdparty/esprima'),
-    escodegen = require(root),
-    chai = require('chai'),
-    expect = chai.expect,
-    data;
+var fs = require("fs"),
+  path = require("path"),
+  root = path.join(path.dirname(fs.realpathSync(__filename)), ".."),
+  esprima = require("./3rdparty/esprima"),
+  escodegen = require(root),
+  chai = require("chai"),
+  expect = chai.expect,
+  data;
 
 data = {
-    'DirectiveStatement': {
-
-        '\'use strict\';': {
-            type: 'Program',
-            body: [{
-                type: 'DirectiveStatement',
-                directive: 'use strict',
-            }]
+  DirectiveStatement: {
+    "'use strict';": {
+      type: "Program",
+      body: [
+        {
+          type: "DirectiveStatement",
+          directive: "use strict",
         },
+      ],
+    },
 
-        '(\'use strict\');': {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: 'use strict',
-                }
-            }]
+    "('use strict');": {
+      type: "Program",
+      body: [
+        {
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: "use strict",
+          },
         },
+      ],
+    },
 
-        '{\n    \'use strict\';\n}': {
-            type: 'Program',
-            body: [{
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'Literal',
-                        value: 'use strict',
-                    }
-                }]
-            }]
+    "{\n    'use strict';\n}": {
+      type: "Program",
+      body: [
+        {
+          type: "BlockStatement",
+          body: [
+            {
+              type: "ExpressionStatement",
+              expression: {
+                type: "Literal",
+                value: "use strict",
+              },
+            },
+          ],
         },
+      ],
+    },
 
-        '(function () {\n    (\'use strict\');\n});': {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'FunctionExpression',
-                    id: null,
-                    params: [],
-                    body: {
-                        type: 'BlockStatement',
-                        body: [{
-                            type: 'ExpressionStatement',
-                            expression: {
-                                type: 'Literal',
-                                value: 'use strict',
-                            }
-                        }]
-                    }
-                }
-            }]
+    "(function () {\n    ('use strict');\n});": {
+      type: "Program",
+      body: [
+        {
+          type: "ExpressionStatement",
+          expression: {
+            type: "FunctionExpression",
+            id: null,
+            params: [],
+            body: {
+              type: "BlockStatement",
+              body: [
+                {
+                  type: "ExpressionStatement",
+                  expression: {
+                    type: "Literal",
+                    value: "use strict",
+                  },
+                },
+              ],
+            },
+          },
         },
+      ],
+    },
 
-        '(function () {\n    \'use strict\';\n});': {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'FunctionExpression',
-                    id: null,
-                    params: [],
-                    body: {
-                        type: 'BlockStatement',
-                        body: [{
-                            type: 'DirectiveStatement',
-                            directive: 'use strict',
-                        }]
-                    }
-                }
-            }]
+    "(function () {\n    'use strict';\n});": {
+      type: "Program",
+      body: [
+        {
+          type: "ExpressionStatement",
+          expression: {
+            type: "FunctionExpression",
+            id: null,
+            params: [],
+            body: {
+              type: "BlockStatement",
+              body: [
+                {
+                  type: "DirectiveStatement",
+                  directive: "use strict",
+                },
+              ],
+            },
+          },
         },
+      ],
+    },
 
-        '(function () {\n    "use strict";\n});': {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'FunctionExpression',
-                    id: null,
-                    params: [],
-                    body: {
-                        type: 'BlockStatement',
-                        body: [{
-                            type: 'DirectiveStatement',
-                            directive: 'use strict',
-                            raw: '"use strict"'
-                        }]
-                    }
-                }
-            }]
+    '(function () {\n    "use strict";\n});': {
+      type: "Program",
+      body: [
+        {
+          type: "ExpressionStatement",
+          expression: {
+            type: "FunctionExpression",
+            id: null,
+            params: [],
+            body: {
+              type: "BlockStatement",
+              body: [
+                {
+                  type: "DirectiveStatement",
+                  directive: "use strict",
+                  raw: '"use strict"',
+                },
+              ],
+            },
+          },
         },
+      ],
+    },
 
-        '(function () {\n    \'use\\u0020strict\';\n});': {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'FunctionExpression',
-                    id: null,
-                    params: [],
-                    body: {
-                        type: 'BlockStatement',
-                        body: [{
-                            type: 'DirectiveStatement',
-                            directive: 'use\\u0020strict',
-                        }]
-                    }
-                }
-            }]
+    "(function () {\n    'use\\u0020strict';\n});": {
+      type: "Program",
+      body: [
+        {
+          type: "ExpressionStatement",
+          expression: {
+            type: "FunctionExpression",
+            id: null,
+            params: [],
+            body: {
+              type: "BlockStatement",
+              body: [
+                {
+                  type: "DirectiveStatement",
+                  directive: "use\\u0020strict",
+                },
+              ],
+            },
+          },
         },
+      ],
+    },
 
-        '(function () {\n    "use\\u0020strict\'";\n});': {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'FunctionExpression',
-                    id: null,
-                    params: [],
-                    body: {
-                        type: 'BlockStatement',
-                        body: [{
-                            type: 'DirectiveStatement',
-                            directive: 'use\\u0020strict\'',
-                        }]
-                    }
-                }
-            }]
+    '(function () {\n    "use\\u0020strict\'";\n});': {
+      type: "Program",
+      body: [
+        {
+          type: "ExpressionStatement",
+          expression: {
+            type: "FunctionExpression",
+            id: null,
+            params: [],
+            body: {
+              type: "BlockStatement",
+              body: [
+                {
+                  type: "DirectiveStatement",
+                  directive: "use\\u0020strict'",
+                },
+              ],
+            },
+          },
         },
+      ],
+    },
 
-        '(function () {\n    {\n        \'use strict\';\n    }\n});': {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'FunctionExpression',
-                    id: null,
-                    params: [],
-                    body: {
-                        type: 'BlockStatement',
-                        body: [{
-                            type: 'BlockStatement',
-                            body: [{
-                                type: 'ExpressionStatement',
-                                expression: {
-                                    type: 'Literal',
-                                    value: 'use strict',
-                                }
-                            }]
-                        }]
-                    }
-                }
-            }]
-        }
-
-    }
+    "(function () {\n    {\n        'use strict';\n    }\n});": {
+      type: "Program",
+      body: [
+        {
+          type: "ExpressionStatement",
+          expression: {
+            type: "FunctionExpression",
+            id: null,
+            params: [],
+            body: {
+              type: "BlockStatement",
+              body: [
+                {
+                  type: "BlockStatement",
+                  body: [
+                    {
+                      type: "ExpressionStatement",
+                      expression: {
+                        type: "Literal",
+                        value: "use strict",
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      ],
+    },
+  },
 };
 
 function runTest(expected, result) {
-    var actual, options;
+  var actual, options;
 
-    options = {
-        indent: '    ',
-        directive: true,
-        parse: esprima.parse
-    };
+  options = {
+    indent: "    ",
+    directive: true,
+    parse: esprima.parse,
+  };
 
-    actual = escodegen.generate(result, options);
-    expect(actual).to.be.equal(expected);
+  actual = escodegen.generate(result, options);
+  expect(actual).to.be.equal(expected);
 }
 
-describe('directive support', function () {
-    Object.keys(data).forEach(function (category) {
-        it(category, function () {
-            Object.keys(data[category]).forEach(function (source) {
-                runTest(source, data[category][source]);
-            });
-        });
+describe("directive support", function () {
+  Object.keys(data).forEach(function (category) {
+    it(category, function () {
+      Object.keys(data[category]).forEach(function (source) {
+        runTest(source, data[category][source]);
+      });
     });
+  });
 });

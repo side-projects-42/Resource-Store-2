@@ -1,5 +1,4 @@
-( function () {
-
+(function () {
 	/**
 	 * mw.Upload.Dialog controls a {@link mw.Upload.BookletLayout BookletLayout}.
 	 *
@@ -36,14 +35,17 @@
 	 *     used for the steps
 	 * @cfg {Object} [booklet] Booklet constructor configuration
 	 */
-	mw.Upload.Dialog = function ( config ) {
+	mw.Upload.Dialog = function (config) {
 		// Config initialization
-		config = $.extend( {
-			bookletClass: mw.Upload.BookletLayout
-		}, config );
+		config = $.extend(
+			{
+				bookletClass: mw.Upload.BookletLayout,
+			},
+			config
+		);
 
 		// Parent constructor
-		mw.Upload.Dialog.parent.call( this, config );
+		mw.Upload.Dialog.parent.call(this, config);
 
 		// Initialize
 		this.bookletClass = config.bookletClass;
@@ -52,7 +54,7 @@
 
 	/* Setup */
 
-	OO.inheritClass( mw.Upload.Dialog, OO.ui.ProcessDialog );
+	OO.inheritClass(mw.Upload.Dialog, OO.ui.ProcessDialog);
 
 	/* Static Properties */
 
@@ -60,13 +62,13 @@
 	 * @inheritdoc
 	 * @property {string} name
 	 */
-	mw.Upload.Dialog.static.name = 'mwUploadDialog';
+	mw.Upload.Dialog.static.name = "mwUploadDialog";
 
 	/**
 	 * @inheritdoc
 	 * @property {Function|string} title
 	 */
-	mw.Upload.Dialog.static.title = mw.msg( 'upload-dialog-title' );
+	mw.Upload.Dialog.static.title = mw.msg("upload-dialog-title");
 
 	/**
 	 * @inheritdoc
@@ -74,35 +76,35 @@
 	 */
 	mw.Upload.Dialog.static.actions = [
 		{
-			flags: 'safe',
-			action: 'cancel',
-			label: mw.msg( 'upload-dialog-button-cancel' ),
-			modes: [ 'upload', 'insert' ]
+			flags: "safe",
+			action: "cancel",
+			label: mw.msg("upload-dialog-button-cancel"),
+			modes: ["upload", "insert"],
 		},
 		{
-			flags: 'safe',
-			action: 'cancelupload',
-			label: mw.msg( 'upload-dialog-button-back' ),
-			modes: [ 'info' ]
+			flags: "safe",
+			action: "cancelupload",
+			label: mw.msg("upload-dialog-button-back"),
+			modes: ["info"],
 		},
 		{
-			flags: [ 'primary', 'progressive' ],
-			label: mw.msg( 'upload-dialog-button-done' ),
-			action: 'insert',
-			modes: 'insert'
+			flags: ["primary", "progressive"],
+			label: mw.msg("upload-dialog-button-done"),
+			action: "insert",
+			modes: "insert",
 		},
 		{
-			flags: [ 'primary', 'progressive' ],
-			label: mw.msg( 'upload-dialog-button-save' ),
-			action: 'save',
-			modes: 'info'
+			flags: ["primary", "progressive"],
+			label: mw.msg("upload-dialog-button-save"),
+			action: "save",
+			modes: "info",
 		},
 		{
-			flags: [ 'primary', 'progressive' ],
-			label: mw.msg( 'upload-dialog-button-upload' ),
-			action: 'upload',
-			modes: 'upload'
-		}
+			flags: ["primary", "progressive"],
+			label: mw.msg("upload-dialog-button-upload"),
+			action: "upload",
+			modes: "upload",
+		},
 	];
 
 	/* Methods */
@@ -112,16 +114,16 @@
 	 */
 	mw.Upload.Dialog.prototype.initialize = function () {
 		// Parent method
-		mw.Upload.Dialog.parent.prototype.initialize.call( this );
+		mw.Upload.Dialog.parent.prototype.initialize.call(this);
 
 		this.uploadBooklet = this.createUploadBooklet();
-		this.uploadBooklet.connect( this, {
-			set: 'onUploadBookletSet',
-			uploadValid: 'onUploadValid',
-			infoValid: 'onInfoValid'
-		} );
+		this.uploadBooklet.connect(this, {
+			set: "onUploadBookletSet",
+			uploadValid: "onUploadValid",
+			infoValid: "onInfoValid",
+		});
 
-		this.$body.append( this.uploadBooklet.$element );
+		this.$body.append(this.uploadBooklet.$element);
 	};
 
 	/**
@@ -132,9 +134,14 @@
 	 */
 	mw.Upload.Dialog.prototype.createUploadBooklet = function () {
 		// eslint-disable-next-line new-cap
-		return new this.bookletClass( $.extend( {
-			$overlay: this.$overlay
-		}, this.bookletConfig ) );
+		return new this.bookletClass(
+			$.extend(
+				{
+					$overlay: this.$overlay,
+				},
+				this.bookletConfig
+			)
+		);
 	};
 
 	/**
@@ -150,9 +157,9 @@
 	 * @protected
 	 * @param {OO.ui.PageLayout} page Current page
 	 */
-	mw.Upload.Dialog.prototype.onUploadBookletSet = function ( page ) {
-		this.actions.setMode( page.getName() );
-		this.actions.setAbilities( { upload: false, save: false } );
+	mw.Upload.Dialog.prototype.onUploadBookletSet = function (page) {
+		this.actions.setMode(page.getName());
+		this.actions.setAbilities({ upload: false, save: false });
 	};
 
 	/**
@@ -164,8 +171,8 @@
 	 * @protected
 	 * @param {boolean} isValid The panel is complete and valid
 	 */
-	mw.Upload.Dialog.prototype.onUploadValid = function ( isValid ) {
-		this.actions.setAbilities( { upload: isValid } );
+	mw.Upload.Dialog.prototype.onUploadValid = function (isValid) {
+		this.actions.setAbilities({ upload: isValid });
 	};
 
 	/**
@@ -177,54 +184,59 @@
 	 * @protected
 	 * @param {boolean} isValid The panel is complete and valid
 	 */
-	mw.Upload.Dialog.prototype.onInfoValid = function ( isValid ) {
-		this.actions.setAbilities( { save: isValid } );
+	mw.Upload.Dialog.prototype.onInfoValid = function (isValid) {
+		this.actions.setAbilities({ save: isValid });
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	mw.Upload.Dialog.prototype.getSetupProcess = function ( data ) {
-		return mw.Upload.Dialog.parent.prototype.getSetupProcess.call( this, data )
-			.next( function () {
+	mw.Upload.Dialog.prototype.getSetupProcess = function (data) {
+		return mw.Upload.Dialog.parent.prototype.getSetupProcess
+			.call(this, data)
+			.next(function () {
 				return this.uploadBooklet.initialize();
-			}, this );
+			}, this);
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	mw.Upload.Dialog.prototype.getActionProcess = function ( action ) {
+	mw.Upload.Dialog.prototype.getActionProcess = function (action) {
 		var dialog = this;
 
-		if ( action === 'upload' ) {
-			return new OO.ui.Process( this.uploadBooklet.uploadFile() );
+		if (action === "upload") {
+			return new OO.ui.Process(this.uploadBooklet.uploadFile());
 		}
-		if ( action === 'save' ) {
-			return new OO.ui.Process( this.uploadBooklet.saveFile() );
+		if (action === "save") {
+			return new OO.ui.Process(this.uploadBooklet.saveFile());
 		}
-		if ( action === 'insert' ) {
-			return new OO.ui.Process( function () {
-				dialog.close( dialog.upload );
-			} );
+		if (action === "insert") {
+			return new OO.ui.Process(function () {
+				dialog.close(dialog.upload);
+			});
 		}
-		if ( action === 'cancel' ) {
-			return new OO.ui.Process( this.close().closed );
+		if (action === "cancel") {
+			return new OO.ui.Process(this.close().closed);
 		}
-		if ( action === 'cancelupload' ) {
-			return new OO.ui.Process( this.uploadBooklet.initialize() );
+		if (action === "cancelupload") {
+			return new OO.ui.Process(this.uploadBooklet.initialize());
 		}
 
-		return mw.Upload.Dialog.parent.prototype.getActionProcess.call( this, action );
+		return mw.Upload.Dialog.parent.prototype.getActionProcess.call(
+			this,
+			action
+		);
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	mw.Upload.Dialog.prototype.getTeardownProcess = function ( data ) {
-		return mw.Upload.Dialog.parent.prototype.getTeardownProcess.call( this, data )
-			.next( function () {
+	mw.Upload.Dialog.prototype.getTeardownProcess = function (data) {
+		return mw.Upload.Dialog.parent.prototype.getTeardownProcess
+			.call(this, data)
+			.next(function () {
 				this.uploadBooklet.clear();
-			}, this );
+			}, this);
 	};
-}() );
+})();

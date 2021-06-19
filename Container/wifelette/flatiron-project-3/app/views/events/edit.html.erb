@@ -1,0 +1,8 @@
+<div class="card-header h3">
+  Edit <%= @event.name %>
+</div>
+<div class="card body container-fluid">
+  <%= render 'form', event: @event %>
+
+  <p><%= link_to "Back to Event", @event, class: "btn btn-primary" %></p>
+</div>

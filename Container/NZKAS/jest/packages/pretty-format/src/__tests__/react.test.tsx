@@ -374,7 +374,7 @@ test('supports array of elements', () => {
   ].join('\n');
   expect(formatElement(val)).toEqual(expected);
   expect(
-    formatTestObject(val.map(element => renderer.create(element).toJSON())),
+    formatTestObject(val.map((element) => renderer.create(element).toJSON())),
   ).toEqual(expected);
 });
 
@@ -555,7 +555,7 @@ describe('maxDepth option', () => {
     expect(formatElement(array, {maxDepth})).toEqual(expected);
     expect(
       formatTestObject(
-        array.map(element => renderer.create(element).toJSON()),
+        array.map((element) => renderer.create(element).toJSON()),
         {maxDepth},
       ),
     ).toEqual(expected);

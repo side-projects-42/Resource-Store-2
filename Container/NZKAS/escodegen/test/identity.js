@@ -22,86 +22,100 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-'use strict';
+"use strict";
 
-var fs = require('fs'),
-    path = require('path'),
-    root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
-    esprima = require('./3rdparty/esprima'),
-    escodegen = require(root),
-    chai = require('chai'),
-    expect = chai.expect,
-    fixtures;
+var fs = require("fs"),
+  path = require("path"),
+  root = path.join(path.dirname(fs.realpathSync(__filename)), ".."),
+  esprima = require("./3rdparty/esprima"),
+  escodegen = require(root),
+  chai = require("chai"),
+  expect = chai.expect,
+  fixtures;
 
 function slug(name) {
-    return name.toLowerCase().replace(/\s/g, '-');
+  return name.toLowerCase().replace(/\s/g, "-");
 }
 
 function adjustRegexLiteral(key, value) {
-    if (key === 'value' && value instanceof RegExp) {
-        value = value.toString();
-    }
-    return value;
+  if (key === "value" && value instanceof RegExp) {
+    value = value.toString();
+  }
+  return value;
 }
 
 fixtures = [
-    'jQuery 1.7.1',
-    'jQuery 1.6.4',
-    'jQuery.Mobile 1.0',
-    'Prototype 1.7.0.0',
-    'Prototype 1.6.1',
-    'Ext Core 3.1.0',
-    'Ext Core 3.0.0',
-    'MooTools 1.4.1',
-    'MooTools 1.3.2',
-    'Backbone 0.5.3',
-    'Underscore 1.2.3'
+  "jQuery 1.7.1",
+  "jQuery 1.6.4",
+  "jQuery.Mobile 1.0",
+  "Prototype 1.7.0.0",
+  "Prototype 1.6.1",
+  "Ext Core 3.1.0",
+  "Ext Core 3.0.0",
+  "MooTools 1.4.1",
+  "MooTools 1.3.2",
+  "Backbone 0.5.3",
+  "Underscore 1.2.3",
 ];
 
 function testIdentity(code) {
-    var expected, tree, actual, options, commentOptions, commentTree, StringObject, err;
+  var expected,
+    tree,
+    actual,
+    options,
+    commentOptions,
+    commentTree,
+    StringObject,
+    err;
 
-    // alias, so that JSLint does not complain.
-    StringObject = String;
+  // alias, so that JSLint does not complain.
+  StringObject = String;
 
-    // once
-    options = {
-        comment: false,
-        range: false,
-        loc: false,
-        tokens: false,
-        raw: false
-    };
+  // once
+  options = {
+    comment: false,
+    range: false,
+    loc: false,
+    tokens: false,
+    raw: false,
+  };
 
-    tree = esprima.parse(code, options);
-    expected = JSON.stringify(tree, adjustRegexLiteral, 4);
-    tree = esprima.parse(escodegen.generate(tree), options);
-    actual = JSON.stringify(tree, adjustRegexLiteral, 4);
-    expect(actual).to.be.equal(expected);
+  tree = esprima.parse(code, options);
+  expected = JSON.stringify(tree, adjustRegexLiteral, 4);
+  tree = esprima.parse(escodegen.generate(tree), options);
+  actual = JSON.stringify(tree, adjustRegexLiteral, 4);
+  expect(actual).to.be.equal(expected);
 
-    // second, attachComments
-    commentOptions = {
-        comment: true,
-        range: true,
-        loc: false,
-        tokens: true,
-        raw: false
-    };
+  // second, attachComments
+  commentOptions = {
+    comment: true,
+    range: true,
+    loc: false,
+    tokens: true,
+    raw: false,
+  };
 
-    commentTree = esprima.parse(code, commentOptions);
-    commentTree = escodegen.attachComments(commentTree, commentTree.comments, commentTree.tokens);
-    tree = esprima.parse(escodegen.generate(commentTree), options);
-    actual = JSON.stringify(tree, adjustRegexLiteral, 4);
-    expect(actual).to.be.equal(expected);
+  commentTree = esprima.parse(code, commentOptions);
+  commentTree = escodegen.attachComments(
+    commentTree,
+    commentTree.comments,
+    commentTree.tokens
+  );
+  tree = esprima.parse(escodegen.generate(commentTree), options);
+  actual = JSON.stringify(tree, adjustRegexLiteral, 4);
+  expect(actual).to.be.equal(expected);
 }
 
-describe('identity test', function () {
-    fixtures.forEach(function (filename) {
-        it(filename, function () {
-            var source = fs.readFileSync(__dirname + '/3rdparty/' + slug(filename) + '.js', 'utf-8'),
-                size = source.length;
-            testIdentity(source);
-        });
+describe("identity test", function () {
+  fixtures.forEach(function (filename) {
+    it(filename, function () {
+      var source = fs.readFileSync(
+          __dirname + "/3rdparty/" + slug(filename) + ".js",
+          "utf-8"
+        ),
+        size = source.length;
+      testIdentity(source);
     });
+  });
 });
 /* vim: set sw=4 ts=4 et tw=80 : */

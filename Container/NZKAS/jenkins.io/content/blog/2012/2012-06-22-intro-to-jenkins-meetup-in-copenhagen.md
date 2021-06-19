@@ -4,11 +4,12 @@
 :nodeid: 387
 :created: 1340366400
 :tags:
-- general
-- cia
-- meetup
+  - general
+  - cia
+  - meetup
 :author: rtyler
 ---
+
 [ **Editor's Note**: This was originally posted to the [jenkinsci-users](https://groups.google.com/group/jenkinsci-users/msg/9e1bb07e7a109c21?hl=en_US) mailing list by community member Bue Petersen ]
 
 ---
@@ -17,16 +18,15 @@
 
 Continuous Integration – er et princip der dikterer, at alle ændringer skal integreres, i det øjeblik de er skabt – kontinuerligt og automatisk. Continous Software Validation går skridtet videre - alle ændringer skal valideres, i det øjeblik de er skabt.
 
-
 Jenkins Continuous Integration Server hurtigt blevet de facto standard for Continuous Integration. Og den er hjørnestenen i build- og softwarevaliderings-systemet og bindeledet mellem samtlige tools i hele den tool-chain, man ønsker at indføre eller udbygge.
 
 På Jenkins konfigureres jobs, som udover at bygge og eksekvere unittests også kan tage ansvar for valideringer som statisk kodeanalyse, rapportering af warnings, coverage-målinger af unittests, automatisk generering af dokumentation, eksekvering af funktionelle tests etc.
 
 Vi holder et uformelt gå-hjem-møde med pizza, øl og sodavand, hvor vi præsenterer Jenkins Continuous Integration og viser dig, hvordan du nemt kommer i gang, så du allerede dagen efter kan høste synlige fordele på dine projekter.
 
-Du kan få helt ny viden og indsigt i din kodebase, og du kan skabe grundlag for ændring af arbejdsgange i udviklingen. 
+Du kan få helt ny viden og indsigt i din kodebase, og du kan skabe grundlag for ændring af arbejdsgange i udviklingen.
 
-> Onsdag 27. juni 2012  kl. 17.00 - 18.30
+> Onsdag 27. juni 2012 kl. 17.00 - 18.30
 >
 > Praqma A/S
 >
@@ -34,7 +34,7 @@ Du kan få helt ny viden og indsigt i din kodebase, og du kan skabe grundlag for
 >
 > 3450 Allerød
 >
-> Denmark 
+> Denmark
 
 [Tilmelding](https://sites.google.com/a/praqma.net/www/seminar)
 

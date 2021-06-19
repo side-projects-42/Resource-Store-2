@@ -4,12 +4,13 @@
 :nodeid: 516
 :created: 1417594188
 :tags:
-- development
-- plugins
-- pipeline
-- workflow
+  - development
+  - plugins
+  - pipeline
+  - workflow
 :author: kohsuke
 ---
+
 Jenkins started with a notion of jobs and builds at heart. One script is one job, and as you repeatedly execute jobs, it creates builds as records. As the use case of Jenkins gets more sophisticated, people started combining jobs to orchestrate ever more complex activities.
 
 A number of plugins have been developed to enable all sorts of different ways to compose jobs, and many are used quite successfully in production. But this resulted in a certain degree of complexity for users to figure out how to assemble these plugins.

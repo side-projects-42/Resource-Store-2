@@ -169,7 +169,7 @@ async function runTestInternal(
   const sourcemapOptions: SourceMapOptions = {
     environment: 'node',
     handleUncaughtExceptions: false,
-    retrieveSourceMap: source => {
+    retrieveSourceMap: (source) => {
       const sourceMaps = runtime && runtime.getSourceMaps();
       const sourceMapSource = sourceMaps && sourceMaps[source];
 
@@ -269,7 +269,7 @@ async function runTestInternal(
     }
 
     // Delay the resolution to allow log messages to be output.
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setImmediate(() => resolve({leakDetector, result}));
     });
   } finally {
@@ -297,7 +297,7 @@ export default async function runTest(
 
   if (leakDetector) {
     // We wanna allow a tiny but time to pass to allow last-minute cleanup
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     // Resolve leak detector, outside the "runTestInternal" closure.
     result.leaks = leakDetector.isLeaking();

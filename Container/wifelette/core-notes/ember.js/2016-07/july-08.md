@@ -5,12 +5,12 @@
 - FCP Process Tweaks
 - Igniter w/ @runspired (YK)
 - Shipping Glimmer 2 (YK/GC)
-    - Alpha state in features.json (YK)
-    - Last-mile perfect compatibility vs. performance (YK)
+  - Alpha state in features.json (YK)
+  - Last-mile perfect compatibility vs. performance (YK)
 - Feature Review
-    - ember-runtime-enumerable-includes
-    - ember-string-ishtmlsafe
-    - ember-testing-check-waiters
+  - ember-runtime-enumerable-includes
+  - ember-string-ishtmlsafe
+  - ember-testing-check-waiters
 
 ### Attendees
 
@@ -85,7 +85,7 @@ YK: I agree with your philosophy, but I think the exact strategy isn't quite
 right. Alpha means "we are not aware of any more work that we need to do, but if
 it is used widely, we expect that there will be more work to do."
 
-YK: Alpha differs from canary because canary contains features that we *know*
+YK: Alpha differs from canary because canary contains features that we _know_
 are incomplete/still evolving. Alpha means we consider it done but need the
 public to help identify outstanding issues.
 
@@ -94,7 +94,7 @@ public to help identify outstanding issues.
 YK:
 https://github.com/emberjs/ember.js/blob/master/packages/ember-glimmer/tests/integration/components/curly-components-test.js#L1969-L2030
 
-YK: This is something that *some* apps may rely on, but is a huge performance
+YK: This is something that _some_ apps may rely on, but is a huge performance
 footgun, and it's actually easy to fall into an infinite loop if you do this.
 
 YK: We've gotten quite good at not calling `.value()` on a reference if we
@@ -121,8 +121,8 @@ YK: Let me try to outline the options we have:
    anyone's code.
 2. Less conservative, provide an opt-in for the new semantics. We can do that
    compatibly, it's just hard to detect if the opt-in is accessible. It becomes
-  a "secret handshake" only pro users will have; not likely to be found by naive
-  users doing a benchmark for example.
+   a "secret handshake" only pro users will have; not likely to be found by naive
+   users doing a benchmark for example.
 3. Make it a hard error in development, still allow in production.
 4. The last option, which I prefer, is to cause this to break but allow people
    to opt in to the old behavior.

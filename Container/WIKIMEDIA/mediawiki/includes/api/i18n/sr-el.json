@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Milicevic01",
-			"Obsuser",
-			"Zoranzoki21",
-			"Сербијана"
-		]
+		"authors": ["Milicevic01", "Obsuser", "Zoranzoki21", "Сербијана"]
 	},
 	"apihelp-block-summary": "Blokiraj korisnika.",
 	"apihelp-block-param-reason": "Razlog za blokiranje.",

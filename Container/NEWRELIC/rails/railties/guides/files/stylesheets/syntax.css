@@ -1,5 +1,5 @@
 .html .tag {
-	color : green;
+  color: green;
 }
 
 .html .doctype {
@@ -7,7 +7,7 @@
 }
 
 .erb .tag {
-	color : green;
+  color: green;
 }
 
 .erb .doctype {
@@ -15,11 +15,11 @@
 }
 
 .ruby .keywords {
-  color : red;
+  color: red;
 }
 
 .ruby .ivar {
-  color : blue;
+  color: blue;
 }
 
 .ruby .comment {
@@ -27,5 +27,5 @@
 }
 
 .ruby .symbol {
- color: green;
+  color: green;
 }

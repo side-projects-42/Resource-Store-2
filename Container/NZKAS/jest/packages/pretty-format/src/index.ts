@@ -279,8 +279,8 @@ function printPlugin(
       ? plugin.serialize(val, config, indentation, depth, refs, printer)
       : plugin.print(
           val,
-          valChild => printer(valChild, config, indentation, depth, refs),
-          str => {
+          (valChild) => printer(valChild, config, indentation, depth, refs),
+          (str) => {
             const indentationNext = indentation + config.indent;
             return (
               indentationNext +
@@ -376,7 +376,7 @@ const DEFAULT_OPTIONS: PrettyFormat.Options = {
 };
 
 function validateOptions(options: PrettyFormat.OptionsReceived) {
-  Object.keys(options).forEach(key => {
+  Object.keys(options).forEach((key) => {
     if (!DEFAULT_OPTIONS.hasOwnProperty(key)) {
       throw new Error(`pretty-format: Unknown option "${key}".`);
     }

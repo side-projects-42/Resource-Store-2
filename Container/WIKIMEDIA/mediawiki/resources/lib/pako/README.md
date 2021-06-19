@@ -1,12 +1,11 @@
-pako
-==========================================
+# pako
 
 [![Build Status](https://travis-ci.org/nodeca/pako.svg?branch=master)](https://travis-ci.org/nodeca/pako)
 [![NPM version](https://img.shields.io/npm/v/pako.svg)](https://www.npmjs.org/package/pako)
 
 > zlib port to javascript, very fast!
 
-__Why pako is cool:__
+**Why pako is cool:**
 
 - Almost as fast in modern JS engines as C implementation (see benchmarks).
 - Works in browsers, you can browserify any separate component.
@@ -16,8 +15,7 @@ __Why pako is cool:__
 This project was done to understand how fast JS can be and is it necessary to
 develop native C modules for CPU-intensive tasks. Enjoy the result!
 
-
-__Famous projects, using pako:__
+**Famous projects, using pako:**
 
 - [browserify](http://browserify.org/) (via [browserify-zlib](https://github.com/devongovett/browserify-zlib))
 - [JSZip](http://stuk.github.io/jszip/)
@@ -26,8 +24,7 @@ __Famous projects, using pako:__
   [Tedit](https://chrome.google.com/webstore/detail/tedit-development-environ/ooekdijbnbbjdfjocaiflnjgoohnblgf)
   by [@creationix](https://github.com/creationix)
 
-
-__Benchmarks:__
+**Benchmarks:**
 
 ```
 node v0.10.26, 1mb sample:
@@ -67,7 +64,7 @@ zlib's test is partially affected by marshalling (that make sense for inflate on
 You can change deflate level to 0 in benchmark source, to investigate details.
 For deflate level 6 results can be considered as correct.
 
-__Install:__
+**Install:**
 
 node.js:
 
@@ -81,9 +78,7 @@ browser:
 bower install pako
 ```
 
-
-Example & API
--------------
+## Example & API
 
 Full docs - http://nodeca.github.io/pako/
 
@@ -130,35 +125,31 @@ big objects as json to server. Pako detects input data type. You can
 force output to be string with option `{ to: 'string' }`.
 
 ```javascript
-var pako = require('pako');
+var pako = require("pako");
 
-var test = { my: 'super', puper: [456, 567], awesome: 'pako' };
+var test = { my: "super", puper: [456, 567], awesome: "pako" };
 
-var binaryString = pako.deflate(JSON.stringify(test), { to: 'string' });
+var binaryString = pako.deflate(JSON.stringify(test), { to: "string" });
 
 //
 // Here you can do base64 encode, make xhr requests and so on.
 //
 
-var restored = JSON.parse(pako.inflate(binaryString, { to: 'string' }));
+var restored = JSON.parse(pako.inflate(binaryString, { to: "string" }));
 ```
 
-
-Notes
------
+## Notes
 
 Pako does not contain some specific zlib functions:
 
-- __deflate__ -  methods `deflateCopy`, `deflateBound`, `deflateParams`,
+- **deflate** - methods `deflateCopy`, `deflateBound`, `deflateParams`,
   `deflatePending`, `deflatePrime`, `deflateTune`.
-- __inflate__ - methods `inflateCopy`, `inflateMark`,
+- **inflate** - methods `inflateCopy`, `inflateMark`,
   `inflatePrime`, `inflateGetDictionary`, `inflateSync`, `inflateSyncPoint`, `inflateUndermine`.
 - High level inflate/deflate wrappers (classes) may not support some flush
   modes. Those should work: Z_NO_FLUSH, Z_FINISH, Z_SYNC_FLUSH.
 
-
-Authors
--------
+## Authors
 
 - Andrey Tupitsin [@anrd83](https://github.com/andr83)
 - Vitaly Puzrin [@puzrin](https://github.com/puzrin)
@@ -175,9 +166,7 @@ Original implementation (in C):
 
 - [zlib](http://zlib.net/) by Jean-loup Gailly and Mark Adler.
 
-
-License
--------
+## License
 
 - MIT - all files, except `/lib/zlib` folder
 - ZLIB - `/lib/zlib` content

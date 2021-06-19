@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Şeyx Şamil"
-		]
-	},
-	"admanager_labelCategory": "Kateqoriya adları"
+  "@metadata": {
+    "authors": ["Şeyx Şamil"]
+  },
+  "admanager_labelCategory": "Kateqoriya adları"
 }

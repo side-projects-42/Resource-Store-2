@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fulup"
-		]
+		"authors": ["Fulup"]
 	},
 	"paramvalidator-badexpiry": "Talvoud \"$2\" direizh evit an arventenn aet d'e dermen \"$1\".",
 	"paramvalidator-badexpiry-past": "An talvoud \"$2\" evit an arventenn aet d'e dermen \"$1\" a zo tremenet c'hoazh.",

@@ -1,5 +1,4 @@
-Hooks
-=====
+# Hooks
 
 ## Introduction
 
@@ -187,10 +186,10 @@ is clear from the documentation that replacement is expected.
 
 ## How to define a new hook
 
-* Create a hook interface, typically in a subnamespace called `Hook` relative
+- Create a hook interface, typically in a subnamespace called `Hook` relative
   to the caller namespace. For example, if the caller is in a namespace called
   `MediaWiki\Foo`, the hook interface might be placed in `MediaWiki\Foo\Hook`.
-* Add an implementation to the relevant HookRunner class.
+- Add an implementation to the relevant HookRunner class.
 
 ## Hook deprecation
 
@@ -227,9 +226,9 @@ Deprecating a hook in this way activates a migration system called
 
 If deprecation is acknowledged by the extension:
 
-* If MediaWiki knows that the hook is deprecated, the handler will not be
+- If MediaWiki knows that the hook is deprecated, the handler will not be
   called. The call to the handler is filtered.
-* If MediaWiki does not have the hook in its list of deprecated hooks, the
+- If MediaWiki does not have the hook in its list of deprecated hooks, the
   handler will be called anyway.
 
 Deprecation acknowledgement is a way for the extension to say that it has made
@@ -243,11 +242,11 @@ new one called `Slice`. In our example extension FoodProcessor 1.0, the
 `Mash` hook is handled. In FoodProcessor 2.0, both `Mash` and `Slice` have
 handlers, but deprecation of `Mash` is acknowledged. Thus:
 
-* With MediaWiki 2.0 and FoodProcessor 1.0, `onMash` is called but raises a
+- With MediaWiki 2.0 and FoodProcessor 1.0, `onMash` is called but raises a
   deprecation warning.
-* With MediaWiki 2.0 and FoodProcessor 2.0, `onMash` is filtered, and `onSlice`
+- With MediaWiki 2.0 and FoodProcessor 2.0, `onMash` is filtered, and `onSlice`
   is called.
-* With MediaWiki 1.0 and FoodProcessor 2.0, `onMash` is called, since it is not
+- With MediaWiki 1.0 and FoodProcessor 2.0, `onMash` is called, since it is not
   yet deprecated in Core. `onSlice` is not called since it does not yet exist
   in Core.
 

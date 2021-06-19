@@ -143,7 +143,7 @@ export default function watch(
   };
 
   const watchPlugins: Array<WatchPlugin> = INTERNAL_PLUGINS.map(
-    InternalPlugin => new InternalPlugin({stdin, stdout: outputStream}),
+    (InternalPlugin) => new InternalPlugin({stdin, stdout: outputStream}),
   );
   watchPlugins.forEach((plugin: WatchPlugin) => {
     const hookSubscriber = hooks.getSubscriber();
@@ -188,7 +188,7 @@ export default function watch(
   }
 
   const failedTestsCache = new FailedTestsCache();
-  let searchSources = contexts.map(context => ({
+  let searchSources = contexts.map((context) => ({
     context,
     searchSource: new SearchSource(context),
   }));
@@ -201,7 +201,7 @@ export default function watch(
     if (hooks.isUsed('onFileChange')) {
       const projects = searchSources.map(({context, searchSource}) => ({
         config: context.config,
-        testPaths: searchSource.findMatchingTests('').tests.map(t => t.path),
+        testPaths: searchSource.findMatchingTests('').tests.map((t) => t.path),
       }));
       hooks.getEmitter().onFileChange({projects});
     }
@@ -258,7 +258,7 @@ export default function watch(
     isInteractive && outputStream.write(specialChars.CLEAR);
     preRunMessagePrint(outputStream);
     isRunning = true;
-    const configs = contexts.map(context => context.config);
+    const configs = contexts.map((context) => context.config);
     const changedFilesPromise = getChangedFilesPromise(globalConfig, configs);
     return runJest({
       changedFilesPromise,
@@ -267,7 +267,7 @@ export default function watch(
       filter,
       globalConfig,
       jestHooks: hooks.getEmitter(),
-      onComplete: results => {
+      onComplete: (results) => {
         isRunning = false;
         hooks.getEmitter().onTestRunComplete(results);
 
@@ -296,7 +296,7 @@ export default function watch(
       outputStream,
       startRun,
       testWatcher,
-    }).catch(error =>
+    }).catch((error) =>
       // Errors thrown inside `runJest`, e.g. by resolvers, are caught here for
       // continuous watch mode execution. We need to reprint them to the
       // terminal and give just a little bit of extra space so they fit below
@@ -327,7 +327,7 @@ export default function watch(
 
     // Abort test run
     const pluginKeys = getSortedUsageRows(watchPlugins, globalConfig).map(
-      usage => Number(usage.key).toString(16),
+      (usage) => Number(usage.key).toString(16),
     );
     if (
       isRunning &&
@@ -341,7 +341,7 @@ export default function watch(
     const matchingWatchPlugin = filterInteractivePlugins(
       watchPlugins,
       globalConfig,
-    ).find(plugin => getPluginKey(plugin, globalConfig) === key);
+    ).find((plugin) => getPluginKey(plugin, globalConfig) === key);
 
     if (matchingWatchPlugin != null) {
       if (isRunning) {
@@ -353,7 +353,7 @@ export default function watch(
       activePlugin = matchingWatchPlugin;
       if (activePlugin.run) {
         activePlugin.run(globalConfig, updateConfigAndRun).then(
-          shouldRerun => {
+          (shouldRerun) => {
             activePlugin = null;
             if (shouldRerun) {
               updateConfigAndRun();
@@ -465,7 +465,7 @@ const checkForConflicts = (
   Please change the configuration key for this plugin.`.trim();
   } else {
     const plugins = [conflictor.plugin, plugin]
-      .map(p => chalk.bold.red(getPluginIdentifier(p)))
+      .map((p) => chalk.bold.red(getPluginIdentifier(p)))
       .join(' and ');
     error = `
   Watch plugins ${plugins} both attempted to register key ${chalk.bold.red(
@@ -531,7 +531,7 @@ const usage = (
       : null,
 
     ...getSortedUsageRows(watchPlugins, globalConfig).map(
-      plugin =>
+      (plugin) =>
         chalk.dim(' \u203A Press') +
         ' ' +
         plugin.key +
@@ -544,7 +544,7 @@ const usage = (
       chalk.dim(' to trigger a test run.'),
   ];
 
-  return messages.filter(message => !!message).join(delimiter) + '\n';
+  return messages.filter((message) => !!message).join(delimiter) + '\n';
 };
 
 const showToggleUsagePrompt = () =>

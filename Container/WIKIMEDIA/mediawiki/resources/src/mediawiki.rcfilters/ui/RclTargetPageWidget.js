@@ -10,46 +10,48 @@
  * @param {Object} [config] Configuration object
  */
 var RclTargetPageWidget = function MwRcfiltersUiRclTargetPageWidget(
-	controller, targetPageModel, config
+	controller,
+	targetPageModel,
+	config
 ) {
 	config = config || {};
 
 	// Parent
-	RclTargetPageWidget.parent.call( this, config );
+	RclTargetPageWidget.parent.call(this, config);
 
 	this.controller = controller;
 	this.model = targetPageModel;
 
-	this.titleSearch = new mw.widgets.TitleInputWidget( {
+	this.titleSearch = new mw.widgets.TitleInputWidget({
 		validate: false,
-		placeholder: mw.msg( 'rcfilters-target-page-placeholder' ),
+		placeholder: mw.msg("rcfilters-target-page-placeholder"),
 		showImages: true,
 		showDescriptions: true,
-		addQueryInput: false
-	} );
+		addQueryInput: false,
+	});
 
 	// Events
-	this.model.connect( this, { update: 'updateUiBasedOnModel' } );
+	this.model.connect(this, { update: "updateUiBasedOnModel" });
 
-	this.titleSearch.$input.on( {
-		blur: this.onLookupInputBlur.bind( this )
-	} );
+	this.titleSearch.$input.on({
+		blur: this.onLookupInputBlur.bind(this),
+	});
 
-	this.titleSearch.lookupMenu.connect( this, {
-		choose: 'onLookupMenuChoose'
-	} );
+	this.titleSearch.lookupMenu.connect(this, {
+		choose: "onLookupMenuChoose",
+	});
 
 	// Initialize
 	this.$element
-		.addClass( 'mw-rcfilters-ui-rclTargetPageWidget' )
-		.append( this.titleSearch.$element );
+		.addClass("mw-rcfilters-ui-rclTargetPageWidget")
+		.append(this.titleSearch.$element);
 
 	this.updateUiBasedOnModel();
 };
 
 /* Initialization */
 
-OO.inheritClass( RclTargetPageWidget, OO.ui.Widget );
+OO.inheritClass(RclTargetPageWidget, OO.ui.Widget);
 
 /* Methods */
 
@@ -57,24 +59,24 @@ OO.inheritClass( RclTargetPageWidget, OO.ui.Widget );
  * Respond to the user choosing a title
  */
 RclTargetPageWidget.prototype.onLookupMenuChoose = function () {
-	this.titleSearch.$input.trigger( 'blur' );
+	this.titleSearch.$input.trigger("blur");
 };
 
 /**
  * Respond to titleSearch $input blur
  */
 RclTargetPageWidget.prototype.onLookupInputBlur = function () {
-	this.controller.setTargetPage( this.titleSearch.getQueryValue() );
+	this.controller.setTargetPage(this.titleSearch.getQueryValue());
 };
 
 /**
  * Respond to the model being updated
  */
 RclTargetPageWidget.prototype.updateUiBasedOnModel = function () {
-	var title = mw.Title.newFromText( this.model.getValue() ),
+	var title = mw.Title.newFromText(this.model.getValue()),
 		text = title ? title.toText() : this.model.getValue();
-	this.titleSearch.setValue( text );
-	this.titleSearch.setTitle( text );
+	this.titleSearch.setValue(text);
+	this.titleSearch.setTitle(text);
 };
 
 module.exports = RclTargetPageWidget;

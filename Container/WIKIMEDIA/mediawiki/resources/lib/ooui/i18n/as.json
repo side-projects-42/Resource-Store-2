@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Dibya Dutta",
-			"Gitartha.bordoloi",
-			"IKHazarika"
-		]
+		"authors": ["Dibya Dutta", "Gitartha.bordoloi", "IKHazarika"]
 	},
 	"ooui-outline-control-move-down": "সমল তললৈ স্থানান্তৰ কৰক",
 	"ooui-outline-control-move-up": "সমল ওপৰলৈ স্থানান্তৰ কৰক",

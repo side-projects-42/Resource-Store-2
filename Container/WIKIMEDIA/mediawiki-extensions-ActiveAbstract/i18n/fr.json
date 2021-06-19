@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Gomoko"
-		]
-	},
-	"activeabstract-desc": "Générer le fil XML pour le projet Résumés dynamiques de Yahoo"
+  "@metadata": {
+    "authors": ["Gomoko"]
+  },
+  "activeabstract-desc": "Générer le fil XML pour le projet Résumés dynamiques de Yahoo"
 }

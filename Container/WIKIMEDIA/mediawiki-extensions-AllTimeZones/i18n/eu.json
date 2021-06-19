@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Xabier Armendaritz"
-		]
-	},
-	"alltimezones-desc": "Etiketa bat gehitzen du, ordu eremu guztietako datak erakusteko"
+  "@metadata": {
+    "authors": ["Xabier Armendaritz"]
+  },
+  "alltimezones-desc": "Etiketa bat gehitzen du, ordu eremu guztietako datak erakusteko"
 }

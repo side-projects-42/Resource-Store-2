@@ -22,12 +22,12 @@ const activeFilters = (
         ? chalk.dim('test name ') + chalk.yellow('/' + testNamePattern + '/')
         : null,
     ]
-      .filter(f => f)
+      .filter((f) => f)
       .join(', ');
 
     const messages = ['\n' + chalk.bold('Active Filters: ') + filters];
 
-    return messages.filter(message => !!message).join(delimiter);
+    return messages.filter((message) => !!message).join(delimiter);
   }
 
   return '';

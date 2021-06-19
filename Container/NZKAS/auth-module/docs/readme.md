@@ -14,10 +14,9 @@ If it is first time using this module, reading resources below in order is recom
 
 ## More Resources
 
-* [Glossary](./glossary.md)
-* [GitHub](https://github.com/nuxt-community/auth-module)
-* [Releases](https://github.com/nuxt-community/auth-module/releases)
-* [Migration Guide](./migration.md)
-* [Examples](https://github.com/nuxt-community/auth-module/tree/dev/examples)
-* [Demo](https://nuxt-auth.herokuapp.com)
-
+- [Glossary](./glossary.md)
+- [GitHub](https://github.com/nuxt-community/auth-module)
+- [Releases](https://github.com/nuxt-community/auth-module/releases)
+- [Migration Guide](./migration.md)
+- [Examples](https://github.com/nuxt-community/auth-module/tree/dev/examples)
+- [Demo](https://nuxt-auth.herokuapp.com)

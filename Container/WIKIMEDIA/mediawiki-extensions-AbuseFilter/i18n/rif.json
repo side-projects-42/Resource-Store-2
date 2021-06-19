@@ -1,10 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Amara-Amaziɣ",
-			"Jose77"
-		]
-	},
-	"abusefilter-log-search-submit": "ⵔⵣⵓ",
-	"abusefilter-list-edit": "Arri"
+  "@metadata": {
+    "authors": ["Amara-Amaziɣ", "Jose77"]
+  },
+  "abusefilter-log-search-submit": "ⵔⵣⵓ",
+  "abusefilter-list-edit": "Arri"
 }

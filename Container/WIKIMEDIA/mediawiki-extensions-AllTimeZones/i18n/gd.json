@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"GunChleoc"
-		]
-	},
-	"alltimezones-desc": "Cuiridh seo tagaichean ris gus cinn-là a shealltainn sna h-uile roinn-tìde"
+  "@metadata": {
+    "authors": ["GunChleoc"]
+  },
+  "alltimezones-desc": "Cuiridh seo tagaichean ris gus cinn-là a shealltainn sna h-uile roinn-tìde"
 }

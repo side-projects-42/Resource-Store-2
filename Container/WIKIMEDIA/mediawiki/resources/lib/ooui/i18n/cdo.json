@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Yejianfei"
-		]
+		"authors": ["Yejianfei"]
 	},
 	"ooui-outline-control-move-down": "下移項目",
 	"ooui-outline-control-move-up": "上移項目",

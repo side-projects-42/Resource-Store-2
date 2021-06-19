@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fitoschido",
-			"Juanpabl"
-		]
+		"authors": ["Fitoschido", "Juanpabl"]
 	},
 	"config-help": "aduya",
 	"mainpagetext": "'''O programa MediaWiki s'ha instalato correctament.'''",

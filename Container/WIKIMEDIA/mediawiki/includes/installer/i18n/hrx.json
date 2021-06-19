@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Iohanen",
-			"Macofe",
-			"Paul Beppler"
-		]
+		"authors": ["Iohanen", "Macofe", "Paul Beppler"]
 	},
 	"config-desc": "Das MediaWiki-Installationsprogramm",
 	"config-title": "Installation von MediaWiki $1",

@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Kolonahe"
-		]
+		"authors": ["Kolonahe"]
 	},
 	"config-desc": "Ka polokalamu hoʻonoho no MekiaWiki",
 	"config-title": "Ka hoʻonoho MekiaWiki $1",

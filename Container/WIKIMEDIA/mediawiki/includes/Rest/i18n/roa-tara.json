@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Joetaras"
-		]
+		"authors": ["Joetaras"]
 	},
 	"rest-prefix-mismatch": "'U percorse cercate ($1) non ge ste jndr'à 'u percorse radice d'u REST API ($2)",
 	"rest-wrong-method": "'U metode cercate ($1) non g'ere {{PLURAL:$3|'nu metode conzendite|une de le metode conzendite}} pe stu percorse ($2)",

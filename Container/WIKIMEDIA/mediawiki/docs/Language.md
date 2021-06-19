@@ -1,5 +1,4 @@
-Language
-=======
+# Language
 
 The Language object handles all readable text produced by the software.
 

@@ -1,0 +1,50 @@
+<h1><%= @post.title %></h1>
+
+<p><%= @post.content %></p>
+
+<h3>Categories</h3>
+<ul>
+  <% @post.categories.each do |category| %>
+  <li><%= link_to category.name, category %></li>
+  <% end %>
+</ul>
+
+<h3>Comments</h3>
+<ul>
+  <% @post.comments.each do |comment| %>
+  <% if comment.user %>
+  <li><%= comment.user.username %> says: <%= comment.content %><br><br></li>
+  <% end %>
+  <% end %>
+</ul>
+
+<h3>Comment Authors</h3>
+<ul>
+  <% @post.comments.map(&:user).uniq.compact.each do |user| %>
+  <li><%= link_to user.username, user %></li>
+  <% end %>
+</ul>
+
+<h2>Add a New Comment</h2>
+
+<%= form_for(@comment) do |f| %>
+
+<%= f.fields_for :user do |u| %>
+
+<%= u.label :username, "Username:" %><br>
+<%= u.text_field :username %><br><br>
+
+<% end %>
+
+<%= f.select(:user_id, User.all.collect { |p| [ p.username, p.id ] }, { include_blank: true }) %>
+
+<%= f.label :content, "Comment:" %><br>
+<%= f.text_area :content %><br>
+
+<%= f.hidden_field :post_id, value: @post.id %>
+
+<%= f.submit %>
+
+<% end %>
+
+<p><%= params.inspect %>

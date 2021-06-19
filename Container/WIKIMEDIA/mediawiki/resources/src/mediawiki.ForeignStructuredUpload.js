@@ -1,4 +1,4 @@
-( function () {
+(function () {
 	/**
 	 * Used to represent an upload in progress on the frontend.
 	 *
@@ -18,19 +18,19 @@
 	 * @param {string} [target]
 	 * @param {Object} [apiconfig]
 	 */
-	function ForeignStructuredUpload( target, apiconfig ) {
+	function ForeignStructuredUpload(target, apiconfig) {
 		this.date = undefined;
 		this.descriptions = [];
 		this.categories = [];
 
 		// Config for uploads to local wiki.
 		// Can be overridden with foreign wiki config when #loadConfig is called.
-		this.config = require( './config.json' ).UploadDialog;
+		this.config = require("./config.json").UploadDialog;
 
-		mw.ForeignUpload.call( this, target, apiconfig );
+		mw.ForeignUpload.call(this, target, apiconfig);
 	}
 
-	OO.inheritClass( ForeignStructuredUpload, mw.ForeignUpload );
+	OO.inheritClass(ForeignStructuredUpload, mw.ForeignUpload);
 
 	/**
 	 * Get the configuration for the form and filepage from the foreign wiki, if any, and use it for
@@ -42,39 +42,48 @@
 		var deferred,
 			upload = this;
 
-		if ( this.configPromise ) {
+		if (this.configPromise) {
 			return this.configPromise;
 		}
 
-		if ( this.target === 'local' ) {
+		if (this.target === "local") {
 			deferred = $.Deferred();
-			setTimeout( function () {
+			setTimeout(function () {
 				// Resolve asynchronously, so that it's harder to accidentally write synchronous code that
 				// will break for cross-wiki uploads
-				deferred.resolve( upload.config );
-			} );
+				deferred.resolve(upload.config);
+			});
 			this.configPromise = deferred.promise();
 		} else {
-			this.configPromise = this.apiPromise.then( function ( api ) {
+			this.configPromise = this.apiPromise.then(function (api) {
 				// Get the config from the foreign wiki
-				return api.get( {
-					action: 'query',
-					meta: 'siteinfo',
-					siprop: 'uploaddialog',
-					// For convenient true/false booleans
-					formatversion: 2
-				} ).then( function ( resp ) {
-					// Foreign wiki might be running a pre-1.27 MediaWiki, without support for this
-					if ( resp.query && resp.query.uploaddialog ) {
-						upload.config = resp.query.uploaddialog;
-						return upload.config;
-					} else {
-						return $.Deferred().reject( 'upload-foreign-cant-load-config' );
-					}
-				}, function () {
-					return $.Deferred().reject( 'upload-foreign-cant-load-config' );
-				} );
-			} );
+				return api
+					.get({
+						action: "query",
+						meta: "siteinfo",
+						siprop: "uploaddialog",
+						// For convenient true/false booleans
+						formatversion: 2,
+					})
+					.then(
+						function (resp) {
+							// Foreign wiki might be running a pre-1.27 MediaWiki, without support for this
+							if (resp.query && resp.query.uploaddialog) {
+								upload.config = resp.query.uploaddialog;
+								return upload.config;
+							} else {
+								return $.Deferred().reject(
+									"upload-foreign-cant-load-config"
+								);
+							}
+						},
+						function () {
+							return $.Deferred().reject(
+								"upload-foreign-cant-load-config"
+							);
+						}
+					);
+			});
 		}
 
 		return this.configPromise;
@@ -85,10 +94,10 @@
 	 *
 	 * @param {string[]} categories Array of categories to which this upload will be added.
 	 */
-	ForeignStructuredUpload.prototype.addCategories = function ( categories ) {
+	ForeignStructuredUpload.prototype.addCategories = function (categories) {
 		// The length of the array must be less than 10000.
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push#Merging_two_arrays
-		Array.prototype.push.apply( this.categories, categories );
+		Array.prototype.push.apply(this.categories, categories);
 	};
 
 	/**
@@ -104,11 +113,14 @@
 	 * @param {string} language The language code for the description's language. Must have a template on the target wiki to work properly.
 	 * @param {string} description The description of the file.
 	 */
-	ForeignStructuredUpload.prototype.addDescription = function ( language, description ) {
-		this.descriptions.push( {
+	ForeignStructuredUpload.prototype.addDescription = function (
+		language,
+		description
+	) {
+		this.descriptions.push({
 			language: language,
-			text: description
-		} );
+			text: description,
+		});
 	};
 
 	/**
@@ -123,7 +135,7 @@
 	 *
 	 * @param {Date} date
 	 */
-	ForeignStructuredUpload.prototype.setDate = function ( date ) {
+	ForeignStructuredUpload.prototype.setDate = function (date) {
 		this.date = date;
 	};
 
@@ -134,28 +146,30 @@
 	 * @return {string}
 	 */
 	ForeignStructuredUpload.prototype.getText = function () {
-		return this.config.format.filepage
-			// Replace "named parameters" with the given information
-			.replace( '$DESCRIPTION', this.getDescriptions() )
-			.replace( '$DATE', this.getDate() )
-			.replace( '$SOURCE', this.getSource() )
-			.replace( '$AUTHOR', this.getUser() )
-			.replace( '$LICENSE', this.getLicense() )
-			.replace( '$CATEGORIES', this.getCategories() );
+		return (
+			this.config.format.filepage
+				// Replace "named parameters" with the given information
+				.replace("$DESCRIPTION", this.getDescriptions())
+				.replace("$DATE", this.getDate())
+				.replace("$SOURCE", this.getSource())
+				.replace("$AUTHOR", this.getUser())
+				.replace("$LICENSE", this.getLicense())
+				.replace("$CATEGORIES", this.getCategories())
+		);
 	};
 
 	/**
 	 * @inheritdoc
 	 */
 	ForeignStructuredUpload.prototype.getComment = function () {
-		var
-			isLocal = this.target === 'local',
-			comment = typeof this.config.comment === 'string' ?
-				this.config.comment :
-				this.config.comment[ isLocal ? 'local' : 'foreign' ];
+		var isLocal = this.target === "local",
+			comment =
+				typeof this.config.comment === "string"
+					? this.config.comment
+					: this.config.comment[isLocal ? "local" : "foreign"];
 		return comment
-			.replace( '$PAGENAME', mw.config.get( 'wgPageName' ) )
-			.replace( '$HOST', location.host );
+			.replace("$PAGENAME", mw.config.get("wgPageName"))
+			.replace("$HOST", location.host);
 	};
 
 	/**
@@ -165,8 +179,8 @@
 	 * @return {string}
 	 */
 	ForeignStructuredUpload.prototype.getDate = function () {
-		if ( !this.date ) {
-			return '';
+		if (!this.date) {
+			return "";
 		}
 
 		return this.date.toString();
@@ -181,11 +195,13 @@
 	 */
 	ForeignStructuredUpload.prototype.getDescriptions = function () {
 		var upload = this;
-		return this.descriptions.map( function ( desc ) {
-			return upload.config.format.description
-				.replace( '$LANGUAGE', desc.language )
-				.replace( '$TEXT', desc.text );
-		} ).join( '\n' );
+		return this.descriptions
+			.map(function (desc) {
+				return upload.config.format.description
+					.replace("$LANGUAGE", desc.language)
+					.replace("$TEXT", desc.text);
+			})
+			.join("\n");
 	};
 
 	/**
@@ -196,13 +212,15 @@
 	 * @return {string}
 	 */
 	ForeignStructuredUpload.prototype.getCategories = function () {
-		if ( this.categories.length === 0 ) {
+		if (this.categories.length === 0) {
 			return this.config.format.uncategorized;
 		}
 
-		return this.categories.map( function ( cat ) {
-			return '[[Category:' + cat + ']]';
-		} ).join( '\n' );
+		return this.categories
+			.map(function (cat) {
+				return "[[Category:" + cat + "]]";
+			})
+			.join("\n");
 	};
 
 	/**
@@ -234,17 +252,17 @@
 	ForeignStructuredUpload.prototype.getUser = function () {
 		var username, namespace;
 		// Do not localise, we don't know the language of target wiki
-		namespace = 'User';
-		username = mw.config.get( 'wgUserName' );
-		if ( !username ) {
+		namespace = "User";
+		username = mw.config.get("wgUserName");
+		if (!username) {
 			// The user is not logged in locally. However, they might be logged in on the foreign wiki.
 			// We should record their username there. (If they're not logged in there either, this will
 			// record the IP address.) It's also possible that the user opened this dialog, got an error
 			// about not being logged in, logged in in another browser tab, then continued uploading.
-			username = '{{subst:REVISIONUSER}}';
+			username = "{{subst:REVISIONUSER}}";
 		}
-		return '[[' + namespace + ':' + username + '|' + username + ']]';
+		return "[[" + namespace + ":" + username + "|" + username + "]]";
 	};
 
 	mw.ForeignStructuredUpload = ForeignStructuredUpload;
-}() );
+})();

@@ -38,17 +38,16 @@
  */
 
 module.exports = function (ctx, name, getter) {
-  var _get = Object.getOwnPropertyDescriptor(ctx, name)
-    , _super = function () {};
+  var _get = Object.getOwnPropertyDescriptor(ctx, name),
+    _super = function () {};
 
-  if (_get && 'function' === typeof _get.get)
-    _super = _get.get
+  if (_get && "function" === typeof _get.get) _super = _get.get;
 
-  Object.defineProperty(ctx, name,
-    { get: function () {
-        var result = getter(_super).call(this);
-        return result === undefined ? this : result;
-      }
-    , configurable: true
+  Object.defineProperty(ctx, name, {
+    get: function () {
+      var result = getter(_super).call(this);
+      return result === undefined ? this : result;
+    },
+    configurable: true,
   });
 };

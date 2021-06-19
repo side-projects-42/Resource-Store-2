@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Jon Harald Søby"
-		]
+		"authors": ["Jon Harald Søby"]
 	},
 	"paramvalidator-badbool": "Ugyldig verdi «$2» for den boolske parameteren «$1». Send $3 for true eller $5 for false.",
 	"paramvalidator-badexpiry": "Ugyldig verdi «$2» for utløpsparameteren «$1».",

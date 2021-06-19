@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Adehertogh",
-			"Desiphral",
-			"לערי ריינהארט",
-			"ⓝⓘⓙⓦⓜ",
-			"아라"
-		]
+		"authors": ["Adehertogh", "Desiphral", "לערי ריינהארט", "ⓝⓘⓙⓦⓜ", "아라"]
 	},
 	"underline-always": "Savaxt",
 	"underline-never": "Ni ekhvar",

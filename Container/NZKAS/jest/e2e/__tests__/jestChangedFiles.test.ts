@@ -42,7 +42,7 @@ test('gets hg SCM roots and dedups them', async () => {
     'first-repo/nested-dir/second-nested-dir',
     'second-repo/nested-dir',
     'second-repo/nested-dir/second-nested-dir',
-  ].map(filename => path.resolve(DIR, filename));
+  ].map((filename) => path.resolve(DIR, filename));
 
   const repos = await findRepos(roots);
   expect(repos.git.size).toBe(0);
@@ -77,7 +77,7 @@ test('gets git SCM roots and dedups them', async () => {
     'first-repo/nested-dir/second-nested-dir',
     'second-repo/nested-dir',
     'second-repo/nested-dir/second-nested-dir',
-  ].map(filename => path.resolve(DIR, filename));
+  ].map((filename) => path.resolve(DIR, filename));
 
   const repos = await findRepos(roots);
   expect(repos.hg.size).toBe(0);
@@ -111,7 +111,7 @@ test('gets mixed git and hg SCM roots and dedups them', async () => {
     'first-repo/nested-dir/second-nested-dir',
     'second-repo/nested-dir',
     'second-repo/nested-dir/second-nested-dir',
-  ].map(filename => path.resolve(DIR, filename));
+  ].map((filename) => path.resolve(DIR, filename));
 
   const repos = await findRepos(roots);
   const hgRepos = Array.from(repos.hg);
@@ -135,13 +135,13 @@ test('gets changed files for git', async () => {
   run(`${GIT} init`, DIR);
 
   const roots = ['', 'nested-dir', 'nested-dir/second-nested-dir'].map(
-    filename => path.resolve(DIR, filename),
+    (filename) => path.resolve(DIR, filename),
   );
 
   let {changedFiles: files} = await getChangedFilesForRoots(roots, {});
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt', 'file2.txt', 'file3.txt']);
 
@@ -160,7 +160,7 @@ test('gets changed files for git', async () => {
   }));
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt', 'file2.txt', 'file3.txt']);
 
@@ -171,7 +171,7 @@ test('gets changed files for git', async () => {
   ({changedFiles: files} = await getChangedFilesForRoots(roots, {}));
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt']);
 
@@ -187,7 +187,7 @@ test('gets changed files for git', async () => {
   // Returns files from current uncommitted state + the last commit
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt', 'file4.txt']);
 
@@ -200,7 +200,7 @@ test('gets changed files for git', async () => {
   // Returns files from the last 2 commits
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt', 'file4.txt']);
 
@@ -218,7 +218,7 @@ test('gets changed files for git', async () => {
   // Returns files from this branch but not ones that only exist on master
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file5.txt']);
 });
@@ -237,7 +237,7 @@ test('monitors only root paths for git', async () => {
   const {changedFiles: files} = await getChangedFilesForRoots(roots, {});
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file2.txt', 'file3.txt']);
 });
@@ -282,13 +282,13 @@ test('gets changed files for hg', async () => {
   run(`${HG} init`, DIR);
 
   const roots = ['', 'nested-dir', 'nested-dir/second-nested-dir'].map(
-    filename => path.resolve(DIR, filename),
+    (filename) => path.resolve(DIR, filename),
   );
 
   let {changedFiles: files} = await getChangedFilesForRoots(roots, {});
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt', 'file2.txt', 'file3.txt']);
 
@@ -303,7 +303,7 @@ test('gets changed files for hg', async () => {
   }));
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt', 'file2.txt', 'file3.txt']);
 
@@ -314,7 +314,7 @@ test('gets changed files for hg', async () => {
   ({changedFiles: files} = await getChangedFilesForRoots(roots, {}));
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt']);
 
@@ -330,7 +330,7 @@ test('gets changed files for hg', async () => {
   // Returns files from current uncommitted state + the last commit
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt', 'file4.txt']);
 
@@ -343,7 +343,7 @@ test('gets changed files for hg', async () => {
   // Returns files from the last 2 commits
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file1.txt', 'file4.txt']);
 
@@ -363,7 +363,7 @@ test('gets changed files for hg', async () => {
   // Returns files from this branch but not ones that only exist on main
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file5.txt']);
 });
@@ -389,7 +389,7 @@ test('monitors only root paths for hg', async () => {
   const {changedFiles: files} = await getChangedFilesForRoots(roots, {});
   expect(
     Array.from(files)
-      .map(filePath => path.basename(filePath))
+      .map((filePath) => path.basename(filePath))
       .sort(),
   ).toEqual(['file2.txt', 'file3.txt']);
 });

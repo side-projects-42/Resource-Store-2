@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Saederup92",
-			"Sarrus"
-		]
+		"authors": ["Saederup92", "Sarrus"]
 	},
 	"apihelp-main-param-action": "Hvilken handling der skal udføres",
 	"apihelp-main-param-format": "Formatet af resultatet.",

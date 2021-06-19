@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Andria",
-			"L2212",
-			"Taxandru",
-			"Uharteko"
-		]
+		"authors": ["Andria", "L2212", "Taxandru", "Uharteko"]
 	},
 	"config-page-language": "Limba",
 	"config-page-name": "Nùmene",

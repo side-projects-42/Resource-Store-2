@@ -1,45 +1,47 @@
-var cordova = require('cordova');
+var cordova = require("cordova");
 
 module.exports = {
-    alert:function(win, loseX, args) {
-        var message = args[0];
-        var _title = args[1];
-        var _buttonLabel = args[2];
+  alert: function (win, loseX, args) {
+    var message = args[0];
+    var _title = args[1];
+    var _buttonLabel = args[2];
 
-        var md = new Windows.UI.Popups.MessageDialog(message, _title);
-        md.commands.append(new Windows.UI.Popups.UICommand(_buttonLabel));
-        md.showAsync().then(win);
-    },
+    var md = new Windows.UI.Popups.MessageDialog(message, _title);
+    md.commands.append(new Windows.UI.Popups.UICommand(_buttonLabel));
+    md.showAsync().then(win);
+  },
 
-    confirm:function(win, loseX, args) {
-        var message = args[0];
-        var _title = args[1];
-        var _buttonLabels = args[2];
+  confirm: function (win, loseX, args) {
+    var message = args[0];
+    var _title = args[1];
+    var _buttonLabels = args[2];
 
-        var btnList = [];
-        function commandHandler (command) {
-            win(btnList[command.label]);
-        };
+    var btnList = [];
+    function commandHandler(command) {
+      win(btnList[command.label]);
+    }
 
-        var md = new Windows.UI.Popups.MessageDialog(message, _title);
-        var button = _buttonLabels.split(',');
-        var btnList = [];
-        for (var i = 0; i<button.length; i++) {
-            btnList[button[i]] = i+1;
-            md.commands.append(new Windows.UI.Popups.UICommand(button[i],commandHandler));
-        };
-        md.showAsync();
-    },
+    var md = new Windows.UI.Popups.MessageDialog(message, _title);
+    var button = _buttonLabels.split(",");
+    var btnList = [];
+    for (var i = 0; i < button.length; i++) {
+      btnList[button[i]] = i + 1;
+      md.commands.append(
+        new Windows.UI.Popups.UICommand(button[i], commandHandler)
+      );
+    }
+    md.showAsync();
+  },
 
-    vibrate:function(winX, loseX, args) {
-        var mills = args[0];
+  vibrate: function (winX, loseX, args) {
+    var mills = args[0];
 
-        //...
-    },
+    //...
+  },
 
-    beep:function(winX, loseX, args) {
-        var count = args[0];
-        /*
+  beep: function (winX, loseX, args) {
+    var count = args[0];
+    /*
         var src = //filepath//
         var playTime = 500; // ms
         var quietTime = 1000; // ms
@@ -56,5 +58,5 @@ module.exports = {
                 window.clearInterval(intervalId);
             }
         }, playTime + quietTime); */
-    }
+  },
 };

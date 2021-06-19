@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Crazymadlover",
-			"Omnipaedista"
-		]
+		"authors": ["Crazymadlover", "Omnipaedista"]
 	},
 	"config-page-language": "Γλῶττα",
 	"mainpagetext": "'''Ἡ ἐγκατάστασις τῆς MediaWiki ἦν ἐπιτυχής'''",

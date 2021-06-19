@@ -14,7 +14,11 @@
  * @cfg {jQuery} [$overlay] A jQuery object serving as overlay for popups
  */
 var TagItemWidget = function MwRcfiltersUiTagItemWidget(
-	controller, filtersViewModel, invertModel, itemModel, config
+	controller,
+	filtersViewModel,
+	invertModel,
+	itemModel,
+	config
 ) {
 	// Configuration initialization
 	config = config || {};
@@ -25,57 +29,74 @@ var TagItemWidget = function MwRcfiltersUiTagItemWidget(
 	this.itemModel = itemModel;
 	this.selected = false;
 
-	TagItemWidget.parent.call( this, $.extend( {
-		data: this.itemModel.getName()
-	}, config ) );
+	TagItemWidget.parent.call(
+		this,
+		$.extend(
+			{
+				data: this.itemModel.getName(),
+			},
+			config
+		)
+	);
 
 	this.$overlay = config.$overlay || this.$element;
 	this.popupLabel = new OO.ui.LabelWidget();
 
 	// Mixin constructors
-	OO.ui.mixin.PopupElement.call( this, $.extend( {
-		popup: {
-			padded: false,
-			align: 'center',
-			position: 'above',
-			$content: $( '<div>' )
-				.addClass( 'mw-rcfilters-ui-tagItemWidget-popup-content' )
-				.append( this.popupLabel.$element ),
-			$floatableContainer: this.$element,
-			classes: [ 'mw-rcfilters-ui-tagItemWidget-popup' ]
-		}
-	}, config ) );
+	OO.ui.mixin.PopupElement.call(
+		this,
+		$.extend(
+			{
+				popup: {
+					padded: false,
+					align: "center",
+					position: "above",
+					$content: $("<div>")
+						.addClass("mw-rcfilters-ui-tagItemWidget-popup-content")
+						.append(this.popupLabel.$element),
+					$floatableContainer: this.$element,
+					classes: ["mw-rcfilters-ui-tagItemWidget-popup"],
+				},
+			},
+			config
+		)
+	);
 
 	this.popupTimeoutShow = null;
 	this.popupTimeoutHide = null;
 
-	this.$highlight = $( '<div>' )
-		.addClass( 'mw-rcfilters-ui-tagItemWidget-highlight' );
+	this.$highlight = $("<div>").addClass(
+		"mw-rcfilters-ui-tagItemWidget-highlight"
+	);
 
 	// Add title attribute with the item label to 'x' button
-	this.closeButton.setTitle( mw.msg( 'rcfilters-tag-remove', this.itemModel.getLabel() ) );
+	this.closeButton.setTitle(
+		mw.msg("rcfilters-tag-remove", this.itemModel.getLabel())
+	);
 
 	// Events
-	this.filtersViewModel.connect( this, { highlightChange: 'updateUiBasedOnState' } );
-	this.invertModel.connect( this, { update: 'updateUiBasedOnState' } );
-	this.itemModel.connect( this, { update: 'updateUiBasedOnState' } );
+	this.filtersViewModel.connect(this, {
+		highlightChange: "updateUiBasedOnState",
+	});
+	this.invertModel.connect(this, { update: "updateUiBasedOnState" });
+	this.itemModel.connect(this, { update: "updateUiBasedOnState" });
 
 	// Initialization
-	this.$overlay.append( this.popup.$element );
+	this.$overlay.append(this.popup.$element);
 	this.$element
-		.addClass( 'mw-rcfilters-ui-tagItemWidget' )
-		.prepend( this.$highlight )
-		.attr( 'aria-haspopup', 'true' )
-		.on( 'mouseenter', this.onMouseEnter.bind( this ) )
-		.on( 'mouseleave', this.onMouseLeave.bind( this ) );
+		.addClass("mw-rcfilters-ui-tagItemWidget")
+		.prepend(this.$highlight)
+		.attr("aria-haspopup", "true")
+		.on("mouseenter", this.onMouseEnter.bind(this))
+		.on("mouseleave", this.onMouseLeave.bind(this));
 
 	this.updateUiBasedOnState();
 };
 
 /* Initialization */
 
-OO.inheritClass( TagItemWidget, OO.ui.TagItemWidget );
-OO.mixinClass( TagItemWidget, OO.ui.mixin.PopupElement );
+OO.inheritClass(TagItemWidget, OO.ui.TagItemWidget);
+OO.mixinClass(TagItemWidget, OO.ui.mixin.PopupElement);
 
 /* Methods */
 
@@ -84,20 +105,27 @@ OO.mixinClass( TagItemWidget, OO.ui.mixin.PopupElement );
  */
 TagItemWidget.prototype.updateUiBasedOnState = function () {
 	// Update label if needed
-	var labelMsg = this.itemModel.getLabelMessageKey( this.invertModel.isSelected() );
-	if ( labelMsg ) {
-		this.setLabel( $( '<div>' ).append(
-			$( '<bdi>' ).html(
-				// eslint-disable-next-line mediawiki/msg-doc
-				mw.message( labelMsg, mw.html.escape( this.itemModel.getLabel() ) ).parse()
-			)
-		).contents() );
-	} else {
+	var labelMsg = this.itemModel.getLabelMessageKey(
+		this.invertModel.isSelected()
+	);
+	if (labelMsg) {
 		this.setLabel(
-			$( '<bdi>' ).text(
-				this.itemModel.getLabel()
-			)
+			$("<div>")
+				.append(
+					$("<bdi>").html(
+						// eslint-disable-next-line mediawiki/msg-doc
+						mw
+							.message(
+								labelMsg,
+								mw.html.escape(this.itemModel.getLabel())
+							)
+							.parse()
+					)
+				)
+				.contents()
 		);
+	} else {
+		this.setLabel($("<bdi>").text(this.itemModel.getLabel()));
 	}
 
 	this.setCurrentMuteState();
@@ -108,14 +136,16 @@ TagItemWidget.prototype.updateUiBasedOnState = function () {
  * Set the current highlight color for this item
  */
 TagItemWidget.prototype.setHighlightColor = function () {
-	var selectedColor = this.filtersViewModel.isHighlightEnabled() && this.itemModel.isHighlighted ?
-		this.itemModel.getHighlightColor() :
-		null;
+	var selectedColor =
+		this.filtersViewModel.isHighlightEnabled() &&
+		this.itemModel.isHighlighted
+			? this.itemModel.getHighlightColor()
+			: null;
 
 	this.$highlight
-		.attr( 'data-color', selectedColor )
+		.attr("data-color", selectedColor)
 		.toggleClass(
-			'mw-rcfilters-ui-tagItemWidget-highlight-highlighted',
+			"mw-rcfilters-ui-tagItemWidget-highlight-highlighted",
 			!!selectedColor
 		);
 };
@@ -131,16 +161,19 @@ TagItemWidget.prototype.setCurrentMuteState = function () {};
 TagItemWidget.prototype.onMouseEnter = function () {
 	var labelText = this.itemModel.getStateMessage();
 
-	if ( labelText ) {
-		this.popupLabel.setLabel( labelText );
+	if (labelText) {
+		this.popupLabel.setLabel(labelText);
 
 		// Set timeout for the popup to show
-		this.popupTimeoutShow = setTimeout( function () {
-			this.popup.toggle( true );
-		}.bind( this ), 500 );
+		this.popupTimeoutShow = setTimeout(
+			function () {
+				this.popup.toggle(true);
+			}.bind(this),
+			500
+		);
 
 		// Cancel the hide timeout
-		clearTimeout( this.popupTimeoutHide );
+		clearTimeout(this.popupTimeoutHide);
 		this.popupTimeoutHide = null;
 	}
 };
@@ -149,12 +182,15 @@ TagItemWidget.prototype.onMouseEnter = function () {
  * Respond to mouse leave event
  */
 TagItemWidget.prototype.onMouseLeave = function () {
-	this.popupTimeoutHide = setTimeout( function () {
-		this.popup.toggle( false );
-	}.bind( this ), 250 );
+	this.popupTimeoutHide = setTimeout(
+		function () {
+			this.popup.toggle(false);
+		}.bind(this),
+		250
+	);
 
 	// Clear the show timeout
-	clearTimeout( this.popupTimeoutShow );
+	clearTimeout(this.popupTimeoutShow);
 	this.popupTimeoutShow = null;
 };
 
@@ -163,13 +199,16 @@ TagItemWidget.prototype.onMouseLeave = function () {
  *
  * @param {boolean} [isSelected] Widget is selected
  */
-TagItemWidget.prototype.toggleSelected = function ( isSelected ) {
+TagItemWidget.prototype.toggleSelected = function (isSelected) {
 	isSelected = isSelected !== undefined ? isSelected : !this.selected;
 
-	if ( this.selected !== isSelected ) {
+	if (this.selected !== isSelected) {
 		this.selected = isSelected;
 
-		this.$element.toggleClass( 'mw-rcfilters-ui-tagItemWidget-selected', this.selected );
+		this.$element.toggleClass(
+			"mw-rcfilters-ui-tagItemWidget-selected",
+			this.selected
+		);
 	}
 };
 
@@ -217,8 +256,8 @@ TagItemWidget.prototype.destroy = function () {
 	this.popup.$element.detach();
 
 	// Disconnect events
-	this.itemModel.disconnect( this );
-	this.closeButton.disconnect( this );
+	this.itemModel.disconnect(this);
+	this.closeButton.disconnect(this);
 };
 
 module.exports = TagItemWidget;

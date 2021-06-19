@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function positionCards() {
     const handWidth = hand.offsetWidth;
-    cards.forEach(card => {
+    cards.forEach((card) => {
       const offset = parseInt(card.dataset.index, 10) - 2;
       card.parentElement.style.transform = cardTransform(offset, handWidth);
     });
@@ -42,13 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (results[index]) {
         card.classList.remove('jest-card-fail');
         card.classList.add('jest-card-pass');
-        card.querySelectorAll('.jest-card-label').forEach(el => {
+        card.querySelectorAll('.jest-card-label').forEach((el) => {
           el.innerHTML = 'PASS';
         });
       } else {
         card.classList.remove('jest-card-pass');
         card.classList.add('jest-card-fail');
-        card.querySelectorAll('.jest-card-label').forEach(el => {
+        card.querySelectorAll('.jest-card-label').forEach((el) => {
           el.innerHTML = 'FAIL';
         });
       }
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return undefined;
   }
 
-  hand.addEventListener('click', ev => {
+  hand.addEventListener('click', (ev) => {
     let card;
     if (ev.target.classList.contains('jest-card-hitslop')) {
       card = ev.target.firstChild;
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clickButton.onclick = () => {
         document
           .querySelectorAll('.matchers .button.landing')
-          .forEach(b => (b.className = 'button landing'));
+          .forEach((b) => (b.className = 'button landing'));
         clickButton.className = 'button landing active';
         screenshotImg.style.opacity = 0.5;
         screenshotImg.src = button.url;
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // we can't make the screenshots clickable. This fixes that with client-side
   // JS. Let's call it progressive enhancement, sure.
   function makeScreenshotsClickable() {
-    document.querySelectorAll('.blockImage img').forEach(img => {
+    document.querySelectorAll('.blockImage img').forEach((img) => {
       img.style.cursor = 'pointer';
       img.onclick = () => {
         document.location = img.src;

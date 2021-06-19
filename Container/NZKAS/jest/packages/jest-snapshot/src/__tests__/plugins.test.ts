@@ -10,7 +10,7 @@ beforeEach(() => jest.resetModules());
 const testPath = (names: Array<string>) => {
   const {addSerializer, getSerializers} = require('../plugins');
   const prev = getSerializers();
-  const added = names.map(name =>
+  const added = names.map((name) =>
     require(require.resolve(`./plugins/${name}`)),
   );
 
@@ -19,7 +19,7 @@ const testPath = (names: Array<string>) => {
   added
     .concat()
     .reverse()
-    .forEach(serializer => addSerializer(serializer));
+    .forEach((serializer) => addSerializer(serializer));
 
   const next = getSerializers();
   expect(next.length).toBe(added.length + prev.length);

@@ -1,30 +1,30 @@
-( function () {
+(function () {
 	var caretSample,
 		sig = {
-			pre: '--~~~~'
+			pre: "--~~~~",
 		},
 		bold = {
-			pre: '\'\'\'',
-			peri: 'Bold text',
-			post: '\'\'\''
+			pre: "'''",
+			peri: "Bold text",
+			post: "'''",
 		},
 		h2 = {
-			pre: '== ',
-			peri: 'Heading 2',
-			post: ' ==',
+			pre: "== ",
+			peri: "Heading 2",
+			post: " ==",
 			regex: /^(\s*)(={1,6})(.*?)\2(\s*)$/,
-			regexReplace: '$1==$3==$4',
-			ownline: true
+			regexReplace: "$1==$3==$4",
+			ownline: true,
 		},
 		ulist = {
-			pre: '* ',
-			peri: 'Bulleted list item',
-			post: '',
+			pre: "* ",
+			peri: "Bulleted list item",
+			post: "",
 			ownline: true,
-			splitlines: true
+			splitlines: true,
 		};
 
-	QUnit.module( 'jquery.textSelection', QUnit.newMwEnvironment() );
+	QUnit.module("jquery.textSelection", QUnit.newMwEnvironment());
 
 	/**
 	 * Test factory for $.fn.textSelection( 'encapsulateText' )
@@ -37,207 +37,241 @@
 	 * @param {number} options.end Ending char for selection
 	 * @param {Object} options.params Additional parameters for $().textSelection( 'encapsulateText' )
 	 */
-	function encapsulateTest( options ) {
-		var opt = $.extend( {
-			description: '',
-			before: {},
-			after: {},
-			replace: {}
-		}, options );
+	function encapsulateTest(options) {
+		var opt = $.extend(
+			{
+				description: "",
+				before: {},
+				after: {},
+				replace: {},
+			},
+			options
+		);
 
-		opt.before = $.extend( {
-			text: '',
-			start: 0,
-			end: 0
-		}, opt.before );
-		opt.after = $.extend( {
-			text: '',
-			selected: null
-		}, opt.after );
+		opt.before = $.extend(
+			{
+				text: "",
+				start: 0,
+				end: 0,
+			},
+			opt.before
+		);
+		opt.after = $.extend(
+			{
+				text: "",
+				selected: null,
+			},
+			opt.after
+		);
 
-		QUnit.test( opt.description, function ( assert ) {
+		QUnit.test(opt.description, function (assert) {
 			var $textarea, start, end, opts, text, selected;
 
-			$textarea = $( '<textarea>' );
+			$textarea = $("<textarea>");
 
-			$( '#qunit-fixture' ).append( $textarea );
+			$("#qunit-fixture").append($textarea);
 
-			$textarea.textSelection( 'setContents', opt.before.text );
+			$textarea.textSelection("setContents", opt.before.text);
 
 			start = opt.before.start;
 			end = opt.before.end;
 
 			// Clone opt.replace
-			opts = $.extend( {}, opt.replace );
+			opts = $.extend({}, opt.replace);
 			opts.selectionStart = start;
 			opts.selectionEnd = end;
-			$textarea.textSelection( 'encapsulateSelection', opts );
+			$textarea.textSelection("encapsulateSelection", opts);
 
-			text = $textarea.textSelection( 'getContents' ).replace( /\r\n/g, '\n' );
+			text = $textarea
+				.textSelection("getContents")
+				.replace(/\r\n/g, "\n");
 
-			assert.strictEqual( text, opt.after.text, 'Checking full text after encapsulation' );
+			assert.strictEqual(
+				text,
+				opt.after.text,
+				"Checking full text after encapsulation"
+			);
 
-			if ( opt.after.selected !== null ) {
-				selected = $textarea.textSelection( 'getSelection' );
-				assert.strictEqual( selected, opt.after.selected, 'Checking selected text after encapsulation.' );
+			if (opt.after.selected !== null) {
+				selected = $textarea.textSelection("getSelection");
+				assert.strictEqual(
+					selected,
+					opt.after.selected,
+					"Checking selected text after encapsulation."
+				);
 			}
-
-		} );
+		});
 	}
 
-	encapsulateTest( {
-		description: 'Adding sig to end of text',
+	encapsulateTest({
+		description: "Adding sig to end of text",
 		before: {
-			text: 'Wikilove dude! ',
+			text: "Wikilove dude! ",
 			start: 15,
-			end: 15
+			end: 15,
 		},
 		after: {
-			text: 'Wikilove dude! --~~~~',
-			selected: ''
+			text: "Wikilove dude! --~~~~",
+			selected: "",
 		},
-		replace: sig
-	} );
+		replace: sig,
+	});
 
-	encapsulateTest( {
-		description: 'Adding bold to empty',
+	encapsulateTest({
+		description: "Adding bold to empty",
 		before: {
-			text: '',
+			text: "",
 			start: 0,
-			end: 0
+			end: 0,
 		},
 		after: {
-			text: '\'\'\'Bold text\'\'\'',
-			selected: 'Bold text' // selected because it's the default
+			text: "'''Bold text'''",
+			selected: "Bold text", // selected because it's the default
 		},
-		replace: bold
-	} );
+		replace: bold,
+	});
 
-	encapsulateTest( {
-		description: 'Adding bold to existing text',
+	encapsulateTest({
+		description: "Adding bold to existing text",
 		before: {
-			text: 'Now is the time for all good men to come to the aid of their country',
+			text: "Now is the time for all good men to come to the aid of their country",
 			start: 20,
-			end: 32
+			end: 32,
 		},
 		after: {
-			text: 'Now is the time for \'\'\'all good men\'\'\' to come to the aid of their country',
-			selected: '' // empty because it's not the default'
+			text: "Now is the time for '''all good men''' to come to the aid of their country",
+			selected: "", // empty because it's not the default'
 		},
-		replace: bold
-	} );
+		replace: bold,
+	});
 
-	encapsulateTest( {
-		description: 'ownline option: adding new h2',
+	encapsulateTest({
+		description: "ownline option: adding new h2",
 		before: {
-			text: 'Before\nAfter',
+			text: "Before\nAfter",
 			start: 7,
-			end: 7
+			end: 7,
 		},
 		after: {
-			text: 'Before\n== Heading 2 ==\nAfter',
-			selected: 'Heading 2'
+			text: "Before\n== Heading 2 ==\nAfter",
+			selected: "Heading 2",
 		},
-		replace: h2
-	} );
+		replace: h2,
+	});
 
-	encapsulateTest( {
-		description: 'ownline option: turn a whole line into new h2',
+	encapsulateTest({
+		description: "ownline option: turn a whole line into new h2",
 		before: {
-			text: 'Before\nMy heading\nAfter',
+			text: "Before\nMy heading\nAfter",
 			start: 7,
-			end: 17
+			end: 17,
 		},
 		after: {
-			text: 'Before\n== My heading ==\nAfter',
-			selected: ''
+			text: "Before\n== My heading ==\nAfter",
+			selected: "",
 		},
-		replace: h2
-	} );
+		replace: h2,
+	});
 
-	encapsulateTest( {
-		description: 'ownline option: turn a partial line into new h2',
+	encapsulateTest({
+		description: "ownline option: turn a partial line into new h2",
 		before: {
-			text: 'BeforeMy headingAfter',
+			text: "BeforeMy headingAfter",
 			start: 6,
-			end: 16
+			end: 16,
 		},
 		after: {
-			text: 'Before\n== My heading ==\nAfter',
-			selected: ''
+			text: "Before\n== My heading ==\nAfter",
+			selected: "",
 		},
-		replace: h2
-	} );
+		replace: h2,
+	});
 
-	encapsulateTest( {
-		description: 'splitlines option: no selection, insert new list item',
+	encapsulateTest({
+		description: "splitlines option: no selection, insert new list item",
 		before: {
-			text: 'Before\nAfter',
+			text: "Before\nAfter",
 			start: 7,
-			end: 7
+			end: 7,
 		},
 		after: {
-			text: 'Before\n* Bulleted list item\nAfter'
+			text: "Before\n* Bulleted list item\nAfter",
 		},
-		replace: ulist
-	} );
+		replace: ulist,
+	});
 
-	encapsulateTest( {
-		description: 'splitlines option: single partial line selection, insert new list item',
+	encapsulateTest({
+		description:
+			"splitlines option: single partial line selection, insert new list item",
 		before: {
-			text: 'BeforeMy List ItemAfter',
+			text: "BeforeMy List ItemAfter",
 			start: 6,
-			end: 18
+			end: 18,
 		},
 		after: {
-			text: 'Before\n* My List Item\nAfter'
+			text: "Before\n* My List Item\nAfter",
 		},
-		replace: ulist
-	} );
+		replace: ulist,
+	});
 
-	encapsulateTest( {
-		description: 'splitlines option: multiple lines',
+	encapsulateTest({
+		description: "splitlines option: multiple lines",
 		before: {
-			text: 'Before\nFirst\nSecond\nThird\nAfter',
+			text: "Before\nFirst\nSecond\nThird\nAfter",
 			start: 7,
-			end: 25
+			end: 25,
 		},
 		after: {
-			text: 'Before\n* First\n* Second\n* Third\nAfter'
+			text: "Before\n* First\n* Second\n* Third\nAfter",
 		},
-		replace: ulist
-	} );
+		replace: ulist,
+	});
 
-	function caretTest( options ) {
-		QUnit.test( options.description, function ( assert ) {
+	function caretTest(options) {
+		QUnit.test(options.description, function (assert) {
 			var pos,
-				$textarea = $( '<textarea>' ).text( options.text );
+				$textarea = $("<textarea>").text(options.text);
 
-			$( '#qunit-fixture' ).append( $textarea );
+			$("#qunit-fixture").append($textarea);
 
-			if ( options.mode === 'set' ) {
-				$textarea.textSelection( 'setSelection', {
+			if (options.mode === "set") {
+				$textarea.textSelection("setSelection", {
 					start: options.start,
-					end: options.end
-				} );
+					end: options.end,
+				});
 			}
 
-			function among( actual, expected, message ) {
-				if ( Array.isArray( expected ) ) {
+			function among(actual, expected, message) {
+				if (Array.isArray(expected)) {
 					// eslint-disable-next-line qunit/no-ok-equality
-					assert.ok( expected.indexOf( actual ) !== -1, message + ' (got ' + actual + '; expected one of ' + expected.join( ', ' ) + ')' );
+					assert.ok(
+						expected.indexOf(actual) !== -1,
+						message +
+							" (got " +
+							actual +
+							"; expected one of " +
+							expected.join(", ") +
+							")"
+					);
 				} else {
-					assert.strictEqual( actual, expected, message );
+					assert.strictEqual(actual, expected, message);
 				}
 			}
 
-			pos = $textarea.textSelection( 'getCaretPosition', { startAndEnd: true } );
-			among( pos[ 0 ], options.start, 'Caret start should be where we set it.' );
-			among( pos[ 1 ], options.end, 'Caret end should be where we set it.' );
-		} );
+			pos = $textarea.textSelection("getCaretPosition", {
+				startAndEnd: true,
+			});
+			among(
+				pos[0],
+				options.start,
+				"Caret start should be where we set it."
+			);
+			among(pos[1], options.end, "Caret end should be where we set it.");
+		});
 	}
 
-	caretSample = 'Some big text that we like to work with. Nothing fancy... you know what I mean?';
+	caretSample =
+		"Some big text that we like to work with. Nothing fancy... you know what I mean?";
 
 	/* @broken: Disabled per T36820
 	caretTest({
@@ -249,19 +283,19 @@
 	});
 	*/
 
-	caretTest( {
-		description: 'set/getCaretPosition with forced empty selection',
+	caretTest({
+		description: "set/getCaretPosition with forced empty selection",
 		text: caretSample,
 		start: 7,
 		end: 7,
-		mode: 'set'
-	} );
+		mode: "set",
+	});
 
-	caretTest( {
-		description: 'set/getCaretPosition with small selection',
+	caretTest({
+		description: "set/getCaretPosition with small selection",
 		text: caretSample,
 		start: 6,
 		end: 11,
-		mode: 'set'
-	} );
-}() );
+		mode: "set",
+	});
+})();

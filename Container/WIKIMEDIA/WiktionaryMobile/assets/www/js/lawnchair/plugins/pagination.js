@@ -15,37 +15,37 @@ var p = new Lawnchair({name:'people', record:'person'}, function() {
 })
 // chaining friendly
 p.page(1, 'console.log(page.people)').each('console.log(person)')
-*/ 
+*/
 Lawnchair.plugin({
+  page: function (page, callback) {
+    // some defaults
+    var objs = [],
+      count = 5, // TODO make this configurable
+      cur = ~~page || 1,
+      next = cur + 1,
+      prev = cur - 1,
+      start = cur == 1 ? 0 : prev * count,
+      end = start >= count ? start + count : count;
 
-    page: function (page, callback) {
-        // some defaults
-	    var objs  = []
-	    ,   count = 5 // TODO make this configurable
-	    ,   cur   = ~~page || 1
-	    ,   next  = cur + 1
-	    ,   prev  = cur - 1
-	    ,   start = cur == 1 ? 0 : prev*count
-	    ,   end   = start >= count ? start+count : count
-              
-        // grab all the records	
-        // FIXME if this was core we could use this.__results for faster queries
-		this.all(function(r){
-	 		objs = r
- 		})
-        
-        // grab the metadata	
-        var max  = Math.ceil(objs.length/count)
-	    ,   page = { max: max 
-	               , next: next > max ? max : next
-	               , prev: prev == 0 ? 1 : prev
-	               }
+    // grab all the records
+    // FIXME if this was core we could use this.__results for faster queries
+    this.all(function (r) {
+      objs = r;
+    });
 
-        // reassign to the working resultset
-        this.__results = page[this.name] = objs.slice(start, end)
+    // grab the metadata
+    var max = Math.ceil(objs.length / count),
+      page = {
+        max: max,
+        next: next > max ? max : next,
+        prev: prev == 0 ? 1 : prev,
+      };
 
-        // callback / chain
-        if (callback) this.fn('page', callback).call(this, page)
-        return this
-	}
+    // reassign to the working resultset
+    this.__results = page[this.name] = objs.slice(start, end);
+
+    // callback / chain
+    if (callback) this.fn("page", callback).call(this, page);
+    return this;
+  },
 });

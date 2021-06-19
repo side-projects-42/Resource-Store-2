@@ -51,10 +51,10 @@ jest.mock(
           './path/to/file9-test.js',
           './path/to/file10-test.js',
           './path/to/file11-test.js',
-        ].filter(path => path.match(pattern));
+        ].filter((path) => path.match(pattern));
 
         return {
-          tests: paths.map(path => ({
+          tests: paths.map((path) => ({
             context: this._context,
             duration: null,
             path,
@@ -67,12 +67,12 @@ jest.mock(
 jest.doMock('chalk', () => new chalk.constructor({enabled: false}));
 
 jest.doMock('strip-ansi');
-require('strip-ansi').mockImplementation(str => str);
+require('strip-ansi').mockImplementation((str) => str);
 
 jest.doMock(
   '../runJest',
   () =>
-    function() {
+    function () {
       const args = Array.from(arguments);
       const [{onComplete}] = args;
       runJestMock.apply(null, args);
@@ -86,7 +86,7 @@ jest.doMock(
 
 const watch = require('../watch').default;
 
-const nextTick = () => new Promise(res => process.nextTick(res));
+const nextTick = () => new Promise((res) => process.nextTick(res));
 
 const globalConfig = {watch: true};
 
@@ -113,7 +113,7 @@ describe('Watch mode flows', () => {
     stdin.emit('p');
     expect(pipe.write).toBeCalledWith(' pattern › ');
 
-    const assertPattern = hex => {
+    const assertPattern = (hex) => {
       pipe.write.mockReset();
       stdin.emit(hex);
       expect(pipe.write.mock.calls.join('\n')).toMatchSnapshot();
@@ -145,12 +145,12 @@ describe('Watch mode flows', () => {
     ['p', '.', '*', '1', '0']
 
       .concat(KEYS.ENTER)
-      .forEach(key => stdin.emit(key));
+      .forEach((key) => stdin.emit(key));
 
     stdin.emit('t');
     await nextTick();
 
-    ['t', 'e', 's', 't'].concat(KEYS.ENTER).forEach(key => stdin.emit(key));
+    ['t', 'e', 's', 't'].concat(KEYS.ENTER).forEach((key) => stdin.emit(key));
 
     await nextTick();
 
@@ -181,6 +181,6 @@ class MockStdin {
   }
 
   emit(key) {
-    this._callbacks.forEach(cb => cb(key));
+    this._callbacks.forEach((cb) => cb(key));
   }
 }

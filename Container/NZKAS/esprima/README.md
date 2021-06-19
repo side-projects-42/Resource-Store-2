@@ -9,7 +9,7 @@ with the help of [many contributors](https://github.com/ariya/esprima/contributo
 
 - Full support for ECMAScript 5.1 ([ECMA-262](http://www.ecma-international.org/publications/standards/Ecma-262.htm))
 - Sensible [syntax tree format](http://esprima.org/doc/index.html#ast) compatible with Mozilla
-[Parser AST](https://developer.mozilla.org/en/SpiderMonkey/Parser_API)
+  [Parser AST](https://developer.mozilla.org/en/SpiderMonkey/Parser_API)
 - Optional tracking of syntax node location (index-based and line-column)
 - Heavily tested (> 600 [unit tests](http://esprima.org/test/) with solid statement and branch coverage)
 - Experimental support for ES6/Harmony (module, class, destructuring, ...)

@@ -51,7 +51,7 @@ describe('.rejects', () => {
     await jestExpect(fn()).rejects.toThrow('some error');
   });
 
-  ['a', [1], () => {}, {a: 1}].forEach(value => {
+  ['a', [1], () => {}, {a: 1}].forEach((value) => {
     it(`fails non-promise value ${stringify(value)} synchronously`, () => {
       let error;
       try {
@@ -74,7 +74,7 @@ describe('.rejects', () => {
     });
   });
 
-  [4, null, true, undefined].forEach(value => {
+  [4, null, true, undefined].forEach((value) => {
     it(`fails non-promise value ${stringify(value)} synchronously`, () => {
       let error;
       try {
@@ -128,7 +128,7 @@ describe('.resolves', () => {
     ).resolves.toThrow();
   });
 
-  ['a', [1], () => {}, {a: 1}].forEach(value => {
+  ['a', [1], () => {}, {a: 1}].forEach((value) => {
     it(`fails non-promise value ${stringify(value)} synchronously`, () => {
       let error;
       try {
@@ -152,7 +152,7 @@ describe('.resolves', () => {
     });
   });
 
-  [4, null, true, undefined].forEach(value => {
+  [4, null, true, undefined].forEach((value) => {
     it(`fails non-promise value ${stringify(value)} synchronously`, () => {
       let error;
       try {
@@ -217,7 +217,7 @@ describe('.toBe()', () => {
     });
   });
 
-  [false, 1, 'a', undefined, null, {}, []].forEach(v => {
+  [false, 1, 'a', undefined, null, {}, []].forEach((v) => {
     it(`fails for '${stringify(v)}' with '.not'`, () => {
       expect(() => jestExpect(v).not.toBe(v)).toThrowErrorMatchingSnapshot();
     });
@@ -350,7 +350,10 @@ describe('.toEqual()', () => {
     ['banana', 'apple'],
     [null, undefined],
     [[1], [2]],
-    [[1, 2], [2, 1]],
+    [
+      [1, 2],
+      [2, 1],
+    ],
     [Immutable.List([1]), Immutable.List([2])],
     [Immutable.List([1, 2]), Immutable.List([2, 1])],
     [new Map(), new Set()],
@@ -365,7 +368,13 @@ describe('.toEqual()', () => {
     [Immutable.Set([1, 2]), Immutable.Set()],
     [Immutable.Set([1, 2]), Immutable.Set([1, 2, 3])],
     [Immutable.OrderedSet([1, 2]), Immutable.OrderedSet([2, 1])],
-    [new Map([[1, 'one'], [2, 'two']]), new Map([[1, 'one']])],
+    [
+      new Map([
+        [1, 'one'],
+        [2, 'two'],
+      ]),
+      new Map([[1, 'one']]),
+    ],
     [new Map([['a', 0]]), new Map([['b', 0]])],
     [new Map([['v', 1]]), new Map([['v', 2]])],
     [new Map([[['v'], 1]]), new Map([[['v'], 2]])],
@@ -376,12 +385,8 @@ describe('.toEqual()', () => {
     [Immutable.Map({a: 0}), Immutable.Map({b: 0})],
     [Immutable.Map({v: 1}), Immutable.Map({v: 2})],
     [
-      Immutable.OrderedMap()
-        .set(1, 'one')
-        .set(2, 'two'),
-      Immutable.OrderedMap()
-        .set(2, 'two')
-        .set(1, 'one'),
+      Immutable.OrderedMap().set(1, 'one').set(2, 'two'),
+      Immutable.OrderedMap().set(2, 'two').set(1, 'one'),
     ],
     [
       Immutable.Map({1: Immutable.Map({2: {a: 99}})}),
@@ -449,7 +454,10 @@ describe('.toEqual()', () => {
     // eslint-disable-next-line no-new-wrappers
     ['abc', new String('abc')],
     [[1], [1]],
-    [[1, 2], [1, 2]],
+    [
+      [1, 2],
+      [1, 2],
+    ],
     [Immutable.List([1]), Immutable.List([1])],
     [Immutable.List([1, 2]), Immutable.List([1, 2])],
     [{}, {}],
@@ -470,52 +478,92 @@ describe('.toEqual()', () => {
     [Immutable.OrderedSet(), Immutable.OrderedSet()],
     [Immutable.OrderedSet([1, 2]), Immutable.OrderedSet([1, 2])],
     [new Map(), new Map()],
-    [new Map([[1, 'one'], [2, 'two']]), new Map([[1, 'one'], [2, 'two']])],
-    [new Map([[1, 'one'], [2, 'two']]), new Map([[2, 'two'], [1, 'one']])],
     [
-      new Map([[[1], 'one'], [[2], 'two'], [[3], 'three'], [[3], 'four']]),
-      new Map([[[3], 'three'], [[3], 'four'], [[2], 'two'], [[1], 'one']]),
+      new Map([
+        [1, 'one'],
+        [2, 'two'],
+      ]),
+      new Map([
+        [1, 'one'],
+        [2, 'two'],
+      ]),
     ],
     [
-      new Map([[[1], new Map([[[1], 'one']])], [[2], new Map([[[2], 'two']])]]),
-      new Map([[[2], new Map([[[2], 'two']])], [[1], new Map([[[1], 'one']])]]),
+      new Map([
+        [1, 'one'],
+        [2, 'two'],
+      ]),
+      new Map([
+        [2, 'two'],
+        [1, 'one'],
+      ]),
     ],
     [
-      new Map([[[1], 'one'], [[2], 'two']]),
-      new Map([[[2], 'two'], [[1], 'one']]),
+      new Map([
+        [[1], 'one'],
+        [[2], 'two'],
+        [[3], 'three'],
+        [[3], 'four'],
+      ]),
+      new Map([
+        [[3], 'three'],
+        [[3], 'four'],
+        [[2], 'two'],
+        [[1], 'one'],
+      ]),
     ],
     [
-      new Map([[{a: 1}, 'one'], [{b: 2}, 'two']]),
-      new Map([[{b: 2}, 'two'], [{a: 1}, 'one']]),
+      new Map([
+        [[1], new Map([[[1], 'one']])],
+        [[2], new Map([[[2], 'two']])],
+      ]),
+      new Map([
+        [[2], new Map([[[2], 'two']])],
+        [[1], new Map([[[1], 'one']])],
+      ]),
     ],
     [
-      new Map([[1, ['one']], [2, ['two']]]),
-      new Map([[2, ['two']], [1, ['one']]]),
+      new Map([
+        [[1], 'one'],
+        [[2], 'two'],
+      ]),
+      new Map([
+        [[2], 'two'],
+        [[1], 'one'],
+      ]),
+    ],
+    [
+      new Map([
+        [{a: 1}, 'one'],
+        [{b: 2}, 'two'],
+      ]),
+      new Map([
+        [{b: 2}, 'two'],
+        [{a: 1}, 'one'],
+      ]),
+    ],
+    [
+      new Map([
+        [1, ['one']],
+        [2, ['two']],
+      ]),
+      new Map([
+        [2, ['two']],
+        [1, ['one']],
+      ]),
     ],
     [Immutable.Map(), Immutable.Map()],
     [
-      Immutable.Map()
-        .set(1, 'one')
-        .set(2, 'two'),
-      Immutable.Map()
-        .set(1, 'one')
-        .set(2, 'two'),
+      Immutable.Map().set(1, 'one').set(2, 'two'),
+      Immutable.Map().set(1, 'one').set(2, 'two'),
     ],
     [
-      Immutable.Map()
-        .set(1, 'one')
-        .set(2, 'two'),
-      Immutable.Map()
-        .set(2, 'two')
-        .set(1, 'one'),
+      Immutable.Map().set(1, 'one').set(2, 'two'),
+      Immutable.Map().set(2, 'two').set(1, 'one'),
     ],
     [
-      Immutable.OrderedMap()
-        .set(1, 'one')
-        .set(2, 'two'),
-      Immutable.OrderedMap()
-        .set(1, 'one')
-        .set(2, 'two'),
+      Immutable.OrderedMap().set(1, 'one').set(2, 'two'),
+      Immutable.OrderedMap().set(1, 'one').set(2, 'two'),
     ],
     [
       Immutable.Map({1: Immutable.Map({2: {a: 99}})}),
@@ -723,7 +771,7 @@ describe('.toBeInstanceOf()', () => {
     [Object.create(null), A],
     [undefined, String],
     [null, String],
-    [/\w+/, function() {}],
+    [/\w+/, function () {}],
     [new DefinesNameProp(), RegExp],
   ].forEach(([a, b]) => {
     test(`failing ${stringify(a)} and ${stringify(b)}`, () => {
@@ -751,7 +799,7 @@ describe('.toBeTruthy(), .toBeFalsy()', () => {
     ).toThrowErrorMatchingSnapshot();
   });
 
-  [{}, [], true, 1, 'a', 0.5, new Map(), () => {}, Infinity].forEach(v => {
+  [{}, [], true, 1, 'a', 0.5, new Map(), () => {}, Infinity].forEach((v) => {
     test(`'${stringify(v)}' is truthy`, () => {
       jestExpect(v).toBeTruthy();
       jestExpect(v).not.toBeFalsy();
@@ -764,7 +812,7 @@ describe('.toBeTruthy(), .toBeFalsy()', () => {
     });
   });
 
-  [false, null, NaN, 0, '', undefined].forEach(v => {
+  [false, null, NaN, 0, '', undefined].forEach((v) => {
     test(`'${stringify(v)}' is falsy`, () => {
       jestExpect(v).toBeFalsy();
       jestExpect(v).not.toBeTruthy();
@@ -780,7 +828,7 @@ describe('.toBeTruthy(), .toBeFalsy()', () => {
 
 describe('.toBeNaN()', () => {
   it('{pass: true} expect(NaN).toBeNaN()', () => {
-    [NaN, Math.sqrt(-1), Infinity - Infinity, 0 / 0].forEach(v => {
+    [NaN, Math.sqrt(-1), Infinity - Infinity, 0 / 0].forEach((v) => {
       jestExpect(v).toBeNaN();
 
       expect(() => jestExpect(v).not.toBeNaN()).toThrowErrorMatchingSnapshot();
@@ -788,16 +836,18 @@ describe('.toBeNaN()', () => {
   });
 
   it('throws', () => {
-    [1, '', null, undefined, {}, [], 0.2, 0, Infinity, -Infinity].forEach(v => {
-      expect(() => jestExpect(v).toBeNaN()).toThrowErrorMatchingSnapshot();
+    [1, '', null, undefined, {}, [], 0.2, 0, Infinity, -Infinity].forEach(
+      (v) => {
+        expect(() => jestExpect(v).toBeNaN()).toThrowErrorMatchingSnapshot();
 
-      jestExpect(v).not.toBeNaN();
-    });
+        jestExpect(v).not.toBeNaN();
+      },
+    );
   });
 });
 
 describe('.toBeNull()', () => {
-  [{}, [], true, 1, 'a', 0.5, new Map(), () => {}, Infinity].forEach(v => {
+  [{}, [], true, 1, 'a', 0.5, new Map(), () => {}, Infinity].forEach((v) => {
     test(`fails for '${stringify(v)}'`, () => {
       jestExpect(v).not.toBeNull();
 
@@ -817,7 +867,7 @@ describe('.toBeNull()', () => {
 });
 
 describe('.toBeDefined(), .toBeUndefined()', () => {
-  [{}, [], true, 1, 'a', 0.5, new Map(), () => {}, Infinity].forEach(v => {
+  [{}, [], true, 1, 'a', 0.5, new Map(), () => {}, Infinity].forEach((v) => {
     test(`'${stringify(v)}' is defined`, () => {
       jestExpect(v).toBeDefined();
       jestExpect(v).not.toBeUndefined();
@@ -1071,7 +1121,11 @@ describe('.toBeCloseTo()', () => {
     });
   });
 
-  [[0, 0.01], [1, 1.23], [1.23, 1.2249999]].forEach(([n1, n2]) => {
+  [
+    [0, 0.01],
+    [1, 1.23],
+    [1.23, 1.2249999],
+  ].forEach(([n1, n2]) => {
     it(`throws: [${n1}, ${n2}]`, () => {
       expect(() =>
         jestExpect(n1).toBeCloseTo(n2),
@@ -1081,7 +1135,10 @@ describe('.toBeCloseTo()', () => {
     });
   });
 
-  [[Infinity, Infinity], [-Infinity, -Infinity]].forEach(([n1, n2]) => {
+  [
+    [Infinity, Infinity],
+    [-Infinity, -Infinity],
+  ].forEach(([n1, n2]) => {
     it(`{pass: true} expect(${n1})toBeCloseTo( ${n2})`, () => {
       jestExpect(n1).toBeCloseTo(n2);
 
@@ -1091,19 +1148,25 @@ describe('.toBeCloseTo()', () => {
     });
   });
 
-  [[Infinity, -Infinity], [Infinity, 1.23], [-Infinity, -1.23]].forEach(
-    ([n1, n2]) => {
-      it(`{pass: false} expect(${n1})toBeCloseTo( ${n2})`, () => {
-        jestExpect(n1).not.toBeCloseTo(n2);
+  [
+    [Infinity, -Infinity],
+    [Infinity, 1.23],
+    [-Infinity, -1.23],
+  ].forEach(([n1, n2]) => {
+    it(`{pass: false} expect(${n1})toBeCloseTo( ${n2})`, () => {
+      jestExpect(n1).not.toBeCloseTo(n2);
 
-        expect(() =>
-          jestExpect(n1).toBeCloseTo(n2),
-        ).toThrowErrorMatchingSnapshot();
-      });
-    },
-  );
+      expect(() =>
+        jestExpect(n1).toBeCloseTo(n2),
+      ).toThrowErrorMatchingSnapshot();
+    });
+  });
 
-  [[0, 0.1, 0], [0, 0.0001, 3], [0, 0.000004, 5]].forEach(([n1, n2, p]) => {
+  [
+    [0, 0.1, 0],
+    [0, 0.0001, 3],
+    [0, 0.000004, 5],
+  ].forEach(([n1, n2, p]) => {
     it(`accepts an optional precision argument: [${n1}, ${n2}, ${p}]`, () => {
       jestExpect(n1).toBeCloseTo(n2, p);
 
@@ -1168,7 +1231,10 @@ describe('.toBeCloseTo()', () => {
 });
 
 describe('.toMatch()', () => {
-  [['foo', 'foo'], ['Foo bar', /^foo/i]].forEach(([n1, n2]) => {
+  [
+    ['foo', 'foo'],
+    ['Foo bar', /^foo/i],
+  ].forEach(([n1, n2]) => {
     it(`{pass: true} expect(${n1}).toMatch(${n2})`, () => {
       jestExpect(n1).toMatch(n2);
 
@@ -1178,7 +1244,10 @@ describe('.toMatch()', () => {
     });
   });
 
-  [['bar', 'foo'], ['bar', /foo/]].forEach(([n1, n2]) => {
+  [
+    ['bar', 'foo'],
+    ['bar', /foo/],
+  ].forEach(([n1, n2]) => {
     it(`throws: [${n1}, ${n2}]`, () => {
       expect(() => jestExpect(n1).toMatch(n2)).toThrowErrorMatchingSnapshot();
     });
@@ -1225,31 +1294,39 @@ describe('.toMatch()', () => {
 });
 
 describe('.toHaveLength', () => {
-  [[[1, 2], 2], [[], 0], [['a', 'b'], 2], ['abc', 3], ['', 0]].forEach(
-    ([received, length]) => {
-      test(`{pass: true} expect(${stringify(
-        received,
-      )}).toHaveLength(${length})`, () => {
-        jestExpect(received).toHaveLength(length);
-        expect(() =>
-          jestExpect(received).not.toHaveLength(length),
-        ).toThrowErrorMatchingSnapshot();
-      });
-    },
-  );
+  [
+    [[1, 2], 2],
+    [[], 0],
+    [['a', 'b'], 2],
+    ['abc', 3],
+    ['', 0],
+  ].forEach(([received, length]) => {
+    test(`{pass: true} expect(${stringify(
+      received,
+    )}).toHaveLength(${length})`, () => {
+      jestExpect(received).toHaveLength(length);
+      expect(() =>
+        jestExpect(received).not.toHaveLength(length),
+      ).toThrowErrorMatchingSnapshot();
+    });
+  });
 
-  [[[1, 2], 3], [[], 1], [['a', 'b'], 99], ['abc', 66], ['', 1]].forEach(
-    ([received, length]) => {
-      test(`{pass: false} expect(${stringify(
-        received,
-      )}).toHaveLength(${length})`, () => {
-        jestExpect(received).not.toHaveLength(length);
-        expect(() =>
-          jestExpect(received).toHaveLength(length),
-        ).toThrowErrorMatchingSnapshot();
-      });
-    },
-  );
+  [
+    [[1, 2], 3],
+    [[], 1],
+    [['a', 'b'], 99],
+    ['abc', 66],
+    ['', 1],
+  ].forEach(([received, length]) => {
+    test(`{pass: false} expect(${stringify(
+      received,
+    )}).toHaveLength(${length})`, () => {
+      jestExpect(received).not.toHaveLength(length);
+      expect(() =>
+        jestExpect(received).toHaveLength(length),
+      ).toThrowErrorMatchingSnapshot();
+    });
+  });
 
   test('error cases', () => {
     expect(() =>
@@ -1330,7 +1407,7 @@ describe('.toHaveProperty()', () => {
   }
   E.prototype.nodeType = 1;
 
-  const memoized = function() {};
+  const memoized = function () {};
   memoized.memo = [];
 
   [
@@ -1459,8 +1536,14 @@ describe('toMatchObject()', () => {
 
   [
     [{a: 'b', c: 'd'}, {a: 'b'}],
-    [{a: 'b', c: 'd'}, {a: 'b', c: 'd'}],
-    [{a: 'b', t: {x: {r: 'r'}, z: 'z'}}, {a: 'b', t: {z: 'z'}}],
+    [
+      {a: 'b', c: 'd'},
+      {a: 'b', c: 'd'},
+    ],
+    [
+      {a: 'b', t: {x: {r: 'r'}, z: 'z'}},
+      {a: 'b', t: {z: 'z'}},
+    ],
     [{a: 'b', t: {x: {r: 'r'}, z: 'z'}}, {t: {x: {r: 'r'}}}],
     [{a: [3, 4, 5], b: 'b'}, {a: [3, 4, 5]}],
     [{a: [3, 4, 5, 'v'], b: 'b'}, {a: [3, 4, 5, 'v']}],
@@ -1473,7 +1556,10 @@ describe('toMatchObject()', () => {
     [{a: null, b: 'b'}, {a: null}],
     [{a: undefined, b: 'b'}, {a: undefined}],
     [{a: [{a: 'a', b: 'b'}]}, {a: [{a: 'a'}]}],
-    [[1, 2], [1, 2]],
+    [
+      [1, 2],
+      [1, 2],
+    ],
     [{a: undefined}, {a: undefined}],
     [[], []],
     [new Error('foo'), new Error('foo')],
@@ -1493,16 +1579,25 @@ describe('toMatchObject()', () => {
 
   [
     [{a: 'b', c: 'd'}, {e: 'b'}],
-    [{a: 'b', c: 'd'}, {a: 'b!', c: 'd'}],
+    [
+      {a: 'b', c: 'd'},
+      {a: 'b!', c: 'd'},
+    ],
     [{a: 'a', c: 'd'}, {a: jestExpect.any(Number)}],
-    [{a: 'b', t: {x: {r: 'r'}, z: 'z'}}, {a: 'b', t: {z: [3]}}],
+    [
+      {a: 'b', t: {x: {r: 'r'}, z: 'z'}},
+      {a: 'b', t: {z: [3]}},
+    ],
     [{a: 'b', t: {x: {r: 'r'}, z: 'z'}}, {t: {l: {r: 'r'}}}],
     [{a: [3, 4, 5], b: 'b'}, {a: [3, 4, 5, 6]}],
     [{a: [3, 4, 5], b: 'b'}, {a: [3, 4]}],
     [{a: [3, 4, 'v'], b: 'b'}, {a: ['v']}],
     [{a: [3, 4, 5], b: 'b'}, {a: {b: 4}}],
     [{a: [3, 4, 5], b: 'b'}, {a: {b: jestExpect.any(String)}}],
-    [[1, 2], [1, 3]],
+    [
+      [1, 2],
+      [1, 3],
+    ],
     [[0], [-0]],
     [new Set([1, 2]), new Set([2])],
     [new Date('2015-11-30'), new Date('2015-10-10')],
@@ -1513,8 +1608,14 @@ describe('toMatchObject()', () => {
     [{a: [{a: 'a', b: 'b'}]}, {a: [{a: 'c'}]}],
     [{a: 1, b: 1, c: 1, d: {e: {f: 555}}}, {d: {e: {f: 222}}}],
     [{}, {a: undefined}],
-    [[1, 2, 3], [2, 3, 1]],
-    [[1, 2, 3], [1, 2, 2]],
+    [
+      [1, 2, 3],
+      [2, 3, 1],
+    ],
+    [
+      [1, 2, 3],
+      [1, 2, 2],
+    ],
     [new Error('foo'), new Error('bar')],
     [Object.assign(Object.create(null), {a: 'b'}), {c: 'd'}],
   ].forEach(([n1, n2]) => {

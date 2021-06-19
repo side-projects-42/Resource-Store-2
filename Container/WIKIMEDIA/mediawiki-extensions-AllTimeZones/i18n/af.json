@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Naudefj"
-		]
-	},
-	"alltimezones-desc": "Maak 'n etiket beskikbaar om datums in alle tydsones te wys"
+  "@metadata": {
+    "authors": ["Naudefj"]
+  },
+  "alltimezones-desc": "Maak 'n etiket beskikbaar om datums in alle tydsones te wys"
 }

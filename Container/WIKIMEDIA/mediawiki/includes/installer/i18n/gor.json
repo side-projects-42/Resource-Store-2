@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Marwan Mohamad"
-		]
+		"authors": ["Marwan Mohamad"]
 	},
 	"config-information": "habari",
 	"config-wiki-language": "bahasa wiki",

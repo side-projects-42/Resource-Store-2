@@ -1,8 +1,8 @@
 Attending:
 
-* David Baker
-* Michael Kaiser-Nyman
-* Ricardo Mendes
+- David Baker
+- Michael Kaiser-Nyman
+- Ricardo Mendes
 
 ---
 

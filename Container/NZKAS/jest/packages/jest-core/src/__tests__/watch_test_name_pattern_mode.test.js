@@ -43,12 +43,12 @@ jest.mock(
 jest.doMock('chalk', () => new chalk.constructor({enabled: false}));
 
 jest.doMock('strip-ansi');
-require('strip-ansi').mockImplementation(str => str);
+require('strip-ansi').mockImplementation((str) => str);
 
 jest.doMock(
   '../runJest',
   () =>
-    function() {
+    function () {
       const args = Array.from(arguments);
       const [{onComplete}] = args;
       runJestMock.apply(null, args);
@@ -127,7 +127,7 @@ describe('Watch mode flows', () => {
     stdin.emit('t');
     expect(pipe.write).toBeCalledWith(' pattern › ');
 
-    const assertPattern = hex => {
+    const assertPattern = (hex) => {
       pipe.write.mockReset();
       stdin.emit(hex);
       expect(pipe.write.mock.calls.join('\n')).toMatchSnapshot();
@@ -171,6 +171,6 @@ class MockStdin {
   }
 
   emit(key) {
-    this._callbacks.forEach(cb => cb(key));
+    this._callbacks.forEach((cb) => cb(key));
   }
 }

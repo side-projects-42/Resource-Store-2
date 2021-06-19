@@ -3,29 +3,55 @@
  *
  * Loading this module also ensures the availability of appropriate messages via mw.msg.
  */
-( function () {
-	var
-		monthMessages = [
-			'january', 'february', 'march', 'april',
-			'may_long', 'june', 'july', 'august',
-			'september', 'october', 'november', 'december'
+(function () {
+	var monthMessages = [
+			"january",
+			"february",
+			"march",
+			"april",
+			"may_long",
+			"june",
+			"july",
+			"august",
+			"september",
+			"october",
+			"november",
+			"december",
 		],
 		monthGenMessages = [
-			'january-gen', 'february-gen', 'march-gen', 'april-gen',
-			'may-gen', 'june-gen', 'july-gen', 'august-gen',
-			'september-gen', 'october-gen', 'november-gen', 'december-gen'
+			"january-gen",
+			"february-gen",
+			"march-gen",
+			"april-gen",
+			"may-gen",
+			"june-gen",
+			"july-gen",
+			"august-gen",
+			"september-gen",
+			"october-gen",
+			"november-gen",
+			"december-gen",
 		],
 		monthAbbrevMessages = [
-			'jan', 'feb', 'mar', 'apr',
-			'may', 'jun', 'jul', 'aug',
-			'sep', 'oct', 'nov', 'dec'
+			"jan",
+			"feb",
+			"mar",
+			"apr",
+			"may",
+			"jun",
+			"jul",
+			"aug",
+			"sep",
+			"oct",
+			"nov",
+			"dec",
 		];
 
 	// Function suitable for passing to Array.prototype.map
 	// Can't use mw.msg directly because Array.prototype.map passes element index as second argument
-	function mwMsgMapper( key ) {
+	function mwMsgMapper(key) {
 		// eslint-disable-next-line mediawiki/msg-doc
-		return mw.msg( key );
+		return mw.msg(key);
 	}
 
 	/**
@@ -47,11 +73,10 @@
 		keys: {
 			names: monthMessages,
 			genitive: monthGenMessages,
-			abbrev: monthAbbrevMessages
+			abbrev: monthAbbrevMessages,
 		},
-		names: monthMessages.map( mwMsgMapper ),
-		genitive: monthGenMessages.map( mwMsgMapper ),
-		abbrev: monthAbbrevMessages.map( mwMsgMapper )
+		names: monthMessages.map(mwMsgMapper),
+		genitive: monthGenMessages.map(mwMsgMapper),
+		abbrev: monthAbbrevMessages.map(mwMsgMapper),
 	};
-
-}() );
+})();

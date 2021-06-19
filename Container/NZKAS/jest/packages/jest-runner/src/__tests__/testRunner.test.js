@@ -13,7 +13,7 @@ let mockWorkerFarm;
 
 jest.mock('jest-worker', () =>
   jest.fn(
-    worker =>
+    (worker) =>
       (mockWorkerFarm = {
         end: jest.fn(),
         getStderr: jest.fn(),
@@ -36,7 +36,10 @@ test('injects the serializable module map into each worker in watch mode', () =>
   };
   return new TestRunner(globalConfig)
     .runTests(
-      [{context, path: './file.test.js'}, {context, path: './file2.test.js'}],
+      [
+        {context, path: './file.test.js'},
+        {context, path: './file2.test.js'},
+      ],
       new TestWatcher({isWatchMode: globalConfig.watch}),
       () => {},
       () => {},
@@ -75,7 +78,10 @@ test('does not inject the serializable module map in serial mode', () => {
 
   return new TestRunner(globalConfig, runContext)
     .runTests(
-      [{context, path: './file.test.js'}, {context, path: './file2.test.js'}],
+      [
+        {context, path: './file.test.js'},
+        {context, path: './file2.test.js'},
+      ],
       new TestWatcher({isWatchMode: globalConfig.watch}),
       () => {},
       () => {},

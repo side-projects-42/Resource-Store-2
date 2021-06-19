@@ -1,12 +1,9 @@
-if (e = 1)
-    doSomething();
+if ((e = 1)) doSomething();
 
-while (obj = arr.next())
-    doSomething();
+while ((obj = arr.next())) doSomething();
 
-for (var b; b = arr.next();)
-    doSomething();
+for (var b; (b = arr.next()); ) doSomething();
 
 do {
-    doSomething();
-} while (b = arr.next());
+  doSomething();
+} while ((b = arr.next()));

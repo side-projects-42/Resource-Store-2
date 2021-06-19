@@ -3,8 +3,7 @@
  *
  * @copyright 2011-2016 VisualEditor Team and others; see http://ve.mit-license.org
  */
-( function () {
-
+(function () {
 	/**
 	 * API Results Provider object.
 	 *
@@ -24,26 +23,29 @@
 	 *  the API request. These can change per request, like the search query term
 	 *  or sizing parameters for images, etc.
 	 */
-	mw.widgets.APIResultsProvider = function MwWidgetsAPIResultsProvider( apiurl, config ) {
+	mw.widgets.APIResultsProvider = function MwWidgetsAPIResultsProvider(
+		apiurl,
+		config
+	) {
 		config = config || {};
 
-		this.setAPIurl( apiurl );
-		this.setDefaultFetchLimit( config.fetchLimit || 30 );
-		this.setLang( config.lang );
-		this.setOffset( config.offset || 0 );
-		this.setAjaxSettings( config.ajaxSettings || {} );
+		this.setAPIurl(apiurl);
+		this.setDefaultFetchLimit(config.fetchLimit || 30);
+		this.setLang(config.lang);
+		this.setOffset(config.offset || 0);
+		this.setAjaxSettings(config.ajaxSettings || {});
 
 		this.staticParams = config.staticParams || {};
 		this.userParams = config.userParams || {};
 
-		this.toggleDepleted( false );
+		this.toggleDepleted(false);
 
 		// Mixin constructors
-		OO.EventEmitter.call( this );
+		OO.EventEmitter.call(this);
 	};
 
 	/* Setup */
-	OO.mixinClass( mw.widgets.APIResultsProvider, OO.EventEmitter );
+	OO.mixinClass(mw.widgets.APIResultsProvider, OO.EventEmitter);
 
 	/* Methods */
 
@@ -57,17 +59,20 @@
 	mw.widgets.APIResultsProvider.prototype.getResults = function () {
 		var xhr,
 			deferred = $.Deferred(),
-			allParams = $.extend( {}, this.getStaticParams(), this.getUserParams() );
+			allParams = $.extend(
+				{},
+				this.getStaticParams(),
+				this.getUserParams()
+			);
 
-		xhr = $.getJSON( this.getAPIurl(), allParams )
-			.done( function ( data ) {
-				if ( Array.isArray( data ) && data.length ) {
-					deferred.resolve( data );
-				} else {
-					deferred.resolve();
-				}
-			} );
-		return deferred.promise( { abort: xhr.abort } );
+		xhr = $.getJSON(this.getAPIurl(), allParams).done(function (data) {
+			if (Array.isArray(data) && data.length) {
+				deferred.resolve(data);
+			} else {
+				deferred.resolve();
+			}
+		});
+		return deferred.promise({ abort: xhr.abort });
 	};
 
 	/**
@@ -75,7 +80,7 @@
 	 *
 	 * @param {string} apiurl API url
 	 */
-	mw.widgets.APIResultsProvider.prototype.setAPIurl = function ( apiurl ) {
+	mw.widgets.APIResultsProvider.prototype.setAPIurl = function (apiurl) {
 		this.apiurl = apiurl;
 	};
 
@@ -111,10 +116,10 @@
 	 *
 	 * @param {Object} params User defined data parameters
 	 */
-	mw.widgets.APIResultsProvider.prototype.setUserParams = function ( params ) {
+	mw.widgets.APIResultsProvider.prototype.setUserParams = function (params) {
 		// Asymmetrically compare (params is subset of this.userParams)
-		if ( !OO.compare( params, this.userParams, true ) ) {
-			this.userParams = $.extend( {}, this.userParams, params );
+		if (!OO.compare(params, this.userParams, true)) {
+			this.userParams = $.extend({}, this.userParams, params);
 			this.reset();
 		}
 	};
@@ -124,9 +129,9 @@
 	 */
 	mw.widgets.APIResultsProvider.prototype.reset = function () {
 		// Reset offset
-		this.setOffset( 0 );
+		this.setOffset(0);
 		// Reset depleted status
-		this.toggleDepleted( false );
+		this.toggleDepleted(false);
 	};
 
 	/**
@@ -144,7 +149,9 @@
 	 *
 	 * @param {number} limit Default number of results to fetch from the API
 	 */
-	mw.widgets.APIResultsProvider.prototype.setDefaultFetchLimit = function ( limit ) {
+	mw.widgets.APIResultsProvider.prototype.setDefaultFetchLimit = function (
+		limit
+	) {
 		this.limit = limit;
 	};
 
@@ -162,7 +169,7 @@
 	 *
 	 * @param {string} lang Provider API language
 	 */
-	mw.widgets.APIResultsProvider.prototype.setLang = function ( lang ) {
+	mw.widgets.APIResultsProvider.prototype.setLang = function (lang) {
 		this.lang = lang;
 	};
 
@@ -180,7 +187,7 @@
 	 *
 	 * @param {number} offset Results offset for the upcoming request
 	 */
-	mw.widgets.APIResultsProvider.prototype.setOffset = function ( offset ) {
+	mw.widgets.APIResultsProvider.prototype.setOffset = function (offset) {
 		this.offset = offset;
 	};
 
@@ -199,7 +206,9 @@
 	 *
 	 * @param {boolean} isDepleted The provider is depleted
 	 */
-	mw.widgets.APIResultsProvider.prototype.toggleDepleted = function ( isDepleted ) {
+	mw.widgets.APIResultsProvider.prototype.toggleDepleted = function (
+		isDepleted
+	) {
 		this.depleted = isDepleted !== undefined ? isDepleted : !this.depleted;
 	};
 
@@ -217,7 +226,9 @@
 	 *
 	 * @param {Object} settings Ajax settings
 	 */
-	mw.widgets.APIResultsProvider.prototype.setAjaxSettings = function ( settings ) {
+	mw.widgets.APIResultsProvider.prototype.setAjaxSettings = function (
+		settings
+	) {
 		this.ajaxSettings = settings;
 	};
-}() );
+})();

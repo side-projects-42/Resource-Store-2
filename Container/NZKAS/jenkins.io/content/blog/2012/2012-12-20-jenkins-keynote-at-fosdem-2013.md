@@ -4,12 +4,13 @@
 :nodeid: 413
 :created: 1356012000
 :tags:
-- general
-- cia
-- meetup
-- news
+  - general
+  - cia
+  - meetup
+  - news
 :author: rtyler
 ---
+
 <a href="https://fosdem.org/2013" target="_blank"><img src="http://agentdero.cachefly.net/continuousblog/images/fosdem-2013.png" align="right"/></a>
 
 Earlier this year we participated in [FOSDEM 2012](/event/jenkins-fosdem-2012) in Brussels, Belgium. Overall the event was a major success and we're very happy we were able to take part in it!
@@ -18,8 +19,8 @@ For FOSDEM 2013, we'll be back in Brussels and participating in a major way. The
 
 Here's an excerpt from Kohsuke's talk proposal:
 
->Jenkins project has an interesting history. It started from scratch on my spare time, and grow over time to boast 600+ open-source plugins developed by 300+ contributors from all around the world.
-> 
+> Jenkins project has an interesting history. It started from scratch on my spare time, and grow over time to boast 600+ open-source plugins developed by 300+ contributors from all around the world.
+>
 > There are several key ingredients, both technical and social, that enabled this model, and I think those ingredients are useful to other projects. In this talk, I'll discuss how Jenkins project and the community works, what these ingredients are, why they help you attract more developers into your projects, and why it matters.
 
 You can read more about [Kohsuke's keynote here](https://fosdem.org/2013/schedule/event/keynote_vibrant_developer_community/)
@@ -39,4 +40,5 @@ Regardless, a **lot** of Jenkins community members will be at FOSDEM in February
 If you're interested in participating and/or meeting up with the Jenkins crowd, there's details coming together on **[the FOSDEM wiki page](https://wiki.jenkins-ci.org/display/JENKINS/FOSDEM)**.
 
 We hope to see you there!
+
 <!--break-->

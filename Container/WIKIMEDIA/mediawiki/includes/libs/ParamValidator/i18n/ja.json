@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Kkairri",
-			"Omotecho"
-		]
+		"authors": ["Kkairri", "Omotecho"]
 	},
 	"paramvalidator-badbool": "ブール変数\"$1\"に対する値\"$2\"が正しくありません。$3を真に、もしくは$5を偽にしてください。",
 	"paramvalidator-badexpiry": "有効期限属性「$1」に対する「$2」が無効です。",

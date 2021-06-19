@@ -239,9 +239,9 @@ An import declaration, e.g., `import foo from "mod";`.
 
 ```js
 interface ImportSpecifier {
-    type: "ImportSpecifier";
-    imported: Identifier;
-    local: Identifier;
+  type: "ImportSpecifier";
+  imported: Identifier;
+  local: Identifier;
 }
 ```
 
@@ -251,8 +251,8 @@ An imported variable binding, e.g., `{foo}` in `import {foo} from "mod"` or `{fo
 
 ```js
 interface ImportDefaultSpecifier {
-    type: "ImportDefaultSpecifier";
-    local: Identifier;
+  type: "ImportDefaultSpecifier";
+  local: Identifier;
 }
 ```
 
@@ -262,8 +262,8 @@ A default import specifier, e.g., `foo` in `import foo from "mod.js"`.
 
 ```js
 interface ImportNamespaceSpecifier {
-    type: "ImportNamespaceSpecifier";
-    local: Identifier;
+  type: "ImportNamespaceSpecifier";
+  local: Identifier;
 }
 ```
 
@@ -288,9 +288,9 @@ _Note: Having `declaration` populated with non-empty `specifiers` or non-null `s
 
 ```js
 interface ExportSpecifier {
-    type: "ExportSpecifier";
-    exported: Identifier;
-    local: Identifier;
+  type: "ExportSpecifier";
+  exported: Identifier;
+  local: Identifier;
 }
 ```
 

@@ -1,0 +1,6 @@
+require_relative 'config/application'
+
+Rails.application.load_tasks
+
+# I kept re-running both these rake commands, so I wrote a task to have a custom command do both in one go. 
+task remigrate: ["db:migrate:reset", "db:setup"]

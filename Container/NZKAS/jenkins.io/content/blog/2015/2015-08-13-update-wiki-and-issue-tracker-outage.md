@@ -1,17 +1,18 @@
 ---
 :layout: post
-:title: 'Update: Wiki and issue tracker outage'
+:title: "Update: Wiki and issue tracker outage"
 :nodeid: 601
 :created: 1439455436
 :tags:
-- infrastructure
+  - infrastructure
 :author: daniel-beck
 ---
+
 [I recently wrote about the two day outage of our wiki and issue tracker](https://jenkins-ci.org/content/wiki-and-issue-tracker-outage-over-weekend):
 
 > While this was a rather lengthy outage, it could have been much worse. We lost none of the data, after all.
 
-[OSUOSL have since published their post mortem](http://osuosl.org/blog/mysql1-vip-post-mortem). I was *really* wrong about not losing any data:
+[OSUOSL have since published their post mortem](http://osuosl.org/blog/mysql1-vip-post-mortem). I was _really_ wrong about not losing any data:
 
 > A further complication was that our backups were pointed at mysql2, which was out-of-date with mysql1, due to the initial synchronization failures. Fortunately, we had the binary logs from the 17th through the 30th. This means that though most data could be restored, some data from between the 15th and the 17th was lost.
 

@@ -12,12 +12,13 @@ import prompts from 'prompts';
 import init from '../';
 
 jest.mock('prompts');
-jest.mock('../../../../jest-config/build/getCacheDirectory', () => () =>
-  '/tmp/jest',
+jest.mock(
+  '../../../../jest-config/build/getCacheDirectory',
+  () => () => '/tmp/jest',
 );
 jest.mock('path', () => ({...jest.requireActual('path'), sep: '/'}));
 
-const resolveFromFixture = relativePath =>
+const resolveFromFixture = (relativePath) =>
   path.resolve(__dirname, 'fixtures', relativePath);
 
 const writeFileSync = fs.writeFileSync;
@@ -173,7 +174,7 @@ describe('init', () => {
       await init(resolveFromFixture('test_script_configured'));
 
       const questionsNames = prompts.mock.calls[0][0].map(
-        question => question.name,
+        (question) => question.name,
       );
 
       expect(questionsNames).not.toContain('scripts');

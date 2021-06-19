@@ -28,7 +28,7 @@ it('mocks modules by default when using automocking', () =>
   createRuntime(__filename, {
     automock: true,
     moduleNameMapper,
-  }).then(runtime => {
+  }).then((runtime) => {
     const exports = runtime.requireModuleOrMock(
       runtime.__mockRootPath,
       'RegularModule',
@@ -40,7 +40,7 @@ it(`doesn't mock modules when explicitly unmocked when using automocking`, () =>
   createRuntime(__filename, {
     automock: true,
     moduleNameMapper,
-  }).then(runtime => {
+  }).then((runtime) => {
     const root = runtime.requireModule(runtime.__mockRootPath);
     root.jest.unmock('RegularModule');
     const exports = runtime.requireModuleOrMock(
@@ -54,7 +54,7 @@ it(`doesn't mock modules when explicitly unmocked via a different name`, () =>
   createRuntime(__filename, {
     automock: true,
     moduleNameMapper,
-  }).then(runtime => {
+  }).then((runtime) => {
     const root = runtime.requireModule(runtime.__mockRootPath);
     root.jest.unmock('./RegularModule');
     const exports = runtime.requireModuleOrMock(
@@ -65,7 +65,7 @@ it(`doesn't mock modules when explicitly unmocked via a different name`, () =>
   }));
 
 it(`doesn't mock modules when disableAutomock() has been called`, () =>
-  createRuntime(__filename, {moduleNameMapper}).then(runtime => {
+  createRuntime(__filename, {moduleNameMapper}).then((runtime) => {
     const root = runtime.requireModule(runtime.__mockRootPath);
     root.jest.disableAutomock();
     const exports = runtime.requireModuleOrMock(
@@ -79,7 +79,7 @@ it('uses manual mock when automocking on and mock is available', () =>
   createRuntime(__filename, {
     automock: true,
     moduleNameMapper,
-  }).then(runtime => {
+  }).then((runtime) => {
     const exports = runtime.requireModuleOrMock(
       runtime.__mockRootPath,
       'ManuallyMocked',
@@ -88,7 +88,7 @@ it('uses manual mock when automocking on and mock is available', () =>
   }));
 
 it('does not use manual mock when automocking is off and a real module is available', () =>
-  createRuntime(__filename, {moduleNameMapper}).then(runtime => {
+  createRuntime(__filename, {moduleNameMapper}).then((runtime) => {
     const root = runtime.requireModule(runtime.__mockRootPath);
     root.jest.disableAutomock();
     const exports = runtime.requireModuleOrMock(
@@ -102,7 +102,7 @@ it('resolves mapped module names and unmocks them by default', () =>
   createRuntime(__filename, {
     moduleFileExtensions: ['js', 'jsx'],
     moduleNameMapper,
-  }).then(runtime => {
+  }).then((runtime) => {
     let exports = runtime.requireModuleOrMock(
       runtime.__mockRootPath,
       'image!not_really_a_module',
@@ -152,7 +152,7 @@ it('resolves mapped module names and unmocks them by default', () =>
 it('automocking is disabled by default', () =>
   createRuntime(__filename, {
     moduleNameMapper,
-  }).then(runtime => {
+  }).then((runtime) => {
     const exports = runtime.requireModuleOrMock(
       runtime.__mockRootPath,
       'RegularModule',
@@ -165,7 +165,7 @@ it('unmocks modules in config.unmockedModulePathPatterns for tests with automock
     automock: false,
     moduleNameMapper,
     unmockedModulePathPatterns: ['npm3-main-dep'],
-  }).then(runtime => {
+  }).then((runtime) => {
     const root = runtime.requireModule(runtime.__mockRootPath);
     root.jest.enableAutomock();
     const nodeModule = runtime.requireModuleOrMock(
@@ -180,7 +180,7 @@ describe('resetModules', () => {
   it('resets all the modules', () =>
     createRuntime(__filename, {
       moduleNameMapper,
-    }).then(runtime => {
+    }).then((runtime) => {
       let exports = runtime.requireModuleOrMock(
         runtime.__mockRootPath,
         'ModuleWithState',
@@ -201,7 +201,7 @@ describe('isolateModules', () => {
   it('resets all modules after the block', () =>
     createRuntime(__filename, {
       moduleNameMapper,
-    }).then(runtime => {
+    }).then((runtime) => {
       let exports;
       runtime.isolateModules(() => {
         exports = runtime.requireModuleOrMock(
@@ -223,7 +223,7 @@ describe('isolateModules', () => {
   it('cannot nest isolateModules blocks', () =>
     createRuntime(__filename, {
       moduleNameMapper,
-    }).then(runtime => {
+    }).then((runtime) => {
       expect(() => {
         runtime.isolateModules(() => {
           runtime.isolateModules(() => {});
@@ -236,7 +236,7 @@ describe('isolateModules', () => {
   it('can call resetModules within a isolateModules block', () =>
     createRuntime(__filename, {
       moduleNameMapper,
-    }).then(runtime => {
+    }).then((runtime) => {
       let exports;
       runtime.isolateModules(() => {
         exports = runtime.requireModuleOrMock(

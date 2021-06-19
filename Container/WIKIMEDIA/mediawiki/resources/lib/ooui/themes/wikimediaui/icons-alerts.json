@@ -27,9 +27,7 @@
 	"images": {
 		"alert": {
 			"file": "images/icons/alert.svg",
-			"variants": [
-				"warning"
-			]
+			"variants": ["warning"]
 		},
 		"bell": {
 			"file": "images/icons/bell.svg"
@@ -39,9 +37,7 @@
 		},
 		"error": {
 			"file": "images/icons/error.svg",
-			"variants": [
-				"error"
-			]
+			"variants": ["error"]
 		},
 		"message": {
 			"file": "images/icons/message.svg"

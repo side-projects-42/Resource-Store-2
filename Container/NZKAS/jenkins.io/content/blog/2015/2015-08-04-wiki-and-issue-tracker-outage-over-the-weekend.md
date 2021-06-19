@@ -4,10 +4,11 @@
 :nodeid: 596
 :created: 1438723230
 :tags:
-- infrastructure
-- meta
+  - infrastructure
+  - meta
 :author: daniel-beck
 ---
+
 As you may have noticed, our wiki and issue tracker were unavailable from Thursday to Sunday last week. What happened?
 
 We host parts of our infrastructure at the Open Source Lab at Oregon State (OSUOSL), including the databases for these two services. So far, there's no post mortem by OSUOSL (they expect to post one later this week), so we need to piece together what we know.

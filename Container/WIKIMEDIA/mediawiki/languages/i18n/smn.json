@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Mlolthuis",
-			"Muotâ",
-			"Seipinne",
-			"Trondtr",
-			"Yupik"
-		]
+		"authors": ["Mlolthuis", "Muotâ", "Seipinne", "Trondtr", "Yupik"]
 	},
 	"tog-underline": "Liiŋkâi vuálávijvim:",
 	"tog-hideminor": "Čievâ smavvâ nubástusâid \"vorâs nubástusah\" -listoost",

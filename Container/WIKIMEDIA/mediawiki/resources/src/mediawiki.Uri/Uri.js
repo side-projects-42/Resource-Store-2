@@ -50,7 +50,7 @@
  * @class mw.Uri
  */
 
-( function () {
+(function () {
 	var parser, properties;
 
 	/**
@@ -66,12 +66,12 @@
 	 * @param {boolean} raw If true, val will not be encoded
 	 * @return {string} Result
 	 */
-	function cat( pre, val, post, raw ) {
-		if ( val === undefined || val === null || val === '' ) {
-			return '';
+	function cat(pre, val, post, raw) {
+		if (val === undefined || val === null || val === "") {
+			return "";
 		}
 
-		return pre + ( raw ? val : mw.Uri.encode( val ) ) + post;
+		return pre + (raw ? val : mw.Uri.encode(val)) + post;
 	}
 
 	/**
@@ -86,8 +86,8 @@
 	 * @property {Object} parser
 	 */
 	parser = {
-		strict: require( './strict.regexp.js' ),
-		loose: require( './loose.regexp.js' )
+		strict: require("./strict.regexp.js"),
+		loose: require("./loose.regexp.js"),
 	};
 
 	/**
@@ -98,14 +98,14 @@
 	 * @property {string[]} properties
 	 */
 	properties = [
-		'protocol',
-		'user',
-		'password',
-		'host',
-		'port',
-		'path',
-		'query',
-		'fragment'
+		"protocol",
+		"user",
+		"password",
+		"host",
+		"port",
+		"path",
+		"query",
+		"fragment",
 	];
 
 	/**
@@ -143,22 +143,25 @@
 	 * @member mw
 	 * @return {Function} An mw.Uri class constructor
 	 */
-	mw.UriRelative = function ( documentLocation ) {
-		var getDefaultUri = ( function () {
+	mw.UriRelative = function (documentLocation) {
+		var getDefaultUri = (function () {
 			// Cache
 			var href, uri;
 
 			return function () {
-				var hrefCur = typeof documentLocation === 'string' ? documentLocation : documentLocation();
-				if ( href === hrefCur ) {
+				var hrefCur =
+					typeof documentLocation === "string"
+						? documentLocation
+						: documentLocation();
+				if (href === hrefCur) {
 					return uri;
 				}
 				href = hrefCur;
 				// eslint-disable-next-line no-use-before-define
-				uri = new Uri( href );
+				uri = new Uri(href);
 				return uri;
 			};
-		}() );
+		})();
 
 		/**
 		 * Construct a new URI object. Throws error if arguments are illegal/impossible, or
@@ -182,68 +185,81 @@
 		 *  Implies `overrideKeys: true` (query parameters without `[...]` are not parsed as arrays).
 		 * @throws {Error} when the query string or fragment contains an unknown % sequence
 		 */
-		function Uri( uri, options ) {
-			var prop, hrefCur,
-				hasOptions = ( options !== undefined ),
+		function Uri(uri, options) {
+			var prop,
+				hrefCur,
+				hasOptions = options !== undefined,
 				defaultUri = getDefaultUri();
 
-			options = typeof options === 'object' ? options : { strictMode: !!options };
-			options = $.extend( {
-				strictMode: false,
-				overrideKeys: false,
-				arrayParams: false
-			}, options );
+			options =
+				typeof options === "object"
+					? options
+					: { strictMode: !!options };
+			options = $.extend(
+				{
+					strictMode: false,
+					overrideKeys: false,
+					arrayParams: false,
+				},
+				options
+			);
 
 			this.arrayParams = options.arrayParams;
 
-			if ( uri !== undefined && uri !== null && uri !== '' ) {
-				if ( typeof uri === 'string' ) {
-					this.parse( uri, options );
-				} else if ( typeof uri === 'object' ) {
+			if (uri !== undefined && uri !== null && uri !== "") {
+				if (typeof uri === "string") {
+					this.parse(uri, options);
+				} else if (typeof uri === "object") {
 					// Copy data over from existing URI object
-					for ( prop in uri ) {
+					for (prop in uri) {
 						// Only copy direct properties, not inherited ones
-						if ( Object.prototype.hasOwnProperty.call( uri, prop ) ) {
+						if (Object.prototype.hasOwnProperty.call(uri, prop)) {
 							// Deep copy object properties
-							if ( Array.isArray( uri[ prop ] ) || $.isPlainObject( uri[ prop ] ) ) {
-								this[ prop ] = $.extend( true, {}, uri[ prop ] );
+							if (
+								Array.isArray(uri[prop]) ||
+								$.isPlainObject(uri[prop])
+							) {
+								this[prop] = $.extend(true, {}, uri[prop]);
 							} else {
-								this[ prop ] = uri[ prop ];
+								this[prop] = uri[prop];
 							}
 						}
 					}
-					if ( !this.query ) {
+					if (!this.query) {
 						this.query = {};
 					}
 				}
-			} else if ( hasOptions ) {
+			} else if (hasOptions) {
 				// We didn't get a URI in the constructor, but we got options.
-				hrefCur = typeof documentLocation === 'string' ? documentLocation : documentLocation();
-				this.parse( hrefCur, options );
+				hrefCur =
+					typeof documentLocation === "string"
+						? documentLocation
+						: documentLocation();
+				this.parse(hrefCur, options);
 			} else {
 				// We didn't get a URI or options in the constructor, use the default instance.
 				return defaultUri.clone();
 			}
 
 			// protocol-relative URLs
-			if ( !this.protocol ) {
+			if (!this.protocol) {
 				this.protocol = defaultUri.protocol;
 			}
 			// No host given:
-			if ( !this.host ) {
+			if (!this.host) {
 				this.host = defaultUri.host;
 				// port ?
-				if ( !this.port ) {
+				if (!this.port) {
 					this.port = defaultUri.port;
 				}
 			}
-			if ( this.path && this.path[ 0 ] !== '/' ) {
+			if (this.path && this.path[0] !== "/") {
 				// A real relative URL, relative to defaultUri.path. We can't really handle that since we cannot
 				// figure out whether the last path component of defaultUri.path is a directory or a file.
-				throw new Error( 'Bad constructor arguments' );
+				throw new Error("Bad constructor arguments");
 			}
-			if ( !( this.protocol && this.host && this.path ) ) {
-				throw new Error( 'Bad constructor arguments' );
+			if (!(this.protocol && this.host && this.path)) {
+				throw new Error("Bad constructor arguments");
 			}
 		}
 
@@ -258,11 +274,14 @@
 		 * @param {string} s String to encode
 		 * @return {string} Encoded string for URI
 		 */
-		Uri.encode = function ( s ) {
-			return encodeURIComponent( s )
-				.replace( /!/g, '%21' ).replace( /'/g, '%27' ).replace( /\(/g, '%28' )
-				.replace( /\)/g, '%29' ).replace( /\*/g, '%2A' )
-				.replace( /%20/g, '+' );
+		Uri.encode = function (s) {
+			return encodeURIComponent(s)
+				.replace(/!/g, "%21")
+				.replace(/'/g, "%27")
+				.replace(/\(/g, "%28")
+				.replace(/\)/g, "%29")
+				.replace(/\*/g, "%2A")
+				.replace(/%20/g, "+");
 		};
 
 		/**
@@ -276,12 +295,11 @@
 		 * @return {string} Decoded string
 		 * @throws {Error} when the string contains an unknown % sequence
 		 */
-		Uri.decode = function ( s ) {
-			return decodeURIComponent( s.replace( /\+/g, '%20' ) );
+		Uri.decode = function (s) {
+			return decodeURIComponent(s.replace(/\+/g, "%20"));
 		};
 
 		Uri.prototype = {
-
 			/**
 			 * Parse a string and set our properties accordingly.
 			 *
@@ -290,73 +308,85 @@
 			 * @param {Object} options See constructor.
 			 * @throws {Error} when the query string or fragment contains an unknown % sequence
 			 */
-			parse: function ( str, options ) {
-				var q, matches,
+			parse: function (str, options) {
+				var q,
+					matches,
 					uri = this,
 					hasOwn = Object.prototype.hasOwnProperty;
 
 				// Apply parser regex and set all properties based on the result
-				matches = parser[ options.strictMode ? 'strict' : 'loose' ].exec( str );
-				properties.forEach( function ( property, i ) {
-					uri[ property ] = matches[ i + 1 ];
-				} );
+				matches =
+					parser[options.strictMode ? "strict" : "loose"].exec(str);
+				properties.forEach(function (property, i) {
+					uri[property] = matches[i + 1];
+				});
 
 				// uri.query starts out as the query string; we will parse it into key-val pairs then make
 				// that object the "query" property.
 				// we overwrite query in uri way to make cloning easier, it can use the same list of properties.
 				q = {};
 				// using replace to iterate over a string
-				if ( uri.query ) {
-					uri.query.replace( /(?:^|&)([^&=]*)(?:(=)([^&]*))?/g, function ( match, k, eq, v ) {
-						var arrayKeyMatch, i;
-						if ( k ) {
-							k = Uri.decode( k );
-							v = ( eq === '' || eq === undefined ) ? null : Uri.decode( v );
-							arrayKeyMatch = k.match( /^([^[]+)\[(\d*)\]$/ );
+				if (uri.query) {
+					uri.query.replace(
+						/(?:^|&)([^&=]*)(?:(=)([^&]*))?/g,
+						function (match, k, eq, v) {
+							var arrayKeyMatch, i;
+							if (k) {
+								k = Uri.decode(k);
+								v =
+									eq === "" || eq === undefined
+										? null
+										: Uri.decode(v);
+								arrayKeyMatch = k.match(/^([^[]+)\[(\d*)\]$/);
 
-							// If arrayParams and this parameter name contains an array index...
-							if ( options.arrayParams && arrayKeyMatch ) {
-								// Remove the index from parameter name
-								k = arrayKeyMatch[ 1 ];
+								// If arrayParams and this parameter name contains an array index...
+								if (options.arrayParams && arrayKeyMatch) {
+									// Remove the index from parameter name
+									k = arrayKeyMatch[1];
 
-								// Turn the parameter value into an array (throw away anything else)
-								if ( !Array.isArray( q[ k ] ) ) {
-									q[ k ] = [];
-								}
+									// Turn the parameter value into an array (throw away anything else)
+									if (!Array.isArray(q[k])) {
+										q[k] = [];
+									}
 
-								i = arrayKeyMatch[ 2 ];
-								if ( i === '' ) {
-									// If no explicit index, append at the end
-									i = q[ k ].length;
-								}
+									i = arrayKeyMatch[2];
+									if (i === "") {
+										// If no explicit index, append at the end
+										i = q[k].length;
+									}
 
-								q[ k ][ i ] = v;
+									q[k][i] = v;
 
-							// If overrideKeys, always (re)set top level value.
-							// If not overrideKeys but this key wasn't set before, then we set it as well.
-							// arrayParams implies overrideKeys (no array handling for non-array params).
-							} else if ( options.arrayParams || options.overrideKeys || !hasOwn.call( q, k ) ) {
-								q[ k ] = v;
+									// If overrideKeys, always (re)set top level value.
+									// If not overrideKeys but this key wasn't set before, then we set it as well.
+									// arrayParams implies overrideKeys (no array handling for non-array params).
+								} else if (
+									options.arrayParams ||
+									options.overrideKeys ||
+									!hasOwn.call(q, k)
+								) {
+									q[k] = v;
 
-							// Use arrays if overrideKeys is false and key was already seen before
-							} else {
-								// Once before, still a string, turn into an array
-								if ( typeof q[ k ] === 'string' ) {
-									q[ k ] = [ q[ k ] ];
-								}
-								// Add to the array
-								if ( Array.isArray( q[ k ] ) ) {
-									q[ k ].push( v );
+									// Use arrays if overrideKeys is false and key was already seen before
+								} else {
+									// Once before, still a string, turn into an array
+									if (typeof q[k] === "string") {
+										q[k] = [q[k]];
+									}
+									// Add to the array
+									if (Array.isArray(q[k])) {
+										q[k].push(v);
+									}
 								}
 							}
 						}
-					} );
+					);
 				}
 				uri.query = q;
 
 				// Decode uri.fragment, otherwise it gets double-encoded when serializing
-				if ( uri.fragment !== undefined ) {
-					uri.fragment = Uri.decode( uri.fragment );
+				if (uri.fragment !== undefined) {
+					uri.fragment = Uri.decode(uri.fragment);
 				}
 			},
 
@@ -366,7 +396,7 @@
 			 * @return {string}
 			 */
 			getUserInfo: function () {
-				return cat( '', this.user, cat( ':', this.password, '' ) );
+				return cat("", this.user, cat(":", this.password, ""));
 			},
 
 			/**
@@ -375,7 +405,7 @@
 			 * @return {string}
 			 */
 			getHostPort: function () {
-				return this.host + cat( ':', this.port, '' );
+				return this.host + cat(":", this.port, "");
 			},
 
 			/**
@@ -386,7 +416,7 @@
 			 * @return {string}
 			 */
 			getAuthority: function () {
-				return cat( '', this.getUserInfo(), '@' ) + this.getHostPort();
+				return cat("", this.getUserInfo(), "@") + this.getHostPort();
 			},
 
 			/**
@@ -400,25 +430,25 @@
 				var args = [],
 					arrayParams = this.arrayParams;
 				// eslint-disable-next-line no-jquery/no-each-util
-				$.each( this.query, function ( key, val ) {
-					var k = Uri.encode( key ),
-						isArrayParam = Array.isArray( val ),
-						vals = isArrayParam ? val : [ val ];
-					vals.forEach( function ( v, i ) {
+				$.each(this.query, function (key, val) {
+					var k = Uri.encode(key),
+						isArrayParam = Array.isArray(val),
+						vals = isArrayParam ? val : [val];
+					vals.forEach(function (v, i) {
 						var ki = k;
-						if ( arrayParams && isArrayParam ) {
-							ki += Uri.encode( '[' + i + ']' );
+						if (arrayParams && isArrayParam) {
+							ki += Uri.encode("[" + i + "]");
 						}
-						if ( v === null ) {
-							args.push( ki );
-						} else if ( k === 'title' ) {
-							args.push( ki + '=' + mw.util.wikiUrlencode( v ) );
+						if (v === null) {
+							args.push(ki);
+						} else if (k === "title") {
+							args.push(ki + "=" + mw.util.wikiUrlencode(v));
 						} else {
-							args.push( ki + '=' + Uri.encode( v ) );
+							args.push(ki + "=" + Uri.encode(v));
 						}
-					} );
-				} );
-				return args.join( '&' );
+					});
+				});
+				return args.join("&");
 			},
 
 			/**
@@ -427,7 +457,11 @@
 			 * @return {string}
 			 */
 			getRelativePath: function () {
-				return this.path + cat( '?', this.getQueryString(), '', true ) + cat( '#', this.fragment, '' );
+				return (
+					this.path +
+					cat("?", this.getQueryString(), "", true) +
+					cat("#", this.fragment, "")
+				);
 			},
 
 			/**
@@ -438,7 +472,12 @@
 			 * @return {string} The URI string
 			 */
 			toString: function () {
-				return this.protocol + '://' + this.getAuthority() + this.getRelativePath();
+				return (
+					this.protocol +
+					"://" +
+					this.getAuthority() +
+					this.getRelativePath()
+				);
 			},
 
 			/**
@@ -447,7 +486,7 @@
 			 * @return {Object} New URI object with same properties
 			 */
 			clone: function () {
-				return new Uri( this );
+				return new Uri(this);
 			},
 
 			/**
@@ -457,18 +496,17 @@
 			 *  object
 			 * @return {Object} This URI object
 			 */
-			extend: function ( parameters ) {
-				$.extend( this.query, parameters );
+			extend: function (parameters) {
+				$.extend(this.query, parameters);
 				return this;
-			}
+			},
 		};
 
 		return Uri;
 	};
 
 	// Default to the current browsing location (for relative URLs).
-	mw.Uri = mw.UriRelative( function () {
+	mw.Uri = mw.UriRelative(function () {
 		return location.href;
-	} );
-
-}() );
+	});
+})();

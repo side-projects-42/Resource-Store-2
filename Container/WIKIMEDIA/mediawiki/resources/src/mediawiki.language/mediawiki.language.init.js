@@ -1,4 +1,4 @@
-( function () {
+(function () {
 	/**
 	 * Base language object with methods related to language support, attempting to mirror some of the
 	 * functionality of the Language class in MediaWiki:
@@ -55,11 +55,11 @@
 		 * @return {Mixed} Value stored in the mw.Map (or `undefined` if there is no map for the
 		 *  specified langCode)
 		 */
-		getData: function ( langCode, dataKey ) {
+		getData: function (langCode, dataKey) {
 			var langData = mw.language.data;
 			langCode = langCode.toLowerCase();
-			if ( langData && langData[ langCode ] instanceof mw.Map ) {
-				return langData[ langCode ].get( dataKey );
+			if (langData && langData[langCode] instanceof mw.Map) {
+				return langData[langCode].get(dataKey);
 			}
 			return undefined;
 		},
@@ -73,18 +73,17 @@
 		 * @param {string|Object} dataKey Key or object of key/values
 		 * @param {Mixed} [value] Value for dataKey, omit if dataKey is an object
 		 */
-		setData: function ( langCode, dataKey, value ) {
+		setData: function (langCode, dataKey, value) {
 			var langData = mw.language.data;
 			langCode = langCode.toLowerCase();
-			if ( !( langData[ langCode ] instanceof mw.Map ) ) {
-				langData[ langCode ] = new mw.Map();
+			if (!(langData[langCode] instanceof mw.Map)) {
+				langData[langCode] = new mw.Map();
 			}
-			if ( arguments.length > 2 ) {
-				langData[ langCode ].set( dataKey, value );
+			if (arguments.length > 2) {
+				langData[langCode].set(dataKey, value);
 			} else {
-				langData[ langCode ].set( dataKey );
+				langData[langCode].set(dataKey);
 			}
-		}
+		},
 	};
-
-}() );
+})();

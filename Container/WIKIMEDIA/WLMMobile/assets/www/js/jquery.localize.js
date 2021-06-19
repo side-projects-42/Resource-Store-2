@@ -78,88 +78,89 @@
  *     <p>You may not get there all in one piece.</p>
  *
  */
-( function ( $, mw ) {
+(function ($, mw) {
+  /**
+   * Gets a localized message, using parameters from options if present.
+   *
+   * @function
+   * @param {String} key Message key to get localized message for
+   * @returns {String} Localized message
+   */
+  function msg(options, key) {
+    var args = options.params[key] || [];
+    // Format: mw.msg( key [, p1, p2, ...] )
+    args.unshift(options.prefix + (options.keys[key] || key));
+    return mw.msg.apply(mw, args);
+  }
 
-/**
- * Gets a localized message, using parameters from options if present.
- *
- * @function
- * @param {String} key Message key to get localized message for
- * @returns {String} Localized message
- */
-function msg( options, key ) {
-	var args = options.params[key] || [];
-	// Format: mw.msg( key [, p1, p2, ...] )
-	args.unshift( options.prefix + ( options.keys[key] || key ) );
-	return mw.msg.apply( mw, args );
-}
+  /**
+   * Localizes a DOM selection by replacing <html:msg /> elements with localized text and adding
+   * localized title and alt attributes to elements with title-msg and alt-msg attributes
+   * respectively.
+   *
+   * @method
+   * @param {Object} options Map of options to be used while localizing
+   * @param {String} options.prefix String to prepend to all message keys
+   * @param {Object} options.keys Message key aliases, used for remapping keys to a template
+   * @param {Object} options.params Lists of parameters to use with certain message keys
+   * @returns {jQuery} This selection
+   */
+  $.fn.localize = function (options) {
+    var $target = this,
+      attributes = ["title", "alt", "placeholder"];
 
-/**
- * Localizes a DOM selection by replacing <html:msg /> elements with localized text and adding
- * localized title and alt attributes to elements with title-msg and alt-msg attributes
- * respectively.
- *
- * @method
- * @param {Object} options Map of options to be used while localizing
- * @param {String} options.prefix String to prepend to all message keys
- * @param {Object} options.keys Message key aliases, used for remapping keys to a template
- * @param {Object} options.params Lists of parameters to use with certain message keys
- * @returns {jQuery} This selection
- */
-$.fn.localize = function ( options ) {
-	var $target = this,
-		attributes = ['title', 'alt', 'placeholder'];
+    // Extend options
+    options = $.extend(
+      {
+        prefix: "",
+        keys: {},
+        params: {},
+      },
+      options
+    );
 
-	// Extend options
-	options = $.extend( {
-		prefix: '',
-		keys: {},
-		params: {}
-	}, options );
+    // Elements
+    // Ok, so here's the story on this selector. In IE 6/7, searching for 'msg' turns up the
+    // 'html:msg', but searching for 'html:msg' doesn't. In later IE and other browsers, searching
+    // for 'html:msg' turns up the 'html:msg', but searching for 'msg' doesn't. So searching for
+    // both 'msg' and 'html:msg' seems to get the job done. This feels pretty icky, though.
+    $target.find("msg,html\\:msg").each(function () {
+      var $el = $(this);
+      // Escape by default
+      if ($el.attr("raw")) {
+        $el.html(msg(options, $el.attr("key")));
+      } else {
+        $el.text(msg(options, $el.attr("key")));
+      }
+      // Remove wrapper
+      $el.replaceWith($el.html());
+    });
 
-	// Elements
-	// Ok, so here's the story on this selector. In IE 6/7, searching for 'msg' turns up the
-	// 'html:msg', but searching for 'html:msg' doesn't. In later IE and other browsers, searching
-	// for 'html:msg' turns up the 'html:msg', but searching for 'msg' doesn't. So searching for
-	// both 'msg' and 'html:msg' seems to get the job done. This feels pretty icky, though.
-	$target.find( 'msg,html\\:msg' ).each( function () {
-		var $el = $(this);
-		// Escape by default
-		if ( $el.attr( 'raw' ) ) {
-			$el.html( msg( options, $el.attr( 'key' ) ) );
-		} else {
-			$el.text( msg( options, $el.attr( 'key' ) ) );
-		}
-		// Remove wrapper
-		$el.replaceWith( $el.html() );
-	} );
+    // Attributes
+    // Note: there's no way to prevent escaping of values being injected into attributes, this is
+    // on purpose, not a design flaw.
+    $.each(attributes, function (i, attr) {
+      var msgAttr = attr + "-msg";
+      $target.find("[" + msgAttr + "]").each(function () {
+        var $el = $(this);
+        $el.attr(attr, msg(options, $el.attr(msgAttr))).removeAttr(msgAttr);
+      });
+    });
 
-	// Attributes
-	// Note: there's no way to prevent escaping of values being injected into attributes, this is
-	// on purpose, not a design flaw.
-	$.each( attributes, function ( i, attr ) {
-		var msgAttr = attr + '-msg';
-		$target.find( '[' + msgAttr + ']' ).each( function () {
-			var $el = $(this);
-			$el.attr( attr, msg( options, $el.attr( msgAttr ) ) ).removeAttr( msgAttr );
-		} );
-	} );
+    // HTML, Text for elements which cannot have children e.g. OPTION
+    $target.find("[data-msg-text]").each(function () {
+      var $el = $(this);
+      $el.text(msg(options, $el.attr("data-msg-text")));
+    });
 
-	// HTML, Text for elements which cannot have children e.g. OPTION
-	$target.find( '[data-msg-text]' ).each( function() {
-		var $el = $( this );
-		$el.text( msg( options, $el.attr( 'data-msg-text' ) ) );
-	} );
+    $target.find("[data-msg-html]").each(function () {
+      var $el = $(this);
+      $el.html(msg(options, $el.attr("data-msg-html")));
+    });
 
-	$target.find( '[data-msg-html]' ).each( function() {
-		var $el = $( this );
-		$el.html( msg( options, $el.attr( 'data-msg-html' ) ) );
-	} );
+    return $target;
+  };
 
-	return $target;
-};
-
-// Let IE know about the msg tag before it's used...
-document.createElement( 'msg' );
-
-}( jQuery, mediaWiki ) );
+  // Let IE know about the msg tag before it's used...
+  document.createElement("msg");
+})(jQuery, mediaWiki);

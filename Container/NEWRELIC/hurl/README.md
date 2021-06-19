@@ -1,14 +1,11 @@
-Hurl
-====
+# Hurl
 
 Hurl was created for the Rails Rumble 2009 in 48 hours.
 Now Hurl is an open source project for your enjoyment.
 
 <http://hurl.it/>
 
-
-Installation
-------------
+## Installation
 
 Hurl requires Ruby 1.8.6+
 
@@ -29,34 +26,25 @@ Now install Hurl's dependencies:
 
     bundle install
 
-
-Run Locally
------------
+## Run Locally
 
     bundle exec shotgun config.ru
 
 Now visit <http://localhost:9393>
 
-
-Issues
-------
+## Issues
 
 Find a bug? Want a feature? Submit an [issue
 here](http://github.com/twilio/hurl/issues). Patches welcome!
 
-
-Screenshot
-----------
+## Screenshot
 
 [![Hurl](http://img.skitch.com/20091020-xtiqtj4eajuxs43iu5h3be7upj.png)](http://hurl.it)
 
+## Original Authors
 
-Original Authors
-----------------
-
-* [Leah Culver][2]
-* [Chris Wanstrath][3]
-
+- [Leah Culver][2]
+- [Chris Wanstrath][3]
 
 [1]: http://r09.railsrumble.com/
 [2]: http://github.com/leah

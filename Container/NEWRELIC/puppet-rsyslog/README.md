@@ -1,23 +1,26 @@
 # puppet-rsyslog
+
 ================
 
 Manage rsyslog client and server via Puppet
 
 ## REQUIREMENTS
 
-* Puppet >=2.6 if using parameterized classes
-* Currently supports Ubuntu >=11.04 & Debian running rsyslog >=4.5
+- Puppet >=2.6 if using parameterized classes
+- Currently supports Ubuntu >=11.04 & Debian running rsyslog >=4.5
 
 ## USAGE
 
 ### Client
 
 #### Using default values
+
 ```
     class { 'rsyslog::client': }
 ```
 
 #### Variables and default values
+
 ```
     class { 'rsyslog::client':
         log_remote     => true,
@@ -34,11 +37,12 @@ Manage rsyslog client and server via Puppet
 
 Events can also be logged to a MySQL or PostgreSQL database. The database needs to be deployed separately, either locally or remotely. Schema are available from the `rsyslog` source:
 
-  * [MySQL schema](http://git.adiscon.com/?p=rsyslog.git;a=blob_plain;f=plugins/ommysql/createDB.sql)
-  * [PostgreSQL schema](http://git.adiscon.com/?p=rsyslog.git;a=blob_plain;f=plugins/ompgsql/createDB.sql)
+- [MySQL schema](http://git.adiscon.com/?p=rsyslog.git;a=blob_plain;f=plugins/ommysql/createDB.sql)
+- [PostgreSQL schema](http://git.adiscon.com/?p=rsyslog.git;a=blob_plain;f=plugins/ompgsql/createDB.sql)
 
 Declare the following to configure the connection:
-````
+
+```
     class { 'rsyslog::database':
         backend  => 'mysql',
         server   => 'localhost',
@@ -46,15 +50,18 @@ Declare the following to configure the connection:
         username => 'rsyslog',
         password => 'secret',
     }
-````
+```
+
 ### Server
 
 #### Using default values
+
 ```
     class { 'rsyslog::server': }
 ```
 
 #### Variables and default values
+
 ```
     class { 'rsyslog::server':
         enable_tcp                => true,

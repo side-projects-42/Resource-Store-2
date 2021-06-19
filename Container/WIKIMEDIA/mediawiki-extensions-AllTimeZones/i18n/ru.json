@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Eleferen"
-		]
-	},
-	"alltimezones-desc": "Добавляет тег для отображения дат во всех часовых поясах"
+  "@metadata": {
+    "authors": ["Eleferen"]
+  },
+  "alltimezones-desc": "Добавляет тег для отображения дат во всех часовых поясах"
 }

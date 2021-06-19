@@ -10,12 +10,10 @@
  * @description:
  * Tests to see if there are any `describe.skip` tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	describe.skip('something', function () {
-		it('should do stuff', function () {
-
-		});
+	describe.skip("something", function () {
+		it("should do stuff", function () {});
 	});
-}(this));
+})(this);

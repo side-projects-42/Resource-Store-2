@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Jeleniccz"
-		]
-	},
-	"activeabstract-desc": "Genereer XML feed voor het Active Abstracts project van Yahoo"
+  "@metadata": {
+    "authors": ["Jeleniccz"]
+  },
+  "activeabstract-desc": "Genereer XML feed voor het Active Abstracts project van Yahoo"
 }

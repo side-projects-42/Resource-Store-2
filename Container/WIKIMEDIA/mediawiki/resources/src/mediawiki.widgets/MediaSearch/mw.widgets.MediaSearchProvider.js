@@ -4,8 +4,7 @@
  * @copyright 2011-2016 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * MediaWiki media search provider.
 	 *
@@ -16,55 +15,71 @@
 	 * @param {string} apiurl The API url
 	 * @param {Object} [config] Configuration options
 	 */
-	mw.widgets.MediaSearchProvider = function MwWidgetsMediaSearchProvider( apiurl, config ) {
+	mw.widgets.MediaSearchProvider = function MwWidgetsMediaSearchProvider(
+		apiurl,
+		config
+	) {
 		config = config || {};
 
-		config.staticParams = $.extend( {
-			generator: 'search',
-			gsrnamespace: mw.config.get( 'wgNamespaceIds' ).file,
-			uselang: mw.config.get( 'wgUserLanguage' )
-		}, config.staticParams );
+		config.staticParams = $.extend(
+			{
+				generator: "search",
+				gsrnamespace: mw.config.get("wgNamespaceIds").file,
+				uselang: mw.config.get("wgUserLanguage"),
+			},
+			config.staticParams
+		);
 
 		// Parent constructor
-		mw.widgets.MediaSearchProvider.super.call( this, apiurl, config );
+		mw.widgets.MediaSearchProvider.super.call(this, apiurl, config);
 	};
 
 	/* Inheritance */
-	OO.inheritClass( mw.widgets.MediaSearchProvider, mw.widgets.MediaResourceProvider );
+	OO.inheritClass(
+		mw.widgets.MediaSearchProvider,
+		mw.widgets.MediaResourceProvider
+	);
 
 	/* Methods */
 
 	/**
 	 * @inheritdoc
 	 */
-	mw.widgets.MediaSearchProvider.prototype.getContinueData = function ( howMany ) {
+	mw.widgets.MediaSearchProvider.prototype.getContinueData = function (
+		howMany
+	) {
 		return {
 			gsroffset: this.getOffset(),
-			gsrlimit: howMany || this.getDefaultFetchLimit()
+			gsrlimit: howMany || this.getDefaultFetchLimit(),
 		};
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	mw.widgets.MediaSearchProvider.prototype.setContinue = function ( continueData ) {
+	mw.widgets.MediaSearchProvider.prototype.setContinue = function (
+		continueData
+	) {
 		// Update the offset for next time
-		this.setOffset( continueData.gsroffset );
+		this.setOffset(continueData.gsroffset);
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	mw.widgets.MediaSearchProvider.prototype.sort = function ( results ) {
-		return results.sort( function ( a, b ) {
+	mw.widgets.MediaSearchProvider.prototype.sort = function (results) {
+		return results.sort(function (a, b) {
 			return a.index - b.index;
-		} );
+		});
 	};
 
 	/**
 	 * @inheritdoc
 	 */
 	mw.widgets.MediaSearchProvider.prototype.isValid = function () {
-		return this.getUserParams().gsrsearch && mw.widgets.MediaSearchProvider.super.prototype.isValid.call( this );
+		return (
+			this.getUserParams().gsrsearch &&
+			mw.widgets.MediaSearchProvider.super.prototype.isValid.call(this)
+		);
 	};
-}() );
+})();

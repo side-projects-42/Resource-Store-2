@@ -90,81 +90,79 @@ const logMutationInfo = ({ org, mutation, elapsedMs }) => {
   }
 };
 
-const graphql = (octokit, org, { operationType }) => async (
-  query,
-  variables,
-  headers
-) => {
-  // rate limit only works for queries
-  if (!query.query.includes('rateLimit') && operationType === 'query') {
-    log.warn(
-      'Detected graphql query that does not include "rateLimit"' +
-        ' Every Github GraphQL query should include the following query: \n',
-      `rateLimit {
+const graphql =
+  (octokit, org, { operationType }) =>
+  async (query, variables, headers) => {
+    // rate limit only works for queries
+    if (!query.query.includes('rateLimit') && operationType === 'query') {
+      log.warn(
+        'Detected graphql query that does not include "rateLimit"' +
+          ' Every Github GraphQL query should include the following query: \n',
+        `rateLimit {
 					limit
 					cost
 					remaining
 					resetAt
 				}`
-    );
-  }
-
-  const endTimeSpan = startTimeSpan();
-  const resp = await octokit.request({
-    headers: {
-      accept:
-        // enable isDraft preview
-        'application/vnd.github.shadow-cat-preview+json, ' +
-        // enable and mergeStateStatus
-        'application/vnd.github.merge-info-preview+json, ' +
-        // enable Checks (Check Suites)
-        'application/vnd.github.antiope-preview+json',
-      'content-type': 'application/json',
-      ...headers,
-    },
-    method: 'POST',
-    url: '/graphql',
-
-    query: query.query,
-    variables: query.variables,
-  });
-
-  if (resp.status !== 200) {
-    log.warn(`Got non 200 HTTP status from GraphQL status=${resp.status}`);
-  }
-
-  const elapsedMs = Math.round(endTimeSpan());
-  const { data, errors } = resp.data;
-  const cleanedUpQuery = removeAllExtraCharacters(query.query);
-
-  if (operationType === 'query') {
-    logQueryInfoAndRemainingLimits({
-      org,
-      data,
-      query: cleanedUpQuery,
-      elapsedMs,
-    });
-  } else if (operationType === 'mutation') {
-    logMutationInfo({ org, mutation: cleanedUpQuery, elapsedMs });
-  }
-
-  if (errors) {
-    log.warn(
-      'Graphql query returned some errors: ',
-      R.pipe(R.pluck('message'), R.uniq)(errors),
-      'Total errors: ',
-      errors.length
-    );
-    // it's "nomral" to have errors if data property is non empty
-    // those could be due to lack of permissions, but API would still retur
-    // partial results
-    if (!data) {
-      throw new GraphQLError(errors, cleanedUpQuery, variables);
+      );
     }
-  }
 
-  return data;
-};
+    const endTimeSpan = startTimeSpan();
+    const resp = await octokit.request({
+      headers: {
+        accept:
+          // enable isDraft preview
+          'application/vnd.github.shadow-cat-preview+json, ' +
+          // enable and mergeStateStatus
+          'application/vnd.github.merge-info-preview+json, ' +
+          // enable Checks (Check Suites)
+          'application/vnd.github.antiope-preview+json',
+        'content-type': 'application/json',
+        ...headers,
+      },
+      method: 'POST',
+      url: '/graphql',
+
+      query: query.query,
+      variables: query.variables,
+    });
+
+    if (resp.status !== 200) {
+      log.warn(`Got non 200 HTTP status from GraphQL status=${resp.status}`);
+    }
+
+    const elapsedMs = Math.round(endTimeSpan());
+    const { data, errors } = resp.data;
+    const cleanedUpQuery = removeAllExtraCharacters(query.query);
+
+    if (operationType === 'query') {
+      logQueryInfoAndRemainingLimits({
+        org,
+        data,
+        query: cleanedUpQuery,
+        elapsedMs,
+      });
+    } else if (operationType === 'mutation') {
+      logMutationInfo({ org, mutation: cleanedUpQuery, elapsedMs });
+    }
+
+    if (errors) {
+      log.warn(
+        'Graphql query returned some errors: ',
+        R.pipe(R.pluck('message'), R.uniq)(errors),
+        'Total errors: ',
+        errors.length
+      );
+      // it's "nomral" to have errors if data property is non empty
+      // those could be due to lack of permissions, but API would still retur
+      // partial results
+      if (!data) {
+        throw new GraphQLError(errors, cleanedUpQuery, variables);
+      }
+    }
+
+    return data;
+  };
 
 // eslint-disable-next-line no-unused-vars
 function addGraphQL(octokit, org, user = '') {

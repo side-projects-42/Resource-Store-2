@@ -1,0 +1,13 @@
+<div class="card-header h3">
+  <%= @event.name %> Sponsorship Packages
+</div>
+<div class="card body container-fluid">
+  <ul>
+    <% @packages.each do |pkg| %>
+    <li><%= link_to pkg.name, event_package_path(@event, pkg) %></li>
+    <% end %>
+  </ul>
+
+  <p><%= link_to "Create a New Package", new_event_package_path, class: "btn btn-success" %></p>
+  <p><%= link_to "Back to Event", event_path(@event), class: "btn btn-primary" %></p>
+</div>

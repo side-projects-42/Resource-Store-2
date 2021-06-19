@@ -43,16 +43,16 @@ export function installErrorOnPrivate(global: Global.Global): void {
   const jasmine = global.jasmine as Jasmine;
 
   (Object.keys(disabledGlobals) as Array<DisabledGlobalKeys>).forEach(
-    functionName => {
+    (functionName) => {
       global[functionName] = () => {
         throwAtFunction(disabledGlobals[functionName], global[functionName]);
       };
     },
   );
 
-  (Object.keys(disabledJasmineMethods) as Array<
-    DisabledJasmineMethodsKeys
-  >).forEach(methodName => {
+  (
+    Object.keys(disabledJasmineMethods) as Array<DisabledJasmineMethodsKeys>
+  ).forEach((methodName) => {
     jasmine[methodName] = () => {
       throwAtFunction(disabledJasmineMethods[methodName], jasmine[methodName]);
     };

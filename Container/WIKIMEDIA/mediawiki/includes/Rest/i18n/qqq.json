@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Bill Pirkle",
-			"Matma Rex",
-			"Raymond",
-			"Tim Starling"
-		]
+		"authors": ["Bill Pirkle", "Matma Rex", "Raymond", "Tim Starling"]
 	},
 	"rest-prefix-mismatch": "Error message for REST API debugging, shown if $wgRestPath is incorrect or otherwise not matched. Parameters:\n* $1: The requested path.\n* $2: The configured root path ($wgRestPath).",
 	"rest-wrong-method": "Error message for REST API debugging, shown if the HTTP method is incorrect. Parameters:\n* $1: The received request method.\n* $2: A comma-separated list of allowed methods for this path.\n* $3: The number of items in the list $2",

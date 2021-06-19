@@ -14,26 +14,36 @@
  * @constructor
  * @param {Object} [config] Configuration options
  */
-mw.widgets.AbandonEditDialog = function VeUiAbandonEditDialog( config ) {
+mw.widgets.AbandonEditDialog = function VeUiAbandonEditDialog(config) {
 	// Parent constructor
-	mw.widgets.AbandonEditDialog.super.call( this, config );
+	mw.widgets.AbandonEditDialog.super.call(this, config);
 };
 
 /* Inheritance */
 
-OO.inheritClass( mw.widgets.AbandonEditDialog, OO.ui.MessageDialog );
+OO.inheritClass(mw.widgets.AbandonEditDialog, OO.ui.MessageDialog);
 
 /* Static Properties */
 
-mw.widgets.AbandonEditDialog.static.name = 'abandonedit';
+mw.widgets.AbandonEditDialog.static.name = "abandonedit";
 
-mw.widgets.AbandonEditDialog.static.title =
-	OO.ui.deferMsg( 'mw-widgets-abandonedit-title' );
+mw.widgets.AbandonEditDialog.static.title = OO.ui.deferMsg(
+	"mw-widgets-abandonedit-title"
+);
 
-mw.widgets.AbandonEditDialog.static.message =
-	OO.ui.deferMsg( 'mw-widgets-abandonedit' );
+mw.widgets.AbandonEditDialog.static.message = OO.ui.deferMsg(
+	"mw-widgets-abandonedit"
+);
 
 mw.widgets.AbandonEditDialog.static.actions = [
-	{ action: 'discard', label: OO.ui.deferMsg( 'mw-widgets-abandonedit-discard' ), flags: 'destructive' },
-	{ action: 'keep', label: OO.ui.deferMsg( 'mw-widgets-abandonedit-keep' ), flags: [ 'primary', 'safe' ] }
+	{
+		action: "discard",
+		label: OO.ui.deferMsg("mw-widgets-abandonedit-discard"),
+		flags: "destructive",
+	},
+	{
+		action: "keep",
+		label: OO.ui.deferMsg("mw-widgets-abandonedit-keep"),
+		flags: ["primary", "safe"],
+	},
 ];

@@ -17,7 +17,7 @@ it('creates a process object that looks like the original one', () => {
   // They look the same, but they are NOT the same (deep copied object). The
   // "_events" property is checked to ensure event emitter properties are
   // properly copied.
-  ['argv', 'env', '_events'].forEach(key => {
+  ['argv', 'env', '_events'].forEach((key) => {
     // @ts-ignore
     expect(fakeProcess[key]).toEqual(process[key]);
     // @ts-ignore

@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"EileenSanda"
-		]
+		"authors": ["EileenSanda"]
 	},
 	"config-desc": "Innstallasjónsforrit til MediaWiki",
 	"config-title": "Innstallering av MediaWiki $1",

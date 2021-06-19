@@ -8,7 +8,11 @@
 				"name": "page_id",
 				"comment": "Unique identifier number. The page_id will be preserved across edits and rename operations, but not deletions and recreations.",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "page_namespace",
@@ -98,30 +102,30 @@
 		"indexes": [
 			{
 				"name": "name_title",
-				"columns": [ "page_namespace", "page_title" ],
+				"columns": ["page_namespace", "page_title"],
 				"comment": "The title index. Care must be taken to always specify a namespace when by title, so that the index is used. Even listing all known namespaces with IN() is better than omitting page_namespace from the WHERE clause.",
 				"unique": true
 			},
 			{
 				"name": "page_random",
-				"columns": [ "page_random" ],
+				"columns": ["page_random"],
 				"comment": "Index for Special:Random",
 				"unique": false
 			},
 			{
 				"name": "page_len",
-				"columns": [ "page_len" ],
+				"columns": ["page_len"],
 				"comment": "Questionable utility, used by ProofreadPage, possibly DynamicPageList. ApiQueryAllPages unconditionally filters on namespace and so hopefully does not use it.",
 				"unique": false
 			},
 			{
 				"name": "page_redirect_namespace_len",
-				"columns": [ "page_is_redirect", "page_namespace", "page_len" ],
+				"columns": ["page_is_redirect", "page_namespace", "page_len"],
 				"comment": "The index for Special:Shortpages and Special:Longpages. Also SiteStats::articles() in 'comma' counting mode, MessageCache::loadFromDB().",
 				"unique": false
 			}
 		],
-		"pk": [ "page_id" ]
+		"pk": ["page_id"]
 	},
 	"after": {
 		"name": "page",
@@ -131,7 +135,11 @@
 				"name": "page_id",
 				"comment": "Unique identifier number. The page_id will be preserved across edits and rename operations, but not deletions and recreations.",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "page_namespace",
@@ -221,29 +229,29 @@
 		"indexes": [
 			{
 				"name": "page_name_title",
-				"columns": [ "page_namespace", "page_title" ],
+				"columns": ["page_namespace", "page_title"],
 				"comment": "The title index. Care must be taken to always specify a namespace when by title, so that the index is used. Even listing all known namespaces with IN() is better than omitting page_namespace from the WHERE clause.",
 				"unique": true
 			},
 			{
 				"name": "page_random",
-				"columns": [ "page_random" ],
+				"columns": ["page_random"],
 				"comment": "Index for Special:Random",
 				"unique": false
 			},
 			{
 				"name": "page_len",
-				"columns": [ "page_len" ],
+				"columns": ["page_len"],
 				"comment": "Questionable utility, used by ProofreadPage, possibly DynamicPageList. ApiQueryAllPages unconditionally filters on namespace and so hopefully does not use it.",
 				"unique": false
 			},
 			{
 				"name": "page_redirect_namespace_len",
-				"columns": [ "page_is_redirect", "page_namespace", "page_len" ],
+				"columns": ["page_is_redirect", "page_namespace", "page_len"],
 				"comment": "The index for Special:Shortpages and Special:Longpages. Also SiteStats::articles() in 'comma' counting mode, MessageCache::loadFromDB().",
 				"unique": false
 			}
 		],
-		"pk": [ "page_id" ]
+		"pk": ["page_id"]
 	}
 }

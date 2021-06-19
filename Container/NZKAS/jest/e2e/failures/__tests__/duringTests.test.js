@@ -29,11 +29,11 @@ test('Error during test', () => {
   doesNotExist.alsoThisNot;
 });
 
-test('done(Error)', done => {
+test('done(Error)', (done) => {
   done(new Error('this is an error'));
 });
 
-test('done(non-error)', done => {
+test('done(non-error)', (done) => {
   done(deepObject);
 });
 

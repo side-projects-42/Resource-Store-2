@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Macofe",
-			"Michawiki",
-			"아라"
-		]
+		"authors": ["Macofe", "Michawiki", "아라"]
 	},
 	"config-desc": "Instalaciski program za MediaWiki",
 	"config-title": "Instalacija MediaWiki $1",

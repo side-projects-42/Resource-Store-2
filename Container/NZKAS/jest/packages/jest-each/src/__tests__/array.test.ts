@@ -45,7 +45,7 @@ describe('jest-each', () => {
     ['describe'],
     ['fdescribe'],
     ['describe', 'only'],
-  ].forEach(keyPath => {
+  ].forEach((keyPath) => {
     describe(`.${keyPath.join('.')}`, () => {
       test('throws an error when not called with an array', () => {
         const globalTestMocks = getGlobalTestMocks();
@@ -294,7 +294,7 @@ describe('jest-each', () => {
       [['it', 'only']],
     ])(
       'calls %O with done when cb function has more args than params of given test row',
-      keyPath => {
+      (keyPath) => {
         const globalTestMocks = getGlobalTestMocks();
         const eachObject = each.withGlobal(globalTestMocks)([['hello']]);
 
@@ -309,12 +309,12 @@ describe('jest-each', () => {
 
     test.each([[['describe']], [['fdescribe']], [['describe', 'only']]])(
       'does not call %O with done when test function has more args than params of given test row',
-      keyPath => {
+      (keyPath) => {
         const globalTestMocks = getGlobalTestMocks();
         const eachObject = each.withGlobal(globalTestMocks)([['hello']]);
 
         const testFunction = get(eachObject, keyPath);
-        testFunction('expected string', function(hello, done) {
+        testFunction('expected string', function (hello, done) {
           expect(hello).toBe('hello');
           expect(arguments.length).toBe(1);
           expect(done).toBe(undefined);
@@ -331,7 +331,7 @@ describe('jest-each', () => {
     ['it', 'skip'],
     ['xdescribe'],
     ['describe', 'skip'],
-  ].forEach(keyPath => {
+  ].forEach((keyPath) => {
     describe(`.${keyPath.join('.')}`, () => {
       test('calls global with given title', () => {
         const globalTestMocks = getGlobalTestMocks();

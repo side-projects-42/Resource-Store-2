@@ -1,7 +1,7 @@
 // Inputs
 
-@import 'mediawiki.mixins.less';
-@import 'mediawiki.ui/variables.less';
+@import "mediawiki.mixins.less";
+@import "mediawiki.ui/variables.less";
 
 // Text inputs
 //
@@ -57,8 +57,8 @@
 	}
 
 	// `:not()` is used exclusively for `transition`s as both are not supported by IE < 9.
-	&:not( :disabled ) {
-		.transition( ~'color 100ms, border-color 100ms, box-shadow 100ms' );
+	&:not(:disabled) {
+		.transition( ~"color 100ms, border-color 100ms, box-shadow 100ms" );
 	}
 
 	&:disabled {
@@ -67,7 +67,7 @@
 	}
 
 	// Normalize styling for `<input type="search">`
-	&[ type='search' ] {
+	&[type="search"] {
 		// Support: Safari/iOS `none` needed, Chrome would accept `textfield` as well.
 		/* stylelint-disable-next-line plugin/no-unsupported-browser-features */
 		-webkit-appearance: none;

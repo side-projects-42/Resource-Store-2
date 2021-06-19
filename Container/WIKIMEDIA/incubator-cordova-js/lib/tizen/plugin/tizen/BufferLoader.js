@@ -14,11 +14,11 @@
  */
 
 function BufferLoader(context, urlList, callback) {
-    this.context = context;
-    this.urlList = urlList;
-    this.onload = callback;
-    this.bufferList = [];
-    this.loadCount = 0;
+  this.context = context;
+  this.urlList = urlList;
+  this.onload = callback;
+  this.bufferList = [];
+  this.loadCount = 0;
 }
 
 /*
@@ -28,47 +28,48 @@ function BufferLoader(context, urlList, callback) {
  *
  */
 
-BufferLoader.prototype.loadBuffer = function(url, index) {
-    // Load buffer asynchronously
-    var request = null,
-        loader = null;
+BufferLoader.prototype.loadBuffer = function (url, index) {
+  // Load buffer asynchronously
+  var request = null,
+    loader = null;
 
-    request = new XMLHttpRequest();
+  request = new XMLHttpRequest();
 
-    if (request === null) {
-        console.log ("BufferLoader.prototype.loadBuffer, cannot allocate XML http request");
-        return;
-    }
+  if (request === null) {
+    console.log(
+      "BufferLoader.prototype.loadBuffer, cannot allocate XML http request"
+    );
+    return;
+  }
 
-    request.open("GET", url, true);
-    request.responseType = "arraybuffer";
+  request.open("GET", url, true);
+  request.responseType = "arraybuffer";
 
-    loader = this;
+  loader = this;
 
-    request.onload = function() {
+  request.onload = function () {
     // Asynchronously decode the audio file data in request.response
-    loader.context.decodeAudioData(
-        request.response,
-        function(buffer) {
-                if (!buffer) {
-                    console.log ("BufferLoader.prototype.loadBuffer,error decoding file data: " + url);
-                    return;
-                }
-
-                loader.bufferList[index] = buffer;
-
-                if (++loader.loadCount == loader.urlList.length) {
-                    loader.onload(loader.bufferList);
-                }
-            }
+    loader.context.decodeAudioData(request.response, function (buffer) {
+      if (!buffer) {
+        console.log(
+          "BufferLoader.prototype.loadBuffer,error decoding file data: " + url
         );
-    };
+        return;
+      }
 
-    request.onerror = function() {
-        console.log ("BufferLoader.prototype.loadBuffer, XHR error");
-    };
+      loader.bufferList[index] = buffer;
 
-    request.send();
+      if (++loader.loadCount == loader.urlList.length) {
+        loader.onload(loader.bufferList);
+      }
+    });
+  };
+
+  request.onerror = function () {
+    console.log("BufferLoader.prototype.loadBuffer, XHR error");
+  };
+
+  request.send();
 };
 
 /*
@@ -77,10 +78,10 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
  *
  */
 
-BufferLoader.prototype.load = function() {
-    for (var i = 0; i < this.urlList.length; ++i) {
-        this.loadBuffer(this.urlList[i], i);
-    }
+BufferLoader.prototype.load = function () {
+  for (var i = 0; i < this.urlList.length; ++i) {
+    this.loadBuffer(this.urlList[i], i);
+  }
 };
 
 module.exports = BufferLoader;

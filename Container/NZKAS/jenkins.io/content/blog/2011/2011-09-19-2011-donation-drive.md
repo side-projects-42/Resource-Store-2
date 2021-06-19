@@ -4,11 +4,12 @@
 :nodeid: 338
 :created: 1316440800
 :tags:
-- general
-- news
-- jenkinsci
+  - general
+  - news
+  - jenkinsci
 :author: rtyler
 ---
+
 <img src="http://agentdero.cachefly.net/continuousblog/images/tip-jar.png"
 align="right"/>
 
@@ -25,7 +26,7 @@ For the project this is a big step forward as it will allow us to offset the
 cost of servers for the project, bandwidth, SSL certificates and other costs
 incurred as part of running such a large open source project.
 
-----
+---
 
 _Trivia:_ The machine that this page is being served from originally started
 out as "hudson labs", purchased and colocated by
@@ -33,7 +34,7 @@ out as "hudson labs", purchased and colocated by
 [kohsuke](https://twitter.com/kohsukekawa) and
 [myself](https://twitter.com/agentdero).
 
-----
+---
 
 <br clear="all"/>
 

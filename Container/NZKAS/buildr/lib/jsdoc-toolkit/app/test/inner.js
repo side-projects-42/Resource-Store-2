@@ -10,7 +10,7 @@ function Outer() {
     this.name = name;
   }
 
-  this.open = function(name) {
-    return (new Inner(name));
-  }
+  this.open = function (name) {
+    return new Inner(name);
+  };
 }

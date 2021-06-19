@@ -25,4 +25,4 @@ pipelines:
           image:
             id: "${build.imageID}"
             name: mediawiki
-            tags: [ "${setup.branch}" ]
+            tags: ["${setup.branch}"]

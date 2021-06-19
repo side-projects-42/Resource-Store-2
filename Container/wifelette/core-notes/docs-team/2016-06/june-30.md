@@ -5,7 +5,7 @@ Previously
 - [x] TJ: Coordinate getting out a quality tutorial in the April-May timeframe
 - [ ] TJ: Private API work (on hold)
 - [ ] TJ: work with volunteers to finish subroutes in tutorial
- 
+
 # Topics
 
 - Fastboot environment followup (for new Ember site) - LS
@@ -17,7 +17,7 @@ Previously
 - Ember Data / imports issue - BM
 - Cleaning up actions, to make the various approaches easier to understand? - DB
 - Blog post about Learning team - RM
- 
+
 # Minutes
 
 ## Attendees
@@ -28,7 +28,7 @@ Previously
 - RM: Ricardo Mendes @locks
 - SK: Sivakumar Kailasam @siva
 - BM: Brendan McLoughlin @bmac
- 
+
 ## Notes
 
 ---
@@ -36,15 +36,14 @@ Previously
 ### Fastboot / Ember site
 
 - LS: will contact Heroku, slipped through the cracks
- 
+
 ### Builds page app
 
 - siva gonna push it over finish line
 - deploy builds to S3
 - website links directly
- 
+
 ### Ember Data, change to blueprints
 
 - BM: wanting to revert changes to Ember Data import format
 - RM / DB: we're in favor, would love to work out the larger import shim question as well so guides include accurate import statements
- 

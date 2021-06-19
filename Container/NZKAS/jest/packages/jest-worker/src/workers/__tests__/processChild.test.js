@@ -12,7 +12,7 @@ const mockExtendedError = new ReferenceError('Booo extended');
 const processExit = process.exit;
 const processSend = process.send;
 const uninitializedParam = {};
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 import {
   CHILD_MESSAGE_INITIALIZE,

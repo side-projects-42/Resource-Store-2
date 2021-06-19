@@ -3,8 +3,8 @@
  *  An error code assigned by an implementation when an error has occured
  * @constructor
  */
-var CompassError = function(err) {
-    this.code = (err !== undefined ? err : null);
+var CompassError = function (err) {
+  this.code = err !== undefined ? err : null;
 };
 
 CompassError.COMPASS_INTERNAL_ERR = 0;

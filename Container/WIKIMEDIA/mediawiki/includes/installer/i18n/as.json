@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Chaipau",
-			"Gitartha.bordoloi",
-			"Mohsin Ali",
-			"Simbu123"
-		]
+		"authors": ["Chaipau", "Gitartha.bordoloi", "Mohsin Ali", "Simbu123"]
 	},
 	"config-desc": "মিডিয়াৱিকিৰ ইনষ্টলাৰ",
 	"config-title": "মিডিয়াৱিকি $1 ইনষ্টলেশ্যন",

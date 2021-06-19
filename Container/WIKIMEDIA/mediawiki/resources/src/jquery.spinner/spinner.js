@@ -5,17 +5,16 @@
  *
  * @class jQuery.plugin.spinner
  */
-( function () {
-
+(function () {
 	// Default options for new spinners,
 	// stored outside the function to share between calls.
 	var defaults = {
 		id: undefined,
-		size: 'small',
-		type: 'inline'
+		size: "small",
+		type: "inline",
 	};
 
-	$.extend( {
+	$.extend({
 		/**
 		 * Create a spinner element
 		 *
@@ -58,29 +57,39 @@
 		 *   height equal to spinner size.
 		 * @return {jQuery}
 		 */
-		createSpinner: function ( opts ) {
+		createSpinner: function (opts) {
 			var i, $spinner, $container;
 
-			if ( typeof opts === 'string' ) {
+			if (typeof opts === "string") {
 				opts = {
-					id: opts
+					id: opts,
 				};
 			}
 
-			opts = $.extend( {}, defaults, opts );
+			opts = $.extend({}, defaults, opts);
 
-			$spinner = $( '<div>' ).addClass( 'mw-spinner' ).attr( 'title', '...' );
-			if ( opts.id !== undefined ) {
-				$spinner.attr( 'id', 'mw-spinner-' + opts.id );
+			$spinner = $("<div>").addClass("mw-spinner").attr("title", "...");
+			if (opts.id !== undefined) {
+				$spinner.attr("id", "mw-spinner-" + opts.id);
 			}
 
 			$spinner
-				.addClass( opts.size === 'large' ? 'mw-spinner-large' : 'mw-spinner-small' )
-				.addClass( opts.type === 'block' ? 'mw-spinner-block' : 'mw-spinner-inline' );
+				.addClass(
+					opts.size === "large"
+						? "mw-spinner-large"
+						: "mw-spinner-small"
+				)
+				.addClass(
+					opts.type === "block"
+						? "mw-spinner-block"
+						: "mw-spinner-inline"
+				);
 
-			$container = $( '<div>' ).addClass( 'mw-spinner-container' ).appendTo( $spinner );
-			for ( i = 0; i < 12; i++ ) {
-				$container.append( $( '<div>' ) );
+			$container = $("<div>")
+				.addClass("mw-spinner-container")
+				.appendTo($spinner);
+			for (i = 0; i < 12; i++) {
+				$container.append($("<div>"));
 			}
 
 			return $spinner;
@@ -94,10 +103,10 @@
 		 * @param {string} id Id of the spinner, as passed to #createSpinner
 		 * @return {jQuery} The (now detached) spinner element
 		 */
-		removeSpinner: function ( id ) {
-			return $( '#mw-spinner-' + id ).remove();
-		}
-	} );
+		removeSpinner: function (id) {
+			return $("#mw-spinner-" + id).remove();
+		},
+	});
 
 	/**
 	 * Inject a spinner after each element in the collection
@@ -108,13 +117,12 @@
 	 * @param {Object|string} [opts] See #createSpinner
 	 * @return {jQuery}
 	 */
-	$.fn.injectSpinner = function ( opts ) {
-		return this.after( $.createSpinner( opts ) );
+	$.fn.injectSpinner = function (opts) {
+		return this.after($.createSpinner(opts));
 	};
 
 	/**
 	 * @class jQuery
 	 * @mixins jQuery.plugin.spinner
 	 */
-
-}() );
+})();

@@ -20,7 +20,7 @@ export type CoverageWorkerResult = {
   sourceMapPath?: string | null;
 };
 
-export default function(
+export default function (
   source: string,
   filename: Config.Path,
   globalConfig: Config.GlobalConfig,

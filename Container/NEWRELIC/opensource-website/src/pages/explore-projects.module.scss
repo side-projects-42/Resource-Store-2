@@ -15,8 +15,7 @@
   background-color: var(--color-background);
   border: 1px solid var(--color-neutrals-300);
   border-radius: 4px;
-  box-shadow:
-    0px 0.249053px 0.553451px rgba(0, 0, 0, 0.00562291),
+  box-shadow: 0px 0.249053px 0.553451px rgba(0, 0, 0, 0.00562291),
     0px 0.598509px 1.33002px rgba(0, 0, 0, 0.00807786),
     0px 1.12694px 2.50431px rgba(0, 0, 0, 0.01),
     0px 2.01027px 4.46726px rgba(0, 0, 0, 0.0119221),
@@ -39,7 +38,6 @@
   border-radius: 50%;
   font-size: 12px;
   overflow: hidden;
-
 }
 
 .featured-project-title {
@@ -85,7 +83,7 @@
   color: var(--color-neutrals-600);
   text-align: center;
   border-bottom: none;
-  transition: all .1s var(--ease-out-quad);
+  transition: all 0.1s var(--ease-out-quad);
 
   &:first-child {
     border-right: 1px dotted var(--color-neutrals-400);
@@ -94,7 +92,10 @@
 
 .project-listing-container {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(
+      0,
+      1fr
+    );
   grid-template-rows: 1fr  auto;
   grid-gap: 20px;
 }
@@ -108,13 +109,18 @@
   border: 1px solid var(--color-neutrals-300);
   box-sizing: border-box;
   border-radius: 4px;
-  transition: all .08s var(--ease-out-quad);
+  transition: all 0.08s var(--ease-out-quad);
   text-decoration: none;
 
   &:hover {
     transform: translateY(-2px);
     border: 1px solid var(--color-neutrals-400);
-    box-shadow: 0px 0.249053px 0.553451px rgba(0, 0, 0, 0.00562291), 0px 0.598509px 1.33002px rgba(0, 0, 0, 0.00807786), 0px 1.12694px 2.50431px rgba(0, 0, 0, 0.01), 0px 2.01027px 4.46726px rgba(0, 0, 0, 0.0119221), 0px 3.75998px 8.35552px rgba(0, 0, 0, 0.0143771), 0px 9px 20px rgba(0, 0, 0, 0.02);
+    box-shadow: 0px 0.249053px 0.553451px rgba(0, 0, 0, 0.00562291),
+      0px 0.598509px 1.33002px rgba(0, 0, 0, 0.00807786),
+      0px 1.12694px 2.50431px rgba(0, 0, 0, 0.01),
+      0px 2.01027px 4.46726px rgba(0, 0, 0, 0.0119221),
+      0px 3.75998px 8.35552px rgba(0, 0, 0, 0.0143771),
+      0px 9px 20px rgba(0, 0, 0, 0.02);
 
     .project-title {
       color: var(--color-neutrals-900);
@@ -158,7 +164,7 @@
   font-size: 14px;
   line-height: 19px;
   color: var(--color-neutrals-700);
-  transition: all .1s var(--ease-out-quad);
+  transition: all 0.1s var(--ease-out-quad);
 }
 
 .project-description {
@@ -194,7 +200,7 @@
   color: var(--color-neutrals-600);
   text-align: center;
   border-bottom: none;
-  transition: all .1s var(--ease-out-quad);
+  transition: all 0.1s var(--ease-out-quad);
 
   &:first-child {
     border-right: 1px dotted var(--color-neutrals-400);
@@ -227,7 +233,7 @@
   width: 40px;
   height: 40px;
   margin-bottom: 16px;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .search-empty-state-title {
@@ -253,7 +259,7 @@
 // Hide the first three items in the list because they're
 // visible above as featured projects. Later we'll display
 // these when we hide the featured projects.
-.project-container:nth-child(-n+3) {
+.project-container:nth-child(-n + 3) {
   display: none;
 }
 
@@ -325,7 +331,7 @@
   .featured-projects {
     display: none;
   }
-  .project-container:nth-child(-n+3) {
+  .project-container:nth-child(-n + 3) {
     display: flex;
   }
 }
@@ -365,7 +371,12 @@
 :global(.dark-mode) {
   .featured-project {
     border: 1px solid var(--color-neutrals-400);
-    box-shadow: 0px 0.996212px 1.05156px rgba(3, 15, 16, 0.0365489), 0px 2.39404px 2.52704px rgba(3, 15, 16, 0.0525061), 0px 4.50776px 4.75819px rgba(3, 15, 16, 0.065), 0px 8.04107px 8.4878px rgba(3, 15, 16, 0.0774939), 0px 15.0399px 15.8755px rgba(3, 15, 16, 0.0934511), 0px 36px 38px rgba(3, 15, 16, 0.13);
+    box-shadow: 0px 0.996212px 1.05156px rgba(3, 15, 16, 0.0365489),
+      0px 2.39404px 2.52704px rgba(3, 15, 16, 0.0525061),
+      0px 4.50776px 4.75819px rgba(3, 15, 16, 0.065),
+      0px 8.04107px 8.4878px rgba(3, 15, 16, 0.0774939),
+      0px 15.0399px 15.8755px rgba(3, 15, 16, 0.0934511),
+      0px 36px 38px rgba(3, 15, 16, 0.13);
   }
 
   .featured-project-footer {
@@ -375,7 +386,7 @@
 
   .featured-project-footer-link {
     color: var(--color-neutrals-600);
-    opacity: .65;
+    opacity: 0.65;
 
     &:first-child {
       border-color: var(--color-neutrals-500);
@@ -384,7 +395,12 @@
 
   .project-container {
     border: 1px solid var(--color-neutrals-400);
-    box-shadow: 0px 0.249053px 0.304398px rgba(3, 15, 16, 0.0337375), 0px 0.598509px 0.731511px rgba(3, 15, 16, 0.0484671), 0px 1.12694px 1.37737px rgba(3, 15, 16, 0.06), 0px 2.01027px 2.45699px rgba(3, 15, 16, 0.0715329), 0px 3.75998px 4.59554px rgba(3, 15, 16, 0.0862625), 0px 9px 11px rgba(3, 15, 16, 0.12);
+    box-shadow: 0px 0.249053px 0.304398px rgba(3, 15, 16, 0.0337375),
+      0px 0.598509px 0.731511px rgba(3, 15, 16, 0.0484671),
+      0px 1.12694px 1.37737px rgba(3, 15, 16, 0.06),
+      0px 2.01027px 2.45699px rgba(3, 15, 16, 0.0715329),
+      0px 3.75998px 4.59554px rgba(3, 15, 16, 0.0862625),
+      0px 9px 11px rgba(3, 15, 16, 0.12);
 
     &:hover {
       border: 1px solid var(--color-neutrals-500);
@@ -398,7 +414,7 @@
 
   .project-footer-meta {
     color: var(--color-neutrals-600);
-    opacity: .65;
+    opacity: 0.65;
 
     &:first-child {
       border-color: var(--color-neutrals-500);

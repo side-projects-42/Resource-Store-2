@@ -12,40 +12,46 @@
  * @param {jQuery} $formRoot Root element of the form to attach to
  * @param {Object} config Configuration object
  */
-var FormWrapperWidget = function MwRcfiltersUiFormWrapperWidget( filtersModel, changeListModel, controller, $formRoot, config ) {
+var FormWrapperWidget = function MwRcfiltersUiFormWrapperWidget(
+	filtersModel,
+	changeListModel,
+	controller,
+	$formRoot,
+	config
+) {
 	config = config || {};
 
 	// Parent
-	FormWrapperWidget.parent.call( this, $.extend( {}, config, {
-		$element: $formRoot
-	} ) );
+	FormWrapperWidget.parent.call(
+		this,
+		$.extend({}, config, {
+			$element: $formRoot,
+		})
+	);
 
 	this.changeListModel = changeListModel;
 	this.filtersModel = filtersModel;
 	this.controller = controller;
-	this.$submitButton = this.$element.find( 'form input[type=submit]' );
+	this.$submitButton = this.$element.find("form input[type=submit]");
 
-	this.$element
-		.on( 'click', 'a[data-params]', this.onLinkClick.bind( this ) );
+	this.$element.on("click", "a[data-params]", this.onLinkClick.bind(this));
 
-	this.$element
-		.on( 'submit', 'form', this.onFormSubmit.bind( this ) );
+	this.$element.on("submit", "form", this.onFormSubmit.bind(this));
 
 	// Events
-	this.changeListModel.connect( this, {
-		invalidate: 'onChangesModelInvalidate',
-		update: 'onChangesModelUpdate'
-	} );
+	this.changeListModel.connect(this, {
+		invalidate: "onChangesModelInvalidate",
+		update: "onChangesModelUpdate",
+	});
 
 	// Initialize
 	this.cleanUpFieldset();
-	this.$element
-		.addClass( 'mw-rcfilters-ui-FormWrapperWidget' );
+	this.$element.addClass("mw-rcfilters-ui-FormWrapperWidget");
 };
 
 /* Initialization */
 
-OO.inheritClass( FormWrapperWidget, OO.ui.Widget );
+OO.inheritClass(FormWrapperWidget, OO.ui.Widget);
 
 /**
  * Respond to link click
@@ -53,8 +59,8 @@ OO.inheritClass( FormWrapperWidget, OO.ui.Widget );
  * @param {jQuery.Event} e Event
  * @return {boolean} false
  */
-FormWrapperWidget.prototype.onLinkClick = function ( e ) {
-	this.controller.updateChangesList( $( e.target ).data( 'params' ) );
+FormWrapperWidget.prototype.onLinkClick = function (e) {
+	this.controller.updateChangesList($(e.target).data("params"));
 	return false;
 };
 
@@ -64,25 +70,27 @@ FormWrapperWidget.prototype.onLinkClick = function ( e ) {
  * @param {jQuery.Event} e Event
  * @return {boolean} false
  */
-FormWrapperWidget.prototype.onFormSubmit = function ( e ) {
+FormWrapperWidget.prototype.onFormSubmit = function (e) {
 	var data = {};
 
 	// Collect all data from the form
-	$( e.target ).find( 'input, select' ).each( function () {
-		if ( this.type === 'hidden' || this.type === 'submit' ) {
-			return;
-		}
+	$(e.target)
+		.find("input, select")
+		.each(function () {
+			if (this.type === "hidden" || this.type === "submit") {
+				return;
+			}
 
-		if ( this.type === 'checkbox' && !this.checked ) {
-			// Use a fixed value for unchecked checkboxes.
-			data[ this.name ] = '';
-		} else {
-			// Use the live value for select, checked checkboxes, or non-checkbox input.
-			data[ this.name ] = $( this ).val();
-		}
-	} );
+			if (this.type === "checkbox" && !this.checked) {
+				// Use a fixed value for unchecked checkboxes.
+				data[this.name] = "";
+			} else {
+				// Use the live value for select, checked checkboxes, or non-checkbox input.
+				data[this.name] = $(this).val();
+			}
+		});
 
-	this.controller.updateChangesList( data );
+	this.controller.updateChangesList(data);
 	return false;
 };
 
@@ -90,7 +98,7 @@ FormWrapperWidget.prototype.onFormSubmit = function ( e ) {
  * Respond to model invalidate
  */
 FormWrapperWidget.prototype.onChangesModelInvalidate = function () {
-	this.$submitButton.prop( 'disabled', true );
+	this.$submitButton.prop("disabled", true);
 };
 
 /**
@@ -102,15 +110,20 @@ FormWrapperWidget.prototype.onChangesModelInvalidate = function () {
  * @param {string} noResultsDetails Type of no result error
  * @param {boolean} isInitialDOM Whether $changesListContent is the existing (already attached) DOM
  */
-FormWrapperWidget.prototype.onChangesModelUpdate = function ( $changesList, $fieldset, noResultsDetails, isInitialDOM ) {
-	this.$submitButton.prop( 'disabled', false );
+FormWrapperWidget.prototype.onChangesModelUpdate = function (
+	$changesList,
+	$fieldset,
+	noResultsDetails,
+	isInitialDOM
+) {
+	this.$submitButton.prop("disabled", false);
 
 	// Replace the entire fieldset
-	this.$element.empty().append( $fieldset.contents() );
+	this.$element.empty().append($fieldset.contents());
 
-	if ( !isInitialDOM ) {
+	if (!isInitialDOM) {
 		// Make sure enhanced RC re-initializes correctly
-		mw.hook( 'wikipage.content' ).fire( this.$element );
+		mw.hook("wikipage.content").fire(this.$element);
 	}
 
 	this.cleanUpFieldset();
@@ -120,32 +133,40 @@ FormWrapperWidget.prototype.onChangesModelUpdate = function ( $changesList, $fie
  * Clean up the old-style show/hide that we have implemented in the filter list
  */
 FormWrapperWidget.prototype.cleanUpFieldset = function () {
-	this.$element.find( '.clshowhideoption[data-feature-in-structured-ui=1]' ).each( function () {
-		// HACK: Remove the text node after the span.
-		// If there isn't one, we're at the end, so remove the text node before the span.
-		// This would be unnecessary if we added separators with CSS.
-		if ( this.nextSibling && this.nextSibling.nodeType === Node.TEXT_NODE ) {
-			this.parentNode.removeChild( this.nextSibling );
-		} else if ( this.previousSibling && this.previousSibling.nodeType === Node.TEXT_NODE ) {
-			this.parentNode.removeChild( this.previousSibling );
-		}
-		// Remove the span itself
-		this.parentNode.removeChild( this );
-	} );
+	this.$element
+		.find(".clshowhideoption[data-feature-in-structured-ui=1]")
+		.each(function () {
+			// HACK: Remove the text node after the span.
+			// If there isn't one, we're at the end, so remove the text node before the span.
+			// This would be unnecessary if we added separators with CSS.
+			if (
+				this.nextSibling &&
+				this.nextSibling.nodeType === Node.TEXT_NODE
+			) {
+				this.parentNode.removeChild(this.nextSibling);
+			} else if (
+				this.previousSibling &&
+				this.previousSibling.nodeType === Node.TEXT_NODE
+			) {
+				this.parentNode.removeChild(this.previousSibling);
+			}
+			// Remove the span itself
+			this.parentNode.removeChild(this);
+		});
 
 	// Hide namespaces and tags
-	this.$element.find( '.namespaceForm' ).detach();
-	this.$element.find( '.mw-tagfilter-label' ).closest( 'tr' ).detach();
+	this.$element.find(".namespaceForm").detach();
+	this.$element.find(".mw-tagfilter-label").closest("tr").detach();
 
 	// Hide Related Changes page name form
-	this.$element.find( '.targetForm' ).detach();
+	this.$element.find(".targetForm").detach();
 
 	// misc: limit, days, watchlist info msg
-	this.$element.find( '.rclinks, .cldays, .wlinfo' ).detach();
+	this.$element.find(".rclinks, .cldays, .wlinfo").detach();
 
-	if ( !this.$element.find( '.mw-recentchanges-table tr' ).length ) {
-		this.$element.find( '.mw-recentchanges-table' ).detach();
-		this.$element.find( 'hr' ).detach();
+	if (!this.$element.find(".mw-recentchanges-table tr").length) {
+		this.$element.find(".mw-recentchanges-table").detach();
+		this.$element.find("hr").detach();
 	}
 
 	// Get rid of all <br>s, which are inside rcshowhide
@@ -153,24 +174,24 @@ FormWrapperWidget.prototype.cleanUpFieldset = function () {
 	// gone. Instead, the CSS now has a rule to mark all <span>s
 	// inside .rcshowhide with display:block; to simulate newlines
 	// where they're actually needed.
-	this.$element.find( 'br' ).detach();
-	if ( !this.$element.find( '.rcshowhide' ).contents().length ) {
-		this.$element.find( '.rcshowhide' ).detach();
+	this.$element.find("br").detach();
+	if (!this.$element.find(".rcshowhide").contents().length) {
+		this.$element.find(".rcshowhide").detach();
 	}
 
-	if ( this.$element.find( '.cloption' ).text().trim() === '' ) {
-		this.$element.find( '.cloption-submit' ).detach();
+	if (this.$element.find(".cloption").text().trim() === "") {
+		this.$element.find(".cloption-submit").detach();
 	}
 
-	this.$element.find(
-		'.rclistfrom, .rcnotefrom, .rcoptions-listfromreset'
-	).detach();
+	this.$element
+		.find(".rclistfrom, .rcnotefrom, .rcoptions-listfromreset")
+		.detach();
 
 	// Get rid of the legend
-	this.$element.find( 'legend' ).detach();
+	this.$element.find("legend").detach();
 
 	// Check if the element is essentially empty, and detach it if it is
-	if ( !this.$element.text().trim().length ) {
+	if (!this.$element.text().trim().length) {
 		this.$element.detach();
 	}
 };

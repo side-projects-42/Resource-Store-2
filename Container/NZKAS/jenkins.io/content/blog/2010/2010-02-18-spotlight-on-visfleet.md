@@ -1,18 +1,20 @@
 ---
 :layout: post
-:title: 'Spotlight on: VisFleet'
+:title: "Spotlight on: VisFleet"
 :nodeid: 198
 :created: 1266506100
 :tags:
-- general
-- feedback
-- interview
+  - general
+  - feedback
+  - interview
 :author: rtyler
 ---
+
 For this week's user spotlight, I'm talking to Rasheed Abdul-Aziz of
-VisFleet Ltd. out of New Zealand. This being our second "spotlight" on a particular company, the format can still be considered *beta*; if you have any additional questions for Rasheed, feel free to ask them in the comments and I'll try to get Rasheed to answer.
+VisFleet Ltd. out of New Zealand. This being our second "spotlight" on a particular company, the format can still be considered _beta_; if you have any additional questions for Rasheed, feel free to ask them in the comments and I'll try to get Rasheed to answer.
 
 Similar to the spotlight on ITA Software from last week, VisFleet builds business software helping their customers operate their businesses more effectively through web applications in tandem with mobile applications. While I could endlessly discuss the power and flexibility of Hudson, particularly for building web software, I'll let Rasheed do the majority of the talking, so let's get to it.
+
 <!--break-->
 <table border="0">
 <tr><td align="center">
@@ -40,7 +42,6 @@ tight iterations.
 </td></tr>
 <tr><td><br/></td></tr>
 
-
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
 <strong>Hudson</strong>
@@ -55,7 +56,6 @@ How long has VisFleet been using Hudson?
 About 14 months now.
 </td></tr>
 <tr><td><br/></td></tr>
-
 
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
@@ -76,7 +76,6 @@ integration recommended Hudson.
 
 </td></tr>
 <tr><td><br/></td></tr>
-
 
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
@@ -126,8 +125,6 @@ development environment and workflow.
 </td></tr>
 <tr><td><br/></td></tr>
 
-
-
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
 <strong>Hudson</strong>
@@ -147,8 +144,6 @@ of time possible.
 </td></tr>
 <tr><td><br/></td></tr>
 
-
-
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
 <strong>Hudson</strong>
@@ -165,11 +160,10 @@ So it sounds like you guys are all on board with Hudson, on a 1-10 scale, how im
 <tr><td><br/></td></tr>
 </table>
 
-----
+---
 
 Thanks again to Rasheed for chatting with me about how Hudson helps VisFleet keep cranking on what they do best. If you would like to discuss your company's use of Hudson for Continuous Blog, you can contact me at `tyler` at `linux.com`
 
+---
 
-
-----
 **Editor's Note:** Rasheed Abdul-Aziz is a Software Architect at VisFleet Ltd. Rasheed specializes in Flex RIA development, but also loves a good build script and manages Hudson for VisFleet. Find out more about VisFleet and Rasheed on the [VisFleet devblog](http://devblog.visfleet.com/) and [Rasheed's blog](http://squeedee.tumblr.com)

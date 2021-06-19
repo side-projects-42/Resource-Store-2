@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Aefgh39622",
-			"Hzy980512",
-			"Omotecho",
-			"Shirayuki"
-		]
+		"authors": ["Aefgh39622", "Hzy980512", "Omotecho", "Shirayuki"]
 	},
 	"rest-prefix-mismatch": "リクエストされたパス ($1) は REST API ルートパス ($2) 内にありませんでした",
 	"rest-wrong-method": "このリクエストメソッド（$1）はこのパスで使用可能なメソッド{{PLURAL:$3||の一つ}}（$2）ではありません。",

@@ -4,5 +4,5 @@ os:
   - windows
 language: node_js
 node_js:
-  - '12'
-  - '10'
+  - "12"
+  - "10"

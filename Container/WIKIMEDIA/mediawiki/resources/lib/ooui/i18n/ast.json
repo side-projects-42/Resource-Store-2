@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Basharh",
-			"Bishnu Saikia",
-			"Xuacu"
-		]
+		"authors": ["Basharh", "Bishnu Saikia", "Xuacu"]
 	},
 	"ooui-outline-control-move-down": "Mover abaxo l'elementu",
 	"ooui-outline-control-move-up": "Mover arriba l'elementu",

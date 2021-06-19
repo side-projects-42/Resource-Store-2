@@ -1,4 +1,3 @@
-
 # Install Node
 
 Using Homebrew, install Node (npm will be installed with Node):
@@ -17,7 +16,7 @@ brew install yarn
 
 # Install NCC
 
-NCC is used to compile the *.js into a dist/index.js
+NCC is used to compile the \*.js into a dist/index.js
 
 ```
 npm i -g @zeit/ncc
@@ -31,7 +30,7 @@ yarn run package
 
 # Installing new javascript packages
 
-Adding new javascript packages is fairly straightforward.  If you're adding a github @actions/xxx package,
+Adding new javascript packages is fairly straightforward. If you're adding a github @actions/xxx package,
 simply refer to it by its short-hand name:
 
 ```
@@ -42,11 +41,10 @@ npm install @actions/core
 
 A pre-commit hook is provided that can help keep dist/index.js in tune with local changes
 
-
 # Using Node as a REPL
 
-If you're developing or working on the index.js script, it can be handy to try out stuff 
-locally.  To do that, use Node to start up a REPL shell by running it from the action's folder:
+If you're developing or working on the index.js script, it can be handy to try out stuff
+locally. To do that, use Node to start up a REPL shell by running it from the action's folder:
 
 ```
 cd .github/workflow/actions/annotate

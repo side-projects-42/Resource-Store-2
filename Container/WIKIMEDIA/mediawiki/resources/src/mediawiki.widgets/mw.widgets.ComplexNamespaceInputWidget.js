@@ -4,8 +4,7 @@
  * @copyright 2011-2015 MediaWiki Widgets Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * Namespace input widget. Displays a dropdown box with the choice of available namespaces, plus
 	 * two checkboxes to include associated namespace or to invert selection.
@@ -30,73 +29,68 @@
 	 *     the "include associated namespace" checkbox
 	 * @cfg {string} associatedLabel.label Label text for the label
 	 */
-	mw.widgets.ComplexNamespaceInputWidget = function MwWidgetsComplexNamespaceInputWidget( config ) {
-		// Configuration initialization
-		config = $.extend(
-			{
-				// Config options for nested widgets
-				namespace: {},
-				invert: {},
-				invertLabel: {},
-				associated: {},
-				associatedLabel: {}
-			},
-			config
-		);
-
-		// Parent constructor
-		mw.widgets.ComplexNamespaceInputWidget.parent.call( this, config );
-
-		// Properties
-		this.config = config;
-
-		this.namespace = new mw.widgets.NamespaceInputWidget( config.namespace );
-		if ( config.associated !== null ) {
-			this.associated = new OO.ui.CheckboxInputWidget( $.extend(
-				{ value: '1' },
-				config.associated
-			) );
-			// TODO Should use a LabelWidget? But they don't work like HTML <label>s yet
-			this.associatedLabel = new OO.ui.FieldLayout(
-				this.associated,
-				$.extend(
-					{ align: 'inline' },
-					config.associatedLabel
-				)
+	mw.widgets.ComplexNamespaceInputWidget =
+		function MwWidgetsComplexNamespaceInputWidget(config) {
+			// Configuration initialization
+			config = $.extend(
+				{
+					// Config options for nested widgets
+					namespace: {},
+					invert: {},
+					invertLabel: {},
+					associated: {},
+					associatedLabel: {},
+				},
+				config
 			);
-		}
-		if ( config.invert !== null ) {
-			this.invert = new OO.ui.CheckboxInputWidget( $.extend(
-				{ value: '1' },
-				config.invert
-			) );
-			// TODO Should use a LabelWidget? But they don't work like HTML <label>s yet
-			this.invertLabel = new OO.ui.FieldLayout(
-				this.invert,
-				$.extend(
-					{ align: 'inline' },
-					config.invertLabel
-				)
-			);
-		}
 
-		// Events
-		this.namespace.connect( this, { change: 'updateCheckboxesState' } );
+			// Parent constructor
+			mw.widgets.ComplexNamespaceInputWidget.parent.call(this, config);
 
-		// Initialization
-		this.$element
-			.addClass( 'mw-widget-complexNamespaceInputWidget' )
-			.append(
-				this.namespace.$element,
-				this.invert ? this.invertLabel.$element : '',
-				this.associated ? this.associatedLabel.$element : ''
+			// Properties
+			this.config = config;
+
+			this.namespace = new mw.widgets.NamespaceInputWidget(
+				config.namespace
 			);
-		this.updateCheckboxesState();
-	};
+			if (config.associated !== null) {
+				this.associated = new OO.ui.CheckboxInputWidget(
+					$.extend({ value: "1" }, config.associated)
+				);
+				// TODO Should use a LabelWidget? But they don't work like HTML <label>s yet
+				this.associatedLabel = new OO.ui.FieldLayout(
+					this.associated,
+					$.extend({ align: "inline" }, config.associatedLabel)
+				);
+			}
+			if (config.invert !== null) {
+				this.invert = new OO.ui.CheckboxInputWidget(
+					$.extend({ value: "1" }, config.invert)
+				);
+				// TODO Should use a LabelWidget? But they don't work like HTML <label>s yet
+				this.invertLabel = new OO.ui.FieldLayout(
+					this.invert,
+					$.extend({ align: "inline" }, config.invertLabel)
+				);
+			}
+
+			// Events
+			this.namespace.connect(this, { change: "updateCheckboxesState" });
+
+			// Initialization
+			this.$element
+				.addClass("mw-widget-complexNamespaceInputWidget")
+				.append(
+					this.namespace.$element,
+					this.invert ? this.invertLabel.$element : "",
+					this.associated ? this.associatedLabel.$element : ""
+				);
+			this.updateCheckboxesState();
+		};
 
 	/* Setup */
 
-	OO.inheritClass( mw.widgets.ComplexNamespaceInputWidget, OO.ui.Widget );
+	OO.inheritClass(mw.widgets.ComplexNamespaceInputWidget, OO.ui.Widget);
 
 	/* Methods */
 
@@ -105,32 +99,38 @@
 	 *
 	 * @private
 	 */
-	mw.widgets.ComplexNamespaceInputWidget.prototype.updateCheckboxesState = function () {
-		var disabled = this.namespace.getValue() === this.namespace.allValue;
-		if ( this.invert ) {
-			this.invert.setDisabled( disabled );
-		}
-		if ( this.associated ) {
-			this.associated.setDisabled( disabled );
-		}
-	};
+	mw.widgets.ComplexNamespaceInputWidget.prototype.updateCheckboxesState =
+		function () {
+			var disabled =
+				this.namespace.getValue() === this.namespace.allValue;
+			if (this.invert) {
+				this.invert.setDisabled(disabled);
+			}
+			if (this.associated) {
+				this.associated.setDisabled(disabled);
+			}
+		};
 
 	/**
 	 * @inheritdoc
 	 */
-	mw.widgets.ComplexNamespaceInputWidget.prototype.setDisabled = function ( disabled ) {
-		mw.widgets.ComplexNamespaceInputWidget.parent.prototype.setDisabled.call( this, disabled );
-		if ( this.namespace ) {
-			this.namespace.setDisabled( disabled );
+	mw.widgets.ComplexNamespaceInputWidget.prototype.setDisabled = function (
+		disabled
+	) {
+		mw.widgets.ComplexNamespaceInputWidget.parent.prototype.setDisabled.call(
+			this,
+			disabled
+		);
+		if (this.namespace) {
+			this.namespace.setDisabled(disabled);
 		}
-		if ( this.invert ) {
-			this.invert.setDisabled( disabled );
+		if (this.invert) {
+			this.invert.setDisabled(disabled);
 		}
 
-		if ( this.associated ) {
-			this.associated.setDisabled( disabled );
+		if (this.associated) {
+			this.associated.setDisabled(disabled);
 		}
 		return this;
 	};
-
-}() );
+})();

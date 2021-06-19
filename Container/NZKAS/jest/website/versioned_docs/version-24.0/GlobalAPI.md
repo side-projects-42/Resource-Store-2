@@ -36,13 +36,13 @@ afterAll(() => {
 });
 
 test('can find things', () => {
-  return globalDatabase.find('thing', {}, results => {
+  return globalDatabase.find('thing', {}, (results) => {
     expect(results.length).toBeGreaterThan(0);
   });
 });
 
 test('can insert a thing', () => {
-  return globalDatabase.insert('thing', makeThing(), response => {
+  return globalDatabase.insert('thing', makeThing(), (response) => {
     expect(response.success).toBeTruthy();
   });
 });
@@ -76,13 +76,13 @@ afterEach(() => {
 });
 
 test('can find things', () => {
-  return globalDatabase.find('thing', {}, results => {
+  return globalDatabase.find('thing', {}, (results) => {
     expect(results.length).toBeGreaterThan(0);
   });
 });
 
 test('can insert a thing', () => {
-  return globalDatabase.insert('thing', makeThing(), response => {
+  return globalDatabase.insert('thing', makeThing(), (response) => {
     expect(response.success).toBeTruthy();
   });
 });
@@ -118,7 +118,7 @@ beforeAll(() => {
 // Since we only set up the database once in this example, it's important
 // that our tests don't modify it.
 test('can find things', () => {
-  return globalDatabase.find('thing', {}, results => {
+  return globalDatabase.find('thing', {}, (results) => {
     expect(results.length).toBeGreaterThan(0);
   });
 });
@@ -152,13 +152,13 @@ beforeEach(() => {
 });
 
 test('can find things', () => {
-  return globalDatabase.find('thing', {}, results => {
+  return globalDatabase.find('thing', {}, (results) => {
     expect(results.length).toBeGreaterThan(0);
   });
 });
 
 test('can insert a thing', () => {
-  return globalDatabase.insert('thing', makeThing(), response => {
+  return globalDatabase.insert('thing', makeThing(), (response) => {
     expect(response.success).toBeTruthy();
   });
 });
@@ -196,7 +196,7 @@ This isn't required - you can just write the `test` blocks directly at the top l
 You can also nest `describe` blocks if you have a hierarchy of tests:
 
 ```js
-const binaryStringToNumber = binString => {
+const binaryStringToNumber = (binString) => {
   if (!/^[01]+$/.test(binString)) {
     throw new CustomError('Not a binary number.');
   }
@@ -250,22 +250,23 @@ Use `describe.each` if you keep duplicating the same test suites with different 
 Example:
 
 ```js
-describe.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(
-  '.add(%i, %i)',
-  (a, b, expected) => {
-    test(`returns ${expected}`, () => {
-      expect(a + b).toBe(expected);
-    });
+describe.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('.add(%i, %i)', (a, b, expected) => {
+  test(`returns ${expected}`, () => {
+    expect(a + b).toBe(expected);
+  });
 
-    test(`returned value not be greater than ${expected}`, () => {
-      expect(a + b).not.toBeGreaterThan(expected);
-    });
+  test(`returned value not be greater than ${expected}`, () => {
+    expect(a + b).not.toBeGreaterThan(expected);
+  });
 
-    test(`returned value not be less than ${expected}`, () => {
-      expect(a + b).not.toBeLessThan(expected);
-    });
-  },
-);
+  test(`returned value not be less than ${expected}`, () => {
+    expect(a + b).not.toBeLessThan(expected);
+  });
+});
 ```
 
 #### 2. `` describe.each`table`(name, fn, timeout) ``
@@ -334,14 +335,15 @@ Use `describe.only.each` if you want to only run specific tests suites of data d
 #### `describe.only.each(table)(name, fn)`
 
 ```js
-describe.only.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(
-  '.add(%i, %i)',
-  (a, b, expected) => {
-    test(`returns ${expected}`, () => {
-      expect(a + b).toBe(expected);
-    });
-  },
-);
+describe.only.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('.add(%i, %i)', (a, b, expected) => {
+  test(`returns ${expected}`, () => {
+    expect(a + b).toBe(expected);
+  });
+});
 
 test('will not be ran', () => {
   expect(1 / 0).toBe(Infinity);
@@ -402,14 +404,15 @@ Use `describe.skip.each` if you want to stop running a suite of data driven test
 #### `describe.skip.each(table)(name, fn)`
 
 ```js
-describe.skip.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(
-  '.add(%i, %i)',
-  (a, b, expected) => {
-    test(`returns ${expected}`, () => {
-      expect(a + b).toBe(expected); // will not be ran
-    });
-  },
-);
+describe.skip.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('.add(%i, %i)', (a, b, expected) => {
+  test(`returns ${expected}`, () => {
+    expect(a + b).toBe(expected); // will not be ran
+  });
+});
 
 test('will be ran', () => {
   expect(1 / 0).toBe(Infinity);
@@ -455,7 +458,7 @@ For example, let's say `fetchBeverageList()` returns a promise that is supposed 
 
 ```js
 test('has lemon in it', () => {
-  return fetchBeverageList().then(list => {
+  return fetchBeverageList().then((list) => {
     expect(list).toContain('lemon');
   });
 });
@@ -492,12 +495,13 @@ Use `test.each` if you keep duplicating the same test with different data. `test
 Example:
 
 ```js
-test.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(
-  '.add(%i, %i)',
-  (a, b, expected) => {
-    expect(a + b).toBe(expected);
-  },
-);
+test.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('.add(%i, %i)', (a, b, expected) => {
+  expect(a + b).toBe(expected);
+});
 ```
 
 #### 2. `` test.each`table`(name, fn, timeout) ``
@@ -558,12 +562,13 @@ Use `test.only.each` if you want to only run specific tests with different test 
 #### `test.only.each(table)(name, fn)`
 
 ```js
-test.only.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(
-  '.add(%i, %i)',
-  (a, b, expected) => {
-    expect(a + b).toBe(expected);
-  },
-);
+test.only.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('.add(%i, %i)', (a, b, expected) => {
+  expect(a + b).toBe(expected);
+});
 
 test('will not be ran', () => {
   expect(1 / 0).toBe(Infinity);
@@ -620,12 +625,13 @@ Use `test.skip.each` if you want to stop running a collection of data driven tes
 #### `test.skip.each(table)(name, fn)`
 
 ```js
-test.skip.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(
-  '.add(%i, %i)',
-  (a, b, expected) => {
-    expect(a + b).toBe(expected); // will not be ran
-  },
-);
+test.skip.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('.add(%i, %i)', (a, b, expected) => {
+  expect(a + b).toBe(expected); // will not be ran
+});
 
 test('will be ran', () => {
   expect(1 / 0).toBe(Infinity);

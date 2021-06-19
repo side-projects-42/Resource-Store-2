@@ -64,7 +64,7 @@ export const runCLI = async (
   }
 
   if (argv.clearCache) {
-    configs.forEach(config => {
+    configs.forEach((config) => {
       rimraf.sync(config.cacheDirectory);
       process.stdout.write(`Cleared ${config.cacheDirectory}\n`);
     });
@@ -77,7 +77,7 @@ export const runCLI = async (
     configs,
     hasDeprecationWarnings,
     outputStream,
-    r => (results = r),
+    (r) => (results = r),
   );
 
   if (argv.watch || argv.watchAll) {

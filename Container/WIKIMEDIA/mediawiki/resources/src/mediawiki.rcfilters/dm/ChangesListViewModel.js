@@ -7,21 +7,23 @@
  * @param {jQuery} $initialFieldset The initial server-generated legacy form content
  * @constructor
  */
-var ChangesListViewModel = function MwRcfiltersDmChangesListViewModel( $initialFieldset ) {
+var ChangesListViewModel = function MwRcfiltersDmChangesListViewModel(
+	$initialFieldset
+) {
 	// Mixin constructor
-	OO.EventEmitter.call( this );
+	OO.EventEmitter.call(this);
 
 	this.valid = true;
 	this.newChangesExist = false;
 	this.liveUpdate = false;
 	this.unseenWatchedChanges = false;
 
-	this.extractNextFrom( $initialFieldset );
+	this.extractNextFrom($initialFieldset);
 };
 
 /* Initialization */
-OO.initClass( ChangesListViewModel );
-OO.mixinClass( ChangesListViewModel, OO.EventEmitter );
+OO.initClass(ChangesListViewModel);
+OO.mixinClass(ChangesListViewModel, OO.EventEmitter);
 
 /* Events */
 
@@ -64,9 +66,9 @@ OO.mixinClass( ChangesListViewModel, OO.EventEmitter );
  * @fires invalidate
  */
 ChangesListViewModel.prototype.invalidate = function () {
-	if ( this.valid ) {
+	if (this.valid) {
 		this.valid = false;
-		this.emit( 'invalidate' );
+		this.emit("invalidate");
 	}
 };
 
@@ -80,12 +82,25 @@ ChangesListViewModel.prototype.invalidate = function () {
  * @param {boolean} [separateOldAndNew] Whether a logical separation between old and new changes is needed
  * @fires update
  */
-ChangesListViewModel.prototype.update = function ( changesListContent, $fieldset, noResultsDetails, isInitialDOM, separateOldAndNew ) {
+ChangesListViewModel.prototype.update = function (
+	changesListContent,
+	$fieldset,
+	noResultsDetails,
+	isInitialDOM,
+	separateOldAndNew
+) {
 	var from = this.nextFrom;
 	this.valid = true;
-	this.extractNextFrom( $fieldset );
-	this.checkForUnseenWatchedChanges( changesListContent );
-	this.emit( 'update', changesListContent, $fieldset, noResultsDetails, isInitialDOM, separateOldAndNew ? from : null );
+	this.extractNextFrom($fieldset);
+	this.checkForUnseenWatchedChanges(changesListContent);
+	this.emit(
+		"update",
+		changesListContent,
+		$fieldset,
+		noResultsDetails,
+		isInitialDOM,
+		separateOldAndNew ? from : null
+	);
 };
 
 /**
@@ -94,10 +109,10 @@ ChangesListViewModel.prototype.update = function ( changesListContent, $fieldset
  * @param {boolean} newChangesExist
  * @fires newChangesExist
  */
-ChangesListViewModel.prototype.setNewChangesExist = function ( newChangesExist ) {
-	if ( newChangesExist !== this.newChangesExist ) {
+ChangesListViewModel.prototype.setNewChangesExist = function (newChangesExist) {
+	if (newChangesExist !== this.newChangesExist) {
 		this.newChangesExist = newChangesExist;
-		this.emit( 'newChangesExist', newChangesExist );
+		this.emit("newChangesExist", newChangesExist);
 	}
 };
 
@@ -113,9 +128,9 @@ ChangesListViewModel.prototype.getNewChangesExist = function () {
  *
  * @param {jQuery} $fieldset
  */
-ChangesListViewModel.prototype.extractNextFrom = function ( $fieldset ) {
-	var data = $fieldset.find( '.rclistfrom > a, .wlinfo' ).data( 'params' );
-	if ( data && data.from ) {
+ChangesListViewModel.prototype.extractNextFrom = function ($fieldset) {
+	var data = $fieldset.find(".rclistfrom > a, .wlinfo").data("params");
+	if (data && data.from) {
 		this.nextFrom = data.from;
 		this.nextFromFormatted = data.fromFormatted;
 	}
@@ -140,11 +155,11 @@ ChangesListViewModel.prototype.getNextFromFormatted = function () {
  *
  * @param {boolean} enable
  */
-ChangesListViewModel.prototype.toggleLiveUpdate = function ( enable ) {
+ChangesListViewModel.prototype.toggleLiveUpdate = function (enable) {
 	enable = enable === undefined ? !this.liveUpdate : enable;
-	if ( enable !== this.liveUpdate ) {
+	if (enable !== this.liveUpdate) {
 		this.liveUpdate = enable;
-		this.emit( 'liveUpdateChange', this.liveUpdate );
+		this.emit("liveUpdateChange", this.liveUpdate);
 	}
 };
 
@@ -160,9 +175,12 @@ ChangesListViewModel.prototype.getLiveUpdate = function () {
  *
  * @param {jQuery|string} changeslistContent
  */
-ChangesListViewModel.prototype.checkForUnseenWatchedChanges = function ( changeslistContent ) {
-	this.unseenWatchedChanges = changeslistContent !== 'NO_RESULTS' &&
-		changeslistContent.find( '.mw-changeslist-line-watched' ).length > 0;
+ChangesListViewModel.prototype.checkForUnseenWatchedChanges = function (
+	changeslistContent
+) {
+	this.unseenWatchedChanges =
+		changeslistContent !== "NO_RESULTS" &&
+		changeslistContent.find(".mw-changeslist-line-watched").length > 0;
 };
 
 /**

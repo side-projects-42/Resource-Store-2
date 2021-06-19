@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Foxj",
-			"John Reid",
-			"MJL"
-		]
+		"authors": ["Foxj", "John Reid", "MJL"]
 	},
 	"ooui-outline-control-move-down": "Muiv item doon",
 	"ooui-outline-control-move-up": "Muiv item up",

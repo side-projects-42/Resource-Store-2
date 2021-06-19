@@ -56,7 +56,7 @@ class JSDOMEnvironment implements JestEnvironment {
     installCommonGlobals(global as any, config.globals);
 
     // Report uncaught errors.
-    this.errorEventListener = event => {
+    this.errorEventListener = (event) => {
       if (userErrorListenerCount === 0 && event.error) {
         process.emit('uncaughtException', event.error);
       }
@@ -68,7 +68,7 @@ class JSDOMEnvironment implements JestEnvironment {
     const originalAddListener = global.addEventListener;
     const originalRemoveListener = global.removeEventListener;
     let userErrorListenerCount = 0;
-    global.addEventListener = function(
+    global.addEventListener = function (
       ...args: Parameters<typeof originalAddListener>
     ) {
       if (args[0] === 'error') {
@@ -76,7 +76,7 @@ class JSDOMEnvironment implements JestEnvironment {
       }
       return originalAddListener.apply(this, args);
     };
-    global.removeEventListener = function(
+    global.removeEventListener = function (
       ...args: Parameters<typeof originalRemoveListener>
     ) {
       if (args[0] === 'error') {

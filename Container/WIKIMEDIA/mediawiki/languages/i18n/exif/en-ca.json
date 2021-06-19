@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Dantman",
-			"Techman224"
-		]
+		"authors": ["Dantman", "Techman224"]
 	},
 	"exif-ycbcrcoefficients": "Colour space transformation matrix coefficients",
 	"exif-colorspace": "Colour space",

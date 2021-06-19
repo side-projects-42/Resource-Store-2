@@ -10,12 +10,10 @@
  * @description:
  * Tests to see if there are any `describe.only` tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	describe.only('something', function () {
-		it('should do stuff', function () {
-
-		});
+	describe.only("something", function () {
+		it("should do stuff", function () {});
 	});
-}(this));
+})(this);

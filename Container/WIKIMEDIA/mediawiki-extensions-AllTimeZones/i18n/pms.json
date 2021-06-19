@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Borichèt",
-			"Dragonòt"
-		]
-	},
-	"alltimezones-desc": "A gionta na tichëtta për smon-e le date an tùit ij fus orari"
+  "@metadata": {
+    "authors": ["Borichèt", "Dragonòt"]
+  },
+  "alltimezones-desc": "A gionta na tichëtta për smon-e le date an tùit ij fus orari"
 }

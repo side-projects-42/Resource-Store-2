@@ -3,29 +3,29 @@
  * Recommended options from:
  * https://www.mediawiki.org/wiki/Manual:Coding_conventions/SVG#Exemplified_safe_configuration
  */
-const { extendDefaultPlugins } = require( 'svgo' );
+const { extendDefaultPlugins } = require("svgo");
 module.exports = {
 	multipass: true,
-	plugins: extendDefaultPlugins( [
+	plugins: extendDefaultPlugins([
 		{
-			name: 'cleanupIDs',
-			active: false
+			name: "cleanupIDs",
+			active: false,
 		},
 		{
-			name: 'removeDesc',
-			active: false
+			name: "removeDesc",
+			active: false,
 		},
 		{
-			name: 'removeRasterImages',
-			active: true
+			name: "removeRasterImages",
+			active: true,
 		},
 		{
-			name: 'removeTitle',
-			active: false
+			name: "removeTitle",
+			active: false,
 		},
 		{
-			name: 'removeViewBox',
-			active: false
+			name: "removeViewBox",
+			active: false,
 		},
 		{
 			// If the SVG doesn't start with an XML declaration, then its MIME type will
@@ -33,14 +33,14 @@ module.exports = {
 			// consequently, MediaWiki's CSSMin CSS minifier. libmagic's default database
 			// currently requires that SVGs contain an XML declaration:
 			// https://github.com/threatstack/libmagic/blob/master/magic/Magdir/sgml#L5
-			name: 'removeXMLProcInst',
-			active: false
+			name: "removeXMLProcInst",
+			active: false,
 		},
 		{
-			name: 'sortAttrs',
-			active: true
-		}
-	] ),
+			name: "sortAttrs",
+			active: true,
+		},
+	]),
 
 	// Configure the indent (default 4 spaces) used by `--pretty` here:
 	// @see https://github.com/svg/svgo/blob/master/lib/svgo/js2svg.js#L6 for more config options
@@ -51,5 +51,5 @@ module.exports = {
 	js2svg: {
 		indent: "\t",
 		pretty: true,
-	}
-}
+	},
+};

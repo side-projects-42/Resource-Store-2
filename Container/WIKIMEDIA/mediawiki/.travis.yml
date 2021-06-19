@@ -17,8 +17,8 @@ dist: trusty
 cache:
   npm: true
   directories:
-  # Composer doesn't have a dedicated cache setting in Travis CI config, so set the directory path instead.
-  - vendor
+    # Composer doesn't have a dedicated cache setting in Travis CI config, so set the directory path instead.
+    - vendor
 
 matrix:
   fast_finish: true
@@ -39,8 +39,8 @@ branches:
 addons:
   apt:
     packages:
-    - djvulibre-bin
-    - tidy
+      - djvulibre-bin
+      - tidy
 
 before_script:
   - echo 'opcache.enable_cli = 1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini

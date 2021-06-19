@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Amire80"
-		]
+		"authors": ["Amire80"]
 	},
 	"paramvalidator-badbool": "ערך בלתי־תקין \"$2\" עבור פרמטר הבוליאני \"$1\". יש להעביר $3 בשביל אמת, או $5 בשביל שקר.",
 	"paramvalidator-badexpiry": "ערך בלתי־תקין \"$2\" עבור פרמטר התפוגה \"$1\".",

@@ -15,10 +15,7 @@
   "description": "Cartridge to simplify adding New Relic Browser Javascript to your SalesForce Commerce Cloud site",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "JavaScript",
-  "projectTags": [
-    "nrlabs",
-    "browser"
-  ],
+  "projectTags": ["nrlabs", "browser"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Browser for SalesForce Commerce Cloud",

@@ -4,32 +4,39 @@
 var msg,
 	loadedScripts = {};
 
-function wikiUrlencode( page ) {
-	return encodeURIComponent( String( page ) )
-		.replace( /'/g, '%27' )
-		.replace( /%20/g, '_' )
-		// wfUrlencode replacements
-		.replace( /%3B/g, ';' )
-		.replace( /%40/g, '@' )
-		.replace( /%24/g, '$' )
-		.replace( /%21/g, '!' )
-		.replace( /%2A/g, '*' )
-		.replace( /%28/g, '(' )
-		.replace( /%29/g, ')' )
-		.replace( /%2C/g, ',' )
-		.replace( /%2F/g, '/' )
-		.replace( /%7E/g, '~' )
-		.replace( /%3A/g, ':' );
+function wikiUrlencode(page) {
+	return (
+		encodeURIComponent(String(page))
+			.replace(/'/g, "%27")
+			.replace(/%20/g, "_")
+			// wfUrlencode replacements
+			.replace(/%3B/g, ";")
+			.replace(/%40/g, "@")
+			.replace(/%24/g, "$")
+			.replace(/%21/g, "!")
+			.replace(/%2A/g, "*")
+			.replace(/%28/g, "(")
+			.replace(/%29/g, ")")
+			.replace(/%2C/g, ",")
+			.replace(/%2F/g, "/")
+			.replace(/%7E/g, "~")
+			.replace(/%3A/g, ":")
+	);
 }
 
 /**
  * @deprecated since 1.17 Use jQuery instead
  */
-mw.log.deprecate( window, 'addOnloadHook', function ( fn ) {
-	$( function () {
-		fn();
-	} );
-}, 'Use jQuery instead.' );
+mw.log.deprecate(
+	window,
+	"addOnloadHook",
+	function (fn) {
+		$(function () {
+			fn();
+		});
+	},
+	"Use jQuery instead."
+);
 
 /**
  * Wikipage import methods
@@ -42,22 +49,25 @@ mw.log.deprecate( window, 'addOnloadHook', function ( fn ) {
  * @param {string} url
  * @return {HTMLElement} Script tag
  */
-function importScriptURI( url ) {
+function importScriptURI(url) {
 	var s;
-	if ( loadedScripts[ url ] ) {
+	if (loadedScripts[url]) {
 		return null;
 	}
-	loadedScripts[ url ] = true;
-	s = document.createElement( 'script' );
-	s.setAttribute( 'src', url );
-	document.head.appendChild( s );
+	loadedScripts[url] = true;
+	s = document.createElement("script");
+	s.setAttribute("src", url);
+	document.head.appendChild(s);
 	return s;
 }
 
-function importScript( page ) {
-	var uri = mw.config.get( 'wgScript' ) + '?title=' + wikiUrlencode( page ) +
-		'&action=raw&ctype=text/javascript';
-	return importScriptURI( uri );
+function importScript(page) {
+	var uri =
+		mw.config.get("wgScript") +
+		"?title=" +
+		wikiUrlencode(page) +
+		"&action=raw&ctype=text/javascript";
+	return importScriptURI(uri);
 }
 
 /**
@@ -66,27 +76,30 @@ function importScript( page ) {
  * @param {string} media
  * @return {HTMLElement} Link tag
  */
-function importStylesheetURI( url, media ) {
-	var l = document.createElement( 'link' );
-	l.rel = 'stylesheet';
+function importStylesheetURI(url, media) {
+	var l = document.createElement("link");
+	l.rel = "stylesheet";
 	l.href = url;
-	if ( media ) {
+	if (media) {
 		l.media = media;
 	}
-	document.head.appendChild( l );
+	document.head.appendChild(l);
 	return l;
 }
 
-function importStylesheet( page ) {
-	var uri = mw.config.get( 'wgScript' ) + '?title=' + wikiUrlencode( page ) +
-		'&action=raw&ctype=text/css';
-	return importStylesheetURI( uri );
+function importStylesheet(page) {
+	var uri =
+		mw.config.get("wgScript") +
+		"?title=" +
+		wikiUrlencode(page) +
+		"&action=raw&ctype=text/css";
+	return importStylesheetURI(uri);
 }
 
-msg = 'Use mw.loader instead.';
-mw.log.deprecate( window, 'loadedScripts', loadedScripts, msg );
-mw.log.deprecate( window, 'importScriptURI', importScriptURI, msg );
-mw.log.deprecate( window, 'importStylesheetURI', importStylesheetURI, msg );
+msg = "Use mw.loader instead.";
+mw.log.deprecate(window, "loadedScripts", loadedScripts, msg);
+mw.log.deprecate(window, "importScriptURI", importScriptURI, msg);
+mw.log.deprecate(window, "importStylesheetURI", importStylesheetURI, msg);
 // Not quite deprecated yet.
 window.importScript = importScript;
 window.importStylesheet = importStylesheet;
@@ -97,8 +110,16 @@ window.importStylesheet = importStylesheet;
  *
  * @deprecated since 1.26
  */
-[ 'write', 'writeln' ].forEach( function ( method ) {
-	mw.log.deprecate( document, method, function () {
-		$( document.body ).append( $.parseHTML( Array.prototype.join.call( arguments, '' ) ) );
-	}, 'Use jQuery or mw.loader.load instead.', 'document.' + method );
-} );
+["write", "writeln"].forEach(function (method) {
+	mw.log.deprecate(
+		document,
+		method,
+		function () {
+			$(document.body).append(
+				$.parseHTML(Array.prototype.join.call(arguments, ""))
+			);
+		},
+		"Use jQuery or mw.loader.load instead.",
+		"document." + method
+	);
+});

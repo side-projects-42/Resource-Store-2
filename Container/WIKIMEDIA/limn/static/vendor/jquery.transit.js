@@ -7,7 +7,7 @@
  * http://github.com/rstacruz/jquery.transit
  */
 
-(function($) {
+(function ($) {
   "use strict";
 
   $.transit = {
@@ -16,71 +16,76 @@
     // Map of $.css() keys to values for 'transitionProperty'.
     // See https://developer.mozilla.org/en/CSS/CSS_transitions#Properties_that_can_be_animated
     propertyMap: {
-      marginLeft    : 'margin',
-      marginRight   : 'margin',
-      marginBottom  : 'margin',
-      marginTop     : 'margin',
-      paddingLeft   : 'padding',
-      paddingRight  : 'padding',
-      paddingBottom : 'padding',
-      paddingTop    : 'padding'
+      marginLeft: "margin",
+      marginRight: "margin",
+      marginBottom: "margin",
+      marginTop: "margin",
+      paddingLeft: "padding",
+      paddingRight: "padding",
+      paddingBottom: "padding",
+      paddingTop: "padding",
     },
 
     // Will simply transition "instantly" if false
     enabled: true,
 
     // Set this to false if you don't want to use the transition end property.
-    useTransitionEnd: false
+    useTransitionEnd: false,
   };
 
-  var div = document.createElement('div');
+  var div = document.createElement("div");
   var support = {};
 
   // Helper function to get the proper vendor property name.
   // (`transition` => `WebkitTransition`)
   function getVendorPropertyName(prop) {
-    var prefixes = ['Moz', 'Webkit', 'O', 'ms'];
+    var prefixes = ["Moz", "Webkit", "O", "ms"];
     var prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
 
-    if (prop in div.style) { return prop; }
+    if (prop in div.style) {
+      return prop;
+    }
 
-    for (var i=0; i<prefixes.length; ++i) {
+    for (var i = 0; i < prefixes.length; ++i) {
       var vendorProp = prefixes[i] + prop_;
-      if (vendorProp in div.style) { return vendorProp; }
+      if (vendorProp in div.style) {
+        return vendorProp;
+      }
     }
   }
 
   // Helper function to check if transform3D is supported.
   // Should return true for Webkits and Firefox 10+.
   function checkTransform3dSupport() {
-    div.style[support.transform] = '';
-    div.style[support.transform] = 'rotateY(90deg)';
-    return div.style[support.transform] !== '';
+    div.style[support.transform] = "";
+    div.style[support.transform] = "rotateY(90deg)";
+    return div.style[support.transform] !== "";
   }
 
-  var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+  var isChrome = navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
 
   // Check for the browser's transitions support.
   // You can access this in jQuery's `$.support.transition`.
   // As per [jQuery's cssHooks documentation](http://api.jquery.com/jQuery.cssHooks/),
   // we set $.support.transition to a string of the actual property name used.
-  support.transition      = getVendorPropertyName('transition');
-  support.transitionDelay = getVendorPropertyName('transitionDelay');
-  support.transform       = getVendorPropertyName('transform');
-  support.transformOrigin = getVendorPropertyName('transformOrigin');
-  support.transform3d     = checkTransform3dSupport();
+  support.transition = getVendorPropertyName("transition");
+  support.transitionDelay = getVendorPropertyName("transitionDelay");
+  support.transform = getVendorPropertyName("transform");
+  support.transformOrigin = getVendorPropertyName("transformOrigin");
+  support.transform3d = checkTransform3dSupport();
 
   $.extend($.support, support);
 
   var eventNames = {
-    'MozTransition':    'transitionend',
-    'OTransition':      'oTransitionEnd',
-    'WebkitTransition': 'webkitTransitionEnd',
-    'msTransition':     'MSTransitionEnd'
+    MozTransition: "transitionend",
+    OTransition: "oTransitionEnd",
+    WebkitTransition: "webkitTransitionEnd",
+    msTransition: "MSTransitionEnd",
   };
 
   // Detect the 'transitionend' event needed.
-  var transitionEnd = support.transitionEnd = eventNames[support.transition] || null;
+  var transitionEnd = (support.transitionEnd =
+    eventNames[support.transition] || null);
 
   // Avoid memory leak in IE.
   div = null;
@@ -88,11 +93,11 @@
   // ## $.cssEase
   // List of easing aliases that you can use with `$.fn.transition`.
   $.cssEase = {
-    '_default': 'ease',
-    'in':       'ease-in',
-    'out':      'ease-out',
-    'in-out':   'ease-in-out',
-    'snap':     'cubic-bezier(0,1,.5,1)'
+    _default: "ease",
+    in: "ease-in",
+    out: "ease-out",
+    "in-out": "ease-in-out",
+    snap: "cubic-bezier(0,1,.5,1)",
   };
 
   // ## 'transform' CSS hook
@@ -105,12 +110,12 @@
   //
   $.cssHooks.transform = {
     // The getter returns a `Transform` object.
-    get: function(elem) {
-      return $(elem).data('transform');
+    get: function (elem) {
+      return $(elem).data("transform");
     },
 
     // The setter accepts a `Transform` object or a string.
-    set: function(elem, v) {
+    set: function (elem, v) {
       var value = v;
 
       if (!(value instanceof Transform)) {
@@ -122,14 +127,14 @@
       // forcing Chrome to not use the 3d transforms as well.  Not sure if
       // translate is affectede, but not risking it.  Detection code from
       // http://davidwalsh.name/detecting-google-chrome-javascript
-      if (support.transform === 'WebkitTransform' && !isChrome) {
+      if (support.transform === "WebkitTransform" && !isChrome) {
         elem.style[support.transform] = value.toString(true);
       } else {
         elem.style[support.transform] = value.toString();
       }
 
-      $(elem).data('transform', value);
-    }
+      $(elem).data("transform", value);
+    },
   };
 
   // ## 'transformOrigin' CSS hook
@@ -139,41 +144,41 @@
   //     $("#hello").css({ transformOrigin: '0 0' });
   //
   $.cssHooks.transformOrigin = {
-    get: function(elem) {
+    get: function (elem) {
       return elem.style[support.transformOrigin];
     },
-    set: function(elem, value) {
+    set: function (elem, value) {
       elem.style[support.transformOrigin] = value;
-    }
+    },
   };
 
   // ## 'transition' CSS hook
   // Allows you to use the `transition` property in CSS.
   //
-  //     $("#hello").css({ transition: 'all 0 ease 0' }); 
+  //     $("#hello").css({ transition: 'all 0 ease 0' });
   //
   $.cssHooks.transition = {
-    get: function(elem) {
+    get: function (elem) {
       return elem.style[support.transition];
     },
-    set: function(elem, value) {
+    set: function (elem, value) {
       elem.style[support.transition] = value;
-    }
+    },
   };
 
   // ## Other CSS hooks
   // Allows you to rotate, scale and translate.
-  registerCssHook('scale');
-  registerCssHook('translate');
-  registerCssHook('rotate');
-  registerCssHook('rotateX');
-  registerCssHook('rotateY');
-  registerCssHook('rotate3d');
-  registerCssHook('perspective');
-  registerCssHook('skewX');
-  registerCssHook('skewY');
-  registerCssHook('x', true);
-  registerCssHook('y', true);
+  registerCssHook("scale");
+  registerCssHook("translate");
+  registerCssHook("rotate");
+  registerCssHook("rotateX");
+  registerCssHook("rotateY");
+  registerCssHook("rotate3d");
+  registerCssHook("perspective");
+  registerCssHook("skewX");
+  registerCssHook("skewY");
+  registerCssHook("x", true);
+  registerCssHook("y", true);
 
   // ## Transform class
   // This is the main class of a transformation property that powers
@@ -199,7 +204,9 @@
   //     t.toString(true)     //=> "rotate(90deg) scale3d(4,4,0)" (WebKit version)
   //
   function Transform(str) {
-    if (typeof str === 'string') { this.parse(str); }
+    if (typeof str === "string") {
+      this.parse(str);
+    }
     return this;
   }
 
@@ -210,11 +217,13 @@
     //     t.setFromString('scale', '2,4');
     //     // Same as set('scale', '2', '4');
     //
-    setFromString: function(prop, val) {
+    setFromString: function (prop, val) {
       var args =
-        (typeof val === 'string')  ? val.split(',') :
-        (val.constructor === Array) ? val :
-        [ val ];
+        typeof val === "string"
+          ? val.split(",")
+          : val.constructor === Array
+          ? val
+          : [val];
 
       args.unshift(prop);
 
@@ -226,16 +235,16 @@
     //
     //     t.set('scale', 2, 4);
     //
-    set: function(prop) {
+    set: function (prop) {
       var args = Array.prototype.slice.apply(arguments, [1]);
       if (this.setter[prop]) {
         this.setter[prop].apply(this, args);
       } else {
-        this[prop] = args.join(',');
+        this[prop] = args.join(",");
       }
     },
 
-    get: function(prop) {
+    get: function (prop) {
       if (this.getter[prop]) {
         return this.getter[prop].apply(this);
       } else {
@@ -251,16 +260,16 @@
       //     .css({ rotate: "30deg" })
       //     .css({ rotate: "30deg" })
       //
-      rotate: function(theta) {
-        this.rotate = unit(theta, 'deg');
+      rotate: function (theta) {
+        this.rotate = unit(theta, "deg");
       },
 
-      rotateX: function(theta) {
-        this.rotateX = unit(theta, 'deg');
+      rotateX: function (theta) {
+        this.rotateX = unit(theta, "deg");
       },
 
-      rotateY: function(theta) {
-        this.rotateY = unit(theta, 'deg');
+      rotateY: function (theta) {
+        this.rotateY = unit(theta, "deg");
       },
 
       // ### scale
@@ -268,23 +277,25 @@
       //     .css({ scale: 9 })      //=> "scale(9,9)"
       //     .css({ scale: '3,2' })  //=> "scale(3,2)"
       //
-      scale: function(x, y) {
-        if (y === undefined) { y = x; }
+      scale: function (x, y) {
+        if (y === undefined) {
+          y = x;
+        }
         this.scale = x + "," + y;
       },
 
       // ### skewX + skewY
-      skewX: function(x) {
-        this.skewX = unit(x, 'deg');
+      skewX: function (x) {
+        this.skewX = unit(x, "deg");
       },
 
-      skewY: function(y) {
-        this.skewY = unit(y, 'deg');
+      skewY: function (y) {
+        this.skewY = unit(y, "deg");
       },
 
       // ### perspectvie
-      perspective: function(dist) {
-        this.perspective = unit(dist, 'px');
+      perspective: function (dist) {
+        this.perspective = unit(dist, "px");
       },
 
       // ### x / y
@@ -293,12 +304,12 @@
       //     .css({ x: 4 })       //=> "translate(4px, 0)"
       //     .css({ y: 10 })      //=> "translate(4px, 10px)"
       //
-      x: function(x) {
-        this.set('translate', x, null);
+      x: function (x) {
+        this.set("translate", x, null);
       },
 
-      y: function(y) {
-        this.set('translate', null, y);
+      y: function (y) {
+        this.set("translate", null, y);
       },
 
       // ### translate
@@ -306,52 +317,68 @@
       //
       //     .css({ translate: '2, 5' })    //=> "translate(2px, 5px)"
       //
-      translate: function(x, y) {
-        if (this._translateX === undefined) { this._translateX = 0; }
-        if (this._translateY === undefined) { this._translateY = 0; }
+      translate: function (x, y) {
+        if (this._translateX === undefined) {
+          this._translateX = 0;
+        }
+        if (this._translateY === undefined) {
+          this._translateY = 0;
+        }
 
-        if (x !== null) { this._translateX = unit(x, 'px'); }
-        if (y !== null) { this._translateY = unit(y, 'px'); }
+        if (x !== null) {
+          this._translateX = unit(x, "px");
+        }
+        if (y !== null) {
+          this._translateY = unit(y, "px");
+        }
 
         this.translate = this._translateX + "," + this._translateY;
-      }
+      },
     },
 
     getter: {
-      x: function() {
+      x: function () {
         return this._translateX || 0;
       },
 
-      y: function() {
+      y: function () {
         return this._translateY || 0;
       },
 
-      scale: function() {
-        var s = (this.scale || "1,1").split(',');
-        if (s[0]) { s[0] = parseFloat(s[0]); }
-        if (s[1]) { s[1] = parseFloat(s[1]); }
+      scale: function () {
+        var s = (this.scale || "1,1").split(",");
+        if (s[0]) {
+          s[0] = parseFloat(s[0]);
+        }
+        if (s[1]) {
+          s[1] = parseFloat(s[1]);
+        }
 
         // "2.5,2.5" => 2.5
         // "2.5,1" => [2.5,1]
-        return (s[0] === s[1]) ? s[0] : s;
+        return s[0] === s[1] ? s[0] : s;
       },
 
-      rotate3d: function() {
-        var s = (this.rotate3d || "0,0,0,0deg").split(',');
-        for (var i=0; i<=3; ++i) {
-          if (s[i]) { s[i] = parseFloat(s[i]); }
+      rotate3d: function () {
+        var s = (this.rotate3d || "0,0,0,0deg").split(",");
+        for (var i = 0; i <= 3; ++i) {
+          if (s[i]) {
+            s[i] = parseFloat(s[i]);
+          }
         }
-        if (s[3]) { s[3] = unit(s[3], 'deg'); }
+        if (s[3]) {
+          s[3] = unit(s[3], "deg");
+        }
 
         return s;
-      }
+      },
     },
 
     // ### parse()
     // Parses from a string. Called on constructor.
-    parse: function(str) {
+    parse: function (str) {
       var self = this;
-      str.replace(/([a-zA-Z0-9]+)\((.*?)\)/g, function(x, prop, val) {
+      str.replace(/([a-zA-Z0-9]+)\((.*?)\)/g, function (x, prop, val) {
         self.setFromString(prop, val);
       });
     },
@@ -359,22 +386,26 @@
     // ### toString()
     // Converts to a `transition` CSS property string. If `use3d` is given,
     // it converts to a `-webkit-transition` CSS property string instead.
-    toString: function(use3d) {
+    toString: function (use3d) {
       var re = [];
 
       for (var i in this) {
         if (this.hasOwnProperty(i)) {
           // Don't use 3D transformations if the browser can't support it.
-          if ((!support.transform3d) && (
-            (i === 'rotateX') ||
-            (i === 'rotateY') ||
-            (i === 'perspective') ||
-            (i === 'transformOrigin'))) { continue; }
+          if (
+            !support.transform3d &&
+            (i === "rotateX" ||
+              i === "rotateY" ||
+              i === "perspective" ||
+              i === "transformOrigin")
+          ) {
+            continue;
+          }
 
-          if (i[0] !== '_') {
-            if (use3d && (i === 'scale')) {
+          if (i[0] !== "_") {
+            if (use3d && i === "scale") {
               re.push(i + "3d(" + this[i] + ",1)");
-            } else if (use3d && (i === 'translate')) {
+            } else if (use3d && i === "translate") {
               re.push(i + "3d(" + this[i] + ",0)");
             } else {
               re.push(i + "(" + this[i] + ")");
@@ -384,7 +415,7 @@
       }
 
       return re.join(" ");
-    }
+    },
   };
 
   function callOrQueue(self, queue, fn) {
@@ -403,12 +434,14 @@
   function getProperties(props) {
     var re = [];
 
-    $.each(props, function(key) {
+    $.each(props, function (key) {
       key = $.camelCase(key); // Convert "text-align" => "textAlign"
       key = $.transit.propertyMap[key] || key;
       key = uncamel(key); // Convert back to dasherized
 
-      if ($.inArray(key, re) === -1) { re.push(key); }
+      if ($.inArray(key, re) === -1) {
+        re.push(key);
+      }
     });
 
     return re;
@@ -427,20 +460,24 @@
     var props = getProperties(properties);
 
     // Account for aliases (`in` => `ease-in`).
-    if ($.cssEase[easing]) { easing = $.cssEase[easing]; }
+    if ($.cssEase[easing]) {
+      easing = $.cssEase[easing];
+    }
 
     // Build the duration/easing/delay attributes for it.
-    var attribs = '' + toMS(duration) + ' ' + easing;
-    if (parseInt(delay, 10) > 0) { attribs += ' ' + toMS(delay); }
+    var attribs = "" + toMS(duration) + " " + easing;
+    if (parseInt(delay, 10) > 0) {
+      attribs += " " + toMS(delay);
+    }
 
     // For more properties, add them this way:
     // "margin 200ms ease, padding 200ms ease, ..."
     var transitions = [];
-    $.each(props, function(i, name) {
-      transitions.push(name + ' ' + attribs);
+    $.each(props, function (i, name) {
+      transitions.push(name + " " + attribs);
     });
 
-    return transitions.join(', ');
+    return transitions.join(", ");
   }
 
   // ## $.fn.transition
@@ -469,52 +506,61 @@
   //       complete: function() { /* ... */ }
   //      });
   //
-  $.fn.transition = $.fn.transit = function(properties, duration, easing, callback) {
-    var self  = this;
+  $.fn.transition = $.fn.transit = function (
+    properties,
+    duration,
+    easing,
+    callback
+  ) {
+    var self = this;
     var delay = 0;
     var queue = true;
 
     // Account for `.transition(properties, callback)`.
-    if (typeof duration === 'function') {
+    if (typeof duration === "function") {
       callback = duration;
       duration = undefined;
     }
 
     // Account for `.transition(properties, duration, callback)`.
-    if (typeof easing === 'function') {
+    if (typeof easing === "function") {
       callback = easing;
       easing = undefined;
     }
 
     // Alternate syntax.
-    if (typeof properties.easing !== 'undefined') {
+    if (typeof properties.easing !== "undefined") {
       easing = properties.easing;
       delete properties.easing;
     }
 
-    if (typeof properties.duration !== 'undefined') {
+    if (typeof properties.duration !== "undefined") {
       duration = properties.duration;
       delete properties.duration;
     }
 
-    if (typeof properties.complete !== 'undefined') {
+    if (typeof properties.complete !== "undefined") {
       callback = properties.complete;
       delete properties.complete;
     }
 
-    if (typeof properties.queue !== 'undefined') {
+    if (typeof properties.queue !== "undefined") {
       queue = properties.queue;
       delete properties.queue;
     }
 
-    if (typeof properties.delay !== 'undefined') {
+    if (typeof properties.delay !== "undefined") {
       delay = properties.delay;
       delete properties.delay;
     }
 
     // Set defaults. (`400` duration, `ease` easing)
-    if (typeof duration === 'undefined') { duration = $.fx.speeds._default; }
-    if (typeof easing === 'undefined')   { easing = $.cssEase._default; }
+    if (typeof duration === "undefined") {
+      duration = $.fx.speeds._default;
+    }
+    if (typeof easing === "undefined") {
+      easing = $.cssEase._default;
+    }
 
     duration = toMS(duration);
 
@@ -524,14 +570,18 @@
     // Compute delay until callback.
     // If this becomes 0, don't bother setting the transition property.
     var work = $.transit.enabled && support.transition;
-    var i = work ? (parseInt(duration, 10) + parseInt(delay, 10)) : 0;
+    var i = work ? parseInt(duration, 10) + parseInt(delay, 10) : 0;
 
     // If there's nothing to do...
     if (i === 0) {
-      var fn = function(next) {
+      var fn = function (next) {
         self.css(properties);
-        if (callback) { callback.apply(self); }
-        if (next) { next(); }
+        if (callback) {
+          callback.apply(self);
+        }
+        if (next) {
+          next();
+        }
       };
 
       callOrQueue(self, queue, fn);
@@ -541,24 +591,30 @@
     // Save the old transitions of each element so we can restore it later.
     var oldTransitions = {};
 
-    var run = function(nextCall) {
+    var run = function (nextCall) {
       var bound = false;
 
       // Prepare the callback.
-      var cb = function() {
-        if (bound) { self.unbind(transitionEnd, cb); }
+      var cb = function () {
+        if (bound) {
+          self.unbind(transitionEnd, cb);
+        }
 
         if (i > 0) {
-          self.each(function() {
-            this.style[support.transition] = (oldTransitions[this] || null);
+          self.each(function () {
+            this.style[support.transition] = oldTransitions[this] || null;
           });
         }
 
-        if (typeof callback === 'function') { callback.apply(self); }
-        if (typeof nextCall === 'function') { nextCall(); }
+        if (typeof callback === "function") {
+          callback.apply(self);
+        }
+        if (typeof nextCall === "function") {
+          nextCall();
+        }
       };
 
-      if ((i > 0) && (transitionEnd) && ($.transit.useTransitionEnd)) {
+      if (i > 0 && transitionEnd && $.transit.useTransitionEnd) {
         // Use the 'transitionend' event if it's available.
         bound = true;
         self.bind(transitionEnd, cb);
@@ -568,7 +624,7 @@
       }
 
       // Apply transitions.
-      self.each(function() {
+      self.each(function () {
         if (i > 0) {
           this.style[support.transition] = transitionValue;
         }
@@ -578,14 +634,18 @@
 
     // Defer running. This allows the browser to paint any pending CSS it hasn't
     // painted yet before doing the transitions.
-    var deferredRun = function(next) {
+    var deferredRun = function (next) {
       var i = 0;
 
       // Durations that are too slow will get transitions mixed up.
       // (Tested on Mac/FF 7.0.1)
-      if ((support.transition === 'MozTransition') && (i < 25)) { i = 25; }
+      if (support.transition === "MozTransition" && i < 25) {
+        i = 25;
+      }
 
-      window.setTimeout(function() { run(next); }, i);
+      window.setTimeout(function () {
+        run(next);
+      }, i);
     };
 
     // Use jQuery's fx queue.
@@ -597,22 +657,24 @@
 
   function registerCssHook(prop, isPixels) {
     // For certain properties, the 'px' should not be implied.
-    if (!isPixels) { $.cssNumber[prop] = true; }
+    if (!isPixels) {
+      $.cssNumber[prop] = true;
+    }
 
     $.transit.propertyMap[prop] = support.transform;
 
     $.cssHooks[prop] = {
-      get: function(elem) {
-        var t = $(elem).css('transform') || new Transform();
+      get: function (elem) {
+        var t = $(elem).css("transform") || new Transform();
         return t.get(prop);
       },
 
-      set: function(elem, value) {
-        var t = $(elem).css('transform') || new Transform();
+      set: function (elem, value) {
+        var t = $(elem).css("transform") || new Transform();
         t.setFromString(prop, value);
 
         $(elem).css({ transform: t });
-      }
+      },
     };
   }
 
@@ -620,7 +682,9 @@
   // Converts a camelcase string to a dasherized string.
   // (`marginLeft` => `margin-left`)
   function uncamel(str) {
-    return str.replace(/([A-Z])/g, function(letter) { return '-' + letter.toLowerCase(); });
+    return str.replace(/([A-Z])/g, function (letter) {
+      return "-" + letter.toLowerCase();
+    });
   }
 
   // ### unit(number, unit)
@@ -631,7 +695,7 @@
   //     unit("30deg", 'rad')   //=> "30deg"
   //
   function unit(i, units) {
-    if ((typeof i === "string") && (!i.match(/^[\-0-9\.]+$/))) {
+    if (typeof i === "string" && !i.match(/^[\-0-9\.]+$/)) {
       return i;
     } else {
       return "" + i + units;
@@ -648,9 +712,11 @@
     var i = duration;
 
     // Allow for string durations like 'fast'.
-    if ($.fx.speeds[i]) { i = $.fx.speeds[i]; }
+    if ($.fx.speeds[i]) {
+      i = $.fx.speeds[i];
+    }
 
-    return unit(i, 'ms');
+    return unit(i, "ms");
   }
 
   // Export some functions for testable-ness.

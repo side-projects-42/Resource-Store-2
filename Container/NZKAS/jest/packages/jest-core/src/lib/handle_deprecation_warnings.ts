@@ -25,7 +25,7 @@ export default (
       stdin.setRawMode(true);
       stdin.resume();
       stdin.setEncoding('utf8');
-      stdin.on('data', key => {
+      stdin.on('data', (key) => {
         if (key === KEYS.ENTER) {
           resolve();
         } else if (

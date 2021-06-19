@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Chinamoonroll"
-		]
-	},
-	"akismetklik-desc": "Nolak asil uahan saking sang spam panyawisan sané kacurigain ring Akismet's spamlist"
+  "@metadata": {
+    "authors": ["Chinamoonroll"]
+  },
+  "akismetklik-desc": "Nolak asil uahan saking sang spam panyawisan sané kacurigain ring Akismet's spamlist"
 }

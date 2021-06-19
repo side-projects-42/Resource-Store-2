@@ -21,34 +21,32 @@ export type EachTests = Array<{
 type TestFn = (done?: Global.DoneFn) => Promise<any> | void | undefined;
 type GlobalCallback = (testName: string, fn: TestFn, timeout?: number) => void;
 
-export default (cb: GlobalCallback, supportsDone: boolean = true) => (
-  table: Global.EachTable,
-  ...taggedTemplateData: Global.TemplateData
-) =>
-  function eachBind(
-    title: string,
-    test: Global.EachTestFn,
-    timeout?: number,
-  ): void {
-    try {
-      const tests = isArrayTable(taggedTemplateData)
-        ? buildArrayTests(title, table)
-        : buildTemplateTests(title, table, taggedTemplateData);
+export default (cb: GlobalCallback, supportsDone: boolean = true) =>
+  (table: Global.EachTable, ...taggedTemplateData: Global.TemplateData) =>
+    function eachBind(
+      title: string,
+      test: Global.EachTestFn,
+      timeout?: number,
+    ): void {
+      try {
+        const tests = isArrayTable(taggedTemplateData)
+          ? buildArrayTests(title, table)
+          : buildTemplateTests(title, table, taggedTemplateData);
 
-      return tests.forEach(row =>
-        cb(
-          row.title,
-          applyArguments(supportsDone, row.arguments, test),
-          timeout,
-        ),
-      );
-    } catch (e) {
-      const error = new ErrorWithStack(e.message, eachBind);
-      return cb(title, () => {
-        throw error;
-      });
-    }
-  };
+        return tests.forEach((row) =>
+          cb(
+            row.title,
+            applyArguments(supportsDone, row.arguments, test),
+            timeout,
+          ),
+        );
+      } catch (e) {
+        const error = new ErrorWithStack(e.message, eachBind);
+        return cb(title, () => {
+          throw error;
+        });
+      }
+    };
 
 const isArrayTable = (data: Global.TemplateData) => data.length === 0;
 

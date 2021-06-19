@@ -11,7 +11,8 @@
 		<pre>
 			foo\
 			bar
-		</pre>
+		</pre
+		>
 	</div>
 </template>
 
@@ -19,9 +20,9 @@
 module.exports = {
 	data: function () {
 		return {
-			hello: 'world'
+			hello: "world",
 		};
-	}
+	},
 };
 </script>
 

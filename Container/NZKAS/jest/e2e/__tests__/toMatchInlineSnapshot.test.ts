@@ -14,7 +14,7 @@ import runJest from '../runJest';
 const DIR = path.resolve(__dirname, '../to-match-inline-snapshot');
 const TESTS_DIR = path.resolve(DIR, '__tests__');
 
-const readFile = filename =>
+const readFile = (filename) =>
   fs.readFileSync(path.join(TESTS_DIR, filename), 'utf8');
 
 beforeEach(() => cleanup(TESTS_DIR));

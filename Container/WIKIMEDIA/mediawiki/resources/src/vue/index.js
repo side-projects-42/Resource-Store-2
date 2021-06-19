@@ -1,7 +1,7 @@
-( function () {
-	var Vue = require( '../../lib/vue/vue.js' );
+(function () {
+	var Vue = require("../../lib/vue/vue.js");
 
-	Vue.use( require( './i18n.js' ) );
+	Vue.use(require("./i18n.js"));
 
 	/**
 	 * Track component errors that bubble up to the Vue.js runtime on the `error.vue` analytics
@@ -13,11 +13,11 @@
 	 * @param {Error} error
 	 * @ignore
 	 */
-	Vue.config.errorHandler = function ( error ) {
-		mw.errorLogger.logError( error, 'error.vue' );
+	Vue.config.errorHandler = function (error) {
+		mw.errorLogger.logError(error, "error.vue");
 
-		mw.log.error( error );
+		mw.log.error(error);
 	};
 
 	module.exports = Vue;
-}() );
+})();

@@ -4,7 +4,7 @@
  * @copyright 2011-2015 MediaWiki Widgets Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-@import 'mediawiki.skin.variables.less';
+@import "mediawiki.skin.variables.less";
 
 // Variables taken from OOUI's WikimediaUI theme
 @ooui-font-size-browser: 16; // assumed browser default of `16px`
@@ -28,7 +28,10 @@
 @box-shadow-widget--focus: inset 0 0 0 1px #36c;
 
 // `line-height` has to be relative/in `em` to enable user override in browser settings.
-@line-height-widget-base: unit( 18 / @ooui-font-size-browser / @ooui-font-size-base, @ooui-unit ); // equals `18px` at base `font-size: 14px;
+@line-height-widget-base: unit(
+	18 / @ooui-font-size-browser / @ooui-font-size-base,
+	@ooui-unit
+); // equals `18px` at base `font-size: 14px;
 
 @transition-ease-medium: @transition-duration-medium; // `ease` is the initial value
 @transition-duration-medium: 250ms;
@@ -49,7 +52,7 @@
 }
 
 .oo-ui-transition( @value1, @value2: X, ... ) {
-	@value: ~`'@{arguments}'.replace( /[\[\]]|\,\sX/g, '' )`;
+	@value: ~` "@{arguments}" .replace(/[\[\]]|\, \sX/g, "") `;
 	-webkit-transition: @value;
 	-moz-transition: @value;
 	transition: @value;

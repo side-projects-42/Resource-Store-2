@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <!--
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -20,56 +20,53 @@
 -->
 
 <html>
+  <!-- ======================================================================= -->
+  <head>
+    <title>cordova errgen tester</title>
+    <script src="../../pkg/cordova.errgen.js"></script>
+    <script src="./errgen-tests.js"></script>
+  </head>
 
-<!-- ======================================================================= -->
-<head>
-<title>cordova errgen tester</title>
-<script src='../../pkg/cordova.errgen.js'></script>
-<script src='./errgen-tests.js'></script>
-</head>
+  <!-- ======================================================================= -->
+  <body>
+    <h1>cordova errgen tester</h1>
+    <div id="results"></div>
+  </body>
 
-<!-- ======================================================================= -->
-<body>
-<h1>cordova errgen tester</h1>
-<div id="results">
-</div>
-</body>
+  <!-- ======================================================================= -->
+  <script>
+    var resultsDiv = null;
 
-<!-- ======================================================================= -->
-<script>
-var resultsDiv = null
-
-function reportSuccess(message) {
-    reportMessage(message, 'success')
-}
-
-function reportFailure(message) {
-    reportMessage(message, 'failure')
-}
-
-function reportMessage(message, className) {
-    var div = document.createElement('div')
-    div.className = className
-    div.innerText = message
-    
-    if (!resultsDiv) {
-        resultsDiv = document.getElementById('results')
+    function reportSuccess(message) {
+      reportMessage(message, "success");
     }
-    
-    resultsDiv.appendChild(div)
-}
-</script>
 
-<!-- ======================================================================= -->
-<style>
-.success {
-    color: green;
-}
-.failure {
-    color: red;
-}
+    function reportFailure(message) {
+      reportMessage(message, "failure");
+    }
 
-</style>
+    function reportMessage(message, className) {
+      var div = document.createElement("div");
+      div.className = className;
+      div.innerText = message;
 
-<!-- ======================================================================= -->
+      if (!resultsDiv) {
+        resultsDiv = document.getElementById("results");
+      }
+
+      resultsDiv.appendChild(div);
+    }
+  </script>
+
+  <!-- ======================================================================= -->
+  <style>
+    .success {
+      color: green;
+    }
+    .failure {
+      color: red;
+    }
+  </style>
+
+  <!-- ======================================================================= -->
 </html>

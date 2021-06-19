@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Cedric31",
-			"Gloria sah",
-			"Nicolas Eynaud",
-			"Quentí"
-		]
+		"authors": ["Cedric31", "Gloria sah", "Nicolas Eynaud", "Quentí"]
 	},
 	"ooui-outline-control-move-down": "Far davalar l’element",
 	"ooui-outline-control-move-up": "Far montar l’element",

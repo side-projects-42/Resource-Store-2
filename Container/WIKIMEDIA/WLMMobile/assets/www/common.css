@@ -1,22 +1,22 @@
 html.loading {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 body {
-	font-family: "Roboto", "Droid Sans", "Helvetica";
-	padding: 0;
-	margin: 0;
-	background-color: #F2F2F2;
-	color: #222;
-	top: 0;
-	bottom: 0;
-	position: absolute;
-	right: 0;
-	left: 0;
+  font-family: "Roboto", "Droid Sans", "Helvetica";
+  padding: 0;
+  margin: 0;
+  background-color: #f2f2f2;
+  color: #222;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  left: 0;
 }
 
 html.loading body,
@@ -26,13 +26,13 @@ html.loading body,
 #results .footer.loading,
 .loading #results,
 .loading .content {
-	background-image: url(images/loader.gif);
-	background-position: center center;
-	background-repeat: no-repeat;
-	min-height: 50px;
+  background-image: url(images/loader.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
+  min-height: 50px;
 }
 
 html.loading .popup-container-container,
 html.loading .page {
-	display: none !important;
+  display: none !important;
 }

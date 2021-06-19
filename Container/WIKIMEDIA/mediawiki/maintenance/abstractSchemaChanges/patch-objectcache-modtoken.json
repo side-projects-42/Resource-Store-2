@@ -21,9 +21,9 @@
 			}
 		],
 		"indexes": [
-			{ "name": "exptime", "columns": [ "exptime" ], "unique": false }
+			{ "name": "exptime", "columns": ["exptime"], "unique": false }
 		],
-		"pk": [ "keyname" ]
+		"pk": ["keyname"]
 	},
 	"after": {
 		"name": "objectcache",
@@ -47,17 +47,25 @@
 			{
 				"name": "modtoken",
 				"type": "string",
-				"options": { "notnull": true, "length": 17, "default": "00000000000000000" }
+				"options": {
+					"notnull": true,
+					"length": 17,
+					"default": "00000000000000000"
+				}
 			},
 			{
 				"name": "flags",
 				"type": "integer",
-				"options": { "notnull": false, "unsigned": true, "default": null }
+				"options": {
+					"notnull": false,
+					"unsigned": true,
+					"default": null
+				}
 			}
 		],
 		"indexes": [
-			{ "name": "exptime", "columns": [ "exptime" ], "unique": false }
+			{ "name": "exptime", "columns": ["exptime"], "unique": false }
 		],
-		"pk": [ "keyname" ]
+		"pk": ["keyname"]
 	}
 }

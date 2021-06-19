@@ -9,30 +9,28 @@
  * Jeroen De Dauw <jeroendedauw at gmail dot com>
  */
 
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
-	$( function () {
+	$(function () {
 		// FIXME: This shouldn't be a global selector to avoid conflicts
 		// with unrelated content on the same page. (T131318)
-		var $checkboxes = $( 'li input[type="checkbox"]' );
+		var $checkboxes = $('li input[type="checkbox"]');
 
-		function selectAll( check ) {
-			$checkboxes.prop( 'checked', check );
+		function selectAll(check) {
+			$checkboxes.prop("checked", check);
 		}
 
-		$( '.mw-checkbox-all' ).on( 'click', function () {
-			selectAll( true );
-		} );
-		$( '.mw-checkbox-none' ).on( 'click', function () {
-			selectAll( false );
-		} );
-		$( '.mw-checkbox-invert' ).on( 'click', function () {
-			$checkboxes.prop( 'checked', function ( i, val ) {
+		$(".mw-checkbox-all").on("click", function () {
+			selectAll(true);
+		});
+		$(".mw-checkbox-none").on("click", function () {
+			selectAll(false);
+		});
+		$(".mw-checkbox-invert").on("click", function () {
+			$checkboxes.prop("checked", function (i, val) {
 				return !val;
-			} );
-		} );
-
-	} );
-
-}() );
+			});
+		});
+	});
+})();

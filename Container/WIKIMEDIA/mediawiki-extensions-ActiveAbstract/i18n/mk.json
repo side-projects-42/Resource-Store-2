@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Bjankuloski06"
-		]
-	},
-	"activeabstract-desc": "Создавање на XML-тековник за проектот „Активни извадоци“ (Active Abstracts) на Yahoo"
+  "@metadata": {
+    "authors": ["Bjankuloski06"]
+  },
+  "activeabstract-desc": "Создавање на XML-тековник за проектот „Активни извадоци“ (Active Abstracts) на Yahoo"
 }

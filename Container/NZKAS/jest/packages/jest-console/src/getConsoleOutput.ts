@@ -18,7 +18,7 @@ export default (root: string, verbose: boolean, buffer: ConsoleBuffer) => {
     origin = slash(path.relative(root, origin));
     message = message
       .split(/\n/)
-      .map(line => CONSOLE_INDENT + line)
+      .map((line) => CONSOLE_INDENT + line)
       .join('\n');
 
     let typeMessage = 'console.' + type;

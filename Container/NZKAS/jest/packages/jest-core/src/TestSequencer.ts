@@ -89,7 +89,7 @@ export default class TestSequencer {
     const time = (cache: Cache, test: Test) =>
       cache[test.path] && cache[test.path][1];
 
-    tests.forEach(test => (test.duration = time(this._getCache(test), test)));
+    tests.forEach((test) => (test.duration = time(this._getCache(test), test)));
     return tests.sort((testA, testB) => {
       const cacheA = this._getCache(testA);
       const cacheB = this._getCache(testB);
@@ -111,8 +111,8 @@ export default class TestSequencer {
 
   cacheResults(tests: Array<Test>, results: AggregatedResult) {
     const map = Object.create(null);
-    tests.forEach(test => (map[test.path] = test));
-    results.testResults.forEach(testResult => {
+    tests.forEach((test) => (map[test.path] = test));
+    results.testResults.forEach((testResult) => {
       if (testResult && map[testResult.testFilePath] && !testResult.skipped) {
         const cache = this._getCache(map[testResult.testFilePath]);
         const perf = testResult.perfStats;

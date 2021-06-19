@@ -7,14 +7,14 @@
  * @description
  * ESLint plugin rules
  */
-'use strict';
+"use strict";
 
-var requireDirectory = require('require-directory');
+var requireDirectory = require("require-directory");
 
 module.exports = {
 	rules: requireDirectory(module),
 	rulesConfig: {
-		'exclude': 2,
-		'focus': 2
-	}
+		exclude: 2,
+		focus: 2,
+	},
 };

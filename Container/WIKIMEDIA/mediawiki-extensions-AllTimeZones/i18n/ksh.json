@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Purodha"
-		]
-	},
-	"alltimezones-desc": "Deiht ene Befähl en et Wikki, öm jedes Dattum en jeede Ziggzohn aanzeije ze künne."
+  "@metadata": {
+    "authors": ["Purodha"]
+  },
+  "alltimezones-desc": "Deiht ene Befähl en et Wikki, öm jedes Dattum en jeede Ziggzohn aanzeije ze künne."
 }

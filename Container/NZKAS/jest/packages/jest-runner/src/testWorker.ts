@@ -24,7 +24,7 @@ type WorkerData = {
 };
 
 // Make sure uncaught errors are logged before we exit.
-process.on('uncaughtException', err => {
+process.on('uncaughtException', (err) => {
   console.error(err.stack);
   exit(1);
 });

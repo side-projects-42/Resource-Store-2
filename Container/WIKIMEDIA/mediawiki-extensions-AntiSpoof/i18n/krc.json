@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Ernác",
-			"Iltever"
-		]
-	},
-	"antispoof-ignore": "Ушаш атланы тинтиуге эс бёлме"
+  "@metadata": {
+    "authors": ["Ernác", "Iltever"]
+  },
+  "antispoof-ignore": "Ушаш атланы тинтиуге эс бёлме"
 }

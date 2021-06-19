@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Kghbln",
-			"Purodha"
-		]
-	},
-	"alltimezones-desc": "Schafft den Befehl <code><timezone></code>, mit dem man eine zeitzonenabhängige Zeitangabe im Wikitext einbinden kann"
+  "@metadata": {
+    "authors": ["Kghbln", "Purodha"]
+  },
+  "alltimezones-desc": "Schafft den Befehl <code><timezone></code>, mit dem man eine zeitzonenabhängige Zeitangabe im Wikitext einbinden kann"
 }

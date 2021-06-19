@@ -25,7 +25,10 @@ An array that represents all calls that have been made into this mock function. 
 For example: A mock function `f` that has been called twice, with the arguments `f('arg1', 'arg2')`, and then with the arguments `f('arg3', 'arg4')` would have a `mock.calls` array that looks like this:
 
 ```js
-[['arg1', 'arg2'], ['arg3', 'arg4']];
+[
+  ['arg1', 'arg2'],
+  ['arg3', 'arg4'],
+];
 ```
 
 ### `mockFn.mock.instances`
@@ -79,7 +82,7 @@ _Note: `jest.fn(implementation)` is a shorthand for `jest.fn().mockImplementatio
 For example:
 
 ```js
-const mockFn = jest.fn().mockImplementation(scalar => 42 + scalar);
+const mockFn = jest.fn().mockImplementation((scalar) => 42 + scalar);
 // or: jest.fn(scalar => 42 + scalar);
 
 const a = mockFn(0);
@@ -167,7 +170,7 @@ Will result in this error:
 Just a simple sugar function for:
 
 ```js
-jest.fn(function() {
+jest.fn(function () {
   return this;
 });
 ```

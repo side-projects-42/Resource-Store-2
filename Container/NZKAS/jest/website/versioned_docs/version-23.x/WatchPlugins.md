@@ -56,12 +56,12 @@ For example:
 ```javascript
 class MyWatchPlugin {
   apply(jestHooks) {
-    jestHooks.shouldRunTestSuite(testPath => {
+    jestHooks.shouldRunTestSuite((testPath) => {
       return testPath.includes('my-keyword');
     });
 
     // or a promise
-    jestHooks.shouldRunTestSuite(testPath => {
+    jestHooks.shouldRunTestSuite((testPath) => {
       return Promise.resolve(testPath.includes('my-keyword'));
     });
   }
@@ -77,7 +77,7 @@ For example:
 ```javascript
 class MyWatchPlugin {
   apply(jestHooks) {
-    jestHooks.onTestRunComplete(results => {
+    jestHooks.onTestRunComplete((results) => {
       this._hasSnapshotFailure = results.snapshot.failure;
     });
   }

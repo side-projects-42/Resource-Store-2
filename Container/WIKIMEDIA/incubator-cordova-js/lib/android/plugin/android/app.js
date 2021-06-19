@@ -1,10 +1,10 @@
-var exec = require('cordova/exec');
+var exec = require("cordova/exec");
 
 module.exports = {
   /**
    * Clear the resource cache.
    */
-  clearCache:function() {
+  clearCache: function () {
     exec(null, null, "App", "clearCache", []);
   },
 
@@ -22,14 +22,14 @@ module.exports = {
    * Example:
    *      navigator.app.loadUrl("http://server/myapp/index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
    */
-  loadUrl:function(url, props) {
+  loadUrl: function (url, props) {
     exec(null, null, "App", "loadUrl", [url, props]);
   },
 
   /**
    * Cancel loadUrl that is waiting to be loaded.
    */
-  cancelLoadUrl:function() {
+  cancelLoadUrl: function () {
     exec(null, null, "App", "cancelLoadUrl", []);
   },
 
@@ -37,7 +37,7 @@ module.exports = {
    * Clear web history in this web view.
    * Instead of BACK button loading the previous web page, it will exit the app.
    */
-  clearHistory:function() {
+  clearHistory: function () {
     exec(null, null, "App", "clearHistory", []);
   },
 
@@ -45,7 +45,7 @@ module.exports = {
    * Go to previous page displayed.
    * This is the same as pressing the backbutton on Android device.
    */
-  backHistory:function() {
+  backHistory: function () {
     exec(null, null, "App", "backHistory", []);
   },
 
@@ -58,14 +58,14 @@ module.exports = {
    *
    * @param override        T=override, F=cancel override
    */
-  overrideBackbutton:function(override) {
+  overrideBackbutton: function (override) {
     exec(null, null, "App", "overrideBackbutton", [override]);
   },
 
   /**
    * Exit and terminate the application.
    */
-  exitApp:function() {
+  exitApp: function () {
     return exec(null, null, "App", "exitApp", []);
-  }
+  },
 };

@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"DzWiki",
-			"Semso98",
-			"Srdjan m",
-			"Srđan"
-		]
+		"authors": ["DzWiki", "Semso98", "Srdjan m", "Srđan"]
 	},
 	"ooui-outline-control-move-down": "Premjesti stavku dolje",
 	"ooui-outline-control-move-up": "Premjesti stavku gore",

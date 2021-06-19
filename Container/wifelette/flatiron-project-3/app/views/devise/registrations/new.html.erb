@@ -1,0 +1,53 @@
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+<div class="card text-center">
+  <div class="card-header h3">
+    Sign Up
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <p class="formy">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </p>
+      </div>
+
+      <div class="field">
+        <p class="formy">
+          <% if @minimum_password_length %>
+          <a href="#" data-toggle="tooltip" data-original-title="<%= @minimum_password_length %> characters minimum"
+            data-placement="top">
+            <%= f.label :password %></a>
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password" %>
+        </p>
+      </div>
+
+      <div class="field">
+        <p class="formy">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        </p>
+      </div>
+
+      <div class="actions">
+        <p class="formy">
+          <%= f.submit "Sign up", class: "btn btn-primary" %>
+        </p>
+      </div>
+      <% end %>
+
+      <%- if devise_mapping.omniauthable? %>
+      <%- resource_class.omniauth_providers.each do |provider| %>
+      <%= link_to "Sign up with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: "btn btn-outline-secondary" %><br />
+      <% end %>
+      <% end %>
+  </div>
+</div>

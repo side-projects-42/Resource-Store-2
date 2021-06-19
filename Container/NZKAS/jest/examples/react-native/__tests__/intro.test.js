@@ -29,7 +29,7 @@ it('renders the ActivityIndicator component', () => {
   expect(tree).toMatchSnapshot();
 });
 
-it('renders the Image component', done => {
+it('renders the Image component', (done) => {
   const Image = require('Image');
   Image.getSize('path.jpg', (width, height) => {
     const tree = renderer.create(<Image style={{height, width}} />).toJSON();
@@ -56,7 +56,7 @@ it('renders the ListView component', () => {
     .create(
       <ListView
         dataSource={dataSource}
-        renderRow={rowData => <Text>{rowData}</Text>}
+        renderRow={(rowData) => <Text>{rowData}</Text>}
       />
     )
     .toJSON();

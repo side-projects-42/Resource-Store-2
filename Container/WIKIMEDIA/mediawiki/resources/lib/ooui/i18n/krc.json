@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ernác",
-			"Iltever"
-		]
+		"authors": ["Ernác", "Iltever"]
 	},
 	"ooui-outline-control-move-down": "Элементни тюбюне кёчюр",
 	"ooui-outline-control-move-up": "Элементни башына кёчюр",

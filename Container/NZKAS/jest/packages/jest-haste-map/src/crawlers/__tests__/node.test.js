@@ -69,8 +69,9 @@ jest.mock('fs', () => {
   };
 });
 
-const pearMatcher = path => /pear/.test(path);
-const createMap = obj => new Map(Object.keys(obj).map(key => [key, obj[key]]));
+const pearMatcher = (path) => /pear/.test(path);
+const createMap = (obj) =>
+  new Map(Object.keys(obj).map((key) => [key, obj[key]]));
 
 const rootDir = '/project';
 let mockResponse;

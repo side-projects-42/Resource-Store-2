@@ -1,9 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Kareyac"
-		]
-	},
-	"adminlinks_general": "Ընդհանուր",
-	"adminlinks_users": "Մասնակիցներ"
+  "@metadata": {
+    "authors": ["Kareyac"]
+  },
+  "adminlinks_general": "Ընդհանուր",
+  "adminlinks_users": "Մասնակիցներ"
 }

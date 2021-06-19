@@ -73,7 +73,7 @@ export default {
   authorize: () => {
     return 'token';
   },
-  isAuthorized: secret => secret === 'wizard',
+  isAuthorized: (secret) => secret === 'wizard',
 };
 ```
 
@@ -391,7 +391,7 @@ module.exports = async () => {
 
 ```js
 // teardown.js
-module.exports = async function() {
+module.exports = async function () {
   await global.__MONGOD__.stop();
 };
 ```

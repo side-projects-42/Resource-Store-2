@@ -4,12 +4,16 @@
  * declarations and not (anonymous) function expressions.
  */
 
-var test = (function() {
-    var func = function() {},
+var test = (function () {
+  var func = function () {},
     innerTest = {
-        get func() { return func;},
-        set func(value) { func = value; }
+      get func() {
+        return func;
+      },
+      set func(value) {
+        func = value;
+      },
     };
-    innerTest = func;
-    return innerTest;
+  innerTest = func;
+  return innerTest;
 })();

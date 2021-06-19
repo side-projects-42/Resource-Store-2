@@ -8,7 +8,11 @@
 				"name": "user_id",
 				"comment": "Unique identifier number. The page_id will be preserved across edits and rename operations, but not deletions and recreations.",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "user_name",
@@ -56,7 +60,12 @@
 				"name": "user_token",
 				"comment": "A pseudorandomly generated value that is stored in a cookie when the 'remember password' feature is used (previously, a hash of the password was used, but this was vulnerable to cookie-stealing attacks)",
 				"type": "binary",
-				"options": { "notnull": true, "default": "", "length": 32, "fixed": true }
+				"options": {
+					"notnull": true,
+					"default": "",
+					"length": 32,
+					"fixed": true
+				}
 			},
 			{
 				"name": "user_email_authenticated",
@@ -101,11 +110,20 @@
 			}
 		],
 		"indexes": [
-			{ "name": "user_name", "columns": [ "user_name" ], "unique": true },
-			{ "name": "user_email_token", "columns": [ "user_email_token" ], "unique": false },
-			{ "name": "user_email", "columns": [ "user_email" ], "unique": false, "options": { "lengths": [ 50, null, null ] } }
+			{ "name": "user_name", "columns": ["user_name"], "unique": true },
+			{
+				"name": "user_email_token",
+				"columns": ["user_email_token"],
+				"unique": false
+			},
+			{
+				"name": "user_email",
+				"columns": ["user_email"],
+				"unique": false,
+				"options": { "lengths": [50, null, null] }
+			}
 		],
-		"pk": [ "user_id" ]
+		"pk": ["user_id"]
 	},
 	"after": {
 		"name": "user",
@@ -115,7 +133,11 @@
 				"name": "user_id",
 				"comment": "Unique identifier number. The page_id will be preserved across edits and rename operations, but not deletions and recreations.",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "user_name",
@@ -163,7 +185,12 @@
 				"name": "user_token",
 				"comment": "A pseudorandomly generated value that is stored in a cookie when the 'remember password' feature is used (previously, a hash of the password was used, but this was vulnerable to cookie-stealing attacks)",
 				"type": "binary",
-				"options": { "notnull": true, "default": "", "length": 32, "fixed": true }
+				"options": {
+					"notnull": true,
+					"default": "",
+					"length": 32,
+					"fixed": true
+				}
 			},
 			{
 				"name": "user_email_authenticated",
@@ -208,10 +235,19 @@
 			}
 		],
 		"indexes": [
-			{ "name": "user_name", "columns": [ "user_name" ], "unique": true },
-			{ "name": "user_email_token", "columns": [ "user_email_token" ], "unique": false },
-			{ "name": "user_email", "columns": [ "user_email" ], "unique": false, "options": { "lengths": [ 50, null, null ] } }
+			{ "name": "user_name", "columns": ["user_name"], "unique": true },
+			{
+				"name": "user_email_token",
+				"columns": ["user_email_token"],
+				"unique": false
+			},
+			{
+				"name": "user_email",
+				"columns": ["user_email"],
+				"unique": false,
+				"options": { "lengths": [50, null, null] }
+			}
 		],
-		"pk": [ "user_id" ]
+		"pk": ["user_id"]
 	}
 }

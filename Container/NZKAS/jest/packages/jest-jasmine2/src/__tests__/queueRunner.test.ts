@@ -10,8 +10,8 @@ import queueRunner from '../queueRunner';
 
 describe('queueRunner', () => {
   it('runs every function in the queue.', async () => {
-    const fnOne = jest.fn(next => next());
-    const fnTwo = jest.fn(next => next());
+    const fnOne = jest.fn((next) => next());
+    const fnTwo = jest.fn((next) => next());
     const options = {
       clearTimeout,
       fail: () => {},
@@ -34,8 +34,8 @@ describe('queueRunner', () => {
 
   it('exposes `fail` to `next`.', async () => {
     const fail = jest.fn();
-    const fnOne = jest.fn(next => next.fail());
-    const fnTwo = jest.fn(next => next());
+    const fnOne = jest.fn((next) => next.fail());
+    const fnTwo = jest.fn((next) => next());
     const options = {
       clearTimeout,
       fail,
@@ -63,7 +63,7 @@ describe('queueRunner', () => {
     const fnOne = jest.fn(() => {
       throw error;
     });
-    const fnTwo = jest.fn(next => next());
+    const fnTwo = jest.fn((next) => next());
     const onException = jest.fn();
     const options = {
       clearTimeout,
@@ -88,8 +88,8 @@ describe('queueRunner', () => {
   });
 
   it('passes an error to `onException` on timeout.', async () => {
-    const fnOne = jest.fn(_next => {});
-    const fnTwo = jest.fn(next => next());
+    const fnOne = jest.fn((_next) => {});
+    const fnTwo = jest.fn((next) => next());
     const onException = jest.fn();
     const options = {
       clearTimeout,
@@ -120,7 +120,7 @@ describe('queueRunner', () => {
   });
 
   it('calls `fail` with arguments', async () => {
-    const failFn = jest.fn(next => next.fail('miserably', 'failed'));
+    const failFn = jest.fn((next) => next.fail('miserably', 'failed'));
     const options = {
       clearTimeout,
       fail: jest.fn(),
@@ -136,8 +136,8 @@ describe('queueRunner', () => {
   it('calls `fail` when done(error) is invoked', async () => {
     const error = new Error('I am an error');
     const fail = jest.fn();
-    const fnOne = jest.fn(next => next(error));
-    const fnTwo = jest.fn(next => next());
+    const fnOne = jest.fn((next) => next(error));
+    const fnTwo = jest.fn((next) => next());
     const options = {
       clearTimeout,
       fail,

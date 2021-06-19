@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Joetaras"
-		]
+		"authors": ["Joetaras"]
 	},
 	"apihelp-main-param-action": "Ce azione ste da fà.",
 	"apihelp-main-param-format": "'U formate d'u resultate.",

@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"AlimanRuna"
-		]
+		"authors": ["AlimanRuna"]
 	},
 	"config-desc": "MediaWiki tiyachiq",
 	"config-title": "MediaWiki $1 tiyachiy",

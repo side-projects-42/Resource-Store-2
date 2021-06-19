@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Malafaya",
-			"פוילישער",
-			"十弌"
-		]
+		"authors": ["Malafaya", "פוילישער", "十弌"]
 	},
 	"ooui-outline-control-move-down": "רוקן עלעמענט אראפ",
 	"ooui-outline-control-move-up": "רוקן עלעמענט ארויף",

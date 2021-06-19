@@ -1,34 +1,34 @@
-const { resolve } = require('path')
+const { resolve } = require("path");
 
 module.exports = {
-  rootDir: resolve(__dirname, '../..'),
+  rootDir: resolve(__dirname, "../.."),
   srcDir: __dirname,
-  buildDir: resolve(__dirname, '.nuxt'),
+  buildDir: resolve(__dirname, ".nuxt"),
   dev: false,
   render: {
-    resourceHints: false
+    resourceHints: false,
   },
   build: {
     extractCSS: true,
     babel: {
-      plugins: ['transform-decorators-legacy', 'transform-class-properties']
-    }
+      plugins: ["transform-decorators-legacy", "transform-class-properties"],
+    },
   },
-  serverMiddleware: ['../api/auth'],
+  serverMiddleware: ["../api/auth"],
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { propertyName: 'token.accessToken' }
-        }
-      }
-    }
+          login: { propertyName: "token.accessToken" },
+        },
+      },
+    },
   },
-  modules: ['bootstrap-vue/nuxt', '@nuxtjs/axios', '@nuxtjs/toast', '@@'],
+  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/toast", "@@"],
   axios: {
-    proxy: true
+    proxy: true,
   },
   proxy: {
-    '/api': 'http://localhost:3000'
-  }
-}
+    "/api": "http://localhost:3000",
+  },
+};

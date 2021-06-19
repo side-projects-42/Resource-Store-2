@@ -52,7 +52,7 @@ const isRecoverableError = (error: Error) => {
       'Unexpected end of input',
       'missing ) after argument list',
       'Unexpected token',
-    ].some(exception => error.message.includes(exception));
+    ].some((exception) => error.message.includes(exception));
   }
   return false;
 };

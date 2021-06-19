@@ -114,11 +114,11 @@ table.toc {
 }
 
 .toctogglespan:before {
-	content: ' [';
+	content: " [";
 }
 
 .toctogglespan:after {
-	content: ']';
+	content: "]";
 }
 
 /* Make the label look like a link. */
@@ -141,11 +141,11 @@ table.toc {
 
 /* Change the text of the button based on the state of the checkbox. */
 .toctogglecheckbox:checked + .toctitle .toctogglelabel:after {
-	content: '@{msg-showtoc}';
+	content: "@{msg-showtoc}";
 }
 
-.toctogglecheckbox:not( :checked ) + .toctitle .toctogglelabel:after {
-	content: '@{msg-hidetoc}';
+.toctogglecheckbox:not(:checked) + .toctitle .toctogglelabel:after {
+	content: "@{msg-hidetoc}";
 }
 
-@import 'i18n.less';
+@import "i18n.less";

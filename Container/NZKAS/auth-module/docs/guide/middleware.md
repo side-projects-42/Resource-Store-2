@@ -7,15 +7,15 @@ Setting per route:
 
 ```js
 export default {
-  middleware: 'auth'
-}
+  middleware: "auth",
+};
 ```
 
 Globally setting in `nuxt.config.js`:
 
 ```js
 router: {
-  middleware: ['auth']
+  middleware: ["auth"];
 }
 ```
 
@@ -23,14 +23,14 @@ In case of global usage, You can set `auth` option to `false` in a specific comp
 
 ```js
 export default {
-  auth: false
-}
+  auth: false,
+};
 ```
 
 You can set `auth` option to `guest` in a specific component. When this middleware is enabled on a route and `loggedIn` is `true` user will be redirected to `redirect.home` route. (`/` by default)
 
 ```js
 export default {
-  auth: 'guest'
-}
+  auth: "guest",
+};
 ```

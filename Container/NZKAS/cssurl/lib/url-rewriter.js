@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 
 var TokenStream = require("parserlib").css.TokenStream,
-	Tokens = require("parserlib").css.Tokens;
+  Tokens = require("parserlib").css.Tokens;
 
 //------------------------------------------------------------------------------
 // Private
@@ -29,60 +29,61 @@ var URL_PARENS = /^url\(["'"]?\s*|\s*["']?\)$/g;
  * @constructor
  */
 function URLRewriter(replacer) {
+  if (typeof replacer !== "function") {
+    throw new TypeError("Constructor expects a function as an argument.");
+  }
 
-	if (typeof replacer !== "function") {
-		throw new TypeError("Constructor expects a function as an argument.");
-	}
-
-	/**
-	 * The replacer function to use.
-	 * @type Function
-	 */
-	this.replacer = replacer;
+  /**
+   * The replacer function to use.
+   * @type Function
+   */
+  this.replacer = replacer;
 }
 
 URLRewriter.prototype = {
+  /**
+   * Rewrites the given CSS code using the replacer.
+   * @param {string} code The CSS code to rewrite.
+   * @returns {string} The CSS code with the URLs replaced.
+   */
+  rewrite: function (code) {
+    var tokens = new TokenStream(code),
+      hasCRLF = code.indexOf("\r") > -1,
+      lines = code.split(/\r?\n/),
+      line,
+      token,
+      tt,
+      replacement,
+      colAdjust = 0,
+      lastLine = 0;
 
-	/**
-	 * Rewrites the given CSS code using the replacer.
-	 * @param {string} code The CSS code to rewrite.
-	 * @returns {string} The CSS code with the URLs replaced.
-	 */
-	rewrite: function(code) {
+    while ((tt = tokens.get()) !== 0) {
+      token = tokens.token();
 
-		var tokens = new TokenStream(code),
-			hasCRLF = code.indexOf("\r") > -1,
-			lines = code.split(/\r?\n/),
-			line,
-			token,
-			tt,
-			replacement,
-			colAdjust = 0,
-			lastLine = 0;
+      if (tt === Tokens.URI) {
+        // URI
 
-		while ((tt = tokens.get()) !== 0) {
-			token = tokens.token();
+        if (lastLine !== token.startLine) {
+          colAdjust = 0;
+          lastLine = token.startLine;
+        }
 
-			if (tt === Tokens.URI) { // URI
+        replacement = this.replacer(token.value.replace(URL_PARENS, ""));
 
-				if (lastLine !== token.startLine) {
-					colAdjust = 0;
-					lastLine = token.startLine;
-				}
+        // 5 is for url() characters
+        line = lines[token.startLine - 1];
+        lines[token.startLine - 1] =
+          line.substring(0, token.startCol + colAdjust - 1) +
+          "url(" +
+          replacement +
+          ")" +
+          line.substring(token.endCol + colAdjust - 1);
+        colAdjust += replacement.length + 5 - token.value.length;
+      }
+    }
 
-				replacement = this.replacer(token.value.replace(URL_PARENS, ""));
-
-				// 5 is for url() characters
-				line = lines[token.startLine - 1];
-				lines[token.startLine - 1] = line.substring(0, token.startCol + colAdjust - 1) +
-					"url(" + replacement + ")" + line.substring(token.endCol + colAdjust - 1);
-				colAdjust += ((replacement.length + 5) - token.value.length);
-			}
-		}
-
-		return lines.join(hasCRLF ? "\r\n" : "\n");
-	}
-
+    return lines.join(hasCRLF ? "\r\n" : "\n");
+  },
 };
 
 /**

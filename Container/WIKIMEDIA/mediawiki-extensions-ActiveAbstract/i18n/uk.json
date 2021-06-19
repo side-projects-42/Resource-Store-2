@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Piramidion"
-		]
-	},
-	"activeabstract-desc": "Згенерувати XML-стрічку для проекту Active Abstracts від Yahoo"
+  "@metadata": {
+    "authors": ["Piramidion"]
+  },
+  "activeabstract-desc": "Згенерувати XML-стрічку для проекту Active Abstracts від Yahoo"
 }

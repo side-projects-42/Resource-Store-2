@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"AnakngAraw",
-			"Jewel457",
-			"Sky Harbor"
-		]
+		"authors": ["AnakngAraw", "Jewel457", "Sky Harbor"]
 	},
 	"ooui-outline-control-move-down": "Ilipat ang aytem pababa",
 	"ooui-outline-control-move-up": "Ilipat ang aytem pataas",

@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Thakurji"
-		]
+		"authors": ["Thakurji"]
 	},
 	"ooui-outline-control-move-down": "Item ke niche karo",
 	"ooui-outline-control-move-up": "Item ke uppar karo",

@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Tofeiku"
-		]
-	},
-	"apierror-abusefilter-badsyntax": "Penapis tersebut mempunyai sintaks yang tidak sah."
+  "@metadata": {
+    "authors": ["Tofeiku"]
+  },
+  "apierror-abusefilter-badsyntax": "Penapis tersebut mempunyai sintaks yang tidak sah."
 }

@@ -11,6 +11,7 @@
 # Agenda
 
 ### Are we comfortable with
+
 [https://github.com/emberjs/data/pull/4356](https://github.com/emberjs/data/pull/4356)
 being a bugfix?
 

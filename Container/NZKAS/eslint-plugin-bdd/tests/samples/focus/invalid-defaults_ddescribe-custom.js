@@ -12,12 +12,12 @@
  * @description:
  * Tests to see if there are any `ddescribeXYZ` focus tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	ddescribeAnimal('something', function () {
-		it('should do stuff', function () {
+	ddescribeAnimal("something", function () {
+		it("should do stuff", function () {
 			expect(true).toBe(true);
 		});
 	});
-}(this));
+})(this);

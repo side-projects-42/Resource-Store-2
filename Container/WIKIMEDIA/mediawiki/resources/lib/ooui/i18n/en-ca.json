@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Skyllful"
-		]
+		"authors": ["Skyllful"]
 	},
 	"ooui-outline-control-move-down": "Move item down",
 	"ooui-outline-control-move-up": "Move item up",

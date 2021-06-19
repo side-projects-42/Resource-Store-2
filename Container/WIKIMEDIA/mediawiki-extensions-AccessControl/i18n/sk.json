@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"TomášPolonec"
-		]
-	},
-	"accesscontrol-info": "Toto je zabezpečená stránka."
+  "@metadata": {
+    "authors": ["TomášPolonec"]
+  },
+  "accesscontrol-info": "Toto je zabezpečená stránka."
 }

@@ -29,10 +29,10 @@ jest.mock(
         const paths = [
           './path/to/file1-test.js',
           './path/to/file2-test.js',
-        ].filter(path => path.match(pattern));
+        ].filter((path) => path.match(pattern));
 
         return {
-          tests: paths.map(path => ({
+          tests: paths.map((path) => ({
             context: this._context,
             duration: null,
             path,
@@ -46,7 +46,7 @@ jest.doMock('chalk', () => new chalk.constructor({enabled: false}));
 jest.doMock(
   '../runJest',
   () =>
-    function() {
+    function () {
       const args = Array.from(arguments);
       const [{onComplete}] = args;
       runJestMock.apply(null, args);
@@ -86,12 +86,12 @@ jest.doMock(
   {virtual: true},
 );
 
-const regularUpdateGlobalConfig = require('../lib/update_global_config')
-  .default;
+const regularUpdateGlobalConfig =
+  require('../lib/update_global_config').default;
 const updateGlobalConfig = jest.fn(regularUpdateGlobalConfig);
 jest.doMock('../lib/update_global_config', () => updateGlobalConfig);
 
-const nextTick = () => new Promise(res => process.nextTick(res));
+const nextTick = () => new Promise((res) => process.nextTick(res));
 
 afterEach(runJestMock.mockReset);
 
@@ -450,7 +450,7 @@ describe('Watch mode flows', () => {
     );
 
     it('forbids third-party WatchPlugins overriding each other', () => {
-      const pluginPaths = ['Foo', 'Bar'].map(ident => {
+      const pluginPaths = ['Foo', 'Bar'].map((ident) => {
         const run = jest.fn(() => Promise.resolve());
         const pluginPath = `${__dirname}/__fixtures__/plugin_bad_override_${ident.toLowerCase()}`;
         jest.doMock(
@@ -480,7 +480,7 @@ describe('Watch mode flows', () => {
           {
             ...globalConfig,
             rootDir: __dirname,
-            watchPlugins: pluginPaths.map(path => ({config: {}, path})),
+            watchPlugins: pluginPaths.map((path) => ({config: {}, path})),
           },
           contexts,
           pipe,
@@ -710,7 +710,7 @@ describe('Watch mode flows', () => {
 
   it('prevents Jest from handling keys when active and returns control when end is called', async () => {
     let resolveShowPrompt;
-    const run = jest.fn(() => new Promise(res => (resolveShowPrompt = res)));
+    const run = jest.fn(() => new Promise((res) => (resolveShowPrompt = res)));
     const pluginPath = `${__dirname}/__fixtures__/plugin_path_1`;
     jest.doMock(
       pluginPath,
@@ -818,7 +818,7 @@ describe('Watch mode flows', () => {
     runJestMock.mockReset();
 
     stdin.emit('t');
-    ['t', 'e', 's', 't'].forEach(key => stdin.emit(key));
+    ['t', 'e', 's', 't'].forEach((key) => stdin.emit(key));
     stdin.emit(KEYS.ENTER);
     await nextTick();
 
@@ -836,7 +836,7 @@ describe('Watch mode flows', () => {
     runJestMock.mockReset();
 
     stdin.emit('p');
-    ['f', 'i', 'l', 'e'].forEach(key => stdin.emit(key));
+    ['f', 'i', 'l', 'e'].forEach((key) => stdin.emit(key));
     stdin.emit(KEYS.ENTER);
     await nextTick();
 
@@ -854,12 +854,12 @@ describe('Watch mode flows', () => {
     runJestMock.mockReset();
 
     stdin.emit('p');
-    ['f', 'i', 'l', 'e'].forEach(key => stdin.emit(key));
+    ['f', 'i', 'l', 'e'].forEach((key) => stdin.emit(key));
     stdin.emit(KEYS.ENTER);
     await nextTick();
 
     stdin.emit('t');
-    ['t', 'e', 's', 't'].forEach(key => stdin.emit(key));
+    ['t', 'e', 's', 't'].forEach((key) => stdin.emit(key));
     stdin.emit(KEYS.ENTER);
     await nextTick();
 
@@ -955,6 +955,6 @@ class MockStdin {
   }
 
   emit(key) {
-    this._callbacks.forEach(cb => cb(key));
+    this._callbacks.forEach((cb) => cb(key));
   }
 }

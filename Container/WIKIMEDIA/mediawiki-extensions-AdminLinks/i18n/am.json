@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Codex Sinaiticus"
-		]
-	},
-	"adminlinks_users": "ተጠቃሚዎች"
+  "@metadata": {
+    "authors": ["Codex Sinaiticus"]
+  },
+  "adminlinks_users": "ተጠቃሚዎች"
 }

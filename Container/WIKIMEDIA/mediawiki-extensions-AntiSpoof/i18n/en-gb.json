@@ -1,10 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Dejavu",
-			"Samwilson",
-			"Shirayuki"
-		]
-	},
-	"antispoof-tooshort": "Normalised name too short"
+  "@metadata": {
+    "authors": ["Dejavu", "Samwilson", "Shirayuki"]
+  },
+  "antispoof-tooshort": "Normalised name too short"
 }

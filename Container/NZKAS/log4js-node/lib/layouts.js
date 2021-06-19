@@ -1,33 +1,45 @@
 "use strict";
-var dateFormat = require('./date_format')
-, os = require('os')
-, eol = os.EOL || '\n'
-, util = require('util')
-, replacementRegExp = /%[sdj]/g
-, layoutMakers = {
-  "messagePassThrough": function() { return messagePassThroughLayout; }, 
-  "basic": function() { return basicLayout; }, 
-  "colored": function() { return colouredLayout; }, 
-  "coloured": function() { return colouredLayout; }, 
-  "pattern": function (config) {
-    return patternLayout(config && config.pattern, config && config.tokens);
-	}
-}
-, colours = {
-  ALL: "grey", 
-  TRACE: "blue", 
-  DEBUG: "cyan", 
-  INFO: "green", 
-  WARN: "yellow", 
-  ERROR: "red", 
-  FATAL: "magenta", 
-  OFF: "grey"
-};
+var dateFormat = require("./date_format"),
+  os = require("os"),
+  eol = os.EOL || "\n",
+  util = require("util"),
+  replacementRegExp = /%[sdj]/g,
+  layoutMakers = {
+    messagePassThrough: function () {
+      return messagePassThroughLayout;
+    },
+    basic: function () {
+      return basicLayout;
+    },
+    colored: function () {
+      return colouredLayout;
+    },
+    coloured: function () {
+      return colouredLayout;
+    },
+    pattern: function (config) {
+      return patternLayout(config && config.pattern, config && config.tokens);
+    },
+  },
+  colours = {
+    ALL: "grey",
+    TRACE: "blue",
+    DEBUG: "cyan",
+    INFO: "green",
+    WARN: "yellow",
+    ERROR: "red",
+    FATAL: "magenta",
+    OFF: "grey",
+  };
 
 function wrapErrorsWithInspect(items) {
-  return items.map(function(item) {
-    if ((item instanceof Error) && item.stack) {
-      return { inspect: function() { return util.format(item) + '\n' + item.stack; } };
+  return items.map(function (item) {
+    if (item instanceof Error && item.stack) {
+      return {
+        inspect: function () {
+          return util.format(item) + "\n" + item.stack;
+        },
+      };
     } else {
       return item;
     }
@@ -35,51 +47,53 @@ function wrapErrorsWithInspect(items) {
 }
 
 function formatLogData(logData) {
-  var data = Array.isArray(logData) ? logData : Array.prototype.slice.call(arguments);
+  var data = Array.isArray(logData)
+    ? logData
+    : Array.prototype.slice.call(arguments);
   return util.format.apply(util, wrapErrorsWithInspect(data));
 }
 
 var styles = {
-    //styles
-  'bold'      : [1,  22],
-  'italic'    : [3,  23],
-  'underline' : [4,  24],
-  'inverse'   : [7,  27],
+  //styles
+  bold: [1, 22],
+  italic: [3, 23],
+  underline: [4, 24],
+  inverse: [7, 27],
   //grayscale
-  'white'     : [37, 39],
-  'grey'      : [90, 39],
-  'black'     : [90, 39],
+  white: [37, 39],
+  grey: [90, 39],
+  black: [90, 39],
   //colors
-  'blue'      : [34, 39],
-  'cyan'      : [36, 39],
-  'green'     : [32, 39],
-  'magenta'   : [35, 39],
-  'red'       : [31, 39],
-  'yellow'    : [33, 39]
+  blue: [34, 39],
+  cyan: [36, 39],
+  green: [32, 39],
+  magenta: [35, 39],
+  red: [31, 39],
+  yellow: [33, 39],
 };
 
 function colorizeStart(style) {
-  return style ? '\x1B[' + styles[style][0] + 'm' : '';
+  return style ? "\x1B[" + styles[style][0] + "m" : "";
 }
 function colorizeEnd(style) {
-  return style ? '\x1B[' + styles[style][1] + 'm' : '';
+  return style ? "\x1B[" + styles[style][1] + "m" : "";
 }
 /**
  * Taken from masylum's fork (https://github.com/masylum/log4js-node)
  */
-function colorize (str, style) {
+function colorize(str, style) {
   return colorizeStart(style) + str + colorizeEnd(style);
 }
 
 function timestampLevelAndCategory(loggingEvent, colour) {
   var output = colorize(
     formatLogData(
-      '[%s] [%s] %s - '
-      , dateFormat.asString(loggingEvent.startTime)
-      , loggingEvent.level
-      , loggingEvent.categoryName
-    )
-    , colour
+      "[%s] [%s] %s - ",
+      dateFormat.asString(loggingEvent.startTime),
+      loggingEvent.level,
+      loggingEvent.categoryName
+    ),
+    colour
   );
   return output;
 }
@@ -93,22 +107,26 @@ function timestampLevelAndCategory(loggingEvent, colour) {
  *
  * @author Stephan Strittmatter
  */
-function basicLayout (loggingEvent) {
-  return timestampLevelAndCategory(loggingEvent) + formatLogData(loggingEvent.data);
+function basicLayout(loggingEvent) {
+  return (
+    timestampLevelAndCategory(loggingEvent) + formatLogData(loggingEvent.data)
+  );
 }
 
 /**
  * colouredLayout - taken from masylum's fork.
  * same as basicLayout, but with colours.
  */
-function colouredLayout (loggingEvent) {
-  return timestampLevelAndCategory(
-    loggingEvent,
-    colours[loggingEvent.level.toString()]
-  ) + formatLogData(loggingEvent.data);
+function colouredLayout(loggingEvent) {
+  return (
+    timestampLevelAndCategory(
+      loggingEvent,
+      colours[loggingEvent.level.toString()]
+    ) + formatLogData(loggingEvent.data)
+  );
 }
 
-function messagePassThroughLayout (loggingEvent) {
+function messagePassThroughLayout(loggingEvent) {
   return formatLogData(loggingEvent.data);
 }
 
@@ -129,7 +147,7 @@ function messagePassThroughLayout (loggingEvent) {
  *  - %x{<tokenname>} add dynamic tokens to your log. Tokens are specified in the tokens parameter
  * You can use %[ and %] to define a colored block.
  *
- * Tokens are specified as simple key:value objects. 
+ * Tokens are specified as simple key:value objects.
  * The key represents the token name whereas the value can be a string or function
  * which is called to extract the value to put in the log message. If token is not
  * found, it doesn't replace the field.
@@ -143,10 +161,11 @@ function messagePassThroughLayout (loggingEvent) {
  * @author Stephan Strittmatter
  * @author Jan Schmidle
  */
-function patternLayout (pattern, tokens) {
-  var TTCC_CONVERSION_PATTERN  = "%r %p %c - %m%n";
-  var regex = /%(-?[0-9]+)?(\.?[0-9]+)?([\[\]cdhmnprzxy%])(\{([^\}]+)\})?|([^%]+)/;
-  
+function patternLayout(pattern, tokens) {
+  var TTCC_CONVERSION_PATTERN = "%r %p %c - %m%n";
+  var regex =
+    /%(-?[0-9]+)?(\.?[0-9]+)?([\[\]cdhmnprzxy%])(\{([^\}]+)\})?|([^%]+)/;
+
   pattern = pattern || TTCC_CONVERSION_PATTERN;
 
   function categoryName(loggingEvent, specifier) {
@@ -155,7 +174,9 @@ function patternLayout (pattern, tokens) {
       var precision = parseInt(specifier, 10);
       var loggerNameBits = loggerName.split(".");
       if (precision < loggerNameBits.length) {
-        loggerName = loggerNameBits.slice(loggerNameBits.length - precision).join(".");
+        loggerName = loggerNameBits
+          .slice(loggerNameBits.length - precision)
+          .join(".");
       }
     }
     return loggerName;
@@ -169,7 +190,7 @@ function patternLayout (pattern, tokens) {
       if (format == "ISO8601") {
         format = dateFormat.ISO8601_FORMAT;
       } else if (format == "ISO8601_WITH_TZ_OFFSET") {
-        format = dateFormat.ISO8601_WITH_TZ_OFFSET_FORMAT; 
+        format = dateFormat.ISO8601_WITH_TZ_OFFSET_FORMAT;
       } else if (format == "ABSOLUTE") {
         format = dateFormat.ABSOLUTETIME_FORMAT;
       } else if (format == "DATE") {
@@ -179,7 +200,7 @@ function patternLayout (pattern, tokens) {
     // Format the date
     return dateFormat.asString(format, loggingEvent.startTime);
   }
-  
+
   function hostname() {
     return os.hostname().toString();
   }
@@ -187,7 +208,7 @@ function patternLayout (pattern, tokens) {
   function formatMessage(loggingEvent) {
     return formatLogData(loggingEvent.data);
   }
-  
+
   function endOfLine() {
     return eol;
   }
@@ -209,7 +230,7 @@ function patternLayout (pattern, tokens) {
   }
 
   function percent() {
-    return '%';
+    return "%";
   }
 
   function pid(loggingEvent) {
@@ -219,23 +240,23 @@ function patternLayout (pattern, tokens) {
       return process.pid;
     }
   }
-  
+
   function clusterInfo(loggingEvent, specifier) {
     if (loggingEvent.cluster && specifier) {
       return specifier
-        .replace('%m', loggingEvent.cluster.master)
-        .replace('%w', loggingEvent.cluster.worker)
-        .replace('%i', loggingEvent.cluster.workerId);
+        .replace("%m", loggingEvent.cluster.master)
+        .replace("%w", loggingEvent.cluster.worker)
+        .replace("%i", loggingEvent.cluster.workerId);
     } else if (loggingEvent.cluster) {
-      return loggingEvent.cluster.worker+'@'+loggingEvent.cluster.master;
+      return loggingEvent.cluster.worker + "@" + loggingEvent.cluster.master;
     } else {
       return pid();
     }
   }
 
   function userDefined(loggingEvent, specifier) {
-    if (typeof(tokens[specifier]) !== 'undefined') {
-      if (typeof(tokens[specifier]) === 'function') {
+    if (typeof tokens[specifier] !== "undefined") {
+      if (typeof tokens[specifier] === "function") {
         return tokens[specifier](loggingEvent);
       } else {
         return tokens[specifier];
@@ -245,19 +266,19 @@ function patternLayout (pattern, tokens) {
   }
 
   var replacers = {
-    'c': categoryName,
-    'd': formatAsDate,
-    'h': hostname,
-    'm': formatMessage,
-    'n': endOfLine,
-    'p': logLevel,
-    'r': startTime,
-    '[': startColour,
-    ']': endColour,
-    'y': clusterInfo,
-    'z': pid,
-    '%': percent,
-    'x': userDefined
+    c: categoryName,
+    d: formatAsDate,
+    h: hostname,
+    m: formatMessage,
+    n: endOfLine,
+    p: logLevel,
+    r: startTime,
+    "[": startColour,
+    "]": endColour,
+    y: clusterInfo,
+    z: pid,
+    "%": percent,
+    x: userDefined,
   };
 
   function replaceToken(conversionCharacter, loggingEvent, specifier) {
@@ -293,12 +314,12 @@ function patternLayout (pattern, tokens) {
     }
     return toPad;
   }
-  
-  return function(loggingEvent) {
+
+  return function (loggingEvent) {
     var formattedString = "";
     var result;
     var searchString = pattern;
-    
+
     while ((result = regex.exec(searchString))) {
       var matchedString = result[0];
       var padding = result[1];
@@ -306,14 +327,18 @@ function patternLayout (pattern, tokens) {
       var conversionCharacter = result[3];
       var specifier = result[5];
       var text = result[6];
-      
+
       // Check if the pattern matched was just normal text
       if (text) {
         formattedString += "" + text;
       } else {
         // Create a raw replacement string based on the conversion
         // character and specifier
-        var replacement = replaceToken(conversionCharacter, loggingEvent, specifier);
+        var replacement = replaceToken(
+          conversionCharacter,
+          loggingEvent,
+          specifier
+        );
 
         // Format the replacement according to any padding or
         // truncation specified
@@ -325,16 +350,15 @@ function patternLayout (pattern, tokens) {
     }
     return formattedString;
   };
-
 }
 
 module.exports = {
-  basicLayout: basicLayout, 
-  messagePassThroughLayout: messagePassThroughLayout, 
-  patternLayout: patternLayout, 
-  colouredLayout: colouredLayout, 
-  coloredLayout: colouredLayout, 
-  layout: function(name, config) {
+  basicLayout: basicLayout,
+  messagePassThroughLayout: messagePassThroughLayout,
+  patternLayout: patternLayout,
+  colouredLayout: colouredLayout,
+  coloredLayout: colouredLayout,
+  layout: function (name, config) {
     return layoutMakers[name] && layoutMakers[name](config);
-  }
+  },
 };

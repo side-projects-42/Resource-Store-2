@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Rachmat04"
-		]
+		"authors": ["Rachmat04"]
 	},
 	"rest-prefix-mismatch": "Lintasan yang diminta ($1) tidak berada di dalam lintasan utama REST API ($2)",
 	"rest-wrong-method": "Metode yang diminta ($1) bukan {{PLURAL:$3|metode yang diizinkan untuk lintasan tunggal dari metode yang diizinkan pada lintasan ini}} ($2)",

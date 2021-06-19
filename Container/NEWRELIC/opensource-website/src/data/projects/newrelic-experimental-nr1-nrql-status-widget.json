@@ -17,9 +17,7 @@
   "description": "NRQL powered status widget for dashboards",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "JavaScript",
-  "projectTags": [
-    "visualizations"
-  ],
+  "projectTags": ["visualizations"],
   "acceptsContributions": true,
   "website": {
     "title": "NRQL Status Widget",

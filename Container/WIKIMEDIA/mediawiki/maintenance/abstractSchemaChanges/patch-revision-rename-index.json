@@ -8,7 +8,11 @@
 				"name": "rev_id",
 				"comment": "Unique ID to identify each revision",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "rev_page",
@@ -68,37 +72,41 @@
 		"indexes": [
 			{
 				"name": "rev_page_id",
-				"columns": [ "rev_page", "rev_id" ],
+				"columns": ["rev_page", "rev_id"],
 				"comment": "The index is proposed for removal, do not use it in new code: T163532. Used for ordering revisions within a page by rev_id, which is usually incorrect, since rev_timestamp is normally the correct order. It can also be used by dumpBackup.php, if a page and rev_id range is specified.",
 				"unique": false
 			},
 			{
 				"name": "rev_timestamp",
-				"columns": [ "rev_timestamp" ],
+				"columns": ["rev_timestamp"],
 				"comment": "Used by ApiQueryAllRevisions",
 				"unique": false
 			},
 			{
 				"name": "page_timestamp",
-				"columns": [ "rev_page", "rev_timestamp" ],
+				"columns": ["rev_page", "rev_timestamp"],
 				"comment": "History index",
 				"unique": false
 			},
 			{
 				"name": "rev_actor_timestamp",
-				"columns": [ "rev_actor", "rev_timestamp", "rev_id" ],
+				"columns": ["rev_actor", "rev_timestamp", "rev_id"],
 				"comment": "User contributions index",
 				"unique": false
 			},
 			{
 				"name": "rev_page_actor_timestamp",
-				"columns": [ "rev_page", "rev_actor", "rev_timestamp" ],
+				"columns": ["rev_page", "rev_actor", "rev_timestamp"],
 				"comment": "Credits index. This is scanned in order to compile credits lists for pages, in ApiQueryContributors. Also for ApiQueryRevisions if rvuser is specified",
 				"unique": false
 			}
 		],
-		"table_options": [ "/*$wgDBTableOptions*/", "MAX_ROWS=10000000", "AVG_ROW_LENGTH=1024" ],
-		"pk": [ "rev_id" ]
+		"table_options": [
+			"/*$wgDBTableOptions*/",
+			"MAX_ROWS=10000000",
+			"AVG_ROW_LENGTH=1024"
+		],
+		"pk": ["rev_id"]
 	},
 	"after": {
 		"name": "revision",
@@ -108,7 +116,11 @@
 				"name": "rev_id",
 				"comment": "Unique ID to identify each revision",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "rev_page",
@@ -168,36 +180,40 @@
 		"indexes": [
 			{
 				"name": "rev_page_id",
-				"columns": [ "rev_page", "rev_id" ],
+				"columns": ["rev_page", "rev_id"],
 				"comment": "The index is proposed for removal, do not use it in new code: T163532. Used for ordering revisions within a page by rev_id, which is usually incorrect, since rev_timestamp is normally the correct order. It can also be used by dumpBackup.php, if a page and rev_id range is specified.",
 				"unique": false
 			},
 			{
 				"name": "rev_timestamp",
-				"columns": [ "rev_timestamp" ],
+				"columns": ["rev_timestamp"],
 				"comment": "Used by ApiQueryAllRevisions",
 				"unique": false
 			},
 			{
 				"name": "rev_page_timestamp",
-				"columns": [ "rev_page", "rev_timestamp" ],
+				"columns": ["rev_page", "rev_timestamp"],
 				"comment": "History index",
 				"unique": false
 			},
 			{
 				"name": "rev_actor_timestamp",
-				"columns": [ "rev_actor", "rev_timestamp", "rev_id" ],
+				"columns": ["rev_actor", "rev_timestamp", "rev_id"],
 				"comment": "User contributions index",
 				"unique": false
 			},
 			{
 				"name": "rev_page_actor_timestamp",
-				"columns": [ "rev_page", "rev_actor", "rev_timestamp" ],
+				"columns": ["rev_page", "rev_actor", "rev_timestamp"],
 				"comment": "Credits index. This is scanned in order to compile credits lists for pages, in ApiQueryContributors. Also for ApiQueryRevisions if rvuser is specified",
 				"unique": false
 			}
 		],
-		"table_options": [ "/*$wgDBTableOptions*/", "MAX_ROWS=10000000", "AVG_ROW_LENGTH=1024" ],
-		"pk": [ "rev_id" ]
+		"table_options": [
+			"/*$wgDBTableOptions*/",
+			"MAX_ROWS=10000000",
+			"AVG_ROW_LENGTH=1024"
+		],
+		"pk": ["rev_id"]
 	}
 }

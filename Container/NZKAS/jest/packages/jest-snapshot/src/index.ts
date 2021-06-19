@@ -99,7 +99,7 @@ const cleanup = (
   };
 };
 
-const toMatchSnapshot = function(
+const toMatchSnapshot = function (
   this: Context,
   received: any,
   propertyMatchers?: any,
@@ -144,7 +144,7 @@ const toMatchSnapshot = function(
   });
 };
 
-const toMatchInlineSnapshot = function(
+const toMatchInlineSnapshot = function (
   this: Context,
   received: any,
   propertyMatchersOrInlineSnapshot?: any,
@@ -313,7 +313,7 @@ const _toMatchSnapshot = ({
   };
 };
 
-const toThrowErrorMatchingSnapshot = function(
+const toThrowErrorMatchingSnapshot = function (
   this: Context,
   received: any,
   hint: string | undefined, // because error TS1016 for hint?: string
@@ -341,7 +341,7 @@ const toThrowErrorMatchingSnapshot = function(
   );
 };
 
-const toThrowErrorMatchingInlineSnapshot = function(
+const toThrowErrorMatchingInlineSnapshot = function (
   this: Context,
   received: any,
   inlineSnapshot?: string,

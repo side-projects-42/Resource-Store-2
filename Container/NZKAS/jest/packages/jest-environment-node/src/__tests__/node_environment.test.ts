@@ -36,7 +36,7 @@ describe('NodeEnvironment', () => {
     const timer1 = env1.global.setTimeout(() => {}, 0);
     const timer2 = env1.global.setInterval(() => {}, 0);
 
-    [timer1, timer2].forEach(timer => {
+    [timer1, timer2].forEach((timer) => {
       expect(timer.id).not.toBeUndefined();
       expect(typeof timer.ref).toBe('function');
       expect(typeof timer.unref).toBe('function');

@@ -42,7 +42,7 @@
 		},
 		"unLink": {
 			"file": "images/icons/unLink.svg",
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		},
 		"linkExternal": {
 			"file": {

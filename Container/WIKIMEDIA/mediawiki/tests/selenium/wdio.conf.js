@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
-require( 'dotenv' ).config();
-const { config } = require( 'wdio-mediawiki/wdio-defaults.conf.js' );
+require("dotenv").config();
+const { config } = require("wdio-mediawiki/wdio-defaults.conf.js");
 
-exports.config = { ...config,
+exports.config = {
+	...config,
 	// Override, or add to, the setting from wdio-mediawiki.
 	// Learn more at https://webdriver.io/docs/configurationfile/
 	//
@@ -11,15 +12,15 @@ exports.config = { ...config,
 	// logLevel: 'info',
 
 	specs: [
-		'tests/selenium/specs/**/*.js',
-		'tests/selenium/wdio-mediawiki/specs/*.js'
+		"tests/selenium/specs/**/*.js",
+		"tests/selenium/wdio-mediawiki/specs/*.js",
 	],
 
 	suites: {
 		daily: [
-			'tests/selenium/wdio-mediawiki/specs/*.js',
-			'tests/selenium/specs/page.js',
-			'tests/selenium/specs/user.js'
-		]
-	}
+			"tests/selenium/wdio-mediawiki/specs/*.js",
+			"tests/selenium/specs/page.js",
+			"tests/selenium/specs/user.js",
+		],
+	},
 };

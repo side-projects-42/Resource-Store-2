@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Hylle"
-		]
-	},
-	"alltimezones-desc": "Tilføjer en tag til at vise datoer i alle tidszoner"
+  "@metadata": {
+    "authors": ["Hylle"]
+  },
+  "alltimezones-desc": "Tilføjer en tag til at vise datoer i alle tidszoner"
 }

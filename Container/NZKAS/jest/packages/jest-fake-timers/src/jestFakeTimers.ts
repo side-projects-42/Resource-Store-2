@@ -105,7 +105,7 @@ export default class FakeTimers<TimerRef> {
   }
 
   clearAllTimers() {
-    this._immediates.forEach(immediate =>
+    this._immediates.forEach((immediate) =>
       this._fakeClearImmediate(immediate.uuid),
     );
     this._timers.clear();

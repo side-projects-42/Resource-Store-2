@@ -1,27 +1,27 @@
-export const addAuthor = author => {
+export const addAuthor = (author) => {
   return {
-    type: 'ADD_AUTHOR',
-    author
+    type: "ADD_AUTHOR",
+    author,
   };
 };
 
-export const removeAuthor = id => {
+export const removeAuthor = (id) => {
   return {
-    type: 'REMOVE_AUTHOR',
-    id
+    type: "REMOVE_AUTHOR",
+    id,
   };
 };
 
-export const addBook = book => {
+export const addBook = (book) => {
   return {
-    type: 'ADD_BOOK',
-    book
+    type: "ADD_BOOK",
+    book,
   };
 };
 
-export const removeBook = id => {
+export const removeBook = (id) => {
   return {
-    type: 'REMOVE_BOOK',
-    id
+    type: "REMOVE_BOOK",
+    id,
   };
 };

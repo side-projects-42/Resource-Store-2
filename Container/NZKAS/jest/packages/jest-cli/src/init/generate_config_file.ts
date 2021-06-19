@@ -25,7 +25,7 @@ const stringifyOption = (
     '\n' +
     stringifiedObject
       .split('\n')
-      .map(line => '  ' + linePrefix + line)
+      .map((line) => '  ' + linePrefix + line)
       .join('\n') +
     ',\n'
   );

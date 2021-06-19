@@ -6,8 +6,11 @@
  * @description
  * Runs the ESLint tester over the loaded notated test fixtures
  */
-'use strict';
+"use strict";
 
-require('eslint-tool-test-files').describePlugin('eslint-plugin-bdd', './src/rules', [
-	'./tests/samples/**/*.js'
-], require('./../src/errors'));
+require("eslint-tool-test-files").describePlugin(
+	"eslint-plugin-bdd",
+	"./src/rules",
+	["./tests/samples/**/*.js"],
+	require("./../src/errors")
+);

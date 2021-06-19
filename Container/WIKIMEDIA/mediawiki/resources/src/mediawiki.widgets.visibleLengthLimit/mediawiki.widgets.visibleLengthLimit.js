@@ -1,7 +1,6 @@
-( function () {
-
-	var byteLength = require( 'mediawiki.String' ).byteLength,
-		codePointLength = require( 'mediawiki.String' ).codePointLength;
+(function () {
+	var byteLength = require("mediawiki.String").byteLength,
+		codePointLength = require("mediawiki.String").codePointLength;
 
 	/**
 	 * @class mw.widgets
@@ -16,32 +15,36 @@
 	 * @param {number} [limit] Byte limit, defaults to $input's maxlength
 	 * @param {Function} [filterFunction] Function to call on the string before assessing the length.
 	 */
-	mw.widgets.visibleByteLimit = function ( textInputWidget, limit, filterFunction ) {
-		limit = limit || +textInputWidget.$input.attr( 'maxlength' );
-		if ( !filterFunction || typeof filterFunction !== 'function' ) {
+	mw.widgets.visibleByteLimit = function (
+		textInputWidget,
+		limit,
+		filterFunction
+	) {
+		limit = limit || +textInputWidget.$input.attr("maxlength");
+		if (!filterFunction || typeof filterFunction !== "function") {
 			filterFunction = undefined;
 		}
 
 		function updateCount() {
 			var value = textInputWidget.getValue(),
 				remaining;
-			if ( filterFunction ) {
-				value = filterFunction( value );
+			if (filterFunction) {
+				value = filterFunction(value);
 			}
-			remaining = limit - byteLength( value );
-			if ( remaining > 99 ) {
-				remaining = '';
+			remaining = limit - byteLength(value);
+			if (remaining > 99) {
+				remaining = "";
 			} else {
-				remaining = mw.language.convertNumber( remaining );
+				remaining = mw.language.convertNumber(remaining);
 			}
-			textInputWidget.setLabel( remaining );
+			textInputWidget.setLabel(remaining);
 		}
-		textInputWidget.on( 'change', updateCount );
+		textInputWidget.on("change", updateCount);
 		// Initialise value
 		updateCount();
 
 		// Actually enforce limit
-		textInputWidget.$input.byteLimit( limit, filterFunction );
+		textInputWidget.$input.byteLimit(limit, filterFunction);
 	};
 
 	/**
@@ -53,32 +56,35 @@
 	 * @param {number} [limit] Code point limit, defaults to $input's maxlength
 	 * @param {Function} [filterFunction] Function to call on the string before assessing the length.
 	 */
-	mw.widgets.visibleCodePointLimit = function ( textInputWidget, limit, filterFunction ) {
-		limit = limit || +textInputWidget.$input.attr( 'maxlength' );
-		if ( !filterFunction || typeof filterFunction !== 'function' ) {
+	mw.widgets.visibleCodePointLimit = function (
+		textInputWidget,
+		limit,
+		filterFunction
+	) {
+		limit = limit || +textInputWidget.$input.attr("maxlength");
+		if (!filterFunction || typeof filterFunction !== "function") {
 			filterFunction = undefined;
 		}
 
 		function updateCount() {
 			var value = textInputWidget.getValue(),
 				remaining;
-			if ( filterFunction ) {
-				value = filterFunction( value );
+			if (filterFunction) {
+				value = filterFunction(value);
 			}
-			remaining = limit - codePointLength( value );
-			if ( remaining > 99 ) {
-				remaining = '';
+			remaining = limit - codePointLength(value);
+			if (remaining > 99) {
+				remaining = "";
 			} else {
-				remaining = mw.language.convertNumber( remaining );
+				remaining = mw.language.convertNumber(remaining);
 			}
-			textInputWidget.setLabel( remaining );
+			textInputWidget.setLabel(remaining);
 		}
-		textInputWidget.on( 'change', updateCount );
+		textInputWidget.on("change", updateCount);
 		// Initialise value
 		updateCount();
 
 		// Actually enforce limit
-		textInputWidget.$input.codePointLimit( limit, filterFunction );
+		textInputWidget.$input.codePointLimit(limit, filterFunction);
 	};
-
-}() );
+})();

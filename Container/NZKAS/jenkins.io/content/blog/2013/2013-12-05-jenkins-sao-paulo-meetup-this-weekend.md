@@ -4,11 +4,12 @@
 :nodeid: 449
 :created: 1386244800
 :tags:
-- general
-- meetup
-- news
+  - general
+  - meetup
+  - news
 :author: kohsuke
 ---
+
 I'm going to visit Sao Paulo once again this weekend to attend [the second annual Jenkins users meet-up](http://www.meetup.com/jenkinsmeetup/events/133598002/). It's a whole day free event Saturday full of Jenkins goodness.
 
 You'll hear from a number of active Jenkins folks, and I'll be presenting about what CloudBees (where I currently work) has contributed to the Jenkins project, including recent new OSS plugins and some services. I'm also stuffing my suitcase with lots of give-aways, including Jenkins stickers and [popular Jenkins bobble heads](https://jenkins-ci.org/content/behind-scenes-jenkins-user-conference-palo-alto). I don't intend to bring anything back to the U.S.

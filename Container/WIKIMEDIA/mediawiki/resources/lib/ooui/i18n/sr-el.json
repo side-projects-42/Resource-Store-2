@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Milicevic01",
-			"Prevodim"
-		]
+		"authors": ["Milicevic01", "Prevodim"]
 	},
 	"ooui-outline-control-move-down": "Premesti stavku nadole",
 	"ooui-outline-control-move-up": "Premesti stavku nagore",

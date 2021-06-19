@@ -462,7 +462,7 @@ const matchers: MatchersObject = {
             : printReceived(received)
         }` +
         (!isNot &&
-        indexable.findIndex(item =>
+        indexable.findIndex((item) =>
           equals(item, expected, [iterableEquality]),
         ) !== -1
           ? `\n\n${SUGGEST_TO_CONTAIN_EQUAL}`
@@ -495,7 +495,7 @@ const matchers: MatchersObject = {
       );
     }
 
-    const index = Array.from(received).findIndex(item =>
+    const index = Array.from(received).findIndex((item) =>
       equals(item, expected, [iterableEquality]),
     );
     const pass = index !== -1;

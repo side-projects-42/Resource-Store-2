@@ -1,6 +1,6 @@
-@import 'mediawiki.mixins.less';
-@import 'mediawiki.ui/variables.less';
-@import 'mw.rcfilters.variables.less';
+@import "mediawiki.mixins.less";
+@import "mediawiki.ui/variables.less";
+@import "mw.rcfilters.variables.less";
 
 .mw-rcfilters-ui-filterTagMultiselectWidget {
 	max-width: none;
@@ -34,7 +34,8 @@
 		// filters view which is hidden when collapsed
 		border-bottom: @border-base;
 
-		&.mw-rcfilters-ui-filterTagMultiselectWidget.oo-ui-widget-enabled .oo-ui-tagMultiselectWidget-handle {
+		&.mw-rcfilters-ui-filterTagMultiselectWidget.oo-ui-widget-enabled
+			.oo-ui-tagMultiselectWidget-handle {
 			padding-bottom: 0;
 			padding-top: 0;
 		}
@@ -59,11 +60,13 @@
 		}
 	}
 
-	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled &-animate.oo-ui-tagMultiselectWidget-handle {
+	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled
+		&-animate.oo-ui-tagMultiselectWidget-handle {
 		.transition( background-color 500ms ease-out );
 	}
 
-	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled &-emphasize.oo-ui-tagMultiselectWidget-handle {
+	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled
+		&-emphasize.oo-ui-tagMultiselectWidget-handle {
 		background-color: @background-color-primary;
 	}
 

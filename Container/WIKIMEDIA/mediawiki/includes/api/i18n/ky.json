@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Janatkg",
-			"Macofe"
-		]
+		"authors": ["Janatkg", "Macofe"]
 	},
 	"apihelp-block-summary": "Колдонуучуну бөгөттөө",
 	"apihelp-block-param-reason": "Бөгөттөө себеби.",

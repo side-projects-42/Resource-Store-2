@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Sahran",
-			"Tel'et",
-			"Tifinaghes"
-		]
+		"authors": ["Sahran", "Tel'et", "Tifinaghes"]
 	},
 	"ooui-outline-control-move-down": "تۆۋەنگە يۆتكە",
 	"ooui-outline-control-move-up": "يۇقۇرىغا يۆتكە",

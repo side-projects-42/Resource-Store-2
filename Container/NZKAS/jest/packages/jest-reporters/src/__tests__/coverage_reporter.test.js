@@ -153,7 +153,7 @@ describe('onRunComplete', () => {
       path.resolve(`${process.cwd()}/path-test-files/full_path_file.js`),
       './path-test-files/relative_path_file.js',
       'path-test-files/glob-*/*.js',
-    ].forEach(path => {
+    ].forEach((path) => {
       covThreshold[path] = {
         statements: 100,
       };
@@ -183,7 +183,7 @@ describe('onRunComplete', () => {
       path.resolve(`${process.cwd()}/path-test-files/full_path_file.js`),
       './path-test-files/relative_path_file.js',
       'path-test-files/glob-*/*.js',
-    ].forEach(path => {
+    ].forEach((path) => {
       covThreshold[path] = {
         statements: 50,
       };
@@ -332,7 +332,7 @@ describe('onRunComplete', () => {
       './path-test-files/glob-path/file1.js',
       './path-test-files/glob-path/file2.js',
       './path-test-files/*.js',
-    ].forEach(path => {
+    ].forEach((path) => {
       covThreshold[path] = {
         statements: 0,
       };

@@ -32,7 +32,7 @@ MIT License
 Created by David Dollar
 
 Patches contributed by:
-  Gabriel Gilder
+Gabriel Gilder
 
 ## Copyright
 

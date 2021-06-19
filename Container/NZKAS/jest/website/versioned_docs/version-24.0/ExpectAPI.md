@@ -241,7 +241,7 @@ exports[`stores only 10 characters: toMatchTrimmedSnapshot 1`] = `"extra long"`;
 ```js
 test('map calls its argument with a non-null argument', () => {
   const mock = jest.fn();
-  [1].map(x => mock(x));
+  [1].map((x) => mock(x));
   expect(mock).toBeCalledWith(expect.anything());
 });
 ```
@@ -330,7 +330,7 @@ For example, let's say that we have a few functions that all deal with state. `p
 ```js
 test('prepareState prepares a valid state', () => {
   expect.hasAssertions();
-  prepareState(state => {
+  prepareState((state) => {
     expect(validateState(state)).toBeTruthy();
   });
   return waitOnState();
@@ -705,7 +705,7 @@ For example, let's say you have a mock `drink` that returns the name of the beve
 ```js
 test('drink returns La Croix', () => {
   const beverage = {name: 'La Croix'};
-  const drink = jest.fn(beverage => beverage.name);
+  const drink = jest.fn((beverage) => beverage.name);
 
   drink(beverage);
 
@@ -725,7 +725,7 @@ For example, let's say you have a mock `drink` that returns the name of the beve
 test('drink returns La Croix (Orange) last', () => {
   const beverage1 = {name: 'La Croix (Lemon)'};
   const beverage2 = {name: 'La Croix (Orange)'};
-  const drink = jest.fn(beverage => beverage.name);
+  const drink = jest.fn((beverage) => beverage.name);
 
   drink(beverage1);
   drink(beverage2);
@@ -746,7 +746,7 @@ For example, let's say you have a mock `drink` that returns the name of the beve
 test('drink returns expected nth calls', () => {
   const beverage1 = {name: 'La Croix (Lemon)'};
   const beverage2 = {name: 'La Croix (Orange)'};
-  const drink = jest.fn(beverage => beverage.name);
+  const drink = jest.fn((beverage) => beverage.name);
 
   drink(beverage1);
   drink(beverage2);

@@ -9,7 +9,7 @@
 const Immutable = require('immutable');
 const jestExpect = require('../');
 
-['toBeCalled', 'toHaveBeenCalled'].forEach(called => {
+['toBeCalled', 'toHaveBeenCalled'].forEach((called) => {
   describe(`${called}`, () => {
     test(`works only on spies or jest.fn`, () => {
       const fn = function fn() {};
@@ -56,7 +56,7 @@ const jestExpect = require('../');
   });
 });
 
-['toBeCalledTimes', 'toHaveBeenCalledTimes'].forEach(calledTimes => {
+['toBeCalledTimes', 'toHaveBeenCalledTimes'].forEach((calledTimes) => {
   describe(`${calledTimes}`, () => {
     test('works only on spies or jest.fn', () => {
       const fn = function fn() {};
@@ -71,7 +71,7 @@ const jestExpect = require('../');
       fn();
       jestExpect(fn)[calledTimes](1);
 
-      [{}, [], true, 'a', new Map(), () => {}].forEach(value => {
+      [{}, [], true, 'a', new Map(), () => {}].forEach((value) => {
         expect(() =>
           jestExpect(fn)[calledTimes](value),
         ).toThrowErrorMatchingSnapshot();
@@ -82,7 +82,7 @@ const jestExpect = require('../');
       const fn = jest.fn();
       jestExpect(fn).not[calledTimes](1);
 
-      [{}, [], true, 'a', new Map(), () => {}].forEach(value => {
+      [{}, [], true, 'a', new Map(), () => {}].forEach((value) => {
         expect(() =>
           jestExpect(fn).not[calledTimes](value),
         ).toThrowErrorMatchingSnapshot();
@@ -145,8 +145,8 @@ const jestExpect = require('../');
   'toHaveBeenNthCalledWith',
   'toBeCalledWith',
   'toHaveBeenCalledWith',
-].forEach(calledWith => {
-  const caller = function(callee, ...args) {
+].forEach((calledWith) => {
+  const caller = function (callee, ...args) {
     if (
       calledWith === 'nthCalledWith' ||
       calledWith === 'toHaveBeenNthCalledWith'
@@ -212,9 +212,18 @@ const jestExpect = require('../');
     test(`works with Map`, () => {
       const fn = jest.fn();
 
-      const m1 = new Map([[1, 2], [2, 1]]);
-      const m2 = new Map([[1, 2], [2, 1]]);
-      const m3 = new Map([['a', 'b'], ['b', 'a']]);
+      const m1 = new Map([
+        [1, 2],
+        [2, 1],
+      ]);
+      const m2 = new Map([
+        [1, 2],
+        [2, 1],
+      ]);
+      const m3 = new Map([
+        ['a', 'b'],
+        ['b', 'a'],
+      ]);
 
       fn(m1);
 
@@ -371,7 +380,7 @@ const jestExpect = require('../');
   });
 });
 
-['toReturn', 'toHaveReturned'].forEach(returned => {
+['toReturn', 'toHaveReturned'].forEach((returned) => {
   describe(`${returned}`, () => {
     test(`works only on spies or jest.fn`, () => {
       const fn = function fn() {};
@@ -398,7 +407,7 @@ const jestExpect = require('../');
     });
 
     test(`passes when at least one call does not throw`, () => {
-      const fn = jest.fn(causeError => {
+      const fn = jest.fn((causeError) => {
         if (causeError) {
           throw new Error('Error!');
         }
@@ -494,7 +503,7 @@ const jestExpect = require('../');
 
     test(`incomplete recursive calls are handled properly`, () => {
       // sums up all integers from 0 -> value, using recursion
-      const fn = jest.fn(value => {
+      const fn = jest.fn((value) => {
         if (value === 0) {
           // Before returning from the base case of recursion, none of the
           // calls have returned yet.
@@ -513,7 +522,7 @@ const jestExpect = require('../');
   });
 });
 
-['toReturnTimes', 'toHaveReturnedTimes'].forEach(returnedTimes => {
+['toReturnTimes', 'toHaveReturnedTimes'].forEach((returnedTimes) => {
   describe(`${returnedTimes}`, () => {
     test('works only on spies or jest.fn', () => {
       const fn = function fn() {};
@@ -528,7 +537,7 @@ const jestExpect = require('../');
       fn();
       jestExpect(fn)[returnedTimes](1);
 
-      [{}, [], true, 'a', new Map(), () => {}].forEach(value => {
+      [{}, [], true, 'a', new Map(), () => {}].forEach((value) => {
         expect(() =>
           jestExpect(fn)[returnedTimes](value),
         ).toThrowErrorMatchingSnapshot();
@@ -539,7 +548,7 @@ const jestExpect = require('../');
       const fn = jest.fn(() => 42);
       jestExpect(fn).not[returnedTimes](2);
 
-      [{}, [], true, 'a', new Map(), () => {}].forEach(value => {
+      [{}, [], true, 'a', new Map(), () => {}].forEach((value) => {
         expect(() =>
           jestExpect(fn).not[returnedTimes](value),
         ).toThrowErrorMatchingSnapshot();
@@ -597,7 +606,7 @@ const jestExpect = require('../');
     });
 
     test('calls that throw are not counted', () => {
-      const fn = jest.fn(causeError => {
+      const fn = jest.fn((causeError) => {
         if (causeError) {
           throw new Error('Error!');
         }
@@ -623,7 +632,7 @@ const jestExpect = require('../');
     });
 
     test('calls that throw undefined are not counted', () => {
-      const fn = jest.fn(causeError => {
+      const fn = jest.fn((causeError) => {
         if (causeError) {
           // eslint-disable-next-line no-throw-literal
           throw undefined;
@@ -663,7 +672,7 @@ const jestExpect = require('../');
 
     test(`incomplete recursive calls are handled properly`, () => {
       // sums up all integers from 0 -> value, using recursion
-      const fn = jest.fn(value => {
+      const fn = jest.fn((value) => {
         if (value === 0) {
           return 0;
         } else {
@@ -693,8 +702,8 @@ const jestExpect = require('../');
   'toHaveNthReturnedWith',
   'toReturnWith',
   'toHaveReturnedWith',
-].forEach(returnedWith => {
-  const caller = function(callee, ...args) {
+].forEach((returnedWith) => {
+  const caller = function (callee, ...args) {
     if (
       returnedWith === 'nthReturnedWith' ||
       returnedWith === 'toHaveNthReturnedWith'
@@ -763,9 +772,18 @@ const jestExpect = require('../');
     });
 
     test(`works with Map`, () => {
-      const m1 = new Map([[1, 2], [2, 1]]);
-      const m2 = new Map([[1, 2], [2, 1]]);
-      const m3 = new Map([['a', 'b'], ['b', 'a']]);
+      const m1 = new Map([
+        [1, 2],
+        [2, 1],
+      ]);
+      const m2 = new Map([
+        [1, 2],
+        [2, 1],
+      ]);
+      const m3 = new Map([
+        ['a', 'b'],
+        ['b', 'a'],
+      ]);
 
       const fn = jest.fn(() => m1);
       fn();
@@ -894,7 +912,7 @@ const jestExpect = require('../');
 
       test(`incomplete recursive calls are handled properly`, () => {
         // sums up all integers from 0 -> value, using recursion
-        const fn = jest.fn(value => {
+        const fn = jest.fn((value) => {
           if (value === 0) {
             // Before returning from the base case of recursion, none of the
             // calls have returned yet.
@@ -990,7 +1008,7 @@ const jestExpect = require('../');
 
       test(`incomplete recursive calls are handled properly`, () => {
         // sums up all integers from 0 -> value, using recursion
-        const fn = jest.fn(value => {
+        const fn = jest.fn((value) => {
           if (value === 0) {
             return 0;
           } else {
@@ -1045,7 +1063,7 @@ const jestExpect = require('../');
 
       test(`incomplete recursive calls are handled properly`, () => {
         // sums up all integers from 0 -> value, using recursion
-        const fn = jest.fn(value => {
+        const fn = jest.fn((value) => {
           if (value === 0) {
             // Before returning from the base case of recursion, none of the
             // calls have returned yet.

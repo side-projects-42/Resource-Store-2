@@ -279,7 +279,7 @@ describe('no common items', () => {
         () => {
           throw new Error('input function should not have been called');
         },
-        nCommon => {
+        (nCommon) => {
           n += nCommon;
         },
       );

@@ -15,7 +15,7 @@ it('works with resolves', () => {
 // The assertion for a promise must be returned.
 it('works with promises', () => {
   expect.assertions(1);
-  return user.getUserName(4).then(data => expect(data).toEqual('Mark'));
+  return user.getUserName(4).then((data) => expect(data).toEqual('Mark'));
 });
 
 // async/await can be used.
@@ -42,7 +42,7 @@ it('tests error with rejects', () => {
 // Testing for async errors using Promise.catch.
 test('tests error with promises', async () => {
   expect.assertions(1);
-  return user.getUserName(2).catch(e =>
+  return user.getUserName(2).catch((e) =>
     expect(e).toEqual({
       error: 'User with 2 not found.',
     })

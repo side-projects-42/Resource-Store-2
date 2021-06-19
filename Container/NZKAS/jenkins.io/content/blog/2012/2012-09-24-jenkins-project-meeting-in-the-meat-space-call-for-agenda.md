@@ -4,13 +4,14 @@
 :nodeid: 400
 :created: 1348502400
 :tags:
-- general
-- feedback
-- meetup
-- javaone
-- juc
+  - general
+  - feedback
+  - meetup
+  - javaone
+  - juc
 :author: kohsuke
 ---
+
 As you may or may not know, the Jenkins project has a [bi-weekly IRC meeting](https://wiki.jenkins-ci.org/display/JENKINS/Governance+Meeting+Agenda) where we discuss and decide on things necessary to keep the project running.
 
 Next Sunday, we'll bring this project meeting live to [Jenkins User Conference San Francisco](http://www.cloudbees.com/jenkins-user-conference-2012-san-francisco.cb).

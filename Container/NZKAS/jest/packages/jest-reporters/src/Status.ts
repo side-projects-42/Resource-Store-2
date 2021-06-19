@@ -47,7 +47,7 @@ class CurrentTestList {
 
   delete(testPath: Config.Path) {
     const record = this._array.find(
-      record => record !== null && record.testPath === testPath,
+      (record) => record !== null && record.testPath === testPath,
     );
     this._array[this._array.indexOf(record || null)] = null;
   }
@@ -134,7 +134,7 @@ export default class Status {
 
     const width: number = process.stdout.columns!;
     let content = '\n';
-    this._currentTests.get().forEach(record => {
+    this._currentTests.get().forEach((record) => {
       if (record) {
         const {config, testPath} = record;
 

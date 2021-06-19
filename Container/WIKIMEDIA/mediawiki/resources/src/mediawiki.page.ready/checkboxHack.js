@@ -128,8 +128,8 @@
  * @return {void}
  * @ignore
  */
-function updateAriaExpanded( checkbox, button ) {
-	button.setAttribute( 'aria-expanded', checkbox.checked.toString() );
+function updateAriaExpanded(checkbox, button) {
+	button.setAttribute("aria-expanded", checkbox.checked.toString());
 }
 
 /**
@@ -156,22 +156,22 @@ function updateAriaExpanded( checkbox, button ) {
  * @return {void}
  * @ignore
  */
-function setCheckedState( checkbox, checked ) {
+function setCheckedState(checkbox, checked) {
 	/** @type {Event} */
 	var e;
 	checkbox.checked = checked;
 	// Chrome and Firefox sends the builtin Event with .bubbles == true and .composed == true.
-	if ( typeof Event === 'function' ) {
-		e = new Event( 'input', { bubbles: true, composed: true } );
+	if (typeof Event === "function") {
+		e = new Event("input", { bubbles: true, composed: true });
 	} else {
 		// IE 9-11, FF 6-10, Chrome 9-14, Safari 5.1, Opera 11.5, Android 3-4.3
-		e = document.createEvent( 'CustomEvent' );
-		if ( !e ) {
+		e = document.createEvent("CustomEvent");
+		if (!e) {
 			return;
 		}
-		e.initCustomEvent( 'input', true /* canBubble */, false, false );
+		e.initCustomEvent("input", true /* canBubble */, false, false);
 	}
-	checkbox.dispatchEvent( e );
+	checkbox.dispatchEvent(e);
 }
 
 /**
@@ -185,11 +185,12 @@ function setCheckedState( checkbox, checked ) {
  * @return {boolean}
  * @ignore
  */
-function containsEventTarget( checkbox, button, target, event ) {
-	return event.target instanceof Node && (
-		checkbox.contains( event.target ) ||
-		button.contains( event.target ) ||
-		target.contains( event.target )
+function containsEventTarget(checkbox, button, target, event) {
+	return (
+		event.target instanceof Node &&
+		(checkbox.contains(event.target) ||
+			button.contains(event.target) ||
+			target.contains(event.target))
 	);
 }
 
@@ -204,9 +205,12 @@ function containsEventTarget( checkbox, button, target, event ) {
  * @return {void}
  * @ignore
  */
-function dismissIfExternalEventTarget( checkbox, button, target, event ) {
-	if ( checkbox.checked && !containsEventTarget( checkbox, button, target, event ) ) {
-		setCheckedState( checkbox, false );
+function dismissIfExternalEventTarget(checkbox, button, target, event) {
+	if (
+		checkbox.checked &&
+		!containsEventTarget(checkbox, button, target, event)
+	) {
+		setCheckedState(checkbox, false);
 	}
 }
 
@@ -218,10 +222,10 @@ function dismissIfExternalEventTarget( checkbox, button, target, event ) {
  * @return {CheckboxHackListeners}
  * @ignore
  */
-function bindUpdateAriaExpandedOnInput( checkbox, button ) {
-	var listener = updateAriaExpanded.bind( undefined, checkbox, button );
+function bindUpdateAriaExpandedOnInput(checkbox, button) {
+	var listener = updateAriaExpanded.bind(undefined, checkbox, button);
 	// Whenever the checkbox state changes, update the `aria-expanded` state.
-	checkbox.addEventListener( 'input', listener );
+	checkbox.addEventListener("input", listener);
 	return { onUpdateAriaExpandedOnInput: listener };
 }
 
@@ -233,14 +237,14 @@ function bindUpdateAriaExpandedOnInput( checkbox, button ) {
  * @return {CheckboxHackListeners}
  * @ignore
  */
-function bindToggleOnClick( checkbox, button ) {
-	function listener( event ) {
+function bindToggleOnClick(checkbox, button) {
+	function listener(event) {
 		// Do not allow the browser to handle the checkbox. Instead, manually toggle it which does
 		// not alter focus.
 		event.preventDefault();
-		setCheckedState( checkbox, !checkbox.checked );
+		setCheckedState(checkbox, !checkbox.checked);
 	}
-	button.addEventListener( 'click', listener, true );
+	button.addEventListener("click", listener, true);
 	return { onToggleOnClick: listener };
 }
 
@@ -252,18 +256,17 @@ function bindToggleOnClick( checkbox, button ) {
  * @return {CheckboxHackListeners}
  * @ignore
  */
-function bindToggleOnSpaceEnter( checkbox, button ) {
-
-	function onToggleOnSpaceEnter( /** @type {KeyboardEvent} */ event ) {
+function bindToggleOnSpaceEnter(checkbox, button) {
+	function onToggleOnSpaceEnter(/** @type {KeyboardEvent} */ event) {
 		// Only handle SPACE and ENTER.
-		if ( event.key !== ' ' && event.key !== 'Enter' ) {
+		if (event.key !== " " && event.key !== "Enter") {
 			return;
 		}
 		event.preventDefault();
-		setCheckedState( checkbox, !checkbox.checked );
+		setCheckedState(checkbox, !checkbox.checked);
 	}
 
-	button.addEventListener( 'keydown', onToggleOnSpaceEnter, true );
+	button.addEventListener("keydown", onToggleOnSpaceEnter, true);
 	return { onToggleOnSpaceEnter: onToggleOnSpaceEnter };
 }
 
@@ -278,9 +281,14 @@ function bindToggleOnSpaceEnter( checkbox, button ) {
  * @return {CheckboxHackListeners}
  * @ignore
  */
-function bindDismissOnClickOutside( window, checkbox, button, target ) {
-	var listener = dismissIfExternalEventTarget.bind( undefined, checkbox, button, target );
-	window.addEventListener( 'click', listener, true );
+function bindDismissOnClickOutside(window, checkbox, button, target) {
+	var listener = dismissIfExternalEventTarget.bind(
+		undefined,
+		checkbox,
+		button,
+		target
+	);
+	window.addEventListener("click", listener, true);
 	return { onDismissOnClickOutside: listener };
 }
 
@@ -295,11 +303,16 @@ function bindDismissOnClickOutside( window, checkbox, button, target ) {
  * @return {CheckboxHackListeners}
  * @ignore
  */
-function bindDismissOnFocusLoss( window, checkbox, button, target ) {
+function bindDismissOnFocusLoss(window, checkbox, button, target) {
 	// If focus is given to any element outside the target, dismiss the target. Setting a focusout
 	// listener on the target would be preferable, but this interferes with the click listener.
-	var listener = dismissIfExternalEventTarget.bind( undefined, checkbox, button, target );
-	window.addEventListener( 'focusin', listener, true );
+	var listener = dismissIfExternalEventTarget.bind(
+		undefined,
+		checkbox,
+		button,
+		target
+	);
+	window.addEventListener("focusin", listener, true);
 	return { onDismissOnFocusLoss: listener };
 }
 
@@ -320,17 +333,28 @@ function bindDismissOnFocusLoss( window, checkbox, button, target ) {
  * @return {CheckboxHackListeners}
  * @ignore
  */
-function bind( window, checkbox, button, target ) {
-	var spaceHandlers = bindToggleOnSpaceEnter( checkbox, button );
+function bind(window, checkbox, button, target) {
+	var spaceHandlers = bindToggleOnSpaceEnter(checkbox, button);
 	// ES6: return Object.assign( bindToggleOnSpaceEnter( checkbox, button ), ... );
 	// https://caniuse.com/#feat=mdn-javascript_builtins_object_assign
 	return {
-		onUpdateAriaExpandedOnInput: bindUpdateAriaExpandedOnInput( checkbox ).onUpdateAriaExpandedOnInput,
-		onToggleOnClick: bindToggleOnClick( checkbox, button ).onToggleOnClick,
+		onUpdateAriaExpandedOnInput:
+			bindUpdateAriaExpandedOnInput(checkbox).onUpdateAriaExpandedOnInput,
+		onToggleOnClick: bindToggleOnClick(checkbox, button).onToggleOnClick,
 		onToggleOnSpaceEnter: spaceHandlers.onToggleOnSpaceEnter,
 		onKeydownSpaceEnter: spaceHandlers.onKeydownSpaceEnter,
-		onDismissOnClickOutside: bindDismissOnClickOutside( window, checkbox, button, target ).onDismissOnClickOutside,
-		onDismissOnFocusLoss: bindDismissOnFocusLoss( window, checkbox, button, target ).onDismissOnFocusLoss
+		onDismissOnClickOutside: bindDismissOnClickOutside(
+			window,
+			checkbox,
+			button,
+			target
+		).onDismissOnClickOutside,
+		onDismissOnFocusLoss: bindDismissOnFocusLoss(
+			window,
+			checkbox,
+			button,
+			target
+		).onDismissOnFocusLoss,
 	};
 }
 
@@ -346,21 +370,24 @@ function bind( window, checkbox, button, target ) {
  * @return {void}
  * @ignore
  */
-function unbind( window, checkbox, button, listeners ) {
-	if ( listeners.onDismissOnFocusLoss ) {
-		window.removeEventListener( 'focusin', listeners.onDismissOnFocusLoss );
+function unbind(window, checkbox, button, listeners) {
+	if (listeners.onDismissOnFocusLoss) {
+		window.removeEventListener("focusin", listeners.onDismissOnFocusLoss);
 	}
-	if ( listeners.onDismissOnClickOutside ) {
-		window.removeEventListener( 'click', listeners.onDismissOnClickOutside );
+	if (listeners.onDismissOnClickOutside) {
+		window.removeEventListener("click", listeners.onDismissOnClickOutside);
 	}
-	if ( listeners.onToggleOnClick ) {
-		button.removeEventListener( 'click', listeners.onToggleOnClick );
+	if (listeners.onToggleOnClick) {
+		button.removeEventListener("click", listeners.onToggleOnClick);
 	}
-	if ( listeners.onToggleOnSpaceEnter ) {
-		button.removeEventListener( 'keydown', listeners.onToggleOnSpaceEnter );
+	if (listeners.onToggleOnSpaceEnter) {
+		button.removeEventListener("keydown", listeners.onToggleOnSpaceEnter);
 	}
-	if ( listeners.onUpdateAriaExpandedOnInput ) {
-		checkbox.removeEventListener( 'input', listeners.onUpdateAriaExpandedOnInput );
+	if (listeners.onUpdateAriaExpandedOnInput) {
+		checkbox.removeEventListener(
+			"input",
+			listeners.onUpdateAriaExpandedOnInput
+		);
 	}
 }
 
@@ -372,5 +399,5 @@ module.exports = {
 	bindDismissOnClickOutside: bindDismissOnClickOutside,
 	bindDismissOnFocusLoss: bindDismissOnFocusLoss,
 	bind: bind,
-	unbind: unbind
+	unbind: unbind,
 };

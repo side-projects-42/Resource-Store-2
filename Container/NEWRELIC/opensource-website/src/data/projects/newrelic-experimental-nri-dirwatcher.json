@@ -15,10 +15,7 @@
   "description": "",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Go",
-  "projectTags": [
-    "nrlabs",
-    "nri"
-  ],
+  "projectTags": ["nrlabs", "nri"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic integration for Directory Monitoring (nri-dirwatcher)",

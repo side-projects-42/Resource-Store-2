@@ -22,9 +22,7 @@ export const format = (value: any): string =>
 export const formatPrettyObject = (value: any): string =>
   typeof value === 'function'
     ? value.toString()
-    : JSON.stringify(value, null, 2)
-        .split('\n')
-        .join('\n    ');
+    : JSON.stringify(value, null, 2).split('\n').join('\n    ');
 
 export class ValidationError extends Error {
   name: string;
@@ -52,7 +50,7 @@ export const createDidYouMeanMessage = (
   unrecognized: string,
   allowedOptions: Array<string>,
 ) => {
-  const suggestion = allowedOptions.find(option => {
+  const suggestion = allowedOptions.find((option) => {
     const steps: number = leven(option, unrecognized);
     return steps < 3;
   });

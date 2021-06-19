@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"SolidBlock"
-		]
+		"authors": ["SolidBlock"]
 	},
 	"config-desc": "MediaWiki安装程序",
 	"config-title": "MediaWiki $1配置",

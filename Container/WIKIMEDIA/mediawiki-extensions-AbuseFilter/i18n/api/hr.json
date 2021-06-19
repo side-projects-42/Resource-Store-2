@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Bugoslav"
-		]
-	},
-	"apierror-abusefilter-badsyntax": "Filtar nema valjanu sintaksu."
+  "@metadata": {
+    "authors": ["Bugoslav"]
+  },
+  "apierror-abusefilter-badsyntax": "Filtar nema valjanu sintaksu."
 }

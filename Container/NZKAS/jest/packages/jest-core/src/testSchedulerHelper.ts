@@ -26,7 +26,7 @@ export function shouldRunInBand(
    * force running in band.
    * https://github.com/facebook/jest/blob/700e0dadb85f5dc8ff5dac6c7e98956690049734/packages/jest-config/src/getMaxWorkers.js#L14-L17
    */
-  const areFastTests = timings.every(timing => timing < SLOW_TEST_TIME);
+  const areFastTests = timings.every((timing) => timing < SLOW_TEST_TIME);
   const oneWorkerOrLess = maxWorkers <= 1;
   const oneTestOrLess = tests.length <= 1;
 

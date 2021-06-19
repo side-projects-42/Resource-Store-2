@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"ANDROBETA",
-			"NGC 54",
-			"Wintereu"
-		]
+		"authors": ["ANDROBETA", "NGC 54", "Wintereu"]
 	},
 	"apihelp-block-summary": "Blochează un utilizator.",
 	"apihelp-block-param-reason": "Motivul blocării.",

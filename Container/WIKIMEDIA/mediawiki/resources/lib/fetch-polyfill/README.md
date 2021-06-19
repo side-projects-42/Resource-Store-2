@@ -7,28 +7,28 @@ replacement for most uses of XMLHttpRequest in traditional web applications.
 
 ## Table of Contents
 
-* [Read this first](#read-this-first)
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Importing](#importing)
-  * [HTML](#html)
-  * [JSON](#json)
-  * [Response metadata](#response-metadata)
-  * [Post form](#post-form)
-  * [Post JSON](#post-json)
-  * [File upload](#file-upload)
-  * [Caveats](#caveats)
-    * [Handling HTTP error statuses](#handling-http-error-statuses)
-    * [Sending cookies](#sending-cookies)
-    * [Receiving cookies](#receiving-cookies)
-    * [Redirect modes](#redirect-modes)
-    * [Obtaining the Response URL](#obtaining-the-response-url)
-    * [Aborting requests](#aborting-requests)
-* [Browser Support](#browser-support)
+- [Read this first](#read-this-first)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Importing](#importing)
+  - [HTML](#html)
+  - [JSON](#json)
+  - [Response metadata](#response-metadata)
+  - [Post form](#post-form)
+  - [Post JSON](#post-json)
+  - [File upload](#file-upload)
+  - [Caveats](#caveats)
+    - [Handling HTTP error statuses](#handling-http-error-statuses)
+    - [Sending cookies](#sending-cookies)
+    - [Receiving cookies](#receiving-cookies)
+    - [Redirect modes](#redirect-modes)
+    - [Obtaining the Response URL](#obtaining-the-response-url)
+    - [Aborting requests](#aborting-requests)
+- [Browser Support](#browser-support)
 
 ## Read this first
 
-* If you believe you found a bug with how `fetch` behaves in your browser,
+- If you believe you found a bug with how `fetch` behaves in your browser,
   please **don't open an issue in this repository** unless you are testing in
   an old version of a browser that doesn't support `window.fetch` natively.
   Make sure you read this _entire_ readme, especially the [Caveats](#caveats)
@@ -38,7 +38,7 @@ replacement for most uses of XMLHttpRequest in traditional web applications.
   effect there. See [Browser support](#browser-support) for detailed
   information.
 
-* If you have trouble **making a request to another domain** (a different
+- If you have trouble **making a request to another domain** (a different
   subdomain or port number also constitutes another domain), please familiarize
   yourself with all the intricacies and limitations of [CORS][] requests.
   Because CORS requires participation of the server by implementing specific
@@ -46,11 +46,11 @@ replacement for most uses of XMLHttpRequest in traditional web applications.
   exclusively handled by the browser's internal mechanisms which this polyfill
   cannot influence.
 
-* This project **doesn't work under Node.js environments**. It's meant for web
+- This project **doesn't work under Node.js environments**. It's meant for web
   browsers only. You should ensure that your application doesn't try to package
   and run this on the server.
 
-* If you have an idea for a new feature of `fetch`, **submit your feature
+- If you have an idea for a new feature of `fetch`, **submit your feature
   requests** to the [specification's repository](https://github.com/whatwg/fetch/issues).
   We only add features and APIs that are part of the [Fetch specification][].
 
@@ -107,95 +107,97 @@ entry: ['whatwg-fetch', ...]
 ### HTML
 
 ```javascript
-fetch('/users.html')
-  .then(function(response) {
-    return response.text()
-  }).then(function(body) {
-    document.body.innerHTML = body
+fetch("/users.html")
+  .then(function (response) {
+    return response.text();
   })
+  .then(function (body) {
+    document.body.innerHTML = body;
+  });
 ```
 
 ### JSON
 
 ```javascript
-fetch('/users.json')
-  .then(function(response) {
-    return response.json()
-  }).then(function(json) {
-    console.log('parsed json', json)
-  }).catch(function(ex) {
-    console.log('parsing failed', ex)
+fetch("/users.json")
+  .then(function (response) {
+    return response.json();
   })
+  .then(function (json) {
+    console.log("parsed json", json);
+  })
+  .catch(function (ex) {
+    console.log("parsing failed", ex);
+  });
 ```
 
 ### Response metadata
 
 ```javascript
-fetch('/users.json').then(function(response) {
-  console.log(response.headers.get('Content-Type'))
-  console.log(response.headers.get('Date'))
-  console.log(response.status)
-  console.log(response.statusText)
-})
+fetch("/users.json").then(function (response) {
+  console.log(response.headers.get("Content-Type"));
+  console.log(response.headers.get("Date"));
+  console.log(response.status);
+  console.log(response.statusText);
+});
 ```
 
 ### Post form
 
 ```javascript
-var form = document.querySelector('form')
+var form = document.querySelector("form");
 
-fetch('/users', {
-  method: 'POST',
-  body: new FormData(form)
-})
+fetch("/users", {
+  method: "POST",
+  body: new FormData(form),
+});
 ```
 
 ### Post JSON
 
 ```javascript
-fetch('/users', {
-  method: 'POST',
+fetch("/users", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    name: 'Hubot',
-    login: 'hubot',
-  })
-})
+    name: "Hubot",
+    login: "hubot",
+  }),
+});
 ```
 
 ### File upload
 
 ```javascript
-var input = document.querySelector('input[type="file"]')
+var input = document.querySelector('input[type="file"]');
 
-var data = new FormData()
-data.append('file', input.files[0])
-data.append('user', 'hubot')
+var data = new FormData();
+data.append("file", input.files[0]);
+data.append("user", "hubot");
 
-fetch('/avatars', {
-  method: 'POST',
-  body: data
-})
+fetch("/avatars", {
+  method: "POST",
+  body: data,
+});
 ```
 
 ### Caveats
 
-* The Promise returned from `fetch()` **won't reject on HTTP error status**
+- The Promise returned from `fetch()` **won't reject on HTTP error status**
   even if the response is an HTTP 404 or 500. Instead, it will resolve normally,
   and it will only reject on network failure or if anything prevented the
   request from completing.
 
-* For maximum browser compatibility when it comes to sending & receiving
+- For maximum browser compatibility when it comes to sending & receiving
   cookies, always supply the `credentials: 'same-origin'` option instead of
   relying on the default. See [Sending cookies](#sending-cookies).
 
-* Not all Fetch standard options are supported in this polyfill. For instance,
+- Not all Fetch standard options are supported in this polyfill. For instance,
   [`redirect`](#redirect-modes) and
   [`cache`](https://github.github.io/fetch/#caveats) directives are ignored.
-  
-* `keepalive` is not supported because it would involve making a synchronous XHR, which is something this project is not willing to do. See [issue #700](https://github.com/github/fetch/issues/700#issuecomment-484188326) for more information.
+- `keepalive` is not supported because it would involve making a synchronous XHR, which is something this project is not willing to do. See [issue #700](https://github.com/github/fetch/issues/700#issuecomment-484188326) for more information.
 
 #### Handling HTTP error statuses
 
@@ -205,26 +207,27 @@ status, define a custom response handler:
 ```javascript
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response
+    return response;
   } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
+    var error = new Error(response.statusText);
+    error.response = response;
+    throw error;
   }
 }
 
 function parseJSON(response) {
-  return response.json()
+  return response.json();
 }
 
-fetch('/users')
+fetch("/users")
   .then(checkStatus)
   .then(parseJSON)
-  .then(function(data) {
-    console.log('request succeeded with JSON response', data)
-  }).catch(function(error) {
-    console.log('request failed', error)
+  .then(function (data) {
+    console.log("request succeeded with JSON response", data);
   })
+  .catch(function (error) {
+    console.log("request failed", error);
+  });
 ```
 
 #### Sending cookies
@@ -233,9 +236,9 @@ For [CORS][] requests, use `credentials: 'include'` to allow sending credentials
 to other domains:
 
 ```javascript
-fetch('https://example.com:1234/users', {
-  credentials: 'include'
-})
+fetch("https://example.com:1234/users", {
+  credentials: "include",
+});
 ```
 
 The default value for `credentials` is "same-origin".
@@ -244,18 +247,17 @@ The default for `credentials` wasn't always the same, though. The following
 versions of browsers implemented an older version of the fetch specification
 where the default was "omit":
 
-* Firefox 39-60
-* Chrome 42-67
-* Safari 10.1-11.1.2
+- Firefox 39-60
+- Chrome 42-67
+- Safari 10.1-11.1.2
 
-If you target these browsers, it's advisable to always specify `credentials:
-'same-origin'` explicitly with all fetch requests instead of relying on the
+If you target these browsers, it's advisable to always specify `credentials: 'same-origin'` explicitly with all fetch requests instead of relying on the
 default:
 
 ```javascript
-fetch('/users', {
-  credentials: 'same-origin'
-})
+fetch("/users", {
+  credentials: "same-origin",
+});
 ```
 
 Note: due to [limitations of
@@ -290,7 +292,7 @@ The solution is to configure the server to set the response HTTP header
 `X-Request-URL` to the current URL after any redirect that might have happened.
 It should be safe to set it unconditionally.
 
-``` ruby
+```ruby
 # Ruby on Rails controller example
 response.headers['X-Request-URL'] = request.url
 ```
@@ -311,24 +313,24 @@ AbortController or AbortSignal. Consequently, you will need to include
 for these APIs to abort fetches:
 
 ```js
-import 'yet-another-abortcontroller-polyfill'
-import {fetch} from 'whatwg-fetch'
+import "yet-another-abortcontroller-polyfill";
+import { fetch } from "whatwg-fetch";
 
 // use native browser implementation if it supports aborting
-const abortableFetch = ('signal' in new Request('')) ? window.fetch : fetch
+const abortableFetch = "signal" in new Request("") ? window.fetch : fetch;
 
-const controller = new AbortController()
+const controller = new AbortController();
 
-abortableFetch('/avatars', {
-  signal: controller.signal
-}).catch(function(ex) {
-  if (ex.name === 'AbortError') {
-    console.log('request aborted')
+abortableFetch("/avatars", {
+  signal: controller.signal,
+}).catch(function (ex) {
+  if (ex.name === "AbortError") {
+    console.log("request aborted");
   }
-})
+});
 
 // some time later...
-controller.abort()
+controller.abort();
 ```
 
 ## Browser Support
@@ -344,11 +346,8 @@ have any effect on those browsers. If you believe you've encountered an error
 with how `window.fetch` is implemented in any of these browsers, you should file
 an issue with that browser vendor instead of this project.
 
-
-  [fetch specification]: https://fetch.spec.whatwg.org
-  [cors]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
-    "Cross-origin resource sharing"
-  [csrf]: https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet
-    "Cross-site request forgery"
-  [forbidden header name]: https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name
-  [releases]: https://github.com/github/fetch/releases
+[fetch specification]: https://fetch.spec.whatwg.org
+[cors]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS "Cross-origin resource sharing"
+[csrf]: https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet "Cross-site request forgery"
+[forbidden header name]: https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name
+[releases]: https://github.com/github/fetch/releases

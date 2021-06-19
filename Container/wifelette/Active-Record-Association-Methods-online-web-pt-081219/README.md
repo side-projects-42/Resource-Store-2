@@ -3,7 +3,7 @@
 ## Objectives
 
 - Understand the common methods we have access to from our Active Record
-   associations
+  associations
 - Use the methods that Active Record gives you based on your associations
 
 Previously, we learned what Active Record associations are and how to use them.
@@ -90,7 +90,7 @@ adele = Artist.create(name: "Adele")
 => #<Artist:0x007fc75b8d9490 id: 1, name: "Adele">
 ```
 
-So, we know that an individual song has an `artist_id` attribute. We *could*
+So, we know that an individual song has an `artist_id` attribute. We _could_
 associate `hello` to `adele` by setting `hello.artist_id=` equal to the `id` of
 the `adele` object. BUT! Active Record makes it so easy for us. The macros we
 implemented in our classes allow us to associate a song object directly to an
@@ -108,7 +108,7 @@ hello.artist
 => #<Artist:0x007fc75b8d9490 id: 1, name: "Adele">
 ```
 
-We can even chain methods to ask `hello` for the *name* of its artist:
+We can even chain methods to ask `hello` for the _name_ of its artist:
 
 ```ruby
 hello.artist.name

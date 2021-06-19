@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Michawiki"
-		]
-	},
-	"activeabstract-desc": "XML-kanal za projekt Yahoo „Active Abstracts“ wutworić"
+  "@metadata": {
+    "authors": ["Michawiki"]
+  },
+  "activeabstract-desc": "XML-kanal za projekt Yahoo „Active Abstracts“ wutworić"
 }

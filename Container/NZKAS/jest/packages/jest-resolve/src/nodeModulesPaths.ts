@@ -57,7 +57,7 @@ export default function nodeModulesPaths(
     .reduce(
       (dirs, aPath) =>
         dirs.concat(
-          modules.map(moduleDir =>
+          modules.map((moduleDir) =>
             path.isAbsolute(moduleDir)
               ? aPath === basedirAbs
                 ? moduleDir
@@ -67,7 +67,7 @@ export default function nodeModulesPaths(
         ),
       [] as Array<Config.Path>,
     )
-    .filter(dir => dir !== '');
+    .filter((dir) => dir !== '');
 
   return options.paths ? dirs.concat(options.paths) : dirs;
 }

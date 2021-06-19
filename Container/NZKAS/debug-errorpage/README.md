@@ -1,6 +1,6 @@
 # Debug Error Page for Express
 
-This is a small module that provides an error page with helpful debugging information on it. The most useful part is that it tracks down the probable cause of the error and shows you a snippet of the file with the likely cause highlighted. As such, it should be used in *development only* and turned off for production mode.
+This is a small module that provides an error page with helpful debugging information on it. The most useful part is that it tracks down the probable cause of the error and shows you a snippet of the file with the likely cause highlighted. As such, it should be used in _development only_ and turned off for production mode.
 
 The page is heavily inspired by the v1.0 [Play Framework](http://playframework.com). In fact, the error page template is the one that the Play Framework used, with some modifications for Express.
 

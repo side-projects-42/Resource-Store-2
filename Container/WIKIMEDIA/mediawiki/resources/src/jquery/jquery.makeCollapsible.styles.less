@@ -22,7 +22,7 @@
 // This selector is used frequently in the code to indicate that the JavaScript has successfully completed
 // it's execution and pseudo elements can be disabled. For readability and maintainability it is separated
 // as a LESS variable.
-@exclude: ~'.mw-made-collapsible';
+@exclude: ~".mw-made-collapsible";
 
 .client-js {
 	ol.mw-collapsible:before,
@@ -44,41 +44,47 @@
 	}
 
 	// table.: Where the tbody or thead is the first child of the collapsible table
-	ol.mw-collapsible:not( @{exclude} ):before,
-	ul.mw-collapsible:not( @{exclude} ):before,
-	table.mw-collapsible:not( @{exclude} ) :first-child tr:first-child th:last-child:before,
-	table.mw-collapsible:not( @{exclude} ) > caption:first-child:after,
-	div.mw-collapsible:not( @{exclude} ):before {
-		content: '[@{msg-collapsible-collapse}]';
+	ol.mw-collapsible:not(@{exclude}):before,
+	ul.mw-collapsible:not(@{exclude}):before,
+	table.mw-collapsible:not(@{exclude})
+		:first-child
+		tr:first-child
+		th:last-child:before,
+	table.mw-collapsible:not(@{exclude}) > caption:first-child:after,
+	div.mw-collapsible:not(@{exclude}):before {
+		content: "[@{msg-collapsible-collapse}]";
 	}
 
-	td.mw-collapsed:not( @{exclude} ):before,
-	table.mw-collapsed:not( @{exclude} ) :first-child tr:first-child th:last-child:before,
-	table.mw-collapsed:not( @{exclude} ) > caption:first-child:after,
-	div.mw-collapsed:not( @{exclude} ):before {
-		content: '[@{msg-collapsible-expand}]';
+	td.mw-collapsed:not(@{exclude}):before,
+	table.mw-collapsed:not(@{exclude})
+		:first-child
+		tr:first-child
+		th:last-child:before,
+	table.mw-collapsed:not(@{exclude}) > caption:first-child:after,
+	div.mw-collapsed:not(@{exclude}):before {
+		content: "[@{msg-collapsible-expand}]";
 	}
 
 	// Any element with id beginning `mw-customcollapsible` will have special treatment
-	.mw-collapsible[ id^='mw-customcollapsible' ] th:before,
-	.mw-collapsible[ id^='mw-customcollapsible' ]:before {
+	.mw-collapsible[id^="mw-customcollapsible"] th:before,
+	.mw-collapsible[id^="mw-customcollapsible"]:before {
 		content: none !important; // stylelint-disable-line declaration-no-important
 	}
 
 	// Special case for table where first child is caption element
-	table.mw-collapsible:not( @{exclude} ) > caption:first-child:after {
+	table.mw-collapsible:not(@{exclude}) > caption:first-child:after {
 		float: none;
 		display: block;
 	}
 
 	// Use the exclude selector to ensure animations do not break
-	.mw-collapsed:not( @{exclude} ) {
+	.mw-collapsed:not(@{exclude}) {
 		// Avoid FOUC/reflows on collapsed elements by making sure they are opened by default (T42812)
 		// > thead + tbody: 'https://www.mediawiki.org/wiki/Manual:Collapsible_elements/Demo/Simple#Collapsed_by_default'
 		> p,
 		> table,
 		> thead + tbody,
-		tr:not( :first-child ),
+		tr:not(:first-child),
 		.mw-collapsible-content {
 			display: none;
 		}
@@ -87,8 +93,8 @@
 
 /* Collapsible elements in the UI (outside of the content area) are not in either .mw-content-ltr or
  * .mw-content-rtl. Align them based on the user language. */
-.mw-collapsible:not( @{exclude} ) th:before,
-.mw-collapsible:not( @{exclude} ):before,
+.mw-collapsible:not(@{exclude}) th:before,
+.mw-collapsible:not(@{exclude}):before,
 .mw-collapsible-toggle {
 	float: right;
 }
@@ -97,8 +103,8 @@
 /* @noflip */
 .mw-content-ltr,
 .mw-content-rtl .mw-content-ltr {
-	.mw-collapsible:not( @{exclude} ) th:before,
-	.mw-collapsible:not( @{exclude} ):before,
+	.mw-collapsible:not(@{exclude}) th:before,
+	.mw-collapsible:not(@{exclude}):before,
 	.mw-collapsible-toggle {
 		float: right;
 	}
@@ -107,8 +113,8 @@
 /* @noflip */
 .mw-content-rtl,
 .mw-content-ltr .mw-content-rtl {
-	.mw-collapsible:not( @{exclude} ) th:before,
-	.mw-collapsible:not( @{exclude} ):before,
+	.mw-collapsible:not(@{exclude}) th:before,
+	.mw-collapsible:not(@{exclude}):before,
 	.mw-collapsible-toggle {
 		float: left;
 	}
@@ -127,7 +133,7 @@ li,
 
 // special treatment for list items to match above
 // !important necessary to override overly-specific float left and right above.
-ol.mw-collapsible:not( @{exclude} ):before,
-ul.mw-collapsible:not( @{exclude} ):before {
+ol.mw-collapsible:not(@{exclude}):before,
+ul.mw-collapsible:not(@{exclude}):before {
 	float: none !important; // stylelint-disable-line declaration-no-important
 }

@@ -3,8 +3,7 @@
  *
  * @copyright 2011-2016 VisualEditor Team and others; see http://ve.mit-license.org
  */
-( function () {
-
+(function () {
 	/**
 	 * API Results Queue object.
 	 *
@@ -18,7 +17,7 @@
 	 *  that the queue should always strive to have on top of the
 	 *  individual requests for items.
 	 */
-	mw.widgets.APIResultsQueue = function MwWidgetsAPIResultsQueue( config ) {
+	mw.widgets.APIResultsQueue = function MwWidgetsAPIResultsQueue(config) {
 		config = config || {};
 
 		this.fileRepoPromise = null;
@@ -29,14 +28,14 @@
 		this.params = {};
 
 		this.limit = config.limit || 20;
-		this.setThreshold( config.threshold || 10 );
+		this.setThreshold(config.threshold || 10);
 
 		// Mixin constructors
-		OO.EventEmitter.call( this );
+		OO.EventEmitter.call(this);
 	};
 
 	/* Setup */
-	OO.mixinClass( mw.widgets.APIResultsQueue, OO.EventEmitter );
+	OO.mixinClass(mw.widgets.APIResultsQueue, OO.EventEmitter);
 
 	/* Methods */
 
@@ -48,7 +47,9 @@
 	 *  are set up. Note: The promise must have an .abort() functionality.
 	 */
 	mw.widgets.APIResultsQueue.prototype.setup = function () {
-		return $.Deferred().resolve().promise( { abort: function () {} } );
+		return $.Deferred()
+			.resolve()
+			.promise({ abort: function () {} });
 	};
 
 	/**
@@ -58,27 +59,26 @@
 	 *  default limit supplied on initialization.
 	 * @return {jQuery.Promise} Promise that resolves into an array of items.
 	 */
-	mw.widgets.APIResultsQueue.prototype.get = function ( howMany ) {
+	mw.widgets.APIResultsQueue.prototype.get = function (howMany) {
 		var fetchingPromise = null,
 			me = this;
 
 		howMany = howMany || this.limit;
 
 		// Check if the queue has enough items
-		if ( this.queue.length < howMany + this.threshold ) {
+		if (this.queue.length < howMany + this.threshold) {
 			// Call for more results
-			fetchingPromise = this.queryProviders( howMany + this.threshold )
-				.then( function ( items ) {
-					// Add to the queue
-					me.queue = me.queue.concat.apply( me.queue, items );
-				} );
+			fetchingPromise = this.queryProviders(
+				howMany + this.threshold
+			).then(function (items) {
+				// Add to the queue
+				me.queue = me.queue.concat.apply(me.queue, items);
+			});
 		}
 
-		return $.when( fetchingPromise )
-			.then( function () {
-				return me.queue.splice( 0, howMany );
-			} );
-
+		return $.when(fetchingPromise).then(function () {
+			return me.queue.splice(0, howMany);
+		});
 	};
 
 	/**
@@ -89,30 +89,31 @@
 	 * @return {jQuery.Promise} Promise that is resolved into an array
 	 *  of fetched items. Note: The promise must have an .abort() functionality.
 	 */
-	mw.widgets.APIResultsQueue.prototype.queryProviders = function ( howMany ) {
-		var i, len,
+	mw.widgets.APIResultsQueue.prototype.queryProviders = function (howMany) {
+		var i,
+			len,
 			queue = this;
 
 		// Make sure there are resources set up
-		return this.setup()
-			.then( function () {
-				// Abort previous requests
-				for ( i = 0, len = queue.providerPromises.length; i < len; i++ ) {
-					queue.providerPromises[ i ].abort();
+		return this.setup().then(function () {
+			// Abort previous requests
+			for (i = 0, len = queue.providerPromises.length; i < len; i++) {
+				queue.providerPromises[i].abort();
+			}
+			queue.providerPromises = [];
+			// Set up the query to all providers
+			for (i = 0, len = queue.providers.length; i < len; i++) {
+				if (!queue.providers[i].isDepleted()) {
+					queue.providerPromises.push(
+						queue.providers[i].getResults(howMany)
+					);
 				}
-				queue.providerPromises = [];
-				// Set up the query to all providers
-				for ( i = 0, len = queue.providers.length; i < len; i++ ) {
-					if ( !queue.providers[ i ].isDepleted() ) {
-						queue.providerPromises.push(
-							queue.providers[ i ].getResults( howMany )
-						);
-					}
-				}
+			}
 
-				return $.when.apply( $, queue.providerPromises )
-					.then( Array.prototype.concat.bind( [] ) );
-			} );
+			return $.when
+				.apply($, queue.providerPromises)
+				.then(Array.prototype.concat.bind([]));
+		});
 	};
 
 	/**
@@ -122,20 +123,20 @@
 	 *
 	 * @param {Object} params API search parameters
 	 */
-	mw.widgets.APIResultsQueue.prototype.setParams = function ( params ) {
+	mw.widgets.APIResultsQueue.prototype.setParams = function (params) {
 		var i, len;
-		if ( !OO.compare( params, this.params, true ) ) {
+		if (!OO.compare(params, this.params, true)) {
 			this.reset();
-			this.params = $.extend( this.params, params );
+			this.params = $.extend(this.params, params);
 			// Reset queue
 			this.queue = [];
 			// Reset promises
-			for ( i = 0, len = this.providerPromises.length; i < len; i++ ) {
-				this.providerPromises[ i ].abort();
+			for (i = 0, len = this.providerPromises.length; i < len; i++) {
+				this.providerPromises[i].abort();
 			}
 			// Change queries
-			for ( i = 0, len = this.providers.length; i < len; i++ ) {
-				this.providers[ i ].setUserParams( this.params );
+			for (i = 0, len = this.providers.length; i < len; i++) {
+				this.providers[i].setUserParams(this.params);
 			}
 		}
 	};
@@ -148,12 +149,12 @@
 		// Reset queue
 		this.queue = [];
 		// Reset promises
-		for ( i = 0, len = this.providerPromises.length; i < len; i++ ) {
-			this.providerPromises[ i ].abort();
+		for (i = 0, len = this.providerPromises.length; i < len; i++) {
+			this.providerPromises[i].abort();
 		}
 		// Reset options
-		for ( i = 0, len = this.providers.length; i < len; i++ ) {
-			this.providers[ i ].reset();
+		for (i = 0, len = this.providers.length; i < len; i++) {
+			this.providers[i].reset();
 		}
 	};
 
@@ -171,12 +172,12 @@
 	 *
 	 * @param {mw.widgets.APIResultsProvider[]} providers An array of providers
 	 */
-	mw.widgets.APIResultsQueue.prototype.setProviders = function ( providers ) {
+	mw.widgets.APIResultsQueue.prototype.setProviders = function (providers) {
 		var i, len;
 		this.providers = providers;
-		for ( i = 0, len = this.providers.length; i < len; i++ ) {
-			this.providers[ i ].setUserParams( this.params );
-			this.providers[ i ].setLang( this.lang );
+		for (i = 0, len = this.providers.length; i < len; i++) {
+			this.providers[i].setUserParams(this.params);
+			this.providers[i].setLang(this.lang);
 		}
 	};
 
@@ -185,10 +186,10 @@
 	 *
 	 * @param {mw.widgets.APIResultsProvider} provider A provider object
 	 */
-	mw.widgets.APIResultsQueue.prototype.addProvider = function ( provider ) {
-		this.providers.push( provider );
-		provider.setUserParams( this.params );
-		provider.setLang( this.lang );
+	mw.widgets.APIResultsQueue.prototype.addProvider = function (provider) {
+		this.providers.push(provider);
+		provider.setUserParams(this.params);
+		provider.setLang(this.lang);
 	};
 
 	/**
@@ -215,7 +216,7 @@
 	 * @param {number} threshold Queue threshold, below which we will
 	 *  request more items
 	 */
-	mw.widgets.APIResultsQueue.prototype.setThreshold = function ( threshold ) {
+	mw.widgets.APIResultsQueue.prototype.setThreshold = function (threshold) {
 		this.threshold = threshold;
 	};
 
@@ -234,11 +235,11 @@
 	 *
 	 * @param {string|undefined} lang Language
 	 */
-	mw.widgets.APIResultsQueue.prototype.setLang = function ( lang ) {
+	mw.widgets.APIResultsQueue.prototype.setLang = function (lang) {
 		var i, len;
 		this.lang = lang;
-		for ( i = 0, len = this.providers.length; i < len; i++ ) {
-			this.providers[ i ].setLang( this.lang );
+		for (i = 0, len = this.providers.length; i < len; i++) {
+			this.providers[i].setLang(this.lang);
 		}
 	};
 
@@ -250,4 +251,4 @@
 	mw.widgets.APIResultsQueue.prototype.getLang = function () {
 		return this.lang;
 	};
-}() );
+})();

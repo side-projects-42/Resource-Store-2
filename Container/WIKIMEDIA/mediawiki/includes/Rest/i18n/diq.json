@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"1917 Ekim Devrimi",
-			"Mirzali"
-		]
+		"authors": ["1917 Ekim Devrimi", "Mirzali"]
 	},
 	"rest-prefix-mismatch": "Raya waziyayi ($1), raya rêçe REST API tede niya ($2)",
 	"rest-nonexistent-title": "Belı bıyaye serey ($1) mewcud niyo",

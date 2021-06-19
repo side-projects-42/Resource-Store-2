@@ -10,15 +10,15 @@ import {Config} from '@jest/types';
 import createProcessObject from './createProcessObject';
 import deepCyclicCopy from './deepCyclicCopy';
 
-const DTRACE = Object.keys(global).filter(key => key.startsWith('DTRACE'));
+const DTRACE = Object.keys(global).filter((key) => key.startsWith('DTRACE'));
 
-export default function(
+export default function (
   globalObject: NodeJS.Global,
   globals: Config.ConfigGlobals,
 ): NodeJS.Global & Config.ConfigGlobals {
   globalObject.process = createProcessObject();
 
-  const symbol = (globalObject.Symbol as unknown) as SymbolConstructor;
+  const symbol = globalObject.Symbol as unknown as SymbolConstructor;
   // Keep a reference to some globals that Jest needs
   Object.defineProperties(globalObject, {
     [symbol.for('jest-native-promise')]: {
@@ -54,9 +54,9 @@ export default function(
   });
 
   // Forward some APIs.
-  DTRACE.forEach(dtrace => {
+  DTRACE.forEach((dtrace) => {
     // @ts-ignore: no index
-    globalObject[dtrace] = function(...args: Array<any>) {
+    globalObject[dtrace] = function (...args: Array<any>) {
       // @ts-ignore: no index
       return global[dtrace].apply(this, args);
     };

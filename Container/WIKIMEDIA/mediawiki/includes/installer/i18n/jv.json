@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Anggoro",
-			"NoiX180",
-			"Sumbukompor"
-		]
+		"authors": ["Anggoro", "NoiX180", "Sumbukompor"]
 	},
 	"config-install-mainpage-failed": "Ora bisa nglebokaké pendhapa: $1",
 	"mainpagetext": "'''Prangkat empuk wiki wis suksès dipasang.'''",

@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ooswesthoesbes",
-			"Seb35"
-		]
+		"authors": ["Ooswesthoesbes", "Seb35"]
 	},
 	"config-desc": "'t Installeringsprogram veur MediaWiki",
 	"config-title": "MediaWiki-installering $1",

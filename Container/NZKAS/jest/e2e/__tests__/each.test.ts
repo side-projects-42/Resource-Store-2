@@ -29,7 +29,7 @@ test('shows the correct errors in stderr when failing tests', () => {
   expect(result.status).toBe(1);
   const output = extractSummary(result.stderr)
     .rest.split('\n')
-    .map(line => line.trimRight())
+    .map((line) => line.trimRight())
     .join('\n');
   expect(wrap(output)).toMatchSnapshot();
 });

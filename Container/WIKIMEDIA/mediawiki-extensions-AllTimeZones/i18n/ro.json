@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Firilacroco"
-		]
-	},
-	"alltimezones-desc": "Adaugă o etichetă pentru a afișa data în toate fusurile orare"
+  "@metadata": {
+    "authors": ["Firilacroco"]
+  },
+  "alltimezones-desc": "Adaugă o etichetă pentru a afișa data în toate fusurile orare"
 }

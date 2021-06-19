@@ -2,7 +2,7 @@
  * @class mw.template
  * @singleton
  */
-( function () {
+(function () {
 	var compiledTemplates = {},
 		compilers = {};
 
@@ -18,11 +18,11 @@
 		 * @param {string} name Compiler name
 		 * @param {Object} compiler
 		 */
-		registerCompiler: function ( name, compiler ) {
-			if ( !compiler.compile ) {
-				throw new Error( 'Compiler must implement a compile method' );
+		registerCompiler: function (name, compiler) {
+			if (!compiler.compile) {
+				throw new Error("Compiler must implement a compile method");
 			}
-			compilers[ name ] = compiler;
+			compilers[name] = compiler;
 		},
 
 		/**
@@ -31,12 +31,12 @@
 		 * @param {string} templateName Name of a template (including suffix)
 		 * @return {string} Name of a compiler
 		 */
-		getCompilerName: function ( templateName ) {
-			var nameParts = templateName.split( '.' );
-			if ( nameParts.length < 2 ) {
-				throw new Error( 'Template name must have a suffix' );
+		getCompilerName: function (templateName) {
+			var nameParts = templateName.split(".");
+			if (nameParts.length < 2) {
+				throw new Error("Template name must have a suffix");
 			}
-			return nameParts[ nameParts.length - 1 ];
+			return nameParts[nameParts.length - 1];
 		},
 
 		/**
@@ -45,10 +45,10 @@
 		 * @param {string} name Name of a compiler
 		 * @return {Object} The compiler
 		 */
-		getCompiler: function ( name ) {
-			var compiler = compilers[ name ];
-			if ( !compiler ) {
-				throw new Error( 'Unknown compiler ' + name );
+		getCompiler: function (name) {
+			var compiler = compilers[name];
+			if (!compiler) {
+				throw new Error("Unknown compiler " + name);
 			}
 			return compiler;
 		},
@@ -63,13 +63,16 @@
 		 * @param {string} templateBody Contents of the template (e.g. html markup)
 		 * @return {Object} Compiled template
 		 */
-		add: function ( moduleName, templateName, templateBody ) {
+		add: function (moduleName, templateName, templateBody) {
 			// Precompile and add to cache
-			var compiled = this.compile( templateBody, this.getCompilerName( templateName ) );
-			if ( !compiledTemplates[ moduleName ] ) {
-				compiledTemplates[ moduleName ] = {};
+			var compiled = this.compile(
+				templateBody,
+				this.getCompilerName(templateName)
+			);
+			if (!compiledTemplates[moduleName]) {
+				compiledTemplates[moduleName] = {};
 			}
-			compiledTemplates[ moduleName ][ templateName ] = compiled;
+			compiledTemplates[moduleName][templateName] = compiled;
 
 			return compiled;
 		},
@@ -81,21 +84,36 @@
 		 * @param {string} templateName Name of template to be retrieved
 		 * @return {Object} Compiled template
 		 */
-		get: function ( moduleName, templateName ) {
+		get: function (moduleName, templateName) {
 			var moduleTemplates;
 
 			// Try cache first
-			if ( compiledTemplates[ moduleName ] && compiledTemplates[ moduleName ][ templateName ] ) {
-				return compiledTemplates[ moduleName ][ templateName ];
+			if (
+				compiledTemplates[moduleName] &&
+				compiledTemplates[moduleName][templateName]
+			) {
+				return compiledTemplates[moduleName][templateName];
 			}
 
-			moduleTemplates = mw.templates.get( moduleName );
-			if ( !moduleTemplates || moduleTemplates[ templateName ] === undefined ) {
-				throw new Error( 'Template ' + templateName + ' not found in module ' + moduleName );
+			moduleTemplates = mw.templates.get(moduleName);
+			if (
+				!moduleTemplates ||
+				moduleTemplates[templateName] === undefined
+			) {
+				throw new Error(
+					"Template " +
+						templateName +
+						" not found in module " +
+						moduleName
+				);
 			}
 
 			// Compiled and add to cache
-			return this.add( moduleName, templateName, moduleTemplates[ templateName ] );
+			return this.add(
+				moduleName,
+				templateName,
+				moduleTemplates[templateName]
+			);
 		},
 
 		/**
@@ -105,20 +123,19 @@
 		 * @param {string} compilerName The name of a registered compiler
 		 * @return {Object} Compiled template
 		 */
-		compile: function ( templateBody, compilerName ) {
-			return this.getCompiler( compilerName ).compile( templateBody );
-		}
+		compile: function (templateBody, compilerName) {
+			return this.getCompiler(compilerName).compile(templateBody);
+		},
 	};
 
 	// Register basic html compiler
-	mw.template.registerCompiler( 'html', {
-		compile: function ( src ) {
+	mw.template.registerCompiler("html", {
+		compile: function (src) {
 			return {
 				render: function () {
-					return $( $.parseHTML( src.trim() ) );
-				}
+					return $($.parseHTML(src.trim()));
+				},
 			};
-		}
-	} );
-
-}() );
+		},
+	});
+})();

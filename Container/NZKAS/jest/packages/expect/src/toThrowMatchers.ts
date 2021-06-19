@@ -70,7 +70,7 @@ export const createMatcher = (
   matcherName: string,
   fromPromise?: boolean,
 ): RawMatcherFn =>
-  function(this: MatcherState, received: Function, expected: any) {
+  function (this: MatcherState, received: Function, expected: any) {
     const options = {
       isNot: this.isNot,
       promise: this.promise,

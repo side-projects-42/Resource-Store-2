@@ -1,4 +1,4 @@
-var cordova = require('cordova');
+var cordova = require("cordova");
 
 /**
  * Execute a cordova command.  It is up to the native side whether this action
@@ -16,32 +16,32 @@ var cordova = require('cordova');
 
  */
 
-module.exports = function(success, fail, service, action, args) {
-
-    var callbackId = service + cordova.callbackId++;
-    if (typeof success == "function" || typeof fail == "function") {
-        cordova.callbacks[callbackId] = {success:success, fail:fail};
+module.exports = function (success, fail, service, action, args) {
+  var callbackId = service + cordova.callbackId++;
+  if (typeof success == "function" || typeof fail == "function") {
+    cordova.callbacks[callbackId] = { success: success, fail: fail };
+  }
+  // generate a new command string, ex. DebugConsole/log/DebugConsole23/["wtf dude?"]
+  for (var n = 0; n < args.length; n++) {
+    if (typeof args[n] !== "string") {
+      args[n] = JSON.stringify(args[n]);
     }
-    // generate a new command string, ex. DebugConsole/log/DebugConsole23/["wtf dude?"]
-    for(var n = 0; n < args.length; n++)
-    {
-        if(typeof args[n] !== "string")
-        {
-            args[n] = JSON.stringify(args[n]);
-        }
+  }
+  var command =
+    service + "/" + action + "/" + callbackId + "/" + JSON.stringify(args);
+  // pass it on to Notify
+  try {
+    if (window.external) {
+      window.external.Notify(command);
+    } else {
+      console.log("window.external not available :: command=" + command);
     }
-    var command = service + "/" + action + "/" + callbackId + "/" + JSON.stringify(args);
-    // pass it on to Notify
-    try {
-        if(window.external) {
-            window.external.Notify(command);
-        }
-        else {
-            console.log("window.external not available :: command=" + command);
-        }
-    }
-    catch(e) {
-        console.log("Exception calling native with command :: " + command + " :: exception=" + e);
-    }
+  } catch (e) {
+    console.log(
+      "Exception calling native with command :: " +
+        command +
+        " :: exception=" +
+        e
+    );
+  }
 };
-

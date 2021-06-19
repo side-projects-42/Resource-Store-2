@@ -17,14 +17,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "da8bc8cc6d062849b0efcf3c169afb5a",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -43,7 +52,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -94,7 +110,7 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "exact": {
           "parent.type": "App",
           "parent.app": "2827902",
@@ -105,7 +121,16 @@
           "sampled": false
         },
         "expected": ["parent.transportDuration", "guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -124,10 +149,12 @@
   },
   {
     "test_name": "non_new_relic_parent",
-    "comment": [ "If a New Relic agent started a trace, and then a non-New",
+    "comment": [
+      "If a New Relic agent started a trace, and then a non-New",
       "Relic tracer propagated the trace, then the traceparent span ID would",
       "updated by the non-New Relic tracer, but not the span ID in the New",
-      "Relic tracestate entry" ],
+      "Relic tracestate entry"
+    ],
     "trusted_account_key": "33",
     "account_id": "33",
     "web_transaction": true,
@@ -144,14 +171,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "7a933b0e517e8c1f6bc6a7466be6f2a0",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -170,8 +206,14 @@
           "trustedParentId": "5093db371f0ba945"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
-
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -184,9 +226,11 @@
   },
   {
     "test_name": "spans_disabled_in_parent",
-    "comment": [ "If the parent is a New Relic agent with span events disabled it SHOULD omit span",
+    "comment": [
+      "If the parent is a New Relic agent with span events disabled it SHOULD omit span",
       "id from the tracestate. This verifies agents propogate Trace Context payloads when the",
-      "parent is a New Relic agent with span events disabled" ],
+      "parent is a New Relic agent with span events disabled"
+    ],
     "trusted_account_key": "33",
     "account_id": "33",
     "web_transaction": true,
@@ -228,16 +272,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "7a933b0e517e8c1f6bc6a7466be6f2a0",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash",
-          "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid",
-          "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -255,9 +306,15 @@
           "parentId": "e8b91a159289ff74"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account",
-          "parent.transportType", "tracingVendors", "trustedParentId"]
-
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors",
+          "trustedParentId"
+        ]
       }
     },
     "expected_metrics": [
@@ -310,7 +367,7 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "exact": {
           "parent.type": "App",
           "parent.app": "2827902",
@@ -321,7 +378,16 @@
           "sampled": true
         },
         "expected": ["parent.transportDuration", "guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -348,8 +414,7 @@
     "span_events_enabled": false,
     "transaction_events_enabled": true,
     "transport_type": "HTTP",
-    "inbound_headers": [
-    ],
+    "inbound_headers": [],
     "outbound_payloads": [
       {
         "expected": [
@@ -366,16 +431,15 @@
           "tracestate.timestamp",
           "tracestate.parent_application_id"
         ],
-        "unexpected": [
-          "tracestate.span_id"
-        ]
+        "unexpected": ["tracestate.span_id"]
       }
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "expected": ["guid", "traceId", "priority", "sampled"],
-        "unexpected": ["grandparentId",
+        "unexpected": [
+          "grandparentId",
           "cross_process_id",
           "nr.tripId",
           "nr.pathHash",
@@ -387,12 +451,11 @@
           "parent.app",
           "parent.account",
           "parent.transportDuration",
-          "parentId"]
+          "parentId"
+        ]
       }
     },
-    "expected_metrics": [
-      ["Supportability/TraceContext/Create/Success", 1]
-    ]
+    "expected_metrics": [["Supportability/TraceContext/Create/Success", 1]]
   },
   {
     "test_name": "exception",
@@ -412,14 +475,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "TransactionError", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "46ad73477e5605a5053d462bde1f95b0",
           "priority": 1.001,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -439,7 +511,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -470,14 +549,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "7aa2a2cf20e3326bd1334b7dc7cf3ff8",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -525,13 +613,22 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "f6e9c09812b22fba2f1999b318ddfc8b",
           "sampled": true
         },
         "expected": ["guid", "priority"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -550,7 +647,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -580,14 +684,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "9cb52593888819d2b2eb63979f436b8d",
           "priority": 1.123456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -656,14 +769,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "e22175eb1d68b6de32bf70e38458ccc3",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -682,7 +804,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -754,14 +883,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "099ae207600a34ecdd5902aba9c8c6c3",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -780,7 +918,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -832,14 +977,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "44673569f54fad422c3795b6cd4aef69",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -858,7 +1012,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -887,9 +1048,22 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "expected": ["guid", "traceId", "priority", "sampled"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.transportDuration", "parent.type", "parent.app", "parent.account"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -904,7 +1078,14 @@
           "tracingVendors": "44@nr"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "trustedParentId"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "trustedParentId"
+        ]
       }
     },
     "expected_metrics": []
@@ -927,9 +1108,22 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "expected": ["guid", "traceId", "priority", "sampled"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.transportDuration", "parent.type", "parent.app", "parent.account"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -944,7 +1138,14 @@
           "tracingVendors": "44@nr"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "trustedParentId"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "trustedParentId"
+        ]
       }
     },
     "expected_metrics": [
@@ -997,14 +1198,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "ccaa36c833b26ce54bafa6c4102fd740",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1023,7 +1233,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -1052,9 +1269,22 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "expected": ["guid", "traceId", "priority", "sampled"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.transportDuration", "parent.type", "parent.app", "parent.account"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1092,12 +1322,32 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "exact": {
           "parentSpanId": "b4a146e3237b4df1"
         },
-        "expected": ["guid", "traceId", "priority", "sampled", "parent.transportType"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.transportDuration", "parent.type", "parent.app", "parent.account", "parentId"]
+        "expected": [
+          "guid",
+          "traceId",
+          "priority",
+          "sampled",
+          "parent.transportType"
+        ],
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parentId"
+        ]
       }
     },
     "expected_metrics": [
@@ -1122,12 +1372,32 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "exact": {
           "parentSpanId": "7d3efb1b173fecfa"
         },
-        "expected": ["guid", "traceId", "priority", "sampled", "parent.transportType"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.transportDuration", "parent.type", "parent.app", "parent.account", "parentId"]
+        "expected": [
+          "guid",
+          "traceId",
+          "priority",
+          "sampled",
+          "parent.transportType"
+        ],
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parentId"
+        ]
       }
     },
     "expected_metrics": [
@@ -1152,12 +1422,32 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "exact": {
           "parentSpanId": "b4a146e3237b4df1"
         },
-        "expected": ["guid", "traceId", "priority", "sampled", "parent.transportType"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.transportDuration", "parent.type", "parent.app", "parent.account", "parentId"]
+        "expected": [
+          "guid",
+          "traceId",
+          "priority",
+          "sampled",
+          "parent.transportType"
+        ],
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parentId"
+        ]
       }
     },
     "expected_metrics": [
@@ -1182,14 +1472,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "5f2796876f44a3c898994ce2668e2222",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1208,7 +1507,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -1237,9 +1543,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "expected": ["guid", "traceId", "priority", "sampled"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.transportDuration", "parent.type", "parent.app", "parent.account", "parentId"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parentId"
+        ]
       }
     },
     "expected_metrics": [
@@ -1264,12 +1584,32 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "exact": {
           "parentSpanId": "b4a146e3237b4df1"
         },
-        "expected": ["guid", "traceId", "priority", "sampled", "parent.transportType"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.transportDuration", "parent.type", "parent.app", "parent.account", "parentId"]
+        "expected": [
+          "guid",
+          "traceId",
+          "priority",
+          "sampled",
+          "parent.transportType"
+        ],
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parentId"
+        ]
       }
     },
     "expected_metrics": [
@@ -1311,21 +1651,27 @@
           "tracestate.sampled",
           "tracestate.priority"
         ],
-        "vendors": [
-          "foo",
-          "bar"
-        ]
+        "vendors": ["foo", "bar"]
       }
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "sampled": true,
           "traceId": "5f2796876f44a3c898994ce2668e2222"
         },
         "expected": ["guid", "priority"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1399,13 +1745,22 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "5f2796876f44a3c898994ce2668e2222",
           "sampled": true
         },
         "expected": ["guid", "priority"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1476,13 +1831,10 @@
           "tracestate.sampled",
           "tracestate.priority"
         ],
-        "vendors": [
-        ]
+        "vendors": []
       }
     ],
-    "expected_metrics": [
-      ["Supportability/TraceContext/Create/Success", 1]
-    ]
+    "expected_metrics": [["Supportability/TraceContext/Create/Success", 1]]
   },
   {
     "test_name": "missing_traceparent_and_tracestate",
@@ -1494,9 +1846,7 @@
     "span_events_enabled": true,
     "transaction_events_enabled": true,
     "transport_type": "HTTP",
-    "inbound_headers": [
-      { }
-    ],
+    "inbound_headers": [{}],
     "outbound_payloads": [
       {
         "exact": {
@@ -1519,9 +1869,7 @@
         ]
       }
     ],
-    "expected_metrics": [
-      ["Supportability/TraceContext/Create/Success", 1]
-    ]
+    "expected_metrics": [["Supportability/TraceContext/Create/Success", 1]]
   },
   {
     "test_name": "multiple_new_relic_trace_state_entries",
@@ -1559,21 +1907,28 @@
           "tracestate.parent_application_id",
           "tracestate.timestamp"
         ],
-        "vendors": [
-          "44@nr"
-        ]
+        "vendors": ["44@nr"]
       }
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "87b1c9a429205b25e5b687d890d4821f",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1593,7 +1948,13 @@
           "tracingVendors": "44@nr"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType"
+        ]
       }
     },
     "expected_metrics": [
@@ -1637,18 +1998,28 @@
           "tracestate.transaction_id",
           "tracestate.parent_application_id",
           "tracestate.timestamp"
-        ]      }
+        ]
+      }
     ],
     "intrinsics": {
       "target_events": ["Transaction"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "87b1c9a429205b25e5b687d890d4821f",
           "priority": 0.000012,
           "sampled": false
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1701,20 +2072,30 @@
           "newrelic.d.ap",
           "newrelic.d.tx",
           "newrelic.d.ti",
-          "newrelic.d.id"],
+          "newrelic.d.id"
+        ],
         "unexpected": ["newrelic.d.tk"]
       }
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "da8bc8cc6d062849b0efcf3c169afb5a",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1733,7 +2114,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -1790,9 +2178,25 @@
     ],
     "intrinsics": {
       "target_events": ["Span"],
-      "common":{
+      "common": {
         "expected": ["guid", "traceId", "priority", "sampled"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.type", "parent.app", "parent.account", "parentId", "parentSpanId", "parent.transportDuration", "tracingVendors"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parentId",
+          "parentSpanId",
+          "parent.transportDuration",
+          "tracingVendors"
+        ]
       },
       "Span": {
         "expected": ["transactionId"]
@@ -1840,13 +2244,27 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "da8bc8cc6d062849b0efcf3c169afb5a",
           "sampled": true
         },
         "expected": ["guid", "priority"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes", "parent.type", "parent.app", "parent.account", "parent.transportDuration", "trustedParentId"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportDuration",
+          "trustedParentId"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1925,13 +2343,22 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "6E2fEA0B173FDAD0",
           "sampled": true
         },
         "expected": ["guid", "priority"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -1995,21 +2422,28 @@
           "tracestate.timestamp",
           "tracestate.parent_application_id"
         ],
-        "unexpected": [
-          "tracestate.transaction_id"
-        ]
+        "unexpected": ["tracestate.transaction_id"]
       }
     ],
     "intrinsics": {
       "target_events": ["Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "e22175eb1d68b6de32bf70e38458ccc3",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Span": {
         "exact": {
@@ -2017,7 +2451,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [
@@ -2068,10 +2509,7 @@
           "tracestate.timestamp",
           "tracestate.parent_application_id"
         ],
-        "unexpected": [
-          "tracestate.span_id",
-          "tracestate.transaction_id"
-        ]
+        "unexpected": ["tracestate.span_id", "tracestate.transaction_id"]
       }
     ],
     "expected_metrics": [
@@ -2260,9 +2698,9 @@
   {
     "test_name": "inbound_payload_from_agent_in_serverless_mode",
     "comment": [
-        "Test a payload that originates from a serverless agent. The only",
-        "difference in the payload between a serverless and non-serverless agent",
-        "is the `appId` in the tracestate header will be 'Unknown'."
+      "Test a payload that originates from a serverless agent. The only",
+      "difference in the payload between a serverless and non-serverless agent",
+      "is the `appId` in the tracestate header will be 'Unknown'."
     ],
     "trusted_account_key": "33",
     "account_id": "33",
@@ -2279,14 +2717,23 @@
     ],
     "intrinsics": {
       "target_events": ["Transaction", "Span"],
-      "common":{
+      "common": {
         "exact": {
           "traceId": "da8bc8cc6d062849b0efcf3c169afb5a",
           "priority": 1.23456,
           "sampled": true
         },
         "expected": ["guid"],
-        "unexpected": ["grandparentId", "cross_process_id", "nr.tripId", "nr.pathHash", "nr.referringPathHash", "nr.guid", "nr.referringTransactionGuid", "nr.alternatePathHashes"]
+        "unexpected": [
+          "grandparentId",
+          "cross_process_id",
+          "nr.tripId",
+          "nr.pathHash",
+          "nr.referringPathHash",
+          "nr.guid",
+          "nr.referringTransactionGuid",
+          "nr.alternatePathHashes"
+        ]
       },
       "Transaction": {
         "exact": {
@@ -2305,7 +2752,14 @@
           "trustedParentId": "7d3efb1b173fecfa"
         },
         "expected": ["transactionId"],
-        "unexpected": ["parent.transportDuration", "parent.type", "parent.app", "parent.account", "parent.transportType", "tracingVendors"]
+        "unexpected": [
+          "parent.transportDuration",
+          "parent.type",
+          "parent.app",
+          "parent.account",
+          "parent.transportType",
+          "tracingVendors"
+        ]
       }
     },
     "expected_metrics": [

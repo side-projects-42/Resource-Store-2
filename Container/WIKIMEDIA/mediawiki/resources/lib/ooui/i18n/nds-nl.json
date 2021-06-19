@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Servien"
-		]
+		"authors": ["Servien"]
 	},
 	"ooui-outline-control-move-down": "Objekt ümdale setten",
 	"ooui-outline-control-move-up": "Objekt ümhouge setten",

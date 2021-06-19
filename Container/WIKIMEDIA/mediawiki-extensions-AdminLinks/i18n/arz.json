@@ -1,13 +1,11 @@
 {
-	"@metadata": {
-		"authors": [
-			"Ghaly"
-		]
-	},
-	"adminlinks": "وصلات الاداريين",
-	"adminlinks-desc": "يضيف [[Special:AdminLinks|صفحة خاصة]] وصلات الاداريين",
-	"adminlinks_documentation": "توثيق $1",
-	"adminlinks_general": "عام",
-	"adminlinks_editcss": "عدل ملف CSS",
-	"adminlinks_users": "يوزرز"
+  "@metadata": {
+    "authors": ["Ghaly"]
+  },
+  "adminlinks": "وصلات الاداريين",
+  "adminlinks-desc": "يضيف [[Special:AdminLinks|صفحة خاصة]] وصلات الاداريين",
+  "adminlinks_documentation": "توثيق $1",
+  "adminlinks_general": "عام",
+  "adminlinks_editcss": "عدل ملف CSS",
+  "adminlinks_users": "يوزرز"
 }

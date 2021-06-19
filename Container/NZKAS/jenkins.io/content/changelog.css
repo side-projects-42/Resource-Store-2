@@ -1,5 +1,9 @@
 /* icons taken from http://www.image-seed.com/archives/cat_10007473.html */
-BODY, TH, TD, P, LI {
+BODY,
+TH,
+TD,
+P,
+LI {
   font-size: 100%;
 }
 
@@ -45,7 +49,16 @@ UL.iconlegend LI {
 }
 
 /* For community ratings */
-img.rate { vertical-align: middle; margin-right: 2em; }
-img.rate:hover { cursor: pointer; }
-div.rate-offset { padding-left: 2em; }
-span.related-issues { display: block; }
+img.rate {
+  vertical-align: middle;
+  margin-right: 2em;
+}
+img.rate:hover {
+  cursor: pointer;
+}
+div.rate-offset {
+  padding-left: 2em;
+}
+span.related-issues {
+  display: block;
+}

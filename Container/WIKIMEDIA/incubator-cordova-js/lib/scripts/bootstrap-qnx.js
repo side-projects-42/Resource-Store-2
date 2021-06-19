@@ -1,3 +1,3 @@
 document.addEventListener("webworksready", function () {
-    require('cordova/channel').onNativeReady.fire();
+  require("cordova/channel").onNativeReady.fire();
 });

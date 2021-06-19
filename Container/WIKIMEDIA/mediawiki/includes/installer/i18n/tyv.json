@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Agilight"
-		]
+		"authors": ["Agilight"]
 	},
 	"config-page-welcome": "MediaWiki-же кирип моорлаңар!",
 	"config-sidebar-license": "Хоолгалаар",

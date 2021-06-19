@@ -4,13 +4,14 @@
 :nodeid: 422
 :created: 1367361200
 :tags:
-- general
-- just for fun
-- news
-- jenkinsci
-- juc
+  - general
+  - just for fun
+  - news
+  - jenkinsci
+  - juc
 :author: lisawells
 ---
+
 This year, the West Coast Jenkins User Conference will be in Palo Alto rather than San Francisco. If you’re nearby – or even if you’re not – join Kohsuke and other fellow developers for a solid day of Jenkins.
 
 <ul>
@@ -37,6 +38,6 @@ The agenda won’t be populated until after the Call for Papers closes and talks
   <li> <a href ="https://www.cloudbees.com/jenkins-user-conference-2011-session-abstracts.cb"> Inaugural JUC San Francisco - 2011 </a> </li>
 </ul>
 
-If JUC Palo Alto is not convenient for you, there’s also a <a href ="http://jenkins-uc-israel-2013.eventbrite.com/">JUC coming up in Herzelia, Israel on June 6</a> and a <a href = "http://www.praqma.com/events/jciusrcph13">Jenkins event planned for Copenhagen, Denmark</a> on September 6. 
+If JUC Palo Alto is not convenient for you, there’s also a <a href ="http://jenkins-uc-israel-2013.eventbrite.com/">JUC coming up in Herzelia, Israel on June 6</a> and a <a href = "http://www.praqma.com/events/jciusrcph13">Jenkins event planned for Copenhagen, Denmark</a> on September 6.
 
 Hope you can join us at JUC!

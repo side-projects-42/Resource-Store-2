@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"L2212"
-		]
+		"authors": ["L2212"]
 	},
 	"ooui-outline-control-move-down": "Move s'elementu a suta",
 	"ooui-outline-control-move-up": "Move s'elementu a suta",

@@ -6,24 +6,25 @@ If any behavioral `it`, `describe*` invokes their `skip` method or only provide 
 This rule also catches the handy `xdescribe` and `xit` that some BDD frameworks support.
 
 ## Example
+
 ```js
-describe('my cool tests', function () {
+describe("my cool tests", function () {
 	// skip
-	it.skip('should work', function () {
+	it.skip("should work", function () {
 		// Cool stuff
 	});
 
 	// no additional argument
-	it('should work again');
+	it("should work again");
 });
 
 // skip, no additional argument
-describe.skip('other cool tests');
+describe.skip("other cool tests");
 
 // xdescribe
-xdescribe('skip this too', function () {
+xdescribe("skip this too", function () {
 	// xit
-	xit('not cool', function () {
+	xit("not cool", function () {
 		// Not run
 	});
 });

@@ -18,8 +18,8 @@ const OK = chalk.reset.inverse.bold.green(' DONE ');
 module.exports.getPackages = function getPackages() {
   return fs
     .readdirSync(PACKAGES_DIR)
-    .map(file => path.resolve(PACKAGES_DIR, file))
-    .filter(f => fs.lstatSync(path.resolve(f)).isDirectory());
+    .map((file) => path.resolve(PACKAGES_DIR, file))
+    .filter((f) => fs.lstatSync(path.resolve(f)).isDirectory());
 };
 
 module.exports.adjustToTerminalWidth = function adjustToTerminalWidth(str) {
@@ -30,10 +30,7 @@ module.exports.adjustToTerminalWidth = function adjustToTerminalWidth(str) {
   if (lastString.length < WIDTH) {
     lastString += Array(WIDTH - lastString.length).join(chalk.dim('.'));
   }
-  return strs
-    .slice(0, -1)
-    .concat(lastString)
-    .join('\n');
+  return strs.slice(0, -1).concat(lastString).join('\n');
 };
 
 module.exports.OK = OK;

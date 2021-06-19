@@ -1,14 +1,15 @@
 ---
 :layout: post
-:title: 'December JAM World Tour:  Lima, Peru'
+:title: "December JAM World Tour:  Lima, Peru"
 :nodeid: 660
 :created: 1450503279
 :tags:
-- general
-- meetup
-- jenkinsci
+  - general
+  - meetup
+  - jenkinsci
 :author: alyssat
 ---
+
 <img src="/sites/default/files/images/peru-butler_0.jpeg" width="150"
 align="right"/>
 
@@ -18,13 +19,10 @@ obligations. Today and tomorrow I will be doing a series of posts to summarize
 December JAM World Tour. Special thanks to the JAM organizers and co-organizers
 who made it all happen in these cities:
 
-
-* Lima, Peru
-* St.Petersburg, Russia
-* Toulouse, France
-* Bay Area, CA
-
-
+- Lima, Peru
+- St.Petersburg, Russia
+- Toulouse, France
+- Bay Area, CA
 
 On December 9 [Lima JAM](http://www.meetup.com/Lima-Jenkins-Area-Meetup/)
 hosted their first Jenkins meetup in Lima, Peru. There were attendance from
@@ -40,12 +38,7 @@ Slides from the meetup can be found
 [here](https://speakerdeck.com/eddumelendez/peru-jam-intro). Additional shared resources used in
 the Lima JAM can be found [here](http://jenkinsperu.github.io/).
 
-
-
-
-
 Check out where [Jenkins Area Meetups](http://www.meetup.com/pro/Jenkins/)
 (JAMs) are located in the world. Don't see a JAM in your area? why not start
 your own, [here's
 how](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+Area+Meetup).
-

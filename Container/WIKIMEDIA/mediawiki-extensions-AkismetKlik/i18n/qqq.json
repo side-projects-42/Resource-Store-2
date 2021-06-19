@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Shirayuki"
-		]
-	},
-	"akismetklik-desc": "{{desc|name=Akismet Klik}}"
+  "@metadata": {
+    "authors": ["Shirayuki"]
+  },
+  "akismetklik-desc": "{{desc|name=Akismet Klik}}"
 }

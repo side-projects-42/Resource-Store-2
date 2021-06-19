@@ -13,7 +13,7 @@ describe('CustomConsole', () => {
   const stdout = () =>
     _console
       .getBuffer()
-      .map(log => log.message)
+      .map((log) => log.message)
       .join('\n');
 
   beforeEach(() => {

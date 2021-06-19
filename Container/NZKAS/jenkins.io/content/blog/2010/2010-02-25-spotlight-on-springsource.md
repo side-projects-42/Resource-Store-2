@@ -1,19 +1,21 @@
 ---
 :layout: post
-:title: 'Spotlight on: SpringSource'
+:title: "Spotlight on: SpringSource"
 :nodeid: 192
 :created: 1267108200
 :tags:
-- general
-- feedback
-- interview
+  - general
+  - feedback
+  - interview
 :author: rtyler
 ---
+
 For this week's user spotlight segment, I'm talking with <a id="aptureLink_FPwIok2zLS" href="http://twitter.com/dougmaceachern">Doug MacEachern</a> of <a id="aptureLink_3sE4QkWryf" href="http://www.crunchbase.com/company/hyperic">Hyperic</a>, part of <a id="aptureLink_Xv7fvWA2ED" href="http://www.crunchbase.com/company/springsource">SpringSource</a>, a division of VMware, hoping I got that dependency chain correct. Hyperic builds enterprise systems monitoring and management software and also contributes to a number of open source projects, many of which are built with Hudson. <a href="http://blog.hudson-ci.org/sites/default/files/hyperic_hudson.png" target="_blank"><img src="http://blog.hudson-ci.org/sites/default/files/hyperic_hudson.png" align="right" width="350" alt="A small subsection of Hyperic's Hudson"/></a>
 
-To date I must say that Doug's use of Hudson is one of the largest and more impressive installations I've seen. I don't want to spoil the interview, but they're testing on platforms that don't even run *Java*. Madness! If you think you can out-do him, you can find my email information at the bottom of the interview, I'd love to hear about it!
+To date I must say that Doug's use of Hudson is one of the largest and more impressive installations I've seen. I don't want to spoil the interview, but they're testing on platforms that don't even run _Java_. Madness! If you think you can out-do him, you can find my email information at the bottom of the interview, I'd love to hear about it!
 
 Without further ado, Doug from SpringSource.
+
 <!--break-->
 <table border="0">
 <tr><td align="center">
@@ -30,8 +32,6 @@ We started using Hudson in early 2008 to automate the build and testing of our <
 </td></tr>
 <tr><td><br/></td></tr>
 
-
-
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
 <strong>Hudson</strong>
@@ -43,9 +43,6 @@ We started using Hudson in early 2008 to automate the build and testing of our <
 </td><td>The SIGAR project actually started back in late 2002 and our initial CI system for the project was a good old-fashioned Perl script / ssh for-loop.  It was good enough to get by in the early years, but a proper replacement was long overdue.  We were (and still are) using <a id="aptureLink_koprNR3BrL" href="http://www.atlassian.com/software/bamboo/">Bamboo</a> to build and test Hyperic HQ.  We looked at using Bamboo for SIGAR, but at the time the "Remote Agent" feature was new to Bamboo and was not in the version we were running. Rather than disrupt HQ's CI along with taking on an additional licensing cost, we gave Hudson a shot and haven't looked back.
 </td></tr>
 <tr><td><br/></td></tr>
-
-
-
 
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
@@ -60,7 +57,6 @@ We started using Hudson in early 2008 to automate the build and testing of our <
 And HP-UX! The matrix of SIGAR's supported OS + kernel version + architecture + distribution is north of 100 combinations.  So, Hudson is covering a very heterogeneous collection of systems with most jobs tied to a specific node.  Our primary focus has been the C API and Java JNI bindings, using an Ant based build system and a JUnit test suite.  SIGAR also has language bindings for Perl, Ruby, Python, Erlang, PHP, C# and Lua.  So, Hudson is also driving each language's extension build system of choice, respectively: MakeMaker, Rake, distutils, emake, phpize, Nant and autotools.
 </td></tr>
 <tr><td><br/></td></tr>
-
 
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
@@ -81,7 +77,6 @@ We have four Hudson servers in different locations, three of which are managing 
 </td></tr>
 <tr><td><br/></td></tr>
 
-
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
 <strong>Hudson</strong>
@@ -95,7 +90,6 @@ We have four Hudson servers in different locations, three of which are managing 
 Other than some Hudson plugin tweaks and additions, the Perl script I mentioned earlier was converted to generate the majority of our Hudson jobs and includes a simple templating system.  The same script generates jobs to build collectd and a few other projects.  We've outgrown this flavor of the script and have started working on integrating <a href="http://www.opscode.com/chef">Opscode Chef</a> to automate our Hudson configration along with the systems we build and test on. And of course, we're using Hyperic HQ to monitor our Hudson server instances, slaves and node machines.
 </td></tr>
 <tr><td><br/></td></tr>
-
 
 <tr><td align="center">
 <img src="/sites/default/files/butler_tiny.png" alt="Hudson"/><br/>
@@ -112,12 +106,10 @@ Other than some Hudson plugin tweaks and additions, the Perl script I mentioned 
 
 </table>
 
-----
-
+---
 
 I'd like to thank Doug again for giving us a peek behind the curtains at SpringSource and how they're using Hudson. If you would like to discuss your organization or company's use of Hudson for Continuous Blog, you can contact me at `tyler` at `linux.com`
 
+---
 
-
-----
-**Editor's note:** Doug was the primary author of <a id="aptureLink_qgVLRGgSjp" href="http://en.wikipedia.org/wiki/Mod%20perl">mod_perl</a> for many years until he was tricked into "helping out" with a new project.  This project turned into Hyperic HQ which shifted his focus to systems and application management for the past ~7 years and counting.  He occasionally rambles on Twitter as <a id="aptureLink_1GSwGzVfcP" href="http://twitter.com/dougmaceachern">@dougmaceachern</a>.
+**Editor's note:** Doug was the primary author of <a id="aptureLink_qgVLRGgSjp" href="http://en.wikipedia.org/wiki/Mod%20perl">mod_perl</a> for many years until he was tricked into "helping out" with a new project. This project turned into Hyperic HQ which shifted his focus to systems and application management for the past ~7 years and counting. He occasionally rambles on Twitter as <a id="aptureLink_1GSwGzVfcP" href="http://twitter.com/dougmaceachern">@dougmaceachern</a>.

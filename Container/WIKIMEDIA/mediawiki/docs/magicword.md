@@ -1,13 +1,12 @@
-Magic Words
-====================================
+# Magic Words
 
 Magic words are localizable keywords used in wikitext. They are used for many
 small fragments of text, including:
 
-* The names of parser functions e.g. `{{urlencode:...}}`
-* The names of variables, e.g. `{{CURRENTDAY}}`
-* Double-underscore behavior switches, e.g. `__NOTOC__`
-* Image link parameter names
+- The names of parser functions e.g. `{{urlencode:...}}`
+- The names of variables, e.g. `{{CURRENTDAY}}`
+- Double-underscore behavior switches, e.g. `__NOTOC__`
+- Image link parameter names
 
 Magic words have a synonym list, with the canonical English word always present,
 and a case sensitivity flag. The MagicWord class provides facilities for
@@ -49,12 +48,12 @@ Then in extension.json:
 
 ```json
 {
-	"ExtensionMessagesFiles": {
-		"ExtensionNameMagic": "ExtensionName.i18n.magic.php"
-	},
-	"Hooks": {
-		"ParserFirstCallInit": "MyExtensionHooks::onParserFirstCallInit"
-	}
+  "ExtensionMessagesFiles": {
+    "ExtensionNameMagic": "ExtensionName.i18n.magic.php"
+  },
+  "Hooks": {
+    "ParserFirstCallInit": "MyExtensionHooks::onParserFirstCallInit"
+  }
 }
 ```
 

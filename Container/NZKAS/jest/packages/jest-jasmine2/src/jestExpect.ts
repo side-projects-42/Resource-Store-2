@@ -43,8 +43,8 @@ export default (config: {expand: boolean}) => {
 
   jasmine.addMatchers = (jasmineMatchersObject: JasmineMatchersObject) => {
     const jestMatchersObject = Object.create(null);
-    Object.keys(jasmineMatchersObject).forEach(name => {
-      jestMatchersObject[name] = function(
+    Object.keys(jasmineMatchersObject).forEach((name) => {
+      jestMatchersObject[name] = function (
         this: MatcherState,
         ...args: Array<unknown>
       ): RawMatcherFn {

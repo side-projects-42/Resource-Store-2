@@ -1,12 +1,12 @@
 exports.foo = function () {
-    return this;
+  return this;
 };
 exports.set = function (x) {
-    this.x = x;
+  this.x = x;
 };
 exports.get = function () {
-    return this.x;
+  return this.x;
 };
 exports.getClosed = function () {
-    return exports.x;
+  return exports.x;
 };

@@ -38,7 +38,7 @@
 
 ## Notes
 
-----
+---
 
 ### Algolia
 
@@ -61,10 +61,10 @@
 
 - TJ: Todd working on a pro license for video sharing (supports 20 concurrent users)
 - link to get on the current ember org: [link](https://goo.gl/mGLPuW)
-- Feel free to play.  Will come back with an update
+- Feel free to play. Will come back with an update
 
 ### Locks homepage updates
 
 - LS: anything in the way of it going live?
-- DB: just needs to be merged.  One small update from rwjblue.  Will address and merge
+- DB: just needs to be merged. One small update from rwjblue. Will address and merge
 - LS: Go ahead and do it.

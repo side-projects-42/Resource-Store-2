@@ -4,9 +4,10 @@
 :nodeid: 3
 :created: 1275344382
 :tags:
-- general
+  - general
 :author: rtyler
 ---
+
 The two primary mailing lists (<em>jenkinsci-users</em> and <em>jenkinsci-dev</em>) have a large number of subscribers, and moderate daily email volume, please strive to be clear and concise when sending messages. <a href="http://www.catb.org/esr/faqs/smart-questions.html">How to ask questions the smart way.</a>
 <br clear="all"/>
 
@@ -21,7 +22,7 @@ Mailing list for users of Jenkins. Post your questions on how to use Jenkins and
 
 ##### jenkinsci-dev@googlegroups.com
 
-Mailing list for *developers* of Jenkins. Post your Jenkins core development and plugin development questions here, as well as topics related to project governance. **Questions that should be asked on the <em>jenkinsci-users</em> list will be ignored**. Do not cross-post.<br/>
+Mailing list for _developers_ of Jenkins. Post your Jenkins core development and plugin development questions here, as well as topics related to project governance. **Questions that should be asked on the <em>jenkinsci-users</em> list will be ignored**. Do not cross-post.<br/>
 <a href="http://groups.google.com/group/jenkinsci-dev/topics">archive</a>
 &nbsp;|&nbsp;<a href="mailto:jenkinsci-dev+subscribe@googlegroups.com">subscribe</a>
 &nbsp;|&nbsp;<a href="mailto:jenkinsci-dev+unsubscribe@googlegroups.com">unsubscribe</a>

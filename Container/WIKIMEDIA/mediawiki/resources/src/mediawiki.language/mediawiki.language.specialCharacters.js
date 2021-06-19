@@ -1,1 +1,1 @@
-module.exports = require( './specialcharacters.json' );
+module.exports = require("./specialcharacters.json");

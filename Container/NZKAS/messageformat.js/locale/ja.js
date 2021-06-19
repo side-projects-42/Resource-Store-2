@@ -1,1 +1,3 @@
-MessageFormat.locale.ja=function(n){return "other"}
+MessageFormat.locale.ja = function (n) {
+  return "other";
+};

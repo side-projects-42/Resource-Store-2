@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Joao Xavier"
-		]
-	},
-	"addthis": "Partigez"
+  "@metadata": {
+    "authors": ["Joao Xavier"]
+  },
+  "addthis": "Partigez"
 }

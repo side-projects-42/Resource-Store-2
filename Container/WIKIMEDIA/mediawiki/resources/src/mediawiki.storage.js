@@ -1,20 +1,19 @@
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
 	// Catch exceptions to avoid fatal in Chrome's "Block data storage" mode
 	// which throws when accessing the localStorage property itself, as opposed
 	// to the standard behaviour of throwing on getItem/setItem. (T148998)
-	var
-		localStorage = ( function () {
+	var localStorage = (function () {
 			try {
 				return window.localStorage;
-			} catch ( e ) {}
-		}() ),
-		sessionStorage = ( function () {
+			} catch (e) {}
+		})(),
+		sessionStorage = (function () {
 			try {
 				return window.sessionStorage;
-			} catch ( e ) {}
-		}() );
+			} catch (e) {}
+		})();
 
 	/**
 	 * A wrapper for the HTML5 Storage interface (`localStorage` or `sessionStorage`)
@@ -24,7 +23,7 @@
 	 * @private
 	 * @param {Object|undefined} store The Storage instance to wrap around
 	 */
-	function SafeStorage( store ) {
+	function SafeStorage(store) {
 		this.store = store;
 	}
 
@@ -35,10 +34,10 @@
 	 * @return {string|null|boolean} String value, null if no value exists, or false
 	 *  if storage is not available.
 	 */
-	SafeStorage.prototype.get = function ( key ) {
+	SafeStorage.prototype.get = function (key) {
 		try {
-			return this.store.getItem( key );
-		} catch ( e ) {}
+			return this.store.getItem(key);
+		} catch (e) {}
 		return false;
 	};
 
@@ -49,11 +48,11 @@
 	 * @param {string} value Value to be stored
 	 * @return {boolean} The value was set
 	 */
-	SafeStorage.prototype.set = function ( key, value ) {
+	SafeStorage.prototype.set = function (key, value) {
 		try {
-			this.store.setItem( key, value );
+			this.store.setItem(key, value);
 			return true;
-		} catch ( e ) {}
+		} catch (e) {}
 		return false;
 	};
 
@@ -63,11 +62,11 @@
 	 * @param {string} key Key of item to remove
 	 * @return {boolean} Whether the key was removed
 	 */
-	SafeStorage.prototype.remove = function ( key ) {
+	SafeStorage.prototype.remove = function (key) {
 		try {
-			this.store.removeItem( key );
+			this.store.removeItem(key);
 			return true;
-		} catch ( e ) {}
+		} catch (e) {}
 		return false;
 	};
 
@@ -78,16 +77,16 @@
 	 * @return {Object|null|boolean} Object, null if no value exists or value
 	 *  is not JSON-parseable, or false if storage is not available.
 	 */
-	SafeStorage.prototype.getObject = function ( key ) {
-		var json = this.get( key );
+	SafeStorage.prototype.getObject = function (key) {
+		var json = this.get(key);
 
-		if ( json === false ) {
+		if (json === false) {
 			return false;
 		}
 
 		try {
-			return JSON.parse( json );
-		} catch ( e ) {}
+			return JSON.parse(json);
+		} catch (e) {}
 
 		return null;
 	};
@@ -99,12 +98,12 @@
 	 * @param {Object} value Object value to be stored
 	 * @return {boolean} The value was set
 	 */
-	SafeStorage.prototype.setObject = function ( key, value ) {
+	SafeStorage.prototype.setObject = function (key, value) {
 		var json;
 		try {
-			json = JSON.stringify( value );
-			return this.set( key, json );
-		} catch ( e ) {}
+			json = JSON.stringify(value);
+			return this.set(key, json);
+		} catch (e) {}
 		return false;
 	};
 
@@ -141,7 +140,7 @@
 	 * @singleton
 	 * @extends mw.SafeStorage
 	 */
-	mw.storage = new SafeStorage( localStorage );
+	mw.storage = new SafeStorage(localStorage);
 
 	/**
 	 * A safe interface to HTML5 `sessionStorage`.
@@ -168,11 +167,10 @@
 	 * @singleton
 	 * @extends mw.SafeStorage
 	 */
-	mw.storage.session = new SafeStorage( sessionStorage );
+	mw.storage.session = new SafeStorage(sessionStorage);
 
 	module.exports = {
 		local: mw.storage,
-		session: mw.storage.session
+		session: mw.storage.session,
 	};
-
-}() );
+})();

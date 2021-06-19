@@ -16,7 +16,7 @@ class CancelError extends Error {
 
 class PCancelable {
   static fn(fn) {
-    return function() {
+    return function () {
       const args = [].slice.apply(arguments);
       return new PCancelable((onCancel, resolve, reject) => {
         args.unshift(onCancel);
@@ -33,14 +33,14 @@ class PCancelable {
       this._reject = reject;
 
       return executor(
-        fn => {
+        (fn) => {
           this._cancel = fn;
         },
-        val => {
+        (val) => {
           this._pending = false;
           resolve(val);
         },
-        err => {
+        (err) => {
           this._pending = false;
           reject(err);
         },

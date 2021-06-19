@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Frhdkazan"
-		]
-	},
-	"abusefilter-revert-reasonfield": "Säbäp:"
+  "@metadata": {
+    "authors": ["Frhdkazan"]
+  },
+  "abusefilter-revert-reasonfield": "Säbäp:"
 }

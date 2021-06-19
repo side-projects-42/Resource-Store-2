@@ -32,7 +32,7 @@ const SHOULD_NOT_PASS_IN_JEST = new Set([
   'spyOnProperty.test.js',
 ]);
 
-testFiles.forEach(testFile => {
+testFiles.forEach((testFile) => {
   test(`${testFile} errors in errorOnDeprecated mode`, () => {
     const result = runJest('error-on-deprecated', [
       testFile,
@@ -44,7 +44,7 @@ testFiles.forEach(testFile => {
   });
 });
 
-testFiles.forEach(testFile => {
+testFiles.forEach((testFile) => {
   const shouldPass = SHOULD_NOT_PASS_IN_JEST.has(testFile);
 
   const expectation = `${testFile} ${shouldPass ? 'errors' : 'passes'}`;

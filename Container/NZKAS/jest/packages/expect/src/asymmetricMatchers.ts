@@ -123,8 +123,8 @@ class ArrayContaining extends AsymmetricMatcher<Array<unknown>> {
     const result =
       this.sample.length === 0 ||
       (Array.isArray(other) &&
-        this.sample.every(item =>
-          other.some(another => equals(item, another)),
+        this.sample.every((item) =>
+          other.some((another) => equals(item, another)),
         ));
 
     return this.inverse ? !result : result;

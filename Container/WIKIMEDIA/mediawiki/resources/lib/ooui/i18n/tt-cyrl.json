@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ajdar",
-			"Ерней",
-			"Ильнар"
-		]
+		"authors": ["Ajdar", "Ерней", "Ильнар"]
 	},
 	"ooui-outline-control-move-down": "Элементны аска күчерү",
 	"ooui-outline-control-move-up": "Элементны өскә күчерү",

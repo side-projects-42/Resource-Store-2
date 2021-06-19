@@ -1,7 +1,6 @@
 [![Archived header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/Archived.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#archived)
 
-puppet-nrsysmond
-================
+# puppet-nrsysmond
 
 Puppet module to install the New Relic Server Monitor
 

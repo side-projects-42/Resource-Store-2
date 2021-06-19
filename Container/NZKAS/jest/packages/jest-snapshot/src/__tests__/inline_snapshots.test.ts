@@ -25,7 +25,7 @@ beforeEach(() => {
   fs.writeFileSync = jest.fn();
   fs.readFileSync = jest.fn();
   fs.existsSync = jest.fn(() => true);
-  (fs.statSync as jest.Mock).mockImplementation(filePath => ({
+  (fs.statSync as jest.Mock).mockImplementation((filePath) => ({
     isDirectory: () => !filePath.endsWith('.js'),
   }));
   fs.readdirSync = jest.fn(() => []);
@@ -65,7 +65,7 @@ test('saveInlineSnapshots() replaces empty function call with a template literal
 
 test.each([['babylon'], ['flow'], ['typescript']])(
   'saveInlineSnapshots() replaces existing template literal - %s parser',
-  parser => {
+  (parser) => {
     const filename = path.join(__dirname, 'my.test.js');
     (fs.readFileSync as jest.Mock).mockImplementation(
       () => 'expect(1).toMatchInlineSnapshot(`2`);\n',
@@ -148,7 +148,10 @@ test('saveInlineSnapshots() throws if multiple calls to to the same location', (
   const frame = {column: 11, file: filename, line: 1} as Frame;
   const save = () =>
     saveInlineSnapshots(
-      [{frame, snapshot: `1`}, {frame, snapshot: `2`}],
+      [
+        {frame, snapshot: `1`},
+        {frame, snapshot: `2`},
+      ],
       prettier,
       babelTraverse,
     );

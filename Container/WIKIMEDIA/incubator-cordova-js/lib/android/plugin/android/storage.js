@@ -1,6 +1,6 @@
-var utils = require('cordova/utils'),
-    exec = require('cordova/exec'),
-    channel = require('cordova/channel');
+var utils = require("cordova/utils"),
+  exec = require("cordova/exec"),
+  channel = require("cordova/channel");
 
 var queryQueue = {};
 
@@ -9,9 +9,9 @@ var queryQueue = {};
  * PRIVATE METHOD
  * @constructor
  */
-var DroidDB_Rows = function() {
-    this.resultSet = [];    // results array
-    this.length = 0;        // number of rows
+var DroidDB_Rows = function () {
+  this.resultSet = []; // results array
+  this.length = 0; // number of rows
 };
 
 /**
@@ -20,8 +20,8 @@ var DroidDB_Rows = function() {
  * @param row           The row number to return
  * @return              The row object
  */
-DroidDB_Rows.prototype.item = function(row) {
-    return this.resultSet[row];
+DroidDB_Rows.prototype.item = function (row) {
+  return this.resultSet[row];
 };
 
 /**
@@ -29,8 +29,8 @@ DroidDB_Rows.prototype.item = function(row) {
  * PRIVATE METHOD
  * @constructor
  */
-var DroidDB_Result = function() {
-    this.rows = new DroidDB_Rows();
+var DroidDB_Result = function () {
+  this.rows = new DroidDB_Rows();
 };
 
 /**
@@ -40,37 +40,36 @@ var DroidDB_Result = function() {
  * @param id   Query id
  */
 function completeQuery(id, data) {
-    var query = queryQueue[id];
-    if (query) {
+  var query = queryQueue[id];
+  if (query) {
+    try {
+      delete queryQueue[id];
+
+      // Get transaction
+      var tx = query.tx;
+
+      // If transaction hasn't failed
+      // Note: We ignore all query results if previous query
+      //       in the same transaction failed.
+      if (tx && tx.queryList[id]) {
+        // Save query results
+        var r = new DroidDB_Result();
+        r.rows.resultSet = data;
+        r.rows.length = data.length;
         try {
-            delete queryQueue[id];
-
-            // Get transaction
-            var tx = query.tx;
-
-            // If transaction hasn't failed
-            // Note: We ignore all query results if previous query
-            //       in the same transaction failed.
-            if (tx && tx.queryList[id]) {
-
-                // Save query results
-                var r = new DroidDB_Result();
-                r.rows.resultSet = data;
-                r.rows.length = data.length;
-                try {
-                    if (typeof query.successCallback === 'function') {
-                        query.successCallback(query.tx, r);
-                    }
-                } catch (ex) {
-                    console.log("executeSql error calling user success callback: "+ex);
-                }
-
-                tx.queryComplete(id);
-            }
-        } catch (e) {
-            console.log("executeSql error: "+e);
+          if (typeof query.successCallback === "function") {
+            query.successCallback(query.tx, r);
+          }
+        } catch (ex) {
+          console.log("executeSql error calling user success callback: " + ex);
         }
+
+        tx.queryComplete(id);
+      }
+    } catch (e) {
+      console.log("executeSql error: " + e);
     }
+  }
 }
 
 /**
@@ -81,35 +80,34 @@ function completeQuery(id, data) {
  * @param id                Query id
  */
 function failQuery(reason, id) {
-    var query = queryQueue[id];
-    if (query) {
+  var query = queryQueue[id];
+  if (query) {
+    try {
+      delete queryQueue[id];
+
+      // Get transaction
+      var tx = query.tx;
+
+      // If transaction hasn't failed
+      // Note: We ignore all query results if previous query
+      //       in the same transaction failed.
+      if (tx && tx.queryList[id]) {
+        tx.queryList = {};
+
         try {
-            delete queryQueue[id];
-
-            // Get transaction
-            var tx = query.tx;
-
-            // If transaction hasn't failed
-            // Note: We ignore all query results if previous query
-            //       in the same transaction failed.
-            if (tx && tx.queryList[id]) {
-                tx.queryList = {};
-
-                try {
-                    if (typeof query.errorCallback === 'function') {
-                        query.errorCallback(query.tx, reason);
-                    }
-                } catch (ex) {
-                    console.log("executeSql error calling user error callback: "+ex);
-                }
-
-                tx.queryFailed(id, reason);
-            }
-
-        } catch (e) {
-            console.log("executeSql error: "+e);
+          if (typeof query.errorCallback === "function") {
+            query.errorCallback(query.tx, reason);
+          }
+        } catch (ex) {
+          console.log("executeSql error calling user error callback: " + ex);
         }
+
+        tx.queryFailed(id, reason);
+      }
+    } catch (e) {
+      console.log("executeSql error: " + e);
     }
+  }
 }
 
 /**
@@ -119,27 +117,25 @@ function failQuery(reason, id) {
  * @constructor
  * @param tx                The transaction object that this query belongs to
  */
-var DroidDB_Query = function(tx) {
+var DroidDB_Query = function (tx) {
+  // Set the id of the query
+  this.id = utils.createUUID();
 
-    // Set the id of the query
-    this.id = utils.createUUID();
+  // Add this query to the queue
+  queryQueue[this.id] = this;
 
-    // Add this query to the queue
-    queryQueue[this.id] = this;
+  // Init result
+  this.resultSet = [];
 
-    // Init result
-    this.resultSet = [];
+  // Set transaction that this query belongs to
+  this.tx = tx;
 
-    // Set transaction that this query belongs to
-    this.tx = tx;
+  // Add this query to transaction list
+  this.tx.queryList[this.id] = this;
 
-    // Add this query to transaction list
-    this.tx.queryList[this.id] = this;
-
-    // Callbacks
-    this.successCallback = null;
-    this.errorCallback = null;
-
+  // Callbacks
+  this.successCallback = null;
+  this.errorCallback = null;
 };
 
 /**
@@ -147,17 +143,16 @@ var DroidDB_Query = function(tx) {
  * PRIVATE METHOD
  * @constructor
  */
-var DroidDB_Tx = function() {
+var DroidDB_Tx = function () {
+  // Set the id of the transaction
+  this.id = utils.createUUID();
 
-    // Set the id of the transaction
-    this.id = utils.createUUID();
+  // Callbacks
+  this.successCallback = null;
+  this.errorCallback = null;
 
-    // Callbacks
-    this.successCallback = null;
-    this.errorCallback = null;
-
-    // Query list
-    this.queryList = {};
+  // Query list
+  this.queryList = {};
 };
 
 /**
@@ -166,26 +161,26 @@ var DroidDB_Tx = function() {
  *
  * @param id                Query id
  */
-DroidDB_Tx.prototype.queryComplete = function(id) {
-    delete this.queryList[id];
+DroidDB_Tx.prototype.queryComplete = function (id) {
+  delete this.queryList[id];
 
-    // If no more outstanding queries, then fire transaction success
-    if (this.successCallback) {
-        var count = 0;
-        var i;
-        for (i in this.queryList) {
-            if (this.queryList.hasOwnProperty(i)) {
-                count++;
-            }
-        }
-        if (count === 0) {
-            try {
-                this.successCallback();
-            } catch(e) {
-                console.log("Transaction error calling user success callback: " + e);
-            }
-        }
+  // If no more outstanding queries, then fire transaction success
+  if (this.successCallback) {
+    var count = 0;
+    var i;
+    for (i in this.queryList) {
+      if (this.queryList.hasOwnProperty(i)) {
+        count++;
+      }
     }
+    if (count === 0) {
+      try {
+        this.successCallback();
+      } catch (e) {
+        console.log("Transaction error calling user success callback: " + e);
+      }
+    }
+  }
 };
 
 /**
@@ -194,21 +189,20 @@ DroidDB_Tx.prototype.queryComplete = function(id) {
  * @param id                Query id
  * @param reason            Error message
  */
-DroidDB_Tx.prototype.queryFailed = function(id, reason) {
+DroidDB_Tx.prototype.queryFailed = function (id, reason) {
+  // The sql queries in this transaction have already been run, since
+  // we really don't have a real transaction implemented in native code.
+  // However, the user callbacks for the remaining sql queries in transaction
+  // will not be called.
+  this.queryList = {};
 
-    // The sql queries in this transaction have already been run, since
-    // we really don't have a real transaction implemented in native code.
-    // However, the user callbacks for the remaining sql queries in transaction
-    // will not be called.
-    this.queryList = {};
-
-    if (this.errorCallback) {
-        try {
-            this.errorCallback(reason);
-        } catch(e) {
-            console.log("Transaction error calling user error callback: " + e);
-        }
+  if (this.errorCallback) {
+    try {
+      this.errorCallback(reason);
+    } catch (e) {
+      console.log("Transaction error calling user error callback: " + e);
     }
+  }
 };
 
 /**
@@ -219,27 +213,30 @@ DroidDB_Tx.prototype.queryFailed = function(id, reason) {
  * @param successCallback       Success callback
  * @param errorCallback         Error callback
  */
-DroidDB_Tx.prototype.executeSql = function(sql, params, successCallback, errorCallback) {
+DroidDB_Tx.prototype.executeSql = function (
+  sql,
+  params,
+  successCallback,
+  errorCallback
+) {
+  // Init params array
+  if (typeof params === "undefined") {
+    params = [];
+  }
 
-    // Init params array
-    if (typeof params === 'undefined') {
-        params = [];
-    }
+  // Create query and add to queue
+  var query = new DroidDB_Query(this);
+  queryQueue[query.id] = query;
 
-    // Create query and add to queue
-    var query = new DroidDB_Query(this);
-    queryQueue[query.id] = query;
+  // Save callbacks
+  query.successCallback = successCallback;
+  query.errorCallback = errorCallback;
 
-    // Save callbacks
-    query.successCallback = successCallback;
-    query.errorCallback = errorCallback;
-
-    // Call native code
-    exec(null, null, "Storage", "executeSql", [sql, params, query.id]);
+  // Call native code
+  exec(null, null, "Storage", "executeSql", [sql, params, query.id]);
 };
 
-var DatabaseShell = function() {
-};
+var DatabaseShell = function () {};
 
 /**
  * Start a transaction.
@@ -249,22 +246,26 @@ var DatabaseShell = function() {
  * @param successCallback {Function}
  * @param errorCallback {Function}
  */
-DatabaseShell.prototype.transaction = function(process, errorCallback, successCallback) {
-    var tx = new DroidDB_Tx();
-    tx.successCallback = successCallback;
-    tx.errorCallback = errorCallback;
-    try {
-        process(tx);
-    } catch (e) {
-        console.log("Transaction error: "+e);
-        if (tx.errorCallback) {
-            try {
-                tx.errorCallback(e);
-            } catch (ex) {
-                console.log("Transaction error calling user error callback: "+e);
-            }
-        }
+DatabaseShell.prototype.transaction = function (
+  process,
+  errorCallback,
+  successCallback
+) {
+  var tx = new DroidDB_Tx();
+  tx.successCallback = successCallback;
+  tx.errorCallback = errorCallback;
+  try {
+    process(tx);
+  } catch (e) {
+    console.log("Transaction error: " + e);
+    if (tx.errorCallback) {
+      try {
+        tx.errorCallback(e);
+      } catch (ex) {
+        console.log("Transaction error calling user error callback: " + e);
+      }
     }
+  }
 };
 
 /**
@@ -276,10 +277,15 @@ DatabaseShell.prototype.transaction = function(process, errorCallback, successCa
  * @param size              Database size in bytes
  * @return                  Database object
  */
-var DroidDB_openDatabase = function(name, version, display_name, size) {
-    exec(null, null, "Storage", "openDatabase", [name, version, display_name, size]);
-    var db = new DatabaseShell();
-    return db;
+var DroidDB_openDatabase = function (name, version, display_name, size) {
+  exec(null, null, "Storage", "openDatabase", [
+    name,
+    version,
+    display_name,
+    size,
+  ]);
+  var db = new DatabaseShell();
+  return db;
 };
 
 /**
@@ -287,91 +293,97 @@ var DroidDB_openDatabase = function(name, version, display_name, size) {
  * TODO: Do similar for sessionStorage.
  * @constructor
  */
-var CupcakeLocalStorage = function() {
-    channel.waitForInitialization("cupcakeStorage");
+var CupcakeLocalStorage = function () {
+  channel.waitForInitialization("cupcakeStorage");
 
-    try {
-
-      this.db = openDatabase('localStorage', '1.0', 'localStorage', 2621440);
-      var storage = {};
-      this.length = 0;
-      function setLength (length) {
-        this.length = length;
-        localStorage.length = length;
-      }
-      this.db.transaction(
-        function (transaction) {
-            var i;
-          transaction.executeSql('CREATE TABLE IF NOT EXISTS storage (id NVARCHAR(40) PRIMARY KEY, body NVARCHAR(255))');
-          transaction.executeSql('SELECT * FROM storage', [], function(tx, result) {
-            for(var i = 0; i < result.rows.length; i++) {
-              storage[result.rows.item(i).id] =  result.rows.item(i).body;
+  try {
+    this.db = openDatabase("localStorage", "1.0", "localStorage", 2621440);
+    var storage = {};
+    this.length = 0;
+    function setLength(length) {
+      this.length = length;
+      localStorage.length = length;
+    }
+    this.db.transaction(
+      function (transaction) {
+        var i;
+        transaction.executeSql(
+          "CREATE TABLE IF NOT EXISTS storage (id NVARCHAR(40) PRIMARY KEY, body NVARCHAR(255))"
+        );
+        transaction.executeSql(
+          "SELECT * FROM storage",
+          [],
+          function (tx, result) {
+            for (var i = 0; i < result.rows.length; i++) {
+              storage[result.rows.item(i).id] = result.rows.item(i).body;
             }
             setLength(result.rows.length);
             channel.initializationComplete("cupcakeStorage");
-          });
-
-        },
-        function (err) {
-          utils.alert(err.message);
-        }
-      );
-      this.setItem = function(key, val) {
-        if (typeof(storage[key])=='undefined') {
-          this.length++;
-        }
-        storage[key] = val;
-        this.db.transaction(
-          function (transaction) {
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS storage (id NVARCHAR(40) PRIMARY KEY, body NVARCHAR(255))');
-            transaction.executeSql('REPLACE INTO storage (id, body) values(?,?)', [key,val]);
           }
         );
-      };
-      this.getItem = function(key) {
-        return storage[key];
-      };
-      this.removeItem = function(key) {
-        delete storage[key];
-        this.length--;
-        this.db.transaction(
-          function (transaction) {
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS storage (id NVARCHAR(40) PRIMARY KEY, body NVARCHAR(255))');
-            transaction.executeSql('DELETE FROM storage where id=?', [key]);
-          }
+      },
+      function (err) {
+        utils.alert(err.message);
+      }
+    );
+    this.setItem = function (key, val) {
+      if (typeof storage[key] == "undefined") {
+        this.length++;
+      }
+      storage[key] = val;
+      this.db.transaction(function (transaction) {
+        transaction.executeSql(
+          "CREATE TABLE IF NOT EXISTS storage (id NVARCHAR(40) PRIMARY KEY, body NVARCHAR(255))"
         );
-      };
-      this.clear = function() {
-        storage = {};
-        this.length = 0;
-        this.db.transaction(
-          function (transaction) {
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS storage (id NVARCHAR(40) PRIMARY KEY, body NVARCHAR(255))');
-            transaction.executeSql('DELETE FROM storage', []);
-          }
+        transaction.executeSql("REPLACE INTO storage (id, body) values(?,?)", [
+          key,
+          val,
+        ]);
+      });
+    };
+    this.getItem = function (key) {
+      return storage[key];
+    };
+    this.removeItem = function (key) {
+      delete storage[key];
+      this.length--;
+      this.db.transaction(function (transaction) {
+        transaction.executeSql(
+          "CREATE TABLE IF NOT EXISTS storage (id NVARCHAR(40) PRIMARY KEY, body NVARCHAR(255))"
         );
-      };
-      this.key = function(index) {
-        var i = 0;
-        for (var j in storage) {
-          if (i==index) {
-            return j;
-          } else {
-            i++;
-          }
+        transaction.executeSql("DELETE FROM storage where id=?", [key]);
+      });
+    };
+    this.clear = function () {
+      storage = {};
+      this.length = 0;
+      this.db.transaction(function (transaction) {
+        transaction.executeSql(
+          "CREATE TABLE IF NOT EXISTS storage (id NVARCHAR(40) PRIMARY KEY, body NVARCHAR(255))"
+        );
+        transaction.executeSql("DELETE FROM storage", []);
+      });
+    };
+    this.key = function (index) {
+      var i = 0;
+      for (var j in storage) {
+        if (i == index) {
+          return j;
+        } else {
+          i++;
         }
-        return null;
-      };
-
-    } catch(e) {
-          utils.alert("Database error "+e+".");
-        return;
-    }
+      }
+      return null;
+    };
+  } catch (e) {
+    utils.alert("Database error " + e + ".");
+    return;
+  }
 };
 
 module.exports = {
-  openDatabase:DroidDB_openDatabase,
-  CupcakeLocalStorage:CupcakeLocalStorage,
-  failQuery:failQuery,
-  completeQuery:completeQuery
+  openDatabase: DroidDB_openDatabase,
+  CupcakeLocalStorage: CupcakeLocalStorage,
+  failQuery: failQuery,
+  completeQuery: completeQuery,
 };

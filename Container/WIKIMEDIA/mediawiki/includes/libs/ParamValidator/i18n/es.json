@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fitoschido"
-		]
+		"authors": ["Fitoschido"]
 	},
 	"paramvalidator-emptystring": "la cadena vacía",
 	"paramvalidator-help-default": "Predeterminado: $1",

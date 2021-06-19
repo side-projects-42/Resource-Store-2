@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Conquistador",
-			"Vlad5250"
-		]
+		"authors": ["Conquistador", "Vlad5250"]
 	},
 	"apihelp-main-param-action": "Koju akciju izvesti.",
 	"apihelp-main-param-format": "Format izlaza.",

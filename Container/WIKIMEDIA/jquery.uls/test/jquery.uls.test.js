@@ -13,13 +13,12 @@
  *
  */
 
-( function ( $ ) {
-	'use strict';
+(function ($) {
+  "use strict";
 
-	QUnit.module( 'jquery.uls' );
+  QUnit.module("jquery.uls");
 
-	QUnit.test( '-- Initial check', function ( assert ) {
-		assert.ok( $.fn.uls, '$.fn.uls is defined' );
-	} );
-
-}( jQuery ) );
+  QUnit.test("-- Initial check", function (assert) {
+    assert.ok($.fn.uls, "$.fn.uls is defined");
+  });
+})(jQuery);

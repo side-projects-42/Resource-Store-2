@@ -1,9 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Kareyac"
-		]
-	},
-	"admanager_Page": "Էջեր",
-	"admanager_Category": "Կատեգորիաներ"
+  "@metadata": {
+    "authors": ["Kareyac"]
+  },
+  "admanager_Page": "Էջեր",
+  "admanager_Category": "Կատեգորիաներ"
 }

@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Iketsi",
-			"Sotiale",
-			"Ushanka"
-		]
+		"authors": ["Iketsi", "Sotiale", "Ushanka"]
 	},
 	"underline-always": "Oltaem",
 	"underline-never": "Neva",

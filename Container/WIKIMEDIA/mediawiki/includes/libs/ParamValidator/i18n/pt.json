@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Hamilton Abreu"
-		]
+		"authors": ["Hamilton Abreu"]
 	},
 	"paramvalidator-badbool": "Valor inválido \"$2\" para o parâmetro booliano \"$1\". Passar $3 para verdadeiro ou $5 para falso.",
 	"paramvalidator-badexpiry": "Valor inválido \"$2\" para o parâmetro de expiração \"$1\".",

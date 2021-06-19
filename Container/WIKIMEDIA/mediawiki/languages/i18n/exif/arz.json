@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ghaly",
-			"Meno25",
-			"Ramsis II"
-		]
+		"authors": ["Ghaly", "Meno25", "Ramsis II"]
 	},
 	"exif-imagewidth": "العرض",
 	"exif-imagelength": "الطول",

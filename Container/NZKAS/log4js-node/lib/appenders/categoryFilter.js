@@ -1,9 +1,9 @@
 "use strict";
-var log4js = require('../log4js');
+var log4js = require("../log4js");
 
-function categoryFilter (excludes, appender) {
-  if (typeof(excludes) === 'string') excludes = [excludes];
-  return function(logEvent) {
+function categoryFilter(excludes, appender) {
+  if (typeof excludes === "string") excludes = [excludes];
+  return function (logEvent) {
     if (excludes.indexOf(logEvent.categoryName) === -1) {
       appender(logEvent);
     }

@@ -30,7 +30,9 @@ export function getValues(validOption: any) {
 }
 
 export function validationCondition(option: any, validOption: any): boolean {
-  return getValues(validOption).some(e => validationConditionSingle(option, e));
+  return getValues(validOption).some((e) =>
+    validationConditionSingle(option, e),
+  );
 }
 
 // TODO: This should infer the types of its arguments, and return a union type of the types

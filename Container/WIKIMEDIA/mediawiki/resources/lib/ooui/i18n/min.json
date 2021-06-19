@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Iwan Novirion",
-			"Jagwar"
-		]
+		"authors": ["Iwan Novirion", "Jagwar"]
 	},
 	"ooui-outline-control-move-down": "Pindahan ka bawah",
 	"ooui-outline-control-move-up": "Pindahan ka ateh",

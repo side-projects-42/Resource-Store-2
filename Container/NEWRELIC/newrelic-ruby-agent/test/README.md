@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-We use Minitest for the Ruby agent.  The following command runs the unit tests without Rails:
+We use Minitest for the Ruby agent. The following command runs the unit tests without Rails:
 
     bundle exec rake test
 
@@ -28,7 +28,7 @@ In CI, these unit tests are run against all supported major.minor versions of Ra
 
 ### Running Specific Tests
 
-The file parameter can be added to the test:env invocation to run a specific unit file.  It can be exact file name, or a wildcard pattern.  Multiple file patterns can be specified by separating with a comma with no spaces surrounding:
+The file parameter can be added to the test:env invocation to run a specific unit file. It can be exact file name, or a wildcard pattern. Multiple file patterns can be specified by separating with a comma with no spaces surrounding:
 
     bundle exec rake test:env[rails60] file=test/new_relic/agent/distributed_tracing/*  # everything in this folder
     bundle exec rake test:env[rails60] file=test/new_relic/agent/tracer_state_test.rb   # single file

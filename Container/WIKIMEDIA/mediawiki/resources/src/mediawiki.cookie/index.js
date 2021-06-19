@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-var config = require( './config.json' ),
+var config = require("./config.json"),
 	defaults = {
 		prefix: config.prefix,
 		domain: config.domain,
 		path: config.path,
 		expires: config.expires,
 		secure: false,
-		sameSite: '',
-		sameSiteLegacy: config.sameSiteLegacy
+		sameSite: "",
+		sameSiteLegacy: config.sameSiteLegacy,
 	};
 
 /**
@@ -22,7 +22,6 @@ var config = require( './config.json' ),
  * @singleton
  */
 mw.cookie = {
-
 	/**
 	 * Set or delete a cookie.
 	 *
@@ -61,44 +60,51 @@ mw.cookie = {
 	 *   cookies will also be sent as a non-SameSite cookie with an 'ss0-' prefix, to work around
 	 *   old browsers interpreting the standard differently.
 	 */
-	set: function ( key, value, options ) {
+	set: function (key, value, options) {
 		var prefix, date, sameSiteLegacy;
 
 		// The 'options' parameter may be a shortcut for the expiry.
-		if ( arguments.length > 2 && ( !options || options instanceof Date || typeof options === 'number' ) ) {
+		if (
+			arguments.length > 2 &&
+			(!options || options instanceof Date || typeof options === "number")
+		) {
 			options = { expires: options };
 		}
 		// Apply defaults
-		options = $.extend( {}, defaults, options );
+		options = $.extend({}, defaults, options);
 
 		// Don't pass invalid option to $.cookie
 		prefix = options.prefix;
 		delete options.prefix;
 
-		if ( !options.expires ) {
+		if (!options.expires) {
 			// Session cookie (null or zero)
 			// Normalize to absent (undefined) for $.cookie.
 			delete options.expires;
-		} else if ( typeof options.expires === 'number' ) {
+		} else if (typeof options.expires === "number") {
 			// Lifetime in seconds
 			date = new Date();
-			date.setTime( Number( date ) + ( options.expires * 1000 ) );
+			date.setTime(Number(date) + options.expires * 1000);
 			options.expires = date;
 		}
 
 		sameSiteLegacy = options.sameSiteLegacy;
 		delete options.sameSiteLegacy;
 
-		if ( value !== null ) {
-			value = String( value );
+		if (value !== null) {
+			value = String(value);
 		}
 
-		$.cookie( prefix + key, value, options );
-		if ( sameSiteLegacy && options.sameSite && options.sameSite.toLowerCase() === 'none' ) {
+		$.cookie(prefix + key, value, options);
+		if (
+			sameSiteLegacy &&
+			options.sameSite &&
+			options.sameSite.toLowerCase() === "none"
+		) {
 			// Make testing easy by not changing the object passed to the first $.cookie call
-			options = $.extend( {}, options );
+			options = $.extend({}, options);
 			delete options.sameSite;
-			$.cookie( prefix + 'ss0-' + key, value, options );
+			$.cookie(prefix + "ss0-" + key, value, options);
 		}
 	},
 
@@ -112,19 +118,19 @@ mw.cookie = {
 	 * @return {string|null|Mixed} If the cookie exists, then the value of the
 	 *   cookie, otherwise `defaultValue`
 	 */
-	get: function ( key, prefix, defaultValue ) {
+	get: function (key, prefix, defaultValue) {
 		var result;
 
-		if ( prefix === undefined || prefix === null ) {
+		if (prefix === undefined || prefix === null) {
 			prefix = defaults.prefix;
 		}
 
 		// Was defaultValue omitted?
-		if ( arguments.length < 3 ) {
+		if (arguments.length < 3) {
 			defaultValue = null;
 		}
 
-		result = $.cookie( prefix + key );
+		result = $.cookie(prefix + key);
 
 		return result !== null ? result : defaultValue;
 	},
@@ -139,26 +145,26 @@ mw.cookie = {
 	 * @return {string|null|Mixed} If the cookie exists, then the value of the
 	 *   cookie, otherwise `defaultValue`
 	 */
-	getCrossSite: function ( key, prefix, defaultValue ) {
+	getCrossSite: function (key, prefix, defaultValue) {
 		var value;
 
-		value = this.get( key, prefix, null );
-		if ( value === null ) {
-			value = this.get( 'ss0-' + key, prefix, null );
+		value = this.get(key, prefix, null);
+		if (value === null) {
+			value = this.get("ss0-" + key, prefix, null);
 		}
-		if ( value === null ) {
+		if (value === null) {
 			value = defaultValue;
 		}
 		return value;
-	}
+	},
 };
 
-if ( window.QUnit ) {
+if (window.QUnit) {
 	module.exports = {
-		setDefaults: function ( value ) {
+		setDefaults: function (value) {
 			var prev = defaults;
 			defaults = value;
 			return prev;
-		}
+		},
 	};
 }

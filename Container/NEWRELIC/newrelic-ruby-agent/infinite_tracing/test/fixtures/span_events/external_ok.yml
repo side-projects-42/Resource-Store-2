@@ -287,7 +287,7 @@
   - *1
 - - type: Span
     traceId: 135a845d74d866fcccef5b53a934a12c
-    guid: '096ba44df64bbb46'
+    guid: "096ba44df64bbb46"
     transactionId: 467c24ca087b7e21
     sampled: true
     priority: 1.854892
@@ -307,7 +307,7 @@
     timestamp: 1586870635763
     duration: 0.0
     name: Middleware/Rack/Rack::Head/call
-    parentId: '096ba44df64bbb46'
+    parentId: "096ba44df64bbb46"
     category: generic
   - *1
   - *1
@@ -441,4 +441,3 @@
     category: generic
   - *1
   - *1
-

@@ -11,23 +11,39 @@
 /* stylelint-disable selector-class-pattern */
 
 .background-image( @url ) {
-	background-image: url( @url );
+	background-image: url(@url);
 }
 
 .horizontal-gradient( @startColor: #808080, @endColor: #fff, @startPos: 0, @endPos: 100% ) {
-	background-color: average( @startColor, @endColor );
-	background-image: -webkit-linear-gradient( left, @startColor @startPos, @endColor @endPos ); // Android 4.3
-	background-image: linear-gradient( to right, @startColor @startPos, @endColor @endPos );
+	background-color: average(@startColor, @endColor);
+	background-image: -webkit-linear-gradient(
+		left,
+		@startColor @startPos,
+		@endColor @endPos
+	); // Android 4.3
+	background-image: linear-gradient(
+		to right,
+		@startColor @startPos,
+		@endColor @endPos
+	);
 }
 
 .vertical-gradient( @startColor: #808080, @endColor: #fff, @startPos: 0, @endPos: 100% ) {
-	background-color: average( @startColor, @endColor );
-	background-image: -webkit-linear-gradient( top, @startColor @startPos, @endColor @endPos ); // Android 4.3
-	background-image: linear-gradient( to bottom, @startColor @startPos, @endColor @endPos );
+	background-color: average(@startColor, @endColor);
+	background-image: -webkit-linear-gradient(
+		top,
+		@startColor @startPos,
+		@endColor @endPos
+	); // Android 4.3
+	background-image: linear-gradient(
+		to bottom,
+		@startColor @startPos,
+		@endColor @endPos
+	);
 }
 
 .list-style-image( @url ) {
-	list-style-image: url( @url );
+	list-style-image: url(@url);
 }
 
 .hyphens( @value: auto ) {
@@ -48,9 +64,9 @@
 	// on the HTML element to enable hyphenation support and improve accessibility.
 	// Chrome 55-87 only supports `auto` exclusively on Mac platform.
 	-webkit-hyphens: @value; // Safari 5.1+, iOS 4.2+
-	-moz-hyphens: @value;    // Firefox 6-42
-	-ms-hyphens: @value;     // IE 10-11, Edge 12-18
-	hyphens: @value;         // Firefox 43+, Chrome 55+, Android 62+, UC Browser 11.8+, Samsung 6.2+
+	-moz-hyphens: @value; // Firefox 6-42
+	-ms-hyphens: @value; // IE 10-11, Edge 12-18
+	hyphens: @value; // Firefox 43+, Chrome 55+, Android 62+, UC Browser 11.8+, Samsung 6.2+
 }
 
 // Use to truncate overflow text with value of `ellipsis` (mixin default)
@@ -127,7 +143,7 @@
 }
 
 .flex-display( @display: flex ) {
-	display: ~'-ms-@{display}box'; // IE 10
+	display: ~"-ms-@{display}box"; // IE 10
 	display: @display;
 }
 
@@ -170,7 +186,7 @@
 
 		// Margin collapsing as feature. Apply it.
 		& when ( @collapse ) {
-			content: '';
+			content: "";
 			display: block;
 		}
 	}
@@ -178,7 +194,7 @@
 	& when not ( @collapse ) {
 		&:before,
 		&:after {
-			content: '';
+			content: "";
 			display: table;
 		}
 	}
@@ -209,7 +225,7 @@
 .mixin-screen-reader-text() {
 	display: block;
 	position: absolute !important; /* stylelint-disable-line declaration-no-important */
-	clip: rect( 1px, 1px, 1px, 1px );
+	clip: rect(1px, 1px, 1px, 1px);
 	width: 1px;
 	height: 1px;
 	margin: -1px;

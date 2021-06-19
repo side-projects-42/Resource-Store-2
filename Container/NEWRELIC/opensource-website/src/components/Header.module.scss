@@ -41,7 +41,7 @@ a.primary-header-nav-link {
   transition: color 0.05s ease-out;
   text-decoration: none;
   svg {
-    display:none;
+    display: none;
   }
   &:hover {
     color: var(--color-brand-900);
@@ -176,7 +176,7 @@ div.exists-in-active-mobile-menu {
     }
     a.primary-header-nav-link {
       svg {
-        display:block;
+        display: block;
       }
     }
   }
@@ -185,13 +185,12 @@ div.exists-in-active-mobile-menu {
     top: -150px;
     transform: skewY(-1.75deg);
   }
-
 }
 
 @media screen and (max-width: 480px) {
   .mobile-menu-active {
     top: 35px;
-    
+
     .mobile-menu-button {
       top: 21px;
     }

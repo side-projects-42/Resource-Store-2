@@ -2,25 +2,25 @@
 
 ## Introduction
 
-Librarian-puppet is a bundler for your puppet infrastructure.  You can use
+Librarian-puppet is a bundler for your puppet infrastructure. You can use
 librarian-puppet to manage the puppet modules your infrastructure depends on.
 It is based on [Librarian](https://github.com/applicationsonline/librarian), a
 framework for writing bundlers, which are tools that resolve, fetch, install,
 and isolate a project's dependencies.
 
 Librarian-puppet manages your `modules/` directory for you based on your
-`Puppetfile`.  Your `Puppetfile` becomes the authoritative source for what
+`Puppetfile`. Your `Puppetfile` becomes the authoritative source for what
 modules you require and at what version, tag or branch.
 
 Once using Librarian-puppet you should not modify the contents of your `modules`
-directory.  The individual modules' repos should be updated, tagged with a new
+directory. The individual modules' repos should be updated, tagged with a new
 release and the version bumped in your Puppetfile.
 
 ## The Puppetfile
 
 Every Puppet repository that uses Librarian-puppet will have a file named
-`Puppetfile` in the root directory of that repository.  The full specification
-for which modules your puppet infrastructure repository  depends goes in here.
+`Puppetfile` in the root directory of that repository. The full specification
+for which modules your puppet infrastructure repository depends goes in here.
 
 ### Example Puppetfile
 
@@ -35,15 +35,15 @@ for which modules your puppet infrastructure repository  depends goes in here.
     mod "stdlib",
       :git => "git://github.com/puppetlabs/puppetlabs-stdlib.git"
 
-*See [jenkins-appliance](https://github.com/aussielunix/jenkins-appliance) for
-a puppet repo already setup to use librarian-puppet.*
+_See [jenkins-appliance](https://github.com/aussielunix/jenkins-appliance) for
+a puppet repo already setup to use librarian-puppet._
 
 ### Puppetfile Breakdown
 
     forge "http://forge.puppetlabs.com"
 
 This declares that we want to use the official Puppet Labs Forge as our default
-source when pulling down modules.  If you run your own local forge, you may
+source when pulling down modules. If you run your own local forge, you may
 want to change this.
 
     mod "puppetlabs/razor"
@@ -123,7 +123,7 @@ well as adding `tmp/` and `modules/` to your `.gitignore`.
     $ librarian-puppet install [--clean] [--verbose]
 
 This command looks at each `mod` declaration and fetches the module from the
-source specified.  This command writes the complete resolution into
+source specified. This command writes the complete resolution into
 `Puppetfile.lock` and then copies all of the fetched modules into your
 `modules/` directory, overwriting whatever was there before.
 
@@ -148,40 +148,40 @@ Update the version of a dependency:
 
 ## How to Contribute
 
- * Pull requests please.
- * Bonus points for feature branches.
+- Pull requests please.
+- Bonus points for feature branches.
 
 ## Reporting Issues
 
 Bug reports to the github issue tracker please.
 Please include:
 
- * Relevant `Puppetfile` and `Puppetfile.lock` files
- * Version of ruby, librarian-puppet
- * What distro
- * Please run the `librarian-puppet` commands in verbose mode by using the
+- Relevant `Puppetfile` and `Puppetfile.lock` files
+- Version of ruby, librarian-puppet
+- What distro
+- Please run the `librarian-puppet` commands in verbose mode by using the
   `--verbose` flag, and include the verbose output in the bug report as well.
 
 ## Changelog
 
 ### 0.9.0
 
- * Initial release
+- Initial release
 
 ### 0.9.1
 
- * Proper error message when a module that is sourced from the forge does not
-   exist.
- * Added support for annotated tags as git references.
- * `librarian-puppet init` adds `.tmp/` to gitignore instead of `tmp/`.
- * Fixed syntax error in the template Puppetfile created by `librarian-puppet
-   init`.
- * Checks for `lib/puppet` as well as `manifests/` when checking if the git
-   repository is a valid module.
- * When a user specifies `<foo>/<bar>` as the name of a module sources from a
-   git repository, assume the module name is actually `<bar>`.
- * Fixed gem description and summary in gemspec.
+- Proper error message when a module that is sourced from the forge does not
+  exist.
+- Added support for annotated tags as git references.
+- `librarian-puppet init` adds `.tmp/` to gitignore instead of `tmp/`.
+- Fixed syntax error in the template Puppetfile created by `librarian-puppet init`.
+- Checks for `lib/puppet` as well as `manifests/` when checking if the git
+  repository is a valid module.
+- When a user specifies `<foo>/<bar>` as the name of a module sources from a
+  git repository, assume the module name is actually `<bar>`.
+- Fixed gem description and summary in gemspec.
 
 ## License
+
 Please see the [LICENSE](https://github.com/rodjek/librarian-puppet/blob/master/LICENSE)
 file.

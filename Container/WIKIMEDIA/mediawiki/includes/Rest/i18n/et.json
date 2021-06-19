@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Pikne"
-		]
+		"authors": ["Pikne"]
 	},
 	"rest-prefix-mismatch": "Päritud tee ($1) is sisaldu REST API juurtees ($2)",
 	"rest-wrong-method": "Päritud meetod ($1) ei ole sellel teel ($2) {{PLURAL:$3|lubatud meetod|üks lubatud meetoditest}}",

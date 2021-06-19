@@ -1,4 +1,4 @@
-var TextParamMixin = require( './TextParamMixin.js' );
+var TextParamMixin = require("./TextParamMixin.js");
 
 /**
  * A wrapper for OO.ui.NumberInputWidget
@@ -8,16 +8,16 @@ var TextParamMixin = require( './TextParamMixin.js' );
  * @constructor
  * @param {Object} config Configuration options
  */
-function IntegerParamWidget( config ) {
+function IntegerParamWidget(config) {
 	config.isInteger = true;
-	IntegerParamWidget.parent.call( this, config );
+	IntegerParamWidget.parent.call(this, config);
 
-	this.setIcon = this.input.setIcon.bind( this.input );
-	this.setTitle = this.input.setTitle.bind( this.input );
-	this.getValidity = this.input.getValidity.bind( this.input );
+	this.setIcon = this.input.setIcon.bind(this.input);
+	this.setTitle = this.input.setTitle.bind(this.input);
+	this.getValidity = this.input.getValidity.bind(this.input);
 }
 
-OO.inheritClass( IntegerParamWidget, OO.ui.NumberInputWidget );
-OO.mixinClass( IntegerParamWidget, TextParamMixin );
+OO.inheritClass(IntegerParamWidget, OO.ui.NumberInputWidget);
+OO.mixinClass(IntegerParamWidget, TextParamMixin);
 
 module.exports = IntegerParamWidget;

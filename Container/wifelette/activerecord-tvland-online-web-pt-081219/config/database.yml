@@ -1,2 +1,2 @@
-adapter: 'sqlite3'
-database: 'db/ar.db'
+adapter: "sqlite3"
+database: "db/ar.db"

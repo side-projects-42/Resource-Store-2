@@ -1,5 +1,4 @@
-( function () {
-
+(function () {
 	/**
 	 * Provides various methods needed for formatting dates and times.
 	 *
@@ -20,44 +19,48 @@
 	 * @cfg {Date} [defaultDate] Default date, for filling unspecified components.
 	 *  Defaults to the current date and time (with 0 milliseconds).
 	 */
-	mw.widgets.datetime.DateTimeFormatter = function MwWidgetsDatetimeDateTimeFormatter( config ) {
-		this.constructor.static.setupDefaults();
+	mw.widgets.datetime.DateTimeFormatter =
+		function MwWidgetsDatetimeDateTimeFormatter(config) {
+			this.constructor.static.setupDefaults();
 
-		config = $.extend( {
-			format: '@default',
-			local: false,
-			fullZones: this.constructor.static.fullZones,
-			shortZones: this.constructor.static.shortZones
-		}, config );
+			config = $.extend(
+				{
+					format: "@default",
+					local: false,
+					fullZones: this.constructor.static.fullZones,
+					shortZones: this.constructor.static.shortZones,
+				},
+				config
+			);
 
-		// Mixin constructors
-		OO.EventEmitter.call( this );
+			// Mixin constructors
+			OO.EventEmitter.call(this);
 
-		// Properties
-		if ( this.constructor.static.formats[ config.format ] ) {
-			this.format = this.constructor.static.formats[ config.format ];
-		} else {
-			this.format = config.format;
-		}
-		this.local = !!config.local;
-		this.fullZones = config.fullZones;
-		this.shortZones = config.shortZones;
-		if ( config.defaultDate instanceof Date ) {
-			this.defaultDate = config.defaultDate;
-		} else {
-			this.defaultDate = new Date();
-			if ( this.local ) {
-				this.defaultDate.setMilliseconds( 0 );
+			// Properties
+			if (this.constructor.static.formats[config.format]) {
+				this.format = this.constructor.static.formats[config.format];
 			} else {
-				this.defaultDate.setUTCMilliseconds( 0 );
+				this.format = config.format;
 			}
-		}
-	};
+			this.local = !!config.local;
+			this.fullZones = config.fullZones;
+			this.shortZones = config.shortZones;
+			if (config.defaultDate instanceof Date) {
+				this.defaultDate = config.defaultDate;
+			} else {
+				this.defaultDate = new Date();
+				if (this.local) {
+					this.defaultDate.setMilliseconds(0);
+				} else {
+					this.defaultDate.setUTCMilliseconds(0);
+				}
+			}
+		};
 
 	/* Setup */
 
-	OO.initClass( mw.widgets.datetime.DateTimeFormatter );
-	OO.mixinClass( mw.widgets.datetime.DateTimeFormatter, OO.EventEmitter );
+	OO.initClass(mw.widgets.datetime.DateTimeFormatter);
+	OO.mixinClass(mw.widgets.datetime.DateTimeFormatter, OO.EventEmitter);
 
 	/* Static */
 
@@ -89,19 +92,16 @@
 	mw.widgets.datetime.DateTimeFormatter.static.shortZones = null;
 
 	mw.widgets.datetime.DateTimeFormatter.static.setupDefaults = function () {
-		if ( !this.fullZones ) {
-			this.fullZones = [
-				mw.msg( 'timezone-utc' ),
-				mw.msg( 'timezone-local' )
-			];
+		if (!this.fullZones) {
+			this.fullZones = [mw.msg("timezone-utc"), mw.msg("timezone-local")];
 		}
-		if ( !this.shortZones ) {
+		if (!this.shortZones) {
 			this.shortZones = [
-				'Z',
-				this.fullZones[ 1 ].substr( 0, 1 ).toUpperCase()
+				"Z",
+				this.fullZones[1].substr(0, 1).toUpperCase(),
 			];
-			if ( this.shortZones[ 1 ] === 'Z' ) {
-				this.shortZones[ 1 ] = 'L';
+			if (this.shortZones[1] === "Z") {
+				this.shortZones[1] = "L";
 			}
 		}
 	};
@@ -132,15 +132,17 @@
 	 * @fires local
 	 * @chainable
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.toggleLocal = function ( flag ) {
-		if ( flag === undefined ) {
+	mw.widgets.datetime.DateTimeFormatter.prototype.toggleLocal = function (
+		flag
+	) {
+		if (flag === undefined) {
 			flag = !this.local;
 		} else {
 			flag = !!flag;
 		}
-		if ( this.local !== flag ) {
+		if (this.local !== flag) {
 			this.local = flag;
-			this.emit( 'local', this.local );
+			this.emit("local", this.local);
 		}
 		return this;
 	};
@@ -150,9 +152,10 @@
 	 *
 	 * @return {Date}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.getDefaultDate = function () {
-		return new Date( this.defaultDate.getTime() );
-	};
+	mw.widgets.datetime.DateTimeFormatter.prototype.getDefaultDate =
+		function () {
+			return new Date(this.defaultDate.getTime());
+		};
 
 	/**
 	 * Fetch the field specification array for this object.
@@ -162,7 +165,7 @@
 	 * @return {Array}
 	 */
 	mw.widgets.datetime.DateTimeFormatter.prototype.getFieldSpec = function () {
-		return this.parseFieldSpec( this.format );
+		return this.parseFieldSpec(this.format);
 	};
 
 	/**
@@ -184,33 +187,39 @@
 	 * @param {string} format
 	 * @return {Array}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.parseFieldSpec = function ( format ) {
-		var m, last, tag, params, spec,
+	mw.widgets.datetime.DateTimeFormatter.prototype.parseFieldSpec = function (
+		format
+	) {
+		var m,
+			last,
+			tag,
+			params,
+			spec,
 			ret = [],
 			re = /(.*?)(\$(!?)\{([^}]+)\})/g;
 
 		last = 0;
-		while ( ( m = re.exec( format ) ) !== null ) {
+		while ((m = re.exec(format)) !== null) {
 			last = re.lastIndex;
 
-			if ( m[ 1 ] !== '' ) {
-				ret.push( m[ 1 ] );
+			if (m[1] !== "") {
+				ret.push(m[1]);
 			}
 
-			params = m[ 4 ].split( '|' );
+			params = m[4].split("|");
 			tag = params.shift();
-			spec = this.getFieldForTag( tag, params );
-			if ( spec ) {
-				if ( m[ 3 ] === '!' ) {
+			spec = this.getFieldForTag(tag, params);
+			if (spec) {
+				if (m[3] === "!") {
 					spec.editable = false;
 				}
-				ret.push( spec );
+				ret.push(spec);
 			} else {
-				ret.push( m[ 2 ] );
+				ret.push(m[2]);
 			}
 		}
-		if ( last < format.length ) {
-			ret.push( format.substr( last ) );
+		if (last < format.length) {
+			ret.push(format.substr(last));
 		}
 
 		return ret;
@@ -255,85 +264,106 @@
 	 * @return {function(string): Mixed} return.parseValue A function to parse a
 	 *  display string into a component value. If parsing fails, returns undefined.
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.getFieldForTag = function ( tag, params ) {
-		var c, spec = null;
+	mw.widgets.datetime.DateTimeFormatter.prototype.getFieldForTag = function (
+		tag,
+		params
+	) {
+		var c,
+			spec = null;
 
-		switch ( tag ) {
-			case 'intercalary':
-			case 'not-intercalary':
-				if ( params.length < 2 || !params[ 0 ] ) {
+		switch (tag) {
+			case "intercalary":
+			case "not-intercalary":
+				if (params.length < 2 || !params[0]) {
 					return null;
 				}
 				spec = {
 					component: null,
 					calendarComponent: false,
 					editable: false,
-					type: 'static',
-					value: params.slice( 1 ).join( '|' ),
+					type: "static",
+					value: params.slice(1).join("|"),
 					size: 0,
-					intercalarySize: {}
+					intercalarySize: {},
 				};
-				if ( tag === 'intercalary' ) {
-					spec.intercalarySize[ params[ 0 ] ] = spec.value.length;
+				if (tag === "intercalary") {
+					spec.intercalarySize[params[0]] = spec.value.length;
 				} else {
 					spec.size = spec.value.length;
-					spec.intercalarySize[ params[ 0 ] ] = 0;
+					spec.intercalarySize[params[0]] = 0;
 				}
 				return spec;
 
-			case 'zone':
-				switch ( params[ 0 ] ) {
-					case '#':
-					case ':':
-						c = params[ 0 ] === '#' ? '' : ':';
+			case "zone":
+				switch (params[0]) {
+					case "#":
+					case ":":
+						c = params[0] === "#" ? "" : ":";
 						return {
-							component: 'zone',
+							component: "zone",
 							calendarComponent: false,
 							editable: true,
-							type: 'toggleLocal',
+							type: "toggleLocal",
 							size: 5 + c.length,
-							formatValue: function ( v ) {
+							formatValue: function (v) {
 								var o, r;
-								if ( v ) {
+								if (v) {
 									o = new Date().getTimezoneOffset();
-									r = String( Math.abs( o ) % 60 );
-									while ( r.length < 2 ) {
-										r = '0' + r;
+									r = String(Math.abs(o) % 60);
+									while (r.length < 2) {
+										r = "0" + r;
 									}
-									r = String( Math.floor( Math.abs( o ) / 60 ) ) + c + r;
-									while ( r.length < 4 + c.length ) {
-										r = '0' + r;
+									r =
+										String(Math.floor(Math.abs(o) / 60)) +
+										c +
+										r;
+									while (r.length < 4 + c.length) {
+										r = "0" + r;
 									}
-									return ( o <= 0 ? '+' : '−' ) + r;
+									return (o <= 0 ? "+" : "−") + r;
 								} else {
-									return '+00' + c + '00';
+									return "+00" + c + "00";
 								}
 							},
-							parseValue: function ( v ) {
+							parseValue: function (v) {
 								var m;
-								v = String( v ).trim();
-								if ( ( m = /^([+-−])([0-9]{1,2}):?([0-9]{2})$/.test( v ) ) ) {
-									return ( m[ 2 ] * 60 + m[ 3 ] ) * ( m[ 1 ] === '+' ? -1 : 1 );
+								v = String(v).trim();
+								if (
+									(m =
+										/^([+-−])([0-9]{1,2}):?([0-9]{2})$/.test(
+											v
+										))
+								) {
+									return (
+										(m[2] * 60 + m[3]) *
+										(m[1] === "+" ? -1 : 1)
+									);
 								} else {
 									return undefined;
 								}
-							}
+							},
 						};
 
-					case 'short':
-					case 'full':
+					case "short":
+					case "full":
 						spec = {
-							component: 'zone',
+							component: "zone",
 							calendarComponent: false,
 							editable: true,
-							type: 'toggleLocal',
-							values: params[ 0 ] === 'short' ? this.shortZones : this.fullZones,
+							type: "toggleLocal",
+							values:
+								params[0] === "short"
+									? this.shortZones
+									: this.fullZones,
 							formatValue: this.formatSpecValue,
-							parseValue: this.parseSpecValue
+							parseValue: this.parseSpecValue,
 						};
 						spec.size = Math.max.apply(
 							// eslint-disable-next-line no-jquery/no-map-util
-							null, $.map( spec.values, function ( v ) { return v.length; } )
+							null,
+							$.map(spec.values, function (v) {
+								return v.length;
+							})
 						);
 						return spec;
 				}
@@ -358,23 +388,25 @@
 	 * @param {Mixed} v
 	 * @return {string}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.formatSpecValue = function ( v ) {
-		if ( v === undefined || v === null ) {
-			return '';
+	mw.widgets.datetime.DateTimeFormatter.prototype.formatSpecValue = function (
+		v
+	) {
+		if (v === undefined || v === null) {
+			return "";
 		}
 
-		if ( typeof v === 'boolean' || this.type === 'toggleLocal' ) {
+		if (typeof v === "boolean" || this.type === "toggleLocal") {
 			v = v ? 1 : 0;
 		}
 
-		if ( this.values ) {
-			return this.values[ v ];
+		if (this.values) {
+			return this.values[v];
 		}
 
-		v = String( v );
-		if ( this.zeropad ) {
-			while ( v.length < this.size ) {
-				v = '0' + v;
+		v = String(v);
+		if (this.zeropad) {
+			while (v.length < this.size) {
+				v = "0" + v;
 			}
 		}
 		return v;
@@ -393,32 +425,34 @@
 	 * @param {string} v
 	 * @return {number|string|null}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.parseSpecValue = function ( v ) {
+	mw.widgets.datetime.DateTimeFormatter.prototype.parseSpecValue = function (
+		v
+	) {
 		var k, re;
 
-		if ( v === '' ) {
+		if (v === "") {
 			return null;
 		}
 
-		if ( !this.values ) {
+		if (!this.values) {
 			v = +v;
-			if ( this.type === 'boolean' || this.type === 'toggleLocal' ) {
-				return isNaN( v ) ? undefined : !!v;
+			if (this.type === "boolean" || this.type === "toggleLocal") {
+				return isNaN(v) ? undefined : !!v;
 			} else {
-				return isNaN( v ) ? undefined : v;
+				return isNaN(v) ? undefined : v;
 			}
 		}
 
 		// eslint-disable-next-line no-restricted-properties
-		if ( v.normalize ) {
+		if (v.normalize) {
 			// eslint-disable-next-line no-restricted-properties
 			v = v.normalize();
 		}
-		re = new RegExp( '^\\s*' + mw.util.escapeRegExp( v ), 'i' );
-		for ( k in this.values ) {
+		re = new RegExp("^\\s*" + mw.util.escapeRegExp(v), "i");
+		for (k in this.values) {
 			k = +k;
-			if ( !isNaN( k ) && re.test( this.values[ k ] ) ) {
-				if ( this.type === 'boolean' || this.type === 'toggleLocal' ) {
+			if (!isNaN(k) && re.test(this.values[k])) {
+				if (this.type === "boolean" || this.type === "toggleLocal") {
 					return !!k;
 				} else {
 					return k;
@@ -440,12 +474,13 @@
 	 * @param {Date|null} date
 	 * @return {Object} Components
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.getComponentsFromDate = function ( date ) {
-		// Should be overridden by subclass
-		return {
-			zone: this.local ? date.getTimezoneOffset() : 0
+	mw.widgets.datetime.DateTimeFormatter.prototype.getComponentsFromDate =
+		function (date) {
+			// Should be overridden by subclass
+			return {
+				zone: this.local ? date.getTimezoneOffset() : 0,
+			};
 		};
-	};
 
 	/**
 	 * Get a Date object from components
@@ -453,10 +488,11 @@
 	 * @param {Object} components Date components
 	 * @return {Date}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.getDateFromComponents = function ( /* components */ ) {
-		// Should be overridden by subclass
-		return new Date();
-	};
+	mw.widgets.datetime.DateTimeFormatter.prototype.getDateFromComponents =
+		function (/* components */) {
+			// Should be overridden by subclass
+			return new Date();
+		};
 
 	/**
 	 * Adjust a date
@@ -470,7 +506,9 @@
 	 *  - 'clip': "Jan 32" => "Jan 31", "Feb 32" => "Feb 28" (or 29), "Feb 0" => "Feb 1", etc.
 	 * @return {Date} Adjusted date
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.adjustComponent = function ( date /* , component, delta, mode */ ) {
+	mw.widgets.datetime.DateTimeFormatter.prototype.adjustComponent = function (
+		date /* , component, delta, mode */
+	) {
 		// Should be overridden by subclass
 		return date;
 	};
@@ -484,10 +522,11 @@
 	 * @abstract
 	 * @return {Array} string or null
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.getCalendarHeadings = function () {
-		// Should be overridden by subclass
-		return [];
-	};
+	mw.widgets.datetime.DateTimeFormatter.prototype.getCalendarHeadings =
+		function () {
+			// Should be overridden by subclass
+			return [];
+		};
 
 	/**
 	 * Test whether two dates are in the same calendar grid
@@ -497,10 +536,11 @@
 	 * @param {Date} date2
 	 * @return {boolean}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.sameCalendarGrid = function ( date1, date2 ) {
-		// Should be overridden by subclass
-		return date1.getTime() === date2.getTime();
-	};
+	mw.widgets.datetime.DateTimeFormatter.prototype.sameCalendarGrid =
+		function (date1, date2) {
+			// Should be overridden by subclass
+			return date1.getTime() === date2.getTime();
+		};
 
 	/**
 	 * Test whether the date parts of two Dates are equal
@@ -509,8 +549,11 @@
 	 * @param {Date} date2
 	 * @return {boolean}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.datePartIsEqual = function ( date1, date2 ) {
-		if ( this.local ) {
+	mw.widgets.datetime.DateTimeFormatter.prototype.datePartIsEqual = function (
+		date1,
+		date2
+	) {
+		if (this.local) {
 			return (
 				date1.getFullYear() === date2.getFullYear() &&
 				date1.getMonth() === date2.getMonth() &&
@@ -532,8 +575,11 @@
 	 * @param {Date} date2
 	 * @return {boolean}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.timePartIsEqual = function ( date1, date2 ) {
-		if ( this.local ) {
+	mw.widgets.datetime.DateTimeFormatter.prototype.timePartIsEqual = function (
+		date1,
+		date2
+	) {
+		if (this.local) {
 			return (
 				date1.getHours() === date2.getHours() &&
 				date1.getMinutes() === date2.getMinutes() &&
@@ -556,13 +602,14 @@
 	 * @param {Date} date
 	 * @return {boolean}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.localChangesDatePart = function ( date ) {
-		return (
-			date.getUTCFullYear() !== date.getFullYear() ||
-			date.getUTCMonth() !== date.getMonth() ||
-			date.getUTCDate() !== date.getDate()
-		);
-	};
+	mw.widgets.datetime.DateTimeFormatter.prototype.localChangesDatePart =
+		function (date) {
+			return (
+				date.getUTCFullYear() !== date.getFullYear() ||
+				date.getUTCMonth() !== date.getMonth() ||
+				date.getUTCDate() !== date.getDate()
+			);
+		};
 
 	/**
 	 * Create a new Date by merging the date part from one with the time part from
@@ -572,27 +619,28 @@
 	 * @param {Date} timepart
 	 * @return {Date}
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.mergeDateAndTime = function ( datepart, timepart ) {
-		var ret = new Date( datepart.getTime() );
+	mw.widgets.datetime.DateTimeFormatter.prototype.mergeDateAndTime =
+		function (datepart, timepart) {
+			var ret = new Date(datepart.getTime());
 
-		if ( this.local ) {
-			ret.setHours(
-				timepart.getHours(),
-				timepart.getMinutes(),
-				timepart.getSeconds(),
-				timepart.getMilliseconds()
-			);
-		} else {
-			ret.setUTCHours(
-				timepart.getUTCHours(),
-				timepart.getUTCMinutes(),
-				timepart.getUTCSeconds(),
-				timepart.getUTCMilliseconds()
-			);
-		}
+			if (this.local) {
+				ret.setHours(
+					timepart.getHours(),
+					timepart.getMinutes(),
+					timepart.getSeconds(),
+					timepart.getMilliseconds()
+				);
+			} else {
+				ret.setUTCHours(
+					timepart.getUTCHours(),
+					timepart.getUTCMinutes(),
+					timepart.getUTCSeconds(),
+					timepart.getUTCMilliseconds()
+				);
+			}
 
-		return ret;
-	};
+			return ret;
+		};
 
 	/**
 	 * Get data for a calendar grid
@@ -616,14 +664,14 @@
 	 *   non-nullable columns returned by this.getCalendarHeadings() to change weeks.
 	 * @return {Array} return.rows Array of arrays of "day" objects or null/undefined.
 	 */
-	mw.widgets.datetime.DateTimeFormatter.prototype.getCalendarData = function ( /* components */ ) {
-		// Should be overridden by subclass
-		return {
-			header: '',
-			monthComponent: 'month',
-			dayComponent: 'day',
-			rows: []
+	mw.widgets.datetime.DateTimeFormatter.prototype.getCalendarData =
+		function (/* components */) {
+			// Should be overridden by subclass
+			return {
+				header: "",
+				monthComponent: "month",
+				dayComponent: "day",
+				rows: [],
+			};
 		};
-	};
-
-}() );
+})();

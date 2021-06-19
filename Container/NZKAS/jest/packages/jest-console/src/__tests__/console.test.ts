@@ -14,9 +14,11 @@ describe('CustomConsole', () => {
 
   beforeEach(() => {
     _console = new CustomConsole(process.stdout, process.stderr);
-    jest.spyOn(_console, '_logToParentConsole').mockImplementation(message => {
-      _stdout += message + '\n';
-    });
+    jest
+      .spyOn(_console, '_logToParentConsole')
+      .mockImplementation((message) => {
+        _stdout += message + '\n';
+      });
 
     _stdout = '';
   });

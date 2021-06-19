@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Mormegil",
-			"Purodha",
-			"Reedy",
-			"Seb35"
-		]
+		"authors": ["Mormegil", "Purodha", "Reedy", "Seb35"]
 	},
 	"config-desc": "Et Projramm för Mediwiki opzesäze.",
 	"config-title": "MehdijaWikki $1 opsäze",

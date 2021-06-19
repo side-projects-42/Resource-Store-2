@@ -22,56 +22,61 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-'use strict';
+"use strict";
 
-var fs = require('fs'),
-    path = require('path'),
-    root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
-    esprima = require('./3rdparty/esprima'),
-    escodegen = require(root),
-    chai = require('chai'),
-    expect = chai.expect;
+var fs = require("fs"),
+  path = require("path"),
+  root = path.join(path.dirname(fs.realpathSync(__filename)), ".."),
+  esprima = require("./3rdparty/esprima"),
+  escodegen = require(root),
+  chai = require("chai"),
+  expect = chai.expect;
 
 function test(code, expected) {
-    var tree, actual, options, StringObject;
+  var tree, actual, options, StringObject;
 
-    // alias, so that JSLint does not complain.
-    StringObject = String;
+  // alias, so that JSLint does not complain.
+  StringObject = String;
 
-    options = {
-        comment: true,
-        range: true,
-        loc: false,
-        tokens: true,
-        raw: false
-    };
+  options = {
+    comment: true,
+    range: true,
+    loc: false,
+    tokens: true,
+    raw: false,
+  };
 
-    tree = esprima.parse(code, options);
-    tree = escodegen.attachComments(tree, tree.comments, tree.tokens);
+  tree = esprima.parse(code, options);
+  tree = escodegen.attachComments(tree, tree.comments, tree.tokens);
 
-    // for UNIX text comment
-    actual = escodegen.generate(tree, {
+  // for UNIX text comment
+  actual =
+    escodegen
+      .generate(tree, {
         comment: true,
         format: {
-            indent: {
-                adjustMultilineComment: true
-            }
-        }
-    }).replace(/[\n\r]$/, '') + '\n';
-    expect(actual).to.be.equal(expected);
+          indent: {
+            adjustMultilineComment: true,
+          },
+        },
+      })
+      .replace(/[\n\r]$/, "") + "\n";
+  expect(actual).to.be.equal(expected);
 }
 
-describe('comment test', function () {
-    fs.readdirSync(__dirname + '/comment').sort().forEach(function(file) {
-        var code, expected, p;
-        if (/\.js$/.test(file) && !/expected\.js$/.test(file)) {
-            it(file, function () {
-                p = file.replace(/\.js$/, '.expected.js');
-                code = fs.readFileSync(__dirname + '/comment/' + file, 'utf-8');
-                expected = fs.readFileSync(__dirname + '/comment/' + p, 'utf-8');
-                test(code, expected);
-            });
-        }
+describe("comment test", function () {
+  fs.readdirSync(__dirname + "/comment")
+    .sort()
+    .forEach(function (file) {
+      var code, expected, p;
+      if (/\.js$/.test(file) && !/expected\.js$/.test(file)) {
+        it(file, function () {
+          p = file.replace(/\.js$/, ".expected.js");
+          code = fs.readFileSync(__dirname + "/comment/" + file, "utf-8");
+          expected = fs.readFileSync(__dirname + "/comment/" + p, "utf-8");
+          test(code, expected);
+        });
+      }
     });
 });
 /* vim: set sw=4 ts=4 et tw=80 : */

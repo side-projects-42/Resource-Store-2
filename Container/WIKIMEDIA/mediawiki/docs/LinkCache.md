@@ -11,7 +11,7 @@ purposes of updating the link tables. This application is now deprecated.
 
 To create a batch, you can use the following code:
 
-~~~{.php}
+```{.php}
 $pages = [ 'Main Page', 'Project:Help', /* ... */ ];
 $titles = [];
 
@@ -22,4 +22,4 @@ foreach( $pages as $page ){
 $linkBatchFactory = MediaWikiServices::getInstance()->getLinkBatchFactory();
 $batch = $linkBatchFactory->newLinkBatch( $titles );
 $batch->execute();
-~~~
+```

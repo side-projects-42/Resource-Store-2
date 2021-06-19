@@ -18,15 +18,15 @@ asciidoctor:
     # the document."
     # <http://asciidoctor.org/docs/user-manual/#configuring-attributes-for-awestruct>
     imagesdir: /images@
-    compat-mode: '@'
+    compat-mode: "@"
     attribute-missing: warn
-    relfileprefix: '../'
-    outfilesuffix: '/'
-    idprefix: ''
-    idseparator: '-'
+    relfileprefix: "../"
+    outfilesuffix: "/"
+    idprefix: ""
+    idseparator: "-"
     icons: font
-    sectanchors: ''
-    linkattrs: ''
+    sectanchors: ""
+    linkattrs: ""
     source-highlighter: coderay
     coderay-css: style
     prewrap: null

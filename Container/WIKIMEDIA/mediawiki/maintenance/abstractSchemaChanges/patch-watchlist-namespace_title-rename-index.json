@@ -6,7 +6,11 @@
 			{
 				"name": "wl_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "wl_user",
@@ -33,24 +37,24 @@
 		"indexes": [
 			{
 				"name": "wl_user",
-				"columns": [ "wl_user", "wl_namespace", "wl_title" ],
+				"columns": ["wl_user", "wl_namespace", "wl_title"],
 				"comment": "Special:Watchlist",
 				"unique": true
 			},
 			{
 				"name": "namespace_title",
-				"columns": [ "wl_namespace", "wl_title" ],
+				"columns": ["wl_namespace", "wl_title"],
 				"comment": "Special:Movepage (WatchedItemStore::duplicateEntry)",
 				"unique": false
 			},
 			{
 				"name": "wl_user_notificationtimestamp",
-				"columns": [ "wl_user", "wl_notificationtimestamp" ],
+				"columns": ["wl_user", "wl_notificationtimestamp"],
 				"comment": "ApiQueryWatchlistRaw changed filter",
 				"unique": false
 			}
 		],
-		"pk": [ "wl_id" ]
+		"pk": ["wl_id"]
 	},
 	"after": {
 		"name": "watchlist",
@@ -58,7 +62,11 @@
 			{
 				"name": "wl_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "wl_user",
@@ -85,23 +93,23 @@
 		"indexes": [
 			{
 				"name": "wl_user",
-				"columns": [ "wl_user", "wl_namespace", "wl_title" ],
+				"columns": ["wl_user", "wl_namespace", "wl_title"],
 				"comment": "Special:Watchlist",
 				"unique": true
 			},
 			{
 				"name": "wl_namespace_title",
-				"columns": [ "wl_namespace", "wl_title" ],
+				"columns": ["wl_namespace", "wl_title"],
 				"comment": "Special:Movepage (WatchedItemStore::duplicateEntry)",
 				"unique": false
 			},
 			{
 				"name": "wl_user_notificationtimestamp",
-				"columns": [ "wl_user", "wl_notificationtimestamp" ],
+				"columns": ["wl_user", "wl_notificationtimestamp"],
 				"comment": "ApiQueryWatchlistRaw changed filter",
 				"unique": false
 			}
 		],
-		"pk": [ "wl_id" ]
+		"pk": ["wl_id"]
 	}
 }

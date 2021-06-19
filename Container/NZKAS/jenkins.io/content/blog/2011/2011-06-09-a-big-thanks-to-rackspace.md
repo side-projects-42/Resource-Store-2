@@ -4,10 +4,11 @@
 :nodeid: 315
 :created: 1307637598
 :tags:
-- infrastructure
-- meta
+  - infrastructure
+  - meta
 :author: rtyler
 ---
+
 This post is long over-due and I really apologize for that.
 
 Some months ago we put out the call for "more slave machines!" through the
@@ -30,10 +31,9 @@ In hindsight, having a powerful infrastructure machine for nothing other than
 builds has helped us build great software faster; I can't imagine how difficult
 things might be otherwise.
 
-
 I've personally had a lot of interaction with Rackspace engineers through the [OpenStack
 project](http://www.openstack.org/) and have a number of friends who operate businesses on
-Rackspace/Rackspace Cloud hybrid infrastructures. 
+Rackspace/Rackspace Cloud hybrid infrastructures.
 
 The folks at Rackspace are
 top notch and I can't thank them enough for contributing to the Jenkins

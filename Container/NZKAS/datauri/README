@@ -1,9 +1,9 @@
 DataURI
 Copyright (c) 2009 Nicholas C. Zakas. All rights reserved.
 
--------------------------------------------------------------------------------
- About
--------------------------------------------------------------------------------
+---
+
+## About
 
 DataURI is a small program/library to make creation of data URIs for web
 content quick and easy.

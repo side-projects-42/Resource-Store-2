@@ -27,7 +27,7 @@
 
 ### Face-to-face Updates
 
-- RFC ripening period. Change the language around RFC approval to make sure that after we believe it's good we'll socialize with the larger Ember community to ensure an end-to-end cohesive experience. 
+- RFC ripening period. Change the language around RFC approval to make sure that after we believe it's good we'll socialize with the larger Ember community to ensure an end-to-end cohesive experience.
 - Module and testing RFC implementation progress. Move toward to active implementation.
 - Ember CLI needs a representative to Ember.js security team.
 

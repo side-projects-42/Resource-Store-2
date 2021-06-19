@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Dbc334"
-		]
+		"authors": ["Dbc334"]
 	},
 	"rest-prefix-mismatch": "Zahtevana pot ($1) ni bila znotraj korenske poti REST API ($2)",
 	"rest-wrong-method": "Zahtevana metoda ($1) ni {{PLURAL:$3|veljavna metoda|ena od veljavnih metod}} za to pot ($2)",

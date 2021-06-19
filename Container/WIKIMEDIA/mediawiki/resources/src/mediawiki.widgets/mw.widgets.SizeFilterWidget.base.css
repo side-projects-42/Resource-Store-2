@@ -21,18 +21,24 @@
 	vertical-align: middle;
 }
 
-.mw-widget-sizeFilterWidget .oo-ui-radioSelectInputWidget .oo-ui-fieldLayout:first-child {
+.mw-widget-sizeFilterWidget
+	.oo-ui-radioSelectInputWidget
+	.oo-ui-fieldLayout:first-child {
 	margin-right: 0.5em;
 }
 
 /* JS widget */
-.mw-widget-sizeFilterWidget .oo-ui-radioSelectInputWidget .oo-ui-radioOptionWidget {
+.mw-widget-sizeFilterWidget
+	.oo-ui-radioSelectInputWidget
+	.oo-ui-radioOptionWidget {
 	display: inline-table;
 	width: auto;
 	margin: 0;
 	vertical-align: middle;
 }
 
-.mw-widget-sizeFilterWidget .oo-ui-radioSelectInputWidget .oo-ui-radioOptionWidget:first-child {
+.mw-widget-sizeFilterWidget
+	.oo-ui-radioSelectInputWidget
+	.oo-ui-radioOptionWidget:first-child {
 	margin-right: 0.5em;
 }

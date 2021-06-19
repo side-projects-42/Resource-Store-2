@@ -1,19 +1,23 @@
-'use strict';
+"use strict";
 
-const Page = require( 'wdio-mediawiki/Page' );
+const Page = require("wdio-mediawiki/Page");
 
 class ViewImportPage extends Page {
-	get importData() { return $( 'textarea[name="wpImportText"]' ); }
-	get submit() { return $( 'button[type="submit"]' ); }
+  get importData() {
+    return $('textarea[name="wpImportText"]');
+  }
+  get submit() {
+    return $('button[type="submit"]');
+  }
 
-	importText( text ) {
-		this.open();
-		this.importData.setValue( text );
-		this.submit.click();
-	}
+  importText(text) {
+    this.open();
+    this.importData.setValue(text);
+    this.submit.click();
+  }
 
-	open() {
-		super.openTitle( 'Special:AbuseFilter/import' );
-	}
+  open() {
+    super.openTitle("Special:AbuseFilter/import");
+  }
 }
 module.exports = new ViewImportPage();

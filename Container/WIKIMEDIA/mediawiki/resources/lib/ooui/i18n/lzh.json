@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Itsmine",
-			"Joe young yu",
-			"SolidBlock"
-		]
+		"authors": ["Itsmine", "Joe young yu", "SolidBlock"]
 	},
 	"ooui-outline-control-move-down": "遷下",
 	"ooui-outline-control-move-up": "遷上",

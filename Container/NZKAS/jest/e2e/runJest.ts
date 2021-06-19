@@ -117,7 +117,7 @@ function normalizeResult(result: RunJestResult, options: RunJestOptions) {
 //   'success', 'startTime', 'numTotalTests', 'numTotalTestSuites',
 //   'numRuntimeErrorTestSuites', 'numPassedTests', 'numFailedTests',
 //   'numPendingTests', 'testResults'
-export const json = function(
+export const json = function (
   dir: string,
   args: Array<string> | undefined,
   options: RunJestOptions = {},
@@ -140,7 +140,7 @@ export const json = function(
 };
 
 // Runs `jest` until a given output is achieved, then kills it with `SIGTERM`
-export const until = async function(
+export const until = async function (
   dir: string,
   args: Array<string> | undefined,
   text: string,

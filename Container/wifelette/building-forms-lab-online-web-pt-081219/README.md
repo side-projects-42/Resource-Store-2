@@ -29,17 +29,16 @@ The createStore method and some basic setup has already been implemented for you
 
 2. You will need to write the `BandInput` component as a child of
    `BandsContainer`. This component should have a form with a text input and
-   submit button. We would like to update this *component's* state each time the
+   submit button. We would like to update this _component's_ state each time the
    user types a new character in the input, stored as `this.state.name`. We will
-   only update the __Redux__ store's state when the user hits the submit button.
+   only update the **Redux** store's state when the user hits the submit button.
    The dispatched action required to initiate this update should be set up in
    `BandsContainer` and passed down as the prop `addBand` to `BandInput`.
 
 3. You will also need to fill in the `manageBand` reducer located under
-   `./src/reducers/manageBand.js`. It will need to respond to an action of `type
-   'ADD_BAND'` and correspondingly concatenate a new band each time the action
+   `./src/reducers/manageBand.js`. It will need to respond to an action of `type 'ADD_BAND'` and correspondingly concatenate a new band each time the action
    is dispatched.
 
 4. Once you've got a form successfully dispatching actions and adding bands to
-   your __Redux__ store, write the necessary code to display each band name from
+   your **Redux** store, write the necessary code to display each band name from
    the store. Band names should be listed in individual `li` elements.

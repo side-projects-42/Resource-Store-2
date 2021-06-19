@@ -2,12 +2,14 @@
  * @private
  * @class jQuery.plugin.footHovzer
  */
-( function () {
+(function () {
 	var $hovzer, footHovzer, $spacer;
 
 	function getHovzer() {
-		if ( $hovzer === undefined ) {
-			$hovzer = $( '<div>' ).attr( 'id', 'jquery-foot-hovzer' ).appendTo( document.body );
+		if ($hovzer === undefined) {
+			$hovzer = $("<div>")
+				.attr("id", "jquery-foot-hovzer")
+				.appendTo(document.body);
 		}
 		return $hovzer;
 	}
@@ -35,7 +37,6 @@
 	 * @class jQuery.footHovzer
 	 */
 	footHovzer = {
-
 		/**
 		 * @property {jQuery} $ The stack container
 		 */
@@ -46,22 +47,24 @@
 		update: function () {
 			var $body;
 
-			$body = $( document.body );
+			$body = $(document.body);
 
-			if ( $spacer === undefined ) {
-				$spacer = $( '<div>' ).attr( 'id', 'jquery-foot-hovzer-spacer' );
-				$spacer.appendTo( $body );
+			if ($spacer === undefined) {
+				$spacer = $("<div>").attr("id", "jquery-foot-hovzer-spacer");
+				$spacer.appendTo($body);
 			}
 			// Ensure CSS is applied by browser before using .outerHeight()
-			setTimeout( function () {
-				$spacer.css( 'height', getHovzer().outerHeight( /* includeMargin = */ true ) );
-			}, 0 );
-		}
+			setTimeout(function () {
+				$spacer.css(
+					"height",
+					getHovzer().outerHeight(/* includeMargin = */ true)
+				);
+			}, 0);
+		},
 	};
 
 	/**
 	 * @class jQuery
 	 * @mixins jQuery.plugin.footHovzer
 	 */
-
-}() );
+})();

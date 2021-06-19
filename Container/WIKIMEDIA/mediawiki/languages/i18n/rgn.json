@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fitoschido",
-			"Reedy",
-			"Sentruper",
-			"아라"
-		]
+		"authors": ["Fitoschido", "Reedy", "Sentruper", "아라"]
 	},
 	"tog-underline": "Link cun la sotliniadura",
 	"tog-hideminor": "Nascond al mudefghi znini int la pàgina \"Ultum mudèfghi\"",

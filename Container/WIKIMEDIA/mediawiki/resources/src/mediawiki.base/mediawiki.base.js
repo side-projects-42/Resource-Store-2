@@ -14,22 +14,22 @@
  *   "mediawiki" module, and will remain a default/implicit dependency for all
  *   regular modules, just like jquery and wikibits already are.
  */
-'use strict';
+"use strict";
 
 var queue,
 	slice = Array.prototype.slice,
-	hooks = Object.create( null ),
+	hooks = Object.create(null),
 	mwLoaderTrack = mw.track,
-	trackCallbacks = $.Callbacks( 'memory' ),
+	trackCallbacks = $.Callbacks("memory"),
 	trackHandlers = [];
 
 // Apply site-level config
-mw.config.set( require( './config.json' ) );
+mw.config.set(require("./config.json"));
 
 // Load other files in the package
-require( './log.js' );
-require( './errorLogger.js' );
-require( './legacy.wikibits.js' );
+require("./log.js");
+require("./errorLogger.js");
+require("./legacy.wikibits.js");
 
 /**
  * Object constructor for messages.
@@ -90,8 +90,8 @@ require( './legacy.wikibits.js' );
  * @param {string} key
  * @param {Array} [parameters]
  */
-function Message( map, key, parameters ) {
-	this.format = 'text';
+function Message(map, key, parameters) {
+	this.format = "text";
 	this.map = map;
 	this.key = key;
 	this.parameters = parameters || [];
@@ -111,17 +111,17 @@ Message.prototype = {
 	 * @return {string} Parsed message
 	 */
 	parser: function () {
-		var text = this.map.get( this.key );
+		var text = this.map.get(this.key);
 		if (
-			mw.config.get( 'wgUserLanguage' ) === 'qqx' &&
-			text === '(' + this.key + ')'
+			mw.config.get("wgUserLanguage") === "qqx" &&
+			text === "(" + this.key + ")"
 		) {
-			text = '(' + this.key + '$*)';
+			text = "(" + this.key + "$*)";
 		}
-		text = mw.format.apply( null, [ text ].concat( this.parameters ) );
-		if ( this.format === 'parse' ) {
+		text = mw.format.apply(null, [text].concat(this.parameters));
+		if (this.format === "parse") {
 			// We don't know how to parse anything, so escape it all
-			text = mw.html.escape( text );
+			text = mw.html.escape(text);
 		}
 		return text;
 	},
@@ -133,10 +133,10 @@ Message.prototype = {
 	 * @return {mw.Message}
 	 * @chainable
 	 */
-	params: function ( parameters ) {
+	params: function (parameters) {
 		var i;
-		for ( i = 0; i < parameters.length; i++ ) {
-			this.parameters.push( parameters[ i ] );
+		for (i = 0; i < parameters.length; i++) {
+			this.parameters.push(parameters[i]);
 		}
 		return this;
 	},
@@ -148,7 +148,7 @@ Message.prototype = {
 	 *  does not exist.
 	 */
 	toString: function () {
-		if ( !this.exists() ) {
+		if (!this.exists()) {
 			// Use ⧼key⧽ as text if key does not exist
 			// Err on the side of safety, ensure that the output
 			// is always html safe in the event the message key is
@@ -157,15 +157,19 @@ Message.prototype = {
 			// '⧼' is used instead of '<' to side-step any
 			// double-escaping issues.
 			// (Keep synchronised with Message::toString() in PHP.)
-			return '⧼' + mw.html.escape( this.key ) + '⧽';
+			return "⧼" + mw.html.escape(this.key) + "⧽";
 		}
 
-		if ( this.format === 'plain' || this.format === 'text' || this.format === 'parse' ) {
+		if (
+			this.format === "plain" ||
+			this.format === "text" ||
+			this.format === "parse"
+		) {
 			return this.parser();
 		}
 
 		// Format: 'escaped'
-		return mw.html.escape( this.parser() );
+		return mw.html.escape(this.parser());
 	},
 
 	/**
@@ -179,7 +183,7 @@ Message.prototype = {
 	 * @return {string} String form of parsed message
 	 */
 	parse: function () {
-		this.format = 'parse';
+		this.format = "parse";
 		return this.toString();
 	},
 
@@ -192,7 +196,7 @@ Message.prototype = {
 	 * @return {string} String form of plain message
 	 */
 	plain: function () {
-		this.format = 'plain';
+		this.format = "plain";
 		return this.toString();
 	},
 
@@ -207,7 +211,7 @@ Message.prototype = {
 	 * @return {string} String form of text message
 	 */
 	text: function () {
-		this.format = 'text';
+		this.format = "text";
 		return this.toString();
 	},
 
@@ -220,7 +224,7 @@ Message.prototype = {
 	 * @return {string} String form of html escaped message
 	 */
 	escaped: function () {
-		this.format = 'escaped';
+		this.format = "escaped";
 		return this.toString();
 	},
 
@@ -231,8 +235,8 @@ Message.prototype = {
 	 * @return {boolean}
 	 */
 	exists: function () {
-		return this.map.exists( this.key );
-	}
+		return this.map.exists(this.key);
+	},
 };
 
 /**
@@ -259,9 +263,9 @@ mw.widgets = {};
 mw.inspect = function () {
 	var args = arguments;
 	// Lazy-load
-	mw.loader.using( 'mediawiki.inspect', function () {
-		mw.inspect.runReports.apply( mw.inspect, args );
-	} );
+	mw.loader.using("mediawiki.inspect", function () {
+		mw.inspect.runReports.apply(mw.inspect, args);
+	});
 };
 
 /**
@@ -273,16 +277,20 @@ mw.inspect = function () {
  * @param {Array} parameters Values for $N replacements
  * @return {string} Transformed format string
  */
-mw.internalDoTransformFormatForQqx = function ( formatString, parameters ) {
+mw.internalDoTransformFormatForQqx = function (formatString, parameters) {
 	var replacement;
-	if ( formatString.indexOf( '$*' ) !== -1 ) {
-		replacement = '';
-		if ( parameters.length ) {
-			replacement = ': ' + parameters.map( function ( _, i ) {
-				return '$' + ( i + 1 );
-			} ).join( ', ' );
+	if (formatString.indexOf("$*") !== -1) {
+		replacement = "";
+		if (parameters.length) {
+			replacement =
+				": " +
+				parameters
+					.map(function (_, i) {
+						return "$" + (i + 1);
+					})
+					.join(", ");
 		}
-		return formatString.replace( '$*', replacement );
+		return formatString.replace("$*", replacement);
 	}
 	return formatString;
 };
@@ -297,13 +305,15 @@ mw.internalDoTransformFormatForQqx = function ( formatString, parameters ) {
  * @param {...Mixed} parameters Values for $N replacements
  * @return {string} Formatted string
  */
-mw.format = function ( formatString ) {
-	var parameters = slice.call( arguments, 1 );
-	formatString = mw.internalDoTransformFormatForQqx( formatString, parameters );
-	return formatString.replace( /\$(\d+)/g, function ( str, match ) {
-		var index = parseInt( match, 10 ) - 1;
-		return parameters[ index ] !== undefined ? parameters[ index ] : '$' + match;
-	} );
+mw.format = function (formatString) {
+	var parameters = slice.call(arguments, 1);
+	formatString = mw.internalDoTransformFormatForQqx(formatString, parameters);
+	return formatString.replace(/\$(\d+)/g, function (str, match) {
+		var index = parseInt(match, 10) - 1;
+		return parameters[index] !== undefined
+			? parameters[index]
+			: "$" + match;
+	});
 };
 
 // Expose Message constructor
@@ -319,9 +329,9 @@ mw.Message = Message;
  * @param {...Mixed} parameters Values for $N replacements
  * @return {mw.Message}
  */
-mw.message = function ( key ) {
-	var parameters = slice.call( arguments, 1 );
-	return new Message( mw.messages, key, parameters );
+mw.message = function (key) {
+	var parameters = slice.call(arguments, 1);
+	return new Message(mw.messages, key, parameters);
 };
 
 /**
@@ -335,7 +345,7 @@ mw.message = function ( key ) {
  * @return {string}
  */
 mw.msg = function () {
-	return mw.message.apply( mw, arguments ).toString();
+	return mw.message.apply(mw, arguments).toString();
 };
 
 /**
@@ -344,11 +354,11 @@ mw.msg = function () {
  * @param {Object} [options] See mw.notification#defaults for the defaults.
  * @return {jQuery.Promise}
  */
-mw.notify = function ( message, options ) {
+mw.notify = function (message, options) {
 	// Lazy load
-	return mw.loader.using( 'mediawiki.notification', function () {
-		return mw.notification.notify( message, options );
-	} );
+	return mw.loader.using("mediawiki.notification", function () {
+		return mw.notification.notify(message, options);
+	});
 };
 
 /**
@@ -367,9 +377,9 @@ mw.notify = function ( message, options ) {
  * @param {string} topic Topic name
  * @param {Object|number|string} [data] Data describing the event.
  */
-mw.track = function ( topic, data ) {
-	mwLoaderTrack( topic, data );
-	trackCallbacks.fire( mw.trackQueue );
+mw.track = function (topic, data) {
+	mwLoaderTrack(topic, data);
+	trackCallbacks.fire(mw.trackQueue);
 };
 
 /**
@@ -385,21 +395,21 @@ mw.track = function ( topic, data ) {
  * @param {string} callback.topic
  * @param {Object} [callback.data]
  */
-mw.trackSubscribe = function ( topic, callback ) {
+mw.trackSubscribe = function (topic, callback) {
 	var seen = 0;
-	function handler( trackQueue ) {
+	function handler(trackQueue) {
 		var event;
-		for ( ; seen < trackQueue.length; seen++ ) {
-			event = trackQueue[ seen ];
-			if ( event.topic.indexOf( topic ) === 0 ) {
-				callback.call( event, event.topic, event.data );
+		for (; seen < trackQueue.length; seen++) {
+			event = trackQueue[seen];
+			if (event.topic.indexOf(topic) === 0) {
+				callback.call(event, event.topic, event.data);
 			}
 		}
 	}
 
-	trackHandlers.push( [ handler, callback ] );
+	trackHandlers.push([handler, callback]);
 
-	trackCallbacks.add( handler );
+	trackCallbacks.add(handler);
 };
 
 /**
@@ -407,19 +417,19 @@ mw.trackSubscribe = function ( topic, callback ) {
  *
  * @param {Function} callback
  */
-mw.trackUnsubscribe = function ( callback ) {
-	trackHandlers = trackHandlers.filter( function ( fns ) {
-		if ( fns[ 1 ] === callback ) {
-			trackCallbacks.remove( fns[ 0 ] );
+mw.trackUnsubscribe = function (callback) {
+	trackHandlers = trackHandlers.filter(function (fns) {
+		if (fns[1] === callback) {
+			trackCallbacks.remove(fns[0]);
 			// Ensure the tuple is removed to avoid holding on to closures
 			return false;
 		}
 		return true;
-	} );
+	});
 };
 
 // Fire events from before track() triggered fire()
-trackCallbacks.fire( mw.trackQueue );
+trackCallbacks.fire(mw.trackQueue);
 
 /**
  * Registry and firing of events.
@@ -469,71 +479,76 @@ trackCallbacks.fire( mw.trackQueue );
  * @param {string} name Name of hook.
  * @return {mw.hook}
  */
-mw.hook = function ( name ) {
-	return hooks[ name ] || ( hooks[ name ] = ( function () {
-		var memory, fns = [];
-		function rethrow( e ) {
-			setTimeout( function () {
-				throw e;
-			} );
-		}
-		return {
-			/**
-			 * Register a hook handler
-			 *
-			 * @param {...Function} handler Function to bind.
-			 * @chainable
-			 */
-			add: function () {
-				var i = 0;
-				for ( ; i < arguments.length; i++ ) {
-					if ( memory ) {
-						try {
-							arguments[ i ].apply( null, memory );
-						} catch ( e ) {
-							rethrow( e );
+mw.hook = function (name) {
+	return (
+		hooks[name] ||
+		(hooks[name] = (function () {
+			var memory,
+				fns = [];
+			function rethrow(e) {
+				setTimeout(function () {
+					throw e;
+				});
+			}
+			return {
+				/**
+				 * Register a hook handler
+				 *
+				 * @param {...Function} handler Function to bind.
+				 * @chainable
+				 */
+				add: function () {
+					var i = 0;
+					for (; i < arguments.length; i++) {
+						if (memory) {
+							try {
+								arguments[i].apply(null, memory);
+							} catch (e) {
+								rethrow(e);
+							}
+						}
+						fns.push(arguments[i]);
+					}
+					return this;
+				},
+				/**
+				 * Unregister a hook handler
+				 *
+				 * @param {...Function} handler Function to unbind.
+				 * @chainable
+				 */
+				remove: function () {
+					var i = 0,
+						j;
+					for (; i < arguments.length; i++) {
+						while ((j = fns.indexOf(arguments[i])) !== -1) {
+							fns.splice(j, 1);
 						}
 					}
-					fns.push( arguments[ i ] );
-				}
-				return this;
-			},
-			/**
-			 * Unregister a hook handler
-			 *
-			 * @param {...Function} handler Function to unbind.
-			 * @chainable
-			 */
-			remove: function () {
-				var i = 0, j;
-				for ( ; i < arguments.length; i++ ) {
-					while ( ( j = fns.indexOf( arguments[ i ] ) ) !== -1 ) {
-						fns.splice( j, 1 );
+					return this;
+				},
+				/**
+				 * Call hook handlers with data.
+				 *
+				 * @param {...Mixed} data
+				 * @return {mw.hook}
+				 * @chainable
+				 */
+				fire: function () {
+					var i = 0;
+					for (; i < fns.length; i++) {
+						try {
+							fns[i].apply(null, arguments);
+						} catch (e) {
+							rethrow(e);
+						}
 					}
-				}
-				return this;
-			},
-			/**
-			 * Call hook handlers with data.
-			 *
-			 * @param {...Mixed} data
-			 * @return {mw.hook}
-			 * @chainable
-			 */
-			fire: function () {
-				var i = 0;
-				for ( ; i < fns.length; i++ ) {
-					try {
-						fns[ i ].apply( null, arguments );
-					} catch ( e ) {
-						rethrow( e );
-					}
-				}
-				memory = slice.call( arguments );
-				return this;
-			}
-		};
-	}() ) );
+					memory = slice.call(arguments);
+					return this;
+				},
+			};
+		})())
+	);
 };
 
 /**
@@ -553,18 +568,18 @@ mw.hook = function ( name ) {
  * @singleton
  */
 
-function escapeCallback( s ) {
-	switch ( s ) {
-		case '\'':
-			return '&#039;';
+function escapeCallback(s) {
+	switch (s) {
+		case "'":
+			return "&#039;";
 		case '"':
-			return '&quot;';
-		case '<':
-			return '&lt;';
-		case '>':
-			return '&gt;';
-		case '&':
-			return '&amp;';
+			return "&quot;";
+		case "<":
+			return "&lt;";
+		case ">":
+			return "&gt;";
+		case "&":
+			return "&amp;";
 	}
 }
 mw.html = {
@@ -579,8 +594,8 @@ mw.html = {
 	 * @param {string} s The string to escape
 	 * @return {string} HTML
 	 */
-	escape: function ( s ) {
-		return s.replace( /['"<>&]/g, escapeCallback );
+	escape: function (s) {
+		return s.replace(/['"<>&]/g, escapeCallback);
 	},
 
 	/**
@@ -595,42 +610,47 @@ mw.html = {
 	 *  - this.Raw: The raw value is directly included.
 	 * @return {string} HTML
 	 */
-	element: function ( name, attrs, contents ) {
-		var v, attrName, s = '<' + name;
+	element: function (name, attrs, contents) {
+		var v,
+			attrName,
+			s = "<" + name;
 
-		if ( attrs ) {
-			for ( attrName in attrs ) {
-				v = attrs[ attrName ];
+		if (attrs) {
+			for (attrName in attrs) {
+				v = attrs[attrName];
 				// Convert name=true, to name=name
-				if ( v === true ) {
+				if (v === true) {
 					v = attrName;
 					// Skip name=false
-				} else if ( v === false ) {
+				} else if (v === false) {
 					continue;
 				}
-				s += ' ' + attrName + '="' + this.escape( String( v ) ) + '"';
+				s += " " + attrName + '="' + this.escape(String(v)) + '"';
 			}
 		}
-		if ( contents === undefined || contents === null ) {
+		if (contents === undefined || contents === null) {
 			// Self close tag
-			s += '/>';
+			s += "/>";
 			return s;
 		}
 		// Regular open tag
-		s += '>';
-		if ( typeof contents === 'string' ) {
+		s += ">";
+		if (typeof contents === "string") {
 			// Escaped
-			s += this.escape( contents );
-		} else if ( typeof contents === 'number' || typeof contents === 'boolean' ) {
+			s += this.escape(contents);
+		} else if (
+			typeof contents === "number" ||
+			typeof contents === "boolean"
+		) {
 			// Convert to string
-			s += String( contents );
-		} else if ( contents instanceof this.Raw ) {
+			s += String(contents);
+		} else if (contents instanceof this.Raw) {
 			// Raw HTML inclusion
 			s += contents.value;
 		} else {
-			throw new Error( 'Invalid content type' );
+			throw new Error("Invalid content type");
 		}
-		s += '</' + name + '>';
+		s += "</" + name + ">";
 		return s;
 	},
 
@@ -641,9 +661,9 @@ mw.html = {
 	 * @constructor
 	 * @param {string} value
 	 */
-	Raw: function ( value ) {
+	Raw: function (value) {
 		this.value = value;
-	}
+	},
 };
 
 /**
@@ -683,31 +703,33 @@ mw.html = {
  * @param {Function} [error] Callback to execute if one or more dependencies failed
  * @return {jQuery.Promise} With a `require` function
  */
-mw.loader.using = function ( dependencies, ready, error ) {
+mw.loader.using = function (dependencies, ready, error) {
 	var deferred = $.Deferred();
 
 	// Allow calling with a single dependency as a string
-	if ( !Array.isArray( dependencies ) ) {
-		dependencies = [ dependencies ];
+	if (!Array.isArray(dependencies)) {
+		dependencies = [dependencies];
 	}
 
-	if ( ready ) {
-		deferred.done( ready );
+	if (ready) {
+		deferred.done(ready);
 	}
-	if ( error ) {
-		deferred.fail( error );
+	if (error) {
+		deferred.fail(error);
 	}
 
 	try {
 		// Resolve entire dependency map
-		dependencies = mw.loader.resolve( dependencies );
-	} catch ( e ) {
-		return deferred.reject( e ).promise();
+		dependencies = mw.loader.resolve(dependencies);
+	} catch (e) {
+		return deferred.reject(e).promise();
 	}
 
 	mw.loader.enqueue(
 		dependencies,
-		function () { deferred.resolve( mw.loader.require ); },
+		function () {
+			deferred.resolve(mw.loader.require);
+		},
 		deferred.reject
 	);
 
@@ -734,11 +756,10 @@ mw.loader.using = function ( dependencies, ready, error ) {
  * @param {string} url Script URL
  * @return {jQuery.Promise} Resolved when the script is loaded
  */
-mw.loader.getScript = function ( url ) {
-	return $.ajax( url, { dataType: 'script', cache: true } )
-		.catch( function () {
-			throw new Error( 'Failed to load script' );
-		} );
+mw.loader.getScript = function (url) {
+	return $.ajax(url, { dataType: "script", cache: true }).catch(function () {
+		throw new Error("Failed to load script");
+	});
 };
 
 // Skeleton user object, extended by the 'mediawiki.user' module.
@@ -754,12 +775,12 @@ mw.user = {
 	/**
 	 * @property {mw.Map}
 	 */
-	tokens: new mw.Map()
+	tokens: new mw.Map(),
 };
 
 // Alias $j to jQuery for backwards compatibility
 // @deprecated since 1.23 Use $ or jQuery instead
-mw.log.deprecate( window, '$j', $, 'Use $ or jQuery instead.' );
+mw.log.deprecate(window, "$j", $, "Use $ or jQuery instead.");
 
 // Process callbacks for modern browsers (Grade A) that require modules.
 queue = window.RLQ;
@@ -768,14 +789,14 @@ queue = window.RLQ;
 // require modules. It must also support late arrivals of
 // plain callbacks. (T208093)
 window.RLQ = {
-	push: function ( entry ) {
-		if ( typeof entry === 'function' ) {
+	push: function (entry) {
+		if (typeof entry === "function") {
 			entry();
 		} else {
-			mw.loader.using( entry[ 0 ], entry[ 1 ] );
+			mw.loader.using(entry[0], entry[1]);
 		}
-	}
+	},
 };
-while ( queue[ 0 ] ) {
-	window.RLQ.push( queue.shift() );
+while (queue[0]) {
+	window.RLQ.push(queue.shift());
 }

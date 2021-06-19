@@ -18,7 +18,7 @@
 
 .tipsy-arrow {
 	position: absolute;
-	background: url( images/tipsy.png ) no-repeat top left;
+	background: url(images/tipsy.png) no-repeat top left;
 	width: 11px;
 	height: 6px;
 }

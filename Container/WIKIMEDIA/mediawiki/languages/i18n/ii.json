@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Biŋhai",
-			"大小李子"
-		]
+		"authors": ["Biŋhai", "大小李子"]
 	},
 	"tog-underline": "链接下划线：",
 	"tog-hideminor": "在最近更改中隐藏小编辑",

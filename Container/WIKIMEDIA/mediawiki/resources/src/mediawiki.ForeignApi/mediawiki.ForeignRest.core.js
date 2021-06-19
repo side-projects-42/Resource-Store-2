@@ -1,5 +1,4 @@
-module.exports = ( function () {
-
+module.exports = (function () {
 	/**
 	 * Create an object like mw.Rest, but automatically handling everything required to communicate
 	 * with another MediaWiki wiki via cross-origin requests (CORS).
@@ -37,28 +36,29 @@ module.exports = ( function () {
 	 *
 	 * @author Petr Pchelko
 	 */
-	function CoreForeignRest( url, foreignActionApi, options ) {
+	function CoreForeignRest(url, foreignActionApi, options) {
 		this.apiUrl = url;
 		this.anonymous = options && options.anonymous;
 		this.foreignActionApi = foreignActionApi;
 
-		options = $.extend( /* deep= */ true,
+		options = $.extend(
+			/* deep= */ true,
 			{
 				ajax: {
 					url: this.apiUrl,
 					xhrFields: {
-						withCredentials: !this.anonymous
-					}
-				}
+						withCredentials: !this.anonymous,
+					},
+				},
 			},
 			options
 		);
 
 		// Call parent constructor
-		CoreForeignRest.parent.call( this, options );
+		CoreForeignRest.parent.call(this, options);
 	}
 
-	OO.inheritClass( CoreForeignRest, mw.Rest );
+	OO.inheritClass(CoreForeignRest, mw.Rest);
 
 	return CoreForeignRest;
-}() );
+})();

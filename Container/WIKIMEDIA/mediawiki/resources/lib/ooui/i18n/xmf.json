@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"David1010",
-			"Narazeni",
-			"Silovan"
-		]
+		"authors": ["David1010", "Narazeni", "Silovan"]
 	},
 	"ooui-outline-control-move-down": "ელემენტის ქვემოთ გადატანა",
 	"ooui-outline-control-move-up": "ელემენტის ზემოთ გადატანა",

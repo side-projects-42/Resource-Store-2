@@ -125,27 +125,13 @@
                   {
                     "name": "DotNet/DefaultController/FooBar"
                   },
-                  [
-                    1,
-                    2,
-                    2,
-                    2,
-                    2,
-                    4
-                  ]
+                  [1, 2, 2, 2, 2, 4]
                 ],
                 [
                   {
                     "name": "DotNet/DefaultController/ApplePie"
                   },
-                  [
-                    1,
-                    2,
-                    2,
-                    2,
-                    2,
-                    4
-                  ]
+                  [1, 2, 2, 2, 2, 4]
                 ]
               ]
             ]
@@ -269,15 +255,7 @@
                 946688461,
                 [],
                 [],
-                [
-                  123,
-                  456,
-                  "rootSegment",
-                  {},
-                  [],
-                  "myClass",
-                  "myMethod"
-                ],
+                [123, 456, "rootSegment", {}, [], "myClass", "myMethod"],
                 {
                   "intrinsics": {
                     "name": "WebTransaction/Action/FooBar",
@@ -341,10 +319,7 @@
               "message": "Oh no!",
               "exception_class_name": "System.Exception",
               "attributes": {
-                "stack_trace": [
-                  "at SomeMethod1()",
-                  "at SomeMethod2()"
-                ],
+                "stack_trace": ["at SomeMethod1()", "at SomeMethod2()"],
                 "agent_attributes": {
                   "response.status": "200"
                 },
@@ -373,10 +348,7 @@
                   "Oh no!",
                   "System.Exception",
                   {
-                    "stack_trace": [
-                      "at SomeMethod1()",
-                      "at SomeMethod2()"
-                    ],
+                    "stack_trace": ["at SomeMethod1()", "at SomeMethod2()"],
                     "agentAttributes": {
                       "response.status": "200"
                     },
@@ -524,14 +496,7 @@
                   {
                     "name": "DotNet/DefaultController/ApplePie"
                   },
-                  [
-                    1,
-                    2,
-                    2,
-                    2,
-                    2,
-                    4
-                  ]
+                  [1, 2, 2, 2, 2, 4]
                 ]
               ]
             ]
@@ -604,9 +569,7 @@
         {
           "expect_request": {
             "command": "get_agent_commands",
-            "payload": [
-              "agentRunId1"
-            ],
+            "payload": ["agentRunId1"],
             "response_payload": {
               "return_value": [
                 [
@@ -675,14 +638,7 @@
                   {
                     "name": "DotNet/DefaultController/ApplePie"
                   },
-                  [
-                    1,
-                    2,
-                    2,
-                    2,
-                    2,
-                    4
-                  ]
+                  [1, 2, 2, 2, 2, 4]
                 ]
               ]
             ]
@@ -711,9 +667,7 @@
         {
           "expect_request": {
             "command": "get_agent_commands",
-            "payload": [
-              "agentRunId1"
-            ],
+            "payload": ["agentRunId1"],
             "response_payload": {
               "return_value": [
                 [
@@ -809,14 +763,7 @@
                   {
                     "name": "DotNet/DefaultController/ApplePie"
                   },
-                  [
-                    1,
-                    2,
-                    2,
-                    2,
-                    2,
-                    4
-                  ]
+                  [1, 2, 2, 2, 2, 4]
                 ]
               ]
             ]
@@ -854,14 +801,7 @@
                   {
                     "name": "DotNet/DefaultController/FooBar"
                   },
-                  [
-                    1,
-                    2,
-                    2,
-                    2,
-                    2,
-                    4
-                  ]
+                  [1, 2, 2, 2, 2, 4]
                 ]
               ]
             ]
@@ -1221,9 +1161,7 @@
         {
           "expect_request": {
             "command": "get_agent_commands",
-            "payload": [
-              "agentRunId1"
-            ],
+            "payload": ["agentRunId1"],
             "response_payload": {
               "return_value": [
                 [
@@ -1254,9 +1192,7 @@
         {
           "expect_request": {
             "command": "get_agent_commands",
-            "payload": [
-              "agentRunId1"
-            ],
+            "payload": ["agentRunId1"],
             "response_payload": {
               "return_value": [
                 [
@@ -1367,14 +1303,7 @@
                   {
                     "name": "DotNet/DefaultController/ApplePie"
                   },
-                  [
-                    1,
-                    2,
-                    2,
-                    2,
-                    2,
-                    4
-                  ]
+                  [1, 2, 2, 2, 2, 4]
                 ]
               ]
             ]

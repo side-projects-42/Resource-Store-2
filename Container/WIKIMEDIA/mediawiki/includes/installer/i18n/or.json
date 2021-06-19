@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Jnanaranjan Sahu",
-			"Psubhashish"
-		]
+		"authors": ["Jnanaranjan Sahu", "Psubhashish"]
 	},
 	"config-information": "ସୂଚନା",
 	"config-session-error": "ଅଧିବେଶନ ଆରମ୍ଭରେ ଅସୁବିଧା: $1",

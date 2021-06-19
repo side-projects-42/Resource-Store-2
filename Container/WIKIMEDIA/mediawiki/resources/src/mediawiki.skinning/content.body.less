@@ -19,7 +19,7 @@
  * with a vanilla MediaWiki install are not allowed here. Please use MediaWiki:Common.css and
  * MediaWiki:<skin>.css for such styles.
  */
-@import 'mediawiki.mixins.less';
+@import "mediawiki.mixins.less";
 
 /**
  * It's possible to add HTML elements inside wikitext, for example <div style="float:right;"></div>
@@ -45,7 +45,8 @@
 }
 
 /* External URLs should always be treated as LTR (T6330) */
-/* @noflip */ .rtl .mw-parser-output a.external.free,
+/* @noflip */
+.rtl .mw-parser-output a.external.free,
 .rtl .mw-parser-output a.external.autonumber {
 	direction: ltr;
 	unicode-bidi: embed;
@@ -53,6 +54,7 @@
 
 // Hide elements that are marked as "empty" according to legacy Tidy rules,
 // except if a client script removes the `.mw-hide-empty-elt` class from the body.
-/* body */ .mw-hide-empty-elt .mw-parser-output .mw-empty-elt {
+/* body */
+.mw-hide-empty-elt .mw-parser-output .mw-empty-elt {
 	display: none;
 }

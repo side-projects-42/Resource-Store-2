@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Kghbln"
-		]
-	},
-	"akismetklik-desc": "Verhindert Bearbeitungen vermutlicher Kommentarspammer, die in der Spamliste von Akismet enthalten sind"
+  "@metadata": {
+    "authors": ["Kghbln"]
+  },
+  "akismetklik-desc": "Verhindert Bearbeitungen vermutlicher Kommentarspammer, die in der Spamliste von Akismet enthalten sind"
 }

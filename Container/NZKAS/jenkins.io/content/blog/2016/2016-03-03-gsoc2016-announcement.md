@@ -2,9 +2,9 @@
 layout: post
 title: "Jenkins joins the Google Summer of Code 2016"
 tags:
-- general
-- jenkins2
-- gsoc
+  - general
+  - jenkins2
+  - gsoc
 author: oleg_nenashev
 ---
 
@@ -26,14 +26,14 @@ on what has been suggested can be found [on the
 wiki](https://wiki.jenkins-ci.org/display/JENKINS/Google+Summer+Of+Code+2016#GoogleSummerOfCode2016-Projectideas)
 which include:
 
-* Jenkins web interface improvements
-* "Update Center 2.0"
-* New generation of the fingerprinting engine
-* External workspace manager
-* Integration of [Docker plugins](/solutions/docker/) with Jenkins 2.0 features
-* Plugins for Electronic Design Automation and Embedded tools integration
-* Improvements of the [Support](https://wiki.jenkins-ci.org/display/JENKINS/Support+Core+Plugin) plugin
-* Improvements to Jenkins project infrastructure: core infra, website, plugin documentation and more
+- Jenkins web interface improvements
+- "Update Center 2.0"
+- New generation of the fingerprinting engine
+- External workspace manager
+- Integration of [Docker plugins](/solutions/docker/) with Jenkins 2.0 features
+- Plugins for Electronic Design Automation and Embedded tools integration
+- Improvements of the [Support](https://wiki.jenkins-ci.org/display/JENKINS/Support+Core+Plugin) plugin
+- Improvements to Jenkins project infrastructure: core infra, website, plugin documentation and more
 
 ## If you are a student:
 
@@ -45,11 +45,11 @@ which include:
 
 ## If you want to be a mentor:
 
-* Feel free to team up with other mentors
-* We accept extra project proposals from mentors until March 9th.
+- Feel free to team up with other mentors
+- We accept extra project proposals from mentors until March 9th.
 
 ## Links
 
-* [Jenkins project page](https://summerofcode.withgoogle.com/organizations/5668199471251456/) on the GSoC2016 website
-* [GSoC2016 page](https://wiki.jenkins-ci.org/display/JENKINS/Google+Summer+Of+Code+2016) on our wiki
-* [Announcement in Twitter](https://twitter.com/jenkinsci/status/704384831124209664)
+- [Jenkins project page](https://summerofcode.withgoogle.com/organizations/5668199471251456/) on the GSoC2016 website
+- [GSoC2016 page](https://wiki.jenkins-ci.org/display/JENKINS/Google+Summer+Of+Code+2016) on our wiki
+- [Announcement in Twitter](https://twitter.com/jenkinsci/status/704384831124209664)

@@ -113,7 +113,7 @@ Jest will set `process.env.NODE_ENV` to `'test'` if it's not set to something el
 
 ```javascript
 // babel.config.js
-module.exports = api => {
+module.exports = (api) => {
   const isTest = api.env('test');
   // You can use isTest to determine what presets and plugins to use.
 

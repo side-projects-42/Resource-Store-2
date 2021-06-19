@@ -14,11 +14,11 @@
 }
 
 .mw-collapsible-toggle-default:before {
-	content: '[';
+	content: "[";
 }
 
 .mw-collapsible-toggle-default:after {
-	content: ']';
+	content: "]";
 }
 
 .mw-customtoggle,

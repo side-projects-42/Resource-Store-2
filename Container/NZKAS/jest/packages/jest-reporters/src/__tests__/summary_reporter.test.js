@@ -21,7 +21,7 @@ let results = [];
 beforeEach(() => {
   process.env.npm_lifecycle_event = 'test';
   process.env.npm_lifecycle_script = 'jest';
-  process.stderr.write = result => results.push(result);
+  process.stderr.write = (result) => results.push(result);
   Date.now = () => 10;
 });
 

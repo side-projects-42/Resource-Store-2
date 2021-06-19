@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Macofe",
-			"Mar(c)",
-			"Seb35",
-			"Siebrand"
-		]
+		"authors": ["Macofe", "Mar(c)", "Seb35", "Siebrand"]
 	},
 	"config-localsettings-badkey": "De sleutel die je hebt opgegeven is onjuist",
 	"config-upgrade-key-missing": "Er is een bestaande installatie van MediaWiki aangetroffen.\nPlaats de volgende regel onderaan je <code>LocalSettings.php</code> om deze installatie bij te werken:\n\n$1",

@@ -1,10 +1,8 @@
 {
-	"@metadata": {
-		"authors": [
-			"Dr Lotus Black"
-		]
-	},
-	"adminlinks": "အက်ဒမင် လင့်ခ်များ",
-	"adminlinks_general": "အထွေထွေ",
-	"adminlinks_users": "အသုံးပြုသူများ"
+  "@metadata": {
+    "authors": ["Dr Lotus Black"]
+  },
+  "adminlinks": "အက်ဒမင် လင့်ခ်များ",
+  "adminlinks_general": "အထွေထွေ",
+  "adminlinks_users": "အသုံးပြုသူများ"
 }

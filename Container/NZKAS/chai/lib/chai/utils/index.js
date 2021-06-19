@@ -8,101 +8,100 @@
  * Main exports
  */
 
-var exports = module.exports = {};
+var exports = (module.exports = {});
 
 /*!
  * test utility
  */
 
-exports.test = require('./test');
+exports.test = require("./test");
 
 /*!
  * type utility
  */
 
-exports.type = require('./type');
+exports.type = require("./type");
 
 /*!
  * message utility
  */
 
-exports.getMessage = require('./getMessage');
+exports.getMessage = require("./getMessage");
 
 /*!
  * actual utility
  */
 
-exports.getActual = require('./getActual');
+exports.getActual = require("./getActual");
 
 /*!
  * Inspect util
  */
 
-exports.inspect = require('./inspect');
+exports.inspect = require("./inspect");
 
 /*!
  * Object Display util
  */
 
-exports.objDisplay = require('./objDisplay');
+exports.objDisplay = require("./objDisplay");
 
 /*!
  * Flag utility
  */
 
-exports.flag = require('./flag');
+exports.flag = require("./flag");
 
 /*!
  * Flag transferring utility
  */
 
-exports.transferFlags = require('./transferFlags');
+exports.transferFlags = require("./transferFlags");
 
 /*!
  * Deep equal utility
  */
 
-exports.eql = require('deep-eql');
+exports.eql = require("deep-eql");
 
 /*!
  * Deep path value
  */
 
-exports.getPathValue = require('./getPathValue');
+exports.getPathValue = require("./getPathValue");
 
 /*!
  * Function name
  */
 
-exports.getName = require('./getName');
+exports.getName = require("./getName");
 
 /*!
  * add Property
  */
 
-exports.addProperty = require('./addProperty');
+exports.addProperty = require("./addProperty");
 
 /*!
  * add Method
  */
 
-exports.addMethod = require('./addMethod');
+exports.addMethod = require("./addMethod");
 
 /*!
  * overwrite Property
  */
 
-exports.overwriteProperty = require('./overwriteProperty');
+exports.overwriteProperty = require("./overwriteProperty");
 
 /*!
  * overwrite Method
  */
 
-exports.overwriteMethod = require('./overwriteMethod');
+exports.overwriteMethod = require("./overwriteMethod");
 
 /*!
  * Add a chainable method
  */
 
-exports.addChainableMethod = require('./addChainableMethod');
-
+exports.addChainableMethod = require("./addChainableMethod");

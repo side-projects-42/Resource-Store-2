@@ -15,10 +15,7 @@
   "description": "Provides instrumentation for Oracle Service Bus v11g",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Java",
-  "projectTags": [
-    "nrlabs",
-    "instrumentation"
-  ],
+  "projectTags": ["nrlabs", "instrumentation"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Java Instrumentation for Oracle Service Bus 11G",

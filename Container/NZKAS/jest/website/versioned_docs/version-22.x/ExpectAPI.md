@@ -149,7 +149,7 @@ When an assertion fails, the error message should give as much signal as necessa
 ```js
 test('map calls its argument with a non-null argument', () => {
   const mock = jest.fn();
-  [1].map(x => mock(x));
+  [1].map((x) => mock(x));
   expect(mock).toBeCalledWith(expect.anything());
 });
 ```
@@ -238,7 +238,7 @@ For example, let's say that we have a few functions that all deal with state. `p
 ```js
 test('prepareState prepares a valid state', () => {
   expect.hasAssertions();
-  prepareState(state => {
+  prepareState((state) => {
     expect(validateState(state)).toBeTruthy();
   });
   return waitOnState();

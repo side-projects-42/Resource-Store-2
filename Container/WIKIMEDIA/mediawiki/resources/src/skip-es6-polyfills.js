@@ -1,5 +1,7 @@
-return Array.prototype.find &&
+return (
+	Array.prototype.find &&
 	Array.prototype.findIndex &&
 	Array.prototype.includes &&
-	typeof Promise === 'function' &&
-	Promise.prototype.finally;
+	typeof Promise === "function" &&
+	Promise.prototype.finally
+);

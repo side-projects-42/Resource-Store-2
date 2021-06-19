@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Pyscowicz"
-		]
+		"authors": ["Pyscowicz"]
 	},
 	"config-desc": "Asennin MeetiaWikiä varten",
 	"config-title": "MeetiaWikin versuunin $1 asennus",

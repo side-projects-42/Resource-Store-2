@@ -26,12 +26,12 @@
   &:before {
     position: absolute;
     left: 0;
-    content: "";
+    content: '';
     height: 100vh;
     background-color: var(--color-neutrals-100);
     width: 100%;
     transform: skewY(-2deg) translateY(-70px);
-    z-index:-1;
+    z-index: -1;
   }
 }
 
@@ -68,7 +68,12 @@
 
 .project {
   border: none;
-  box-shadow: 0px 0.415088px 0.304398px rgba(19, 71, 80, 0.0224916), 0px 0.997515px 0.731511px rgba(19, 71, 80, 0.0323114), 0px 1.87823px 1.37737px rgba(19, 71, 80, 0.04), 0px 3.35045px 2.45699px rgba(19, 71, 80, 0.0476886), 0px 6.26664px 4.59554px rgba(19, 71, 80, 0.0575083), 0px 15px 11px rgba(19, 71, 80, 0.08);
+  box-shadow: 0px 0.415088px 0.304398px rgba(19, 71, 80, 0.0224916),
+    0px 0.997515px 0.731511px rgba(19, 71, 80, 0.0323114),
+    0px 1.87823px 1.37737px rgba(19, 71, 80, 0.04),
+    0px 3.35045px 2.45699px rgba(19, 71, 80, 0.0476886),
+    0px 6.26664px 4.59554px rgba(19, 71, 80, 0.0575083),
+    0px 15px 11px rgba(19, 71, 80, 0.08);
 
   &:hover {
     border: none;
@@ -96,7 +101,7 @@
 
   .collection-listing {
     &:after {
-      content: "";
+      content: '';
       display: block;
       width: 150px;
       height: calc(100% + 25px);
@@ -104,7 +109,11 @@
       top: -1px;
       right: -9px;
       z-index: 400;
-      background: linear-gradient(270deg, var(--color-neutrals-100) 34.6%, rgba(244, 245, 245, 0) 78.29%);
+      background: linear-gradient(
+        270deg,
+        var(--color-neutrals-100) 34.6%,
+        rgba(244, 245, 245, 0) 78.29%
+      );
     }
   }
 
@@ -118,12 +127,12 @@
   align-items: center;
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: .07em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   border: none;
 
   svg {
-    transform: scale(.75) translateY(-1.5px);
+    transform: scale(0.75) translateY(-1.5px);
   }
 }
 
@@ -137,7 +146,7 @@
 // Responsive styles
 // ==============================================================
 @media screen and (max-width: 1200px) {
-  .collection-listing-container{
+  .collection-listing-container {
     box-sizing: border-box;
     padding: 0 28px;
   }

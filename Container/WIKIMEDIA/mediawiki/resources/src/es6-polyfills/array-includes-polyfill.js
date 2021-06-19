@@ -12,23 +12,23 @@
  *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
  */
-if ( !Array.prototype.includes ) {
-	Object.defineProperty( Array.prototype, 'includes', {
-		value: function ( searchElement, fromIndex ) {
+if (!Array.prototype.includes) {
+	Object.defineProperty(Array.prototype, "includes", {
+		value: function (searchElement, fromIndex) {
 			var o, len, n, k;
 
 			// 1. Let O be ? ToObject(this value).
-			if ( this == null ) {
-				throw new TypeError( '"this" is null or not defined' );
+			if (this == null) {
+				throw new TypeError('"this" is null or not defined');
 			}
 
-			o = Object( this );
+			o = Object(this);
 
 			// 2. Let len be ? ToLength(? Get(O, "length")).
 			len = o.length >>> 0;
 
 			// 3. If len is 0, return false.
-			if ( len === 0 ) {
+			if (len === 0) {
 				return false;
 			}
 
@@ -41,18 +41,24 @@ if ( !Array.prototype.includes ) {
 			// 6. Else n < 0,
 			//  a. Let k be len + n.
 			//  b. If k < 0, let k be 0.
-			k = Math.max( n >= 0 ? n : len - Math.abs( n ), 0 );
+			k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
-			function sameValueZero( x, y ) {
-				return x === y || ( typeof x === 'number' && typeof y === 'number' && isNaN( x ) && isNaN( y ) );
+			function sameValueZero(x, y) {
+				return (
+					x === y ||
+					(typeof x === "number" &&
+						typeof y === "number" &&
+						isNaN(x) &&
+						isNaN(y))
+				);
 			}
 
 			// 7. Repeat, while k < len
-			while ( k < len ) {
+			while (k < len) {
 				// a. Let elementK be the result of ? Get(O, ! ToString(k)).
 				// b. If SameValueZero(searchElement, elementK) is true, return true.
 				// c. Increase k by 1.
-				if ( sameValueZero( o[ k ], searchElement ) ) {
+				if (sameValueZero(o[k], searchElement)) {
 					return true;
 				}
 				k++;
@@ -62,6 +68,6 @@ if ( !Array.prototype.includes ) {
 			return false;
 		},
 		configurable: true,
-		writable: true
-	} );
+		writable: true,
+	});
 }

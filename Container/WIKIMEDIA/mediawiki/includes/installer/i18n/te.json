@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Chaduvari",
-			"Macofe",
-			"Ravichandra",
-			"Veeven"
-		]
+		"authors": ["Chaduvari", "Macofe", "Ravichandra", "Veeven"]
 	},
 	"config-desc": "మీడియావికీ కొరకై స్థాపకి",
 	"config-title": "మీడియావికీ $1స్థాపన",

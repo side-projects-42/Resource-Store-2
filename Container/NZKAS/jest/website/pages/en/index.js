@@ -50,8 +50,8 @@ class Contributors extends React.Component {
         </p>
         <div>
           {backers
-            .filter(b => b.tier === 'sponsor')
-            .map(b => (
+            .filter((b) => b.tier === 'sponsor')
+            .map((b) => (
               <a
                 key={b.id}
                 className="sponsor-item"
@@ -83,8 +83,8 @@ class Contributors extends React.Component {
         </p>
         <div>
           {backers
-            .filter(b => b.tier === 'backer' && !b.slug.includes('adult'))
-            .map(b => (
+            .filter((b) => b.tier === 'backer' && !b.slug.includes('adult'))
+            .map((b) => (
               <a
                 key={b.id}
                 className="backer-item"
@@ -209,7 +209,7 @@ class Card extends React.Component {
 
 class Hand extends React.Component {
   render() {
-    const cards = [0, 1, 2, 3, 4].map(i => <Card key={i} index={i} />);
+    const cards = [0, 1, 2, 3, 4].map((i) => <Card key={i} index={i} />);
     return (
       <div className="jest-hand">
         {cards}

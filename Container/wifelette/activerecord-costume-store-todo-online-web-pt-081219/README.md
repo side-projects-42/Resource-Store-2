@@ -2,13 +2,13 @@
 
 ## Contents
 
-|Section                           |
-|----------------------------------|
-|[Objectives](#objectives)         |
-|[Active Record](#active-record)    |
-|[Example](#example)               |
-|[Instructions](#instructions)     |
-|[Resources](#resources)           |
+| Section                         |
+| ------------------------------- |
+| [Objectives](#objectives)       |
+| [Active Record](#active-record) |
+| [Example](#example)             |
+| [Instructions](#instructions)   |
+| [Resources](#resources)         |
 
 ## Objectives
 
@@ -20,34 +20,34 @@ classes: `Costume`, `CostumeStore`, and `HauntedHouse`.
 
 The `costumes` table will have four columns:
 
-  1. name
-  2. price
-  3. size
-  4. image url
-  
-_as well as_ the two "timestamp" columns:  `created_at` and `updated_at`. This
+1. name
+2. price
+3. size
+4. image url
+
+_as well as_ the two "timestamp" columns: `created_at` and `updated_at`. This
 will provide a grand total of _six_ columns.
 
 The `costume_stores` table will have seven columns:
 
-  1. name
-  2. location
-  3. number of costumes, or "costume inventory"
-  4. number of employees
-  5. whether or not it's still in business
-  6. opening time
-  7. closing time
+1. name
+2. location
+3. number of costumes, or "costume inventory"
+4. number of employees
+5. whether or not it's still in business
+6. opening time
+7. closing time
 
 The `haunted_houses` table will have eight columns:
 
-  1. name
-  2. location
-  3. theme
-  4. price
-  5. whether they're family friendly or not
-  6. opening date
-  7. closing date
-  8. long description
+1. name
+2. location
+3. theme
+4. price
+5. whether they're family friendly or not
+6. opening date
+7. closing date
+8. long description
 
 Before coding out the creation of these tables, read about Active Record below:
 
@@ -95,7 +95,7 @@ to customize it.
 
 [create_table]: http://guides.rubyonrails.org/migrations.html#creating-a-table
 
-***NOTE***: As of Active Record 5.x, we can no longer inherit directly from
+**_NOTE_**: As of Active Record 5.x, we can no longer inherit directly from
 `ActiveRecord::Migration` and must instead specify which version of Active
 Record / Rails the migration was written for. If we were writing a migration for
 Active Record 5.1, we would inherit from `ActiveRecord::Migration[5.1]`. Don't
@@ -129,14 +129,14 @@ The above code would create a table called `dogs` with three columns: `name`,
 
 Take a look at a few data types that Active Record supports below:
 
-|Data Type                      |Examples                                               |
-|-------------------------------|-------------------------------------------------------|
-|boolean                        | true, false                                           |
-|integer                        | 2, -13, 485                                           |
-|string                         | "Halloween", "Boo!", strings between 1-255 characters|
-|datetime                       | DateTime.now, DateTime.new(2014,10,31)                |
-|float                          | 2.234, 32.2124, -6.342                                |
-|text                           | strings between 1 and 2 ^ 32 - 1 characters           |
+| Data Type | Examples                                              |
+| --------- | ----------------------------------------------------- |
+| boolean   | true, false                                           |
+| integer   | 2, -13, 485                                           |
+| string    | "Halloween", "Boo!", strings between 1-255 characters |
+| datetime  | DateTime.now, DateTime.new(2014,10,31)                |
+| float     | 2.234, 32.2124, -6.342                                |
+| text      | strings between 1 and 2 ^ 32 - 1 characters           |
 
 ### Models
 
@@ -294,15 +294,15 @@ folder and the three files in the `db/migrations` folder.
 
 **Your models should be no longer than two lines of code.**
 
-* The first step is to run `bundle install`.
-* Create the Costume class in `app/models/`.
-* Fill out the Active Record migration for costumes such that it passes the
+- The first step is to run `bundle install`.
+- Create the Costume class in `app/models/`.
+- Fill out the Active Record migration for costumes such that it passes the
   specs.
-* Create the CostumeStore class in `app/models/`.
-* Fill out the Active Record migration for `costume_stores` such that it passes
+- Create the CostumeStore class in `app/models/`.
+- Fill out the Active Record migration for `costume_stores` such that it passes
   the specs.
-* Create the HauntedHouse class in `app/models/`.
-* Fill out the Active Record migration for haunted_houses such that it passes
+- Create the HauntedHouse class in `app/models/`.
+- Fill out the Active Record migration for haunted_houses such that it passes
   the specs.
 
 Just like for any other lab, run `learn` to view your test progress. However,
@@ -315,14 +315,14 @@ be seen.
 For example, say you've run `rake db:migrate` and `learn` once to start, and see
 that you need to add an attribute to the `costume_stores` table. Since this
 table is the second migration of three, you will need to run `rake db:rollback`
-twice to remove the previous migration for this table, then run 
+twice to remove the previous migration for this table, then run
 `rake db:migrate` again to update the schema.
 
 ## Resources
 
-* [Active Record Migrations](http://guides.rubyonrails.org/migrations.html)
-  * Just look at the code for the example migrations
-* [Creating Active Record Models](http://guides.rubyonrails.org/active_record_basics.html#creating-active-record-models)
-* [Timestamps](http://api.rubyonrails.org/classes/ActiveRecord/Timestamp.html)
+- [Active Record Migrations](http://guides.rubyonrails.org/migrations.html)
+  - Just look at the code for the example migrations
+- [Creating Active Record Models](http://guides.rubyonrails.org/active_record_basics.html#creating-active-record-models)
+- [Timestamps](http://api.rubyonrails.org/classes/ActiveRecord/Timestamp.html)
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/activerecord-costume-store-todo' title='Active Record Costume Store'>Active Record Costume Store</a> on Learn.co and start learning to code for free.</p>

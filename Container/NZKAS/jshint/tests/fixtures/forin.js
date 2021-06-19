@@ -1,9 +1,9 @@
 for (var key in objects) {
-    hey();
+  hey();
 }
 
 for (key in objects) {
-    if (objects.hasOwnProperty(key)) {
-        hey();
-    }
+  if (objects.hasOwnProperty(key)) {
+    hey();
+  }
 }

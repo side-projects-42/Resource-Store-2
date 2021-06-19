@@ -1,6 +1,5 @@
-( function () {
-
-	var CONTROL_BUCKET = 'control',
+(function () {
+	var CONTROL_BUCKET = "control",
 		MAX_INT32_UNSIGNED = 4294967295;
 
 	/**
@@ -15,19 +14,19 @@
 	 * @author Ori Livneh <ori@wikimedia.org>
 	 * @see https://jsbin.com/kejewi/4/watch?js,console
 	 */
-	function hashString( string ) {
+	function hashString(string) {
 		/* eslint-disable no-bitwise */
 		var hash = 0,
 			i = string.length;
 
-		while ( i-- ) {
-			hash += string.charCodeAt( i );
-			hash += ( hash << 10 );
-			hash ^= ( hash >> 6 );
+		while (i--) {
+			hash += string.charCodeAt(i);
+			hash += hash << 10;
+			hash ^= hash >> 6;
 		}
-		hash += ( hash << 3 );
-		hash ^= ( hash >> 11 );
-		hash += ( hash << 15 );
+		hash += hash << 3;
+		hash ^= hash >> 11;
+		hash += hash << 15;
 
 		return hash >>> 0;
 		/* eslint-enable no-bitwise */
@@ -40,7 +39,6 @@
 	 * @singleton
 	 */
 	mw.experiments = {
-
 		/**
 		 * Gets the bucket for the experiment given the token.
 		 *
@@ -77,7 +75,7 @@
 		 *  duration of the experiment
 		 * @return {string} The bucket
 		 */
-		getBucket: function ( experiment, token ) {
+		getBucket: function (experiment, token) {
 			var buckets = experiment.buckets,
 				key,
 				range = 0,
@@ -85,25 +83,24 @@
 				max,
 				acc = 0;
 
-			if ( !experiment.enabled || $.isEmptyObject( experiment.buckets ) ) {
+			if (!experiment.enabled || $.isEmptyObject(experiment.buckets)) {
 				return CONTROL_BUCKET;
 			}
 
-			for ( key in buckets ) {
-				range += buckets[ key ];
+			for (key in buckets) {
+				range += buckets[key];
 			}
 
-			hash = hashString( experiment.name + ':' + token );
-			max = ( hash / MAX_INT32_UNSIGNED ) * range;
+			hash = hashString(experiment.name + ":" + token);
+			max = (hash / MAX_INT32_UNSIGNED) * range;
 
-			for ( key in buckets ) {
-				acc += buckets[ key ];
+			for (key in buckets) {
+				acc += buckets[key];
 
-				if ( max <= acc ) {
+				if (max <= acc) {
 					return key;
 				}
 			}
-		}
+		},
 	};
-
-}() );
+})();

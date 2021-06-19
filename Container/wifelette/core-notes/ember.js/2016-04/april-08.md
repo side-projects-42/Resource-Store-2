@@ -61,25 +61,25 @@ TD: I've never had an issue with granting this before
 
 RJ: awesome, thanks
 
-#### Supporting _super calls when there is no method overridden
+#### Supporting \_super calls when there is no method overridden
 
 KS: In ES6 if you call super and there is nothing there it is an error. I want to attempt to unwind supporting this behavior. We've taken care of it not infinite looping (like we used to do). I think we should keep it as is but provide an error.
 
-RJ: The thing that is convenient to tell people is that they can just call _super on framework hooks
+RJ: The thing that is convenient to tell people is that they can just call \_super on framework hooks
 
 KS: those hooks should always be on the base class though
 
-YK: you suggest that if there is a framework hook they should call _super. the problem is that if there is a thing there and you don't know the semantics it is possible there is a bug anyway (do you pass arguments? is there a return value?)
+YK: you suggest that if there is a framework hook they should call \_super. the problem is that if there is a thing there and you don't know the semantics it is possible there is a bug anyway (do you pass arguments? is there a return value?)
 
-KS: We've been bad in the past with adding a method that it supered after the fact, and bad about documenting the default hook implementation. We just have a bad habit, ObjectiveC went through the same thing, and now you need to call _super if you override something.
+KS: We've been bad in the past with adding a method that it supered after the fact, and bad about documenting the default hook implementation. We just have a bad habit, ObjectiveC went through the same thing, and now you need to call \_super if you override something.
 
-YK: I think this part of the conversation (should you need to call _super, is on( a mis-feature) isn't related to the proposal.
+YK: I think this part of the conversation (should you need to call \_super, is on( a mis-feature) isn't related to the proposal.
 
 YK: I'd like to see this on the glimmer object model, in a test
 
 (discussion of how we would add an error to the root)
 
-Kicked back to technical discussion. General consensus that a) all framework hooks should have a base method defined by the framework b) if you call _super and there is not a method there, it should error (ala ES6, and helps us handle some errors like the one raised). c) the technical path for some of this is still vague.
+Kicked back to technical discussion. General consensus that a) all framework hooks should have a base method defined by the framework b) if you call \_super and there is not a method there, it should error (ala ES6, and helps us handle some errors like the one raised). c) the technical path for some of this is still vague.
 
 #### Modules RFC Update
 

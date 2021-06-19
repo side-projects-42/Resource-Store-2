@@ -12,7 +12,7 @@ const getKeysOfEnumerableProperties = (object: Record<string, any>) => {
   const keys: Array<string | symbol> = Object.keys(object).sort();
 
   if (Object.getOwnPropertySymbols) {
-    Object.getOwnPropertySymbols(object).forEach(symbol => {
+    Object.getOwnPropertySymbols(object).forEach((symbol) => {
       if (Object.getOwnPropertyDescriptor(object, symbol)!.enumerable) {
         keys.push(symbol);
       }

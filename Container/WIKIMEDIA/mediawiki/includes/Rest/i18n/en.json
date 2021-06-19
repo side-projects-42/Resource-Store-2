@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Bill Pirkle",
-			"Tim Starling"
-		]
+		"authors": ["Bill Pirkle", "Tim Starling"]
 	},
 	"rest-prefix-mismatch": "The requested path ($1) was not inside the REST API root path ($2)",
 	"rest-wrong-method": "The request method ($1) was not {{PLURAL:$3|the allowed method for this path|one of the allowed methods for this path}} ($2)",

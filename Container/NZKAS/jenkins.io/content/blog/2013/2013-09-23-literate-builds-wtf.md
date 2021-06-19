@@ -4,18 +4,19 @@
 :nodeid: 440
 :created: 1379964130
 :tags:
-- development
-- plugins
-- javaone
+  - development
+  - plugins
+  - javaone
 :author: kohsuke
 ---
+
 (This is a guest post by Stephen Connolly)
 
 Every developer, at some stage, will be handed a project to maintain that somebody else was responsible for. If you are lucky, the developer will not have left the organization yet and you get a brief Knowledge Transfer as the developer packs up their desk before heading on to their new job. If you are unlucky, you don't even get given the details of where the source code is hiding.
 
 Now begins the detective work, as you try to figure out how to build and release the project, set up Jenkins jobs to build the project and run the tests…
 
-It doesn't have to be this way, you know!  
+It doesn't have to be this way, you know!
 
 What if I told you there was a file sitting at the top level that told you exactly how to build the project and do the important things? You'd be interested, wouldn't you?
 
@@ -105,7 +106,7 @@ The first section containing the word `environment` identifies the section that 
     The build instructions are platform dependent:
 
     * On `windows`:
-    
+
             echo "hello world"
 
     * On `linux`:
@@ -116,16 +117,16 @@ When Jenkins sees bullet points in the `environment` section it assumes each bul
 
 When you have multiple environments on which to build and test, you have two choices on your build instructions. You can either:
 
-* Have one and only one set of commands that work on all environments; or
-* Have bullet points that cover all the specified environments.
+- Have one and only one set of commands that work on all environments; or
+- Have bullet points that cover all the specified environments.
 
 So for example, if you are building on the following environments:
 
-* `windows`, `java-1.6`, `ant-1.7`
-* `windows`, `java-1.6`, `ant-1.8`
-* `windows`, `java-1.7`, `ant-1.8`
-* `linux`, `java-1.7`, `ant-1.7`
-* `linux`, `java-1.7`, `ant-1.8`
+- `windows`, `java-1.6`, `ant-1.7`
+- `windows`, `java-1.6`, `ant-1.8`
+- `windows`, `java-1.7`, `ant-1.8`
+- `linux`, `java-1.7`, `ant-1.7`
+- `linux`, `java-1.7`, `ant-1.8`
 
 You need to have bullet points in your `build` section that can match each of those options, but as long as there is a match for every option you are ok. So for example:
 
@@ -136,7 +137,7 @@ You need to have bullet points in your `build` section that can match each of th
 
     Environments
     ------------
-    
+
     Nesting bullet points multiplies out the options
 
     * `windows`
@@ -144,7 +145,7 @@ You need to have bullet points in your `build` section that can match each of th
             * `ant-1.6`
             * `ant-1.7`
         * `java-1.7`, `ant-1.8`
-    * `linux`, `java-1.7` 
+    * `linux`, `java-1.7`
         * `ant-1.7`
         * `ant-1.8`
 
@@ -223,20 +224,20 @@ In other words, literate projects do not remove the need to configure things in 
 
 Here is a list of some things I want to see for literate builds:
 
-* A literate build step so that people can use some of the literate magic in their free-style projects while they migrate them to literate-style
-* Support for literate task promotion flows (I think Kohsuke has signed up to help deliver this)
-* Exposing the configuration points such as the marker file name (a global config option as well as per-project override) and the keywords to search for in the `README.md` (this is mostly UI work)
-* Adding in some support for other markup languages (I'd really like to see AsciiDoc formatted README parsing, e.g. `README.asc`)
-* Branch properties for untrusted builds (to do things like restrict the build execution to one explicit environment, put an elastic build timeout in place, wrap the shell commands in a chroot jail, etc)
-* Branch properties for build secrets (So that the `production` and `staging` branches can get the keys to deploy into their respective environments.
-* Collapsing the intermediate level in the UI when there is only one build environment.
-* Eliminating the double SCM checkout when the backing SCM supports the `SCMFileSystem` API so that builds work even faster
-* Reusing the GIT repository cache when using GIT branch sources.
-* Some nicer integration with GitHub (I have most of this done, but I think it would be irresponsible to release this without having the Untrusted branch properties implemented as otherwise Pull Requests could become a vector for abuse)
-* Finishing the support for Subversion credentials migration from the legacy credentials storage mechanism to the new Credentials plugin storage mechanism (not strictly literate project related, but Subversion is still a popular SCM and until this gets done we cannot release a version of the Subversion plugin with literate project support)
-* Adding nice DSLs for all the Publishers and Notifiers
-* Adding SCM support to all the SCM plugins
-* Adding branch property support for the Build Wrapper / Build Environment / Job Property plugins where that makes sense.
+- A literate build step so that people can use some of the literate magic in their free-style projects while they migrate them to literate-style
+- Support for literate task promotion flows (I think Kohsuke has signed up to help deliver this)
+- Exposing the configuration points such as the marker file name (a global config option as well as per-project override) and the keywords to search for in the `README.md` (this is mostly UI work)
+- Adding in some support for other markup languages (I'd really like to see AsciiDoc formatted README parsing, e.g. `README.asc`)
+- Branch properties for untrusted builds (to do things like restrict the build execution to one explicit environment, put an elastic build timeout in place, wrap the shell commands in a chroot jail, etc)
+- Branch properties for build secrets (So that the `production` and `staging` branches can get the keys to deploy into their respective environments.
+- Collapsing the intermediate level in the UI when there is only one build environment.
+- Eliminating the double SCM checkout when the backing SCM supports the `SCMFileSystem` API so that builds work even faster
+- Reusing the GIT repository cache when using GIT branch sources.
+- Some nicer integration with GitHub (I have most of this done, but I think it would be irresponsible to release this without having the Untrusted branch properties implemented as otherwise Pull Requests could become a vector for abuse)
+- Finishing the support for Subversion credentials migration from the legacy credentials storage mechanism to the new Credentials plugin storage mechanism (not strictly literate project related, but Subversion is still a popular SCM and until this gets done we cannot release a version of the Subversion plugin with literate project support)
+- Adding nice DSLs for all the Publishers and Notifiers
+- Adding SCM support to all the SCM plugins
+- Adding branch property support for the Build Wrapper / Build Environment / Job Property plugins where that makes sense.
 
 Having said all that, the core functionality works right now for GIT/Subversion/Mercurial on Jenkins 1.509+, and it is only by playing with this functionality that you can see how this could change the way you use Jenkins.
 
@@ -250,8 +251,8 @@ So if you want to play with these plugins you need to change your Jenkins instan
 
     http://updates.jenkins-ci.org/experimental/update-center.json
 
-I would recommend that you use a test Jenkins instance for playing with. 
+I would recommend that you use a test Jenkins instance for playing with.
 
 (WARNING: shameless plug) You could also just fire up a Jenkins in the cloud using CloudBee's DEV@cloud service and follow [these handy instructions](http://developer-blog.cloudbees.com/2013/09/how-to-try-literate-builds-on-devcloud.html) to enable access to the experimental plugins:
- 
+
 The 10 best bug reports on literate builds before the Jenkins User Conference next month will receive a prise from CloudBees, Inc. I was able to get a commitment that the prise would be at least a T-shirt. I am hoping to get some more swag added to the prize pool. CloudBees employees or relatives of CloudBees employees are not eligible for the bug report prise!

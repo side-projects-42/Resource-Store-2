@@ -16,44 +16,43 @@
  * 7. Alt-Ш (Cyrillic capital 'sha', on the same key as Latin 'I').
  */
 
-( function ( $ ) {
-	'use strict';
+(function ($) {
+  "use strict";
 
-	var cyrlPalochka,
-		// All the characters are very similar in appearance,
-		// so it's better to give them names to avoid confusion.
-		latinSmallL = 'l',
-		latinCapitalI = 'I',
-		ukrainianCapitalI = 'І',
-		palochka = 'Ӏ',
-		digitOne = '1';
+  var cyrlPalochka,
+    // All the characters are very similar in appearance,
+    // so it's better to give them names to avoid confusion.
+    latinSmallL = "l",
+    latinCapitalI = "I",
+    ukrainianCapitalI = "І",
+    palochka = "Ӏ",
+    digitOne = "1";
 
-	cyrlPalochka = {
-		id: 'cyrl-palochka',
-		name: 'Cyrillic Palochka',
-		description: 'Palochka input method for Cyrillic',
-		date: '2012-10-10',
-		URL: 'http://github.com/wikimedia/jquery.ime',
-		author: 'Amir E. Aharoni',
-		license: 'GPLv3',
-		version: '1.1',
-		contextLength: 2,
-		maxKeyLength: 3,
-		patterns: [
-			[ '~~' + digitOne, '~~', '~1' ],
-			[ '~' + digitOne, palochka ],
-			[ latinSmallL, palochka ],
-			[ latinCapitalI, palochka ],
-			[ ukrainianCapitalI, palochka ]
-		],
-		patterns_x: [
-			[ digitOne, palochka ],
-			[ 'д', palochka ],
-			[ 'ш', palochka ],
-			[ 'Ш', palochka ]
-		]
-	};
+  cyrlPalochka = {
+    id: "cyrl-palochka",
+    name: "Cyrillic Palochka",
+    description: "Palochka input method for Cyrillic",
+    date: "2012-10-10",
+    URL: "http://github.com/wikimedia/jquery.ime",
+    author: "Amir E. Aharoni",
+    license: "GPLv3",
+    version: "1.1",
+    contextLength: 2,
+    maxKeyLength: 3,
+    patterns: [
+      ["~~" + digitOne, "~~", "~1"],
+      ["~" + digitOne, palochka],
+      [latinSmallL, palochka],
+      [latinCapitalI, palochka],
+      [ukrainianCapitalI, palochka],
+    ],
+    patterns_x: [
+      [digitOne, palochka],
+      ["д", palochka],
+      ["ш", palochka],
+      ["Ш", palochka],
+    ],
+  };
 
-	$.ime.register( cyrlPalochka );
-
-}( jQuery ) );
+  $.ime.register(cyrlPalochka);
+})(jQuery);

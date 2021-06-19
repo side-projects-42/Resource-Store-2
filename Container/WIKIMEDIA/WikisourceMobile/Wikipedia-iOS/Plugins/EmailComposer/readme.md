@@ -2,7 +2,7 @@ Added Cordova 1.5 support March 2012 - @RandyMcMillan
 
 • You will need to add MessageUI.framework to your project if it is not already included.
 
-• Just add the EmailComposer.h EmailComposer.m  files to your Plugins Folder.
+• Just add the EmailComposer.h EmailComposer.m files to your Plugins Folder.
 
 • Place the EmailComposer.js file in your app root, and include it from your html.
 

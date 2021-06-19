@@ -10,12 +10,12 @@
  * @description:
  * Tests to see if there are any `ddescribe` focus tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	ddescribe('something', function () {
-		it('should do stuff', function () {
+	ddescribe("something", function () {
+		it("should do stuff", function () {
 			expect(true).toBe(true);
 		});
 	});
-}(this));
+})(this);

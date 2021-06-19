@@ -113,7 +113,7 @@ export default (
       );
     }
 
-    snapshots.uncheckedKeysByFile.forEach(uncheckedFile => {
+    snapshots.uncheckedKeysByFile.forEach((uncheckedFile) => {
       summary.push(
         `  ${DOWN_ARROW}${formatTestPath(
           globalConfig,
@@ -121,7 +121,7 @@ export default (
         )}`,
       );
 
-      uncheckedFile.keys.forEach(key => {
+      uncheckedFile.keys.forEach((key) => {
         summary.push(`      ${DOT}${key}`);
       });
     });

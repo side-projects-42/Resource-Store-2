@@ -1,14 +1,13 @@
 # Database Access
 
-*Some information about database access in MediaWiki. By Tim Starling, January 2006.*
+_Some information about database access in MediaWiki. By Tim Starling, January 2006._
 
 ## Database Layout
 
 For information about the MediaWiki database layout, such as a description of the tables and their contents, please see:
 
-* [The manual](https://www.mediawiki.org/wiki/Manual:Database_layout)
-* [https://phabricator.wikimedia.org/diffusion/MW/browse/master/maintenance/tables.sql](https://phabricator.wikimedia.org/diffusion/MW/browse/master/maintenance/tables.sql)
-
+- [The manual](https://www.mediawiki.org/wiki/Manual:Database_layout)
+- [https://phabricator.wikimedia.org/diffusion/MW/browse/master/maintenance/tables.sql](https://phabricator.wikimedia.org/diffusion/MW/browse/master/maintenance/tables.sql)
 
 ## API
 
@@ -23,14 +22,15 @@ foreach ( $res as $row ) {
 ```
 
 For a write query, use something like:
+
 ```php
 $dbw = wfGetDB( DB_PRIMARY );
 $dbw->insert( /* ...see docs... */ );
 ```
+
 We use the convention `$dbr` for read and `$dbw` for write to help you keep track of whether the database object is a replica (read-only) or a primary (read/write). If you write to a replica, the world will explode. Or to be precise, a subsequent write query which succeeded on the primary may fail when propagated to the replica due to a unique key collision. Replication will then stop and it may take hours to repair the database and get it back online. Setting `read_only` in `my.cnf` on the replica will avoid this scenario, but given the dire consequences, we prefer to have as many checks as possible.
 
 We provide a `query()` function for raw SQL, but the wrapper functions like `select()` and `insert()` are usually more convenient. They take care of things like table prefixes and escaping for you. If you really need to make your own SQL, please read the documentation for `tableName()` and `addQuotes()`. You will need both of them.
-
 
 ## Basic query optimisation
 
@@ -60,10 +60,10 @@ To avoid excessive lag, queries which write large numbers of rows should be spli
 
 Despite our best efforts, it's not practical to guarantee a low-lag environment. Lag will usually be less than one second, but may occasionally be up to 30 seconds. For scalability, it's very important to keep load on the primary low, so simply sending all your queries to the masprimaryter is not the answer. So when you have a genuine need for up-to-date data, the following approach is advised:
 
-1) Do a quick query to the primary for a sequence number or timestamp
-2) Run the full query on the replica and check if it matches the data you got
-from the primary
-3) If it doesn't, run the full query on the primary
+1. Do a quick query to the primary for a sequence number or timestamp
+2. Run the full query on the replica and check if it matches the data you got
+   from the primary
+3. If it doesn't, run the full query on the primary
 
 To avoid swamping the primary every time the replicas lag, use of this approach should be kept to a minimum. In most cases you should just read from the replica and let the user deal with the delay.
 
@@ -99,14 +99,15 @@ For example, while a database read is executing, if other queries have performed
 
 MediaWiki currently supports the following query groups:
 
-* api
-    * Only use for queries specific to api.php requests; the method ApiBase::getDB() is provided for this purpose.
-* dump
-    * Only use in MediaWiki dump maintenance scripts. In such scripts, all queries, even fast ones, should use this group.
-* vslow
-    * Only use for queries that are expected to have a long execution time. For example, when calculating per-wiki site statistics.
+- api
+  - Only use for queries specific to api.php requests; the method ApiBase::getDB() is provided for this purpose.
+- dump
+  - Only use in MediaWiki dump maintenance scripts. In such scripts, all queries, even fast ones, should use this group.
+- vslow
+  - Only use for queries that are expected to have a long execution time. For example, when calculating per-wiki site statistics.
 
 Use the below example syntax to connect to a database when your query falls into one of the above 3 categories:
+
 ```php
 $lb = MediaWikiServices::getInstance()->getDBLoadBalancer();
 $lb->getConnectionRef( DB_REPLICA, 'vslow' );
@@ -116,11 +117,11 @@ $lb->getConnectionRef( DB_REPLICA, 'vslow' );
 
 MediaWiki is written primarily for use with MySQL. Queries are optimized for it and its schema is considered the canonical version. However, MediaWiki does support the following other DBMSs to varying degrees:
 
-* PostgreSQL
-* SQLite
+- PostgreSQL
+- SQLite
 
 More information can be found about each of these databases (known issues, level of support, extra configuration) in the `databases` subdirectory in this folder.
 
 ## Use of `GROUP BY`
 
-MySQL supports `GROUP BY` without checking anything in the `SELECT` clause.  Other DBMSs (especially Postgres) are stricter and require that all the  non-aggregate items in the `SELECT` clause appear in the `GROUP BY`. For this reason, it is highly discouraged to use `SELECT *` with `GROUP BY`  queries.
+MySQL supports `GROUP BY` without checking anything in the `SELECT` clause. Other DBMSs (especially Postgres) are stricter and require that all the non-aggregate items in the `SELECT` clause appear in the `GROUP BY`. For this reason, it is highly discouraged to use `SELECT *` with `GROUP BY` queries.

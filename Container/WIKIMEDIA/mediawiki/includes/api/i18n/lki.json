@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Arash71",
-			"Hosseinblue",
-			"Lakzon"
-		]
+		"authors": ["Arash71", "Hosseinblue", "Lakzon"]
 	},
 	"apihelp-main-param-action": "کام عملیات انجؤم بِ.",
 	"apihelp-main-param-format": "فرمت خروجی",

@@ -15,6 +15,7 @@ Install the gem, run `corneal new APP-NAME`, run `bundle install`, and you're al
 It uses a file structure similar to what you would see with Rails.
 
 Directory structure:
+
 ```
 ├── config.ru
 ├── Gemfile
@@ -45,12 +46,12 @@ Directory structure:
     └── spec_helper.rb
 ```
 
-
 ## Installation
 
     gem install corneal
 
 ## Commands
+
 ```
 corneal -v              # Show Corneal version number
 corneal help [COMMAND]  # Describe available commands or one specific command
@@ -59,6 +60,7 @@ corneal model NAME      # Generate a model
 corneal controller NAME # Generate a controller
 corneal scaffold NAME   # Generate a model with its associated views and controllers
 ```
+
 The controller generator also have an optional views flag `--no-views` to create controllers without views.
 
 ## Using Corneal

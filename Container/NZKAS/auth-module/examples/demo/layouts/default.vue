@@ -15,7 +15,13 @@
             <b-nav-item-dropdown :text="$auth.user.name" right>
               <b-dropdown-item @click="$auth.logout()">Logout</b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-img :src="picture" class="mt-1" rounded="circle" width="30px" height="30px" />
+            <b-img
+              :src="picture"
+              class="mt-1"
+              rounded="circle"
+              width="30px"
+              height="30px"
+            />
           </template>
           <template v-else>
             <b-dropdown-item to="/login">Login</b-dropdown-item>
@@ -30,16 +36,17 @@
 </template>
 
 <script>
-import dotProp from 'dotprop'
+import dotProp from "dotprop";
 
-export default  {
+export default {
   computed: {
     picture() {
-      return  dotProp(this.$auth.user, 'picture') ||  // OpenID
-              dotProp(this.$auth.user, 'picture.data.url') || // Facebook graph API
-              dotProp(this.$auth.user, 'avatar_url') // GitHub
-    }
-  }
-
-}
+      return (
+        dotProp(this.$auth.user, "picture") || // OpenID
+        dotProp(this.$auth.user, "picture.data.url") || // Facebook graph API
+        dotProp(this.$auth.user, "avatar_url")
+      ); // GitHub
+    },
+  },
+};
 </script>

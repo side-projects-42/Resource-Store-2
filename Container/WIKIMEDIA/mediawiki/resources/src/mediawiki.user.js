@@ -3,7 +3,7 @@
  * @singleton
  */
 /* global Uint16Array */
-( function () {
+(function () {
 	var userInfoPromise, pageviewRandomId;
 
 	/**
@@ -13,15 +13,14 @@
 	 * @return {jQuery.Promise}
 	 */
 	function getUserInfo() {
-		if ( !userInfoPromise ) {
+		if (!userInfoPromise) {
 			userInfoPromise = new mw.Api().getUserInfo();
 		}
 		return userInfoPromise;
 	}
 
 	// mw.user with the properties options and tokens gets defined in mediawiki.base.js.
-	$.extend( mw.user, {
-
+	$.extend(mw.user, {
 		/**
 		 * Generate a random user session ID.
 		 *
@@ -45,7 +44,8 @@
 		 * @return {string} 80 bit integer in hex format, padded
 		 */
 		generateRandomSessionId: function () {
-			var rnds, i,
+			var rnds,
+				i,
 				// Support: IE 11
 				crypto = window.crypto || window.msCrypto;
 
@@ -56,19 +56,19 @@
 			try {
 				// Initialize a typed array containing 5 0-initialized 16-bit integers.
 				// Note that Uint16Array is array-like but does not implement Array.
-				rnds = new Uint16Array( 5 );
+				rnds = new Uint16Array(5);
 				// Overwrite the array elements with cryptographically strong random values.
 				// https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues
 				// NOTE: this operation can fail internally (T263041), so the try-catch block
 				// must be preserved even after WebCrypto is supported in all modern (Grade A)
 				// browsers.
-				crypto.getRandomValues( rnds );
-			} catch ( e ) {
-				rnds = new Array( 5 );
+				crypto.getRandomValues(rnds);
+			} catch (e) {
+				rnds = new Array(5);
 				// 0x10000 is 2^16 so the operation below will return a number
 				// between 2^16 and zero
-				for ( i = 0; i < 5; i++ ) {
-					rnds[ i ] = Math.floor( Math.random() * 0x10000 );
+				for (i = 0; i < 5; i++) {
+					rnds[i] = Math.floor(Math.random() * 0x10000);
 				}
 			}
 
@@ -76,11 +76,13 @@
 			// Concatenation of two random integers with entropy n and m
 			// returns a string with entropy n+m if those strings are independent.
 			// Tested that below code is faster than array + loop + join.
-			return ( rnds[ 0 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
-				( rnds[ 1 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
-				( rnds[ 2 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
-				( rnds[ 3 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
-				( rnds[ 4 ] + 0x10000 ).toString( 16 ).slice( 1 );
+			return (
+				(rnds[0] + 0x10000).toString(16).slice(1) +
+				(rnds[1] + 0x10000).toString(16).slice(1) +
+				(rnds[2] + 0x10000).toString(16).slice(1) +
+				(rnds[3] + 0x10000).toString(16).slice(1) +
+				(rnds[4] + 0x10000).toString(16).slice(1)
+			);
 		},
 
 		/**
@@ -91,7 +93,7 @@
 		 * @return {string} 80 bit integer in hex format, padded
 		 */
 		getPageviewToken: function () {
-			if ( !pageviewRandomId ) {
+			if (!pageviewRandomId) {
 				pageviewRandomId = mw.user.generateRandomSessionId();
 			}
 
@@ -106,7 +108,7 @@
 		 * @return {number} Current user's id, or 0 if user is anonymous
 		 */
 		getId: function () {
-			return mw.config.get( 'wgUserId' ) || 0;
+			return mw.config.get("wgUserId") || 0;
 		},
 
 		/**
@@ -115,7 +117,7 @@
 		 * @return {string|null} User name string or null if user is anonymous
 		 */
 		getName: function () {
-			return mw.config.get( 'wgUserName' );
+			return mw.config.get("wgUserName");
 		},
 
 		/**
@@ -126,13 +128,13 @@
 		 */
 		getRegistration: function () {
 			var registration;
-			if ( mw.user.isAnon() ) {
+			if (mw.user.isAnon()) {
 				return false;
 			}
-			registration = mw.config.get( 'wgUserRegistration' );
+			registration = mw.config.get("wgUserRegistration");
 			// Registration may be unavailable if the user signed up before MediaWiki
 			// began tracking this.
-			return !registration ? null : new Date( registration );
+			return !registration ? null : new Date(registration);
 		},
 
 		/**
@@ -156,12 +158,12 @@
 		 * @return {string} Random session ID
 		 */
 		sessionId: function () {
-			var sessionId = mw.cookie.get( 'mwuser-sessionId' );
-			if ( sessionId === null ) {
+			var sessionId = mw.cookie.get("mwuser-sessionId");
+			if (sessionId === null) {
 				sessionId = mw.user.generateRandomSessionId();
 				// Setting the `expires` field to `null` means that the cookie should
 				// persist (shared across windows and tabs) until the browser is closed.
-				mw.cookie.set( 'mwuser-sessionId', sessionId, { expires: null } );
+				mw.cookie.set("mwuser-sessionId", sessionId, { expires: null });
 			}
 			return sessionId;
 		},
@@ -183,11 +185,11 @@
 		 * @param {Function} [callback]
 		 * @return {jQuery.Promise}
 		 */
-		getGroups: function ( callback ) {
-			var userGroups = mw.config.get( 'wgUserGroups', [] );
+		getGroups: function (callback) {
+			var userGroups = mw.config.get("wgUserGroups", []);
 
 			// Uses promise for backwards compatibility
-			return $.Deferred().resolve( userGroups ).then( callback );
+			return $.Deferred().resolve(userGroups).then(callback);
 		},
 
 		/**
@@ -196,12 +198,17 @@
 		 * @param {Function} [callback]
 		 * @return {jQuery.Promise}
 		 */
-		getRights: function ( callback ) {
-			return getUserInfo().then(
-				function ( userInfo ) { return userInfo.rights; },
-				function () { return []; }
-			).then( callback );
-		}
-	} );
-
-}() );
+		getRights: function (callback) {
+			return getUserInfo()
+				.then(
+					function (userInfo) {
+						return userInfo.rights;
+					},
+					function () {
+						return [];
+					}
+				)
+				.then(callback);
+		},
+	});
+})();

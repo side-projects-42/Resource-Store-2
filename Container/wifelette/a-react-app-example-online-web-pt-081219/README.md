@@ -8,7 +8,6 @@ take a look at a simple React app so we can understand it at a high level.
 In this lesson, we will start with a basic React app, examine the default
 directory structure and gain a better understanding of how these apps are built.
 
-
 ## Objectives
 
 - See an example of a basic React app
@@ -62,7 +61,6 @@ If we make any changes to our app while the server is running, it will 'hot
 reload,' and update the app in the browser. If there are app breaking errors in
 your code, the browser will display those errors instead.
 
-
 ## Reading `App.js`
 
 Open `src/App.js` in a text editor. This file contains a section of code that
@@ -74,16 +72,16 @@ looks _very much_ like HTML:
     {moment().format('MMMM Do YYYY, h:mm:ss a')}
   </header>
   <p className="App-intro">
-    In React apps, we write JSX - it looks like HTML, and uses a lot of HTML syntax.
-    JSX lets us include JavaScript functions right along with the HTML, and also
-    allows us to add in components, which are separate, self-contained chunks of JSX.
+    In React apps, we write JSX - it looks like HTML, and uses a lot of HTML
+    syntax. JSX lets us include JavaScript functions right along with the HTML,
+    and also allows us to add in components, which are separate, self-contained
+    chunks of JSX.
   </p>
   <ExampleComponent />
 </div>
 ```
 
-It also has some _JavaScript_ code in it, `moment().format('MMMM Do YYYY,
-h:mm:ss a')`. As it turns out, this is actually _all_ JavaScript. This syntax is
+It also has some _JavaScript_ code in it, `moment().format('MMMM Do YYYY, h:mm:ss a')`. As it turns out, this is actually _all_ JavaScript. This syntax is
 called JSX. It lets us write code that looks nearly identical to HTML, but
 allows us to mix in vanilla JavaScript and other neat things.
 
@@ -115,7 +113,6 @@ class App extends Component {
 }
 ```
 
-
 We will go into greater depth on things like `extends Component`, but for now,
 the key thing to understand is that all of the _visible content_ of our app is
 contained within this App class.
@@ -126,6 +123,7 @@ visible content, (i.e. by using both `App` and `ExampleComponent`.
 level, the _parent component_ of our React app content.
 
 ## Heads Up!
+
 `create-react-app` version 3.0.0 was released April 22, 2019. It
 makes a small change that defines `App` slightly differently. When you run
 `create-react-app` it may generate `class App extends Component` if you have
@@ -150,14 +148,14 @@ function App() {
 There are two other things in the `App.js` file we haven't touched on:
 
 ```js
-import React, { Component } from 'react'
-import moment from 'moment'
-import ExampleComponent from './ExampleComponent'
-import TestComponent from './TestComponent'
+import React, { Component } from "react";
+import moment from "moment";
+import ExampleComponent from "./ExampleComponent";
+import TestComponent from "./TestComponent";
 
 // class blah blah extends whatever render something etc...
 
-export default App
+export default App;
 ```
 
 `react` and `moment` are both npm packages, so what is happening here? `App.js`
@@ -172,7 +170,7 @@ In this case, `App.js` is importing files in the same directory, like
 
 OK, then what is happening with `export`? By including the `export` line, we are
 allowing _other_ files to _import_ things from the `App.js` file. There are different types
-of exports, like named exports and default exports, but we will dive deeper into this topic in a later lesson. 
+of exports, like named exports and default exports, but we will dive deeper into this topic in a later lesson.
 
 For now, we will just focus on default exports. The line, `export default App` denotes that
 our App class is the main thing we want to export from our `App.js` file. You
@@ -183,7 +181,7 @@ included, but still implied). This is the syntax to import something that is the
 default export of another file:
 
 ```js
-import App from './App';
+import App from "./App";
 ```
 
 This structure of importing and exporting allows for files to 'chain' together.
@@ -198,7 +196,6 @@ Even though React is a modern, complex framework, it still relies on a regular
 folder. Take a look at it and try identify how `public/index.html` is connected
 to `src/index.js`
 
-
 ## Deliverables
 
 There are three tests to pass in this lesson. They are all related to the
@@ -210,7 +207,6 @@ content within `App.js`.
 
 You can open two terminal tabs to both run `npm start` _and_ test the lab using
 `learn` or `npm test`.
-
 
 ## Conclusion
 
@@ -224,7 +220,6 @@ This file structure is used by Facebook, the creators of React, and is what
 set-up is abstracted away. We do not need to deal with writing the HTML document
 or connecting it with JavaScript, as it is always the boiler plate code with
 `index.html`, `index.js`, and `App.js`.
-
 
 ## Resources
 

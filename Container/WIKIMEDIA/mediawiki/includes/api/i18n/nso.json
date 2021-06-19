@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Mohau"
-		]
+		"authors": ["Mohau"]
 	},
 	"apihelp-login-example-login": "Tsena."
 }

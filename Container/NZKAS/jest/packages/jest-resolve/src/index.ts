@@ -43,7 +43,7 @@ const nodePaths = process.env.NODE_PATH
   ? process.env.NODE_PATH.split(path.delimiter)
       .filter(Boolean)
       // The resolver expects absolute paths.
-      .map(p => path.resolve(resolvedCwd, p))
+      .map((p) => path.resolve(resolvedCwd, p))
   : null;
 
 /* eslint-disable-next-line no-redeclare */
@@ -116,12 +116,12 @@ class Resolver {
 
     if (this._supportsNativePlatform) {
       extensions.unshift(
-        ...this._options.extensions.map(ext => '.' + NATIVE_PLATFORM + ext),
+        ...this._options.extensions.map((ext) => '.' + NATIVE_PLATFORM + ext),
       );
     }
     if (defaultPlatform) {
       extensions.unshift(
-        ...this._options.extensions.map(ext => '.' + defaultPlatform + ext),
+        ...this._options.extensions.map((ext) => '.' + defaultPlatform + ext),
       );
     }
 
@@ -347,13 +347,13 @@ class Resolver {
 
     if (this._supportsNativePlatform) {
       extensions.unshift(
-        ...this._options.extensions.map(ext => '.' + NATIVE_PLATFORM + ext),
+        ...this._options.extensions.map((ext) => '.' + NATIVE_PLATFORM + ext),
       );
     }
 
     if (defaultPlatform) {
       extensions.unshift(
-        ...this._options.extensions.map(ext => '.' + defaultPlatform + ext),
+        ...this._options.extensions.map((ext) => '.' + defaultPlatform + ext),
       );
     }
 

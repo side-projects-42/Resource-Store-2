@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"AnakngAraw"
-		]
-	},
-	"alltimezones-desc": "Nagdaragdag ng isang tatak upang maipakita ang mga petsa sa lahat ng mga sona ng oras"
+  "@metadata": {
+    "authors": ["AnakngAraw"]
+  },
+  "alltimezones-desc": "Nagdaragdag ng isang tatak upang maipakita ang mga petsa sa lahat ng mga sona ng oras"
 }

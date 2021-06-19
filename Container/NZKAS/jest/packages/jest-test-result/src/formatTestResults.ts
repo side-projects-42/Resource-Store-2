@@ -75,9 +75,9 @@ export default function formatTestResults(
   codeCoverageFormatter?: CodeCoverageFormatter | null,
   reporter?: CodeCoverageReporter,
 ): FormattedTestResults {
-  const formatter = codeCoverageFormatter || (coverage => coverage);
+  const formatter = codeCoverageFormatter || ((coverage) => coverage);
 
-  const testResults = results.testResults.map(testResult =>
+  const testResults = results.testResults.map((testResult) =>
     formatResult(testResult, formatter, reporter),
   );
 

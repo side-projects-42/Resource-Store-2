@@ -1,5 +1,5 @@
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
 	/**
 	 * Utility library for viewport-related functions
@@ -12,7 +12,6 @@
 	 * @singleton
 	 */
 	var viewport = {
-
 		/**
 		 * This is a private method pulled inside the module for testing purposes.
 		 *
@@ -21,7 +20,7 @@
 		 * @return {Object} Viewport positions
 		 */
 		makeViewportFromWindow: function () {
-			var $window = $( window ),
+			var $window = $(window),
 				scrollTop = $window.scrollTop(),
 				scrollLeft = $window.scrollLeft();
 
@@ -29,7 +28,10 @@
 				top: scrollTop,
 				left: scrollLeft,
 				right: scrollLeft + $window.width(),
-				bottom: ( window.innerHeight ? window.innerHeight : $window.height() ) + scrollTop
+				bottom:
+					(window.innerHeight
+						? window.innerHeight
+						: $window.height()) + scrollTop,
 			};
 		},
 
@@ -51,26 +53,26 @@
 		 *
 		 * @return {boolean}
 		 */
-		isElementInViewport: function ( el, rectangle ) {
-			var $el = $( el ),
+		isElementInViewport: function (el, rectangle) {
+			var $el = $(el),
 				offset = $el.offset(),
 				rect = {
 					height: $el.height(),
 					width: $el.width(),
 					top: offset.top,
-					left: offset.left
+					left: offset.left,
 				},
 				viewportRect = rectangle || this.makeViewportFromWindow();
 
 			return (
 				// Top border must be above viewport's bottom
-				( viewportRect.bottom >= rect.top ) &&
+				viewportRect.bottom >= rect.top &&
 				// Left border must be before viewport's right border
-				( viewportRect.right >= rect.left ) &&
+				viewportRect.right >= rect.left &&
 				// Bottom border must be below viewport's top
-				( viewportRect.top <= rect.top + rect.height ) &&
+				viewportRect.top <= rect.top + rect.height &&
 				// Right border must be after viewport's left border
-				( viewportRect.left <= rect.left + rect.width )
+				viewportRect.left <= rect.left + rect.width
 			);
 		},
 
@@ -85,18 +87,19 @@
 		 *  Defaults to viewport made from `window`.
 		 * @return {boolean}
 		 */
-		isElementCloseToViewport: function ( el, threshold, rectangle ) {
-			var viewportRect = rectangle ? $.extend( {}, rectangle ) : this.makeViewportFromWindow();
+		isElementCloseToViewport: function (el, threshold, rectangle) {
+			var viewportRect = rectangle
+				? $.extend({}, rectangle)
+				: this.makeViewportFromWindow();
 			threshold = threshold || 50;
 
 			viewportRect.top -= threshold;
 			viewportRect.left -= threshold;
 			viewportRect.right += threshold;
 			viewportRect.bottom += threshold;
-			return this.isElementInViewport( el, viewportRect );
-		}
-
+			return this.isElementInViewport(el, viewportRect);
+		},
 	};
 
 	mw.viewport = viewport;
-}() );
+})();

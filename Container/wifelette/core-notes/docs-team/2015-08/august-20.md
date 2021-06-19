@@ -2,23 +2,22 @@
 
 ## Attendees
 
-* BM - Brendan
-* MB - Matthew
-* MK - Michael
-* TD - Tom Dale
-* TG - Trek
-* YK - Yehuda
-* LK - locks
-
+- BM - Brendan
+- MB - Matthew
+- MK - Michael
+- TD - Tom Dale
+- TG - Trek
+- YK - Yehuda
+- LK - locks
 
 ## Topics
 
 Guides:
-* Feature flag infrastruture [Issue #2311](https://github.com/emberjs/website/issues/2311)
-* New module structure
-* rootURL vs baseURL
-* Getting Started Guide (Tutorial)
 
+- Feature flag infrastruture [Issue #2311](https://github.com/emberjs/website/issues/2311)
+- New module structure
+- rootURL vs baseURL
+- Getting Started Guide (Tutorial)
 
 ## Minutes
 

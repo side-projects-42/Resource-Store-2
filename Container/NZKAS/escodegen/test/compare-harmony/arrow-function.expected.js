@@ -1,11 +1,10 @@
-e => {
-    print('hello world');
+(e) => {
+  print("hello world");
 };
 (e1, e2, e3) => {
-    print('hello world');
+  print("hello world");
 };
-e => e;
+(e) => e;
 (e1, e2, e3) => e;
-e => {
-};
-e => 20 + 20;
+(e) => {};
+(e) => 20 + 20;

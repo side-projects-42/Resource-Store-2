@@ -43,14 +43,14 @@
 
 ## Beta release
 
-- ember-cli betas, do they include stable ember by default, or also ember betas? 
+- ember-cli betas, do they include stable ember by default, or also ember betas?
   - general seems to believe we should stick to stable releases of ember.
   - release final ember-cli beta with new stable releases of ember and ember-data?
 
 ### YUIDoc output
 
 - Publish the YUIDocs to ember-cli.com/api? **Yes.**
-- Versioned docs will come later–one step at  a time.
+- Versioned docs will come later–one step at a time.
   - Can we rope in the learning team?
 - We should start to enforce clearer documentation of things in PRs.
 - No need to link them at first, let's start by getting them published at all.

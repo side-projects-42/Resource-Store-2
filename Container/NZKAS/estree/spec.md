@@ -6,8 +6,8 @@ ESTree AST nodes are represented as `Node` objects, which may have any prototype
 
 ```js
 interface Node {
-    type: string;
-    loc: SourceLocation | null;
+  type: string;
+  loc: SourceLocation | null;
 }
 ```
 
@@ -17,9 +17,9 @@ The `loc` field represents the source location information of the node. If the n
 
 ```js
 interface SourceLocation {
-    source: string | null;
-    start: Position;
-    end: Position;
+  source: string | null;
+  start: Position;
+  end: Position;
 }
 ```
 
@@ -43,7 +43,6 @@ interface Program <: Node {
 
 A complete program source tree.
 
-
 # Functions
 
 ```js
@@ -58,7 +57,6 @@ interface Function <: Node {
 
 A function declaration or expression.
 
-
 # Statements
 
 ```js
@@ -66,7 +64,6 @@ interface Statement <: Node { }
 ```
 
 Any statement.
-
 
 ## EmptyStatement
 
@@ -77,7 +74,6 @@ interface EmptyStatement <: Statement {
 ```
 
 An empty statement, i.e., a solitary semicolon.
-
 
 ## BlockStatement
 
@@ -90,7 +86,6 @@ interface BlockStatement <: Statement {
 
 A block statement, i.e., a sequence of statements surrounded by braces.
 
-
 ## ExpressionStatement
 
 ```js
@@ -101,7 +96,6 @@ interface ExpressionStatement <: Statement {
 ```
 
 An expression statement, i.e., a statement consisting of a single expression.
-
 
 ## IfStatement
 
@@ -116,7 +110,6 @@ interface IfStatement <: Statement {
 
 An `if` statement.
 
-
 ## LabeledStatement
 
 ```js
@@ -129,7 +122,6 @@ interface LabeledStatement <: Statement {
 
 A labeled statement, i.e., a statement prefixed by a `break`/`continue` label.
 
-
 ## BreakStatement
 
 ```js
@@ -140,7 +132,6 @@ interface BreakStatement <: Statement {
 ```
 
 A `break` statement.
-
 
 ## ContinueStatement
 
@@ -153,7 +144,6 @@ interface ContinueStatement <: Statement {
 
 A `continue` statement.
 
-
 ## WithStatement
 
 ```js
@@ -165,7 +155,6 @@ interface WithStatement <: Statement {
 ```
 
 A `with` statement.
-
 
 ## SwitchStatement
 
@@ -180,7 +169,6 @@ interface SwitchStatement <: Statement {
 
 A `switch` statement.
 
-
 ## ReturnStatement
 
 ```js
@@ -192,7 +180,6 @@ interface ReturnStatement <: Statement {
 
 A `return` statement.
 
-
 ## ThrowStatement
 
 ```js
@@ -203,7 +190,6 @@ interface ThrowStatement <: Statement {
 ```
 
 A `throw` statement.
-
 
 ## TryStatement
 
@@ -218,7 +204,6 @@ interface TryStatement <: Statement {
 
 A `try` statement. If `handler` is `null` then `finalizer` must be a `BlockStatement`.
 
-
 ## WhileStatement
 
 ```js
@@ -231,7 +216,6 @@ interface WhileStatement <: Statement {
 
 A `while` statement.
 
-
 ## DoWhileStatement
 
 ```js
@@ -243,7 +227,6 @@ interface DoWhileStatement <: Statement {
 ```
 
 A `do`/`while` statement.
-
 
 ## ForStatement
 
@@ -259,7 +242,6 @@ interface ForStatement <: Statement {
 
 A `for` statement.
 
-
 ## ForInStatement
 
 ```js
@@ -273,7 +255,6 @@ interface ForInStatement <: Statement {
 
 A `for`/`in` statement.
 
-
 ## DebuggerStatement
 
 ```js
@@ -284,7 +265,6 @@ interface DebuggerStatement <: Statement {
 
 A `debugger` statement.
 
-
 # Declarations
 
 ```js
@@ -292,7 +272,6 @@ interface Declaration <: Statement { }
 ```
 
 Any declaration node. Note that declarations are considered statements; this is because declarations can appear in any statement context.
-
 
 ## FunctionDeclaration
 
@@ -304,7 +283,6 @@ interface FunctionDeclaration <: Function, Declaration {
 ```
 
 A function declaration. Note that unlike in the parent interface `Function`, the `id` cannot be `null`.
-
 
 ## VariableDeclaration
 
@@ -318,7 +296,6 @@ interface VariableDeclaration <: Declaration {
 
 A variable declaration.
 
-
 ## VariableDeclarator
 
 ```js
@@ -331,7 +308,6 @@ interface VariableDeclarator <: Node {
 
 A variable declarator.
 
-
 # Expressions
 
 ```js
@@ -339,7 +315,6 @@ interface Expression <: Node { }
 ```
 
 Any expression node. Since the left-hand side of an assignment may be any expression in general, an expression can also be a pattern.
-
 
 ## ThisExpression
 
@@ -350,7 +325,6 @@ interface ThisExpression <: Expression {
 ```
 
 A `this` expression.
-
 
 ## ArrayExpression
 
@@ -363,7 +337,6 @@ interface ArrayExpression <: Expression {
 
 An array expression.
 
-
 ## ObjectExpression
 
 ```js
@@ -374,7 +347,6 @@ interface ObjectExpression <: Expression {
 ```
 
 An object expression.
-
 
 ## Property
 
@@ -389,7 +361,6 @@ interface Property <: Node {
 
 A literal property in an object expression can have either a string or number as its `value`. Ordinary property initializers have a `kind` value `"init"`; getters and setters have the kind values `"get"` and `"set"`, respectively.
 
-
 ## FunctionExpression
 
 ```js
@@ -399,7 +370,6 @@ interface FunctionExpression <: Function, Expression {
 ```
 
 A `function` expression.
-
 
 ## SequenceExpression
 
@@ -411,7 +381,6 @@ interface SequenceExpression <: Expression {
 ```
 
 A sequence expression, i.e., a comma-separated sequence of expressions.
-
 
 ## UnaryExpression
 
@@ -426,7 +395,6 @@ interface UnaryExpression <: Expression {
 
 A unary operator expression.
 
-
 ## BinaryExpression
 
 ```js
@@ -439,7 +407,6 @@ interface BinaryExpression <: Expression {
 ```
 
 A binary operator expression.
-
 
 ## AssignmentExpression
 
@@ -454,7 +421,6 @@ interface AssignmentExpression <: Expression {
 
 An assignment operator expression.
 
-
 ## UpdateExpression
 
 ```js
@@ -467,7 +433,6 @@ interface UpdateExpression <: Expression {
 ```
 
 An update (increment or decrement) operator expression.
-
 
 ## LogicalExpression
 
@@ -482,7 +447,6 @@ interface LogicalExpression <: Expression {
 
 A logical operator expression.
 
-
 ## ConditionalExpression
 
 ```js
@@ -496,7 +460,6 @@ interface ConditionalExpression <: Expression {
 
 A conditional expression, i.e., a ternary `?`/`:` expression.
 
-
 ## CallExpression
 
 ```js
@@ -509,7 +472,6 @@ interface CallExpression <: Expression {
 
 A function or method call expression.
 
-
 ## NewExpression
 
 ```js
@@ -519,7 +481,6 @@ interface NewExpression <: CallExpression {
 ```
 
 A `new` expression.
-
 
 ## MemberExpression
 
@@ -534,7 +495,6 @@ interface MemberExpression <: Expression {
 
 A member expression. If `computed === true`, the node corresponds to a computed `e1[e2]` expression and property is an `Expression`. If `computed === false`, the node corresponds to a static `e1.x` expression and `property` is an `Identifier`.
 
-
 # Patterns
 
 Destructuring binding and assignment are not part of ES6, but all binding positions accept `Pattern` to allow for destructuring in ES6. Nevertheless, for ES5, the only `Pattern` subtype is `Identifier`.
@@ -542,7 +502,6 @@ Destructuring binding and assignment are not part of ES6, but all binding positi
 ```js
 interface Pattern <: Node { }
 ```
-
 
 # Clauses
 
@@ -558,7 +517,6 @@ interface SwitchCase <: Node {
 
 A `case` (if `test` is an `Expression`) or `default` (if `test === null`) clause in the body of a `switch` statement.
 
-
 ## CatchClause
 
 ```js
@@ -572,7 +530,6 @@ interface CatchClause <: Node {
 
 A `catch` clause following a `try` block.
 
-
 # Miscellaneous
 
 ## Identifier
@@ -585,7 +542,6 @@ interface Identifier <: Node, Expression, Pattern {
 ```
 
 An identifier. Note that an identifier may be an expression or a destructuring pattern.
-
 
 ## Literal
 
@@ -623,7 +579,6 @@ enum UnaryOperator {
 
 A unary operator token.
 
-
 ## BinaryOperator
 
 ```js
@@ -639,7 +594,6 @@ enum BinaryOperator {
 
 A binary operator token.
 
-
 ## LogicalOperator
 
 ```js
@@ -649,7 +603,6 @@ enum LogicalOperator {
 ```
 
 A logical operator token.
-
 
 ## AssignmentOperator
 
@@ -662,7 +615,6 @@ enum AssignmentOperator {
 ```
 
 An assignment operator token.
-
 
 ## UpdateOperator
 

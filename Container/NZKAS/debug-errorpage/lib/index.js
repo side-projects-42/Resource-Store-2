@@ -8,8 +8,8 @@
 //------------------------------------------------------------------------------
 
 var fs = require("fs"),
-    path = require("path"),
-    mustache = require("mustache");
+  path = require("path"),
+  mustache = require("mustache");
 
 //------------------------------------------------------------------------------
 // Private
@@ -25,31 +25,33 @@ var LINE_PATTERN = /\((.*?):(\d+):\d+\)$/;
  * @returns {Object} Containing a filename key and a lineNumber key.
  */
 function processStack(stack) {
+  var filename = "",
+    lineNumber = 0,
+    lines = stack.split("\n"),
+    matches,
+    i,
+    len;
 
-    var filename = "",
-        lineNumber = 0,
-        lines = stack.split("\n"),
-        matches,
-        i, len;
+  for (i = 0, len = lines.length; i < len; i++) {
+    matches = lines[i].match(LINE_PATTERN);
 
-    for (i = 0, len = lines.length; i < len; i++) {
-        matches = lines[i].match(LINE_PATTERN);
-
-        if (matches) {
-
-            // skip over the Node.js builtins and any external dependencies
-            if (matches[1] !== "module.js" && matches[1].indexOf("node_modules") === -1) {
-                filename = matches[1];
-                lineNumber = Number(matches[2]);
-                break;
-            }
-        }
+    if (matches) {
+      // skip over the Node.js builtins and any external dependencies
+      if (
+        matches[1] !== "module.js" &&
+        matches[1].indexOf("node_modules") === -1
+      ) {
+        filename = matches[1];
+        lineNumber = Number(matches[2]);
+        break;
+      }
     }
+  }
 
-    return {
-        filename: filename,
-        lineNumber: lineNumber
-    };
+  return {
+    filename: filename,
+    lineNumber: lineNumber,
+  };
 }
 
 /**
@@ -63,73 +65,77 @@ function processStack(stack) {
  * @private
  */
 function getFileSnippet(filename, lineNumber, callback) {
-    fs.readFile(filename, "utf8", function(err, code) {
+  fs.readFile(filename, "utf8", function (err, code) {
+    if (err) {
+      callback(err);
+    }
 
-        if (err) {
-            callback(err);
-        }
+    var lines = code.split(/\r?\n/g),
+      startLine = Math.max(0, lineNumber - 5),
+      stopLine = Math.min(lines.length, lineNumber + 5),
+      neededLines = lines.slice(startLine, stopLine);
 
-        var lines = code.split(/\r?\n/g),
-            startLine = Math.max(0, lineNumber - 5),
-            stopLine = Math.min(lines.length, lineNumber + 5),
-            neededLines = lines.slice(startLine, stopLine);
-
-        callback(null, neededLines.map(function(value, i) {
-            return {
-                number: startLine + i,
-                error: (startLine + i) === lineNumber,
-                code: value.replace("\t", "    ")
-            };
-        }));
-    });
+    callback(
+      null,
+      neededLines.map(function (value, i) {
+        return {
+          number: startLine + i,
+          error: startLine + i === lineNumber,
+          code: value.replace("\t", "    "),
+        };
+      })
+    );
+  });
 }
 
 //------------------------------------------------------------------------------
 // Public
 //------------------------------------------------------------------------------
 
-module.exports = function(err, req, res, next) {
+module.exports = function (err, req, res, next) {
+  var accept = req.headers.accept || "",
+    filename = err.fileName || err.filename || "",
+    lineNumber = err.lineNumber || "",
+    status = err.status || 500,
+    result;
 
-    var accept = req.headers.accept || "",
-        filename = err.fileName || err.filename || "",
-        lineNumber = err.lineNumber || "",
-        status = err.status || 500,
-        result;
+  if (!filename) {
+    result = processStack(err.stack);
+    filename = result.filename;
+    lineNumber = result.lineNumber - 1; // always off by one
+  }
 
-    if (!filename) {
-        result = processStack(err.stack);
-        filename = result.filename;
-        lineNumber = result.lineNumber - 1;     // always off by one
-    }
-
-    if (/html/.test(accept)) {
-
-        fs.readFile(path.resolve(__dirname, "../public/error.html"), "utf8", function(e, template) {
-
-            getFileSnippet(filename, lineNumber, function(e, lines) {
-
-                res.setHeader("Content-Type", "text/html");
-                res.send(status, mustache.render(template, {
-                    message: err.message,
-                    stack: err.stack,
-                    lines: lines,
-                    filename: filename,
-                    lineNumber: lineNumber,
-                    status: status
-                }));
-            });
-
+  if (/html/.test(accept)) {
+    fs.readFile(
+      path.resolve(__dirname, "../public/error.html"),
+      "utf8",
+      function (e, template) {
+        getFileSnippet(filename, lineNumber, function (e, lines) {
+          res.setHeader("Content-Type", "text/html");
+          res.send(
+            status,
+            mustache.render(template, {
+              message: err.message,
+              stack: err.stack,
+              lines: lines,
+              filename: filename,
+              lineNumber: lineNumber,
+              status: status,
+            })
+          );
         });
-
-    } else if (/json/.test(accept)) {
-        res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify({
-            message: err.message,
-            stack: err.stack
-        }));
-    } else {
-        res.setHeader("Content-Type", "text/plain");
-        res.end(err.stack);
-    }
-
+      }
+    );
+  } else if (/json/.test(accept)) {
+    res.setHeader("Content-Type", "application/json");
+    res.end(
+      JSON.stringify({
+        message: err.message,
+        stack: err.stack,
+      })
+    );
+  } else {
+    res.setHeader("Content-Type", "text/plain");
+    res.end(err.stack);
+  }
 };

@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"J budissin",
-			"Michawiki"
-		]
+		"authors": ["J budissin", "Michawiki"]
 	},
 	"ooui-outline-control-move-down": "Zapisk dele přesunyć",
 	"ooui-outline-control-move-up": "Zapisk horje přesunyć",

@@ -98,7 +98,7 @@ GC: This feature flag has been disabled at this point, can we remove associated 
 
 YK: The issue is that we cannot support, the old glimmer v1 engine is broken in ways that prevent the tests to pass with this feature enabled.
 
-SP: Feature flags are intended to be enabled/disabled/removed/etc, this is exactly what the point of feature flagging is.  We should remove it.
+SP: Feature flags are intended to be enabled/disabled/removed/etc, this is exactly what the point of feature flagging is. We should remove it.
 
 **next steps for https://github.com/emberjs/ember.js/pull/12575**
 

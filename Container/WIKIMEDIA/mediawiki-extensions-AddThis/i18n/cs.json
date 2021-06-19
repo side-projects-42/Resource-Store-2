@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Vks"
-		]
-	},
-	"addthis": "Sdílet"
+  "@metadata": {
+    "authors": ["Vks"]
+  },
+  "addthis": "Sdílet"
 }

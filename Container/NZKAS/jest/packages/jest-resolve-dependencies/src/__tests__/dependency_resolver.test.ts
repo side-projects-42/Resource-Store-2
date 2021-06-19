@@ -18,11 +18,11 @@ let dependencyResolver: DependencyResolver;
 let Runtime;
 let config: Config.ProjectConfig;
 const cases: {[key: string]: jest.Mock} = {
-  fancyCondition: jest.fn(path => path.length > 10),
-  testRegex: jest.fn(path => /.test.js$/.test(path)),
+  fancyCondition: jest.fn((path) => path.length > 10),
+  testRegex: jest.fn((path) => /.test.js$/.test(path)),
 };
 const filter = (path: Config.Path) =>
-  Object.keys(cases).every(key => cases[key](path));
+  Object.keys(cases).every((key) => cases[key](path));
 
 beforeEach(() => {
   Runtime = require('jest-runtime');

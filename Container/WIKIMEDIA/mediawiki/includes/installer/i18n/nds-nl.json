@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Servien"
-		]
+		"authors": ["Servien"]
 	},
 	"config-help": "hulpe",
 	"mainpagetext": "'''’t Installeren van de MediaWiki programmatuur is succesvol.'''",

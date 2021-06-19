@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Amire80",
-			"Умар"
-		]
+		"authors": ["Amire80", "Умар"]
 	},
 	"ooui-outline-control-move-down": "Лаха яккха элемент",
 	"ooui-outline-control-move-up": "Лаккха яккха элемент",

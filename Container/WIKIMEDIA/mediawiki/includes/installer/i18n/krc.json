@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ernác",
-			"Iltever"
-		]
+		"authors": ["Ernác", "Iltever"]
 	},
 	"config-desc": "MediaWiki инсталлятор",
 	"config-title": "MediaWiki $1 инсталляциясы",

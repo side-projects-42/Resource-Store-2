@@ -88,12 +88,12 @@ export function formatHandleErrors(
 
   return (
     errors
-      .map(err =>
+      .map((err) =>
         formatExecError(err, config, {noStackTrace: false}, undefined, true),
       )
       // E.g. timeouts might give multiple traces to the same line of code
       // This hairy filtering tries to remove entries with duplicate stack traces
-      .filter(handle => {
+      .filter((handle) => {
         const ansiFree: string = stripAnsi(handle);
 
         const match = ansiFree.match(/\s+at(.*)/);

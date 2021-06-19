@@ -39,7 +39,7 @@ module.exports = function createRuntime(filename, config) {
   environment.global.console = console;
   return Runtime.createHasteMap(config, {maxWorkers: 1, resetCache: false})
     .build()
-    .then(hasteMap => {
+    .then((hasteMap) => {
       const runtime = new Runtime(
         config,
         environment,

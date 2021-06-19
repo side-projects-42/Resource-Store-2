@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"FunPL",
-			"Pietrasagh",
-			"Rail",
-			"Rainbow P",
-			"Woytecr"
-		]
+		"authors": ["FunPL", "Pietrasagh", "Rail", "Rainbow P", "Woytecr"]
 	},
 	"rest-prefix-mismatch": "Żądana ścieżka ($1) nie była wewnątrz ścieżki root REST API ($2)",
 	"rest-wrong-method": "Żądana metoda ($1) nie była{{PLURAL:$3|dozwoloną metodą dla tej ścieżki|jedną z dozwolonych metod dla tej ścieżki}} ($2)",

@@ -4,8 +4,7 @@
  * @copyright 2011-2016 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * MediaWiki media resource queue.
 	 *
@@ -17,15 +16,15 @@
 	 * @cfg {number} maxHeight The maximum height of the media, used in the
 	 *  search call to the API.
 	 */
-	mw.widgets.MediaSearchQueue = function MwWidgetsMediaSearchQueue( config ) {
+	mw.widgets.MediaSearchQueue = function MwWidgetsMediaSearchQueue(config) {
 		config = config || {};
 
 		// Parent constructor
-		mw.widgets.MediaSearchQueue.super.call( this, config );
+		mw.widgets.MediaSearchQueue.super.call(this, config);
 	};
 
 	/* Inheritance */
-	OO.inheritClass( mw.widgets.MediaSearchQueue, mw.widgets.MediaResourceQueue );
+	OO.inheritClass(mw.widgets.MediaSearchQueue, mw.widgets.MediaResourceQueue);
 
 	/**
 	 * Override parent method to set up the providers according to
@@ -34,30 +33,30 @@
 	 * @return {jQuery.Promise} Promise that resolves when the resources are set up
 	 */
 	mw.widgets.MediaSearchQueue.prototype.setup = function () {
-		var i, len,
+		var i,
+			len,
 			queue = this;
 
-		return this.getFileRepos().then( function ( sources ) {
-			if ( queue.providers.length === 0 ) {
+		return this.getFileRepos().then(function (sources) {
+			if (queue.providers.length === 0) {
 				// Set up the providers
-				for ( i = 0, len = sources.length; i < len; i++ ) {
-					queue.addProvider( new mw.widgets.MediaSearchProvider(
-						sources[ i ].apiurl,
-						{
-							name: sources[ i ].name,
-							local: sources[ i ].local,
-							scriptDirUrl: sources[ i ].scriptDirUrl,
+				for (i = 0, len = sources.length; i < len; i++) {
+					queue.addProvider(
+						new mw.widgets.MediaSearchProvider(sources[i].apiurl, {
+							name: sources[i].name,
+							local: sources[i].local,
+							scriptDirUrl: sources[i].scriptDirUrl,
 							userParams: {
-								gsrsearch: queue.getSearchQuery()
+								gsrsearch: queue.getSearchQuery(),
 							},
 							staticParams: {
-								iiurlheight: queue.getMaxHeight()
-							}
-						} )
+								iiurlheight: queue.getMaxHeight(),
+							},
+						})
 					);
 				}
 			}
-		} );
+		});
 	};
 
 	/**
@@ -65,8 +64,10 @@
 	 *
 	 * @param {string} searchQuery API search query
 	 */
-	mw.widgets.MediaSearchQueue.prototype.setSearchQuery = function ( searchQuery ) {
-		this.setParams( { gsrsearch: searchQuery } );
+	mw.widgets.MediaSearchQueue.prototype.setSearchQuery = function (
+		searchQuery
+	) {
+		this.setParams({ gsrsearch: searchQuery });
 	};
 
 	/**
@@ -77,4 +78,4 @@
 	mw.widgets.MediaSearchQueue.prototype.getSearchQuery = function () {
 		return this.getParams().gsrsearch;
 	};
-}() );
+})();

@@ -1,4 +1,4 @@
-var TextParamMixin = require( './TextParamMixin.js' );
+var TextParamMixin = require("./TextParamMixin.js");
 
 /**
  * A wrapper for OO.ui.TextInputWidget
@@ -8,12 +8,12 @@ var TextParamMixin = require( './TextParamMixin.js' );
  * @constructor
  * @param {Object} config Configuration options
  */
-function LimitParamWidget( config ) {
-	LimitParamWidget.parent.call( this, config );
+function LimitParamWidget(config) {
+	LimitParamWidget.parent.call(this, config);
 }
 
-OO.inheritClass( LimitParamWidget, OO.ui.TextInputWidget );
-OO.mixinClass( LimitParamWidget, TextParamMixin );
+OO.inheritClass(LimitParamWidget, OO.ui.TextInputWidget);
+OO.mixinClass(LimitParamWidget, TextParamMixin);
 
 /**
  * For a limit parameter, a value can either be "max" or a number
@@ -30,17 +30,19 @@ OO.mixinClass( LimitParamWidget, TextParamMixin );
  * @param {string} value
  * @return {boolean}
  */
-LimitParamWidget.prototype.validate = function ( value ) {
+LimitParamWidget.prototype.validate = function (value) {
 	var n;
-	if ( value === 'max' ) {
+	if (value === "max") {
 		return true;
 	} else {
 		n = +value;
-		return !isNaN( n ) &&
-			isFinite( n ) &&
-			Math.floor( n ) === n &&
+		return (
+			!isNaN(n) &&
+			isFinite(n) &&
+			Math.floor(n) === n &&
 			n >= this.paramInfo.min &&
-			n <= this.paramInfo.apiSandboxMax;
+			n <= this.paramInfo.apiSandboxMax
+		);
 	}
 };
 

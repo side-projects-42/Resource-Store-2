@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Papuass",
-			"Silraks"
-		]
+		"authors": ["Papuass", "Silraks"]
 	},
 	"apihelp-block-summary": "Bloķēt lietotāju",
 	"apihelp-block-param-reason": "Bloķēšanas iemesls:",

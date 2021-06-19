@@ -1,6 +1,6 @@
-@import 'mediawiki.ui/variables.less';
-@import 'mw.rcfilters.mixins.less';
-@import 'mw.rcfilters.variables.less';
+@import "mediawiki.ui/variables.less";
+@import "mw.rcfilters.mixins.less";
+@import "mw.rcfilters.variables.less";
 
 .mw-rcfilters-ui-highlightColorPickerWidget {
 	&-label {
@@ -26,7 +26,9 @@
 			}
 
 			// Make the rule much more specific to override OOUI
-			&.oo-ui-buttonElement-frameless > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon.oo-ui-icon-check {
+			&.oo-ui-buttonElement-frameless
+				> .oo-ui-buttonElement-button
+				> .oo-ui-iconElement-icon.oo-ui-icon-check {
 				// Align centered horizontally within the color circle
 				top: -2px;
 				left: 4 / @font-size-system-ui / @font-size-vector;
@@ -39,7 +41,9 @@
 				// Override `border-style` to `dashed`
 				border-style: dashed;
 
-				&.oo-ui-buttonElement-frameless > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon.oo-ui-icon-check {
+				&.oo-ui-buttonElement-frameless
+					> .oo-ui-buttonElement-button
+					> .oo-ui-iconElement-icon.oo-ui-icon-check {
 					// Align centered horizontally in the dashed white circle with 1px border-width
 					left: 3 / @font-size-system-ui / @font-size-vector;
 				}

@@ -22,7 +22,7 @@ namespace JestMock {
   export type MockFunctionMetadata<
     T,
     Y extends Array<unknown>,
-    Type = MockFunctionMetadataType
+    Type = MockFunctionMetadataType,
   > = {
     ref?: number;
     members?: {[key: string]: MockFunctionMetadata<T, Y>};
@@ -81,11 +81,11 @@ type MockFunctionConfig = {
 
 // see https://github.com/Microsoft/TypeScript/issues/25215
 type NonFunctionPropertyNames<T> = {
-  [K in keyof T]: T[K] extends (...args: Array<any>) => any ? never : K
+  [K in keyof T]: T[K] extends (...args: Array<any>) => any ? never : K;
 }[keyof T] &
   string;
 type FunctionPropertyNames<T> = {
-  [K in keyof T]: T[K] extends (...args: Array<any>) => any ? K : never
+  [K in keyof T]: T[K] extends (...args: Array<any>) => any ? K : never;
 }[keyof T] &
   string;
 
@@ -185,17 +185,17 @@ function matchArity(fn: Function, length: number): Function {
 
   switch (length) {
     case 1:
-      mockConstructor = function(this: unknown, _a: unknown) {
+      mockConstructor = function (this: unknown, _a: unknown) {
         return fn.apply(this, arguments);
       };
       break;
     case 2:
-      mockConstructor = function(this: unknown, _a: unknown, _b: unknown) {
+      mockConstructor = function (this: unknown, _a: unknown, _b: unknown) {
         return fn.apply(this, arguments);
       };
       break;
     case 3:
-      mockConstructor = function(
+      mockConstructor = function (
         this: unknown,
         _a: unknown,
         _b: unknown,
@@ -205,7 +205,7 @@ function matchArity(fn: Function, length: number): Function {
       };
       break;
     case 4:
-      mockConstructor = function(
+      mockConstructor = function (
         this: unknown,
         _a: unknown,
         _b: unknown,
@@ -216,7 +216,7 @@ function matchArity(fn: Function, length: number): Function {
       };
       break;
     case 5:
-      mockConstructor = function(
+      mockConstructor = function (
         this: unknown,
         _a: unknown,
         _b: unknown,
@@ -228,7 +228,7 @@ function matchArity(fn: Function, length: number): Function {
       };
       break;
     case 6:
-      mockConstructor = function(
+      mockConstructor = function (
         this: unknown,
         _a: unknown,
         _b: unknown,
@@ -241,7 +241,7 @@ function matchArity(fn: Function, length: number): Function {
       };
       break;
     case 7:
-      mockConstructor = function(
+      mockConstructor = function (
         this: unknown,
         _a: unknown,
         _b: unknown,
@@ -255,7 +255,7 @@ function matchArity(fn: Function, length: number): Function {
       };
       break;
     case 8:
-      mockConstructor = function(
+      mockConstructor = function (
         this: unknown,
         _a: unknown,
         _b: unknown,
@@ -270,7 +270,7 @@ function matchArity(fn: Function, length: number): Function {
       };
       break;
     case 9:
-      mockConstructor = function(
+      mockConstructor = function (
         this: unknown,
         _a: unknown,
         _b: unknown,
@@ -286,7 +286,7 @@ function matchArity(fn: Function, length: number): Function {
       };
       break;
     default:
-      mockConstructor = function(this: unknown) {
+      mockConstructor = function (this: unknown) {
         return fn.apply(this, arguments);
       };
       break;
@@ -532,7 +532,7 @@ class ModuleMockerClass {
         {};
       const prototypeSlots = this._getSlots(prototype);
       const mocker = this;
-      const mockConstructor = matchArity(function(this: T, ...args: Y) {
+      const mockConstructor = matchArity(function (this: T, ...args: Y) {
         const mockState = mocker._ensureMockState(f);
         const mockConfig = mocker._ensureMockConfig(f);
         mockState.instances.push(this);
@@ -542,7 +542,7 @@ class ModuleMockerClass {
         // issues caused by recursion where results can be recorded in the
         // wrong order.
         const mockResult = {
-          type: ('incomplete' as unknown) as MockFunctionResultType,
+          type: 'incomplete' as unknown as MockFunctionResultType,
           value: undefined,
         };
         mockState.results.push(mockResult);
@@ -565,7 +565,7 @@ class ModuleMockerClass {
           finalReturnValue = (() => {
             if (this instanceof f) {
               // This is probably being called as a constructor
-              prototypeSlots.forEach(slot => {
+              prototypeSlots.forEach((slot) => {
                 // Copy prototype methods to the instance to make
                 // it easier to interact with mock instance call and
                 // return values
@@ -638,10 +638,10 @@ class ModuleMockerClass {
         return finalReturnValue;
       }, metadata.length || 0);
 
-      const f = (this._createMockFunction(
+      const f = this._createMockFunction(
         metadata,
         mockConstructor,
-      ) as unknown) as Mock<T, Y>;
+      ) as unknown as Mock<T, Y>;
       f._isMockFunction = true;
       f.getMockImplementation = () => this._ensureMockConfig(f).mockImpl;
 
@@ -656,7 +656,7 @@ class ModuleMockerClass {
         configurable: false,
         enumerable: true,
         get: () => this._ensureMockState(f),
-        set: val => this._mockState.set(f, val),
+        set: (val) => this._mockState.set(f, val),
       });
 
       f.mockClear = () => {
@@ -725,7 +725,7 @@ class ModuleMockerClass {
       };
 
       f.mockReturnThis = () =>
-        f.mockImplementation(function(this: T) {
+        f.mockImplementation(function (this: T) {
           return this;
         });
 
@@ -834,11 +834,11 @@ class ModuleMockerClass {
       refs[metadata.refID] = mock;
     }
 
-    this._getSlots(metadata.members).forEach(slot => {
+    this._getSlots(metadata.members).forEach((slot) => {
       const slotMetadata = (metadata.members && metadata.members[slot]) || {};
       if (slotMetadata.ref != null) {
         callbacks.push(
-          (function(ref) {
+          (function (ref) {
             return () => (mock[slot] = refs[ref]);
           })(slotMetadata.ref),
         );
@@ -870,7 +870,7 @@ class ModuleMockerClass {
     const callbacks: Array<Function> = [];
     const refs = {};
     const mock = this._generateMock(_metadata, callbacks, refs);
-    callbacks.forEach(setter => setter());
+    callbacks.forEach((setter) => setter());
     return mock;
   }
 
@@ -920,7 +920,7 @@ class ModuleMockerClass {
     } | null = null;
     // Leave arrays alone
     if (type !== 'array') {
-      this._getSlots(component).forEach(slot => {
+      this._getSlots(component).forEach((slot) => {
         if (
           type === 'function' &&
           // @ts-ignore may be a mock
@@ -1015,7 +1015,7 @@ class ModuleMockerClass {
       });
 
       // @ts-ignore original method is now a Mock
-      object[methodName].mockImplementation(function(this: unknown) {
+      object[methodName].mockImplementation(function (this: unknown) {
         return original.apply(this, arguments);
       });
     }
@@ -1084,7 +1084,7 @@ class ModuleMockerClass {
         Object.defineProperty(obj, propertyName, descriptor!);
       });
 
-      (descriptor[accessType] as Mock<T>).mockImplementation(function(
+      (descriptor[accessType] as Mock<T>).mockImplementation(function (
         this: unknown,
       ) {
         // @ts-ignore
@@ -1106,7 +1106,7 @@ class ModuleMockerClass {
   }
 
   restoreAllMocks() {
-    this._spyState.forEach(restore => restore());
+    this._spyState.forEach((restore) => restore());
     this._spyState = new Set();
   }
 

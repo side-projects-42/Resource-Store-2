@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Matthias Klostermayr",
-			"Mucalexx"
-		]
+		"authors": ["Matthias Klostermayr", "Mucalexx"]
 	},
 	"config-desc": "As Installationsprogramm vo MediaWiki",
 	"config-title": "Installation vo MediaWiki $1",

@@ -88,20 +88,19 @@
  *  input or not.
  */
 
-( function () {
-
+(function () {
 	/**
 	 * Cancel any delayed maybeFetch() call and callback the context so
 	 * they can cancel any async fetching if they use AJAX or something.
 	 *
 	 * @param {Object} context
 	 */
-	function cancel( context ) {
-		if ( context.data.timerID !== null ) {
-			clearTimeout( context.data.timerID );
+	function cancel(context) {
+		if (context.data.timerID !== null) {
+			clearTimeout(context.data.timerID);
 		}
-		if ( typeof context.config.cancel === 'function' ) {
-			context.config.cancel.call( context.data.$textbox );
+		if (typeof context.config.cancel === "function") {
+			context.config.cancel.call(context.data.$textbox);
 		}
 	}
 
@@ -110,9 +109,11 @@
 	 *
 	 * @param {Object} context
 	 */
-	function hide( context ) {
+	function hide(context) {
 		// Remove any highlights, including on "special" items
-		context.data.$container.find( '.suggestions-result-current' ).removeClass( 'suggestions-result-current' );
+		context.data.$container
+			.find(".suggestions-result-current")
+			.removeClass("suggestions-result-current");
 		// Hide the container
 		context.data.$container.hide();
 	}
@@ -125,22 +126,28 @@
 	 *
 	 * @param {Object} context
 	 */
-	function restore( context ) {
-		context.data.$textbox.val( context.data.prevText );
+	function restore(context) {
+		context.data.$textbox.val(context.data.prevText);
 	}
 
 	/**
 	 * @param {Object} context
 	 */
-	function special( context ) {
+	function special(context) {
 		// Allow custom rendering - but otherwise don't do any rendering
-		if ( typeof context.config.special.render === 'function' ) {
+		if (typeof context.config.special.render === "function") {
 			// Wait for the browser to update the value
-			setTimeout( function () {
+			setTimeout(function () {
 				// Render special
-				var $special = context.data.$container.find( '.suggestions-special' );
-				context.config.special.render.call( $special, context.data.$textbox.val(), context );
-			}, 1 );
+				var $special = context.data.$container.find(
+					".suggestions-special"
+				);
+				context.config.special.render.call(
+					$special,
+					context.data.$textbox.val(),
+					context
+				);
+			}, 1);
 		}
 	}
 
@@ -153,55 +160,76 @@
 	 * @param {Object} context
 	 * @param {boolean} delayed Whether or not to delay this by the currently configured amount of time
 	 */
-	function update( context, delayed ) {
+	function update(context, delayed) {
 		function maybeFetch() {
 			var val = context.data.$textbox.val(),
 				cache = context.data.cache,
 				cacheHit;
 
-			if ( typeof context.config.update.before === 'function' ) {
-				context.config.update.before.call( context.data.$textbox );
+			if (typeof context.config.update.before === "function") {
+				context.config.update.before.call(context.data.$textbox);
 			}
 
 			// Only fetch if the value in the textbox changed and is not empty, or if the results were hidden
 			// if the textbox is empty then clear the result div, but leave other settings intouched
-			if ( val.length === 0 ) {
-				hide( context );
-				context.data.prevText = '';
+			if (val.length === 0) {
+				hide(context);
+				context.data.prevText = "";
 			} else if (
 				val !== context.data.prevText ||
 				// eslint-disable-next-line no-jquery/no-sizzle
-				!context.data.$container.is( ':visible' )
+				!context.data.$container.is(":visible")
 			) {
 				context.data.prevText = val;
 				// Try cache first
-				if ( context.config.cache && val in cache ) {
-					if ( mw.now() - cache[ val ].timestamp < context.config.cacheMaxAge ) {
-						context.data.$textbox.suggestions( 'suggestions', cache[ val ].suggestions );
-						if ( typeof context.config.update.after === 'function' ) {
-							context.config.update.after.call( context.data.$textbox, cache[ val ].metadata );
+				if (context.config.cache && val in cache) {
+					if (
+						mw.now() - cache[val].timestamp <
+						context.config.cacheMaxAge
+					) {
+						context.data.$textbox.suggestions(
+							"suggestions",
+							cache[val].suggestions
+						);
+						if (typeof context.config.update.after === "function") {
+							context.config.update.after.call(
+								context.data.$textbox,
+								cache[val].metadata
+							);
 						}
 						cacheHit = true;
 					} else {
 						// Cache expired
-						delete cache[ val ];
+						delete cache[val];
 					}
 				}
-				if ( !cacheHit && typeof context.config.fetch === 'function' ) {
+				if (!cacheHit && typeof context.config.fetch === "function") {
 					context.config.fetch.call(
 						context.data.$textbox,
 						val,
-						function ( suggestions, metadata ) {
-							suggestions = suggestions.slice( 0, context.config.maxRows );
-							context.data.$textbox.suggestions( 'suggestions', suggestions );
-							if ( typeof context.config.update.after === 'function' ) {
-								context.config.update.after.call( context.data.$textbox, metadata );
+						function (suggestions, metadata) {
+							suggestions = suggestions.slice(
+								0,
+								context.config.maxRows
+							);
+							context.data.$textbox.suggestions(
+								"suggestions",
+								suggestions
+							);
+							if (
+								typeof context.config.update.after ===
+								"function"
+							) {
+								context.config.update.after.call(
+									context.data.$textbox,
+									metadata
+								);
 							}
-							if ( context.config.cache ) {
-								cache[ val ] = {
+							if (context.config.cache) {
+								cache[val] = {
 									suggestions: suggestions,
 									metadata: metadata,
-									timestamp: mw.now()
+									timestamp: mw.now(),
 								};
 							}
 						},
@@ -211,16 +239,16 @@
 			}
 
 			// Always update special rendering
-			special( context );
+			special(context);
 		}
 
 		// Cancels any delayed maybeFetch call, and invokes context.config.cancel.
-		cancel( context );
+		cancel(context);
 
-		if ( delayed ) {
+		if (delayed) {
 			// To avoid many started/aborted requests while typing, we're gonna take a short
 			// break before trying to fetch data.
-			context.data.timerID = setTimeout( maybeFetch, context.config.delay );
+			context.data.timerID = setTimeout(maybeFetch, context.config.delay);
 		} else {
 			maybeFetch();
 		}
@@ -233,71 +261,116 @@
 	 * @param {jQuery|string} $result `<tr>` to highlight, or 'prev' or 'next'
 	 * @param {boolean} updateTextbox If true, put the suggestion in the textbox
 	 */
-	function highlight( context, $result, updateTextbox ) {
-		var $selected = context.data.$container.find( '.suggestions-result-current' );
-		if ( !$result.get || $selected.get( 0 ) !== $result.get( 0 ) ) {
-			if ( $result === 'prev' ) {
+	function highlight(context, $result, updateTextbox) {
+		var $selected = context.data.$container.find(
+			".suggestions-result-current"
+		);
+		if (!$result.get || $selected.get(0) !== $result.get(0)) {
+			if ($result === "prev") {
 				// eslint-disable-next-line no-jquery/no-class-state
-				if ( $selected.hasClass( 'suggestions-special' ) ) {
-					$result = context.data.$container.find( '.suggestions-result' ).last();
+				if ($selected.hasClass("suggestions-special")) {
+					$result = context.data.$container
+						.find(".suggestions-result")
+						.last();
 				} else {
 					$result = $selected.prev();
 					// eslint-disable-next-line no-jquery/no-class-state
-					if ( !( $result.length && $result.hasClass( 'suggestions-result' ) ) ) {
+					if (
+						!(
+							$result.length &&
+							$result.hasClass("suggestions-result")
+						)
+					) {
 						// there is something in the DOM between selected element and the wrapper, bypass it
-						$result = $selected.parents( '.suggestions-results > *' ).prev().find( '.suggestions-result' ).eq( 0 );
+						$result = $selected
+							.parents(".suggestions-results > *")
+							.prev()
+							.find(".suggestions-result")
+							.eq(0);
 					}
 
-					if ( $selected.length === 0 ) {
+					if ($selected.length === 0) {
 						// we are at the beginning, so lets jump to the last item
-						if ( context.data.$container.find( '.suggestions-special' ).html() !== '' ) {
-							$result = context.data.$container.find( '.suggestions-special' );
+						if (
+							context.data.$container
+								.find(".suggestions-special")
+								.html() !== ""
+						) {
+							$result = context.data.$container.find(
+								".suggestions-special"
+							);
 						} else {
-							$result = context.data.$container.find( '.suggestions-results .suggestions-result' ).last();
+							$result = context.data.$container
+								.find(
+									".suggestions-results .suggestions-result"
+								)
+								.last();
 						}
 					}
 				}
-			} else if ( $result === 'next' ) {
-				if ( $selected.length === 0 ) {
+			} else if ($result === "next") {
+				if ($selected.length === 0) {
 					// No item selected, go to the first one
-					$result = context.data.$container.find( '.suggestions-results .suggestions-result' ).first();
-					if ( $result.length === 0 && context.data.$container.find( '.suggestions-special' ).html() !== '' ) {
+					$result = context.data.$container
+						.find(".suggestions-results .suggestions-result")
+						.first();
+					if (
+						$result.length === 0 &&
+						context.data.$container
+							.find(".suggestions-special")
+							.html() !== ""
+					) {
 						// No suggestion exists, go to the special one directly
-						$result = context.data.$container.find( '.suggestions-special' );
+						$result = context.data.$container.find(
+							".suggestions-special"
+						);
 					}
 				} else {
 					$result = $selected.next();
 					// eslint-disable-next-line no-jquery/no-class-state
-					if ( !( $result.length && $result.hasClass( 'suggestions-result' ) ) ) {
+					if (
+						!(
+							$result.length &&
+							$result.hasClass("suggestions-result")
+						)
+					) {
 						// there is something in the DOM between selected element and the wrapper, bypass it
-						$result = $selected.parents( '.suggestions-results > *' ).next().find( '.suggestions-result' ).eq( 0 );
+						$result = $selected
+							.parents(".suggestions-results > *")
+							.next()
+							.find(".suggestions-result")
+							.eq(0);
 					}
 
 					// eslint-disable-next-line no-jquery/no-class-state
-					if ( $selected.hasClass( 'suggestions-special' ) ) {
-						$result = $( [] );
+					if ($selected.hasClass("suggestions-special")) {
+						$result = $([]);
 					} else if (
 						$result.length === 0 &&
-						context.data.$container.find( '.suggestions-special' ).html() !== ''
+						context.data.$container
+							.find(".suggestions-special")
+							.html() !== ""
 					) {
 						// We were at the last item, jump to the specials!
-						$result = context.data.$container.find( '.suggestions-special' );
+						$result = context.data.$container.find(
+							".suggestions-special"
+						);
 					}
 				}
 			}
-			$selected.removeClass( 'suggestions-result-current' );
-			$result.addClass( 'suggestions-result-current' );
+			$selected.removeClass("suggestions-result-current");
+			$result.addClass("suggestions-result-current");
 		}
-		if ( updateTextbox ) {
-			if ( $result.length === 0 || $result.is( '.suggestions-special' ) ) {
-				restore( context );
+		if (updateTextbox) {
+			if ($result.length === 0 || $result.is(".suggestions-special")) {
+				restore(context);
 			} else {
-				context.data.$textbox.val( $result.data( 'text' ) );
+				context.data.$textbox.val($result.data("text"));
 				// .val() doesn't call any event handlers, so
 				// let the world know what happened
-				context.data.$textbox.trigger( 'change' );
+				context.data.$textbox.trigger("change");
 			}
-			context.data.$textbox.trigger( 'change' );
+			context.data.$textbox.trigger("change");
 		}
 	}
 
@@ -308,148 +381,198 @@
 	 * @param {string} property Name of property
 	 * @param {Mixed} value Value to set property with
 	 */
-	function configure( context, property, value ) {
+	function configure(context, property, value) {
 		var newCSS,
-			$result, $results, $spanForWidth, childrenWidth,
-			regionIsFixed, regionPosition,
-			i, expWidth, maxWidth, text;
+			$result,
+			$results,
+			$spanForWidth,
+			childrenWidth,
+			regionIsFixed,
+			regionPosition,
+			i,
+			expWidth,
+			maxWidth,
+			text;
 
 		// Validate creation using fallback values
-		switch ( property ) {
-			case 'fetch':
-			case 'cancel':
-			case 'special':
-			case 'result':
-			case 'update':
-			case '$region':
-			case 'expandFrom':
-				context.config[ property ] = value;
+		switch (property) {
+			case "fetch":
+			case "cancel":
+			case "special":
+			case "result":
+			case "update":
+			case "$region":
+			case "expandFrom":
+				context.config[property] = value;
 				break;
-			case 'suggestions':
-				context.config[ property ] = value;
+			case "suggestions":
+				context.config[property] = value;
 				// Update suggestions
-				if ( context.data !== undefined ) {
-					if ( context.data.$textbox.val().length === 0 ) {
+				if (context.data !== undefined) {
+					if (context.data.$textbox.val().length === 0) {
 						// Hide the div when no suggestion exist
-						hide( context );
+						hide(context);
 					} else {
 						// Rebuild the suggestions list
 						context.data.$container.show();
 						// Update the size and position of the list
-						regionIsFixed = ( function () {
+						regionIsFixed = (function () {
 							var $el = context.config.$region;
 							do {
-								if ( $el.css( 'position' ) === 'fixed' ) {
+								if ($el.css("position") === "fixed") {
 									return true;
 								}
-								$el = $( $el[ 0 ].offsetParent );
-							} while ( $el.length );
+								$el = $($el[0].offsetParent);
+							} while ($el.length);
 							return false;
-						}() );
-						regionPosition = regionIsFixed ?
-							context.config.$region[ 0 ].getBoundingClientRect() :
-							context.config.$region.offset();
+						})();
+						regionPosition = regionIsFixed
+							? context.config.$region[0].getBoundingClientRect()
+							: context.config.$region.offset();
 						newCSS = {
-							position: regionIsFixed ? 'fixed' : 'absolute',
-							top: regionPosition.top + context.config.$region.outerHeight(),
-							bottom: 'auto',
+							position: regionIsFixed ? "fixed" : "absolute",
+							top:
+								regionPosition.top +
+								context.config.$region.outerHeight(),
+							bottom: "auto",
 							width: context.config.$region.outerWidth(),
-							height: 'auto'
+							height: "auto",
 						};
 
 						// Process expandFrom, after this it is set to left or right.
-						context.config.expandFrom = ( function ( expandFrom ) {
-							var regionWidth, docWidth, regionCenter, docCenter,
-								isRTL = $( document.documentElement ).css( 'direction' ) === 'rtl',
+						context.config.expandFrom = (function (expandFrom) {
+							var regionWidth,
+								docWidth,
+								regionCenter,
+								docCenter,
+								isRTL =
+									$(document.documentElement).css(
+										"direction"
+									) === "rtl",
 								$region = context.config.$region;
 
 							// Backwards compatible
-							if ( context.config.positionFromLeft ) {
-								expandFrom = 'left';
+							if (context.config.positionFromLeft) {
+								expandFrom = "left";
 
-							// Catch invalid values, default to 'auto'
-							} else if ( [ 'left', 'right', 'start', 'end', 'auto' ].indexOf( expandFrom ) === -1 ) {
-								expandFrom = 'auto';
+								// Catch invalid values, default to 'auto'
+							} else if (
+								[
+									"left",
+									"right",
+									"start",
+									"end",
+									"auto",
+								].indexOf(expandFrom) === -1
+							) {
+								expandFrom = "auto";
 							}
 
-							if ( expandFrom === 'auto' ) {
-								if ( $region.data( 'searchsuggest-expand-dir' ) ) {
+							if (expandFrom === "auto") {
+								if ($region.data("searchsuggest-expand-dir")) {
 									// If the markup explicitly contains a direction, use it.
-									expandFrom = $region.data( 'searchsuggest-expand-dir' );
+									expandFrom = $region.data(
+										"searchsuggest-expand-dir"
+									);
 								} else {
 									regionWidth = $region.outerWidth();
-									docWidth = $( document ).width();
-									if ( regionWidth > ( 0.85 * docWidth ) ) {
+									docWidth = $(document).width();
+									if (regionWidth > 0.85 * docWidth) {
 										// If the input size takes up more than 85% of the document horizontally
 										// expand the suggestions to the writing direction's native end.
-										expandFrom = 'start';
+										expandFrom = "start";
 									} else {
 										// Calculate the center points of the input and document
-										regionCenter = regionPosition.left + regionWidth / 2;
+										regionCenter =
+											regionPosition.left +
+											regionWidth / 2;
 										docCenter = docWidth / 2;
-										if ( Math.abs( regionCenter - docCenter ) < ( 0.10 * docCenter ) ) {
+										if (
+											Math.abs(regionCenter - docCenter) <
+											0.1 * docCenter
+										) {
 											// If the input's center is within 10% of the document center
 											// use the writing direction's native end.
-											expandFrom = 'start';
+											expandFrom = "start";
 										} else {
 											// Otherwise expand the input from the closest side of the page,
 											// towards the side of the page with the most free open space
-											expandFrom = regionCenter > docCenter ? 'right' : 'left';
+											expandFrom =
+												regionCenter > docCenter
+													? "right"
+													: "left";
 										}
 									}
 								}
 							}
 
-							if ( expandFrom === 'start' ) {
-								expandFrom = isRTL ? 'right' : 'left';
-
-							} else if ( expandFrom === 'end' ) {
-								expandFrom = isRTL ? 'left' : 'right';
+							if (expandFrom === "start") {
+								expandFrom = isRTL ? "right" : "left";
+							} else if (expandFrom === "end") {
+								expandFrom = isRTL ? "left" : "right";
 							}
 
 							return expandFrom;
+						})(context.config.expandFrom);
 
-						}( context.config.expandFrom ) );
-
-						if ( context.config.expandFrom === 'left' ) {
+						if (context.config.expandFrom === "left") {
 							// Expand from left
 							newCSS.left = regionPosition.left;
-							newCSS.right = 'auto';
+							newCSS.right = "auto";
 						} else {
 							// Expand from right
-							newCSS.left = 'auto';
-							newCSS.right = document.documentElement.clientWidth -
-								( regionPosition.left + context.config.$region.outerWidth() );
+							newCSS.left = "auto";
+							newCSS.right =
+								document.documentElement.clientWidth -
+								(regionPosition.left +
+									context.config.$region.outerWidth());
 						}
 
-						context.data.$container.css( newCSS );
-						$results = context.data.$container.children( '.suggestions-results' );
+						context.data.$container.css(newCSS);
+						$results = context.data.$container.children(
+							".suggestions-results"
+						);
 						$results.empty();
 						expWidth = -1;
-						for ( i = 0; i < context.config.suggestions.length; i++ ) {
-							text = context.config.suggestions[ i ];
-							$result = $( '<div>' )
-								.addClass( 'suggestions-result' )
-								.attr( 'rel', i )
-								.data( 'text', context.config.suggestions[ i ] )
-								.on( 'mousemove', function () {
+						for (
+							i = 0;
+							i < context.config.suggestions.length;
+							i++
+						) {
+							text = context.config.suggestions[i];
+							$result = $("<div>")
+								.addClass("suggestions-result")
+								.attr("rel", i)
+								.data("text", context.config.suggestions[i])
+								.on("mousemove", function () {
 									context.data.selectedWithMouse = true;
 									highlight(
 										context,
-										$( this ).closest( '.suggestions-results .suggestions-result' ),
+										$(this).closest(
+											".suggestions-results .suggestions-result"
+										),
 										false
 									);
-								} )
-								.appendTo( $results );
+								})
+								.appendTo($results);
 							// Allow custom rendering
-							if ( typeof context.config.result.render === 'function' ) {
-								context.config.result.render.call( $result, context.config.suggestions[ i ], context );
+							if (
+								typeof context.config.result.render ===
+								"function"
+							) {
+								context.config.result.render.call(
+									$result,
+									context.config.suggestions[i],
+									context
+								);
 							} else {
-								$result.text( text );
+								$result.text(text);
 							}
 
-							if ( context.config.highlightInput ) {
-								$result.highlightText( context.data.prevText, { method: 'prefixPlusComboHighlight' } );
+							if (context.config.highlightInput) {
+								$result.highlightText(context.data.prevText, {
+									method: "prefixPlusComboHighlight",
+								});
 							}
 
 							// Widen results box if needed (new width is only calculated here, applied later).
@@ -465,41 +588,55 @@
 							//   still report the "trimmed" width. This should not be done in regular CSS
 							//   stylesheets as we don't want this rule to apply to other <span> elements, like
 							//   the ones generated by jquery.highlightText.
-							$spanForWidth = $result.wrapInner( '<span>' ).children();
-							childrenWidth = $spanForWidth.css( 'position', 'absolute' ).outerWidth();
+							$spanForWidth = $result
+								.wrapInner("<span>")
+								.children();
+							childrenWidth = $spanForWidth
+								.css("position", "absolute")
+								.outerWidth();
 							$spanForWidth.contents().unwrap();
 
-							if ( childrenWidth > $result.width() && childrenWidth > expWidth ) {
+							if (
+								childrenWidth > $result.width() &&
+								childrenWidth > expWidth
+							) {
 								// factor in any padding, margin, or border space on the parent
-								expWidth = childrenWidth + ( context.data.$container.width() - $result.width() );
+								expWidth =
+									childrenWidth +
+									(context.data.$container.width() -
+										$result.width());
 							}
 						}
 
 						// Apply new width for results box, if any
-						if ( expWidth > context.data.$container.width() ) {
-							maxWidth = context.config.maxExpandFactor * context.data.$textbox.width();
-							context.data.$container.width( Math.min( expWidth, maxWidth ) );
+						if (expWidth > context.data.$container.width()) {
+							maxWidth =
+								context.config.maxExpandFactor *
+								context.data.$textbox.width();
+							context.data.$container.width(
+								Math.min(expWidth, maxWidth)
+							);
 						}
 					}
 				}
 				break;
-			case 'maxRows':
-				context.config[ property ] = Math.max( 1, Math.min( 100, value ) );
+			case "maxRows":
+				context.config[property] = Math.max(1, Math.min(100, value));
 				break;
-			case 'delay':
-				context.config[ property ] = Math.max( 0, Math.min( 1200, value ) );
+			case "delay":
+				context.config[property] = Math.max(0, Math.min(1200, value));
 				break;
-			case 'cacheMaxAge':
-				context.config[ property ] = Math.max( 1, value );
+			case "cacheMaxAge":
+				context.config[property] = Math.max(1, value);
 				break;
-			case 'maxExpandFactor':
-				context.config[ property ] = Math.max( 1, value );
+			case "maxExpandFactor":
+				context.config[property] = Math.max(1, value);
 				break;
-			case 'cache':
-			case 'submitOnClick':
-			case 'positionFromLeft':
-			case 'highlightInput':
-				context.config[ property ] = !!value;
+			case "cache":
+			case "submitOnClick":
+			case "positionFromLeft":
+			case "highlightInput":
+				context.config[property] = !!value;
 				break;
 		}
 	}
@@ -511,71 +648,85 @@
 	 * @param {Object} context
 	 * @param {number} key Code of key pressed
 	 */
-	function keypress( e, context, key ) {
+	function keypress(e, context, key) {
 		var $selected,
 			// eslint-disable-next-line no-jquery/no-sizzle
-			wasVisible = context.data.$container.is( ':visible' ),
+			wasVisible = context.data.$container.is(":visible"),
 			preventDefault = false;
 
-		switch ( key ) {
+		switch (key) {
 			// Arrow down
 			case 40:
-				if ( wasVisible ) {
-					highlight( context, 'next', true );
+				if (wasVisible) {
+					highlight(context, "next", true);
 					context.data.selectedWithMouse = false;
 				} else {
-					update( context, false );
+					update(context, false);
 				}
 				preventDefault = true;
 				break;
 			// Arrow up
 			case 38:
-				if ( wasVisible ) {
-					highlight( context, 'prev', true );
+				if (wasVisible) {
+					highlight(context, "prev", true);
 					context.data.selectedWithMouse = false;
 				}
 				preventDefault = wasVisible;
 				break;
 			// Escape
 			case 27:
-				hide( context );
-				restore( context );
-				cancel( context );
-				context.data.$textbox.trigger( 'change' );
+				hide(context);
+				restore(context);
+				cancel(context);
+				context.data.$textbox.trigger("change");
 				preventDefault = wasVisible;
 				break;
 			// Enter
 			case 13:
 				preventDefault = wasVisible;
-				$selected = context.data.$container.find( '.suggestions-result-current' );
-				hide( context );
-				if ( $selected.length === 0 || context.data.selectedWithMouse ) {
+				$selected = context.data.$container.find(
+					".suggestions-result-current"
+				);
+				hide(context);
+				if ($selected.length === 0 || context.data.selectedWithMouse) {
 					// If nothing is selected or if something was selected with the mouse
 					// cancel any current requests and allow the form to be submitted
 					// (simply don't prevent default behavior).
-					cancel( context );
+					cancel(context);
 					preventDefault = false;
-				} else if ( $selected.is( '.suggestions-special' ) ) {
-					if ( typeof context.config.special.select === 'function' ) {
+				} else if ($selected.is(".suggestions-special")) {
+					if (typeof context.config.special.select === "function") {
 						// Allow the callback to decide whether to prevent default or not
-						if ( context.config.special.select.call( $selected, context.data.$textbox, 'keyboard' ) === true ) {
+						if (
+							context.config.special.select.call(
+								$selected,
+								context.data.$textbox,
+								"keyboard"
+							) === true
+						) {
 							preventDefault = false;
 						}
 					}
 				} else {
-					if ( typeof context.config.result.select === 'function' ) {
+					if (typeof context.config.result.select === "function") {
 						// Allow the callback to decide whether to prevent default or not
-						if ( context.config.result.select.call( $selected, context.data.$textbox, 'keyboard' ) === true ) {
+						if (
+							context.config.result.select.call(
+								$selected,
+								context.data.$textbox,
+								"keyboard"
+							) === true
+						) {
 							preventDefault = false;
 						}
 					}
 				}
 				break;
 			default:
-				update( context, true );
+				update(context, true);
 				break;
 		}
-		if ( preventDefault ) {
+		if (preventDefault) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
@@ -586,13 +737,13 @@
 		// Multi-context fields
 		var args = arguments;
 
-		$( this ).each( function () {
+		$(this).each(function () {
 			var context, key;
 
 			/* Construction and Loading */
 
-			context = $( this ).data( 'suggestions-context' );
-			if ( context === undefined || context === null ) {
+			context = $(this).data("suggestions-context");
+			if (context === undefined || context === null) {
 				context = {
 					config: {
 						fetch: function () {},
@@ -600,7 +751,7 @@
 						special: {},
 						result: {},
 						update: {},
-						$region: $( this ),
+						$region: $(this),
 						suggestions: [],
 						maxRows: 10,
 						delay: 120,
@@ -608,32 +759,32 @@
 						cacheMaxAge: 60000,
 						submitOnClick: false,
 						maxExpandFactor: 3,
-						expandFrom: 'auto',
-						highlightInput: false
-					}
+						expandFrom: "auto",
+						highlightInput: false,
+					},
 				};
 			}
 
 			/* API */
 
 			// Handle various calling styles
-			if ( args.length > 0 ) {
-				if ( typeof args[ 0 ] === 'object' ) {
+			if (args.length > 0) {
+				if (typeof args[0] === "object") {
 					// Apply set of properties
-					for ( key in args[ 0 ] ) {
-						configure( context, key, args[ 0 ][ key ] );
+					for (key in args[0]) {
+						configure(context, key, args[0][key]);
 					}
-				} else if ( typeof args[ 0 ] === 'string' ) {
-					if ( args.length > 1 ) {
+				} else if (typeof args[0] === "string") {
+					if (args.length > 1) {
 						// Set property values
-						configure( context, args[ 0 ], args[ 1 ] );
+						configure(context, args[0], args[1]);
 					}
 				}
 			}
 
 			/* Initialization */
 
-			if ( context.data === undefined ) {
+			if (context.data === undefined) {
 				context.data = {
 					// ID of running timer
 					timerID: null,
@@ -642,106 +793,148 @@
 					prevText: null,
 
 					// Cache of fetched suggestions
-					cache: Object.create( null ),
+					cache: Object.create(null),
 
 					// Number of results visible without scrolling
 					visibleResults: 0,
 
 					// Suggestion the last mousedown event occurred on
-					$mouseDownOn: $( [] ),
-					$textbox: $( this ),
-					selectedWithMouse: false
+					$mouseDownOn: $([]),
+					$textbox: $(this),
+					selectedWithMouse: false,
 				};
 
-				context.data.$container = $( '<div>' )
-					.css( 'display', 'none' )
-					.addClass( 'suggestions' )
+				context.data.$container = $("<div>")
+					.css("display", "none")
+					.addClass("suggestions")
 					.append(
-						$( '<div>' ).addClass( 'suggestions-results' )
+						$("<div>")
+							.addClass("suggestions-results")
 							// Can't use click() because the container div is hidden when the
 							// textbox loses focus. Instead, listen for a mousedown followed
 							// by a mouseup on the same div.
-							.on( 'mousedown', function ( e ) {
-								context.data.$mouseDownOn = $( e.target ).closest( '.suggestions-results .suggestions-result' );
-							} )
-							.on( 'mouseup', function ( e ) {
-								var $result = $( e.target ).closest( '.suggestions-results .suggestions-result' ),
+							.on("mousedown", function (e) {
+								context.data.$mouseDownOn = $(e.target).closest(
+									".suggestions-results .suggestions-result"
+								);
+							})
+							.on("mouseup", function (e) {
+								var $result = $(e.target).closest(
+										".suggestions-results .suggestions-result"
+									),
 									$other = context.data.$mouseDownOn;
 
-								context.data.$mouseDownOn = $( [] );
-								if ( $result.get( 0 ) !== $other.get( 0 ) ) {
+								context.data.$mouseDownOn = $([]);
+								if ($result.get(0) !== $other.get(0)) {
 									return;
 								}
-								highlight( context, $result, true );
-								if ( typeof context.config.result.select === 'function' ) {
-									context.config.result.select.call( $result, context.data.$textbox, 'mouse' );
+								highlight(context, $result, true);
+								if (
+									typeof context.config.result.select ===
+									"function"
+								) {
+									context.config.result.select.call(
+										$result,
+										context.data.$textbox,
+										"mouse"
+									);
 								}
 								// Don't interfere with special clicks (e.g. to open in new tab)
-								if ( !( e.which !== 1 || e.altKey || e.ctrlKey || e.shiftKey || e.metaKey ) ) {
+								if (
+									!(
+										e.which !== 1 ||
+										e.altKey ||
+										e.ctrlKey ||
+										e.shiftKey ||
+										e.metaKey
+									)
+								) {
 									// This will hide the link we're just clicking on, which causes problems
 									// when done synchronously in at least Firefox 3.6 (T64858).
-									setTimeout( function () {
-										hide( context );
-									} );
+									setTimeout(function () {
+										hide(context);
+									});
 								}
 								// Always bring focus to the textbox, as that's probably where the user expects it
 								// if they were just typing.
-								context.data.$textbox.trigger( 'focus' );
-							} )
+								context.data.$textbox.trigger("focus");
+							})
 					)
 					.append(
-						$( '<div>' ).addClass( 'suggestions-special' )
+						$("<div>")
+							.addClass("suggestions-special")
 							// Can't use click() because the container div is hidden when the
 							// textbox loses focus. Instead, listen for a mousedown followed
 							// by a mouseup on the same div.
-							.on( 'mousedown', function ( e ) {
-								context.data.$mouseDownOn = $( e.target ).closest( '.suggestions-special' );
-							} )
-							.on( 'mouseup', function ( e ) {
-								var $special = $( e.target ).closest( '.suggestions-special' ),
+							.on("mousedown", function (e) {
+								context.data.$mouseDownOn = $(e.target).closest(
+									".suggestions-special"
+								);
+							})
+							.on("mouseup", function (e) {
+								var $special = $(e.target).closest(
+										".suggestions-special"
+									),
 									$other = context.data.$mouseDownOn;
 
-								context.data.$mouseDownOn = $( [] );
-								if ( $special.get( 0 ) !== $other.get( 0 ) ) {
+								context.data.$mouseDownOn = $([]);
+								if ($special.get(0) !== $other.get(0)) {
 									return;
 								}
-								if ( typeof context.config.special.select === 'function' ) {
-									context.config.special.select.call( $special, context.data.$textbox, 'mouse' );
+								if (
+									typeof context.config.special.select ===
+									"function"
+								) {
+									context.config.special.select.call(
+										$special,
+										context.data.$textbox,
+										"mouse"
+									);
 								}
 								// Don't interfere with special clicks (e.g. to open in new tab)
-								if ( !( e.which !== 1 || e.altKey || e.ctrlKey || e.shiftKey || e.metaKey ) ) {
+								if (
+									!(
+										e.which !== 1 ||
+										e.altKey ||
+										e.ctrlKey ||
+										e.shiftKey ||
+										e.metaKey
+									)
+								) {
 									// This will hide the link we're just clicking on, which causes problems
 									// when done synchronously in at least Firefox 3.6 (T64858).
-									setTimeout( function () {
-										hide( context );
-									} );
+									setTimeout(function () {
+										hide(context);
+									});
 								}
 								// Always bring focus to the textbox, as that's probably where the user expects it
 								// if they were just typing.
-								context.data.$textbox.trigger( 'focus' );
-							} )
-							.on( 'mousemove', function ( e ) {
+								context.data.$textbox.trigger("focus");
+							})
+							.on("mousemove", function (e) {
 								context.data.selectedWithMouse = true;
 								highlight(
-									context, $( e.target ).closest( '.suggestions-special' ), false
+									context,
+									$(e.target).closest(".suggestions-special"),
+									false
 								);
-							} )
+							})
 					)
-					.appendTo( document.body );
+					.appendTo(document.body);
 
-				$( this )
+				$(this)
 					// Stop browser autocomplete from interfering
-					.attr( 'autocomplete', 'off' )
-					.on( 'keydown', function ( e ) {
+					.attr("autocomplete", "off")
+					.on("keydown", function (e) {
 						// Store key pressed to handle later
 						context.data.keypressed = e.which;
 						context.data.keypressedCount = 0;
-					} )
-					.on( 'keypress', function ( e ) {
+					})
+					.on("keypress", function (e) {
 						context.data.keypressedCount++;
-						keypress( e, context, context.data.keypressed );
-					} )
-					.on( 'keyup', function ( e ) {
+						keypress(e, context, context.data.keypressed);
+					})
+					.on("keyup", function (e) {
 						// The keypress event is fired when a key is pressed down and that key normally
 						// produces a character value. We also want to handle some keys that don't
 						// produce a character value so we also attach to the keydown/keyup events.
@@ -753,34 +946,35 @@
 							27, // escape
 							13, // enter
 							46, // delete
-							8 //   backspace
+							8, //   backspace
 						];
-						if ( context.data.keypressedCount === 0 &&
+						if (
+							context.data.keypressedCount === 0 &&
 							e.which === context.data.keypressed &&
-							allowed.indexOf( e.which ) !== -1
+							allowed.indexOf(e.which) !== -1
 						) {
-							keypress( e, context, context.data.keypressed );
+							keypress(e, context, context.data.keypressed);
 						}
-					} )
-					.on( 'blur', function () {
+					})
+					.on("blur", function () {
 						// When losing focus because of a mousedown
 						// on a suggestion, don't hide the suggestions
-						if ( context.data.$mouseDownOn.length > 0 ) {
+						if (context.data.$mouseDownOn.length > 0) {
 							return;
 						}
-						hide( context );
-						cancel( context );
-					} );
+						hide(context);
+						cancel(context);
+					});
 				// Load suggestions if the value is changed because there are already
 				// typed characters before the JavaScript is loaded.
-				if ( $( this ).is( ':focus' ) && this.value !== this.defaultValue ) {
-					update( context, false );
+				if ($(this).is(":focus") && this.value !== this.defaultValue) {
+					update(context, false);
 				}
 			}
 
 			// Store the context for next time
-			$( this ).data( 'suggestions-context', context );
-		} );
+			$(this).data("suggestions-context", context);
+		});
 		return this;
 	};
 
@@ -788,5 +982,4 @@
 	 * @class jQuery
 	 * @mixins jQuery.plugin.suggestions
 	 */
-
-}() );
+})();

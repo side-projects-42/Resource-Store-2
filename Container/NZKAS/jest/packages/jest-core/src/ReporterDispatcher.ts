@@ -23,7 +23,7 @@ export default class ReporterDispatcher {
 
   unregister(ReporterClass: Function) {
     this._reporters = this._reporters.filter(
-      reporter => !(reporter instanceof ReporterClass),
+      (reporter) => !(reporter instanceof ReporterClass),
     );
   }
 

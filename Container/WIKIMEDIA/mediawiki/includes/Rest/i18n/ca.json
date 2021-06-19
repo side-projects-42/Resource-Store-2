@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fitoschido",
-			"Mguix",
-			"Toniher"
-		]
+		"authors": ["Fitoschido", "Mguix", "Toniher"]
 	},
 	"rest-nonexistent-title": "El títol especificat ($1) no existeix",
 	"rest-nonexistent-title-revision": "La revisió especificada ($1) no existeix per a la pàgina especificada ($2)",

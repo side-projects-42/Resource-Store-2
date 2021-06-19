@@ -129,11 +129,11 @@ const setupBabelJest = (options: Config.InitialOptions) => {
   const transform = options.transform;
   let babelJest;
   if (transform) {
-    const customJSPattern = Object.keys(transform).find(pattern => {
+    const customJSPattern = Object.keys(transform).find((pattern) => {
       const regex = new RegExp(pattern);
       return regex.test('a.js') || regex.test('a.jsx');
     });
-    const customTSPattern = Object.keys(transform).find(pattern => {
+    const customTSPattern = Object.keys(transform).find((pattern) => {
       const regex = new RegExp(pattern);
       return regex.test('a.ts') || regex.test('a.tsx');
     });
@@ -212,7 +212,7 @@ const normalizeCollectCoverageFrom = (
   }
 
   if (value) {
-    value = value.map(filePath =>
+    value = value.map((filePath) =>
       filePath.replace(/^(!?)(<rootDir>\/)(.*)/, '$1$3'),
     );
   }
@@ -238,7 +238,7 @@ const normalizeUnmockedModulePathPatterns = (
   //
   // For patterns, direct global substitution is far more ideal, so we
   // special case substitutions for patterns here.
-  options[key]!.map(pattern =>
+  options[key]!.map((pattern) =>
     replacePathSepForRegex(pattern.replace(/<rootDir>/g, options.rootDir)),
   );
 
@@ -330,7 +330,7 @@ const normalizeReporters = (options: Config.InitialOptions) => {
   }
 
   validateReporters(reporters);
-  options.reporters = reporters.map(reporterConfig => {
+  options.reporters = reporters.map((reporterConfig) => {
     const normalizedReporterConfig: Config.ReporterConfig =
       typeof reporterConfig === 'string'
         ? // if reporter config is a string, we wrap it in an array
@@ -482,9 +482,9 @@ export default function normalize(
 
   setupBabelJest(options);
   // TODO: Type this properly
-  const newOptions = ({
+  const newOptions = {
     ...DEFAULT_CONFIG,
-  } as unknown) as AllOptions;
+  } as unknown as AllOptions;
 
   try {
     // try to resolve windows short paths, ignoring errors (permission errors, mostly)
@@ -526,7 +526,7 @@ export default function normalize(
           const option = oldOptions[key];
           value =
             option &&
-            option.map(filePath =>
+            option.map((filePath) =>
               resolve(newOptions.resolver, {
                 filePath,
                 key,
@@ -541,7 +541,7 @@ export default function normalize(
           const option = oldOptions[key];
           value =
             option &&
-            option.map(filePath =>
+            option.map((filePath) =>
               path.resolve(
                 options.rootDir,
                 replaceRootDirInPath(options.rootDir, filePath),
@@ -616,7 +616,7 @@ export default function normalize(
         const moduleNameMapper = oldOptions[key];
         value =
           moduleNameMapper &&
-          Object.keys(moduleNameMapper).map(regex => {
+          Object.keys(moduleNameMapper).map((regex) => {
             const item = moduleNameMapper && moduleNameMapper[regex];
             return item && [regex, _replaceRootDirTags(options.rootDir, item)];
           });
@@ -625,7 +625,7 @@ export default function normalize(
         const transform = oldOptions[key];
         value =
           transform &&
-          Object.keys(transform).map(regex => [
+          Object.keys(transform).map((regex) => [
             regex,
             resolve(newOptions.resolver, {
               filePath: transform[regex],
@@ -659,7 +659,7 @@ export default function normalize(
         break;
       case 'projects':
         value = (oldOptions[key] || [])
-          .map(project =>
+          .map((project) =>
             typeof project === 'string'
               ? _replaceRootDirTags(options.rootDir, project)
               : project,
@@ -801,7 +801,7 @@ export default function normalize(
         value = oldOptions[key];
         break;
       case 'watchPlugins':
-        value = (oldOptions[key] || []).map(watchPlugin => {
+        value = (oldOptions[key] || []).map((watchPlugin) => {
           if (typeof watchPlugin === 'string') {
             return {
               config: {},
@@ -832,7 +832,7 @@ export default function normalize(
   newOptions.json = !!argv.json;
 
   newOptions.testFailureExitCode = parseInt(
-    (newOptions.testFailureExitCode as unknown) as string,
+    newOptions.testFailureExitCode as unknown as string,
     10,
   );
 
@@ -860,7 +860,7 @@ export default function normalize(
       : 'new';
 
   newOptions.maxConcurrency = parseInt(
-    (newOptions.maxConcurrency as unknown) as string,
+    newOptions.maxConcurrency as unknown as string,
     10,
   );
   newOptions.maxWorkers = getMaxWorkers(argv);
@@ -881,7 +881,7 @@ export default function normalize(
   // If argv.json is set, coverageReporters shouldn't print a text report.
   if (argv.json) {
     newOptions.coverageReporters = (newOptions.coverageReporters || []).filter(
-      reporter => reporter !== 'text',
+      (reporter) => reporter !== 'text',
     );
   }
 
@@ -892,7 +892,7 @@ export default function normalize(
   // where arguments to `--collectCoverageFrom` should be globs (or relative
   // paths to the rootDir)
   if (newOptions.collectCoverage && argv.findRelatedTests) {
-    let collectCoverageFrom = argv._.map(filename => {
+    let collectCoverageFrom = argv._.map((filename) => {
       filename = replaceRootDirInPath(options.rootDir, filename);
       return path.isAbsolute(filename)
         ? path.relative(options.rootDir, filename)

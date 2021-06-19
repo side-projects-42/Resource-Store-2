@@ -1,118 +1,129 @@
 /* eslint-env node */
-module.exports = function ( grunt ) {
+module.exports = function (grunt) {
 	var wgServer = process.env.MW_SERVER,
 		wgScriptPath = process.env.MW_SCRIPT_PATH,
 		karmaProxy = {};
 
-	grunt.loadNpmTasks( 'grunt-banana-checker' );
-	grunt.loadNpmTasks( 'grunt-contrib-copy' );
-	grunt.loadNpmTasks( 'grunt-eslint' );
-	grunt.loadNpmTasks( 'grunt-karma' );
-	grunt.loadNpmTasks( 'grunt-stylelint' );
+	grunt.loadNpmTasks("grunt-banana-checker");
+	grunt.loadNpmTasks("grunt-contrib-copy");
+	grunt.loadNpmTasks("grunt-eslint");
+	grunt.loadNpmTasks("grunt-karma");
+	grunt.loadNpmTasks("grunt-stylelint");
 
-	karmaProxy[ wgScriptPath ] = {
+	karmaProxy[wgScriptPath] = {
 		target: wgServer + wgScriptPath,
-		changeOrigin: true
+		changeOrigin: true,
 	};
 
-	grunt.initConfig( {
+	grunt.initConfig({
 		eslint: {
 			options: {
-				extensions: [ '.js', '.json', '.vue' ],
+				extensions: [".js", ".json", ".vue"],
 				cache: true,
-				fix: grunt.option( 'fix' )
+				fix: grunt.option("fix"),
 			},
-			all: '.'
+			all: ".",
 		},
 		banana: {
 			options: {
 				requireLowerCase: false,
-				disallowBlankTranslations: false
+				disallowBlankTranslations: false,
 			},
-			core: 'languages/i18n/',
-			exif: 'languages/i18n/exif/',
-			api: 'includes/api/i18n/',
-			rest: 'includes/Rest/i18n/',
-			installer: 'includes/installer/i18n/',
-			paramvalidator: 'includes/libs/ParamValidator/i18n/'
+			core: "languages/i18n/",
+			exif: "languages/i18n/exif/",
+			api: "includes/api/i18n/",
+			rest: "includes/Rest/i18n/",
+			installer: "includes/installer/i18n/",
+			paramvalidator: "includes/libs/ParamValidator/i18n/",
 		},
 		stylelint: {
 			options: {
-				reportNeedlessDisables: true
+				reportNeedlessDisables: true,
 			},
-			src: '{resources/src,mw-config}/**/*.{css,less,vue}'
+			src: "{resources/src,mw-config}/**/*.{css,less,vue}",
 		},
 		watch: {
 			files: [
-				'.{stylelintrc,eslintrc.json}',
-				'**/*',
-				'!{docs,extensions,node_modules,skins,vendor}/**'
+				".{stylelintrc,eslintrc.json}",
+				"**/*",
+				"!{docs,extensions,node_modules,skins,vendor}/**",
 			],
-			tasks: 'test'
+			tasks: "test",
 		},
 		karma: {
 			options: {
 				customLaunchers: {
 					ChromeCustom: {
-						base: 'ChromeHeadless',
+						base: "ChromeHeadless",
 						// Chrome requires --no-sandbox in Docker/CI.
 						// WMF CI images expose CHROMIUM_FLAGS which sets that.
-						flags: ( process.env.CHROMIUM_FLAGS || '' ).split( ' ' )
-					}
+						flags: (process.env.CHROMIUM_FLAGS || "").split(" "),
+					},
 				},
 				proxies: karmaProxy,
-				files: [ {
-					pattern: wgServer + wgScriptPath + '/index.php?title=Special:JavaScriptTest/qunit/export',
-					watched: false,
-					included: true,
-					served: false
-				} ],
-				logLevel: ( process.env.ZUUL_PROJECT ? 'DEBUG' : 'INFO' ),
-				frameworks: [ 'qunit' ],
-				reporters: [ 'mocha' ],
+				files: [
+					{
+						pattern:
+							wgServer +
+							wgScriptPath +
+							"/index.php?title=Special:JavaScriptTest/qunit/export",
+						watched: false,
+						included: true,
+						served: false,
+					},
+				],
+				logLevel: process.env.ZUUL_PROJECT ? "DEBUG" : "INFO",
+				frameworks: ["qunit"],
+				reporters: ["mocha"],
 				singleRun: true,
 				autoWatch: false,
 				// Some tests in extensions don't yield for more than the default 10s (T89075)
 				browserNoActivityTimeout: 60 * 1000,
 				// Karma requires Same-Origin (or CORS) by default since v1.1.1
 				// for better stacktraces. But we load the first request from wgServer
-				crossOriginAttribute: false
+				crossOriginAttribute: false,
 			},
 			main: {
-				browsers: [ 'ChromeCustom' ]
+				browsers: ["ChromeCustom"],
 			},
 			firefox: {
-				browsers: [ 'FirefoxHeadless' ]
-			}
+				browsers: ["FirefoxHeadless"],
+			},
 		},
 		copy: {
 			jsduck: {
-				src: 'resources/**/*',
-				dest: 'docs/js/modules',
+				src: "resources/**/*",
+				dest: "docs/js/modules",
 				expand: true,
-				rename: function ( dest, src ) {
-					return require( 'path' ).join( dest, src.replace( 'resources/', '' ) );
-				}
-			}
-		}
-	} );
+				rename: function (dest, src) {
+					return require("path").join(
+						dest,
+						src.replace("resources/", "")
+					);
+				},
+			},
+		},
+	});
 
-	grunt.registerTask( 'assert-mw-env', function () {
+	grunt.registerTask("assert-mw-env", function () {
 		var ok = true;
-		if ( !process.env.MW_SERVER ) {
-			grunt.log.error( 'Environment variable MW_SERVER must be set.\n' +
-				'Set this like $wgServer, e.g. "http://localhost"'
+		if (!process.env.MW_SERVER) {
+			grunt.log.error(
+				"Environment variable MW_SERVER must be set.\n" +
+					'Set this like $wgServer, e.g. "http://localhost"'
 			);
 			ok = false;
 		}
-		if ( !process.env.MW_SCRIPT_PATH ) {
-			grunt.log.error( 'Environment variable MW_SCRIPT_PATH must be set.\n' +
-				'Set this like $wgScriptPath, e.g. "/w"' );
+		if (!process.env.MW_SCRIPT_PATH) {
+			grunt.log.error(
+				"Environment variable MW_SCRIPT_PATH must be set.\n" +
+					'Set this like $wgScriptPath, e.g. "/w"'
+			);
 			ok = false;
 		}
 		return ok;
-	} );
+	});
 
-	grunt.registerTask( 'lint', [ 'eslint', 'banana', 'stylelint' ] );
-	grunt.registerTask( 'qunit', [ 'assert-mw-env', 'karma:main' ] );
+	grunt.registerTask("lint", ["eslint", "banana", "stylelint"]);
+	grunt.registerTask("qunit", ["assert-mw-env", "karma:main"]);
 };

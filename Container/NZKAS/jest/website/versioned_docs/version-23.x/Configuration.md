@@ -73,7 +73,7 @@ export default {
   authorize: () => {
     return 'token';
   },
-  isAuthorized: secret => secret === 'wizard',
+  isAuthorized: (secret) => secret === 'wizard',
 };
 ```
 

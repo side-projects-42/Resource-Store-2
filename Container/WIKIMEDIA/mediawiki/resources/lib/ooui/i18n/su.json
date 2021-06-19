@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Kandar",
-			"Uchup19"
-		]
+		"authors": ["Kandar", "Uchup19"]
 	},
 	"ooui-outline-control-move-down": "Pindahkeun ka handap",
 	"ooui-outline-control-move-up": "Pindahkeun ka luhur",

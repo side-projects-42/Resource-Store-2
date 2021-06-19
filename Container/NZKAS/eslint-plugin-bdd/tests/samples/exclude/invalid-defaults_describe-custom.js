@@ -14,10 +14,10 @@
  * @description:
  * Tests to see if there are any empty `describeXYZ` tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	describeAnimal('giraffe');
+	describeAnimal("giraffe");
 
-	describePlanet('jupiter');
-}(this));
+	describePlanet("jupiter");
+})(this);

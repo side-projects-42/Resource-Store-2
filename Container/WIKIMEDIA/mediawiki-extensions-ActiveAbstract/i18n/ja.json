@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Ridmevo"
-		]
-	},
-	"activeabstract-desc": "Yahoo!アクティブアブストラクトプロジェクトについてのXMLフィードを生成する"
+  "@metadata": {
+    "authors": ["Ridmevo"]
+  },
+  "activeabstract-desc": "Yahoo!アクティブアブストラクトプロジェクトについてのXMLフィードを生成する"
 }

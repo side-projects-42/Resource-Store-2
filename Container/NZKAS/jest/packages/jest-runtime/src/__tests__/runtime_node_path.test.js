@@ -27,7 +27,7 @@ describe('Runtime', () => {
 
   it('uses NODE_PATH to find modules', () => {
     const nodePath = __dirname + '/NODE_PATH_dir';
-    return createLocalRuntime(nodePath).then(runtime => {
+    return createLocalRuntime(nodePath).then((runtime) => {
       const exports = runtime.requireModuleOrMock(
         runtime.__mockRootPath,
         'regular_module_in_node_path',
@@ -38,19 +38,21 @@ describe('Runtime', () => {
 
   it('uses modulePaths to find modules', () => {
     const nodePath = __dirname + '/NODE_PATH_dir';
-    return createLocalRuntime(null, {modulePaths: [nodePath]}).then(runtime => {
-      const exports = runtime.requireModuleOrMock(
-        runtime.__mockRootPath,
-        'regular_module_in_node_path',
-      );
-      expect(exports).toBeDefined();
-    });
+    return createLocalRuntime(null, {modulePaths: [nodePath]}).then(
+      (runtime) => {
+        const exports = runtime.requireModuleOrMock(
+          runtime.__mockRootPath,
+          'regular_module_in_node_path',
+        );
+        expect(exports).toBeDefined();
+      },
+    );
   });
 
   it('finds modules in NODE_PATH containing multiple paths', () => {
     const nodePath =
       cwd + '/some/other/path' + path.delimiter + __dirname + '/NODE_PATH_dir';
-    return createLocalRuntime(nodePath).then(runtime => {
+    return createLocalRuntime(nodePath).then((runtime) => {
       const exports = runtime.requireModuleOrMock(
         runtime.__mockRootPath,
         'regular_module_in_node_path',
@@ -62,7 +64,7 @@ describe('Runtime', () => {
   it('does not find modules if NODE_PATH is relative', () => {
     const nodePath =
       cwd.substr(path.sep.length) + 'src/Runtime/__tests__/NODE_PATH_dir';
-    return createLocalRuntime(nodePath).then(runtime => {
+    return createLocalRuntime(nodePath).then((runtime) => {
       expect(() => {
         runtime.requireModuleOrMock(
           runtime.__mockRootPath,

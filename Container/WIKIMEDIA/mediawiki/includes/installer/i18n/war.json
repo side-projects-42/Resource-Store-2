@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Harvzsf",
-			"JinJian"
-		]
+		"authors": ["Harvzsf", "JinJian"]
 	},
 	"config-desc": "An pan-installar han MediaWiki",
 	"config-title": "MediaWiki $1 nga pag-installar",

@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Murma174",
-			"Pyt"
-		]
+		"authors": ["Murma174", "Pyt"]
 	},
 	"config-help": "Halep",
 	"mainpagetext": "'''Det instaliarin faan MediaWiki hää loket.'''",

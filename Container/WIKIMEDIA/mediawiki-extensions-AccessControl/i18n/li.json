@@ -1,10 +1,8 @@
 {
-	"@metadata": {
-		"authors": [
-			"Ooswesthoesbes"
-		]
-	},
-	"accesscontrol-desc": "Vermeugelik groepstougangsbepirking op 'ne pagina op gebroekerbasis",
-	"accesscontrol-info": "Dit is 'n besjurmde pagina.",
-	"accesscontrol-info-box": "Tougangsbepirkinge zeen vasgelag veur dees pagina. Wen se dit besjeid zuus, den höbs se geinen tougank toet dees pagina."
+  "@metadata": {
+    "authors": ["Ooswesthoesbes"]
+  },
+  "accesscontrol-desc": "Vermeugelik groepstougangsbepirking op 'ne pagina op gebroekerbasis",
+  "accesscontrol-info": "Dit is 'n besjurmde pagina.",
+  "accesscontrol-info-box": "Tougangsbepirkinge zeen vasgelag veur dees pagina. Wen se dit besjeid zuus, den höbs se geinen tougank toet dees pagina."
 }

@@ -1,10 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Aftabuzzaman",
-			"Bellayet",
-			"আফতাবুজ্জামান"
-		]
-	},
-	"alltimezones-desc": "সকল সময় অঞ্চলের তারিখ দেখাতে ট্যাগ যোগ করো"
+  "@metadata": {
+    "authors": ["Aftabuzzaman", "Bellayet", "আফতাবুজ্জামান"]
+  },
+  "alltimezones-desc": "সকল সময় অঞ্চলের তারিখ দেখাতে ট্যাগ যোগ করো"
 }

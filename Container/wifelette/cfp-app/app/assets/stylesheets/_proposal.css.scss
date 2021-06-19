@@ -1,5 +1,7 @@
 #proposal {
-  input#email { width: 80%; }
+  input#email {
+    width: 80%;
+  }
   select#rating_score {
     width: 4em;
     display: inline;
@@ -9,7 +11,7 @@
     &.status {
       float: right;
       display: block;
-      margin: .3em 6.5em .4em 0;
+      margin: 0.3em 6.5em 0.4em 0;
     }
     &.small-status {
       float: right;
@@ -24,7 +26,9 @@
       margin-right: 10px;
     }
   }
-  .other_proposals li{ margin-bottom: 5px;}
+  .other_proposals li {
+    margin-bottom: 5px;
+  }
   .other_proposal_tags {
     padding-left: 10px;
     margin-bottom: 7px;
@@ -44,8 +48,13 @@
 }
 
 .proposal-list {
-  .actions { width: 180px; }
-  .date_range_filter, .text_filter { width: 100px !important; }
+  .actions {
+    width: 180px;
+  }
+  .date_range_filter,
+  .text_filter {
+    width: 100px !important;
+  }
 }
 
 ul {
@@ -60,15 +69,15 @@ ul {
 }
 
 .twitter-share-button {
-  margin-left: .5em;
+  margin-left: 0.5em;
   margin-top: 2.3em;
 }
 
 .toolbox {
-  margin: 1.5em 0 -.8em;
+  margin: 1.5em 0 -0.8em;
   a {
     float: left;
-    margin-right: .5em;
+    margin-right: 0.5em;
   }
 }
 
@@ -81,7 +90,8 @@ input#email {
   float: right;
   margin-bottom: 10px;
 }
-.btn#back, .btn#edit {
+.btn#back,
+.btn#edit {
   margin-bottom: 5px;
 }
 
@@ -102,15 +112,21 @@ span.disabled-state {
 }
 
 #organizer-proposals-index {
-  .dataTables_filter, .filter_date_range {
+  .dataTables_filter,
+  .filter_date_range {
     display: none;
   }
-  .top_row_buttons { margin-bottom: 5px;}
+  .top_row_buttons {
+    margin-bottom: 5px;
+  }
 }
 
 #reviewer-proposals_wrapper {
   // A hack to hide our rated? boolean column that is being used to initally sort
-  th:last-of-type, td:last-of-type{ display: none }
+  th:last-of-type,
+  td:last-of-type {
+    display: none;
+  }
 }
 
 .callout {
@@ -124,26 +140,33 @@ span.disabled-state {
     margin-bottom: -10px;
   }
   dl {
-    margin-left: .5em;
+    margin-left: 0.5em;
   }
   dt {
-    text-align:left;
+    text-align: left;
     width: 215px;
   }
-  dd { margin-left: 140px; }
+  dd {
+    margin-left: 140px;
+  }
 }
 
 .glyphicon-leaf {
   color: green;
-  &:hover{cursor: pointer;}
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-
 .ratings_list {
-  .text-success:hover { color: #468847; }
+  .text-success:hover {
+    color: #468847;
+  }
   dt {
     text-align: left;
     font-weight: normal;
   }
-  dd { margin-left: 150px; }
+  dd {
+    margin-left: 150px;
+  }
 }

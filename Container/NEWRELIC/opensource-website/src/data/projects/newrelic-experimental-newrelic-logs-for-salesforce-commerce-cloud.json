@@ -15,10 +15,7 @@
   "description": "A Docker image purpose-built to monitor Salesforce Commerce Cloud (fka Demandware) logs using New Relic Logs.",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Shell",
-  "projectTags": [
-    "nrlabs",
-    "logging"
-  ],
+  "projectTags": ["nrlabs", "logging"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Logs for Salesforce Commerce Cloud",

@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Crucifunked",
-			"Enolp",
-			"Fitoschido",
-			"Xuacu"
-		]
+		"authors": ["Crucifunked", "Enolp", "Fitoschido", "Xuacu"]
 	},
 	"config-desc": "L'instalador de MediaWiki",
 	"config-title": "Instalación de MediaWiki $1",

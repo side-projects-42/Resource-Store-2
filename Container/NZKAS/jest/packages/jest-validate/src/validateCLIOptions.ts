@@ -54,7 +54,7 @@ const logDeprecatedOptions = (
   deprecationEntries: DeprecatedOptions,
   argv: Config.Argv,
 ) => {
-  deprecatedOptions.forEach(opt => {
+  deprecatedOptions.forEach((opt) => {
     deprecationWarning(argv, opt, deprecationEntries, {
       ...defaultConfig,
       comment: DOCUMENTATION_NOTE,
@@ -78,7 +78,7 @@ export default function validateCLIOptions(
     new Set(yargsSpecialOptions),
   );
   const unrecognizedOptions = Object.keys(argv).filter(
-    arg =>
+    (arg) =>
       !allowedOptions.has(camelcase(arg)) &&
       (!rawArgv.length || rawArgv.includes(arg)),
     [],
@@ -103,7 +103,7 @@ export default function validateCLIOptions(
   );
   const deprecations = new Set(Object.keys(CLIDeprecations));
   const deprecatedOptions = Object.keys(argv).filter(
-    arg => deprecations.has(arg) && argv[arg] != null,
+    (arg) => deprecations.has(arg) && argv[arg] != null,
   );
 
   if (deprecatedOptions.length) {

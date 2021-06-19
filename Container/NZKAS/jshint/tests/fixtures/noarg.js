@@ -1,7 +1,7 @@
 function callee() {
-    return arguments.callee;
+  return arguments.callee;
 }
 
 function caller() {
-    return arguments.caller;
+  return arguments.caller;
 }

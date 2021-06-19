@@ -6,9 +6,9 @@
  */
 
 module.exports = function (chai, _) {
-  var Assertion = chai.Assertion
-    , toString = Object.prototype.toString
-    , flag = _.flag;
+  var Assertion = chai.Assertion,
+    toString = Object.prototype.toString,
+    flag = _.flag;
 
   /**
    * ### Language Chains
@@ -36,10 +36,19 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  [ 'to', 'be', 'been'
-  , 'is', 'and', 'have'
-  , 'with', 'that', 'at'
-  , 'of', 'same' ].forEach(function (chain) {
+  [
+    "to",
+    "be",
+    "been",
+    "is",
+    "and",
+    "have",
+    "with",
+    "that",
+    "at",
+    "of",
+    "same",
+  ].forEach(function (chain) {
     Assertion.addProperty(chain, function () {
       return this;
     });
@@ -59,8 +68,8 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('not', function () {
-    flag(this, 'negate', true);
+  Assertion.addProperty("not", function () {
+    flag(this, "negate", true);
   });
 
   /**
@@ -77,8 +86,8 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('deep', function () {
-    flag(this, 'deep', true);
+  Assertion.addProperty("deep", function () {
+    flag(this, "deep", true);
   });
 
   /**
@@ -104,21 +113,23 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function an (type, msg) {
-    if (msg) flag(this, 'message', msg);
+  function an(type, msg) {
+    if (msg) flag(this, "message", msg);
     type = type.toLowerCase();
-    var obj = flag(this, 'object')
-      , article = ~[ 'a', 'e', 'i', 'o', 'u' ].indexOf(type.charAt(0)) ? 'an ' : 'a ';
+    var obj = flag(this, "object"),
+      article = ~["a", "e", "i", "o", "u"].indexOf(type.charAt(0))
+        ? "an "
+        : "a ";
 
     this.assert(
-        type === _.type(obj)
-      , 'expected #{this} to be ' + article + type
-      , 'expected #{this} not to be ' + article + type
+      type === _.type(obj),
+      "expected #{this} to be " + article + type,
+      "expected #{this} not to be " + article + type
     );
   }
 
-  Assertion.addChainableMethod('an', an);
-  Assertion.addChainableMethod('a', an);
+  Assertion.addChainableMethod("an", an);
+  Assertion.addChainableMethod("a", an);
 
   /**
    * ### .include(value)
@@ -139,21 +150,22 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function includeChainingBehavior () {
-    flag(this, 'contains', true);
+  function includeChainingBehavior() {
+    flag(this, "contains", true);
   }
 
-  function include (val, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object')
+  function include(val, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
     this.assert(
-        ~obj.indexOf(val)
-      , 'expected #{this} to include ' + _.inspect(val)
-      , 'expected #{this} to not include ' + _.inspect(val));
+      ~obj.indexOf(val),
+      "expected #{this} to include " + _.inspect(val),
+      "expected #{this} to not include " + _.inspect(val)
+    );
   }
 
-  Assertion.addChainableMethod('include', include, includeChainingBehavior);
-  Assertion.addChainableMethod('contain', include, includeChainingBehavior);
+  Assertion.addChainableMethod("include", include, includeChainingBehavior);
+  Assertion.addChainableMethod("contain", include, includeChainingBehavior);
 
   /**
    * ### .ok
@@ -170,11 +182,12 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('ok', function () {
+  Assertion.addProperty("ok", function () {
     this.assert(
-        flag(this, 'object')
-      , 'expected #{this} to be truthy'
-      , 'expected #{this} to be falsy');
+      flag(this, "object"),
+      "expected #{this} to be truthy",
+      "expected #{this} to be falsy"
+    );
   });
 
   /**
@@ -189,12 +202,12 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('true', function () {
+  Assertion.addProperty("true", function () {
     this.assert(
-        true === flag(this, 'object')
-      , 'expected #{this} to be true'
-      , 'expected #{this} to be false'
-      , this.negate ? false : true
+      true === flag(this, "object"),
+      "expected #{this} to be true",
+      "expected #{this} to be false",
+      this.negate ? false : true
     );
   });
 
@@ -210,12 +223,12 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('false', function () {
+  Assertion.addProperty("false", function () {
     this.assert(
-        false === flag(this, 'object')
-      , 'expected #{this} to be false'
-      , 'expected #{this} to be true'
-      , this.negate ? true : false
+      false === flag(this, "object"),
+      "expected #{this} to be false",
+      "expected #{this} to be true",
+      this.negate ? true : false
     );
   });
 
@@ -231,11 +244,11 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('null', function () {
+  Assertion.addProperty("null", function () {
     this.assert(
-        null === flag(this, 'object')
-      , 'expected #{this} to be null'
-      , 'expected #{this} not to be null'
+      null === flag(this, "object"),
+      "expected #{this} to be null",
+      "expected #{this} not to be null"
     );
   });
 
@@ -251,11 +264,11 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('undefined', function () {
+  Assertion.addProperty("undefined", function () {
     this.assert(
-        undefined === flag(this, 'object')
-      , 'expected #{this} to be undefined'
-      , 'expected #{this} not to be undefined'
+      undefined === flag(this, "object"),
+      "expected #{this} to be undefined",
+      "expected #{this} not to be undefined"
     );
   });
 
@@ -276,14 +289,13 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('exist', function () {
+  Assertion.addProperty("exist", function () {
     this.assert(
-        null != flag(this, 'object')
-      , 'expected #{this} to exist'
-      , 'expected #{this} to not exist'
+      null != flag(this, "object"),
+      "expected #{this} to exist",
+      "expected #{this} to not exist"
     );
   });
-
 
   /**
    * ### .empty
@@ -300,20 +312,20 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('empty', function () {
-    var obj = flag(this, 'object')
-      , expected = obj;
+  Assertion.addProperty("empty", function () {
+    var obj = flag(this, "object"),
+      expected = obj;
 
-    if (Array.isArray(obj) || 'string' === typeof object) {
+    if (Array.isArray(obj) || "string" === typeof object) {
       expected = obj.length;
-    } else if (typeof obj === 'object') {
+    } else if (typeof obj === "object") {
       expected = Object.keys(obj).length;
     }
 
     this.assert(
-        !expected
-      , 'expected #{this} to be empty'
-      , 'expected #{this} not to be empty'
+      !expected,
+      "expected #{this} to be empty",
+      "expected #{this} not to be empty"
     );
   });
 
@@ -331,18 +343,18 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function checkArguments () {
-    var obj = flag(this, 'object')
-      , type = Object.prototype.toString.call(obj);
+  function checkArguments() {
+    var obj = flag(this, "object"),
+      type = Object.prototype.toString.call(obj);
     this.assert(
-        '[object Arguments]' === type
-      , 'expected #{this} to be arguments but got ' + type
-      , 'expected #{this} to not be arguments'
+      "[object Arguments]" === type,
+      "expected #{this} to be arguments but got " + type,
+      "expected #{this} to not be arguments"
     );
   }
 
-  Assertion.addProperty('arguments', checkArguments);
-  Assertion.addProperty('Arguments', checkArguments);
+  Assertion.addProperty("arguments", checkArguments);
+  Assertion.addProperty("Arguments", checkArguments);
 
   /**
    * ### .equal(value)
@@ -366,26 +378,26 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertEqual (val, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
-    if (flag(this, 'deep')) {
+  function assertEqual(val, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
+    if (flag(this, "deep")) {
       return this.eql(val);
     } else {
       this.assert(
-          val === obj
-        , 'expected #{this} to equal #{exp}'
-        , 'expected #{this} to not equal #{exp}'
-        , val
-        , this._obj
-        , true
+        val === obj,
+        "expected #{this} to equal #{exp}",
+        "expected #{this} to not equal #{exp}",
+        val,
+        this._obj,
+        true
       );
     }
   }
 
-  Assertion.addMethod('equal', assertEqual);
-  Assertion.addMethod('equals', assertEqual);
-  Assertion.addMethod('eq', assertEqual);
+  Assertion.addMethod("equal", assertEqual);
+  Assertion.addMethod("equals", assertEqual);
+  Assertion.addMethod("eq", assertEqual);
 
   /**
    * ### .eql(value)
@@ -403,19 +415,19 @@ module.exports = function (chai, _) {
    */
 
   function assertEql(obj, msg) {
-    if (msg) flag(this, 'message', msg);
+    if (msg) flag(this, "message", msg);
     this.assert(
-        _.eql(obj, flag(this, 'object'))
-      , 'expected #{this} to deeply equal #{exp}'
-      , 'expected #{this} to not deeply equal #{exp}'
-      , obj
-      , this._obj
-      , true
+      _.eql(obj, flag(this, "object")),
+      "expected #{this} to deeply equal #{exp}",
+      "expected #{this} to not deeply equal #{exp}",
+      obj,
+      this._obj,
+      true
     );
   }
 
-  Assertion.addMethod('eql', assertEql);
-  Assertion.addMethod('eqls', assertEql);
+  Assertion.addMethod("eql", assertEql);
+  Assertion.addMethod("eqls", assertEql);
 
   /**
    * ### .above(value)
@@ -440,31 +452,31 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertAbove (n, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
-    if (flag(this, 'doLength')) {
-      new Assertion(obj, msg).to.have.property('length');
+  function assertAbove(n, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
+    if (flag(this, "doLength")) {
+      new Assertion(obj, msg).to.have.property("length");
       var len = obj.length;
       this.assert(
-          len > n
-        , 'expected #{this} to have a length above #{exp} but got #{act}'
-        , 'expected #{this} to not have a length above #{exp}'
-        , n
-        , len
+        len > n,
+        "expected #{this} to have a length above #{exp} but got #{act}",
+        "expected #{this} to not have a length above #{exp}",
+        n,
+        len
       );
     } else {
       this.assert(
-          obj > n
-        , 'expected #{this} to be above ' + n
-        , 'expected #{this} to be at most ' + n
+        obj > n,
+        "expected #{this} to be above " + n,
+        "expected #{this} to be at most " + n
       );
     }
   }
 
-  Assertion.addMethod('above', assertAbove);
-  Assertion.addMethod('gt', assertAbove);
-  Assertion.addMethod('greaterThan', assertAbove);
+  Assertion.addMethod("above", assertAbove);
+  Assertion.addMethod("gt", assertAbove);
+  Assertion.addMethod("greaterThan", assertAbove);
 
   /**
    * ### .least(value)
@@ -488,30 +500,30 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertLeast (n, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
-    if (flag(this, 'doLength')) {
-      new Assertion(obj, msg).to.have.property('length');
+  function assertLeast(n, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
+    if (flag(this, "doLength")) {
+      new Assertion(obj, msg).to.have.property("length");
       var len = obj.length;
       this.assert(
-          len >= n
-        , 'expected #{this} to have a length at least #{exp} but got #{act}'
-        , 'expected #{this} to have a length below #{exp}'
-        , n
-        , len
+        len >= n,
+        "expected #{this} to have a length at least #{exp} but got #{act}",
+        "expected #{this} to have a length below #{exp}",
+        n,
+        len
       );
     } else {
       this.assert(
-          obj >= n
-        , 'expected #{this} to be at least ' + n
-        , 'expected #{this} to be below ' + n
+        obj >= n,
+        "expected #{this} to be at least " + n,
+        "expected #{this} to be below " + n
       );
     }
   }
 
-  Assertion.addMethod('least', assertLeast);
-  Assertion.addMethod('gte', assertLeast);
+  Assertion.addMethod("least", assertLeast);
+  Assertion.addMethod("gte", assertLeast);
 
   /**
    * ### .below(value)
@@ -536,31 +548,31 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertBelow (n, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
-    if (flag(this, 'doLength')) {
-      new Assertion(obj, msg).to.have.property('length');
+  function assertBelow(n, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
+    if (flag(this, "doLength")) {
+      new Assertion(obj, msg).to.have.property("length");
       var len = obj.length;
       this.assert(
-          len < n
-        , 'expected #{this} to have a length below #{exp} but got #{act}'
-        , 'expected #{this} to not have a length below #{exp}'
-        , n
-        , len
+        len < n,
+        "expected #{this} to have a length below #{exp} but got #{act}",
+        "expected #{this} to not have a length below #{exp}",
+        n,
+        len
       );
     } else {
       this.assert(
-          obj < n
-        , 'expected #{this} to be below ' + n
-        , 'expected #{this} to be at least ' + n
+        obj < n,
+        "expected #{this} to be below " + n,
+        "expected #{this} to be at least " + n
       );
     }
   }
 
-  Assertion.addMethod('below', assertBelow);
-  Assertion.addMethod('lt', assertBelow);
-  Assertion.addMethod('lessThan', assertBelow);
+  Assertion.addMethod("below", assertBelow);
+  Assertion.addMethod("lt", assertBelow);
+  Assertion.addMethod("lessThan", assertBelow);
 
   /**
    * ### .most(value)
@@ -584,30 +596,30 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertMost (n, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
-    if (flag(this, 'doLength')) {
-      new Assertion(obj, msg).to.have.property('length');
+  function assertMost(n, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
+    if (flag(this, "doLength")) {
+      new Assertion(obj, msg).to.have.property("length");
       var len = obj.length;
       this.assert(
-          len <= n
-        , 'expected #{this} to have a length at most #{exp} but got #{act}'
-        , 'expected #{this} to have a length above #{exp}'
-        , n
-        , len
+        len <= n,
+        "expected #{this} to have a length at most #{exp} but got #{act}",
+        "expected #{this} to have a length above #{exp}",
+        n,
+        len
       );
     } else {
       this.assert(
-          obj <= n
-        , 'expected #{this} to be at most ' + n
-        , 'expected #{this} to be above ' + n
+        obj <= n,
+        "expected #{this} to be at most " + n,
+        "expected #{this} to be above " + n
       );
     }
   }
 
-  Assertion.addMethod('most', assertMost);
-  Assertion.addMethod('lte', assertMost);
+  Assertion.addMethod("most", assertMost);
+  Assertion.addMethod("lte", assertMost);
 
   /**
    * ### .within(start, finish)
@@ -631,23 +643,23 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addMethod('within', function (start, finish, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object')
-      , range = start + '..' + finish;
-    if (flag(this, 'doLength')) {
-      new Assertion(obj, msg).to.have.property('length');
+  Assertion.addMethod("within", function (start, finish, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object"),
+      range = start + ".." + finish;
+    if (flag(this, "doLength")) {
+      new Assertion(obj, msg).to.have.property("length");
       var len = obj.length;
       this.assert(
-          len >= start && len <= finish
-        , 'expected #{this} to have a length within ' + range
-        , 'expected #{this} to not have a length within ' + range
+        len >= start && len <= finish,
+        "expected #{this} to have a length within " + range,
+        "expected #{this} to not have a length within " + range
       );
     } else {
       this.assert(
-          obj >= start && obj <= finish
-        , 'expected #{this} to be within ' + range
-        , 'expected #{this} to not be within ' + range
+        obj >= start && obj <= finish,
+        "expected #{this} to be within " + range,
+        "expected #{this} to not be within " + range
       );
     }
   });
@@ -670,18 +682,18 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertInstanceOf (constructor, msg) {
-    if (msg) flag(this, 'message', msg);
+  function assertInstanceOf(constructor, msg) {
+    if (msg) flag(this, "message", msg);
     var name = _.getName(constructor);
     this.assert(
-        flag(this, 'object') instanceof constructor
-      , 'expected #{this} to be an instance of ' + name
-      , 'expected #{this} to not be an instance of ' + name
+      flag(this, "object") instanceof constructor,
+      "expected #{this} to be an instance of " + name,
+      "expected #{this} to not be an instance of " + name
     );
-  };
+  }
 
-  Assertion.addMethod('instanceof', assertInstanceOf);
-  Assertion.addMethod('instanceOf', assertInstanceOf);
+  Assertion.addMethod("instanceof", assertInstanceOf);
+  Assertion.addMethod("instanceOf", assertInstanceOf);
 
   /**
    * ### .property(name, [value])
@@ -742,41 +754,47 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addMethod('property', function (name, val, msg) {
-    if (msg) flag(this, 'message', msg);
+  Assertion.addMethod("property", function (name, val, msg) {
+    if (msg) flag(this, "message", msg);
 
-    var descriptor = flag(this, 'deep') ? 'deep property ' : 'property '
-      , negate = flag(this, 'negate')
-      , obj = flag(this, 'object')
-      , value = flag(this, 'deep')
-        ? _.getPathValue(name, obj)
-        : obj[name];
+    var descriptor = flag(this, "deep") ? "deep property " : "property ",
+      negate = flag(this, "negate"),
+      obj = flag(this, "object"),
+      value = flag(this, "deep") ? _.getPathValue(name, obj) : obj[name];
 
     if (negate && undefined !== val) {
       if (undefined === value) {
-        msg = (msg != null) ? msg + ': ' : '';
-        throw new Error(msg + _.inspect(obj) + ' has no ' + descriptor + _.inspect(name));
+        msg = msg != null ? msg + ": " : "";
+        throw new Error(
+          msg + _.inspect(obj) + " has no " + descriptor + _.inspect(name)
+        );
       }
     } else {
       this.assert(
-          undefined !== value
-        , 'expected #{this} to have a ' + descriptor + _.inspect(name)
-        , 'expected #{this} to not have ' + descriptor + _.inspect(name));
+        undefined !== value,
+        "expected #{this} to have a " + descriptor + _.inspect(name),
+        "expected #{this} to not have " + descriptor + _.inspect(name)
+      );
     }
 
     if (undefined !== val) {
       this.assert(
-          val === value
-        , 'expected #{this} to have a ' + descriptor + _.inspect(name) + ' of #{exp}, but got #{act}'
-        , 'expected #{this} to not have a ' + descriptor + _.inspect(name) + ' of #{act}'
-        , val
-        , value
+        val === value,
+        "expected #{this} to have a " +
+          descriptor +
+          _.inspect(name) +
+          " of #{exp}, but got #{act}",
+        "expected #{this} to not have a " +
+          descriptor +
+          _.inspect(name) +
+          " of #{act}",
+        val,
+        value
       );
     }
 
-    flag(this, 'object', value);
+    flag(this, "object", value);
   });
-
 
   /**
    * ### .ownProperty(name)
@@ -792,18 +810,18 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertOwnProperty (name, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
+  function assertOwnProperty(name, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
     this.assert(
-        obj.hasOwnProperty(name)
-      , 'expected #{this} to have own property ' + _.inspect(name)
-      , 'expected #{this} to not have own property ' + _.inspect(name)
+      obj.hasOwnProperty(name),
+      "expected #{this} to have own property " + _.inspect(name),
+      "expected #{this} to not have own property " + _.inspect(name)
     );
   }
 
-  Assertion.addMethod('ownProperty', assertOwnProperty);
-  Assertion.addMethod('haveOwnProperty', assertOwnProperty);
+  Assertion.addMethod("ownProperty", assertOwnProperty);
+  Assertion.addMethod("haveOwnProperty", assertOwnProperty);
 
   /**
    * ### .length(value)
@@ -831,27 +849,27 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertLengthChain () {
-    flag(this, 'doLength', true);
+  function assertLengthChain() {
+    flag(this, "doLength", true);
   }
 
-  function assertLength (n, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
-    new Assertion(obj, msg).to.have.property('length');
+  function assertLength(n, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
+    new Assertion(obj, msg).to.have.property("length");
     var len = obj.length;
 
     this.assert(
-        len == n
-      , 'expected #{this} to have a length of #{exp} but got #{act}'
-      , 'expected #{this} to not have a length of #{act}'
-      , n
-      , len
+      len == n,
+      "expected #{this} to have a length of #{exp} but got #{act}",
+      "expected #{this} to not have a length of #{act}",
+      n,
+      len
     );
   }
 
-  Assertion.addChainableMethod('length', assertLength, assertLengthChain);
-  Assertion.addMethod('lengthOf', assertLength, assertLengthChain);
+  Assertion.addChainableMethod("length", assertLength, assertLengthChain);
+  Assertion.addMethod("lengthOf", assertLength, assertLengthChain);
 
   /**
    * ### .match(regexp)
@@ -866,13 +884,13 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addMethod('match', function (re, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
+  Assertion.addMethod("match", function (re, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
     this.assert(
-        re.exec(obj)
-      , 'expected #{this} to match ' + re
-      , 'expected #{this} not to match ' + re
+      re.exec(obj),
+      "expected #{this} to match " + re,
+      "expected #{this} not to match " + re
     );
   });
 
@@ -889,18 +907,17 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addMethod('string', function (str, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
-    new Assertion(obj, msg).is.a('string');
+  Assertion.addMethod("string", function (str, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
+    new Assertion(obj, msg).is.a("string");
 
     this.assert(
-        ~obj.indexOf(str)
-      , 'expected #{this} to contain ' + _.inspect(str)
-      , 'expected #{this} to not contain ' + _.inspect(str)
+      ~obj.indexOf(str),
+      "expected #{this} to contain " + _.inspect(str),
+      "expected #{this} to not contain " + _.inspect(str)
     );
   });
-
 
   /**
    * ### .keys(key1, [key2], [...])
@@ -918,57 +935,55 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertKeys (keys) {
-    var obj = flag(this, 'object')
-      , str
-      , ok = true;
+  function assertKeys(keys) {
+    var obj = flag(this, "object"),
+      str,
+      ok = true;
 
-    keys = keys instanceof Array
-      ? keys
-      : Array.prototype.slice.call(arguments);
+    keys = keys instanceof Array ? keys : Array.prototype.slice.call(arguments);
 
-    if (!keys.length) throw new Error('keys required');
+    if (!keys.length) throw new Error("keys required");
 
-    var actual = Object.keys(obj)
-      , len = keys.length;
+    var actual = Object.keys(obj),
+      len = keys.length;
 
     // Inclusion
-    ok = keys.every(function(key){
+    ok = keys.every(function (key) {
       return ~actual.indexOf(key);
     });
 
     // Strict
-    if (!flag(this, 'negate') && !flag(this, 'contains')) {
+    if (!flag(this, "negate") && !flag(this, "contains")) {
       ok = ok && keys.length == actual.length;
     }
 
     // Key string
     if (len > 1) {
-      keys = keys.map(function(key){
+      keys = keys.map(function (key) {
         return _.inspect(key);
       });
       var last = keys.pop();
-      str = keys.join(', ') + ', and ' + last;
+      str = keys.join(", ") + ", and " + last;
     } else {
       str = _.inspect(keys[0]);
     }
 
     // Form
-    str = (len > 1 ? 'keys ' : 'key ') + str;
+    str = (len > 1 ? "keys " : "key ") + str;
 
     // Have / include
-    str = (flag(this, 'contains') ? 'contain ' : 'have ') + str;
+    str = (flag(this, "contains") ? "contain " : "have ") + str;
 
     // Assertion
     this.assert(
-        ok
-      , 'expected #{this} to ' + str
-      , 'expected #{this} to not ' + str
+      ok,
+      "expected #{this} to " + str,
+      "expected #{this} to not " + str
     );
   }
 
-  Assertion.addMethod('keys', assertKeys);
-  Assertion.addMethod('key', assertKeys);
+  Assertion.addMethod("keys", assertKeys);
+  Assertion.addMethod("key", assertKeys);
 
   /**
    * ### .throw(constructor)
@@ -1005,28 +1020,31 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  function assertThrows (constructor, errMsg, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
-    new Assertion(obj, msg).is.a('function');
+  function assertThrows(constructor, errMsg, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
+    new Assertion(obj, msg).is.a("function");
 
-    var thrown = false
-      , desiredError = null
-      , name = null
-      , thrownError = null;
+    var thrown = false,
+      desiredError = null,
+      name = null,
+      thrownError = null;
 
     if (arguments.length === 0) {
       errMsg = null;
       constructor = null;
-    } else if (constructor && (constructor instanceof RegExp || 'string' === typeof constructor)) {
+    } else if (
+      constructor &&
+      (constructor instanceof RegExp || "string" === typeof constructor)
+    ) {
       errMsg = constructor;
       constructor = null;
     } else if (constructor && constructor instanceof Error) {
       desiredError = constructor;
       constructor = null;
       errMsg = null;
-    } else if (typeof constructor === 'function') {
-      name = (new constructor()).name;
+    } else if (typeof constructor === "function") {
+      name = new constructor().name;
     } else {
       constructor = null;
     }
@@ -1037,11 +1055,13 @@ module.exports = function (chai, _) {
       // first, check desired error
       if (desiredError) {
         this.assert(
-            err === desiredError
-          , 'expected #{this} to throw #{exp} but #{act} was thrown'
-          , 'expected #{this} to not throw #{exp}'
-          , (desiredError instanceof Error ? desiredError.toString() : desiredError)
-          , (err instanceof Error ? err.toString() : err)
+          err === desiredError,
+          "expected #{this} to throw #{exp} but #{act} was thrown",
+          "expected #{this} to not throw #{exp}",
+          desiredError instanceof Error
+            ? desiredError.toString()
+            : desiredError,
+          err instanceof Error ? err.toString() : err
         );
 
         return this;
@@ -1049,37 +1069,36 @@ module.exports = function (chai, _) {
       // next, check constructor
       if (constructor) {
         this.assert(
-            err instanceof constructor
-          , 'expected #{this} to throw #{exp} but #{act} was thrown'
-          , 'expected #{this} to not throw #{exp} but #{act} was thrown'
-          , name
-          , (err instanceof Error ? err.toString() : err)
+          err instanceof constructor,
+          "expected #{this} to throw #{exp} but #{act} was thrown",
+          "expected #{this} to not throw #{exp} but #{act} was thrown",
+          name,
+          err instanceof Error ? err.toString() : err
         );
 
         if (!errMsg) return this;
       }
       // next, check message
-      var message = 'object' === _.type(err) && "message" in err
-        ? err.message
-        : '' + err;
+      var message =
+        "object" === _.type(err) && "message" in err ? err.message : "" + err;
 
-      if ((message != null) && errMsg && errMsg instanceof RegExp) {
+      if (message != null && errMsg && errMsg instanceof RegExp) {
         this.assert(
-            errMsg.exec(message)
-          , 'expected #{this} to throw error matching #{exp} but got #{act}'
-          , 'expected #{this} to throw error not matching #{exp}'
-          , errMsg
-          , message
+          errMsg.exec(message),
+          "expected #{this} to throw error matching #{exp} but got #{act}",
+          "expected #{this} to throw error not matching #{exp}",
+          errMsg,
+          message
         );
 
         return this;
-      } else if ((message != null) && errMsg && 'string' === typeof errMsg) {
+      } else if (message != null && errMsg && "string" === typeof errMsg) {
         this.assert(
-            ~message.indexOf(errMsg)
-          , 'expected #{this} to throw error including #{exp} but got #{act}'
-          , 'expected #{this} to throw error not including #{act}'
-          , errMsg
-          , message
+          ~message.indexOf(errMsg),
+          "expected #{this} to throw error including #{exp} but got #{act}",
+          "expected #{this} to throw error not including #{act}",
+          errMsg,
+          message
         );
 
         return this;
@@ -1089,29 +1108,30 @@ module.exports = function (chai, _) {
       }
     }
 
-    var actuallyGot = ''
-      , expectedThrown = name !== null
-        ? name
-        : desiredError
-          ? '#{exp}' //_.inspect(desiredError)
-          : 'an error';
+    var actuallyGot = "",
+      expectedThrown =
+        name !== null
+          ? name
+          : desiredError
+          ? "#{exp}" //_.inspect(desiredError)
+          : "an error";
 
     if (thrown) {
-      actuallyGot = ' but #{act} was thrown'
+      actuallyGot = " but #{act} was thrown";
     }
 
     this.assert(
-        thrown === true
-      , 'expected #{this} to throw ' + expectedThrown + actuallyGot
-      , 'expected #{this} to not throw ' + expectedThrown + actuallyGot
-      , (desiredError instanceof Error ? desiredError.toString() : desiredError)
-      , (thrownError instanceof Error ? thrownError.toString() : thrownError)
+      thrown === true,
+      "expected #{this} to throw " + expectedThrown + actuallyGot,
+      "expected #{this} to not throw " + expectedThrown + actuallyGot,
+      desiredError instanceof Error ? desiredError.toString() : desiredError,
+      thrownError instanceof Error ? thrownError.toString() : thrownError
     );
-  };
+  }
 
-  Assertion.addMethod('throw', assertThrows);
-  Assertion.addMethod('throws', assertThrows);
-  Assertion.addMethod('Throw', assertThrows);
+  Assertion.addMethod("throw", assertThrows);
+  Assertion.addMethod("throws", assertThrows);
+  Assertion.addMethod("Throw", assertThrows);
 
   /**
    * ### .respondTo(method)
@@ -1134,18 +1154,19 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addMethod('respondTo', function (method, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object')
-      , itself = flag(this, 'itself')
-      , context = ('function' === _.type(obj) && !itself)
-        ? obj.prototype[method]
-        : obj[method];
+  Assertion.addMethod("respondTo", function (method, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object"),
+      itself = flag(this, "itself"),
+      context =
+        "function" === _.type(obj) && !itself
+          ? obj.prototype[method]
+          : obj[method];
 
     this.assert(
-        'function' === typeof context
-      , 'expected #{this} to respond to ' + _.inspect(method)
-      , 'expected #{this} to not respond to ' + _.inspect(method)
+      "function" === typeof context,
+      "expected #{this} to respond to " + _.inspect(method),
+      "expected #{this} to not respond to " + _.inspect(method)
     );
   });
 
@@ -1165,8 +1186,8 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addProperty('itself', function () {
-    flag(this, 'itself', true);
+  Assertion.addProperty("itself", function () {
+    flag(this, "itself", true);
   });
 
   /**
@@ -1182,15 +1203,15 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addMethod('satisfy', function (matcher, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
+  Assertion.addMethod("satisfy", function (matcher, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
     this.assert(
-        matcher(obj)
-      , 'expected #{this} to satisfy ' + _.objDisplay(matcher)
-      , 'expected #{this} to not satisfy' + _.objDisplay(matcher)
-      , this.negate ? false : true
-      , matcher(obj)
+      matcher(obj),
+      "expected #{this} to satisfy " + _.objDisplay(matcher),
+      "expected #{this} to not satisfy" + _.objDisplay(matcher),
+      this.negate ? false : true,
+      matcher(obj)
     );
   });
 
@@ -1208,20 +1229,20 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addMethod('closeTo', function (expected, delta, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
+  Assertion.addMethod("closeTo", function (expected, delta, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
     this.assert(
-        Math.abs(obj - expected) <= delta
-      , 'expected #{this} to be close to ' + expected + ' +/- ' + delta
-      , 'expected #{this} not to be close to ' + expected + ' +/- ' + delta
+      Math.abs(obj - expected) <= delta,
+      "expected #{this} to be close to " + expected + " +/- " + delta,
+      "expected #{this} not to be close to " + expected + " +/- " + delta
     );
   });
 
   function isSubsetOf(subset, superset) {
-    return subset.every(function(elem) {
+    return subset.every(function (elem) {
       return superset.indexOf(elem) !== -1;
-    })
+    });
   }
 
   /**
@@ -1242,29 +1263,29 @@ module.exports = function (chai, _) {
    * @api public
    */
 
-  Assertion.addMethod('members', function (subset, msg) {
-    if (msg) flag(this, 'message', msg);
-    var obj = flag(this, 'object');
+  Assertion.addMethod("members", function (subset, msg) {
+    if (msg) flag(this, "message", msg);
+    var obj = flag(this, "object");
 
-    new Assertion(obj).to.be.an('array');
-    new Assertion(subset).to.be.an('array');
+    new Assertion(obj).to.be.an("array");
+    new Assertion(subset).to.be.an("array");
 
-    if (flag(this, 'contains')) {
+    if (flag(this, "contains")) {
       return this.assert(
-          isSubsetOf(subset, obj)
-        , 'expected #{this} to be a superset of #{act}'
-        , 'expected #{this} to not be a superset of #{act}'
-        , obj
-        , subset
+        isSubsetOf(subset, obj),
+        "expected #{this} to be a superset of #{act}",
+        "expected #{this} to not be a superset of #{act}",
+        obj,
+        subset
       );
     }
 
     this.assert(
-        isSubsetOf(obj, subset) && isSubsetOf(subset, obj)
-        , 'expected #{this} to have the same members as #{act}'
-        , 'expected #{this} to not have the same members as #{act}'
-        , obj
-        , subset
+      isSubsetOf(obj, subset) && isSubsetOf(subset, obj),
+      "expected #{this} to have the same members as #{act}",
+      "expected #{this} to not have the same members as #{act}",
+      obj,
+      subset
     );
   });
 };

@@ -1,5 +1,5 @@
-var TextParamMixin = require( './TextParamMixin.js' ),
-	UtilMixin = require( './UtilMixin.js' );
+var TextParamMixin = require("./TextParamMixin.js"),
+	UtilMixin = require("./UtilMixin.js");
 
 /**
  * A wrapper for OO.ui.TextInputWidget
@@ -9,20 +9,20 @@ var TextParamMixin = require( './TextParamMixin.js' ),
  * @constructor
  * @param {Object} config Configuration options
  */
-function PasswordParamWidget( config ) {
-	config.type = 'password';
-	PasswordParamWidget.parent.call( this, config );
+function PasswordParamWidget(config) {
+	config.type = "password";
+	PasswordParamWidget.parent.call(this, config);
 }
 
-OO.inheritClass( PasswordParamWidget, OO.ui.TextInputWidget );
-OO.mixinClass( PasswordParamWidget, TextParamMixin );
-OO.mixinClass( PasswordParamWidget, UtilMixin );
+OO.inheritClass(PasswordParamWidget, OO.ui.TextInputWidget);
+OO.mixinClass(PasswordParamWidget, TextParamMixin);
+OO.mixinClass(PasswordParamWidget, UtilMixin);
 
 /**
  * @return {string}
  */
 PasswordParamWidget.prototype.getApiValueForDisplay = function () {
-	return '';
+	return "";
 };
 
 module.exports = PasswordParamWidget;

@@ -1,4 +1,4 @@
-( function () {
+(function () {
 	/**
 	 * Used to represent an upload in progress on the frontend.
 	 *
@@ -19,12 +19,12 @@
 	 *     make sure there is an entry in the $wgForeignUploadTargets array for this name.
 	 * @param {Object} [apiconfig] Passed to the constructor of mw.ForeignApi or mw.Api, as needed.
 	 */
-	function ForeignUpload( target, apiconfig ) {
+	function ForeignUpload(target, apiconfig) {
 		var api,
-			validTargets = mw.config.get( 'wgForeignUploadTargets' ),
+			validTargets = mw.config.get("wgForeignUploadTargets"),
 			upload = this;
 
-		if ( typeof target === 'object' ) {
+		if (typeof target === "object") {
 			// target probably wasn't passed in, it must
 			// be apiconfig
 			apiconfig = target;
@@ -34,7 +34,7 @@
 		// * Use the given `target` first;
 		// * If not given, fall back to default (first) ForeignUploadTarget;
 		// * If none is configured, fall back to local uploads.
-		this.target = target || validTargets[ 0 ] || 'local';
+		this.target = target || validTargets[0] || "local";
 
 		// Now we have several different options.
 		// If the local wiki is the target, then we can skip a bunch of steps
@@ -43,53 +43,59 @@
 		// However, if the target is a remote wiki, we must check the API
 		// to confirm that the target is one that this site is configured to
 		// support.
-		if ( validTargets.length === 0 ) {
-			this.apiPromise = $.Deferred().reject( 'upload-dialog-disabled' );
-		} else if ( this.target === 'local' ) {
+		if (validTargets.length === 0) {
+			this.apiPromise = $.Deferred().reject("upload-dialog-disabled");
+		} else if (this.target === "local") {
 			// If local uploads were requested, but they are disabled, fail.
-			if ( !mw.config.get( 'wgEnableUploads' ) ) {
-				this.apiPromise = $.Deferred().reject( 'uploaddisabledtext' );
+			if (!mw.config.get("wgEnableUploads")) {
+				this.apiPromise = $.Deferred().reject("uploaddisabledtext");
 			} else {
 				// We'll ignore the CORS and centralauth stuff if the target is
 				// the local wiki.
-				this.apiPromise = $.Deferred().resolve( new mw.Api( apiconfig ) );
+				this.apiPromise = $.Deferred().resolve(new mw.Api(apiconfig));
 			}
 		} else {
 			api = new mw.Api();
-			this.apiPromise = api.get( {
-				action: 'query',
-				meta: 'filerepoinfo',
-				friprop: [ 'name', 'scriptDirUrl', 'canUpload' ]
-			} ).then( function ( data ) {
-				var i, repo,
-					repos = data.query.repos;
+			this.apiPromise = api
+				.get({
+					action: "query",
+					meta: "filerepoinfo",
+					friprop: ["name", "scriptDirUrl", "canUpload"],
+				})
+				.then(function (data) {
+					var i,
+						repo,
+						repos = data.query.repos;
 
-				// First pass - try to find the passed-in target and check
-				// that it's configured for uploads.
-				for ( i in repos ) {
-					repo = repos[ i ];
+					// First pass - try to find the passed-in target and check
+					// that it's configured for uploads.
+					for (i in repos) {
+						repo = repos[i];
 
-					// Skip repos that are not our target, or if they
-					// are the target, cannot be uploaded to.
-					if ( repo.name === upload.target && repo.canUpload === '' ) {
-						return new mw.ForeignApi(
-							repo.scriptDirUrl + '/api.php',
-							apiconfig
-						);
+						// Skip repos that are not our target, or if they
+						// are the target, cannot be uploaded to.
+						if (
+							repo.name === upload.target &&
+							repo.canUpload === ""
+						) {
+							return new mw.ForeignApi(
+								repo.scriptDirUrl + "/api.php",
+								apiconfig
+							);
+						}
 					}
-				}
 
-				return $.Deferred().reject( 'upload-foreign-cant-upload' );
-			} );
+					return $.Deferred().reject("upload-foreign-cant-upload");
+				});
 		}
 
 		// Build the upload object without an API - this class overrides the
 		// actual API call methods to wait for the apiPromise to resolve
 		// before continuing.
-		mw.Upload.call( this, null );
+		mw.Upload.call(this, null);
 	}
 
-	OO.inheritClass( ForeignUpload, mw.Upload );
+	OO.inheritClass(ForeignUpload, mw.Upload);
 
 	/**
 	 * @property {string} target
@@ -120,10 +126,10 @@
 	 */
 	ForeignUpload.prototype.upload = function () {
 		var upload = this;
-		return this.apiPromise.then( function ( api ) {
+		return this.apiPromise.then(function (api) {
 			upload.api = api;
-			return mw.Upload.prototype.upload.call( upload );
-		} );
+			return mw.Upload.prototype.upload.call(upload);
+		});
 	};
 
 	/**
@@ -133,11 +139,11 @@
 	 */
 	ForeignUpload.prototype.uploadToStash = function () {
 		var upload = this;
-		return this.apiPromise.then( function ( api ) {
+		return this.apiPromise.then(function (api) {
 			upload.api = api;
-			return mw.Upload.prototype.uploadToStash.call( upload );
-		} );
+			return mw.Upload.prototype.uploadToStash.call(upload);
+		});
 	};
 
 	mw.ForeignUpload = ForeignUpload;
-}() );
+})();

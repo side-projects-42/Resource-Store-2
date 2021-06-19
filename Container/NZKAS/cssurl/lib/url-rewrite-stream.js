@@ -11,7 +11,7 @@
 //------------------------------------------------------------------------------
 
 var Transform = require("stream").Transform,
-    URLRewriter = require("./url-rewriter");
+  URLRewriter = require("./url-rewriter");
 
 //------------------------------------------------------------------------------
 // Public
@@ -24,24 +24,23 @@ var Transform = require("stream").Transform,
  * @constructor
  */
 function URLRewriteStream(replacer) {
+  if (typeof replacer !== "function") {
+    throw new TypeError("Constructor expects a function as an argument.");
+  }
 
-    if (typeof replacer !== "function") {
-        throw new TypeError("Constructor expects a function as an argument.");
-    }
+  Transform.call(this, { objectMode: true });
 
-    Transform.call(this, { objectMode: true });
+  /**
+   * The replacer function to use.
+   * @type Function
+   */
+  this.replacer = replacer;
 
-    /**
-     * The replacer function to use.
-     * @type Function
-     */
-    this.replacer = replacer;
-
-    /**
-     * Any partial data that isn't ready to be returned yet.
-     * @type *
-     */
-    this._leftover = "";
+  /**
+   * Any partial data that isn't ready to be returned yet.
+   * @type *
+   */
+  this._leftover = "";
 }
 
 URLRewriteStream.prototype = Object.create(Transform.prototype);
@@ -54,28 +53,27 @@ URLRewriteStream.prototype = Object.create(Transform.prototype);
  * @returns {void}
  * @private
  */
-URLRewriteStream.prototype._transform = function(data, encoding, done) {
+URLRewriteStream.prototype._transform = function (data, encoding, done) {
+  var text = data.toString();
 
-    var text = data.toString();
+  // if there was anything left from the last chunk, add it now
+  if (this._leftover) {
+    text = this._leftover + text;
+    this._leftover = "";
+  }
 
-    // if there was anything left from the last chunk, add it now
-    if (this._leftover) {
-        text = this._leftover + text;
-        this._leftover = "";
-    }
+  // get last bit of data after the last newline
+  var lastNewlineIndex = text.lastIndexOf("\n");
 
-    // get last bit of data after the last newline
-    var lastNewlineIndex = text.lastIndexOf("\n");
+  if (lastNewlineIndex > -1) {
+    this._leftover = text.substring(lastNewlineIndex + 1, text.length);
+    text = text.substring(0, lastNewlineIndex + 1);
+  }
 
-    if (lastNewlineIndex > -1) {
-        this._leftover = text.substring(lastNewlineIndex + 1, text.length);
-        text = text.substring(0, lastNewlineIndex + 1);
-    }
+  // rewrite the lines
+  this._rewrite(text);
 
-    // rewrite the lines
-    this._rewrite(text);
-
-    done();
+  done();
 };
 
 /**
@@ -84,17 +82,14 @@ URLRewriteStream.prototype._transform = function(data, encoding, done) {
  * @returns {void}
  * @private
  */
-URLRewriteStream.prototype._flush = function(done) {
+URLRewriteStream.prototype._flush = function (done) {
+  // if there was anything left from the last chunk, add it now
+  if (this._leftover) {
+    // rewrite the lines
+    this._rewrite(this._leftover);
+  }
 
-    // if there was anything left from the last chunk, add it now
-    if (this._leftover) {
-
-        // rewrite the lines
-        this._rewrite(this._leftover);
-
-    }
-
-    done();
+  done();
 };
 
 /**
@@ -103,14 +98,13 @@ URLRewriteStream.prototype._flush = function(done) {
  * @returns {void}
  * @private
  */
-URLRewriteStream.prototype._rewrite = function(text) {
-
-    var rewriter = new URLRewriter(this.replacer);
-    try {
-        this.push(rewriter.rewrite(text));
-    } catch (e) {
-        this.emit("error", e);
-    }
+URLRewriteStream.prototype._rewrite = function (text) {
+  var rewriter = new URLRewriter(this.replacer);
+  try {
+    this.push(rewriter.rewrite(text));
+  } catch (e) {
+    this.emit("error", e);
+  }
 };
 
 /**

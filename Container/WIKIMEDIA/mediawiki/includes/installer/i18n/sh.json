@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Conquistador",
-			"OC Ripper",
-			"Seb35",
-			"Vlad5250"
-		]
+		"authors": ["Conquistador", "OC Ripper", "Seb35", "Vlad5250"]
 	},
 	"config-desc": "Uspostavljač MediaWikija",
 	"config-title": "Uspostava MediaWikija $1",

@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"DannyS712",
-			"Enye Lav",
-			"Soul Train",
-			"Yufereff",
-			"아라"
-		]
+		"authors": ["DannyS712", "Enye Lav", "Soul Train", "Yufereff", "아라"]
 	},
 	"underline-always": "Пыр",
 	"underline-never": "Некöр",

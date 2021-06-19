@@ -1,12 +1,9 @@
 {
-	"@metadata": {
-		"authors": [
-			"Harvzsf",
-			"JinJian"
-		]
-	},
-	"admanager_Page": "Mga pakli",
-	"admanager_Category": "Mga kaarangay",
-	"admanager_added": "Gintipig an imo mga ginliwat",
-	"admanager_addedzone": "Gindugngan hin sona $1"
+  "@metadata": {
+    "authors": ["Harvzsf", "JinJian"]
+  },
+  "admanager_Page": "Mga pakli",
+  "admanager_Category": "Mga kaarangay",
+  "admanager_added": "Gintipig an imo mga ginliwat",
+  "admanager_addedzone": "Gindugngan hin sona $1"
 }

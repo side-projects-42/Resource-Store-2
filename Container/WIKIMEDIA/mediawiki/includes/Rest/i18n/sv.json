@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"McDutchie",
-			"Sabelöga",
-			"WikiPhoenix"
-		]
+		"authors": ["McDutchie", "Sabelöga", "WikiPhoenix"]
 	},
 	"rest-prefix-mismatch": "Den begärda sökvägen ($1) fanns inte inuti rotsökvägen för REST API ($2)",
 	"rest-wrong-method": "Den begärda metoden ($1) var inte {{PLURAL:$3|den tillåtna metoden för denna sökväg|en av de tillåtna metoderna för denna sökväg}} ($2)",

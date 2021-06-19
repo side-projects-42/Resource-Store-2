@@ -1,38 +1,38 @@
 /**
  * Irish (Gaeilge) language functions
  */
-( function ( $ ) {
-	'use strict';
+(function ($) {
+	"use strict";
 
-	$.i18n.languages.ga = $.extend( {}, $.i18n.languages[ 'default' ], {
-		convertGrammar: function ( word, form ) {
-			if ( form === 'ainmlae' ) {
-				switch ( word ) {
-					case 'an Domhnach':
-						word = 'Dé Domhnaigh';
+	$.i18n.languages.ga = $.extend({}, $.i18n.languages["default"], {
+		convertGrammar: function (word, form) {
+			if (form === "ainmlae") {
+				switch (word) {
+					case "an Domhnach":
+						word = "Dé Domhnaigh";
 						break;
-					case 'an Luan':
-						word = 'Dé Luain';
+					case "an Luan":
+						word = "Dé Luain";
 						break;
-					case 'an Mháirt':
-						word = 'Dé Mháirt';
+					case "an Mháirt":
+						word = "Dé Mháirt";
 						break;
-					case 'an Chéadaoin':
-						word = 'Dé Chéadaoin';
+					case "an Chéadaoin":
+						word = "Dé Chéadaoin";
 						break;
-					case 'an Déardaoin':
-						word = 'Déardaoin';
+					case "an Déardaoin":
+						word = "Déardaoin";
 						break;
-					case 'an Aoine':
-						word = 'Dé hAoine';
+					case "an Aoine":
+						word = "Dé hAoine";
 						break;
-					case 'an Satharn':
-						word = 'Dé Sathairn';
+					case "an Satharn":
+						word = "Dé Sathairn";
 						break;
 				}
 			}
 
 			return word;
-		}
-	} );
-}( jQuery ) );
+		},
+	});
+})(jQuery);

@@ -43,73 +43,87 @@
  * @static
  * Website: http://log4js.berlios.de
  */
-var events = require('events')
-, async = require('async')
-, fs = require('fs')
-, path = require('path')
-, util = require('util')
-, layouts = require('./layouts')
-, levels = require('./levels')
-, loggerModule = require('./logger')
-, LoggingEvent = loggerModule.LoggingEvent
-, Logger = loggerModule.Logger
-, ALL_CATEGORIES = '[all]'
-, appenders = {}
-, loggers = {}
-, appenderMakers = {}
-, appenderShutdowns = {}
-, defaultConfig =   {
-  appenders: [
-    { type: "console" }
-  ],
-  replaceConsole: false
-};
+var events = require("events"),
+  async = require("async"),
+  fs = require("fs"),
+  path = require("path"),
+  util = require("util"),
+  layouts = require("./layouts"),
+  levels = require("./levels"),
+  loggerModule = require("./logger"),
+  LoggingEvent = loggerModule.LoggingEvent,
+  Logger = loggerModule.Logger,
+  ALL_CATEGORIES = "[all]",
+  appenders = {},
+  loggers = {},
+  appenderMakers = {},
+  appenderShutdowns = {},
+  defaultConfig = {
+    appenders: [{ type: "console" }],
+    replaceConsole: false,
+  };
 
-require('./appenders/console');
+require("./appenders/console");
 
 function hasLogger(logger) {
   return loggers.hasOwnProperty(logger);
 }
 
-
 function getBufferedLogger(categoryName) {
-    var base_logger = getLogger(categoryName);
-    var logger = {};
-    logger.temp = [];
-    logger.target = base_logger;
-    logger.flush = function () {
-        for (var i = 0; i < logger.temp.length; i++) {
-            var log = logger.temp[i];
-            logger.target[log.level](log.message);
-            delete logger.temp[i];
-        }
-    };
-    logger.trace = function (message) { logger.temp.push({level: 'trace', message: message}); };
-    logger.debug = function (message) { logger.temp.push({level: 'debug', message: message}); };
-    logger.info = function (message) { logger.temp.push({level: 'info', message: message}); };
-    logger.warn = function (message) { logger.temp.push({level: 'warn', message: message}); };
-    logger.error = function (message) { logger.temp.push({level: 'error', message: message}); };
-    logger.fatal = function (message) { logger.temp.push({level: 'fatal', message: message}); };
+  var base_logger = getLogger(categoryName);
+  var logger = {};
+  logger.temp = [];
+  logger.target = base_logger;
+  logger.flush = function () {
+    for (var i = 0; i < logger.temp.length; i++) {
+      var log = logger.temp[i];
+      logger.target[log.level](log.message);
+      delete logger.temp[i];
+    }
+  };
+  logger.trace = function (message) {
+    logger.temp.push({ level: "trace", message: message });
+  };
+  logger.debug = function (message) {
+    logger.temp.push({ level: "debug", message: message });
+  };
+  logger.info = function (message) {
+    logger.temp.push({ level: "info", message: message });
+  };
+  logger.warn = function (message) {
+    logger.temp.push({ level: "warn", message: message });
+  };
+  logger.error = function (message) {
+    logger.temp.push({ level: "error", message: message });
+  };
+  logger.fatal = function (message) {
+    logger.temp.push({ level: "fatal", message: message });
+  };
 
-    return logger;
+  return logger;
 }
 
-function normalizeCategory (category) {
-  return  category + '.';
+function normalizeCategory(category) {
+  return category + ".";
 }
 
-function doesLevelEntryContainsLogger (levelCategory, loggerCategory) {  
+function doesLevelEntryContainsLogger(levelCategory, loggerCategory) {
   var normalizedLevelCategory = normalizeCategory(levelCategory);
   var normalizedLoggerCategory = normalizeCategory(loggerCategory);
-  return normalizedLoggerCategory.substring(0, normalizedLevelCategory.length) == normalizedLevelCategory;
+  return (
+    normalizedLoggerCategory.substring(0, normalizedLevelCategory.length) ==
+    normalizedLevelCategory
+  );
 }
 
-function doesAppenderContainsLogger (appenderCategory, loggerCategory) {
+function doesAppenderContainsLogger(appenderCategory, loggerCategory) {
   var normalizedAppenderCategory = normalizeCategory(appenderCategory);
   var normalizedLoggerCategory = normalizeCategory(loggerCategory);
-  return normalizedLoggerCategory.substring(0, normalizedAppenderCategory.length) == normalizedAppenderCategory;
+  return (
+    normalizedLoggerCategory.substring(0, normalizedAppenderCategory.length) ==
+    normalizedAppenderCategory
+  );
 }
-
 
 /**
  * Get a logger instance. Instance is cached on categoryName level.
@@ -117,15 +131,13 @@ function doesAppenderContainsLogger (appenderCategory, loggerCategory) {
  * @return {Logger} instance of logger for the category
  * @static
  */
-function getLogger (loggerCategoryName) {
-
+function getLogger(loggerCategoryName) {
   // Use default logger if categoryName is not specified or invalid
   if (typeof loggerCategoryName !== "string") {
     loggerCategoryName = Logger.DEFAULT_CATEGORY;
   }
 
   if (!hasLogger(loggerCategoryName)) {
-
     var level = undefined;
 
     // If there's a "levels" entry in the configuration
@@ -140,57 +152,55 @@ function getLogger (loggerCategoryName) {
         }
       }
     }
-  
+
     // Create the logger for this name if it doesn't already exist
     loggers[loggerCategoryName] = new Logger(loggerCategoryName, level);
 
     var appenderList;
-    for(var appenderCategory in appenders) {
+    for (var appenderCategory in appenders) {
       if (doesAppenderContainsLogger(appenderCategory, loggerCategoryName)) {
         appenderList = appenders[appenderCategory];
-        appenderList.forEach(function(appender) {
+        appenderList.forEach(function (appender) {
           loggers[loggerCategoryName].addListener("log", appender);
         });
       }
     }
     if (appenders[ALL_CATEGORIES]) {
       appenderList = appenders[ALL_CATEGORIES];
-      appenderList.forEach(function(appender) {
+      appenderList.forEach(function (appender) {
         loggers[loggerCategoryName].addListener("log", appender);
       });
     }
   }
-  
+
   return loggers[loggerCategoryName];
 }
 
 /**
  * args are appender, then zero or more categories
  */
-function addAppender () {
+function addAppender() {
   var args = Array.prototype.slice.call(arguments);
   var appender = args.shift();
   if (args.length === 0 || args[0] === undefined) {
-    args = [ ALL_CATEGORIES ];
+    args = [ALL_CATEGORIES];
   }
   //argument may already be an array
   if (Array.isArray(args[0])) {
     args = args[0];
   }
-  
-  args.forEach(function(appenderCategory) {
+
+  args.forEach(function (appenderCategory) {
     addAppenderToCategory(appender, appenderCategory);
-    
+
     if (appenderCategory === ALL_CATEGORIES) {
       addAppenderToAllLoggers(appender);
     } else {
-
-      for(var loggerCategory in loggers) {
-        if (doesAppenderContainsLogger(appenderCategory,loggerCategory)) {
+      for (var loggerCategory in loggers) {
+        if (doesAppenderContainsLogger(appenderCategory, loggerCategory)) {
           loggers[loggerCategory].addListener("log", appender);
         }
       }
-      
     }
   });
 }
@@ -210,7 +220,7 @@ function addAppenderToCategory(appender, category) {
   appenders[category].push(appender);
 }
 
-function clearAppenders () {
+function clearAppenders() {
   appenders = {};
   for (var logger in loggers) {
     if (hasLogger(logger)) {
@@ -222,15 +232,18 @@ function clearAppenders () {
 function configureAppenders(appenderList, options) {
   clearAppenders();
   if (appenderList) {
-    appenderList.forEach(function(appenderConfig) {
+    appenderList.forEach(function (appenderConfig) {
       loadAppender(appenderConfig.type);
       var appender;
       appenderConfig.makers = appenderMakers;
       try {
         appender = appenderMakers[appenderConfig.type](appenderConfig, options);
         addAppender(appender, appenderConfig.category);
-      } catch(e) {
-        throw new Error("log4js configuration problem for " + util.inspect(appenderConfig), e);
+      } catch (e) {
+        throw new Error(
+          "log4js configuration problem for " + util.inspect(appenderConfig),
+          e
+        );
       }
     });
   }
@@ -242,10 +255,10 @@ function configureLevels(_levels) {
     var keys = Object.keys(levels.config).sort();
     for (var idx in keys) {
       var category = keys[idx];
-      if(category === ALL_CATEGORIES) {
+      if (category === ALL_CATEGORIES) {
         setGlobalLogLevel(_levels[category]);
-      }        
-      for(var loggerCategory in loggers) {
+      }
+      for (var loggerCategory in loggers) {
         if (doesLevelEntryContainsLogger(category, loggerCategory)) {
           loggers[loggerCategory].setLevel(_levels[category]);
         }
@@ -263,7 +276,7 @@ function setGlobalLogLevel(level) {
  * @return {Logger} instance of default logger
  * @static
  */
-function getDefaultLogger () {
+function getDefaultLogger() {
   return getLogger(Logger.DEFAULT_CATEGORY);
 }
 
@@ -281,7 +294,7 @@ function configureOnceOff(config, options) {
     try {
       configureLevels(config.levels);
       configureAppenders(config.appenders, options);
-      
+
       if (config.replaceConsole) {
         replaceConsole();
       } else {
@@ -289,8 +302,13 @@ function configureOnceOff(config, options) {
       }
     } catch (e) {
       throw new Error(
-        "Problem reading log4js config " + util.inspect(config) + 
-          ". Error was \"" + e.message + "\" (" + e.stack + ")"
+        "Problem reading log4js config " +
+          util.inspect(config) +
+          '. Error was "' +
+          e.message +
+          '" (' +
+          e.stack +
+          ")"
       );
     }
   }
@@ -299,8 +317,11 @@ function configureOnceOff(config, options) {
 function reloadConfiguration(options) {
   var mtime = getMTime(configState.filename);
   if (!mtime) return;
-  
-  if (configState.lastMTime && (mtime.getTime() > configState.lastMTime.getTime())) {
+
+  if (
+    configState.lastMTime &&
+    mtime.getTime() > configState.lastMTime.getTime()
+  ) {
     configureOnceOff(loadConfigurationFile(configState.filename), options);
   }
   configState.lastMTime = mtime;
@@ -311,7 +332,7 @@ function getMTime(filename) {
   try {
     mtime = fs.statSync(configState.filename).mtime;
   } catch (e) {
-    getLogger('log4js').warn('Failed to load configuration file ' + filename);
+    getLogger("log4js").warn("Failed to load configuration file " + filename);
   }
   return mtime;
 }
@@ -323,22 +344,26 @@ function initReloadConfiguration(filename, options) {
   }
   configState.filename = filename;
   configState.lastMTime = getMTime(filename);
-  configState.timerId = setInterval(reloadConfiguration, options.reloadSecs*1000, options);
+  configState.timerId = setInterval(
+    reloadConfiguration,
+    options.reloadSecs * 1000,
+    options
+  );
 }
 
 function configure(configurationFileOrObject, options) {
   var config = configurationFileOrObject;
   config = config || process.env.LOG4JS_CONFIG;
   options = options || {};
-  
-  if (config === undefined || config === null || typeof(config) === 'string') {
+
+  if (config === undefined || config === null || typeof config === "string") {
     if (options.reloadSecs) {
       initReloadConfiguration(config, options);
     }
     config = loadConfigurationFile(config) || defaultConfig;
   } else {
     if (options.reloadSecs) {
-      getLogger('log4js').warn(
+      getLogger("log4js").warn(
         'Ignoring configuration reload parameter for "object" configuration.'
       );
     }
@@ -351,23 +376,23 @@ var originalConsoleFunctions = {
   debug: console.debug,
   info: console.info,
   warn: console.warn,
-  error: console.error
+  error: console.error,
 };
 
 function replaceConsole(logger) {
   function replaceWith(fn) {
-    return function() {
+    return function () {
       fn.apply(logger, arguments);
     };
   }
   logger = logger || getLogger("console");
-  ['log','debug','info','warn','error'].forEach(function (item) {
-    console[item] = replaceWith(item === 'log' ? logger.info : logger[item]);
+  ["log", "debug", "info", "warn", "error"].forEach(function (item) {
+    console[item] = replaceWith(item === "log" ? logger.info : logger[item]);
   });
 }
 
 function restoreConsole() {
-  ['log', 'debug', 'info', 'warn', 'error'].forEach(function (item) {
+  ["log", "debug", "info", "warn", "error"].forEach(function (item) {
     console[item] = originalConsoleFunctions[item];
   });
 }
@@ -384,7 +409,7 @@ function restoreConsole() {
 function requireAppender(appender) {
   var appenderModule;
   try {
-    appenderModule = require('./appenders/' + appender);
+    appenderModule = require("./appenders/" + appender);
   } catch (e) {
     appenderModule = require(appender);
   }
@@ -408,7 +433,8 @@ function loadAppender(appender, appenderModule) {
     throw new Error("Invalid log4js appender: " + util.inspect(appender));
   }
 
-  module.exports.appenders[appender] = appenderModule.appender.bind(appenderModule);
+  module.exports.appenders[appender] =
+    appenderModule.appender.bind(appenderModule);
   if (appenderModule.shutdown) {
     appenderShutdowns[appender] = appenderModule.shutdown.bind(appenderModule);
   }
@@ -430,18 +456,21 @@ function shutdown(cb) {
   loggerModule.disableAllLogWrites();
 
   // Next, get all the shutdown functions for appenders as an array.
-  var shutdownFunctions = Object.keys(appenderShutdowns).reduce(
-    function(accum, category) {
-      return accum.concat(appenderShutdowns[category]);
-    }, []);
+  var shutdownFunctions = Object.keys(appenderShutdowns).reduce(function (
+    accum,
+    category
+  ) {
+    return accum.concat(appenderShutdowns[category]);
+  },
+  []);
 
   // Call each of the shutdown functions.
   async.each(
     shutdownFunctions,
-    function(shutdownFn, done) {
+    function (shutdownFn, done) {
       shutdownFn(done);
     },
-		cb
+    cb
   );
 }
 
@@ -450,25 +479,24 @@ module.exports = {
   getLogger: getLogger,
   getDefaultLogger: getDefaultLogger,
   hasLogger: hasLogger,
-  
+
   addAppender: addAppender,
   loadAppender: loadAppender,
   clearAppenders: clearAppenders,
   configure: configure,
   shutdown: shutdown,
-  
+
   replaceConsole: replaceConsole,
   restoreConsole: restoreConsole,
-  
+
   levels: levels,
   setGlobalLogLevel: setGlobalLogLevel,
-  
+
   layouts: layouts,
   appenders: {},
   appenderMakers: appenderMakers,
-  connectLogger: require('./connect-logger').connectLogger
+  connectLogger: require("./connect-logger").connectLogger,
 };
 
 //set ourselves up
 configure();
-

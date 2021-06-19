@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Giromin Cangiaxo",
-			"S4b1nuz E.656"
-		]
+		"authors": ["Giromin Cangiaxo", "S4b1nuz E.656"]
 	},
 	"apihelp-main-param-action": "Açion da compî.",
 	"apihelp-main-param-format": "Formato de l'output.",

@@ -1,4 +1,4 @@
-var log4js = require('../lib/log4js');
+var log4js = require("../lib/log4js");
 
 /*
  Sample logstash config:
@@ -12,27 +12,28 @@ var log4js = require('../lib/log4js');
 */
 
 log4js.configure({
-  "appenders": [
+  appenders: [
     {
       type: "console",
-      category: "myLogger"
+      category: "myLogger",
     },
     {
-      "host": "127.0.0.1",
-      "port": 10001,
-      "type": "logstashUDP",
-      "logType": "myAppType", // Optional, defaults to 'category'
-      "fields": {             // Optional, will be added to the 'fields' object in logstash
-        "field1": "value1",
-        "field2": "value2"
+      host: "127.0.0.1",
+      port: 10001,
+      type: "logstashUDP",
+      logType: "myAppType", // Optional, defaults to 'category'
+      fields: {
+        // Optional, will be added to the 'fields' object in logstash
+        field1: "value1",
+        field2: "value2",
       },
-      "layout": {
-        "type": "pattern",
-        "pattern": "%m"
+      layout: {
+        type: "pattern",
+        pattern: "%m",
       },
-      "category": "myLogger"
-    }
-  ]
+      category: "myLogger",
+    },
+  ],
 });
 
 var logger = log4js.getLogger("myLogger");

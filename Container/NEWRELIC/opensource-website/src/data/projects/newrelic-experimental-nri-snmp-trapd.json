@@ -15,10 +15,7 @@
   "description": "SNMP trapd on-host integration for New Relic Infrastructure",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Go",
-  "projectTags": [
-    "nrlabs",
-    "nri"
-  ],
+  "projectTags": ["nrlabs", "nri"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic integration for SNMP traps",

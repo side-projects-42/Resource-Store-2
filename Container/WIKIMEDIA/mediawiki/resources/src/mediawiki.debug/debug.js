@@ -1,5 +1,5 @@
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
 	var debug,
 		hovzer = $.getFootHovzer();
@@ -9,7 +9,7 @@
 			top: 0,
 			right: 0,
 			bottom: hovzer.$.outerHeight(),
-			left: 0
+			left: 0,
 		};
 	};
 
@@ -46,16 +46,15 @@
 		 *
 		 * @param {Object} [data] Defaults to 'debugInfo' from mw.config
 		 */
-		init: function ( data ) {
-
-			this.data = data || mw.config.get( 'debugInfo' );
+		init: function (data) {
+			this.data = data || mw.config.get("debugInfo");
 			this.buildHtml();
 
 			// Insert the container into the DOM
-			hovzer.$.append( this.$container );
+			hovzer.$.append(this.$container);
 			hovzer.update();
 
-			$( '.mw-debug-panelink' ).on( 'click', this.switchPane );
+			$(".mw-debug-panelink").on("click", this.switchPane);
 		},
 
 		/**
@@ -68,15 +67,15 @@
 		 *
 		 * @param {jQuery.Event} e
 		 */
-		switchPane: function ( e ) {
-			var currentPaneId = debug.$container.data( 'currentPane' ),
-				requestedPaneId = $( this ).prop( 'id' ).slice( 9 ),
-				$currentPane = $( '#mw-debug-pane-' + currentPaneId ),
-				$requestedPane = $( '#mw-debug-pane-' + requestedPaneId ),
+		switchPane: function (e) {
+			var currentPaneId = debug.$container.data("currentPane"),
+				requestedPaneId = $(this).prop("id").slice(9),
+				$currentPane = $("#mw-debug-pane-" + currentPaneId),
+				$requestedPane = $("#mw-debug-pane-" + requestedPaneId),
 				hovDone = false;
 
 			function updateHov() {
-				if ( !hovDone ) {
+				if (!hovDone) {
 					hovzer.update();
 					hovDone = true;
 				}
@@ -85,24 +84,24 @@
 			// Skip hash fragment handling. Prevents screen from jumping.
 			e.preventDefault();
 
-			$( this ).addClass( 'current ' );
-			$( '.mw-debug-panelink' ).not( this ).removeClass( 'current ' );
+			$(this).addClass("current ");
+			$(".mw-debug-panelink").not(this).removeClass("current ");
 
 			// Hide the current pane
-			if ( requestedPaneId === currentPaneId ) {
+			if (requestedPaneId === currentPaneId) {
 				// FIXME: Use CSS transition
 				// eslint-disable-next-line no-jquery/no-slide
-				$currentPane.slideUp( updateHov );
-				debug.$container.data( 'currentPane', null );
+				$currentPane.slideUp(updateHov);
+				debug.$container.data("currentPane", null);
 				return;
 			}
 
-			debug.$container.data( 'currentPane', requestedPaneId );
+			debug.$container.data("currentPane", requestedPaneId);
 
-			if ( currentPaneId === undefined || currentPaneId === null ) {
+			if (currentPaneId === undefined || currentPaneId === null) {
 				// FIXME: Use CSS transition
 				// eslint-disable-next-line no-jquery/no-slide
-				$requestedPane.slideDown( updateHov );
+				$requestedPane.slideDown(updateHov);
 			} else {
 				$currentPane.hide();
 				$requestedPane.show();
@@ -116,15 +115,15 @@
 		buildHtml: function () {
 			var $container, $bits, panes, paneId, gitInfoText, $gitInfo;
 
-			$container = $( '<div>' )
-				.attr( {
-					id: 'mw-debug-toolbar',
-					lang: 'en',
-					dir: 'ltr'
-				} )
-				.addClass( 'mw-debug' );
+			$container = $("<div>")
+				.attr({
+					id: "mw-debug-toolbar",
+					lang: "en",
+					dir: "ltr",
+				})
+				.addClass("mw-debug");
 
-			$bits = $( '<div>' ).addClass( 'mw-debug-bits' );
+			$bits = $("<div>").addClass("mw-debug-bits");
 
 			/**
 			 * Returns a jQuery element for a debug-bit div
@@ -133,11 +132,13 @@
 			 * @param {string} id
 			 * @return {jQuery}
 			 */
-			function bitDiv( id ) {
-				return $( '<div>' ).prop( {
-					id: 'mw-debug-' + id,
-					className: 'mw-debug-bit'
-				} ).appendTo( $bits );
+			function bitDiv(id) {
+				return $("<div>")
+					.prop({
+						id: "mw-debug-" + id,
+						className: "mw-debug-bit",
+					})
+					.appendTo($bits);
 			}
 
 			/**
@@ -148,13 +149,13 @@
 			 * @param {string} text
 			 * @return {jQuery}
 			 */
-			function paneLabel( id, text ) {
-				return $( '<a>' )
-					.prop( {
-						className: 'mw-debug-panelabel',
-						href: '#mw-debug-pane-' + id
-					} )
-					.text( text );
+			function paneLabel(id, text) {
+				return $("<a>")
+					.prop({
+						className: "mw-debug-panelabel",
+						href: "#mw-debug-pane-" + id,
+					})
+					.text(text);
 			}
 
 			/**
@@ -166,76 +167,95 @@
 			 * @param {string} count Optional count to show
 			 * @return {jQuery}
 			 */
-			function paneTriggerBitDiv( id, text, count ) {
-				if ( count ) {
-					text = text + ' (' + count + ')';
+			function paneTriggerBitDiv(id, text, count) {
+				if (count) {
+					text = text + " (" + count + ")";
 				}
-				return $( '<div>' ).prop( {
-					id: 'mw-debug-' + id,
-					className: 'mw-debug-bit mw-debug-panelink'
-				} )
-					.append( paneLabel( id, text ) )
-					.appendTo( $bits );
+				return $("<div>")
+					.prop({
+						id: "mw-debug-" + id,
+						className: "mw-debug-bit mw-debug-panelink",
+					})
+					.append(paneLabel(id, text))
+					.appendTo($bits);
 			}
 
-			paneTriggerBitDiv( 'console', 'Console', this.data.log.length );
+			paneTriggerBitDiv("console", "Console", this.data.log.length);
 
-			paneTriggerBitDiv( 'querylist', 'Queries', this.data.queries.length );
+			paneTriggerBitDiv("querylist", "Queries", this.data.queries.length);
 
-			paneTriggerBitDiv( 'debuglog', 'Debug log', this.data.debugLog.length );
+			paneTriggerBitDiv(
+				"debuglog",
+				"Debug log",
+				this.data.debugLog.length
+			);
 
-			paneTriggerBitDiv( 'request', 'Request' );
+			paneTriggerBitDiv("request", "Request");
 
-			paneTriggerBitDiv( 'includes', 'PHP includes', this.data.includes.length );
+			paneTriggerBitDiv(
+				"includes",
+				"PHP includes",
+				this.data.includes.length
+			);
 
-			if ( this.data.gitRevision !== false ) {
-				gitInfoText = '(' + this.data.gitRevision.slice( 0, 7 ) + ')';
-				if ( this.data.gitViewUrl !== false ) {
-					$gitInfo = $( '<a>' )
-						.attr( 'href', this.data.gitViewUrl )
-						.text( gitInfoText );
+			if (this.data.gitRevision !== false) {
+				gitInfoText = "(" + this.data.gitRevision.slice(0, 7) + ")";
+				if (this.data.gitViewUrl !== false) {
+					$gitInfo = $("<a>")
+						.attr("href", this.data.gitViewUrl)
+						.text(gitInfoText);
 				} else {
-					$gitInfo = $( document.createTextNode( gitInfoText ) );
+					$gitInfo = $(document.createTextNode(gitInfoText));
 				}
 			}
 
-			bitDiv( 'mwversion' )
-				.append( $( '<a>' ).attr( 'href', 'https://www.mediawiki.org/' ).text( 'MediaWiki' ) )
-				.append( document.createTextNode( ': ' + this.data.mwVersion + ' ' ) )
-				.append( $gitInfo );
+			bitDiv("mwversion")
+				.append(
+					$("<a>")
+						.attr("href", "https://www.mediawiki.org/")
+						.text("MediaWiki")
+				)
+				.append(
+					document.createTextNode(": " + this.data.mwVersion + " ")
+				)
+				.append($gitInfo);
 
-			if ( this.data.gitBranch !== false ) {
-				bitDiv( 'gitbranch' ).text( 'Git branch: ' + this.data.gitBranch );
+			if (this.data.gitBranch !== false) {
+				bitDiv("gitbranch").text("Git branch: " + this.data.gitBranch);
 			}
 
-			bitDiv( 'phpversion' )
-				.append( $( '<a>' ).attr( 'href', 'https://php.net/' ).text( 'PHP' ) )
-				.append( ': ' + this.data.phpVersion );
+			bitDiv("phpversion")
+				.append($("<a>").attr("href", "https://php.net/").text("PHP"))
+				.append(": " + this.data.phpVersion);
 
-			bitDiv( 'time' )
-				.text( 'Time: ' + this.data.time.toFixed( 5 ) );
+			bitDiv("time").text("Time: " + this.data.time.toFixed(5));
 
-			bitDiv( 'memory' )
-				.text( 'Memory: ' + this.data.memory + ' (Peak: ' + this.data.memoryPeak + ')' );
+			bitDiv("memory").text(
+				"Memory: " +
+					this.data.memory +
+					" (Peak: " +
+					this.data.memoryPeak +
+					")"
+			);
 
-			$bits.appendTo( $container );
+			$bits.appendTo($container);
 
 			panes = {
 				console: this.buildConsoleTable(),
 				querylist: this.buildQueryTable(),
 				debuglog: this.buildDebugLogTable(),
 				request: this.buildRequestPane(),
-				includes: this.buildIncludesPane()
+				includes: this.buildIncludesPane(),
 			};
 
-			for ( paneId in panes ) {
-				$( '<div>' )
-					.prop( {
-						className: 'mw-debug-pane',
-						id: 'mw-debug-pane-' + paneId
-					} )
-					.append( panes[ paneId ] )
-					.appendTo( $container );
+			for (paneId in panes) {
+				$("<div>")
+					.prop({
+						className: "mw-debug-pane",
+						id: "mw-debug-pane-" + paneId,
+					})
+					.append(panes[paneId])
+					.appendTo($container);
 			}
 
 			this.$container = $container;
@@ -249,42 +269,45 @@
 		buildConsoleTable: function () {
 			var $table, entryTypeText, i, length, entry;
 
-			$table = $( '<table>' ).attr( 'id', 'mw-debug-console' );
+			$table = $("<table>").attr("id", "mw-debug-console");
 			length = this.data.log.length;
 
-			$( '<colgroup>' ).css( 'width', /* padding = */ 20 + ( 10 * /* fontSize = */ 11 ) ).appendTo( $table );
-			$( '<colgroup>' ).appendTo( $table );
-			$( '<colgroup>' ).css( 'width', 350 ).appendTo( $table );
+			$("<colgroup>")
+				.css("width", /* padding = */ 20 + 10 * /* fontSize = */ 11)
+				.appendTo($table);
+			$("<colgroup>").appendTo($table);
+			$("<colgroup>").css("width", 350).appendTo($table);
 
-			entryTypeText = function ( entryType ) {
-				switch ( entryType ) {
-					case 'log':
-						return 'Log';
-					case 'warn':
-						return 'Warning';
-					case 'deprecated':
-						return 'Deprecated';
+			entryTypeText = function (entryType) {
+				switch (entryType) {
+					case "log":
+						return "Log";
+					case "warn":
+						return "Warning";
+					case "deprecated":
+						return "Deprecated";
 					default:
-						return 'Unknown';
+						return "Unknown";
 				}
 			};
 
-			for ( i = 0; i < length; i++ ) {
-				entry = this.data.log[ i ];
-				entry.typeText = entryTypeText( entry.type );
+			for (i = 0; i < length; i++) {
+				entry = this.data.log[i];
+				entry.typeText = entryTypeText(entry.type);
 
 				// The following classes are used here:
 				// * mw-debug-console-log
 				// * mw-debug-console-warn
 				// * mw-debug-console-deprecated
-				$( '<tr>' )
-					.append( $( '<td>' )
-						.text( entry.typeText )
-						.addClass( 'mw-debug-console-' + entry.type )
+				$("<tr>")
+					.append(
+						$("<td>")
+							.text(entry.typeText)
+							.addClass("mw-debug-console-" + entry.type)
 					)
-					.append( $( '<td>' ).html( entry.msg ) )
-					.append( $( '<td>' ).text( entry.caller ) )
-					.appendTo( $table );
+					.append($("<td>").html(entry.msg))
+					.append($("<td>").text(entry.caller))
+					.appendTo($table);
 			}
 
 			return $table;
@@ -298,25 +321,41 @@
 		buildQueryTable: function () {
 			var $table, i, length, query;
 
-			$table = $( '<table>' ).attr( 'id', 'mw-debug-querylist' );
+			$table = $("<table>").attr("id", "mw-debug-querylist");
 			length = this.data.queries.length;
 
-			$( '<tr>' )
-				.append( $( '<th>' ).attr( 'scope', 'col' ).text( '#' ).css( 'width', '4em' ) )
-				.append( $( '<th>' ).attr( 'scope', 'col' ).text( 'SQL' ) )
-				.append( $( '<th>' ).attr( 'scope', 'col' ).text( 'Time' ).css( 'width', '8em' ) )
-				.append( $( '<th>' ).attr( 'scope', 'col' ).text( 'Call' ).css( 'width', '18em' ) )
-				.appendTo( $table );
+			$("<tr>")
+				.append(
+					$("<th>").attr("scope", "col").text("#").css("width", "4em")
+				)
+				.append($("<th>").attr("scope", "col").text("SQL"))
+				.append(
+					$("<th>")
+						.attr("scope", "col")
+						.text("Time")
+						.css("width", "8em")
+				)
+				.append(
+					$("<th>")
+						.attr("scope", "col")
+						.text("Call")
+						.css("width", "18em")
+				)
+				.appendTo($table);
 
-			for ( i = 0; i < length; i++ ) {
-				query = this.data.queries[ i ];
+			for (i = 0; i < length; i++) {
+				query = this.data.queries[i];
 
-				$( '<tr>' )
-					.append( $( '<td>' ).text( i + 1 ) )
-					.append( $( '<td>' ).text( query.sql ) )
-					.append( $( '<td>' ).text( ( query.time * 1000 ).toFixed( 4 ) + 'ms' ).addClass( 'stats' ) )
-					.append( $( '<td>' ).text( query.function ) )
-					.appendTo( $table );
+				$("<tr>")
+					.append($("<td>").text(i + 1))
+					.append($("<td>").text(query.sql))
+					.append(
+						$("<td>")
+							.text((query.time * 1000).toFixed(4) + "ms")
+							.addClass("stats")
+					)
+					.append($("<td>").text(query.function))
+					.appendTo($table);
 			}
 
 			return $table;
@@ -329,14 +368,14 @@
 		 */
 		buildDebugLogTable: function () {
 			var $list, i, length, line;
-			$list = $( '<ul>' );
+			$list = $("<ul>");
 			length = this.data.debugLog.length;
 
-			for ( i = 0; i < length; i++ ) {
-				line = this.data.debugLog[ i ];
-				$( '<li>' )
-					.html( mw.html.escape( line ).replace( /\n/g, '<br />\n' ) )
-					.appendTo( $list );
+			for (i = 0; i < length; i++) {
+				line = this.data.debugLog[i];
+				$("<li>")
+					.html(mw.html.escape(line).replace(/\n/g, "<br />\n"))
+					.appendTo($list);
 			}
 
 			return $list;
@@ -348,35 +387,34 @@
 		 * @return {jQuery}
 		 */
 		buildRequestPane: function () {
-
-			function buildTable( title, data ) {
+			function buildTable(title, data) {
 				var $unit, $table, key;
 
-				$unit = $( '<div>' ).append( $( '<h2>' ).text( title ) );
+				$unit = $("<div>").append($("<h2>").text(title));
 
-				$table = $( '<table>' ).appendTo( $unit );
+				$table = $("<table>").appendTo($unit);
 
-				$( '<tr>' )
+				$("<tr>")
 					.append(
-						$( '<th>' ).attr( 'scope', 'col' ).text( 'Key' ),
-						$( '<th>' ).attr( 'scope', 'col' ).text( 'Value' )
+						$("<th>").attr("scope", "col").text("Key"),
+						$("<th>").attr("scope", "col").text("Value")
 					)
-					.appendTo( $table );
+					.appendTo($table);
 
-				for ( key in data ) {
-					$( '<tr>' )
-						.append( $( '<th>' ).attr( 'scope', 'row' ).text( key ) )
-						.append( $( '<td>' ).text( data[ key ] ) )
-						.appendTo( $table );
+				for (key in data) {
+					$("<tr>")
+						.append($("<th>").attr("scope", "row").text(key))
+						.append($("<td>").text(data[key]))
+						.appendTo($table);
 				}
 
 				return $unit;
 			}
 
-			return $( '<div>' )
-				.text( this.data.request.method + ' ' + this.data.request.url )
-				.append( buildTable( 'Headers', this.data.request.headers ) )
-				.append( buildTable( 'Parameters', this.data.request.params ) );
+			return $("<div>")
+				.text(this.data.request.method + " " + this.data.request.url)
+				.append(buildTable("Headers", this.data.request.headers))
+				.append(buildTable("Parameters", this.data.request.params));
 		},
 
 		/**
@@ -387,23 +425,22 @@
 		buildIncludesPane: function () {
 			var $table, i, length, file;
 
-			$table = $( '<table>' );
+			$table = $("<table>");
 			length = this.data.includes.length;
 
-			for ( i = 0; i < length; i++ ) {
-				file = this.data.includes[ i ];
-				$( '<tr>' )
-					.append( $( '<td>' ).text( file.name ) )
-					.append( $( '<td>' ).text( file.size ).addClass( 'nr' ) )
-					.appendTo( $table );
+			for (i = 0; i < length; i++) {
+				file = this.data.includes[i];
+				$("<tr>")
+					.append($("<td>").text(file.name))
+					.append($("<td>").text(file.size).addClass("nr"))
+					.appendTo($table);
 			}
 
 			return $table;
-		}
+		},
 	};
 
-	$( function () {
+	$(function () {
 		debug.init();
-	} );
-
-}() );
+	});
+})();

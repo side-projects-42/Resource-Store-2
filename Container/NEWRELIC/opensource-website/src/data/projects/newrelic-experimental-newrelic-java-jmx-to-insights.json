@@ -15,10 +15,7 @@
   "description": "This repo ports a New Relic internal Java Agent extension \"jmx2insights\" as an open experimental project. ",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "JavaScript",
-  "projectTags": [
-    "nrlabs",
-    "instrumentation"
-  ],
+  "projectTags": ["nrlabs", "instrumentation"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Java Agent - JMX Harvester",

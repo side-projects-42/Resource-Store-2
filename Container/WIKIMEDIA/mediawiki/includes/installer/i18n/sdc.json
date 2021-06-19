@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Jun Misugi",
-			"Seb35"
-		]
+		"authors": ["Jun Misugi", "Seb35"]
 	},
 	"config-title": "Isthallazioni di MediaWiki $1",
 	"config-information": "Infuimmazioni",

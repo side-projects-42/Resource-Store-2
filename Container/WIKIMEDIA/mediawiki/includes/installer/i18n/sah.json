@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"HalanTul",
-			"Мария Олесова"
-		]
+		"authors": ["HalanTul", "Мария Олесова"]
 	},
 	"config-desc": "MediaWiki инсталлятора",
 	"config-title": "MediaWiki $1 туруоруу",

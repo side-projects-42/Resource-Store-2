@@ -22,7 +22,7 @@ export default function getNoTestFound(
 
   if (globalConfig.runTestsByPath) {
     dataMessage = `Files: ${globalConfig.nonFlagArgs
-      .map(p => `"${p}"`)
+      .map((p) => `"${p}"`)
       .join(', ')}`;
   } else {
     dataMessage = `Pattern: ${chalk.yellow(

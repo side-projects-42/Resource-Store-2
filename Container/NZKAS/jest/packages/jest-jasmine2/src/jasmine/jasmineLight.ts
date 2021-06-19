@@ -40,12 +40,12 @@ import SpyRegistry from './spyRegistry';
 import Suite from './Suite';
 import Timer from './Timer';
 
-const create = function(createOptions: Record<string, any>): Jasmine {
+const create = function (createOptions: Record<string, any>): Jasmine {
   const j$ = {...createOptions} as Jasmine;
 
   j$._DEFAULT_TIMEOUT_INTERVAL = 5000;
 
-  j$.getEnv = function(options?: object) {
+  j$.getEnv = function (options?: object) {
     const env = (j$.currentEnv_ = j$.currentEnv_ || new j$.Env(options));
     //jasmine. singletons in here (setTimeout blah blah).
     return env;
@@ -63,7 +63,7 @@ const create = function(createOptions: Record<string, any>): Jasmine {
   return j$;
 };
 
-const _interface = function(jasmine: Jasmine, env: any) {
+const _interface = function (jasmine: Jasmine, env: any) {
   const jasmineInterface = {
     describe(description: string, specDefinitions: Function) {
       return env.describe(description, specDefinitions);

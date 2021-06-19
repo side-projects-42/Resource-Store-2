@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"SatyamMishra"
-		]
+		"authors": ["SatyamMishra"]
 	},
 	"ooui-outline-control-move-down": "आइटम नीचे घसकाईं",
 	"ooui-outline-control-move-up": "आइटम ऊपर घसकाईं",

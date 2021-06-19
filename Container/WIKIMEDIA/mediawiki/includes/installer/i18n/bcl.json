@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Geopoet"
-		]
+		"authors": ["Geopoet"]
 	},
 	"config-desc": "An tagapagkaag para sa MediaWiki",
 	"config-title": "MediaWiki $1 na pagkakaag",

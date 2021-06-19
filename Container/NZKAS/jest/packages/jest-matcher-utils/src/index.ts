@@ -232,7 +232,7 @@ export const getLabelPrinter = (...strings: Array<string>): PrintLabel => {
     (max, string) => (string.length > max ? string.length : max),
     0,
   );
-  return string => `${string}: ${' '.repeat(maxLength - string.length)}`;
+  return (string) => `${string}: ${' '.repeat(maxLength - string.length)}`;
 };
 
 export const matcherErrorMessage = (

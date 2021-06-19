@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"EileenSanda"
-		]
+		"authors": ["EileenSanda"]
 	},
 	"apihelp-block-summary": "Sperra ein brúkara.",
 	"apihelp-block-param-user": "Brúkaranavn, IP adressa ella IP interval ið tú ynskir at sperra.",

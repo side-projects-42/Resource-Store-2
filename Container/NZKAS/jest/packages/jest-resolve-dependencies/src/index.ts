@@ -90,7 +90,7 @@ class DependencyResolver {
           moduleMap.reduce<Array<Config.Path>>((acc, module) => {
             if (
               visitedModules.has(module.file) ||
-              !module.dependencies.some(dep => changed.has(dep))
+              !module.dependencies.some((dep) => changed.has(dep))
             ) {
               return acc;
             }
@@ -107,7 +107,7 @@ class DependencyResolver {
         );
       }
       return result.concat(
-        Array.from(related).map(file => ({dependencies: [], file})),
+        Array.from(related).map((file) => ({dependencies: [], file})),
       );
     };
 
@@ -140,7 +140,7 @@ class DependencyResolver {
     options?: Resolver.ResolveModuleConfig,
   ): Array<Config.Path> {
     return this.resolveInverseModuleMap(paths, filter, options).map(
-      module => module.file,
+      (module) => module.file,
     );
   }
 }

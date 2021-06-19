@@ -17,11 +17,11 @@ export default function pTimeout(
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => resolve(onTimeout()), ms);
     promise.then(
-      val => {
+      (val) => {
         clearTimeout(timer);
         resolve(val);
       },
-      err => {
+      (err) => {
         clearTimeout(timer);
         reject(err);
       },

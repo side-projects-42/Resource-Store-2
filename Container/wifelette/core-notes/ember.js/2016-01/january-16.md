@@ -7,7 +7,7 @@ Sat Morn
 - API Docs/Guides. But, no, really this time (Trek) 20min
   - Code School Getting Started Guide (Yehuda)
   - Glimmer2 changes so much
-- Attribute Actions (Matt) [emberjs/rfcs#100](https://github.com/emberjs/rfcs/pull/100), [slides for discussion](https://emberjs.slack.com/files/mixonic/F0JJKQ9MG/attribute_actions.key)  (40min)
+- Attribute Actions (Matt) [emberjs/rfcs#100](https://github.com/emberjs/rfcs/pull/100), [slides for discussion](https://emberjs.slack.com/files/mixonic/F0JJKQ9MG/attribute_actions.key) (40min)
 
 Sat Afternoon
 
@@ -29,7 +29,7 @@ Sat Afternoon
 
 ## Docs
 
-LS: There are some documentation people who are great and seem willing to help, but who didn't feel comfortable taking the lead because they didn't want to step on anyone's toes and had difficulties getting info out of the core team when they had questions/doubts. We should make it even clear to them that they can take lead/responsibility. More Core Team members need to show up to the calls to keep the docs team feeling the inertia and answer questions along the way. It would be tactically helpful but also just make everyone realize how important they are and how much we value their contributions (because we do!). 
+LS: There are some documentation people who are great and seem willing to help, but who didn't feel comfortable taking the lead because they didn't want to step on anyone's toes and had difficulties getting info out of the core team when they had questions/doubts. We should make it even clear to them that they can take lead/responsibility. More Core Team members need to show up to the calls to keep the docs team feeling the inertia and answer questions along the way. It would be tactically helpful but also just make everyone realize how important they are and how much we value their contributions (because we do!).
 
 KS: It seems like no one on core wants to work on docs.
 
@@ -59,7 +59,7 @@ KS: There's a lot of things that we made public that we didn't intend to make pu
 
 \<side conversation on who has interrupted who; we need an interrupt queue :p >
 
-YK: After the 1.13 period, we did not do a good job of documenting any deprecations.  Leah wrote a big checklist and took responsibility for shepherding that issue through to completion, by nagging the right people and making sure PRs got review.
+YK: After the 1.13 period, we did not do a good job of documenting any deprecations. Leah wrote a big checklist and took responsibility for shepherding that issue through to completion, by nagging the right people and making sure PRs got review.
 
 YK: \<points out weird thing in API docs> I think Leah could manage cleanup like this.
 
@@ -79,7 +79,7 @@ YK: We should consider adopting Algolia, the results from eslint search are very
 
 EB: I'd also like to improve interlinking between guides and API docs.
 
-YK: At minimum each guide should link to a few different API classes. I like how Cocoa's API docs work; there are "Common Tasks" that group the APIs by task. [EXAMPLE link]( https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/)
+YK: At minimum each guide should link to a few different API classes. I like how Cocoa's API docs work; there are "Common Tasks" that group the APIs by task. [EXAMPLE link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/)
 
 RJ: David Baker (Acorn Computer) has been investigating integrating Algolia.
 
@@ -117,7 +117,7 @@ YK: We need to also make sure Google does not link to old versions of the docs a
 - [ ] Get in touch with Algolia RE: search (Leah) -> [issue](https://github.com/emberjs/website/issues/2452)
 - [ ] Talk to Acorns about "Task" oriented API docs (Yehuda / Leah / Tom)
 - [ ] Create a checklist issue for adding links between API docs and guides
-- [ ] Make sure that Googling for "Ember Component" does not point to 
+- [ ] Make sure that Googling for "Ember Component" does not point to
 
 ## Better Actions
 
@@ -131,7 +131,7 @@ SP: We should be aware of security implications of interaction of bound `get` he
 
 MB: \<presentation on actions RFC continues>
 
-###  Open Questions
+### Open Questions
 
 - WebComponents have no specification for event handling. In a perfect world we should be able to set a property like we do with DOM and the WC would call it correctly.
 - Or we do the opposite or we tell people not to call the method and intercept property sets and `addEventListener`
@@ -180,7 +180,7 @@ initialize: function(applicationInstanceInstance) {
 }
 ```
 
-\<debate on the using the DI system vs. a declarative solution for DI. Some consensus about the mount point defining the services passed in to an engine> 
+\<debate on the using the DI system vs. a declarative solution for DI. Some consensus about the mount point defining the services passed in to an engine>
 
 SP: Using the current DI APIs or improving them instead of the proposed syntax would be preferred.
 
@@ -206,7 +206,7 @@ DG: I'll move forward on moving the patchy bits into core, and look at the depen
 
 - Route-less component should have internal routers. This internal router can serialize its state back to a two-way-bound prop, etc. This makes route-less components much like an iframe with their own navigation, etc.
 - Services/DI for engines should be defined at the mount point (be it route or template).
-- Let's be careful about adding APIs (such as route serializers in separate files) just to scenario solve. We might end up with some warts. 
+- Let's be careful about adding APIs (such as route serializers in separate files) just to scenario solve. We might end up with some warts.
 
 ### Action Items
 
@@ -231,7 +231,7 @@ RJ: Yes, all the work in Ember is done. We need to enable the feature ASAP as so
 
 YK: What do you call non-pods mode?
 
-RJ: *Classic*.
+RJ: _Classic_.
 
 YK: So you can have classic mode app you can rip out the full component paths and it will just work.
 
@@ -327,7 +327,7 @@ YK: I think we could do with a little more process around teams and little more 
 
 YK: There's a problem with most of the core teams I've been on, which is when and how you decide to leave. There's no impetus to leave on your own, and it can feel bad to be asked my other people on the team to step down.
 
-YK: I want to introduce a "Path Off Core." The problem is that it feels  bad to make a decision to leave because it feels sudden (even though it's usually following an extended period of inaction). I would like to introduce a "countdown" of sorts, which is that you decide to leave but have a period where you can change your mind if you end up becoming more active in that period.
+YK: I want to introduce a "Path Off Core." The problem is that it feels bad to make a decision to leave because it feels sudden (even though it's usually following an extended period of inaction). I would like to introduce a "countdown" of sorts, which is that you decide to leave but have a period where you can change your mind if you end up becoming more active in that period.
 
 RJ: Is it important to define what active means?
 

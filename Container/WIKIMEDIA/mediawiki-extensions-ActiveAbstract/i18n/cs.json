@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Slepi"
-		]
-	},
-	"activeabstract-desc": "Generovat XML kanál pro projekt Active Abstracts firmy Yahoo"
+  "@metadata": {
+    "authors": ["Slepi"]
+  },
+  "activeabstract-desc": "Generovat XML kanál pro projekt Active Abstracts firmy Yahoo"
 }

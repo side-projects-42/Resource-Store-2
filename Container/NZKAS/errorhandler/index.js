@@ -11,14 +11,14 @@
 
 var fs;
 try {
-  fs = require('graceful-fs');
+  fs = require("graceful-fs");
 } catch (_) {
-  fs = require('fs');
+  fs = require("fs");
 }
 
 // environment
 
-var env = process.env.NODE_ENV || 'development';
+var env = process.env.NODE_ENV || "development";
 
 /**
  * Error handler:
@@ -45,39 +45,50 @@ var env = process.env.NODE_ENV || 'development';
  * @api public
  */
 
-exports = module.exports = function errorHandler(){
-  return function errorHandler(err, req, res, next){
+exports = module.exports = function errorHandler() {
+  return function errorHandler(err, req, res, next) {
     if (err.status) res.statusCode = err.status;
     if (res.statusCode < 400) res.statusCode = 500;
-    if ('test' != env) console.error(err.stack);
-    var accept = req.headers.accept || '';
+    if ("test" != env) console.error(err.stack);
+    var accept = req.headers.accept || "";
     // html
-    if (~accept.indexOf('html')) {
-      fs.readFile(__dirname + '/public/style.css', 'utf8', function(e, style){
-        fs.readFile(__dirname + '/public/error.html', 'utf8', function(e, html){
-          var stack = (err.stack || '')
-            .split('\n').slice(1)
-            .map(function(v){ return '<li>' + v + '</li>'; }).join('');
+    if (~accept.indexOf("html")) {
+      fs.readFile(__dirname + "/public/style.css", "utf8", function (e, style) {
+        fs.readFile(
+          __dirname + "/public/error.html",
+          "utf8",
+          function (e, html) {
+            var stack = (err.stack || "")
+              .split("\n")
+              .slice(1)
+              .map(function (v) {
+                return "<li>" + v + "</li>";
+              })
+              .join("");
             html = html
-              .replace('{style}', style)
-              .replace('{stack}', stack)
-              .replace('{title}', exports.title)
-              .replace('{statusCode}', res.statusCode)
-              .replace(/\{error\}/g, escapeHTML(err.toString().replace(/\n/g, '<br/>')));
-            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              .replace("{style}", style)
+              .replace("{stack}", stack)
+              .replace("{title}", exports.title)
+              .replace("{statusCode}", res.statusCode)
+              .replace(
+                /\{error\}/g,
+                escapeHTML(err.toString().replace(/\n/g, "<br/>"))
+              );
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
             res.end(html);
-        });
+          }
+        );
       });
-    // json
-    } else if (~accept.indexOf('json')) {
+      // json
+    } else if (~accept.indexOf("json")) {
       var error = { message: err.message, stack: err.stack };
       for (var prop in err) error[prop] = err[prop];
       var json = JSON.stringify({ error: error });
-      res.setHeader('Content-Type', 'application/json');
+      res.setHeader("Content-Type", "application/json");
       res.end(json);
-    // plain text
+      // plain text
     } else {
-      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader("Content-Type", "text/plain");
       res.end(err.stack);
     }
   };
@@ -87,8 +98,7 @@ exports = module.exports = function errorHandler(){
  * Template title, framework authors may override this value.
  */
 
-exports.title = 'Connect';
-
+exports.title = "Connect";
 
 /**
  * Escape the given string of `html`.
@@ -98,10 +108,10 @@ exports.title = 'Connect';
  * @api private
  */
 
-function escapeHTML(html){
+function escapeHTML(html) {
   return String(html)
-    .replace(/&(?!\w+;)/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-};
+    .replace(/&(?!\w+;)/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}

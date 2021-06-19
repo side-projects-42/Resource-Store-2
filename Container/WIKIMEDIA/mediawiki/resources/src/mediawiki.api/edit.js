@@ -1,10 +1,8 @@
 /**
  * @class mw.Api.plugin.edit
  */
-( function () {
-
-	$.extend( mw.Api.prototype, {
-
+(function () {
+	$.extend(mw.Api.prototype, {
 		/**
 		 * Post to API with csrf token. If we have no token, get one and try to post.
 		 * If we have a cached token try using that, and if it fails, blank out the
@@ -14,8 +12,8 @@
 		 * @param {Object} [ajaxOptions]
 		 * @return {jQuery.Promise} See #post
 		 */
-		postWithEditToken: function ( params, ajaxOptions ) {
-			return this.postWithToken( 'csrf', params, ajaxOptions );
+		postWithEditToken: function (params, ajaxOptions) {
+			return this.postWithToken("csrf", params, ajaxOptions);
 		},
 
 		/**
@@ -24,7 +22,7 @@
 		 * @return {jQuery.Promise} Received token.
 		 */
 		getEditToken: function () {
-			return this.getToken( 'csrf' );
+			return this.getToken("csrf");
 		},
 
 		/**
@@ -44,17 +42,22 @@
 		 * @param {string} content
 		 * @return {jQuery.Promise} API response
 		 */
-		create: function ( title, params, content ) {
-			return this.postWithEditToken( $.extend( this.assertCurrentUser( {
-				action: 'edit',
-				title: String( title ),
-				text: content,
-				formatversion: '2',
-				// Protect against conflicts
-				createonly: true
-			} ), params ) ).then( function ( data ) {
+		create: function (title, params, content) {
+			return this.postWithEditToken(
+				$.extend(
+					this.assertCurrentUser({
+						action: "edit",
+						title: String(title),
+						text: content,
+						formatversion: "2",
+						// Protect against conflicts
+						createonly: true,
+					}),
+					params
+				)
+			).then(function (data) {
 				return data.edit;
-			} );
+			});
 		},
 
 		/**
@@ -115,57 +118,69 @@
 		 *  API parameters, or promise providing one of those.
 		 * @return {jQuery.Promise} Edit API response
 		 */
-		edit: function ( title, transform ) {
-			var basetimestamp, curtimestamp,
+		edit: function (title, transform) {
+			var basetimestamp,
+				curtimestamp,
 				api = this;
 
-			title = String( title );
+			title = String(title);
 
-			return api.get( {
-				action: 'query',
-				prop: 'revisions',
-				rvprop: [ 'content', 'timestamp' ],
-				titles: [ title ],
-				formatversion: '2',
-				curtimestamp: true
-			} )
-				.then( function ( data ) {
+			return api
+				.get({
+					action: "query",
+					prop: "revisions",
+					rvprop: ["content", "timestamp"],
+					titles: [title],
+					formatversion: "2",
+					curtimestamp: true,
+				})
+				.then(function (data) {
 					var page, revision;
-					if ( !data.query || !data.query.pages ) {
-						return $.Deferred().reject( 'unknown' );
+					if (!data.query || !data.query.pages) {
+						return $.Deferred().reject("unknown");
 					}
-					page = data.query.pages[ 0 ];
-					if ( !page || page.invalid ) {
-						return $.Deferred().reject( 'invalidtitle' );
+					page = data.query.pages[0];
+					if (!page || page.invalid) {
+						return $.Deferred().reject("invalidtitle");
 					}
-					if ( page.missing ) {
-						return $.Deferred().reject( 'nocreate-missing' );
+					if (page.missing) {
+						return $.Deferred().reject("nocreate-missing");
 					}
-					revision = page.revisions[ 0 ];
+					revision = page.revisions[0];
 					basetimestamp = revision.timestamp;
 					curtimestamp = data.curtimestamp;
-					return transform( {
+					return transform({
 						timestamp: revision.timestamp,
-						content: revision.content
-					} );
-				} )
-				.then( function ( params ) {
-					var editParams = typeof params === 'object' ? params : { text: String( params ) };
-					return api.postWithEditToken( $.extend( {
-						action: 'edit',
-						title: title,
-						formatversion: '2',
+						content: revision.content,
+					});
+				})
+				.then(function (params) {
+					var editParams =
+						typeof params === "object"
+							? params
+							: { text: String(params) };
+					return api.postWithEditToken(
+						$.extend(
+							{
+								action: "edit",
+								title: title,
+								formatversion: "2",
 
-						// Protect against errors and conflicts
-						assert: mw.config.get( 'wgUserName' ) ? 'user' : undefined,
-						basetimestamp: basetimestamp,
-						starttimestamp: curtimestamp,
-						nocreate: true
-					}, editParams ) );
-				} )
-				.then( function ( data ) {
+								// Protect against errors and conflicts
+								assert: mw.config.get("wgUserName")
+									? "user"
+									: undefined,
+								basetimestamp: basetimestamp,
+								starttimestamp: curtimestamp,
+								nocreate: true,
+							},
+							editParams
+						)
+					);
+				})
+				.then(function (data) {
 					return data.edit;
-				} );
+				});
 		},
 
 		/**
@@ -178,20 +193,24 @@
 		 * @param {Object} [additionalParams] Additional API parameters, e.g. `{ redirect: true }`
 		 * @return {jQuery.Promise}
 		 */
-		newSection: function ( title, header, message, additionalParams ) {
-			return this.postWithEditToken( $.extend( {
-				action: 'edit',
-				section: 'new',
-				title: String( title ),
-				summary: header,
-				text: message
-			}, additionalParams ) );
-		}
-	} );
+		newSection: function (title, header, message, additionalParams) {
+			return this.postWithEditToken(
+				$.extend(
+					{
+						action: "edit",
+						section: "new",
+						title: String(title),
+						summary: header,
+						text: message,
+					},
+					additionalParams
+				)
+			);
+		},
+	});
 
 	/**
 	 * @class mw.Api
 	 * @mixins mw.Api.plugin.edit
 	 */
-
-}() );
+})();

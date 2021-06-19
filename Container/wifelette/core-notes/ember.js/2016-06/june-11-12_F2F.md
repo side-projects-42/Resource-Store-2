@@ -113,7 +113,7 @@ Action items:
 - [ ] Create a SUBTEAM doc or guide.
   - [ ] Suggest that notes be stored in core-notes
   - [ ] Suggest that after notes are created a link is posted into `#core-notes` on Slack
-- [ ] New subteam: *Performance Team*
+- [ ] New subteam: _Performance Team_
   - [ ] Kris will create, liason. Goal of this team is to automate and make following good perf practices easy.
   - [ ] Kris will propose members
 - [ ] New subteam: **Render Team**
@@ -292,7 +292,7 @@ MB: I really like [contributors-on-github](https://chrome.google.com/webstore/de
 
 (agreement)
 
-YK: One good trick is to try to repeat back a frustrated person's own words in the maximally charitable way. If you've done that,  and they accept your summary, you're instantly in a way better place for further discussion.
+YK: One good trick is to try to repeat back a frustrated person's own words in the maximally charitable way. If you've done that, and they accept your summary, you're instantly in a way better place for further discussion.
 
 IT: I've had success reaching out privately to people after one or two things to offer support, kudos and more work ;-)
 
@@ -320,7 +320,7 @@ LS: People send stuff regarding how we do enforcement of trademark. So far, I po
 
 EB: Why do we have a trademark etc?
 
-YK: Trademark, and brand control, allow us to control and maintain a coherent vision and gives people a simple way of understanding when some message is coming from that coherent vision. *Most violations are not intentional.* They just don't realize that a particular thing that they're doing could lead to confusion about who is sending the message.
+YK: Trademark, and brand control, allow us to control and maintain a coherent vision and gives people a simple way of understanding when some message is coming from that coherent vision. _Most violations are not intentional._ They just don't realize that a particular thing that they're doing could lead to confusion about who is sending the message.
 
 LS: I will keep following up. For example there some projects that have incorporated the Ember logo into their own logo. More training companies and whatnot have popped up. Please keep sending things, but don't expect a quick response b/c they take a lot of time to craft.
 
@@ -337,7 +337,7 @@ YK: FWIW, a lot of people have expressed that our policy isn't very clear, but w
 - [Ember.js - Tomster FAQ](http://emberjs.com/tomster/faq/)
 - [Tomster Commission Request](http://emberjs.com/tomster/commission/)
 
-YK: And these *do* come up when you search "ember.js trademark" on Google.
+YK: And these _do_ come up when you search "ember.js trademark" on Google.
 
 Action items:
 
@@ -346,7 +346,7 @@ Action items:
 
 ### Roadmap
 
-YK: We need to increase clarity in the community, and improve the vision.  The fact that the community is confused means that our best marketers are not able to properly help.
+YK: We need to increase clarity in the community, and improve the vision. The fact that the community is confused means that our best marketers are not able to properly help.
 
 SP: I think one example of this working poorly, is with routeable components. Everyone I have spoken to have entirely misunderstood the situation.
 
@@ -356,9 +356,9 @@ YK: I totally agree, and is one of the primary reasons I wanted to discuss the r
 
 YK: By definition, if there is no deprecation of a feature, that means that we have not finished designing the future yet in the general case.
 
-YK: When people say "I want to future proof my app", they are completely misunderstanding the way the project works.  There are a number of techniques that we now use that make it *extremely* clear what is "bad" (deprecated) and what is good (the thing that the deprecation tells you to do).
+YK: When people say "I want to future proof my app", they are completely misunderstanding the way the project works. There are a number of techniques that we now use that make it _extremely_ clear what is "bad" (deprecated) and what is good (the thing that the deprecation tells you to do).
 
-SP: I think this comes down to not properly defining the problems. We tend to use the RFC to describe the path forward, but instead we should focus on the problem/issue first.  This will make it much clearer where we are in the process.
+SP: I think this comes down to not properly defining the problems. We tend to use the RFC to describe the path forward, but instead we should focus on the problem/issue first. This will make it much clearer where we are in the process.
 
 YK: The motivation section of the RFC is intended to make the issue fully fleshed out.
 
@@ -370,7 +370,7 @@ SP: People tend to gravitate on the "title" of the RFC, and somewhat ignore the 
 
 EB: Perhaps we should make the title of the RFC just a summary of the motivation.
 
-YK: The prefetch RFC is a great demonstration of this.  It would have likely progressed much faster if the motivation was more fleshed out, and the focus of the proposal.
+YK: The prefetch RFC is a great demonstration of this. It would have likely progressed much faster if the motivation was more fleshed out, and the focus of the proposal.
 
 SP: Exactly, I think that prefetch and routable components RFC's exactly needed to start as an issue with a thorough discussion of the issue.
 
@@ -386,7 +386,7 @@ MM: It isn't about not talking about your progress, its about doing it correctly
 
 KS: We just messed up during the 1.13/2.0 roadmap cycle.
 
-YK: I agree with this!  But that has already happened, what do we do **now**?
+YK: I agree with this! But that has already happened, what do we do **now**?
 
 EB: I believe we need to have more agreed upon talking points for how the core team generally talks about our roadmap and in-progress features.
 
@@ -423,7 +423,7 @@ DG: I wanted to bring people up to date- even if orbit isn't directly part of em
 
 DG: sources can contain data. they have common interfaces to communicate and a common format to pass data between sources. Sources are queryable and updatable, as is appropriate.
 
-DG: some sources likely to be used by devs, others likely to be used internally as part of an Ember network (internal to  orbit or your app code)
+DG: some sources likely to be used by devs, others likely to be used internally as part of an Ember network (internal to orbit or your app code)
 
 DG: (explanation of some sources and interfaces, new Orbit stuff)
 
@@ -463,7 +463,7 @@ SP: reduce bus factor etc
 
 ### @foo stuff
 
-YK: I want to  ensure the consensus we had last meeting is good.
+YK: I want to ensure the consensus we had last meeting is good.
 
 Discussion about merging and shadowing attributes. Discussion about whether to allow interception of supplied attributes.
 
@@ -495,7 +495,7 @@ Problem if top level element is a button, attributes work, but if it's a div it 
 
 We have not considered the refactoring problem. The problem is if you want to implement a button. Relocating a root hasn't been discussed yet.
 
-Intercepting concept might need to be extend for reprojecting, something like \__IAmDoingAVerySadThing (SP)
+Intercepting concept might need to be extend for reprojecting, something like \_\_IAmDoingAVerySadThing (SP)
 
 YK asking if there is a general objection to the strategy. Ebryn does not object to the overall strategy.
 
@@ -519,7 +519,7 @@ No matter what we do people will write checked={{boolean}}
 
 Behavior right now in Ember if you put quotes it turns into concat. The quotes mean coeerce to string.
 
-YK believes there is inertia about the current system people are ok with special rules. People don't expect the diff  between "" and no "". Its a thing you can learn and you can teach people but its not a thing people expect.
+YK believes there is inertia about the current system people are ok with special rules. People don't expect the diff between "" and no "". Its a thing you can learn and you can teach people but its not a thing people expect.
 
 Ebryn argues everyone learns this quickly, RJ point we will have more new users than existing users.
 

@@ -4,10 +4,11 @@
 :nodeid: 243
 :created: 1283141296
 :tags:
-- general
-- meetup
+  - general
+  - meetup
 :author: kohsuke
 ---
+
 <p>I'll be in Copenhagen from 9/5-9/7 and in Oslo 9/8-9/9 to present in JavaZone. I'd like to take advantage of the opportunities and have user meet-up events in those cities. Depending on the number of participants, it could be just a drink in a bar, or a talk in a meeting room.</p>
 
 <p>So if you are:</p>

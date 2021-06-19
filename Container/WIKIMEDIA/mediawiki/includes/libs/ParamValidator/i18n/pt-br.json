@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Eduardo Addad de Oliveira",
-			"Eduardoaddad",
-			"Iohanen"
-		]
+		"authors": ["Eduardo Addad de Oliveira", "Eduardoaddad", "Iohanen"]
 	},
 	"paramvalidator-badbool": "Valor inválido \"$2\" para o parâmetro booleano \"$1\". Passe $3 para true ou $5 para false.",
 	"paramvalidator-badexpiry": "Valor inválido \"$2\" para o parâmetro de expiração \"$1\".",

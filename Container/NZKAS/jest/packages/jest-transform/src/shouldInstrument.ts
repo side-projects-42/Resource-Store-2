@@ -33,9 +33,9 @@ export default function shouldInstrument(
   }
 
   if (
-    !config.testPathIgnorePatterns.some(pattern => !!filename.match(pattern))
+    !config.testPathIgnorePatterns.some((pattern) => !!filename.match(pattern))
   ) {
-    if (config.testRegex.some(regex => new RegExp(regex).test(filename))) {
+    if (config.testRegex.some((regex) => new RegExp(regex).test(filename))) {
       return false;
     }
 
@@ -66,7 +66,9 @@ export default function shouldInstrument(
   }
 
   if (
-    config.coveragePathIgnorePatterns.some(pattern => !!filename.match(pattern))
+    config.coveragePathIgnorePatterns.some(
+      (pattern) => !!filename.match(pattern),
+    )
   ) {
     return false;
   }
@@ -79,11 +81,11 @@ export default function shouldInstrument(
     return false;
   }
 
-  if (config.setupFiles.some(setupFile => setupFile === filename)) {
+  if (config.setupFiles.some((setupFile) => setupFile === filename)) {
     return false;
   }
 
-  if (config.setupFilesAfterEnv.some(setupFile => setupFile === filename)) {
+  if (config.setupFilesAfterEnv.some((setupFile) => setupFile === filename)) {
     return false;
   }
 

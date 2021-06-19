@@ -15,7 +15,7 @@ function UtilMixin() {
  * @param {Mixed} value
  * @return {boolean}
  */
-UtilMixin.prototype.apiBool = function ( value ) {
+UtilMixin.prototype.apiBool = function (value) {
 	return value !== undefined && value !== false;
 };
 

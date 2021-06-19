@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Minh Nguyen",
-			"Prenn",
-			"Quenhitran",
-			"Vinhtantran"
-		]
+		"authors": ["Minh Nguyen", "Prenn", "Quenhitran", "Vinhtantran"]
 	},
 	"exif-imagewidth": "Chiều ngang",
 	"exif-imagelength": "Chiều cao",

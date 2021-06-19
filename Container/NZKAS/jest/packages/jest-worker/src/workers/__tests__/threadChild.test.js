@@ -22,7 +22,7 @@ let thread;
 const mockError = new TypeError('Booo');
 const mockExtendedError = new ReferenceError('Booo extended');
 const uninitializedParam = {};
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 import {
   CHILD_MESSAGE_INITIALIZE,

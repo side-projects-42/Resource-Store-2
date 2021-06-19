@@ -8,16 +8,24 @@
  *   };
  */
 
-'use strict';
+"use strict";
 
 let ffmpeg;
-const fs = require( 'fs' );
-const path = require( 'path' );
-const logPath = process.env.LOG_DIR || path.join( process.cwd(), 'tests/selenium/log' );
-const { makeFilenameDate, saveScreenshot, startVideo, stopVideo } = require( 'wdio-mediawiki' );
+const fs = require("fs");
+const path = require("path");
+const logPath =
+	process.env.LOG_DIR || path.join(process.cwd(), "tests/selenium/log");
+const {
+	makeFilenameDate,
+	saveScreenshot,
+	startVideo,
+	stopVideo,
+} = require("wdio-mediawiki");
 
-if ( !process.env.MW_SERVER || !process.env.MW_SCRIPT_PATH ) {
-	throw new Error( 'MW_SERVER or MW_SCRIPT_PATH not defined.\nSee https://www.mediawiki.org/wiki/Selenium/How-to/Set_environment_variables\n' );
+if (!process.env.MW_SERVER || !process.env.MW_SCRIPT_PATH) {
+	throw new Error(
+		"MW_SERVER or MW_SCRIPT_PATH not defined.\nSee https://www.mediawiki.org/wiki/Selenium/How-to/Set_environment_variables\n"
+	);
 }
 
 /**
@@ -31,7 +39,7 @@ exports.config = {
 	// ==================
 
 	// See https://webdriver.io/docs/automationProtocols/
-	automationProtocol: 'devtools',
+	automationProtocol: "devtools",
 
 	// ======
 	// Custom conf keys for MediaWiki
@@ -45,14 +53,12 @@ exports.config = {
 	// ==================
 	// Runner Configuration
 	// ==================
-	runner: 'local',
+	runner: "local",
 
 	// ==================
 	// Test Files
 	// ==================
-	specs: [
-		'./tests/selenium/specs/**/*.js'
-	],
+	specs: ["./tests/selenium/specs/**/*.js"],
 
 	// ============
 	// Capabilities
@@ -60,21 +66,23 @@ exports.config = {
 	// ============
 
 	maxInstances: 1,
-	capabilities: [ {
-		// For Chrome/Chromium https://sites.google.com/a/chromium.org/chromedriver/capabilities
-		browserName: 'chrome',
-		'goog:chromeOptions': {
-			// If DISPLAY is set, assume developer asked non-headless or CI with Xvfb.
-			// Otherwise, use --headless.
-			args: [
-				// Dismissed Chrome's `Save password?` popup
-				'--enable-automation',
-				...( process.env.DISPLAY ? [] : [ '--headless' ] ),
-				// Chrome sandbox does not work in Docker
-				...( fs.existsSync( '/.dockerenv' ) ? [ '--no-sandbox' ] : [] )
-			]
-		}
-	} ],
+	capabilities: [
+		{
+			// For Chrome/Chromium https://sites.google.com/a/chromium.org/chromedriver/capabilities
+			browserName: "chrome",
+			"goog:chromeOptions": {
+				// If DISPLAY is set, assume developer asked non-headless or CI with Xvfb.
+				// Otherwise, use --headless.
+				args: [
+					// Dismissed Chrome's `Save password?` popup
+					"--enable-automation",
+					...(process.env.DISPLAY ? [] : ["--headless"]),
+					// Chrome sandbox does not work in Docker
+					...(fs.existsSync("/.dockerenv") ? ["--no-sandbox"] : []),
+				],
+			},
+		},
+	],
 
 	// ===================
 	// Test Configurations
@@ -82,7 +90,7 @@ exports.config = {
 	// ===================
 
 	// Level of logging verbosity: trace | debug | info | warn | error | silent
-	logLevel: 'error',
+	logLevel: "error",
 	// Setting this enables automatic screenshots for when a browser command fails
 	// It is also used by afterTest for capturing screenshots.
 	screenshotPath: logPath,
@@ -91,23 +99,26 @@ exports.config = {
 	// Base for browser.url() and wdio-mediawiki/Page#openTitle()
 	baseUrl: process.env.MW_SERVER + process.env.MW_SCRIPT_PATH,
 	// See also: https://webdriver.io/docs/frameworks/
-	framework: 'mocha',
+	framework: "mocha",
 	// See also: https://mochajs.org/
 	mochaOpts: {
-		ui: 'bdd',
-		timeout: process.env.DEBUG ? ( 60 * 60 * 1000 ) : ( 60 * 1000 )
+		ui: "bdd",
+		timeout: process.env.DEBUG ? 60 * 60 * 1000 : 60 * 1000,
 	},
 	// See also: https://webdriver.io/docs/dot-reporter.html
 	reporters: [
 		// See also: https://webdriver.io/docs/dot-reporter/
-		'dot',
+		"dot",
 		// See also: https://webdriver.io/docs/junit-reporter/
-		[ 'junit', {
-			outputDir: logPath,
-			outputFileFormat: function () {
-				return `WDIO.xunit-${makeFilenameDate()}.xml`;
-			}
-		} ]
+		[
+			"junit",
+			{
+				outputDir: logPath,
+				outputFileFormat: function () {
+					return `WDIO.xunit-${makeFilenameDate()}.xml`;
+				},
+			},
+		],
 	],
 
 	// =====
@@ -119,8 +130,8 @@ exports.config = {
 	 *
 	 * @param {Object} test Mocha Test object
 	 */
-	beforeTest: function ( test ) {
-		ffmpeg = startVideo( ffmpeg, `${test.parent}-${test.title}` );
+	beforeTest: function (test) {
+		ffmpeg = startVideo(ffmpeg, `${test.parent}-${test.title}`);
 	},
 
 	/**
@@ -128,8 +139,8 @@ exports.config = {
 	 *
 	 * @param {Object} test Mocha Test object
 	 */
-	afterTest: function ( test ) {
-		saveScreenshot( `${test.parent}-${test.title}` );
-		stopVideo( ffmpeg );
-	}
+	afterTest: function (test) {
+		saveScreenshot(`${test.parent}-${test.title}`);
+		stopVideo(ffmpeg);
+	},
 };

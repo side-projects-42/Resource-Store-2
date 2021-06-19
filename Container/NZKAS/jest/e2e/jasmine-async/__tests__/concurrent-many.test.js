@@ -7,7 +7,8 @@
 
 'use strict';
 
-const sleep = duration => new Promise(resolve => setTimeout(resolve, duration));
+const sleep = (duration) =>
+  new Promise((resolve) => setTimeout(resolve, duration));
 let current = 0;
 
 for (let t = 0; t < 10; ++t) {

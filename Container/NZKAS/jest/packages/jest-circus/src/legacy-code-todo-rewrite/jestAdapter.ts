@@ -22,10 +22,8 @@ const jestAdapter = async (
   runtime: Runtime,
   testPath: string,
 ): Promise<TestResult> => {
-  const {
-    initialize,
-    runAndTransformResultsToJestFormat,
-  } = runtime.requireInternalModule(FRAMEWORK_INITIALIZER);
+  const {initialize, runAndTransformResultsToJestFormat} =
+    runtime.requireInternalModule(FRAMEWORK_INITIALIZER);
 
   runtime
     .requireInternalModule(path.resolve(__dirname, './jestExpect.js'))
@@ -75,7 +73,7 @@ const jestAdapter = async (
     }
   });
 
-  config.setupFilesAfterEnv.forEach(path => runtime.requireModule(path));
+  config.setupFilesAfterEnv.forEach((path) => runtime.requireModule(path));
 
   runtime.requireModule(testPath);
   const results = await runAndTransformResultsToJestFormat({

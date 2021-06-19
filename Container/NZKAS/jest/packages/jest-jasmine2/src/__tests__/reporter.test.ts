@@ -35,7 +35,7 @@ describe('Jasmine2Reporter', () => {
     // @ts-ignore
     reporter.jasmineDone();
 
-    return reporter.getResults().then(runResults => {
+    return reporter.getResults().then((runResults) => {
       const firstResult = runResults.testResults[0];
       expect(firstResult.ancestorTitles[0]).toBe('parent');
       expect(firstResult.ancestorTitles[1]).toBe('child');

@@ -15,7 +15,8 @@ const commentStartRe = /^\/\*\*/;
 const docblockRe = /^\s*(\/\*\*?(.|\r?\n)*?\*\/)/;
 const lineCommentRe = /(^|\s+)\/\/([^\r\n]*)/g;
 const ltrimNewlineRe = /^(\r?\n)+/;
-const multilineRe = /(?:^|\r?\n) *(@[^\r\n]*?) *\r?\n *(?![^@\r\n]*\/\/[^]*)([^@\r\n\s][^@\r\n]+?) *\r?\n/g;
+const multilineRe =
+  /(?:^|\r?\n) *(@[^\r\n]*?) *\r?\n *(?![^@\r\n]*\/\/[^]*)([^@\r\n\s][^@\r\n]+?) *\r?\n/g;
 const propertyRe = /(?:^|\r?\n) *@(\S+) *([^\r\n]*)/g;
 const stringStartRe = /(\r?\n|^) *\* ?/g;
 
@@ -33,9 +34,10 @@ export function parse(docblock: string): Pragmas {
   return parseWithComments(docblock).pragmas;
 }
 
-export function parseWithComments(
-  docblock: string,
-): {comments: string; pragmas: Pragmas} {
+export function parseWithComments(docblock: string): {
+  comments: string;
+  pragmas: Pragmas;
+} {
   const line = detectNewline(docblock) || EOL;
 
   docblock = docblock
@@ -91,9 +93,9 @@ export function print({
   const keys = Object.keys(pragmas);
 
   const printedObject = keys
-    .map(key => printKeyValues(key, pragmas[key]))
+    .map((key) => printKeyValues(key, pragmas[key]))
     .reduce((arr, next) => arr.concat(next), [])
-    .map(keyValue => start + ' ' + keyValue + line)
+    .map((keyValue) => start + ' ' + keyValue + line)
     .join('');
 
   if (!comments) {
@@ -109,7 +111,7 @@ export function print({
   const printedComments =
     comments
       .split(line)
-      .map(textLine => `${start} ${textLine}`)
+      .map((textLine) => `${start} ${textLine}`)
       .join(line) + line;
 
   return (
@@ -125,5 +127,5 @@ export function print({
 function printKeyValues(key: string, valueOrArray: string | Array<string>) {
   return ([] as Array<string>)
     .concat(valueOrArray)
-    .map(value => `@${key} ${value}`.trim());
+    .map((value) => `@${key} ${value}`.trim());
 }

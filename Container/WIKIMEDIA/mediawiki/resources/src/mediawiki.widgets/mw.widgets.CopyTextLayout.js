@@ -4,8 +4,7 @@
  * @copyright 2011-2015 MediaWiki Widgets Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * An action field layout containing some readonly text and a button to copy
 	 * it to the clipboard.
@@ -23,45 +22,65 @@
 	 * @cfg {string} failMessage Failure message,
 	 *  defaults to 'mw-widgets-copytextlayout-copy-fail'.
 	 */
-	mw.widgets.CopyTextLayout = function MwWidgetsCopyTextLayout( config ) {
+	mw.widgets.CopyTextLayout = function MwWidgetsCopyTextLayout(config) {
 		var TextClass;
 		config = config || {};
 
 		// Properties
-		TextClass = config.multiline ? OO.ui.MultilineTextInputWidget : OO.ui.TextInputWidget;
-		this.textInput = new TextClass( $.extend( {
-			value: config.copyText,
-			readOnly: true
-		}, config.textInput ) );
-		this.button = new OO.ui.ButtonWidget( $.extend( {
-			label: mw.msg( 'mw-widgets-copytextlayout-copy' ),
-			icon: 'articles'
-		}, config.button ) );
-		this.successMessage = config.successMessage || mw.msg( 'mw-widgets-copytextlayout-copy-success' );
-		this.failMessage = config.failMessage || mw.msg( 'mw-widgets-copytextlayout-copy-fail' );
+		TextClass = config.multiline
+			? OO.ui.MultilineTextInputWidget
+			: OO.ui.TextInputWidget;
+		this.textInput = new TextClass(
+			$.extend(
+				{
+					value: config.copyText,
+					readOnly: true,
+				},
+				config.textInput
+			)
+		);
+		this.button = new OO.ui.ButtonWidget(
+			$.extend(
+				{
+					label: mw.msg("mw-widgets-copytextlayout-copy"),
+					icon: "articles",
+				},
+				config.button
+			)
+		);
+		this.successMessage =
+			config.successMessage ||
+			mw.msg("mw-widgets-copytextlayout-copy-success");
+		this.failMessage =
+			config.failMessage || mw.msg("mw-widgets-copytextlayout-copy-fail");
 
 		// Parent constructor
-		mw.widgets.CopyTextLayout.super.call( this, this.textInput, this.button, config );
+		mw.widgets.CopyTextLayout.super.call(
+			this,
+			this.textInput,
+			this.button,
+			config
+		);
 
 		// HACK: Remove classes which connect widgets when using
 		// a multiline text input. TODO: This should be handled in OOUI.
-		if ( config.multiline ) {
-			this.$input.removeClass( 'oo-ui-actionFieldLayout-input' );
+		if (config.multiline) {
+			this.$input.removeClass("oo-ui-actionFieldLayout-input");
 			this.$button
-				.removeClass( 'oo-ui-actionFieldLayout-button' )
-				.addClass( 'mw-widget-copyTextLayout-multiline-button' );
+				.removeClass("oo-ui-actionFieldLayout-button")
+				.addClass("mw-widget-copyTextLayout-multiline-button");
 		}
 
 		// Events
-		this.button.connect( this, { click: 'onButtonClick' } );
-		this.textInput.$input.on( 'focus', this.onInputFocus.bind( this ) );
+		this.button.connect(this, { click: "onButtonClick" });
+		this.textInput.$input.on("focus", this.onInputFocus.bind(this));
 
-		this.$element.addClass( 'mw-widget-copyTextLayout' );
+		this.$element.addClass("mw-widget-copyTextLayout");
 	};
 
 	/* Inheritence */
 
-	OO.inheritClass( mw.widgets.CopyTextLayout, OO.ui.ActionFieldLayout );
+	OO.inheritClass(mw.widgets.CopyTextLayout, OO.ui.ActionFieldLayout);
 
 	/* Methods */
 
@@ -76,24 +95,24 @@
 		this.selectText();
 
 		try {
-			copied = document.execCommand( 'copy' );
-		} catch ( e ) {
+			copied = document.execCommand("copy");
+		} catch (e) {
 			copied = false;
 		}
-		if ( copied ) {
-			mw.notify( this.successMessage );
+		if (copied) {
+			mw.notify(this.successMessage);
 		} else {
-			mw.notify( this.failMessage, { type: 'error' } );
+			mw.notify(this.failMessage, { type: "error" });
 		}
 
-		this.emit( 'copy', copied );
+		this.emit("copy", copied);
 	};
 
 	/**
 	 * Handle text widget focus events
 	 */
 	mw.widgets.CopyTextLayout.prototype.onInputFocus = function () {
-		if ( !this.selecting ) {
+		if (!this.selecting) {
 			this.selectText();
 		}
 	};
@@ -102,7 +121,7 @@
 	 * Select the text to copy
 	 */
 	mw.widgets.CopyTextLayout.prototype.selectText = function () {
-		var input = this.textInput.$input[ 0 ],
+		var input = this.textInput.$input[0],
 			scrollTop = input.scrollTop,
 			scrollLeft = input.scrollLeft;
 
@@ -114,5 +133,4 @@
 		input.scrollTop = scrollTop;
 		input.scrollLeft = scrollLeft;
 	};
-
-}() );
+})();

@@ -4,11 +4,12 @@
 :nodeid: 343
 :created: 1319209200
 :tags:
-- general
-- core
-- feedback
+  - general
+  - core
+  - feedback
 :author: kohsuke
 ---
+
 <img src="http://www.cloudbees.com/sites/default/files/imagefield_thumbs/A_Bug%27s_Life.png" style="float:left; margin:1em"/>
 
 <a href="http://www.cloudbees.com/">CloudBees</a> is running a 60-days <a href="http://www.cloudbees.com/jenkins-community-contests.cb">"bring me bugs"</a> contest for the Jenkins project where you may win a Kindle and Amazon gift cards for a bug report you made during the contest period. See the linked site for details about how to enter into the drawing. Greg Moy from Electronic Arts has already won for the first week, but there are more rounds to come.

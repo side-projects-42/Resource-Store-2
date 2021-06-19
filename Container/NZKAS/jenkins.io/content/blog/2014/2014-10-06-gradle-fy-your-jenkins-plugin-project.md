@@ -4,11 +4,12 @@
 :nodeid: 512
 :created: 1412637141
 :tags:
-- general
-- guest post
-- plugins
+  - general
+  - guest post
+  - plugins
 :author: kohsuke
 ---
+
 (This is a guest post from [Daniel Spilker](http://www.daniel-spilker.com/))
 
 Jenkins supports building plugins using [Gradle](http://www.gradle.org/) for a while now. Last week a new version of the [Gradle JPI plugin](https://wiki.jenkins-ci.org/display/JENKINS/Gradle+JPI+Plugin) has been released to iron out some [issues](https://github.com/jenkinsci/gradle-jpi-plugin/blob/0.6.0/CHANGELOG.md).
@@ -46,7 +47,7 @@ An existing Maven build can be converted to Gradle by using the build.gradle tem
                 name 'Gregory Boissinot'
                 timezone '+1'
             }
-        }                           
+        }
     }
 
     dependencies {

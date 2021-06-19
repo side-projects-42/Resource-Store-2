@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Mirzali"
-		]
-	},
-	"admanager_Page": "Peli"
+  "@metadata": {
+    "authors": ["Mirzali"]
+  },
+  "admanager_Page": "Peli"
 }

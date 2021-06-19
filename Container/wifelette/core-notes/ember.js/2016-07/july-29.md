@@ -4,7 +4,7 @@
 
 - Advanced Documentation (LS)
 - FastBoot 1.0 (TD)
-    - Blog post
+  - Blog post
 - Glimmer 2 Alpha (GC)
 - Chrome Canary M54 break (resolved) TL;DR
 - TC39 update: decorators stage 2, cancellation, async function

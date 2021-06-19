@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Ktchankt"
-		]
-	},
-	"adminlinks_users": "用戶"
+  "@metadata": {
+    "authors": ["Ktchankt"]
+  },
+  "adminlinks_users": "用戶"
 }

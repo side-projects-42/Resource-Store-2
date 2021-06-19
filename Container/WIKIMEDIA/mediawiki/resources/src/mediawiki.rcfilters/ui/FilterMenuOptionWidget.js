@@ -1,4 +1,4 @@
-var ItemMenuOptionWidget = require( './ItemMenuOptionWidget.js' ),
+var ItemMenuOptionWidget = require("./ItemMenuOptionWidget.js"),
 	FilterMenuOptionWidget;
 
 /**
@@ -16,7 +16,12 @@ var ItemMenuOptionWidget = require( './ItemMenuOptionWidget.js' ),
  * @param {Object} config Configuration object
  */
 FilterMenuOptionWidget = function MwRcfiltersUiFilterMenuOptionWidget(
-	controller, filtersViewModel, invertModel, itemModel, highlightPopup, config
+	controller,
+	filtersViewModel,
+	invertModel,
+	itemModel,
+	highlightPopup,
+	config
 ) {
 	config = config || {};
 
@@ -25,17 +30,24 @@ FilterMenuOptionWidget = function MwRcfiltersUiFilterMenuOptionWidget(
 	this.model = itemModel;
 
 	// Parent
-	FilterMenuOptionWidget.parent.call( this, controller, filtersViewModel, this.invertModel, itemModel, highlightPopup, config );
+	FilterMenuOptionWidget.parent.call(
+		this,
+		controller,
+		filtersViewModel,
+		this.invertModel,
+		itemModel,
+		highlightPopup,
+		config
+	);
 
 	// Event
-	this.model.getGroupModel().connect( this, { update: 'onGroupModelUpdate' } );
+	this.model.getGroupModel().connect(this, { update: "onGroupModelUpdate" });
 
-	this.$element
-		.addClass( 'mw-rcfilters-ui-filterMenuOptionWidget' );
+	this.$element.addClass("mw-rcfilters-ui-filterMenuOptionWidget");
 };
 
 /* Initialization */
-OO.inheritClass( FilterMenuOptionWidget, ItemMenuOptionWidget );
+OO.inheritClass(FilterMenuOptionWidget, ItemMenuOptionWidget);
 
 /* Static properties */
 
@@ -49,7 +61,7 @@ FilterMenuOptionWidget.static.scrollIntoViewOnSelect = false;
  */
 FilterMenuOptionWidget.prototype.updateUiBasedOnState = function () {
 	// Parent
-	FilterMenuOptionWidget.parent.prototype.updateUiBasedOnState.call( this );
+	FilterMenuOptionWidget.parent.prototype.updateUiBasedOnState.call(this);
 
 	this.setCurrentMuteState();
 };
@@ -66,28 +78,25 @@ FilterMenuOptionWidget.prototype.onGroupModelUpdate = function () {
  */
 FilterMenuOptionWidget.prototype.setCurrentMuteState = function () {
 	if (
-		this.model.getGroupModel().getView() === 'namespaces' &&
+		this.model.getGroupModel().getView() === "namespaces" &&
 		this.invertModel.isSelected()
 	) {
 		// This is an inverted behavior than the other rules, specifically
 		// for inverted namespaces
-		this.setFlags( {
-			muted: this.model.isSelected()
-		} );
+		this.setFlags({
+			muted: this.model.isSelected(),
+		});
 	} else {
-		this.setFlags( {
-			muted: (
+		this.setFlags({
+			muted:
 				this.model.isConflicted() ||
-				(
-					// Item is also muted when any of the items in its group is active
-					this.model.getGroupModel().isActive() &&
+				// Item is also muted when any of the items in its group is active
+				(this.model.getGroupModel().isActive() &&
 					// But it isn't selected
 					!this.model.isSelected() &&
 					// And also not included
-					!this.model.isIncluded()
-				)
-			)
-		} );
+					!this.model.isIncluded()),
+		});
 	}
 };
 

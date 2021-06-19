@@ -22,125 +22,133 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-'use strict';
+"use strict";
 
-var fs = require('fs'),
-    path = require('path'),
-    root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
-    esprima = require('./3rdparty/esprima'),
-    escodegen = require(root),
-    chai = require('chai'),
-    expect = chai.expect,
-    data;
+var fs = require("fs"),
+  path = require("path"),
+  root = path.join(path.dirname(fs.realpathSync(__filename)), ".."),
+  esprima = require("./3rdparty/esprima"),
+  escodegen = require(root),
+  chai = require("chai"),
+  expect = chai.expect,
+  data;
 
 function make_eval(code) {
-    return {
-        type: 'CallExpression',
-        callee: {
-            type: 'Identifier',
-            name: 'eval'
-        },
-        'arguments': [{
-            type: 'Literal',
-            value: code
-        }],
-        verbatim: code
-    };
+  return {
+    type: "CallExpression",
+    callee: {
+      type: "Identifier",
+      name: "eval",
+    },
+    arguments: [
+      {
+        type: "Literal",
+        value: code,
+      },
+    ],
+    verbatim: code,
+  };
 }
 
 data = {
-    'DISABLED': {
-        "eval('foo');": {
-            type: 'ExpressionStatement',
-            expression: make_eval('foo')
-        }
+  DISABLED: {
+    "eval('foo');": {
+      type: "ExpressionStatement",
+      expression: make_eval("foo"),
     },
+  },
 
-    'verbatim': {
-        // Check it doesn't apply to statements
-        "continue;": {
-            type: 'ContinueStatement',
-            verbatim: 'FOOBARBAZ'
+  verbatim: {
+    // Check it doesn't apply to statements
+    "continue;": {
+      type: "ContinueStatement",
+      verbatim: "FOOBARBAZ",
+    },
+    "foo;": {
+      type: "ExpressionStatement",
+      expression: make_eval("foo"),
+    },
+    "true && (foo)": {
+      type: "BinaryExpression",
+      operator: "&&",
+      left: { type: "Literal", value: true },
+      right: make_eval("foo"),
+    },
+    "var a = (window.location.href);": {
+      type: "VariableDeclaration",
+      kind: "var",
+      declarations: [
+        {
+          type: "VariableDeclarator",
+          id: { type: "Identifier", name: "a" },
+          init: make_eval("window.location.href"),
         },
-        "foo;": {
-            type: 'ExpressionStatement',
-            expression: make_eval('foo')
+      ],
+    },
+    // Multiline
+    "if (true) {\n    foo('bar');\n    foo('baz');\n}": {
+      type: "IfStatement",
+      test: { type: "Literal", value: true },
+      consequent: {
+        type: "BlockStatement",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: make_eval("foo('bar');\nfoo('baz')"),
+          },
+        ],
+      },
+    },
+    // Embedded into sequences
+    "foo(a, (10, 20), b)": {
+      type: "CallExpression",
+      callee: { type: "Identifier", name: "foo" },
+      arguments: [
+        {
+          type: "Identifier",
+          name: "a",
         },
-        "true && (foo)": {
-            type: 'BinaryExpression',
-            operator: '&&',
-            left: { type: 'Literal', value: true },
-            right: make_eval('foo')
+        make_eval("10, 20"),
+        {
+          type: "Identifier",
+          name: "b",
         },
-        "var a = (window.location.href);": {
-            type: 'VariableDeclaration',
-            kind: 'var',
-            declarations: [{
-                type: 'VariableDeclarator',
-                id: { type: 'Identifier', name: 'a' },
-                init: make_eval('window.location.href')
-            }]
-        },
-        // Multiline
-        "if (true) {\n    foo('bar');\n    foo('baz');\n}": {
-            type: 'IfStatement',
-            test: { type: 'Literal', value: true },
-            consequent: {
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: make_eval("foo('bar');\nfoo('baz')")
-                }]
-            }
-        },
-        // Embedded into sequences
-        "foo(a, (10, 20), b)": {
-            type: 'CallExpression',
-            callee: { type: 'Identifier', name: 'foo' },
-            arguments: [{
-                type: 'Identifier',
-                name: 'a'
-            },
-            make_eval('10, 20'),
-            {
-                type: 'Identifier',
-                name: 'b'
-            }]
-        },
-        // Floating point
-        "(0).a": {
-            type: 'MemberExpression',
-            object: { type: 'Literal', value: 0, verbatim: '0' },
-            property: { type: 'Identifier', name: 'a' },
-            computed: false
-        }
-    }
+      ],
+    },
+    // Floating point
+    "(0).a": {
+      type: "MemberExpression",
+      object: { type: "Literal", value: 0, verbatim: "0" },
+      property: { type: "Identifier", name: "a" },
+      computed: false,
+    },
+  },
 };
 
 function runTest(expected, result, verbatim) {
-    var actual, options;
+  var actual, options;
 
-    options = {
-        indent: '    ',
-        directive: true,
-        parse: esprima.parse,
-        verbatim: verbatim
-    };
+  options = {
+    indent: "    ",
+    directive: true,
+    parse: esprima.parse,
+    verbatim: verbatim,
+  };
 
-    expect(function () {
-        actual = escodegen.generate(result, options);
-    }).not.to.be.throw();
-    expect(expected).to.be.equal(actual);
+  expect(function () {
+    actual = escodegen.generate(result, options);
+  }).not.to.be.throw();
+  expect(expected).to.be.equal(actual);
 }
 
-describe('verbatim test', function () {
-    Object.keys(data).forEach(function (category) {
-        it(category, function () {
-            Object.keys(data[category]).forEach(function (source) {
-                var expected = data[category][source];
-                runTest(source, expected, category);
-            });
-        });
+describe("verbatim test", function () {
+  Object.keys(data).forEach(function (category) {
+    it(category, function () {
+      Object.keys(data[category]).forEach(function (source) {
+        var expected = data[category][source];
+        runTest(source, expected, category);
+      });
     });
+  });
 });
 /* vim: set sw=4 ts=4 et tw=80 : */

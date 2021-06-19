@@ -22,7 +22,7 @@ function getExposedMethods(
 
     exposedMethods = Object.keys(module).filter(
       // @ts-ignore: no index
-      name => typeof module[name] === 'function',
+      (name) => typeof module[name] === 'function',
     );
 
     if (typeof module === 'function') {
@@ -99,7 +99,7 @@ export default class JestWorker {
     workerPath: string,
     options: FarmOptions,
   ): void {
-    getExposedMethods(workerPath, options).forEach(name => {
+    getExposedMethods(workerPath, options).forEach((name) => {
       if (name.startsWith('_')) {
         return;
       }

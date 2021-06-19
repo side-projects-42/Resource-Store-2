@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const MWBot = require( 'mwbot' );
+const MWBot = require("mwbot");
 
 module.exports = {
 	/**
@@ -20,11 +20,11 @@ module.exports = {
 	) {
 		const bot = new MWBot();
 
-		await bot.loginGetEditToken( {
+		await bot.loginGetEditToken({
 			apiUrl: `${baseUrl}/api.php`,
 			username: username,
-			password: password
-		} );
+			password: password,
+		});
 		return bot;
 	},
 
@@ -38,18 +38,18 @@ module.exports = {
 	 * @param {string} password New user password
 	 * @return {Object} Promise for API action=createaccount response data.
 	 */
-	async createAccount( adminBot, username, password ) {
+	async createAccount(adminBot, username, password) {
 		await adminBot.getCreateaccountToken();
 
 		// Create the new account
-		return await adminBot.request( {
-			action: 'createaccount',
+		return await adminBot.request({
+			action: "createaccount",
 			createreturnurl: browser.config.baseUrl,
 			createtoken: adminBot.createaccountToken,
 			username: username,
 			password: password,
-			retype: password
-		} );
+			retype: password,
+		});
 	},
 
 	/**
@@ -62,14 +62,14 @@ module.exports = {
 	 * @param {string} [expiry] default is not set. For format see API docs
 	 * @return {Object} Promise for API action=block response data.
 	 */
-	async blockUser( adminBot, username, expiry ) {
-		return await adminBot.request( {
-			action: 'block',
+	async blockUser(adminBot, username, expiry) {
+		return await adminBot.request({
+			action: "block",
 			user: username || browser.config.mwUser,
-			reason: 'browser test',
+			reason: "browser test",
 			token: adminBot.editToken,
-			expiry
-		} );
+			expiry,
+		});
 	},
 
 	/**
@@ -81,12 +81,12 @@ module.exports = {
 	 * @param {string} [username] defaults to unblocking the admin user
 	 * @return {Object} Promise for API action=unblock response data.
 	 */
-	async unblockUser( adminBot, username ) {
-		return await adminBot.request( {
-			action: 'unblock',
+	async unblockUser(adminBot, username) {
+		return await adminBot.request({
+			action: "unblock",
 			user: username || browser.config.mwUser,
-			reason: 'browser test done',
-			token: adminBot.editToken
-		} );
-	}
+			reason: "browser test done",
+			token: adminBot.editToken,
+		});
+	},
 };

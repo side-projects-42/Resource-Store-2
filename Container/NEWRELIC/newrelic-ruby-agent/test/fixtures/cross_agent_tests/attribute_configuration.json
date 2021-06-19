@@ -1,4 +1,5 @@
-[{
+[
+  {
     "testname": "everything enabled, no include/exclude",
     "config": {
       "browser_monitoring.attributes.enabled": true
@@ -63,8 +64,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -85,8 +85,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -104,8 +103,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -128,8 +126,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -203,8 +200,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -233,8 +229,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -258,8 +253,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -283,8 +277,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -345,12 +338,8 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-      "transaction_tracer",
-      "browser_monitoring"
-    ]
+    "expected_destinations": ["transaction_tracer", "browser_monitoring"]
   },
-
 
   {
     "testname": "venn diagram part 1",
@@ -368,8 +357,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -388,8 +376,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -460,8 +447,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -482,8 +468,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -554,8 +539,7 @@
       "span_events",
       "transaction_segments"
     ],
-    "expected_destinations": [
-    ]
+    "expected_destinations": []
   },
 
   {
@@ -596,14 +580,8 @@
       "transaction_events.attributes.exclude": ["bc*"]
     },
     "input_key": "b",
-    "input_default_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ],
-    "expected_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ]
+    "input_default_destinations": ["transaction_events", "transaction_tracer"],
+    "expected_destinations": ["transaction_events", "transaction_tracer"]
   },
 
   {
@@ -613,13 +591,8 @@
       "transaction_events.attributes.exclude": ["bc*"]
     },
     "input_key": "bc",
-    "input_default_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ],
-    "expected_destinations": [
-      "transaction_tracer"
-    ]
+    "input_default_destinations": ["transaction_events", "transaction_tracer"],
+    "expected_destinations": ["transaction_tracer"]
   },
 
   {
@@ -629,14 +602,8 @@
       "transaction_events.attributes.exclude": ["bc*"]
     },
     "input_key": "bcd",
-    "input_default_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ],
-    "expected_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ]
+    "input_default_destinations": ["transaction_events", "transaction_tracer"],
+    "expected_destinations": ["transaction_events", "transaction_tracer"]
   },
 
   {
@@ -646,14 +613,8 @@
       "transaction_events.attributes.exclude": ["bc*"]
     },
     "input_key": "bcde",
-    "input_default_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ],
-    "expected_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ]
+    "input_default_destinations": ["transaction_events", "transaction_tracer"],
+    "expected_destinations": ["transaction_events", "transaction_tracer"]
   },
 
   {
@@ -663,14 +624,8 @@
       "transaction_events.attributes.exclude": ["bc*"]
     },
     "input_key": "b",
-    "input_default_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ],
-    "expected_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ]
+    "input_default_destinations": ["transaction_events", "transaction_tracer"],
+    "expected_destinations": ["transaction_events", "transaction_tracer"]
   },
 
   {
@@ -680,13 +635,8 @@
       "transaction_events.attributes.exclude": ["bc*"]
     },
     "input_key": "bc",
-    "input_default_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ],
-    "expected_destinations": [
-      "transaction_tracer"
-    ]
+    "input_default_destinations": ["transaction_events", "transaction_tracer"],
+    "expected_destinations": ["transaction_tracer"]
   },
 
   {
@@ -696,14 +646,8 @@
       "transaction_events.attributes.exclude": ["bc*"]
     },
     "input_key": "bcd",
-    "input_default_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ],
-    "expected_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ]
+    "input_default_destinations": ["transaction_events", "transaction_tracer"],
+    "expected_destinations": ["transaction_events", "transaction_tracer"]
   },
 
   {
@@ -713,13 +657,7 @@
       "transaction_events.attributes.exclude": ["bc*"]
     },
     "input_key": "bcde",
-    "input_default_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ],
-    "expected_destinations": [
-      "transaction_events",
-      "transaction_tracer"
-    ]
+    "input_default_destinations": ["transaction_events", "transaction_tracer"],
+    "expected_destinations": ["transaction_events", "transaction_tracer"]
   }
 ]

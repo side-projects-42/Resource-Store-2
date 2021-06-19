@@ -20,7 +20,7 @@ TG: Docs sub-team has been meeting for a couple weeks, and the effort seems to b
 
 TG: The docs team is trying to determine what to use for data persistence at the very early stages (use Ember Data, Something else, etc...). `$.ajax` is not good enough.
 
-<aside> 
+<aside>
 
 EB: Is there an issue in ember-cli that requires python?
 
@@ -30,7 +30,7 @@ RJ: Stef updated ember-cli in https://github.com/ember-cli/ember-cli/pull/4466 t
 
 </aside>
 
-TG: Discussed the new folder structure 
+TG: Discussed the new folder structure
 
 RJ: Ember 2.0.0 beta status: currently on beta.2 should release beta.3 in the next couple days.
 
@@ -46,6 +46,6 @@ AM / MM: `this.routeName` should definitely be public.
 
 RJ: What about `this.currentModel`?
 
-MM: Folks should likely use `this.modelFor` or `this.get('controller.model')` to get the model instead of relying on `currentModel`. 
+MM: Folks should likely use `this.modelFor` or `this.get('controller.model')` to get the model instead of relying on `currentModel`.
 
 RJ will comment on issues and get PR's to update the documentation.

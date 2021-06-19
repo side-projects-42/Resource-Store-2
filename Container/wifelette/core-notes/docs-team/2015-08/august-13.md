@@ -3,20 +3,23 @@
 #### Topics
 
 Deprecations:
-* Core.View needs documentation
-* Deprecations must have id and corresponding anchor in guide
+
+- Core.View needs documentation
+- Deprecations must have id and corresponding anchor in guide
 
 Guides:
-* Keep engaging contributors
-* Core Concepts [Issue #585](https://github.com/emberjs/guides/issues/585) rewrite
-* Model section still without leader
-* Tutorial needs a new leader
-* Introduction of a contributor's style guide
-* Full review and read-through
-* Redesign
+
+- Keep engaging contributors
+- Core Concepts [Issue #585](https://github.com/emberjs/guides/issues/585) rewrite
+- Model section still without leader
+- Tutorial needs a new leader
+- Introduction of a contributor's style guide
+- Full review and read-through
+- Redesign
 
 API:
-* [PR #30](https://github.com/emberjs/api/pull/30) still not reviewed.
+
+- [PR #30](https://github.com/emberjs/api/pull/30) still not reviewed.
 
 #### Minutes
 

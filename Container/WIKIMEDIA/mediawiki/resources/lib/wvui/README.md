@@ -71,17 +71,17 @@ entire WVUI component library and styles:
 ```html
 <!-- App.vue -->
 <template>
-	<wvui-button>Hello WVUI</wvui-button>
+  <wvui-button>Hello WVUI</wvui-button>
 </template>
 
 <script lang="ts">
-	import components from "@wikimedia/wvui";
-	import "@wikimedia/wvui/dist/wvui.css";
+  import components from "@wikimedia/wvui";
+  import "@wikimedia/wvui/dist/wvui.css";
 
-	export default {
-		name: "App",
-		components, // App can compose any WVUI component.
-	};
+  export default {
+    name: "App",
+    components, // App can compose any WVUI component.
+  };
 </script>
 ```
 
@@ -91,9 +91,9 @@ import Vue from "vue";
 import App from "./App.vue";
 
 new Vue({
-	el: "#app",
-	components: { App },
-	render: (createElement) => createElement(App),
+  el: "#app",
+  components: { App },
+  render: (createElement) => createElement(App),
 });
 ```
 
@@ -101,14 +101,14 @@ new Vue({
 
 There is currently one bundle available:
 
--   **Combined**: the complete library. This bundle is the simplest to use because it contains all
-    code but is not performant if only part is used or if different parts should be loaded at
-    different times. ⚠️ This chunk is standalone and should not be loaded with split chunks.
+- **Combined**: the complete library. This bundle is the simplest to use because it contains all
+  code but is not performant if only part is used or if different parts should be loaded at
+  different times. ⚠️ This chunk is standalone and should not be loaded with split chunks.
 
-    -   **wvui**.js/css: the complete library, excluding icons, and default export. No other chunks
-        required unless additional icons not referenced by the core library are used.
+  - **wvui**.js/css: the complete library, excluding icons, and default export. No other chunks
+    required unless additional icons not referenced by the core library are used.
 
-    -   **wvui-icons**.js: the complete iconography (optional).
+  - **wvui-icons**.js: the complete iconography (optional).
 
 Each chunk is side-effect free. All chunks are fully compiled ES5 / CSS and require a Vue.js
 runtime. See [peerDependencies](package.json).
@@ -132,16 +132,16 @@ See [CONTRIBUTING](CONTRIBUTING.md) to learn how to contribute to this library.
 
 ## Library design goals
 
--   Deploy search to all test wikis before August 31, 2020: frwiktionary, hewiki, ptwikiversity,
-    frwiki, euwiki, fawiki.
--   Relevant, modern, efficient, iterative contributor workflows.
--   Delightful user experiences shareable as an NPM package and reusable everywhere with and without
-    MediaWiki.
--   Fully typed. Accurate typing improves comprehension for tooling and programmers.
--   [Semantically versioned](https://semver.org).
--   Thoroughly documented for development and usage; everything needed to be productive is in the
-    readme.
--   Well tested and robust.
+- Deploy search to all test wikis before August 31, 2020: frwiktionary, hewiki, ptwikiversity,
+  frwiki, euwiki, fawiki.
+- Relevant, modern, efficient, iterative contributor workflows.
+- Delightful user experiences shareable as an NPM package and reusable everywhere with and without
+  MediaWiki.
+- Fully typed. Accurate typing improves comprehension for tooling and programmers.
+- [Semantically versioned](https://semver.org).
+- Thoroughly documented for development and usage; everything needed to be productive is in the
+  readme.
+- Well tested and robust.
 
 ## License (GPL-2.0+)
 

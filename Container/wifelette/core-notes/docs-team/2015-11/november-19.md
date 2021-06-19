@@ -1,7 +1,7 @@
 Attending:
 
-* David Baker
-* Michael Kaiser-Nyman
+- David Baker
+- Michael Kaiser-Nyman
 
 ---
 
@@ -10,7 +10,7 @@ MKN: We shipped 2.2! Yay! But I'm a bit unhappy about a couple things:
 1. We had no idea 2.2 was shipping early until the day before.
 2. The tutorial didn't get shipped, in part because...
 3. We put a bunch of effort into the redesign at the expense of the tutorial.
-And the redesign didn't even ship either.
+   And the redesign didn't even ship either.
 
 That said, we'll just ship the tutorial and redesign, and re-release.
 

@@ -18,7 +18,7 @@ Previously
 - Emberization of website - Coming up with steps/tasks RM, TJ
 - Go through "active doing" on trello TJ
 
-# Action Items 
+# Action Items
 
 - [ ] RM: Invite Teddy to Learning team
 - [ ] RM: Research Team Page
@@ -44,23 +44,23 @@ LS: Agree we need this info, but I want to keep the team page just people, maybe
 
 RM: Was thinking that we should also include strike teams going on.
 
-LS: worried that for this page its too much info.  Either add a link to a new page or add in nav.  Don't know.. design choice.
+LS: worried that for this page its too much info. Either add a link to a new page or add in nav. Don't know.. design choice.
 
-RM: may try a couple of minor tweak to the main page.  Will research and try a couple of things.
+RM: may try a couple of minor tweak to the main page. Will research and try a couple of things.
 
 ### Ember Hearth
 
-RM: Picking this up again.  Working on having CI/CD.  Tried building for a new release.  Working through a couple of issues getting that going.  working with `@munumunum`
+RM: Picking this up again. Working on having CI/CD. Tried building for a new release. Working through a couple of issues getting that going. working with `@munumunum`
 
 working on website and documentation for it.
 
 ### Bors (the new homu)
 
-RM: Working with Mozilla/Rust.  Nathan Hammond setting up heroku account for it. Getting github users.  Rust has weekly meetings on it https://github.com/rust-community/team/issues/48 
+RM: Working with Mozilla/Rust. Nathan Hammond setting up heroku account for it. Getting github users. Rust has weekly meetings on it https://github.com/rust-community/team/issues/48
 
 ### Stack Overflow Documentation
 
-RM: `@kitler` and i are looking at this.  Maybe a successor for Ember Watch.  Created a tag for ember.  
+RM: `@kitler` and i are looking at this. Maybe a successor for Ember Watch. Created a tag for ember.
 
 TJ: we want to avoid have a second guides.
 
@@ -68,15 +68,15 @@ RM: will do
 
 ### Ember Inspector
 
-RM: Teddy is back... Commenting and making PRs.  LS how is it going?
+RM: Teddy is back... Commenting and making PRs. LS how is it going?
 
-LS: Asked who on the core team had been responsible for contacting him but no reply; it's possible no one claimed the action item when we discussed it.  Regardless of whether he maintains activity, it's still a good idea to pull into learning team, have him work with us and do more knowledge transfer.  RM would you want to talk to him?
+LS: Asked who on the core team had been responsible for contacting him but no reply; it's possible no one claimed the action item when we discussed it. Regardless of whether he maintains activity, it's still a good idea to pull into learning team, have him work with us and do more knowledge transfer. RM would you want to talk to him?
 
-RM: I've had a similar conversation with him earlier.  At the time was just focused on 2.0 rewrite to make things easier.  Will have another to invite him to learning team
+RM: I've had a similar conversation with him earlier. At the time was just focused on 2.0 rewrite to make things easier. Will have another to invite him to learning team
 
 ### Algolia
 
-TJ: Still need to push Algolia to previous versions of the guides.  Talked some with DB about how this will be done last week.  Will try to get to working on it in the coming week.
+TJ: Still need to push Algolia to previous versions of the guides. Talked some with DB about how this will be done last week. Will try to get to working on it in the coming week.
 
 ### Tutorial
 
@@ -84,14 +84,14 @@ TJ: Talked to David (DB) some last week about the ongoing routes tutorial. We ag
 
 ### Website "Emberization"
 
-TJ: After subroutes I plan to move onto something different. May start trying to turn the website into a Ember app.  Will create a new repo to house this.  Need to start figuring out markdown processing.
+TJ: After subroutes I plan to move onto something different. May start trying to turn the website into a Ember app. Will create a new repo to house this. Need to start figuring out markdown processing.
 
 RM: Look at Guides/API for the same work done there.
 
 ### Trello processing
 
-TJ: We should clean up the active Trello board some.  Should we be going over the "Doing" bucket each week, and putting them as actions in minutes 
+TJ: We should clean up the active Trello board some. Should we be going over the "Doing" bucket each week, and putting them as actions in minutes
 
-RM: Rather leave "Doing" be outside the meetings for ongoing projects.  We already have a "Action Items: Active" bucket there, which do track actions week to week.
+RM: Rather leave "Doing" be outside the meetings for ongoing projects. We already have a "Action Items: Active" bucket there, which do track actions week to week.
 
 TJ: ok, will do a better job keeping that up to date.

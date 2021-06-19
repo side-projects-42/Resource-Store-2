@@ -1,5 +1,5 @@
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
 	/**
 	 * Namespace for CLDR-related utility methods.
@@ -18,15 +18,15 @@
 		 * @param {Array} pluralRules
 		 * @return {number} plural form index
 		 */
-		getPluralForm: function ( number, pluralRules ) {
-			var i, pluralRuleParser = require( 'mediawiki.libs.pluralruleparser' );
-			for ( i = 0; i < pluralRules.length; i++ ) {
-				if ( pluralRuleParser( pluralRules[ i ], number ) ) {
+		getPluralForm: function (number, pluralRules) {
+			var i,
+				pluralRuleParser = require("mediawiki.libs.pluralruleparser");
+			for (i = 0; i < pluralRules.length; i++) {
+				if (pluralRuleParser(pluralRules[i], number)) {
 					break;
 				}
 			}
 			return i;
-		}
+		},
 	};
-
-}() );
+})();

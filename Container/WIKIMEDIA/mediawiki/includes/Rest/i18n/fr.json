@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Gomoko",
-			"Thibaut120094",
-			"Verdy p",
-			"Wladek92"
-		]
+		"authors": ["Gomoko", "Thibaut120094", "Verdy p", "Wladek92"]
 	},
 	"rest-prefix-mismatch": "Le chemin requis ($1) n’était pas dans le chemin racine de l’API REST ($2)",
 	"rest-wrong-method": "La méthode requise ($1) n’était pas {{PLURAL:$3|la méthode autorisée pour ce chemin|une des méthodes autorisées pour ce chemin}} ($2)",

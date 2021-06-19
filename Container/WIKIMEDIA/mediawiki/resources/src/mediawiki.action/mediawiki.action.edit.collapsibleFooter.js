@@ -1,4 +1,4 @@
-( function () {
+(function () {
 	var collapsibleLists, handleOne;
 
 	// Collapsible lists of categories and templates
@@ -6,61 +6,70 @@
 	// E.g. detect existence via requestIdleCallback and remove. (T121646)
 	collapsibleLists = [
 		{
-			listSel: '.templatesUsed ul',
-			togglerSel: '.mw-templatesUsedExplanation',
-			storeKey: 'mwedit-state-templatesUsed'
+			listSel: ".templatesUsed ul",
+			togglerSel: ".mw-templatesUsedExplanation",
+			storeKey: "mwedit-state-templatesUsed",
 		},
 		{
-			listSel: '.hiddencats ul',
-			togglerSel: '.mw-hiddenCategoriesExplanation',
-			storeKey: 'mwedit-state-hiddenCategories'
+			listSel: ".hiddencats ul",
+			togglerSel: ".mw-hiddenCategoriesExplanation",
+			storeKey: "mwedit-state-hiddenCategories",
 		},
 		{
-			listSel: '.preview-limit-report-wrapper',
-			togglerSel: '.mw-limitReportExplanation',
-			storeKey: 'mwedit-state-limitReport'
-		}
+			listSel: ".preview-limit-report-wrapper",
+			togglerSel: ".mw-limitReportExplanation",
+			storeKey: "mwedit-state-limitReport",
+		},
 	];
 
-	handleOne = function ( $list, $toggler, storeKey ) {
-		var collapsedVal = '0',
-			expandedVal = '1',
+	handleOne = function ($list, $toggler, storeKey) {
+		var collapsedVal = "0",
+			expandedVal = "1",
 			// Default to collapsed if not set
-			isCollapsed = mw.storage.get( storeKey ) !== expandedVal;
+			isCollapsed = mw.storage.get(storeKey) !== expandedVal;
 
 		// Style the toggler with an arrow icon and add a tabIndex and a role for accessibility
-		$toggler.addClass( 'mw-editfooter-toggler' ).prop( 'tabIndex', 0 ).attr( 'role', 'button' );
-		$list.addClass( 'mw-editfooter-list' );
+		$toggler
+			.addClass("mw-editfooter-toggler")
+			.prop("tabIndex", 0)
+			.attr("role", "button");
+		$list.addClass("mw-editfooter-list");
 
-		$list.makeCollapsible( {
+		$list.makeCollapsible({
 			$customTogglers: $toggler,
 			linksPassthru: true,
 			plainMode: true,
-			collapsed: isCollapsed
-		} );
+			collapsed: isCollapsed,
+		});
 
-		$toggler.addClass( isCollapsed ? 'mw-icon-arrow-collapsed' : 'mw-icon-arrow-expanded' );
+		$toggler.addClass(
+			isCollapsed ? "mw-icon-arrow-collapsed" : "mw-icon-arrow-expanded"
+		);
 
-		$list.on( 'beforeExpand.mw-collapsible', function () {
-			$toggler.removeClass( 'mw-icon-arrow-collapsed' ).addClass( 'mw-icon-arrow-expanded' );
-			mw.storage.set( storeKey, expandedVal );
-		} );
+		$list.on("beforeExpand.mw-collapsible", function () {
+			$toggler
+				.removeClass("mw-icon-arrow-collapsed")
+				.addClass("mw-icon-arrow-expanded");
+			mw.storage.set(storeKey, expandedVal);
+		});
 
-		$list.on( 'beforeCollapse.mw-collapsible', function () {
-			$toggler.removeClass( 'mw-icon-arrow-expanded' ).addClass( 'mw-icon-arrow-collapsed' );
-			mw.storage.set( storeKey, collapsedVal );
-		} );
+		$list.on("beforeCollapse.mw-collapsible", function () {
+			$toggler
+				.removeClass("mw-icon-arrow-expanded")
+				.addClass("mw-icon-arrow-collapsed");
+			mw.storage.set(storeKey, collapsedVal);
+		});
 	};
 
-	mw.hook( 'wikipage.editform' ).add( function ( $editForm ) {
+	mw.hook("wikipage.editform").add(function ($editForm) {
 		var i;
-		for ( i = 0; i < collapsibleLists.length; i++ ) {
+		for (i = 0; i < collapsibleLists.length; i++) {
 			// Pass to a function for iteration-local variables
 			handleOne(
-				$editForm.find( collapsibleLists[ i ].listSel ),
-				$editForm.find( collapsibleLists[ i ].togglerSel ),
-				collapsibleLists[ i ].storeKey
+				$editForm.find(collapsibleLists[i].listSel),
+				$editForm.find(collapsibleLists[i].togglerSel),
+				collapsibleLists[i].storeKey
 			);
 		}
-	} );
-}() );
+	});
+})();

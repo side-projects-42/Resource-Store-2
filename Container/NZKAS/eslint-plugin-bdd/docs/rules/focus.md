@@ -6,25 +6,24 @@ If any behavioral `it`, `describe*` invokes their `only` method this rule will c
 This rule will also catch the handy `ddescribe` and `iit` that some BDD frameworks support.
 
 ## Example
+
 ```js
-describe('my cool tests', function () {
+describe("my cool tests", function () {
 	// only
-	it.only('should work', function () {
+	it.only("should work", function () {
 		// Cool stuff
 	});
 
-	it('should still work', function () {
+	it("should still work", function () {
 		// Never called because we're only testing 'should work'
 	});
 });
 
 // only
-describe.only('other cool tests');
+describe.only("other cool tests");
 
 // ddescribe
-ddescribe('something', function () {
-	iit('more stuff', function () {
-
-	});
+ddescribe("something", function () {
+	iit("more stuff", function () {});
 });
 ```

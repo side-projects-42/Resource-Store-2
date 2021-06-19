@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Liuxinyu970226"
-		]
-	},
-	"adminlinks_users": "用戶"
+  "@metadata": {
+    "authors": ["Liuxinyu970226"]
+  },
+  "adminlinks_users": "用戶"
 }

@@ -50,7 +50,7 @@ export const initialize = ({
   global.fit = global.it.only;
   global.fdescribe = global.describe.only;
 
-  global.test.concurrent = (test => {
+  global.test.concurrent = ((test) => {
     const concurrent = (
       testName: string,
       testFn: () => Promise<any>,
@@ -100,7 +100,7 @@ export const initialize = ({
   config.snapshotSerializers
     .concat()
     .reverse()
-    .forEach(path => {
+    .forEach((path) => {
       addSerializer(localRequire(path));
     });
 
@@ -136,7 +136,7 @@ export const runAndTransformResultsToJestFormat = async ({
   let numTodoTests = 0;
 
   const assertionResults: Array<AssertionResult> = runResult.testResults.map(
-    testResult => {
+    (testResult) => {
       let status: Status;
       if (testResult.status === 'skip') {
         status = 'pending';
@@ -153,7 +153,7 @@ export const runAndTransformResultsToJestFormat = async ({
       }
 
       const ancestorTitles = testResult.testPath.filter(
-        name => name !== ROOT_DESCRIBE_BLOCK_NAME,
+        (name) => name !== ROOT_DESCRIBE_BLOCK_NAME,
       );
       const title = ancestorTitles.pop();
 
@@ -190,7 +190,7 @@ export const runAndTransformResultsToJestFormat = async ({
       (failureMessage || '') +
       '\n\n' +
       runResult.unhandledErrors
-        .map(err => formatExecError(err, config, globalConfig))
+        .map((err) => formatExecError(err, config, globalConfig))
         .join('\n');
   }
 
@@ -243,7 +243,7 @@ const eventHandler = (event: Event) => {
 
 const _addExpectedAssertionErrors = (test: TestEntry) => {
   const failures = extractExpectedAssertionsErrors();
-  const errors = failures.map(failure => failure.error);
+  const errors = failures.map((failure) => failure.error);
   test.errors = test.errors.concat(errors);
 };
 

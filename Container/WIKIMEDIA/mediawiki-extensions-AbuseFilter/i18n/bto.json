@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Filipinayzd"
-		]
-	},
-	"abusefilter-log-hide-no-selected": "Udang piniling entri"
+  "@metadata": {
+    "authors": ["Filipinayzd"]
+  },
+  "abusefilter-log-hide-no-selected": "Udang piniling entri"
 }

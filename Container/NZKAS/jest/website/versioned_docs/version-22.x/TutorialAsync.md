@@ -13,7 +13,7 @@ Let's implement a simple module that fetches user data from an API and returns t
 import request from './request';
 
 export function getUserName(userID) {
-  return request('/users/' + userID).then(user => user.name);
+  return request('/users/' + userID).then((user) => user.name);
 }
 ```
 
@@ -26,13 +26,13 @@ Now imagine an implementation of `request.js` that goes to the network and fetch
 const http = require('http');
 
 export default function request(url) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     // This is an example of an http request, for example to fetch
     // user data from an API.
     // This module is being mocked in __mocks__/request.js
-    http.get({path: url}, response => {
+    http.get({path: url}, (response) => {
       let data = '';
-      response.on('data', _data => (data += _data));
+      response.on('data', (_data) => (data += _data));
       response.on('end', () => resolve(data));
     });
   });
@@ -73,7 +73,7 @@ import * as user from '../user';
 // The assertion for a promise must be returned.
 it('works with promises', () => {
   expect.assertions(1);
-  return user.getUserName(4).then(data => expect(data).toEqual('Mark'));
+  return user.getUserName(4).then((data) => expect(data).toEqual('Mark'));
 });
 ```
 
@@ -121,7 +121,7 @@ Errors can be handled using the `.catch` method. Make sure to add `expect.assert
 // Testing for async errors using Promise.catch.
 test('tests error with promises', async () => {
   expect.assertions(1);
-  return user.getUserName(2).catch(e =>
+  return user.getUserName(2).catch((e) =>
     expect(e).toEqual({
       error: 'User with 2 not found.',
     }),

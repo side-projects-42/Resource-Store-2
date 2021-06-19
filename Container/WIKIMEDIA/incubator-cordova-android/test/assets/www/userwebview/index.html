@@ -16,52 +16,73 @@ $
          specific language governing permissions and limitations$
          under the License.$
 -->
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=320; user-scalable=no" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title>Cordova Tests</title>
-	  <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title">
-	  <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
-      <script type="text/javascript" charset="utf-8" src="../main.js"></script>
+    <link
+      rel="stylesheet"
+      href="../master.css"
+      type="text/css"
+      media="screen"
+      title="no title"
+    />
+    <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../main.js"></script>
   </head>
   <body onload="init();" id="stage" class="theme">
     <h1>User WebView/Client/Chrome Test</h1>
     <div id="info">
-        <h4>Platform: <span id="platform"> &nbsp;</span>,   Version: <span id="version">&nbsp;</span></h4>
-        <h4>UUID: <span id="uuid"> &nbsp;</span>,   Name: <span id="name">&nbsp;</span></h4>
-        <h4>Width: <span id="width"> &nbsp;</span>,   Height: <span id="height">&nbsp;
-                   </span>, Color Depth: <span id="colorDepth"></span></h4>
-     </div>
-     <div id="info">
-     <h4>The following should be seen in LogCat:</h4>
-     <li>userwebview: TestViewClient()<br>
-     <li>userwebview: TestChromeClient()<br>
-     <li>userwebview: onGeolocationPermissionsShowPrompt(file://)<br>
-     <li>userwebview: shouldOverrideUrlLoading(test://this_will_call_shouldOverrideUrlLoading)<br>
-     
-     </div>
-     <script>
-     /**
-      * Get current location
-      */
-     console.log("getLocation()");
+      <h4>
+        Platform: <span id="platform"> &nbsp;</span>, Version:
+        <span id="version">&nbsp;</span>
+      </h4>
+      <h4>
+        UUID: <span id="uuid"> &nbsp;</span>, Name:
+        <span id="name">&nbsp;</span>
+      </h4>
+      <h4>
+        Width: <span id="width"> &nbsp;</span>, Height:
+        <span id="height">&nbsp; </span>, Color Depth:
+        <span id="colorDepth"></span>
+      </h4>
+    </div>
+    <div id="info">
+      <h4>The following should be seen in LogCat:</h4>
+      <li>userwebview: TestViewClient()<br /></li>
+      <li>userwebview: TestChromeClient()<br /></li>
+      <li>userwebview: onGeolocationPermissionsShowPrompt(file://)<br /></li>
+      <li>
+        userwebview:
+        shouldOverrideUrlLoading(test://this_will_call_shouldOverrideUrlLoading)<br />
+      </li>
+    </div>
 
-     // Success callback
-     var success = function(p){
-         console.log("Location = "+p.coords.latitude+","+p.coords.longitude);
-         window.location = "test://this_will_call_shouldOverrideUrlLoading";
-     };
+    <script>
+      /**
+       * Get current location
+       */
+      console.log("getLocation()");
 
-     // Fail callback
-     var fail = function(e){
-         console.log("Error: "+e.code);
-     };
+      // Success callback
+      var success = function (p) {
+        console.log(
+          "Location = " + p.coords.latitude + "," + p.coords.longitude
+        );
+        window.location = "test://this_will_call_shouldOverrideUrlLoading";
+      };
 
-     // Get location
-     navigator.geolocation.getCurrentPosition(success, fail, {enableHighAccuracy: true});
+      // Fail callback
+      var fail = function (e) {
+        console.log("Error: " + e.code);
+      };
 
-     </script>
+      // Get location
+      navigator.geolocation.getCurrentPosition(success, fail, {
+        enableHighAccuracy: true,
+      });
+    </script>
   </body>
 </html>

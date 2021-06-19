@@ -6,7 +6,7 @@ Attending
 - Robert Jackson
 - Todd Jordan
 
-----
+---
 
 Internationalization
 
@@ -28,11 +28,13 @@ Internationalization
 ---
 
 Workflow for getting core attention on issues
+
 - discussion for a while, note-taker got busy talking :-)
 
-Summary: we'll add a weekly issue to the Github guides repo (tagged with "needs core attention" with a few chosen guides / api docs issues).  But we'll plan to only request attention on 3-5 issues per week
+Summary: we'll add a weekly issue to the Github guides repo (tagged with "needs core attention" with a few chosen guides / api docs issues). But we'll plan to only request attention on 3-5 issues per week
 
 ---
+
 Search engine issues with versioned guides
 
 - discussion of the problem, note-taker got talking :-)

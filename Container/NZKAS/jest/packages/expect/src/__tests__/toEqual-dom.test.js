@@ -18,7 +18,7 @@ describe('toEqual', () => {
       tagName: name.toUpperCase(),
     });
 
-    const createTextNode = data => ({
+    const createTextNode = (data) => ({
       data,
       nodeType: 3,
     });

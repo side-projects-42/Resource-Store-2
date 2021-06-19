@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Palapa",
-			"Semso98",
-			"Srđan"
-		]
+		"authors": ["Palapa", "Semso98", "Srđan"]
 	},
 	"apihelp-main-param-action": "Koju akciju izvesti.",
 	"apihelp-main-param-format": "Format izlaza.",

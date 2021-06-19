@@ -10,7 +10,7 @@
 }
 
 .mw-destfile-warning:after {
-	content: '';
+	content: "";
 	clear: both;
 	display: block;
 }

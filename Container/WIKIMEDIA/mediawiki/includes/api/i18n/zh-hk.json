@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"1233qwer1234qwer4",
-			"Liuxinyu970226",
-			"Xiplus"
-		]
+		"authors": ["1233qwer1234qwer4", "Liuxinyu970226", "Xiplus"]
 	},
 	"apihelp-block-param-hidename": "隱藏封鎖日誌的用戶名稱。 (需要 \"hideuser\" 權限)。",
 	"apihelp-block-param-allowusertalk": "允許使用者編輯自己的討論頁（依據<var>[[mw:Manual:$wgBlockAllowsUTEdit|$wgBlockAllowsUTEdit]]</var>的設定）。",

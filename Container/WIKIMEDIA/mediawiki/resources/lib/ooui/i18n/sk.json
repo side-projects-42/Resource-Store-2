@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Kusavica",
-			"Mimarik",
-			"Teslaton",
-			"TomášPolonec"
-		]
+		"authors": ["Kusavica", "Mimarik", "Teslaton", "TomášPolonec"]
 	},
 	"ooui-outline-control-move-down": "Posunúť položku nadol",
 	"ooui-outline-control-move-up": "Posunúť položku nahor",

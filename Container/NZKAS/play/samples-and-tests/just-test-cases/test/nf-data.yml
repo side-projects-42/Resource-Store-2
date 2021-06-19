@@ -2,9 +2,8 @@
 # and then load them using Fixtures.load("data.yml")
 
 Nose(nose):
-    title:  Nose
-    
+  title: Nose
+
 Face(bob):
-    name:   Bob
-    nose:   nose
-    
+  name: Bob
+  nose: nose

@@ -1,8 +1,8 @@
 Attending:
 
-* Dave Wassmer
-* David Baker
-* Ricardo Mendes
+- Dave Wassmer
+- David Baker
+- Ricardo Mendes
 
 ---
 
@@ -24,7 +24,7 @@ RM: Agreed. I'll start moving pages around and will merge the Quick Start in und
 
 ---
 
-RM: Glossary also needs to be merged, but will move that to the bottom of the menu.  Wonder about linking mostly to MDN to save on duplicating effort ...
+RM: Glossary also needs to be merged, but will move that to the bottom of the menu. Wonder about linking mostly to MDN to save on duplicating effort ...
 
 ---
 
@@ -38,4 +38,4 @@ DB: People keep having issues with ember-cli betas and Mirage.
 
 RM: I was working with a guy earlier today, it should all be working
 
-DB:  I'll run through the tutorial again to make sure and will send in a PR about using CLI betas.
+DB: I'll run through the tutorial again to make sure and will send in a PR about using CLI betas.

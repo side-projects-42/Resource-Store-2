@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Sahan.ssw",
-			"Singhalawap",
-			"Thirsty",
-			"පසිඳු කාවින්ද"
-		]
+		"authors": ["Sahan.ssw", "Singhalawap", "Thirsty", "පසිඳු කාවින්ද"]
 	},
 	"config-desc": "මාධ්‍යවිකි සඳහා වූ ස්ථාපකය",
 	"config-title": "මාධ්‍යවිකි $1 ස්ථාපනය",

@@ -1,38 +1,38 @@
-'use strict';
+"use strict";
 
-const assert = require( 'assert' );
-const Api = require( 'wdio-mediawiki/Api' );
-const WatchlistPage = require( '../pageobjects/watchlist.page' );
-const WatchablePage = require( '../pageobjects/watchable.page' );
-const LoginPage = require( 'wdio-mediawiki/LoginPage' );
-const Util = require( 'wdio-mediawiki/Util' );
+const assert = require("assert");
+const Api = require("wdio-mediawiki/Api");
+const WatchlistPage = require("../pageobjects/watchlist.page");
+const WatchablePage = require("../pageobjects/watchable.page");
+const LoginPage = require("wdio-mediawiki/LoginPage");
+const Util = require("wdio-mediawiki/Util");
 
-describe( 'Special:Watchlist', function () {
+describe("Special:Watchlist", function () {
 	let bot;
 
-	before( async () => {
+	before(async () => {
 		// Default bot is the admin that we also use for viewing via LoginPage.loginAdmin()
 		bot = await Api.bot();
-	} );
+	});
 
-	beforeEach( function () {
+	beforeEach(function () {
 		LoginPage.loginAdmin();
-	} );
+	});
 
-	it( 'should show page with new edit', function () {
-		const title = Util.getTestString( 'Title-' );
+	it("should show page with new edit", function () {
+		const title = Util.getTestString("Title-");
 
 		// create
-		browser.call( async () => {
-			await bot.edit( title, Util.getTestString() );
-		} );
+		browser.call(async () => {
+			await bot.edit(title, Util.getTestString());
+		});
 
-		WatchablePage.watch( title );
+		WatchablePage.watch(title);
 
 		// edit
-		browser.call( async () => {
-			await bot.edit( title, Util.getTestString() );
-		} );
+		browser.call(async () => {
+			await bot.edit(title, Util.getTestString());
+		});
 
 		WatchlistPage.open();
 
@@ -40,7 +40,6 @@ describe( 'Special:Watchlist', function () {
 		// but by default Special:Watchlist includes both seen and unseen changes, so
 		// it'll show up anyway. The title we just edited will be first because the edit
 		// was the most recent.
-		assert.strictEqual( WatchlistPage.titles[ 0 ].getText(), title );
-	} );
-
-} );
+		assert.strictEqual(WatchlistPage.titles[0].getText(), title);
+	});
+});

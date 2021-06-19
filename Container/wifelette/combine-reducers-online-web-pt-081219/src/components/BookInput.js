@@ -1,34 +1,32 @@
-import React, { Component } from 'react';
-import { addBook } from '../actions';
-import uuid from 'uuid';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { addBook } from "../actions";
+import uuid from "uuid";
+import { connect } from "react-redux";
 
 export class BookInput extends Component {
-
   state = {
-    title: '',
-    authorName: ''
-  }
+    title: "",
+    authorName: "",
+  };
 
-  handleOnChange = event => {
+  handleOnChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
-  }
+  };
 
-
-  handleOnSubmit = event => {
+  handleOnSubmit = (event) => {
     event.preventDefault();
-    const book = {...this.state, id: uuid() };
+    const book = { ...this.state, id: uuid() };
     this.props.addBook(book);
     this.setState({
-      title: '',
-      authorName: ''
+      title: "",
+      authorName: "",
     });
-  }
+  };
 
   render() {
-    return(
+    return (
       <form onSubmit={(event) => this.handleOnSubmit(event)}>
         <p>
           <input
@@ -36,7 +34,8 @@ export class BookInput extends Component {
             onChange={(event) => this.handleOnChange(event)}
             name="title"
             value={this.state.title}
-            placeholder="book title" />
+            placeholder="book title"
+          />
         </p>
         <p>
           <input
@@ -44,12 +43,13 @@ export class BookInput extends Component {
             onChange={(event) => this.handleOnChange(event)}
             name="authorName"
             value={this.state.authorName}
-            placeholder="author name" />
+            placeholder="author name"
+          />
         </p>
         <input type="submit" />
       </form>
     );
   }
-};
+}
 
 export default connect(null, { addBook })(BookInput);

@@ -36,11 +36,11 @@
 		},
 		"cancel": {
 			"file": "images/icons/cancel.svg",
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		},
 		"check": {
 			"file": "images/icons/check.svg",
-			"variants": [ "destructive", "success" ]
+			"variants": ["destructive", "success"]
 		},
 		"checkAll": {
 			"file": "images/icons/checkAll.svg"
@@ -68,7 +68,7 @@
 				"ltr": "images/icons/funnel-ltr.svg",
 				"rtl": "images/icons/funnel-rtl.svg"
 			},
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		},
 		"heart": {
 			"file": "images/icons/heart.svg"
@@ -144,11 +144,11 @@
 		},
 		"stopHand": {
 			"file": "images/icons/stopHand.svg",
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		},
 		"subtract": {
 			"file": "images/icons/subtract.svg",
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		}
 	}
 }

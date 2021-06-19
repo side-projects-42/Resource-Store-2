@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sponsorships</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+</head>
+
+<body>
+  <div class="card">
+    <div class="card-header">
+      <a href="/">Sponsorships App</a>
+    </div>
+    <div class="card-body">
+      <% if flash.present? %>
+      <div class="alert alert-warning" role="alert">
+        <% flash.each do |key, value| %>
+        <div class="alert-<%= key %>">
+          <%= value %>
+        </div>
+        <% end %>
+      </div>
+      <% end %>
+      <div class="card">
+        <%= yield %>
+      </div>
+
+      <% if user_signed_in? %>
+      <hr>
+      <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+      <% end %>
+    </div>
+</body>
+
+</html>

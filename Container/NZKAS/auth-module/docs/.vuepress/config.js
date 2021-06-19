@@ -1,66 +1,58 @@
 module.exports = {
-  title: 'Auth Module',
-  description: 'Authentication module for Nuxt',
+  title: "Auth Module",
+  description: "Authentication module for Nuxt",
   themeConfig: {
-    repo: 'nuxt-community/auth-module',
-    docsDir: 'docs',
+    repo: "nuxt-community/auth-module",
+    docsDir: "docs",
     editLinks: true,
-    editLinkText: 'Edit this page on GitHub',
+    editLinkText: "Edit this page on GitHub",
     sidebarDepth: 2,
     sidebar: {
-      '/api/': [
-        '/api/auth',
-        '/api/options',
-        '/api/storage'
-      ],
-      '/': [
+      "/api/": ["/api/auth", "/api/options", "/api/storage"],
+      "/": [
         {
-          title: 'Guide',
+          title: "Guide",
           collapsable: false,
           children: [
-            '/',
-            '/guide/setup',
-            '/guide/middleware',
-            '/guide/scheme',
-            '/guide/provider',
-          ]
+            "/",
+            "/guide/setup",
+            "/guide/middleware",
+            "/guide/scheme",
+            "/guide/provider",
+          ],
         },
         {
-          title: 'Schemes',
+          title: "Schemes",
           collapsable: false,
-          children: [
-            '/schemes/local',
-            '/schemes/oauth2'
-          ]
+          children: ["/schemes/local", "/schemes/oauth2"],
         },
         {
-          title: 'Providers',
+          title: "Providers",
           collapsable: false,
           children: [
-            '/providers/auth0',
-            '/providers/facebook',
-            '/providers/github',
-            '/providers/google',
-            '/providers/laravel-passport'
-          ]
-        }, {
-          title: 'Recipes',
+            "/providers/auth0",
+            "/providers/facebook",
+            "/providers/github",
+            "/providers/google",
+            "/providers/laravel-passport",
+          ],
+        },
+        {
+          title: "Recipes",
           collapsable: false,
-          children: [
-            '/recipes/extend'
-          ]
-        }
+          children: ["/recipes/extend"],
+        },
       ],
     },
     nav: [
       {
-        text: 'Guide',
-        link: '/'
+        text: "Guide",
+        link: "/",
       },
       {
-        text: 'API',
-        link: '/api/'
-      }
-    ]
-  }
-}
+        text: "API",
+        link: "/api/",
+      },
+    ],
+  },
+};

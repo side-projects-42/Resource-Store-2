@@ -4,21 +4,20 @@
  * @class mw.Api.plugin.upload
  * @singleton
  */
-( function () {
-	var
-		fieldsAllowed = {
-			stash: true,
-			filekey: true,
-			filename: true,
-			comment: true,
-			text: true,
-			watchlist: true,
-			ignorewarnings: true,
-			chunk: true,
-			offset: true,
-			filesize: true,
-			async: true
-		};
+(function () {
+	var fieldsAllowed = {
+		stash: true,
+		filekey: true,
+		filename: true,
+		comment: true,
+		text: true,
+		watchlist: true,
+		ignorewarnings: true,
+		chunk: true,
+		offset: true,
+		filesize: true,
+		async: true,
+	};
 
 	/**
 	 * Given a non-empty object, return one of its keys.
@@ -27,11 +26,11 @@
 	 * @param {Object} obj
 	 * @return {string}
 	 */
-	function getFirstKey( obj ) {
-		return obj[ Object.keys( obj )[ 0 ] ];
+	function getFirstKey(obj) {
+		return obj[Object.keys(obj)[0]];
 	}
 
-	$.extend( mw.Api.prototype, {
+	$.extend(mw.Api.prototype, {
 		/**
 		 * Upload a file to MediaWiki.
 		 *
@@ -42,21 +41,23 @@
 		 * @param {Object} data Other upload options, see action=upload API docs for more
 		 * @return {jQuery.Promise}
 		 */
-		upload: function ( file, data ) {
-			if ( file && file.nodeType === Node.ELEMENT_NODE && file.files ) {
-				file = file.files[ 0 ];
+		upload: function (file, data) {
+			if (file && file.nodeType === Node.ELEMENT_NODE && file.files) {
+				file = file.files[0];
 			}
 
-			if ( !file ) {
-				throw new Error( 'No file' );
+			if (!file) {
+				throw new Error("No file");
 			}
 
 			// Blobs are allowed in formdata uploads, it turns out
-			if ( !( file instanceof window.File || file instanceof window.Blob ) ) {
-				throw new Error( 'Unsupported argument type passed to mw.Api.upload' );
+			if (!(file instanceof window.File || file instanceof window.Blob)) {
+				throw new Error(
+					"Unsupported argument type passed to mw.Api.upload"
+				);
 			}
 
-			return this.uploadWithFormData( file, data );
+			return this.uploadWithFormData(file, data);
 		},
 
 		/**
@@ -67,60 +68,75 @@
 		 * @param {Object} data Other upload options, see action=upload API docs for more
 		 * @return {jQuery.Promise}
 		 */
-		uploadWithFormData: function ( file, data ) {
-			var key, request,
+		uploadWithFormData: function (file, data) {
+			var key,
+				request,
 				deferred = $.Deferred();
 
-			for ( key in data ) {
-				if ( !fieldsAllowed[ key ] ) {
-					delete data[ key ];
+			for (key in data) {
+				if (!fieldsAllowed[key]) {
+					delete data[key];
 				}
 			}
 
-			data = $.extend( {}, this.defaults.parameters, { action: 'upload' }, data );
-			if ( !data.chunk ) {
+			data = $.extend(
+				{},
+				this.defaults.parameters,
+				{ action: "upload" },
+				data
+			);
+			if (!data.chunk) {
 				data.file = file;
 			}
 
-			if ( !data.filename && !data.stash ) {
-				throw new Error( 'Filename not included in file data.' );
+			if (!data.filename && !data.stash) {
+				throw new Error("Filename not included in file data.");
 			}
 
 			// Use this.postWithEditToken() or this.post()
-			request = this[ this.needToken() ? 'postWithEditToken' : 'post' ]( data, {
-				// Use FormData (if we got here, we know that it's available)
-				contentType: 'multipart/form-data',
-				// No timeout (default from mw.Api is 30 seconds)
-				timeout: 0,
-				// Provide upload progress notifications
-				xhr: function () {
-					var xhr = $.ajaxSettings.xhr();
-					if ( xhr.upload ) {
-						// need to bind this event before we open the connection (see note at
-						// https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest/Using_XMLHttpRequest#Monitoring_progress)
-						xhr.upload.addEventListener( 'progress', function ( ev ) {
-							if ( ev.lengthComputable ) {
-								deferred.notify( ev.loaded / ev.total );
-							}
-						} );
-					}
-					return xhr;
+			request = this[this.needToken() ? "postWithEditToken" : "post"](
+				data,
+				{
+					// Use FormData (if we got here, we know that it's available)
+					contentType: "multipart/form-data",
+					// No timeout (default from mw.Api is 30 seconds)
+					timeout: 0,
+					// Provide upload progress notifications
+					xhr: function () {
+						var xhr = $.ajaxSettings.xhr();
+						if (xhr.upload) {
+							// need to bind this event before we open the connection (see note at
+							// https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest/Using_XMLHttpRequest#Monitoring_progress)
+							xhr.upload.addEventListener(
+								"progress",
+								function (ev) {
+									if (ev.lengthComputable) {
+										deferred.notify(ev.loaded / ev.total);
+									}
+								}
+							);
+						}
+						return xhr;
+					},
 				}
-			} )
-				.done( function ( result ) {
-					deferred.notify( 1 );
-					if ( result.upload && result.upload.warnings ) {
-						deferred.reject( getFirstKey( result.upload.warnings ), result );
+			)
+				.done(function (result) {
+					deferred.notify(1);
+					if (result.upload && result.upload.warnings) {
+						deferred.reject(
+							getFirstKey(result.upload.warnings),
+							result
+						);
 					} else {
-						deferred.resolve( result );
+						deferred.resolve(result);
 					}
-				} )
-				.fail( function ( errorCode, result ) {
-					deferred.notify( 1 );
-					deferred.reject( errorCode, result );
-				} );
+				})
+				.fail(function (errorCode, result) {
+					deferred.notify(1);
+					deferred.reject(errorCode, result);
+				});
 
-			return deferred.promise( { abort: request.abort } );
+			return deferred.promise({ abort: request.abort });
 		},
 
 		/**
@@ -132,26 +148,37 @@
 		 * @param {number} [chunkRetries] Amount of times to retry a failed chunk (default: 1)
 		 * @return {jQuery.Promise}
 		 */
-		chunkedUpload: function ( file, data, chunkSize, chunkRetries ) {
-			var start, end, promise, next, active,
+		chunkedUpload: function (file, data, chunkSize, chunkRetries) {
+			var start,
+				end,
+				promise,
+				next,
+				active,
 				deferred = $.Deferred();
 
 			chunkSize = chunkSize === undefined ? 5 * 1024 * 1024 : chunkSize;
 			chunkRetries = chunkRetries === undefined ? 1 : chunkRetries;
 
-			if ( !data.filename ) {
-				throw new Error( 'Filename not included in file data.' );
+			if (!data.filename) {
+				throw new Error("Filename not included in file data.");
 			}
 
 			// Submit first chunk to get the filekey
-			active = promise = this.uploadChunk( file, data, 0, chunkSize, '', chunkRetries )
-				.done( chunkSize >= file.size ? deferred.resolve : null )
-				.fail( deferred.reject )
-				.progress( deferred.notify );
+			active = promise = this.uploadChunk(
+				file,
+				data,
+				0,
+				chunkSize,
+				"",
+				chunkRetries
+			)
+				.done(chunkSize >= file.size ? deferred.resolve : null)
+				.fail(deferred.reject)
+				.progress(deferred.notify);
 
 			// Now iteratively submit the rest of the chunks
-			for ( start = chunkSize; start < file.size; start += chunkSize ) {
-				end = Math.min( start + chunkSize, file.size );
+			for (start = chunkSize; start < file.size; start += chunkSize) {
+				end = Math.min(start + chunkSize, file.size);
 				next = $.Deferred();
 
 				// We could simply chain one this.uploadChunk after another with
@@ -160,20 +187,31 @@
 				// 47. This'll work around it, but comes with the drawback of
 				// having to properly relay the results to the returned promise.
 				// eslint-disable-next-line no-loop-func
-				promise.done( function ( s, e, n, result ) {
-					var filekey = result.upload.filekey;
-					active = this.uploadChunk( file, data, s, e, filekey, chunkRetries )
-						.done( e === file.size ? deferred.resolve : n.resolve )
-						.fail( deferred.reject )
-						.progress( deferred.notify );
-				// start, end & next must be bound to closure, or they'd have
-				// changed by the time the promises are resolved
-				}.bind( this, start, end, next ) );
+				promise.done(
+					function (s, e, n, result) {
+						var filekey = result.upload.filekey;
+						active = this.uploadChunk(
+							file,
+							data,
+							s,
+							e,
+							filekey,
+							chunkRetries
+						)
+							.done(
+								e === file.size ? deferred.resolve : n.resolve
+							)
+							.fail(deferred.reject)
+							.progress(deferred.notify);
+						// start, end & next must be bound to closure, or they'd have
+						// changed by the time the promises are resolved
+					}.bind(this, start, end, next)
+				);
 
 				promise = next;
 			}
 
-			return deferred.promise( { abort: active.abort } );
+			return deferred.promise({ abort: active.abort });
 		},
 
 		/**
@@ -188,10 +226,10 @@
 		 * @param {number} [retries] Amount of times to retry request
 		 * @return {jQuery.Promise}
 		 */
-		uploadChunk: function ( file, data, start, end, filekey, retries ) {
+		uploadChunk: function (file, data, start, end, filekey, retries) {
 			var upload,
 				api = this,
-				chunk = this.slice( file, start, end );
+				chunk = this.slice(file, start, end);
 
 			// When uploading in chunks, we're going to be issuing a lot more
 			// requests and there's always a chance of 1 getting dropped.
@@ -205,50 +243,63 @@
 
 			// filekey must only be added when uploading follow-up chunks; the
 			// first chunk should never have a filekey (it'll be generated)
-			if ( filekey && start !== 0 ) {
+			if (filekey && start !== 0) {
 				data.filekey = filekey;
 			}
 
-			upload = this.uploadWithFormData( file, data );
-			return upload.then(
-				null,
-				function ( code, result ) {
-					var retry;
+			upload = this.uploadWithFormData(file, data);
+			return upload
+				.then(
+					null,
+					function (code, result) {
+						var retry;
 
-					// uploadWithFormData will reject uploads with warnings, but
-					// these warnings could be "harmless" or recovered from
-					// (e.g. exists-normalized, when it'll be renamed later)
-					// In the case of (only) a warning, we still want to
-					// continue the chunked upload until it completes: then
-					// reject it - at least it's been fully uploaded by then and
-					// failure handlers have a complete result object (including
-					// possibly more warnings, e.g. duplicate)
-					// This matches .upload, which also completes the upload.
-					if ( result.upload && result.upload.warnings ) {
-						if ( end === file.size ) {
-							// uploaded last chunk = reject with result data
-							return $.Deferred().reject( result.upload.warnings.code || 'unknown', result );
-						} else {
-							// still uploading chunks = resolve to keep going
-							return $.Deferred().resolve( result );
+						// uploadWithFormData will reject uploads with warnings, but
+						// these warnings could be "harmless" or recovered from
+						// (e.g. exists-normalized, when it'll be renamed later)
+						// In the case of (only) a warning, we still want to
+						// continue the chunked upload until it completes: then
+						// reject it - at least it's been fully uploaded by then and
+						// failure handlers have a complete result object (including
+						// possibly more warnings, e.g. duplicate)
+						// This matches .upload, which also completes the upload.
+						if (result.upload && result.upload.warnings) {
+							if (end === file.size) {
+								// uploaded last chunk = reject with result data
+								return $.Deferred().reject(
+									result.upload.warnings.code || "unknown",
+									result
+								);
+							} else {
+								// still uploading chunks = resolve to keep going
+								return $.Deferred().resolve(result);
+							}
 						}
-					}
 
-					if ( retries === 0 ) {
-						return $.Deferred().reject( code, result );
-					}
+						if (retries === 0) {
+							return $.Deferred().reject(code, result);
+						}
 
-					// If the call flat out failed, we may want to try again...
-					retry = api.uploadChunk.bind( api, file, data, start, end, filekey, retries - 1 );
-					return api.retry( code, result, retry );
-				},
-				function ( fraction ) {
-					// Since we're only uploading small parts of a file, we
-					// need to adjust the reported progress to reflect where
-					// we actually are in the combined upload
-					return ( start + fraction * ( end - start ) ) / file.size;
-				}
-			).promise( { abort: upload.abort } );
+						// If the call flat out failed, we may want to try again...
+						retry = api.uploadChunk.bind(
+							api,
+							file,
+							data,
+							start,
+							end,
+							filekey,
+							retries - 1
+						);
+						return api.retry(code, result, retry);
+					},
+					function (fraction) {
+						// Since we're only uploading small parts of a file, we
+						// need to adjust the reported progress to reflect where
+						// we actually are in the combined upload
+						return (start + fraction * (end - start)) / file.size;
+					}
+				)
+				.promise({ abort: upload.abort });
 		},
 
 		/**
@@ -260,7 +311,7 @@
 		 * @param {Function} callable
 		 * @return {jQuery.Promise}
 		 */
-		retry: function ( code, result, callable ) {
+		retry: function (code, result, callable) {
 			var uploadPromise,
 				retryTimer,
 				deferred = $.Deferred(),
@@ -268,25 +319,27 @@
 				// resolve/reject the promise we'll return
 				retry = function () {
 					uploadPromise = callable();
-					uploadPromise.then( deferred.resolve, deferred.reject );
+					uploadPromise.then(deferred.resolve, deferred.reject);
 				};
 
 			// Don't retry if the request failed because we aborted it (or if
 			// it's another kind of request failure)
-			if ( code !== 'http' || result.textStatus === 'abort' ) {
-				return deferred.reject( code, result );
+			if (code !== "http" || result.textStatus === "abort") {
+				return deferred.reject(code, result);
 			}
 
-			retryTimer = setTimeout( retry, 1000 );
-			return deferred.promise( { abort: function () {
-				// Clear the scheduled upload, or abort if already in flight
-				if ( retryTimer ) {
-					clearTimeout( retryTimer );
-				}
-				if ( uploadPromise.abort ) {
-					uploadPromise.abort();
-				}
-			} } );
+			retryTimer = setTimeout(retry, 1000);
+			return deferred.promise({
+				abort: function () {
+					// Clear the scheduled upload, or abort if already in flight
+					if (retryTimer) {
+						clearTimeout(retryTimer);
+					}
+					if (uploadPromise.abort) {
+						uploadPromise.abort();
+					}
+				},
+			});
 		},
 
 		/**
@@ -298,18 +351,18 @@
 		 * @param {number} stop
 		 * @return {Blob}
 		 */
-		slice: function ( file, start, stop ) {
-			if ( file.mozSlice ) {
+		slice: function (file, start, stop) {
+			if (file.mozSlice) {
 				// FF <= 12
-				return file.mozSlice( start, stop, file.type );
-			} else if ( file.webkitSlice ) {
+				return file.mozSlice(start, stop, file.type);
+			} else if (file.webkitSlice) {
 				// Chrome <= 20
-				return file.webkitSlice( start, stop, file.type );
+				return file.webkitSlice(start, stop, file.type);
 			} else {
 				// On really old browser versions (before slice was prefixed),
 				// slice() would take (start, length) instead of (start, end)
 				// We'll ignore that here...
-				return file.slice( start, stop, file.type );
+				return file.slice(start, stop, file.type);
 			}
 		},
 
@@ -335,30 +388,35 @@
 		 * @return {jQuery.Promise} return.finishUpload.return API promise for the final upload
 		 * @return {Object} return.finishUpload.return.data API return value for the final upload
 		 */
-		finishUploadToStash: function ( uploadPromise, data ) {
+		finishUploadToStash: function (uploadPromise, data) {
 			var filekey,
 				api = this;
 
-			function finishUpload( moreData ) {
-				return api.uploadFromStash( filekey, $.extend( data, moreData ) );
+			function finishUpload(moreData) {
+				return api.uploadFromStash(filekey, $.extend(data, moreData));
 			}
 
 			return uploadPromise.then(
-				function ( result ) {
+				function (result) {
 					filekey = result.upload.filekey;
 					return finishUpload;
 				},
-				function ( errorCode, result ) {
-					if ( result && result.upload && result.upload.result === 'Success' && result.upload.filekey ) {
+				function (errorCode, result) {
+					if (
+						result &&
+						result.upload &&
+						result.upload.result === "Success" &&
+						result.upload.filekey
+					) {
 						// When a file is uploaded with `ignorewarnings` and there are warnings,
 						// the promise will be rejected (because of those warnings, e.g. 'duplicate')
 						// but the result is actually a success
 						// We don't really care about those warnings, as long as the upload got stashed...
 						// Turn this back into a successful promise and allow the upload to complete
 						filekey = result.upload.filekey;
-						return $.Deferred().resolve( finishUpload );
+						return $.Deferred().resolve(finishUpload);
 					}
-					return $.Deferred().reject( errorCode, result );
+					return $.Deferred().reject(errorCode, result);
 				}
 			);
 		},
@@ -387,16 +445,20 @@
 		 * @return {jQuery.Promise} return.finishUpload.return API promise for the final upload
 		 * @return {Object} return.finishUpload.return.data API return value for the final upload
 		 */
-		uploadToStash: function ( file, data ) {
+		uploadToStash: function (file, data) {
 			var promise;
 
-			if ( !data.filename ) {
-				throw new Error( 'Filename not included in file data.' );
+			if (!data.filename) {
+				throw new Error("Filename not included in file data.");
 			}
 
-			promise = this.upload( file, { stash: true, filename: data.filename, ignorewarnings: data.ignorewarnings } );
+			promise = this.upload(file, {
+				stash: true,
+				filename: data.filename,
+				ignorewarnings: data.ignorewarnings,
+			});
 
-			return this.finishUploadToStash( promise, data );
+			return this.finishUploadToStash(promise, data);
 		},
 
 		/**
@@ -416,21 +478,25 @@
 		 * @return {jQuery.Promise} return.finishUpload.return API promise for the final upload
 		 * @return {Object} return.finishUpload.return.data API return value for the final upload
 		 */
-		chunkedUploadToStash: function ( file, data, chunkSize, chunkRetries ) {
+		chunkedUploadToStash: function (file, data, chunkSize, chunkRetries) {
 			var promise;
 
-			if ( !data.filename ) {
-				throw new Error( 'Filename not included in file data.' );
+			if (!data.filename) {
+				throw new Error("Filename not included in file data.");
 			}
 
 			promise = this.chunkedUpload(
 				file,
-				{ stash: true, filename: data.filename, ignorewarnings: data.ignorewarnings },
+				{
+					stash: true,
+					filename: data.filename,
+					ignorewarnings: data.ignorewarnings,
+				},
 				chunkSize,
 				chunkRetries
 			);
 
-			return this.finishUploadToStash( promise, data );
+			return this.finishUploadToStash(promise, data);
 		},
 
 		/**
@@ -440,30 +506,32 @@
 		 * @param {Object} data
 		 * @return {jQuery.Promise}
 		 */
-		uploadFromStash: function ( filekey, data ) {
+		uploadFromStash: function (filekey, data) {
 			data.filekey = filekey;
-			data.action = 'upload';
-			data.format = 'json';
+			data.action = "upload";
+			data.format = "json";
 
-			if ( !data.filename ) {
-				throw new Error( 'Filename not included in file data.' );
+			if (!data.filename) {
+				throw new Error("Filename not included in file data.");
 			}
 
-			return this.postWithEditToken( data ).then( function ( result ) {
-				if ( result.upload && result.upload.warnings ) {
-					return $.Deferred().reject( getFirstKey( result.upload.warnings ), result ).promise();
+			return this.postWithEditToken(data).then(function (result) {
+				if (result.upload && result.upload.warnings) {
+					return $.Deferred()
+						.reject(getFirstKey(result.upload.warnings), result)
+						.promise();
 				}
 				return result;
-			} );
+			});
 		},
 
 		needToken: function () {
 			return true;
-		}
-	} );
+		},
+	});
 
 	/**
 	 * @class mw.Api
 	 * @mixins mw.Api.plugin.upload
 	 */
-}() );
+})();

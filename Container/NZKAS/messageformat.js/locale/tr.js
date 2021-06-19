@@ -1,1 +1,3 @@
-MessageFormat.locale.tr=function(n){return "other"}
+MessageFormat.locale.tr = function (n) {
+  return "other";
+};

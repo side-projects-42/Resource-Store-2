@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Hanberke"
-		]
-	},
-	"adminlinks_users": "Ulanyjylar"
+  "@metadata": {
+    "authors": ["Hanberke"]
+  },
+  "adminlinks_users": "Ulanyjylar"
 }

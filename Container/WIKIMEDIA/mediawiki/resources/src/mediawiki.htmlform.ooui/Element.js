@@ -1,5 +1,4 @@
-( function () {
-
+(function () {
 	mw.htmlform = {};
 
 	/**
@@ -12,7 +11,7 @@
 	 * @ignore
 	 * @param {Object} [config] Configuration options
 	 */
-	mw.htmlform.Element = function ( config ) {
+	mw.htmlform.Element = function (config) {
 		// Configuration initialization
 		config = config || {};
 
@@ -20,27 +19,26 @@
 		this.hideIf = config.hideIf;
 
 		// Initialization
-		if ( this.hideIf ) {
-			this.$element.addClass( 'mw-htmlform-hide-if' );
+		if (this.hideIf) {
+			this.$element.addClass("mw-htmlform-hide-if");
 		}
 	};
 
-	mw.htmlform.FieldLayout = function ( config ) {
+	mw.htmlform.FieldLayout = function (config) {
 		// Parent constructor
-		mw.htmlform.FieldLayout.parent.call( this, config );
+		mw.htmlform.FieldLayout.parent.call(this, config);
 		// Mixin constructors
-		mw.htmlform.Element.call( this, config );
+		mw.htmlform.Element.call(this, config);
 	};
-	OO.inheritClass( mw.htmlform.FieldLayout, OO.ui.FieldLayout );
-	OO.mixinClass( mw.htmlform.FieldLayout, mw.htmlform.Element );
+	OO.inheritClass(mw.htmlform.FieldLayout, OO.ui.FieldLayout);
+	OO.mixinClass(mw.htmlform.FieldLayout, mw.htmlform.Element);
 
-	mw.htmlform.ActionFieldLayout = function ( config ) {
+	mw.htmlform.ActionFieldLayout = function (config) {
 		// Parent constructor
-		mw.htmlform.ActionFieldLayout.parent.call( this, config );
+		mw.htmlform.ActionFieldLayout.parent.call(this, config);
 		// Mixin constructors
-		mw.htmlform.Element.call( this, config );
+		mw.htmlform.Element.call(this, config);
 	};
-	OO.inheritClass( mw.htmlform.ActionFieldLayout, OO.ui.ActionFieldLayout );
-	OO.mixinClass( mw.htmlform.ActionFieldLayout, mw.htmlform.Element );
-
-}() );
+	OO.inheritClass(mw.htmlform.ActionFieldLayout, OO.ui.ActionFieldLayout);
+	OO.mixinClass(mw.htmlform.ActionFieldLayout, mw.htmlform.Element);
+})();

@@ -1,17 +1,17 @@
-@import 'mediawiki.mixins.less';
-@import 'mediawiki.ui/variables.less';
+@import "mediawiki.mixins.less";
+@import "mediawiki.ui/variables.less";
 
 // Helpers
 .mixin-mw-ui-anchor-styles( @mainColor ) {
 	color: @mainColor;
 
 	&:hover {
-		color: lighten( @mainColor, @colorLightenPercentage );
+		color: lighten(@mainColor, @colorLightenPercentage);
 	}
 
 	&:focus,
 	&:active {
-		color: darken( @mainColor, @colorDarkenPercentage );
+		color: darken(@mainColor, @colorDarkenPercentage);
 		outline: 0;
 	}
 
@@ -66,6 +66,6 @@ Markup:
 
 	&:focus,
 	&:active {
-		color: darken( @mainColor, @colorDarkenPercentage );
+		color: darken(@mainColor, @colorDarkenPercentage);
 	}
 }

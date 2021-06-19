@@ -21,7 +21,7 @@ describe('Runtime', () => {
 
   describe('jest.mock', () => {
     it('uses explicitly set mocks instead of automocking', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const mockReference = {isMock: true};
         const root = runtime.requireModule(runtime.__mockRootPath, rootJsPath);
         // Erase module registry because root.js requires most other modules.
@@ -48,7 +48,7 @@ describe('Runtime', () => {
       }));
 
     it('sets virtual mock for non-existing module required from same directory', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const mockReference = {isVirtualMock: true};
         const virtual = true;
         const root = runtime.requireModule(runtime.__mockRootPath, rootJsPath);
@@ -82,7 +82,7 @@ describe('Runtime', () => {
       }));
 
     it('sets virtual mock for non-existing module required from different directory', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const mockReference = {isVirtualMock: true};
         const virtual = true;
         const root = runtime.requireModule(runtime.__mockRootPath, rootJsPath);
@@ -118,7 +118,7 @@ describe('Runtime', () => {
 
   describe('jest.setMock', () => {
     it('uses explicitly set mocks instead of automocking', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const mockReference = {isMock: true};
         const root = runtime.requireModule(runtime.__mockRootPath, rootJsPath);
         // Erase module registry because root.js requires most other modules.

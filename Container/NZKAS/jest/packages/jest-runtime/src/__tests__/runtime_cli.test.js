@@ -13,7 +13,7 @@ skipSuiteOnWindows();
 
 const JEST_RUNTIME = path.resolve(__dirname, '../../bin/jest-runtime.js');
 
-const run = args =>
+const run = (args) =>
   spawnSync(JEST_RUNTIME, args, {
     cwd: process.cwd(),
     env: process.env,

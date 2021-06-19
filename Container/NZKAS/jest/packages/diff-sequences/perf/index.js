@@ -39,7 +39,7 @@ const testBaseline = (a, b) => {
   return benchmark.stats;
 };
 
-const testImproved = function(a, b) {
+const testImproved = function (a, b) {
   const benchmark = new Benchmark({
     fn() {
       // Split string arguments to make fair comparison with baseline.
@@ -74,7 +74,7 @@ const writeHeading2 = () => {
   console.log('A ratio less than 1.0 means `diff-sequences` is faster.');
 };
 
-const writeHeading3 = n => {
+const writeHeading3 = (n) => {
   console.log(`\n### n = ${n}\n`);
   console.log('| name | % | ratio | improved | rme | baseline | rme |');
   console.log('| :--- | ---: | :--- | :--- | ---: | :--- | ---: |');
@@ -129,23 +129,39 @@ const getItems = (n, callback) => {
 // Simulate change of property name which is usually not same line.
 // Expected: 0 1 2 3 4 5 6 7 8 9 and so on
 // Received: 1 2 3 4 x0 5 6 7 8 9 and so on
-const change2 = i => {
+const change2 = (i) => {
   const j = i % 10;
   return j === 4 ? `x${i - 4}` : j < 4 ? `${i + 1}` : `${i}`;
 };
 
-const testLength = n => {
-  const all = getItems(n, i => `${i}`);
+const testLength = (n) => {
+  const all = getItems(n, (i) => `${i}`);
 
   writeHeading3(n);
 
-  [2, 4, 8].forEach(tenth => {
-    testDeleteInsert(tenth, all, getItems(n, i => i % 10 >= tenth && `${i}`));
+  [2, 4, 8].forEach((tenth) => {
+    testDeleteInsert(
+      tenth,
+      all,
+      getItems(n, (i) => i % 10 >= tenth && `${i}`),
+    );
   });
-  testChange(1, all, getItems(n, i => (i % 10 === 0 ? `x${i}` : `${i}`)));
+  testChange(
+    1,
+    all,
+    getItems(n, (i) => (i % 10 === 0 ? `x${i}` : `${i}`)),
+  );
   testChange(2, all, getItems(n, change2));
-  testChange(5, all, getItems(n, i => (i % 2 === 0 ? `x${i}` : `${i}`)));
-  testChange(10, all, getItems(n, i => `x${i}`)); // simulate TDD
+  testChange(
+    5,
+    all,
+    getItems(n, (i) => (i % 2 === 0 ? `x${i}` : `${i}`)),
+  );
+  testChange(
+    10,
+    all,
+    getItems(n, (i) => `x${i}`),
+  ); // simulate TDD
 };
 
 writeHeading2();

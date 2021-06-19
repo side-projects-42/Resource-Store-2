@@ -22,7 +22,7 @@ describe('Runtime', () => {
 
   describe('requireMock', () => {
     it('uses manual mocks before attempting to automock', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const exports = runtime.requireMock(
           runtime.__mockRootPath,
           'ManuallyMocked',
@@ -31,7 +31,7 @@ describe('Runtime', () => {
       }));
 
     it('can resolve modules that are only referenced from mocks', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const exports = runtime.requireMock(
           runtime.__mockRootPath,
           'ManuallyMocked',
@@ -42,7 +42,7 @@ describe('Runtime', () => {
       }));
 
     it('stores and re-uses manual mock exports', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         let exports = runtime.requireMock(
           runtime.__mockRootPath,
           'ManuallyMocked',
@@ -53,7 +53,7 @@ describe('Runtime', () => {
       }));
 
     it('automocks haste modules without a manual mock', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const exports = runtime.requireMock(
           runtime.__mockRootPath,
           'RegularModule',
@@ -62,7 +62,7 @@ describe('Runtime', () => {
       }));
 
     it('automocks relative-path modules without a file extension', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const exports = runtime.requireMock(
           __filename,
           './test_root/RegularModule',
@@ -71,7 +71,7 @@ describe('Runtime', () => {
       }));
 
     it('automocks relative-path modules with a file extension', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const exports = runtime.requireMock(
           __filename,
           './test_root/RegularModule.js',
@@ -80,7 +80,7 @@ describe('Runtime', () => {
       }));
 
     it('just falls back when loading a native module', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         let error;
         // Okay so this is a really WAT way to test this, but we
         // are going to require an empty .node file which should
@@ -99,7 +99,7 @@ describe('Runtime', () => {
       }));
 
     it('stores and re-uses automocked haste exports', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         let exports = runtime.requireMock(
           runtime.__mockRootPath,
           'RegularModule',
@@ -110,7 +110,7 @@ describe('Runtime', () => {
       }));
 
     it('stores and re-uses automocked relative-path modules', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         let exports = runtime.requireMock(
           __filename,
           './test_root/RegularModule',
@@ -121,7 +121,7 @@ describe('Runtime', () => {
       }));
 
     it('multiple node core modules returns correct module', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         runtime.requireMock(runtime.__mockRootPath, 'fs');
         expect(
           runtime.requireMock(runtime.__mockRootPath, 'events').EventEmitter,
@@ -129,7 +129,7 @@ describe('Runtime', () => {
       }));
 
     it('throws on non-existent haste modules', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         expect(() => {
           runtime.requireMock(runtime.__mockRootPath, 'DoesntExist');
         }).toThrow();
@@ -139,7 +139,7 @@ describe('Runtime', () => {
       createRuntime(__filename, {
         // using the default resolver as a custom resolver
         resolver: require.resolve('./defaultResolver.js'),
-      }).then(runtime => {
+      }).then((runtime) => {
         const exports = runtime.requireMock(
           runtime.__mockRootPath,
           './ManuallyMocked',
@@ -149,7 +149,7 @@ describe('Runtime', () => {
       }));
 
     it('provides `require.main` in mock', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         runtime.setMock(__filename, 'export_main', () => module, {
           virtual: true,
         });

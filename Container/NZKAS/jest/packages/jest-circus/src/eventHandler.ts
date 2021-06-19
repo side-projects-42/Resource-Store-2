@@ -42,10 +42,8 @@ const eventHandler: EventHandler = (event, state): void => {
       invariant(currentDescribeBlock, `currentDescribeBlock must be there`);
 
       if (!describeBlockHasTests(currentDescribeBlock)) {
-        currentDescribeBlock.hooks.forEach(hook => {
-          hook.asyncError.message = `Invalid: ${
-            hook.type
-          }() may not be used in a describe block containing no tests.`;
+        currentDescribeBlock.hooks.forEach((hook) => {
+          hook.asyncError.message = `Invalid: ${hook.type}() may not be used in a describe block containing no tests.`;
           state.unhandledErrors.push(hook.asyncError);
         });
       }
@@ -54,11 +52,11 @@ const eventHandler: EventHandler = (event, state): void => {
       // do not inherit "only" mode when there is already tests with "only" mode
       const shouldInheritMode = !(
         currentDescribeBlock.mode === 'only' &&
-        currentDescribeBlock.tests.find(test => test.mode === 'only')
+        currentDescribeBlock.tests.find((test) => test.mode === 'only')
       );
 
       if (shouldInheritMode) {
-        currentDescribeBlock.tests.forEach(test => {
+        currentDescribeBlock.tests.forEach((test) => {
           if (!test.mode) {
             test.mode = currentDescribeBlock.mode;
           }
@@ -67,7 +65,7 @@ const eventHandler: EventHandler = (event, state): void => {
 
       if (
         !state.hasFocusedTests &&
-        currentDescribeBlock.tests.some(test => test.mode === 'only')
+        currentDescribeBlock.tests.some((test) => test.mode === 'only')
       ) {
         state.hasFocusedTests = true;
       }

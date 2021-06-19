@@ -10,9 +10,9 @@ The Rails `session` method gives us access to the Rails session. The session is 
 
 We're going to use this to implement a shopping site. Here's how the site will work:
 
-  1. The root page of the app has an input box on it (within a form of course).
-  2. The user types in the item they want and clicks `add to cart`.
-  3. The item is added to their cart. The page shows everything in the user's cart.
+1. The root page of the app has an input box on it (within a form of course).
+2. The user types in the item they want and clicks `add to cart`.
+3. The item is added to their cart. The page shows everything in the user's cart.
 
 ## Instructions
 

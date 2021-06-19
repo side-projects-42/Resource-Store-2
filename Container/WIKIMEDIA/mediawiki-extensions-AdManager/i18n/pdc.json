@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Xqt"
-		]
-	},
-	"admanager_labelPage": "Naame vun Bledder"
+  "@metadata": {
+    "authors": ["Xqt"]
+  },
+  "admanager_labelPage": "Naame vun Bledder"
 }

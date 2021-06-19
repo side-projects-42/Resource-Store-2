@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ravi Mundkur",
-			"VASANTH S.N.",
-			"Vishwanatha Badikana"
-		]
+		"authors": ["Ravi Mundkur", "VASANTH S.N.", "Vishwanatha Badikana"]
 	},
 	"config-desc": "ಮೀಡಿಯ ವಿಕಿದ ಪ್ರತಿಸ್ಟಾಪನೆ",
 	"config-title": "ಮೀಡಿಯಾವಿಕಿ ಆವೃತ್ತಿ $1 ರ ಪ್ರತಿಸ್ಟಾಪನೆ",

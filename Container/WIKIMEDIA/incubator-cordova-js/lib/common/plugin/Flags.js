@@ -8,8 +8,8 @@
  *            target path exists
  */
 function Flags(create, exclusive) {
-    this.create = create || false;
-    this.exclusive = exclusive || false;
+  this.create = create || false;
+  this.exclusive = exclusive || false;
 }
 
 module.exports = Flags;

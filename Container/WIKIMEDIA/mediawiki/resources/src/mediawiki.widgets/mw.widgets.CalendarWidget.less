@@ -6,7 +6,7 @@
  */
 
 /* stylelint-disable no-duplicate-selectors */
-@import 'mediawiki.mixins.less';
+@import "mediawiki.mixins.less";
 
 @calendarWidth: 21em;
 @calendarHeight: 14em;
@@ -72,12 +72,12 @@
 		height: @calendarHeight;
 	}
 
-	.mw-widget-calendarWidget-body:not( .mw-widget-calendarWidget-old-body ):first-child {
+	.mw-widget-calendarWidget-body:not(.mw-widget-calendarWidget-old-body):first-child {
 		margin-top: -@calendarHeight;
 		margin-left: -@calendarWidth;
 	}
 
-	.mw-widget-calendarWidget-body:not( .mw-widget-calendarWidget-old-body ):last-child {
+	.mw-widget-calendarWidget-body:not(.mw-widget-calendarWidget-old-body):last-child {
 		margin-top: 0;
 		margin-left: 0;
 	}
@@ -170,17 +170,17 @@
 	line-height: @calendarHeight / 7;
 
 	// Don't overlap the hacked-up fake box-shadow border we get when focussed
-	&:nth-child( 7n ) {
+	&:nth-child(7n) {
 		width: @calendarWidth / 7 - 0.2em;
 		margin-right: 0.2em;
 	}
 
-	&:nth-child( 7n+1 ) {
+	&:nth-child(7n + 1) {
 		width: @calendarWidth / 7 - 0.2em;
 		margin-left: 0.2em;
 	}
 
-	&:nth-child( 42 ) ~ & {
+	&:nth-child(42) ~ & {
 		line-height: @calendarHeight / 7 - 0.2em;
 		margin-bottom: 0.2em;
 	}
@@ -192,17 +192,17 @@
 	line-height: @calendarHeight / 6;
 
 	// Don't overlap the hacked-up fake box-shadow border we get when focussed
-	&:nth-child( 2n ) {
+	&:nth-child(2n) {
 		width: @calendarWidth / 2 - 0.2em;
 		margin-right: 0.2em;
 	}
 
-	&:nth-child( 2n+1 ) {
+	&:nth-child(2n + 1) {
 		width: @calendarWidth / 2 - 0.2em;
 		margin-left: 0.2em;
 	}
 
-	&:nth-child( 10 ) ~ & {
+	&:nth-child(10) ~ & {
 		line-height: @calendarHeight / 6 - 0.2em;
 		margin-bottom: 0.2em;
 	}
@@ -214,17 +214,17 @@
 	line-height: @calendarHeight / 4;
 
 	// Don't overlap the hacked-up fake box-shadow border we get when focussed
-	&:nth-child( 5n ) {
+	&:nth-child(5n) {
 		width: @calendarWidth / 5 - 0.2em;
 		margin-right: 0.2em;
 	}
 
-	&:nth-child( 5n+1 ) {
+	&:nth-child(5n + 1) {
 		width: @calendarWidth / 5 - 0.2em;
 		margin-left: 0.2em;
 	}
 
-	&:nth-child( 15 ) ~ & {
+	&:nth-child(15) ~ & {
 		line-height: @calendarHeight / 4 - 0.2em;
 		margin-bottom: 0.2em;
 	}
@@ -238,7 +238,7 @@
 .mw-widget-calendarWidget {
 	.box-sizing( border-box );
 	border: 1px solid #a2a9b1;
-	.transition( ~'border-color 100ms, box-shadow 100ms' );
+	.transition( ~"border-color 100ms, box-shadow 100ms" );
 
 	&:focus {
 		border-color: #36c;
@@ -269,7 +269,7 @@
 	}
 
 	&-item {
-		.transition( ~'background-color 250ms, color 250ms' );
+		.transition( ~"background-color 250ms, color 250ms" );
 
 		&:hover {
 			background-color: #36c;

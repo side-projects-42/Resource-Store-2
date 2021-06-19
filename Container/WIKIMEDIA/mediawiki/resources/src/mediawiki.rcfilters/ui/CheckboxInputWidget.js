@@ -7,11 +7,11 @@
  * @constructor
  * @param {Object} config Configuration object
  */
-var CheckboxInputWidget = function MwRcfiltersUiCheckboxInputWidget( config ) {
+var CheckboxInputWidget = function MwRcfiltersUiCheckboxInputWidget(config) {
 	config = config || {};
 
 	// Parent
-	CheckboxInputWidget.parent.call( this, config );
+	CheckboxInputWidget.parent.call(this, config);
 
 	// Event
 	this.$input
@@ -22,13 +22,13 @@ var CheckboxInputWidget = function MwRcfiltersUiCheckboxInputWidget( config ) {
 		// of whether to check/uncheck this checkboxInputWidget, and for that,
 		// we have to bypass the browser action that checks/unchecks it during
 		// click.
-		.on( 'click', false )
-		.on( 'change', this.onUserChange.bind( this ) );
+		.on("click", false)
+		.on("change", this.onUserChange.bind(this));
 };
 
 /* Initialization */
 
-OO.inheritClass( CheckboxInputWidget, OO.ui.CheckboxInputWidget );
+OO.inheritClass(CheckboxInputWidget, OO.ui.CheckboxInputWidget);
 
 /* Events */
 
@@ -58,7 +58,7 @@ CheckboxInputWidget.prototype.onEdit = function () {
  * Respond to checkbox change by a user and emit 'userChange'.
  */
 CheckboxInputWidget.prototype.onUserChange = function () {
-	this.emit( 'userChange', this.$input.prop( 'checked' ) );
+	this.emit("userChange", this.$input.prop("checked"));
 };
 
 module.exports = CheckboxInputWidget;

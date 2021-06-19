@@ -1,6 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 
-@import 'mediawiki.mixins';
+@import "mediawiki.mixins";
 
 /**
  * Helper classes used across special pages
@@ -9,7 +9,7 @@
 /* Content dividers */
 /* @todo FIXME: Hard coded ". .". Is there a message for this? Should there be? */
 .mw-changeslist-separator:empty:before {
-	content: '. .';
+	content: ". .";
 }
 
 /**
@@ -48,16 +48,16 @@
  * Never use semicolon on this page. Always use “. .” as separators.
  */
 .mw-changeslist-separator--semicolon:before {
-	content: '@{msg-semicolon-separator}';
+	content: "@{msg-semicolon-separator}";
 }
 
 .mw-rollback-link {
 	&:before {
-		content: '@{msg-brackets-start}';
+		content: "@{msg-brackets-start}";
 	}
 
 	&:after {
-		content: '@{msg-brackets-end}';
+		content: "@{msg-brackets-end}";
 	}
 }
 
@@ -68,35 +68,35 @@
 .mw-tag-markers,
 .mw-uctop {
 	&:before {
-		content: '@{msg-parentheses-start}';
+		content: "@{msg-parentheses-start}";
 	}
 
 	&:after {
-		content: '@{msg-parentheses-end}';
+		content: "@{msg-parentheses-end}";
 	}
 }
 
 .mw-changeslist-links {
 	display: inline-block;
 
-	> span:not( :first-child ):before {
-		content: '@{msg-pipe-separator}';
+	> span:not(:first-child):before {
+		content: "@{msg-pipe-separator}";
 	}
 
 	// In pages like history, do not add additional brackets where not needed
 	.mw-rollback-link:before,
 	.mw-rollback-link:after {
-		content: '';
+		content: "";
 	}
 }
 
 .mw-tag-marker {
 	&:after {
-		content: '@{msg-comma-separator}';
+		content: "@{msg-comma-separator}";
 	}
 
 	&:last-child:after {
-		content: '';
+		content: "";
 	}
 }
 

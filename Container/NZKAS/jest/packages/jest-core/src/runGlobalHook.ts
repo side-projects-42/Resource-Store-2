@@ -23,7 +23,7 @@ export default async ({
   moduleName: 'globalSetup' | 'globalTeardown';
 }): Promise<void> => {
   const globalModulePaths = new Set(
-    allTests.map(test => test.context.config[moduleName]),
+    allTests.map((test) => test.context.config[moduleName]),
   );
 
   if (globalConfig[moduleName]) {
@@ -31,13 +31,13 @@ export default async ({
   }
 
   if (globalModulePaths.size > 0) {
-    await pEachSeries(Array.from(globalModulePaths), async modulePath => {
+    await pEachSeries(Array.from(globalModulePaths), async (modulePath) => {
       if (!modulePath) {
         return;
       }
 
       const correctConfig = allTests.find(
-        t => t.context.config[moduleName] === modulePath,
+        (t) => t.context.config[moduleName] === modulePath,
       );
 
       const projectConfig = correctConfig

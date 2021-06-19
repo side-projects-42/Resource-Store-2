@@ -1,11 +1,10 @@
 Attending:
 
-* David Baker
-* Michael Kaiser-Nyman
-* Ricardo Mendes
+- David Baker
+- Michael Kaiser-Nyman
+- Ricardo Mendes
 
 ---
-
 
 MKN: https://github.com/emberjs/guides/issues/853#issuecomment-153623259 - are action names dasherized or camel cased?
 
@@ -14,7 +13,6 @@ DB: I just made a Twiddle showing that they are camel cased.
 MKN: I updated the issue to ask for this to get fixed.
 
 ---
-
 
 MKN: Good job on the redesign!
 
@@ -40,7 +38,6 @@ MKN: Thanks both of you for making this happen.
 
 ---
 
-
 RM: Also syntax highlighting is terrible for the dark background and not ES6 compatible.
 
 MKN: We're using CodeRay.
@@ -54,7 +51,6 @@ DB: dgeb looked into this recently and couldn't find much.
 MKN: I'll open an issue for this.
 
 ---
-
 
 RM: I forgot about the tutorial. I'll try again today or tomorrow.
 
@@ -74,20 +70,19 @@ MKN: What topics are in Getting Started?
 
 RM: Installing and Core Concepts.
 
-MKN: *If* we have both, I think Getting Started should have prerequisites, installing, ember new, core concepts, dev server, and building.
-  But then duplication and getting out of sync.
+MKN: _If_ we have both, I think Getting Started should have prerequisites, installing, ember new, core concepts, dev server, and building.
+But then duplication and getting out of sync.
 
 RM: People won't look in the Tutorial if they aren't brand new, and they won't find the content they need.
 
 DB: We have two sets of users - brand new, and more experienced looking for specific info or Ember CLI stuff.
 
 MKN: What if we just had all of the Getting Started stuff in its own section, and then the tutorial picks up where it left off?
-  That would DRY things up and make it easy to find stuff.
+That would DRY things up and make it easy to find stuff.
 
 RM: That works.
 
 ---
-
 
 RM: I wish we had separators like Trek proposed.
 

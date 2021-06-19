@@ -1,5 +1,5 @@
-var FilterItemHighlightButton = require( './FilterItemHighlightButton.js' ),
-	CheckboxInputWidget = require( './CheckboxInputWidget.js' ),
+var FilterItemHighlightButton = require("./FilterItemHighlightButton.js"),
+	CheckboxInputWidget = require("./CheckboxInputWidget.js"),
 	ItemMenuOptionWidget;
 
 /**
@@ -17,13 +17,19 @@ var FilterItemHighlightButton = require( './FilterItemHighlightButton.js' ),
  * @param {Object} config Configuration object
  */
 ItemMenuOptionWidget = function MwRcfiltersUiItemMenuOptionWidget(
-	controller, filtersViewModel, invertModel, itemModel, highlightPopup, config
+	controller,
+	filtersViewModel,
+	invertModel,
+	itemModel,
+	highlightPopup,
+	config
 ) {
 	var layout,
 		$widgetRow,
 		classes = [],
-		$label = $( '<div>' )
-			.addClass( 'mw-rcfilters-ui-itemMenuOptionWidget-label' );
+		$label = $("<div>").addClass(
+			"mw-rcfilters-ui-itemMenuOptionWidget-label"
+		);
 
 	config = config || {};
 
@@ -33,28 +39,34 @@ ItemMenuOptionWidget = function MwRcfiltersUiItemMenuOptionWidget(
 	this.itemModel = itemModel;
 
 	// Parent
-	ItemMenuOptionWidget.parent.call( this, $.extend( {
-		// Override the 'check' icon that OOUI defines
-		icon: '',
-		data: this.itemModel.getName(),
-		label: this.itemModel.getLabel()
-	}, config ) );
+	ItemMenuOptionWidget.parent.call(
+		this,
+		$.extend(
+			{
+				// Override the 'check' icon that OOUI defines
+				icon: "",
+				data: this.itemModel.getName(),
+				label: this.itemModel.getLabel(),
+			},
+			config
+		)
+	);
 
-	this.checkboxWidget = new CheckboxInputWidget( {
+	this.checkboxWidget = new CheckboxInputWidget({
 		value: this.itemModel.getName(),
-		selected: this.itemModel.isSelected()
-	} );
+		selected: this.itemModel.isSelected(),
+	});
 
 	$label.append(
-		$( '<div>' )
-			.addClass( 'mw-rcfilters-ui-itemMenuOptionWidget-label-title' )
-			.append( $( '<bdi>' ).append( this.$label ) )
+		$("<div>")
+			.addClass("mw-rcfilters-ui-itemMenuOptionWidget-label-title")
+			.append($("<bdi>").append(this.$label))
 	);
-	if ( this.itemModel.getDescription() ) {
+	if (this.itemModel.getDescription()) {
 		$label.append(
-			$( '<div>' )
-				.addClass( 'mw-rcfilters-ui-itemMenuOptionWidget-label-desc' )
-				.append( $( '<bdi>' ).text( this.itemModel.getDescription() ) )
+			$("<div>")
+				.addClass("mw-rcfilters-ui-itemMenuOptionWidget-label-desc")
+				.append($("<bdi>").text(this.itemModel.getDescription()))
 		);
 	}
 
@@ -64,57 +76,67 @@ ItemMenuOptionWidget = function MwRcfiltersUiItemMenuOptionWidget(
 		highlightPopup,
 		{
 			$overlay: config.$overlay || this.$element,
-			title: mw.msg( 'rcfilters-highlightmenu-help' )
+			title: mw.msg("rcfilters-highlightmenu-help"),
 		}
 	);
-	this.highlightButton.toggle( this.filtersViewModel.isHighlightEnabled() );
+	this.highlightButton.toggle(this.filtersViewModel.isHighlightEnabled());
 
-	this.excludeLabel = new OO.ui.LabelWidget( {
-		label: mw.msg( 'rcfilters-filter-excluded' )
-	} );
+	this.excludeLabel = new OO.ui.LabelWidget({
+		label: mw.msg("rcfilters-filter-excluded"),
+	});
 	this.excludeLabel.toggle(
-		this.itemModel.getGroupModel().getView() === 'namespaces' &&
-		this.itemModel.isSelected() &&
-		this.invertModel.isSelected()
+		this.itemModel.getGroupModel().getView() === "namespaces" &&
+			this.itemModel.isSelected() &&
+			this.invertModel.isSelected()
 	);
 
-	layout = new OO.ui.FieldLayout( this.checkboxWidget, {
+	layout = new OO.ui.FieldLayout(this.checkboxWidget, {
 		label: $label,
-		align: 'inline'
-	} );
+		align: "inline",
+	});
 
 	// Events
-	this.filtersViewModel.connect( this, { highlightChange: 'updateUiBasedOnState' } );
-	this.invertModel.connect( this, { update: 'updateUiBasedOnState' } );
-	this.itemModel.connect( this, { update: 'updateUiBasedOnState' } );
+	this.filtersViewModel.connect(this, {
+		highlightChange: "updateUiBasedOnState",
+	});
+	this.invertModel.connect(this, { update: "updateUiBasedOnState" });
+	this.itemModel.connect(this, { update: "updateUiBasedOnState" });
 	// HACK: Prevent defaults on 'click' for the label so it
 	// doesn't steal the focus away from the input. This means
 	// we can continue arrow-movement after we click the label
 	// and is consistent with the checkbox *itself* also preventing
 	// defaults on 'click' as well.
-	layout.$label.on( 'click', false );
+	layout.$label.on("click", false);
 
-	$widgetRow = $( '<div>' )
-		.addClass( 'mw-rcfilters-ui-table' )
+	$widgetRow = $("<div>")
+		.addClass("mw-rcfilters-ui-table")
 		.append(
-			$( '<div>' )
-				.addClass( 'mw-rcfilters-ui-row' )
+			$("<div>")
+				.addClass("mw-rcfilters-ui-row")
 				.append(
-					$( '<div>' )
-						.addClass( 'mw-rcfilters-ui-cell mw-rcfilters-ui-itemMenuOptionWidget-itemCheckbox' )
-						.append( layout.$element )
+					$("<div>")
+						.addClass(
+							"mw-rcfilters-ui-cell mw-rcfilters-ui-itemMenuOptionWidget-itemCheckbox"
+						)
+						.append(layout.$element)
 				)
 		);
 
-	if ( !OO.ui.isMobile() ) {
-		$widgetRow.find( '.mw-rcfilters-ui-row' ).append(
-			$( '<div>' )
-				.addClass( 'mw-rcfilters-ui-cell mw-rcfilters-ui-itemMenuOptionWidget-excludeLabel' )
-				.append( this.excludeLabel.$element ),
-			$( '<div>' )
-				.addClass( 'mw-rcfilters-ui-cell mw-rcfilters-ui-itemMenuOptionWidget-highlightButton' )
-				.append( this.highlightButton.$element )
-		);
+	if (!OO.ui.isMobile()) {
+		$widgetRow
+			.find(".mw-rcfilters-ui-row")
+			.append(
+				$("<div>")
+					.addClass(
+						"mw-rcfilters-ui-cell mw-rcfilters-ui-itemMenuOptionWidget-excludeLabel"
+					)
+					.append(this.excludeLabel.$element),
+				$("<div>")
+					.addClass(
+						"mw-rcfilters-ui-cell mw-rcfilters-ui-itemMenuOptionWidget-highlightButton"
+					)
+					.append(this.highlightButton.$element)
+			);
 	}
 
 	// The following classes are used here:
@@ -122,20 +144,25 @@ ItemMenuOptionWidget = function MwRcfiltersUiItemMenuOptionWidget(
 	// * mw-rcfilters-ui-itemMenuOptionWidget-view-namespaces
 	// * mw-rcfilters-ui-itemMenuOptionWidget-view-tags
 	this.$element
-		.addClass( 'mw-rcfilters-ui-itemMenuOptionWidget' )
-		.addClass( 'mw-rcfilters-ui-itemMenuOptionWidget-view-' + this.itemModel.getGroupModel().getView() )
-		.append( $widgetRow );
+		.addClass("mw-rcfilters-ui-itemMenuOptionWidget")
+		.addClass(
+			"mw-rcfilters-ui-itemMenuOptionWidget-view-" +
+				this.itemModel.getGroupModel().getView()
+		)
+		.append($widgetRow);
 
-	if ( this.itemModel.getIdentifiers() ) {
+	if (this.itemModel.getIdentifiers()) {
 		// The following classes are used here:
 		// * mw-rcfilters-ui-itemMenuOptionWidget-identifier-subject
 		// * mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk
-		this.itemModel.getIdentifiers().forEach( function ( ident ) {
-			classes.push( 'mw-rcfilters-ui-itemMenuOptionWidget-identifier-' + ident );
-		} );
+		this.itemModel.getIdentifiers().forEach(function (ident) {
+			classes.push(
+				"mw-rcfilters-ui-itemMenuOptionWidget-identifier-" + ident
+			);
+		});
 
 		// eslint-disable-next-line mediawiki/class-doc
-		this.$element.addClass( classes );
+		this.$element.addClass(classes);
 	}
 
 	this.updateUiBasedOnState();
@@ -143,7 +170,7 @@ ItemMenuOptionWidget = function MwRcfiltersUiItemMenuOptionWidget(
 
 /* Initialization */
 
-OO.inheritClass( ItemMenuOptionWidget, OO.ui.MenuOptionWidget );
+OO.inheritClass(ItemMenuOptionWidget, OO.ui.MenuOptionWidget);
 
 /* Static properties */
 
@@ -156,15 +183,15 @@ ItemMenuOptionWidget.static.scrollIntoViewOnSelect = false;
  * Respond to item model update event
  */
 ItemMenuOptionWidget.prototype.updateUiBasedOnState = function () {
-	this.checkboxWidget.setSelected( this.itemModel.isSelected() );
+	this.checkboxWidget.setSelected(this.itemModel.isSelected());
 
-	this.highlightButton.toggle( this.filtersViewModel.isHighlightEnabled() );
+	this.highlightButton.toggle(this.filtersViewModel.isHighlightEnabled());
 	this.excludeLabel.toggle(
-		this.itemModel.getGroupModel().getView() === 'namespaces' &&
-		this.itemModel.isSelected() &&
-		this.invertModel.isSelected()
+		this.itemModel.getGroupModel().getView() === "namespaces" &&
+			this.itemModel.isSelected() &&
+			this.invertModel.isSelected()
 	);
-	this.toggle( this.itemModel.isVisible() );
+	this.toggle(this.itemModel.isVisible());
 };
 
 /**

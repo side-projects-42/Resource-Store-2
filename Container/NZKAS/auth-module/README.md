@@ -27,7 +27,6 @@
 <a href="https://auth.nuxtjs.org">Read Documentation</a>
 </p>
 
-
 ## Development
 
 Running demo for development:

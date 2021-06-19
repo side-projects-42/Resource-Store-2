@@ -30,8 +30,7 @@
         {
           "ancestorTitles": ["testing EthNumber..."],
           "failureMessages": [],
-          "fullName":
-            "testing EthNumber... can take various format bigNumber can take",
+          "fullName": "testing EthNumber... can take various format bigNumber can take",
           "status": "passed",
           "title": "can take various format bigNumber can take"
         },
@@ -47,8 +46,7 @@
         {
           "ancestorTitles": ["testing EthNumber..."],
           "failureMessages": [],
-          "fullName":
-            "testing EthNumber... can handle empty and null as expected",
+          "fullName": "testing EthNumber... can handle empty and null as expected",
           "status": "passed",
           "title": "can handle empty and null as expected"
         },
@@ -90,8 +88,7 @@
         {
           "ancestorTitles": ["testing Address"],
           "failureMessages": [],
-          "fullName":
-            "testing Address can accept valid address with or without prefix",
+          "fullName": "testing Address can accept valid address with or without prefix",
           "status": "passed",
           "title": "can accept valid address with or without prefix"
         },
@@ -104,8 +101,7 @@
         }
       ],
       "endTime": 1506696066220,
-      "message":
-        "  ● testing EthNumber... › should fail\n\n    Failed: that's right\n      \n      at stackFormatter (node_modules/jest/node_modules/jest-jasmine2/build/expectation_result_factory.js:49:427)\n      at Object.<anonymous> (packages/Y-core/src/eth/__tests__/types.test.ts:19:9)\n          at Promise (<anonymous>)\n",
+      "message": "  ● testing EthNumber... › should fail\n\n    Failed: that's right\n      \n      at stackFormatter (node_modules/jest/node_modules/jest-jasmine2/build/expectation_result_factory.js:49:427)\n      at Object.<anonymous> (packages/Y-core/src/eth/__tests__/types.test.ts:19:9)\n          at Promise (<anonymous>)\n",
       "name": "/X/packages/Y-core/src/eth/__tests__/types.test.ts",
       "startTime": 1506696063929,
       "status": "failed",
@@ -152,10 +148,8 @@
         }
       ],
       "endTime": 1506696066416,
-      "message":
-        "  ● curry › keeper jest test\n\n    Failed: intentionally failed\n      \n      at stackFormatter (node_modules/jest/node_modules/jest-jasmine2/build/expectation_result_factory.js:49:427)\n      at Object.<anonymous> (packages/Y-keeper/src/redux/doable/__tests__/learn-ramda.test.ts:75:9)\n          at Promise (<anonymous>)\n",
-      "name":
-        "/X/packages/Y-keeper/src/redux/doable/__tests__/learn-ramda.test.ts",
+      "message": "  ● curry › keeper jest test\n\n    Failed: intentionally failed\n      \n      at stackFormatter (node_modules/jest/node_modules/jest-jasmine2/build/expectation_result_factory.js:49:427)\n      at Object.<anonymous> (packages/Y-keeper/src/redux/doable/__tests__/learn-ramda.test.ts:75:9)\n          at Promise (<anonymous>)\n",
+      "name": "/X/packages/Y-keeper/src/redux/doable/__tests__/learn-ramda.test.ts",
       "startTime": 1506696063883,
       "status": "failed",
       "summary": ""
@@ -165,32 +159,28 @@
         {
           "ancestorTitles": ["testing HDKeyMaker"],
           "failureMessages": [],
-          "fullName":
-            "testing HDKeyMaker can create account and generate mnemonic phrase",
+          "fullName": "testing HDKeyMaker can create account and generate mnemonic phrase",
           "status": "passed",
           "title": "can create account and generate mnemonic phrase"
         },
         {
           "ancestorTitles": ["testing HDKeyMaker"],
           "failureMessages": [],
-          "fullName":
-            "testing HDKeyMaker same mnemonic will generate same keys and same order",
+          "fullName": "testing HDKeyMaker same mnemonic will generate same keys and same order",
           "status": "passed",
           "title": "same mnemonic will generate same keys and same order"
         },
         {
           "ancestorTitles": ["testing HDKeyMaker"],
           "failureMessages": [],
-          "fullName":
-            "testing HDKeyMaker different mnemonic will generate different keys",
+          "fullName": "testing HDKeyMaker different mnemonic will generate different keys",
           "status": "passed",
           "title": "different mnemonic will generate different keys"
         },
         {
           "ancestorTitles": ["testing HDKeyMaker"],
           "failureMessages": [],
-          "fullName":
-            "testing HDKeyMaker can add more accounts, while to be restorable",
+          "fullName": "testing HDKeyMaker can add more accounts, while to be restorable",
           "status": "passed",
           "title": "can add more accounts, while to be restorable"
         },
@@ -204,8 +194,7 @@
         {
           "ancestorTitles": ["testing HDKeyMaker"],
           "failureMessages": [],
-          "fullName":
-            "testing HDKeyMaker can serialize then deserialize correctly",
+          "fullName": "testing HDKeyMaker can serialize then deserialize correctly",
           "status": "passed",
           "title": "can serialize then deserialize correctly"
         },
@@ -243,8 +232,7 @@
       ],
       "endTime": 1506696066914,
       "message": "",
-      "name":
-        "/X/packages/Y-keeper/src/redux/middlewares/__tests__/createGateMonitor.test.ts",
+      "name": "/X/packages/Y-keeper/src/redux/middlewares/__tests__/createGateMonitor.test.ts",
       "startTime": 1506696066251,
       "status": "passed",
       "summary": ""
@@ -261,16 +249,14 @@
         {
           "ancestorTitles": ["test protocols"],
           "failureMessages": [],
-          "fullName":
-            "test protocols can pass a keyMakerCreatible class for creation",
+          "fullName": "test protocols can pass a keyMakerCreatible class for creation",
           "status": "passed",
           "title": "can pass a keyMakerCreatible class for creation"
         },
         {
           "ancestorTitles": ["test protocols"],
           "failureMessages": [],
-          "fullName":
-            "test protocols can pass a keyMakerCreatible class for deserialization",
+          "fullName": "test protocols can pass a keyMakerCreatible class for deserialization",
           "status": "passed",
           "title": "can pass a keyMakerCreatible class for deserialization"
         }
@@ -286,8 +272,7 @@
       "assertionResults": [],
       "coverage": {},
       "endTime": 1506696067888,
-      "message":
-        "  ● Test suite failed to run\n\n    Cannot find module 'StyleSheet' from 'react-native-implementation.js'\n      \n      at Resolver.resolveModule (node_modules/jest-runtime/node_modules/jest-resolve/build/index.js:191:17)\n      at Object.get StyleSheet [as StyleSheet] (packages/Y-app-vault/native/node_modules/react-native/Libraries/react-native/react-native-implementation.js:95:25)\n      at Object.<anonymous> (packages/Y-app-vault/native/app/App.js:56:24)\n",
+      "message": "  ● Test suite failed to run\n\n    Cannot find module 'StyleSheet' from 'react-native-implementation.js'\n      \n      at Resolver.resolveModule (node_modules/jest-runtime/node_modules/jest-resolve/build/index.js:191:17)\n      at Object.get StyleSheet [as StyleSheet] (packages/Y-app-vault/native/node_modules/react-native/Libraries/react-native/react-native-implementation.js:95:25)\n      at Object.<anonymous> (packages/Y-app-vault/native/app/App.js:56:24)\n",
       "name": "/X/packages/Y-app-vault/native/__tests__/index.ios.js",
       "startTime": 1506696067888,
       "status": "failed",
@@ -297,8 +282,7 @@
       "assertionResults": [],
       "coverage": {},
       "endTime": 1506696067888,
-      "message":
-        "  ● Test suite failed to run\n\n    Cannot find module 'StyleSheet' from 'react-native-implementation.js'\n      \n      at Resolver.resolveModule (node_modules/jest-runtime/node_modules/jest-resolve/build/index.js:191:17)\n      at Object.get StyleSheet [as StyleSheet] (packages/Y-app-vault/native/node_modules/react-native/Libraries/react-native/react-native-implementation.js:95:25)\n      at Object.<anonymous> (packages/Y-app-vault/native/app/App.js:56:24)\n",
+      "message": "  ● Test suite failed to run\n\n    Cannot find module 'StyleSheet' from 'react-native-implementation.js'\n      \n      at Resolver.resolveModule (node_modules/jest-runtime/node_modules/jest-resolve/build/index.js:191:17)\n      at Object.get StyleSheet [as StyleSheet] (packages/Y-app-vault/native/node_modules/react-native/Libraries/react-native/react-native-implementation.js:95:25)\n      at Object.<anonymous> (packages/Y-app-vault/native/app/App.js:56:24)\n",
       "name": "/X/packages/Y-app-vault/native/__tests__/index.android.js",
       "startTime": 1506696067888,
       "status": "failed",
@@ -386,8 +370,7 @@
         {
           "ancestorTitles": ["DoableActionInvoker"],
           "failureMessages": [],
-          "fullName":
-            "DoableActionInvoker won't execute the action already executed",
+          "fullName": "DoableActionInvoker won't execute the action already executed",
           "status": "passed",
           "title": "won't execute the action already executed"
         },
@@ -415,8 +398,7 @@
         {
           "ancestorTitles": ["DoableActionLogging"],
           "failureMessages": [],
-          "fullName":
-            "DoableActionLogging can log async actions upon actual completion",
+          "fullName": "DoableActionLogging can log async actions upon actual completion",
           "status": "passed",
           "title": "can log async actions upon actual completion"
         },
@@ -430,41 +412,35 @@
         {
           "ancestorTitles": ["DoableActionReducer"],
           "failureMessages": [],
-          "fullName":
-            "DoableActionReducer can merge from DoableAction's doResult",
+          "fullName": "DoableActionReducer can merge from DoableAction's doResult",
           "status": "passed",
           "title": "can merge from DoableAction's doResult"
         },
         {
           "ancestorTitles": ["DoableActionReducer"],
           "failureMessages": [],
-          "fullName":
-            "DoableActionReducer will return original state for actions without reducer property",
+          "fullName": "DoableActionReducer will return original state for actions without reducer property",
           "status": "passed",
-          "title":
-            "will return original state for actions without reducer property"
+          "title": "will return original state for actions without reducer property"
         },
         {
           "ancestorTitles": ["more complex cases"],
           "failureMessages": [],
-          "fullName":
-            "more complex cases can handle nested dispatches in sync operation",
+          "fullName": "more complex cases can handle nested dispatches in sync operation",
           "status": "passed",
           "title": "can handle nested dispatches in sync operation"
         },
         {
           "ancestorTitles": ["more complex cases"],
           "failureMessages": [],
-          "fullName":
-            "more complex cases can handle nested dispatches in async operation",
+          "fullName": "more complex cases can handle nested dispatches in async operation",
           "status": "passed",
           "title": "can handle nested dispatches in async operation"
         }
       ],
       "endTime": 1506696067828,
       "message": "",
-      "name":
-        "/X/packages/Y-keeper/src/redux/doable/__tests__/ReduxDoable.test.ts",
+      "name": "/X/packages/Y-keeper/src/redux/doable/__tests__/ReduxDoable.test.ts",
       "startTime": 1506696063895,
       "status": "passed",
       "summary": ""

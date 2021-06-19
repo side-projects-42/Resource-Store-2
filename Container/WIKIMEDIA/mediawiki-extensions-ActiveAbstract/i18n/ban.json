@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Chinamoonroll"
-		]
-	},
-	"activeabstract-desc": "Ngasilan umpan XML, antuk proyék Active Abstracts Yahoo"
+  "@metadata": {
+    "authors": ["Chinamoonroll"]
+  },
+  "activeabstract-desc": "Ngasilan umpan XML, antuk proyék Active Abstracts Yahoo"
 }

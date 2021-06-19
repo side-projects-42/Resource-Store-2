@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Obsuser"
-		]
-	},
-	"akismetklik-desc": "Одбија измене од сумњивих спамера коментарима на Akismet црној листи"
+  "@metadata": {
+    "authors": ["Obsuser"]
+  },
+  "akismetklik-desc": "Одбија измене од сумњивих спамера коментарима на Akismet црној листи"
 }

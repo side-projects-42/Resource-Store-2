@@ -26,7 +26,7 @@ export const errorMessage = (
   const message = `  Option ${chalk.bold(
     `"${path && path.length > 0 ? path.join('.') + '.' : ''}${option}"`,
   )} must be of type:
-    ${validTypes.map(e => chalk.bold.green(e)).join(' or ')}
+    ${validTypes.map((e) => chalk.bold.green(e)).join(' or ')}
   but instead received:
     ${chalk.bold.red(getType(received))}
 
@@ -41,7 +41,7 @@ ${formatExamples(option, conditions)}`;
 
 function formatExamples(option: string, examples: Array<any>) {
   return examples.map(
-    e => `  {
+    (e) => `  {
     ${chalk.bold(`"${option}"`)}: ${chalk.bold(formatPrettyObject(e))}
   }`,
   ).join(`

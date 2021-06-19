@@ -22,154 +22,176 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-'use strict';
+"use strict";
 
 var data,
-    fs = require('fs'),
-    path = require('path'),
-    root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
-    esprima = require('./3rdparty/esprima'),
-    escodegen = require(root),
-    chai = require('chai'),
-    expect = chai.expect;
+  fs = require("fs"),
+  path = require("path"),
+  root = path.join(path.dirname(fs.realpathSync(__filename)), ".."),
+  esprima = require("./3rdparty/esprima"),
+  escodegen = require(root),
+  chai = require("chai"),
+  expect = chai.expect;
 
 data = {
-    'RegExp string': [
+  "RegExp string": [
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('///')
-                },
-            }],
-            expected: '/\\/\\/\\//;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("///"),
+          },
         },
+      ],
+      expected: "/\\/\\/\\//;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('///', 'i')
-                },
-            }],
-            expected: '/\\/\\/\\//i;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("///", "i"),
+          },
         },
+      ],
+      expected: "/\\/\\/\\//i;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('\n', 'i')
-                },
-            }],
-            expected: '/\\n/i;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("\n", "i"),
+          },
         },
+      ],
+      expected: "/\\n/i;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('\r', 'i')
-                },
-            }],
-            expected: '/\\r/i;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("\r", "i"),
+          },
         },
+      ],
+      expected: "/\\r/i;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('\u2028', 'i')
-                },
-            }],
-            expected: '/\\u2028/i;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("\u2028", "i"),
+          },
         },
+      ],
+      expected: "/\\u2028/i;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('\u2029', 'i')
-                },
-            }],
-            expected: '/\\u2029/i;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("\u2029", "i"),
+          },
         },
+      ],
+      expected: "/\\u2029/i;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('\\\\', 'i')
-                },
-            }],
-            expected: '/\\\\/i;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("\\\\", "i"),
+          },
         },
+      ],
+      expected: "/\\\\/i;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('\\\u2028', 'i')
-                },
-            }],
-            expected: '/\\u2028/i;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("\\\u2028", "i"),
+          },
         },
+      ],
+      expected: "/\\u2028/i;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: new RegExp('\\\\u2028', 'i')
-                },
-            }],
-            expected: '/\\\\u2028/i;'
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: new RegExp("\\\\u2028", "i"),
+          },
         },
+      ],
+      expected: "/\\\\u2028/i;",
+    },
+    {
+      type: "Program",
+      body: [
         {
-            type: 'Program',
-            body: [{
-                type: 'ExpressionStatement',
-                expression: {
-                    type: 'Literal',
-                    value: {
-                        toString: function() { return new RegExp('', 'i').toString(); },
-                        source: ''
-                    }
-                },
-            }],
-            expected: '/(?:)/i;'
-        }
-    ]
+          type: "ExpressionStatement",
+          expression: {
+            type: "Literal",
+            value: {
+              toString: function () {
+                return new RegExp("", "i").toString();
+              },
+              source: "",
+            },
+          },
+        },
+      ],
+      expected: "/(?:)/i;",
+    },
+  ],
 };
 
 function runTest(ast, expected) {
-    var actual, options;
+  var actual, options;
 
-    options = {
-        indent: '    ',
-        parse: esprima.parse
-    };
+  options = {
+    indent: "    ",
+    parse: esprima.parse,
+  };
 
-    actual = escodegen.generate(ast, options);
-    expect(actual).to.be.equal(expected);
+  actual = escodegen.generate(ast, options);
+  expect(actual).to.be.equal(expected);
 }
 
-describe('AST', function () {
-    Object.keys(data).forEach(function (category) {
-        it(category + ' test', function () {
-            data[category].forEach(function (ast) {
-                runTest(ast, ast.expected);
-            });
-        });
+describe("AST", function () {
+  Object.keys(data).forEach(function (category) {
+    it(category + " test", function () {
+      data[category].forEach(function (ast) {
+        runTest(ast, ast.expected);
+      });
     });
+  });
 });
 /* vim: set sw=4 ts=4 et tw=80 : */

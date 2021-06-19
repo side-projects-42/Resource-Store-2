@@ -1,4 +1,4 @@
-( function () {
+(function () {
 	/**
 	 * Factory for MessagePoster objects. This provides a pluggable to way to script the action
 	 * of adding a message to someone's talk page.
@@ -24,10 +24,10 @@
 	 * @singleton
 	 */
 	function MessagePosterFactory() {
-		this.contentModelToClass = Object.create( null );
+		this.contentModelToClass = Object.create(null);
 	}
 
-	OO.initClass( MessagePosterFactory );
+	OO.initClass(MessagePosterFactory);
 
 	// Note: This registration scheme is currently not compatible with LQT, since that doesn't
 	// have its own content model, just islqttalkpage. LQT pages will be passed to the wikitext
@@ -38,12 +38,17 @@
 	 * @param {string} contentModel Content model of pages this MessagePoster can post to
 	 * @param {Function} constructor Constructor of a MessagePoster subclass
 	 */
-	MessagePosterFactory.prototype.register = function ( contentModel, constructor ) {
-		if ( this.contentModelToClass[ contentModel ] ) {
-			throw new Error( 'Content model "' + contentModel + '" is already registered' );
+	MessagePosterFactory.prototype.register = function (
+		contentModel,
+		constructor
+	) {
+		if (this.contentModelToClass[contentModel]) {
+			throw new Error(
+				'Content model "' + contentModel + '" is already registered'
+			);
 		}
 
-		this.contentModelToClass[ contentModel ] = constructor;
+		this.contentModelToClass[contentModel] = constructor;
 	};
 
 	/**
@@ -52,8 +57,8 @@
 	 *
 	 * @param {string} contentModel Content model to unregister
 	 */
-	MessagePosterFactory.prototype.unregister = function ( contentModel ) {
-		delete this.contentModelToClass[ contentModel ];
+	MessagePosterFactory.prototype.unregister = function (contentModel) {
+		delete this.contentModelToClass[contentModel];
 	};
 
 	/**
@@ -75,31 +80,50 @@
 	 *   - error Error explanation
 	 *   - details Further error details
 	 */
-	MessagePosterFactory.prototype.create = function ( title, apiUrl ) {
+	MessagePosterFactory.prototype.create = function (title, apiUrl) {
 		var factory = this,
-			api = apiUrl ? new mw.ForeignApi( apiUrl ) : new mw.Api();
+			api = apiUrl ? new mw.ForeignApi(apiUrl) : new mw.Api();
 
-		return api.get( {
-			formatversion: 2,
-			action: 'query',
-			prop: 'info',
-			titles: title.getPrefixedDb()
-		} ).then( function ( data ) {
-			var contentModel, page = data.query.pages[ 0 ];
-			if ( !page ) {
-				return $.Deferred().reject( 'unexpected-response', 'Unexpected API response' );
-			}
-			contentModel = page.contentmodel;
-			if ( !factory.contentModelToClass[ contentModel ] ) {
-				return $.Deferred().reject( 'content-model-unknown', 'No handler for "' + contentModel + '"' );
-			}
-			return new factory.contentModelToClass[ contentModel ]( title, api );
-		}, function ( error, details ) {
-			return $.Deferred().reject( 'content-model-query-failed', error, details );
-		} );
+		return api
+			.get({
+				formatversion: 2,
+				action: "query",
+				prop: "info",
+				titles: title.getPrefixedDb(),
+			})
+			.then(
+				function (data) {
+					var contentModel,
+						page = data.query.pages[0];
+					if (!page) {
+						return $.Deferred().reject(
+							"unexpected-response",
+							"Unexpected API response"
+						);
+					}
+					contentModel = page.contentmodel;
+					if (!factory.contentModelToClass[contentModel]) {
+						return $.Deferred().reject(
+							"content-model-unknown",
+							'No handler for "' + contentModel + '"'
+						);
+					}
+					return new factory.contentModelToClass[contentModel](
+						title,
+						api
+					);
+				},
+				function (error, details) {
+					return $.Deferred().reject(
+						"content-model-query-failed",
+						error,
+						details
+					);
+				}
+			);
 	};
 
 	mw.messagePoster = {
-		factory: new MessagePosterFactory()
+		factory: new MessagePosterFactory(),
 	};
-}() );
+})();

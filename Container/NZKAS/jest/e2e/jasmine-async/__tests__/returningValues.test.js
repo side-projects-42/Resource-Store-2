@@ -20,7 +20,7 @@ describe('returning values', () => {
     [1],
     {},
     () => {},
-  ].forEach(val => {
+  ].forEach((val) => {
     it(`throws if '${val}:${typeof val}' is returned`, () => val);
   });
 });

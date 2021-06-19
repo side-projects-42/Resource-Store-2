@@ -1,0 +1,36 @@
+  <div class="card-header h3">
+    Perks
+  </div>
+
+  <div class="card body container-fluid">
+    <table class="table table-striped table-hover table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Limited?</th>
+          <th scope="col">$ Addon?</th>
+          <th scope="col" colspan="3" class="text-center">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @perks.each do |perk| %>
+        <tr>
+          <td><%= perk.name %></td>
+          <td>
+            <% if perk.limited.present? %>
+            ✅
+            <% end %>
+          </td>
+          <td>
+            <% if perk.paid_addon.present? %>
+            ✅
+            <% end %>
+          </td>
+          <td><%= link_to "View", perk_path(perk), class: "btn btn-primary small" %>
+            <% end %>
+        </tr>
+      </tbody>
+    </table>
+    <p><%= link_to "Create a New Perk", new_perk_path, class: "btn btn-success"  %></p>
+    <p><%= link_to "Back to Events", events_path, class: "btn btn-primary" %></p>
+  </div>

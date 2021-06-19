@@ -4,12 +4,13 @@
 :nodeid: 295
 :created: 1300727796
 :tags:
-- general
-- feedback
-- news
+  - general
+  - feedback
+  - news
 :author: rtyler
 ---
-After a number of **absolutely** fantastic logo submissions from a number of designers, I'm extremely pleased to open the polls on the vote for the ***brand new Jenkins logo!***
+
+After a number of **absolutely** fantastic logo submissions from a number of designers, I'm extremely pleased to open the polls on the vote for the **_brand new Jenkins logo!_**
 
 The thumbnails do not do any of these logos justice in my opinion, so I recommend opening each logo up in its own tab to get the full effect :)
 
@@ -40,7 +41,6 @@ I plan to end voting **March 28th at 12:01 UTC**.
             <a href="http://jenkins-ci.org/content/jenkins-logo-entry-3">Logo #3</a>
         </td>
     </tr>
-
 
     <tr>
         <td align="center">
@@ -110,6 +110,7 @@ I plan to end voting **March 28th at 12:01 UTC**.
         <td align="center">
         </td>
     </tr>
+
 </table>
 <!--break-->
 ### The Vote

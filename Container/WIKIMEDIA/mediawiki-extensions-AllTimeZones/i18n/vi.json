@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Vinhtantran"
-		]
-	},
-	"alltimezones-desc": "Thêm một thẻ để hiển thị ngày tháng trong tất cả các múi giờ"
+  "@metadata": {
+    "authors": ["Vinhtantran"]
+  },
+  "alltimezones-desc": "Thêm một thẻ để hiển thị ngày tháng trong tất cả các múi giờ"
 }

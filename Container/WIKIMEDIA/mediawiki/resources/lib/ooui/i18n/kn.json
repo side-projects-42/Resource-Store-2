@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Nayvik",
-			"Omshivaprakash",
-			"Pavanaja",
-			"Vikassy",
-			"Yogesh"
-		]
+		"authors": ["Nayvik", "Omshivaprakash", "Pavanaja", "Vikassy", "Yogesh"]
 	},
 	"ooui-outline-control-move-down": "ವಸ್ತುವನ್ನು ಕೆಳಗೆ ಸರಿಸು",
 	"ooui-outline-control-move-up": "ವಸ್ತುವನ್ನು ಮೇಲೆ ಸರಿಸು",

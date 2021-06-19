@@ -32,7 +32,7 @@ GC: https://github.com/emberjs/ember.js/blob/master/packages/ember-application/l
 
 GC: there are two patches requires for DOM helper for the visit API to work.
 
-GC: First thing is it uses the dom to parse URLs 
+GC: First thing is it uses the dom to parse URLs
 
 YK+RJ: We use the DOM to parse URLs so we can ensure the correct contextual protocol. An "a" tag
 

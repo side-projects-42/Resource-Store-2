@@ -15,10 +15,7 @@
   "description": "Instrumentation of Spring Cloud Gateway for use with the New Relic Java Agent",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Shell",
-  "projectTags": [
-    "nrlabs",
-    "instrumentation"
-  ],
+  "projectTags": ["nrlabs", "instrumentation"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Java Instrumentation for Spring Cloud Gateway",

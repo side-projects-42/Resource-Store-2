@@ -2,8 +2,7 @@
  * HTMLForm enhancements:
  * Set up 'hide-if' behaviors for form fields that have them.
  */
-( function () {
-
+(function () {
 	/**
 	 * Helper function for hide-if to find the nearby form field.
 	 *
@@ -18,22 +17,26 @@
 	 * @param {string} name
 	 * @return {jQuery|OO.ui.Widget|null}
 	 */
-	function hideIfGetField( $el, name ) {
-		var $found, $p, $widget,
-			suffix = name.replace( /^([^[]+)/, '[$1]' );
+	function hideIfGetField($el, name) {
+		var $found,
+			$p,
+			$widget,
+			suffix = name.replace(/^([^[]+)/, "[$1]");
 
 		function nameFilter() {
-			return this.name === name ||
-				( this.name === ( 'wp' + name ) ) ||
-				this.name.slice( -suffix.length ) === suffix;
+			return (
+				this.name === name ||
+				this.name === "wp" + name ||
+				this.name.slice(-suffix.length) === suffix
+			);
 		}
 
-		for ( $p = $el.parent(); $p.length > 0; $p = $p.parent() ) {
-			$found = $p.find( '[name]' ).filter( nameFilter );
-			if ( $found.length ) {
-				$widget = $found.closest( '.oo-ui-widget[data-ooui]' );
-				if ( $widget.length ) {
-					return OO.ui.Widget.static.infuse( $widget );
+		for ($p = $el.parent(); $p.length > 0; $p = $p.parent()) {
+			$found = $p.find("[name]").filter(nameFilter);
+			if ($found.length) {
+				$widget = $found.closest(".oo-ui-widget[data-ooui]");
+				if ($widget.length) {
+					return OO.ui.Widget.static.infuse($widget);
 				}
 				return $found;
 			}
@@ -53,34 +56,34 @@
 	 * @return {Array} return.0 Dependent fields, array of jQuery objects or OO.ui.Widgets
 	 * @return {Function} return.1 Test function
 	 */
-	function hideIfParse( $el, spec ) {
+	function hideIfParse($el, spec) {
 		var op, i, l, v, field, $field, fields, func, funcs, getVal;
 
-		op = spec[ 0 ];
+		op = spec[0];
 		l = spec.length;
-		switch ( op ) {
-			case 'AND':
-			case 'OR':
-			case 'NAND':
-			case 'NOR':
+		switch (op) {
+			case "AND":
+			case "OR":
+			case "NAND":
+			case "NOR":
 				funcs = [];
 				fields = [];
-				for ( i = 1; i < l; i++ ) {
-					if ( !Array.isArray( spec[ i ] ) ) {
-						throw new Error( op + ' parameters must be arrays' );
+				for (i = 1; i < l; i++) {
+					if (!Array.isArray(spec[i])) {
+						throw new Error(op + " parameters must be arrays");
 					}
-					v = hideIfParse( $el, spec[ i ] );
-					fields = fields.concat( v[ 0 ] );
-					funcs.push( v[ 1 ] );
+					v = hideIfParse($el, spec[i]);
+					fields = fields.concat(v[0]);
+					funcs.push(v[1]);
 				}
 
 				l = funcs.length;
-				switch ( op ) {
-					case 'AND':
+				switch (op) {
+					case "AND":
 						func = function () {
 							var j;
-							for ( j = 0; j < l; j++ ) {
-								if ( !funcs[ j ]() ) {
+							for (j = 0; j < l; j++) {
+								if (!funcs[j]()) {
 									return false;
 								}
 							}
@@ -88,11 +91,11 @@
 						};
 						break;
 
-					case 'OR':
+					case "OR":
 						func = function () {
 							var j;
-							for ( j = 0; j < l; j++ ) {
-								if ( funcs[ j ]() ) {
+							for (j = 0; j < l; j++) {
+								if (funcs[j]()) {
 									return true;
 								}
 							}
@@ -100,11 +103,11 @@
 						};
 						break;
 
-					case 'NAND':
+					case "NAND":
 						func = function () {
 							var j;
-							for ( j = 0; j < l; j++ ) {
-								if ( !funcs[ j ]() ) {
+							for (j = 0; j < l; j++) {
+								if (!funcs[j]()) {
 									return true;
 								}
 							}
@@ -112,11 +115,11 @@
 						};
 						break;
 
-					case 'NOR':
+					case "NOR":
 						func = function () {
 							var j;
-							for ( j = 0; j < l; j++ ) {
-								if ( funcs[ j ]() ) {
+							for (j = 0; j < l; j++) {
+								if (funcs[j]()) {
 									return false;
 								}
 							}
@@ -125,41 +128,47 @@
 						break;
 				}
 
-				return [ fields, func ];
+				return [fields, func];
 
-			case 'NOT':
-				if ( l !== 2 ) {
-					throw new Error( 'NOT takes exactly one parameter' );
+			case "NOT":
+				if (l !== 2) {
+					throw new Error("NOT takes exactly one parameter");
 				}
-				if ( !Array.isArray( spec[ 1 ] ) ) {
-					throw new Error( 'NOT parameters must be arrays' );
+				if (!Array.isArray(spec[1])) {
+					throw new Error("NOT parameters must be arrays");
 				}
-				v = hideIfParse( $el, spec[ 1 ] );
-				fields = v[ 0 ];
-				func = v[ 1 ];
-				return [ fields, function () {
-					return !func();
-				} ];
+				v = hideIfParse($el, spec[1]);
+				fields = v[0];
+				func = v[1];
+				return [
+					fields,
+					function () {
+						return !func();
+					},
+				];
 
-			case '===':
-			case '!==':
-				if ( l !== 3 ) {
-					throw new Error( op + ' takes exactly two parameters' );
+			case "===":
+			case "!==":
+				if (l !== 3) {
+					throw new Error(op + " takes exactly two parameters");
 				}
-				field = hideIfGetField( $el, spec[ 1 ] );
-				if ( !field ) {
-					return [ [], function () {
-						return false;
-					} ];
+				field = hideIfGetField($el, spec[1]);
+				if (!field) {
+					return [
+						[],
+						function () {
+							return false;
+						},
+					];
 				}
-				v = spec[ 2 ];
+				v = spec[2];
 
-				if ( !( field instanceof $ ) ) {
+				if (!(field instanceof $)) {
 					// field is a OO.ui.Widget
-					if ( field.supports( 'isSelected' ) ) {
+					if (field.supports("isSelected")) {
 						getVal = function () {
 							var selected = field.isSelected();
-							return selected ? field.getValue() : '';
+							return selected ? field.getValue() : "";
 						};
 					} else {
 						getVal = function () {
@@ -167,11 +176,14 @@
 						};
 					}
 				} else {
-					$field = $( field );
-					if ( $field.prop( 'type' ) === 'radio' || $field.prop( 'type' ) === 'checkbox' ) {
+					$field = $(field);
+					if (
+						$field.prop("type") === "radio" ||
+						$field.prop("type") === "checkbox"
+					) {
 						getVal = function () {
-							var $selected = $field.filter( ':checked' );
-							return $selected.length ? $selected.val() : '';
+							var $selected = $field.filter(":checked");
+							return $selected.length ? $selected.val() : "";
 						};
 					} else {
 						getVal = function () {
@@ -180,79 +192,85 @@
 					}
 				}
 
-				switch ( op ) {
-					case '===':
+				switch (op) {
+					case "===":
 						func = function () {
 							return getVal() === v;
 						};
 						break;
-					case '!==':
+					case "!==":
 						func = function () {
 							return getVal() !== v;
 						};
 						break;
 				}
 
-				return [ [ field ], func ];
+				return [[field], func];
 
 			default:
-				throw new Error( 'Unrecognized operation \'' + op + '\'' );
+				throw new Error("Unrecognized operation '" + op + "'");
 		}
 	}
 
-	mw.hook( 'htmlform.enhance' ).add( function ( $root ) {
-		var
-			$fields = $root.find( '.mw-htmlform-hide-if' ),
-			$oouiFields = $fields.filter( '[data-ooui]' ),
+	mw.hook("htmlform.enhance").add(function ($root) {
+		var $fields = $root.find(".mw-htmlform-hide-if"),
+			$oouiFields = $fields.filter("[data-ooui]"),
 			modules = [];
 
-		if ( $oouiFields.length ) {
-			modules.push( 'mediawiki.htmlform.ooui' );
-			$oouiFields.each( function () {
-				var data, extraModules,
-					$el = $( this );
+		if ($oouiFields.length) {
+			modules.push("mediawiki.htmlform.ooui");
+			$oouiFields.each(function () {
+				var data,
+					extraModules,
+					$el = $(this);
 
-				data = $el.data( 'mw-modules' );
-				if ( data ) {
+				data = $el.data("mw-modules");
+				if (data) {
 					// We can trust this value, 'data-mw-*' attributes are banned from user content in Sanitizer
-					extraModules = data.split( ',' );
-					modules.push.apply( modules, extraModules );
+					extraModules = data.split(",");
+					modules.push.apply(modules, extraModules);
 				}
-			} );
+			});
 		}
 
-		mw.loader.using( modules ).done( function () {
-			$fields.each( function () {
-				var v, i, fields, test, func, spec, $elOrLayout,
-					$el = $( this );
+		mw.loader.using(modules).done(function () {
+			$fields.each(function () {
+				var v,
+					i,
+					fields,
+					test,
+					func,
+					spec,
+					$elOrLayout,
+					$el = $(this);
 
-				if ( $el.is( '[data-ooui]' ) ) {
+				if ($el.is("[data-ooui]")) {
 					// $elOrLayout should be a FieldLayout that mixes in mw.htmlform.Element
-					$elOrLayout = OO.ui.FieldLayout.static.infuse( $el );
+					$elOrLayout = OO.ui.FieldLayout.static.infuse($el);
 					spec = $elOrLayout.hideIf;
 					// The original element has been replaced with infused one
 					$el = $elOrLayout.$element;
 				} else {
 					$elOrLayout = $el;
-					spec = $el.data( 'hideIf' );
+					spec = $el.data("hideIf");
 				}
 
-				if ( !spec ) {
+				if (!spec) {
 					return;
 				}
 
-				v = hideIfParse( $el, spec );
-				fields = v[ 0 ];
-				test = v[ 1 ];
+				v = hideIfParse($el, spec);
+				fields = v[0];
+				test = v[1];
 				// The .toggle() method works mostly the same for jQuery objects and OO.ui.Widget
 				func = function () {
 					var shouldHide = test();
-					$elOrLayout.toggle( !shouldHide );
+					$elOrLayout.toggle(!shouldHide);
 
 					// It is impossible to submit a form with hidden fields failing validation, e.g. one that
 					// is required. However, validity is not checked for disabled fields, as these are not
 					// submitted with the form. So we should also disable fields when hiding them.
-					if ( $elOrLayout instanceof $ ) {
+					if ($elOrLayout instanceof $) {
 						// This also finds elements inside any nested fields (in case of HTMLFormFieldCloner),
 						// which is problematic. But it works because:
 						// * HTMLFormFieldCloner::createFieldsForKey() copies 'hide-if' rules to nested fields
@@ -260,36 +278,48 @@
 						//   handlers for parents first
 						// * Event handlers are fired in the order they were registered, so even if the handler
 						//   for parent messed up the child, the handle for child will run next and fix it
-						$elOrLayout.find( 'input, textarea, select' ).each( function () {
-							var $this = $( this );
-							if ( shouldHide ) {
-								if ( $this.data( 'was-disabled' ) === undefined ) {
-									$this.data( 'was-disabled', $this.prop( 'disabled' ) );
+						$elOrLayout
+							.find("input, textarea, select")
+							.each(function () {
+								var $this = $(this);
+								if (shouldHide) {
+									if (
+										$this.data("was-disabled") === undefined
+									) {
+										$this.data(
+											"was-disabled",
+											$this.prop("disabled")
+										);
+									}
+									$this.prop("disabled", true);
+								} else {
+									$this.prop(
+										"disabled",
+										$this.data("was-disabled")
+									);
 								}
-								$this.prop( 'disabled', true );
-							} else {
-								$this.prop( 'disabled', $this.data( 'was-disabled' ) );
-							}
-						} );
+							});
 					} else {
 						// $elOrLayout is a OO.ui.FieldLayout
-						if ( shouldHide ) {
-							if ( $elOrLayout.wasDisabled === undefined ) {
-								$elOrLayout.wasDisabled = $elOrLayout.fieldWidget.isDisabled();
+						if (shouldHide) {
+							if ($elOrLayout.wasDisabled === undefined) {
+								$elOrLayout.wasDisabled =
+									$elOrLayout.fieldWidget.isDisabled();
 							}
-							$elOrLayout.fieldWidget.setDisabled( true );
-						} else if ( $elOrLayout.wasDisabled !== undefined ) {
-							$elOrLayout.fieldWidget.setDisabled( $elOrLayout.wasDisabled );
+							$elOrLayout.fieldWidget.setDisabled(true);
+						} else if ($elOrLayout.wasDisabled !== undefined) {
+							$elOrLayout.fieldWidget.setDisabled(
+								$elOrLayout.wasDisabled
+							);
 						}
 					}
 				};
-				for ( i = 0; i < fields.length; i++ ) {
+				for (i = 0; i < fields.length; i++) {
 					// The .on() method works mostly the same for jQuery objects and OO.ui.Widget
-					fields[ i ].on( 'change', func );
+					fields[i].on("change", func);
 				}
 				func();
-			} );
-		} );
-	} );
-
-}() );
+			});
+		});
+	});
+})();

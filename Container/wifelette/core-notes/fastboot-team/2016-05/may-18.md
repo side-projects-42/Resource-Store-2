@@ -9,7 +9,7 @@ Tom Dale, Dan McClain, Arjan Singh, Hassan, Patrick Fisher, Ron White
 ## Agenda
 
 - [x] Last Week's Action Items
-  - [x] @tomdale to audit GitHub and npm packages  and make sure @danmcclain has access
+  - [x] @tomdale to audit GitHub and npm packages and make sure @danmcclain has access
 - [x] Shoebox
 - [x] Caching
 - [x] Redirection - handling `intermediateTransitionTo`, deleting `html` on 3xx responses
@@ -42,7 +42,7 @@ Tom Dale, Dan McClain, Arjan Singh, Hassan, Patrick Fisher, Ron White
   - Current response renders the body
     - Potential for data leakage
   - Aborting rendering: Yay/Nay - Nay
-    - Would cause multiple redirection responses if you had multiple `transitionTo` 
+    - Would cause multiple redirection responses if you had multiple `transitionTo`
     - Better experience to follow the thread of redirects (less requests)
     - When chaining down redirects, if you lose state, you could not hit the same routes based on new requests
   - `NoneLocation` should not be hardcoded (separate, future PR)

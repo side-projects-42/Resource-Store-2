@@ -18,7 +18,7 @@ Here's an example of the GlobalSetup script
 
 ```js
 // setup.js
-module.exports = async function() {
+module.exports = async function () {
   const browser = await puppeteer.launch();
   // store the browser instance so we can teardown it later
   global.__BROWSER__ = browser;
@@ -66,7 +66,7 @@ Finally we can close the puppeteer instance and clean-up the file
 
 ```js
 // teardown.js
-module.exports = async function() {
+module.exports = async function () {
   // close the browser instance
   await global.__BROWSER__.close();
 

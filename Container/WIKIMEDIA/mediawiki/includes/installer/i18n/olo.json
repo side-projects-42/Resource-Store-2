@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ilja.mos",
-			"Mashoi7",
-			"Pyscowicz"
-		]
+		"authors": ["Ilja.mos", "Mashoi7", "Pyscowicz"]
 	},
 	"config-your-language": "Sinun kieli:",
 	"config-wiki-language": "Wikin kieli:",

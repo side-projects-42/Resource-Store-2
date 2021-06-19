@@ -1,4 +1,3 @@
-
 ### Escodegen [![Build Status](https://secure.travis-ci.org/Constellation/escodegen.png)](http://travis-ci.org/Constellation/escodegen) [![Build Status](https://drone.io/github.com/Constellation/escodegen/status.png)](https://drone.io/github.com/Constellation/escodegen/latest)
 
 Escodegen ([escodegen](http://github.com/Constellation/escodegen)) is
@@ -6,7 +5,6 @@ Escodegen ([escodegen](http://github.com/Constellation/escodegen)) is
 (also popularly known as [JavaScript](http://en.wikipedia.org/wiki/JavaScript>JavaScript))
 code generator from [Parser API](https://developer.mozilla.org/en/SpiderMonkey/Parser_API) AST.
 See [online generator demo](http://constellation.github.com/escodegen/demo/index.html).
-
 
 ### Install
 
@@ -56,17 +54,17 @@ will generate minified `escodegen.browser.min.js`.
 #### Escodegen
 
 Copyright (C) 2012 [Yusuke Suzuki](http://github.com/Constellation)
- (twitter: [@Constellation](http://twitter.com/Constellation)) and other contributors.
+(twitter: [@Constellation](http://twitter.com/Constellation)) and other contributors.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-  * Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
+- Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
 
-  * Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
+- Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -89,14 +87,14 @@ All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice, this
+- Redistributions of source code must retain the above copyright notice, this
   list of conditions and the following disclaimer.
 
-* Redistributions in binary form must reproduce the above copyright notice,
+- Redistributions in binary form must reproduce the above copyright notice,
   this list of conditions and the following disclaimer in the documentation
   and/or other materials provided with the distribution.
 
-* Neither the names of the Mozilla Foundation nor the names of project
+- Neither the names of the Mozilla Foundation nor the names of project
   contributors may be used to endorse or promote products derived from this
   software without specific prior written permission.
 

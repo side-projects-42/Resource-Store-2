@@ -11,11 +11,11 @@ would correspond to `2pack_12core_24logical.txt`, and would be pretty sweet.
 Using `A`, `B`, and `C` from above, code processing the text in these files
 should produce the following expected values:
 
-| property             | value   |
-| -------------------- |---------|
-| # physical packages  | `A`     |
-| # physical cores     | `B`     |
-| # logical processors | `C`     |
+| property             | value |
+| -------------------- | ----- |
+| # physical packages  | `A`   |
+| # physical cores     | `B`   |
+| # logical processors | `C`   |
 
 (Obviously, the processing code should do this with no knowledge of the filenames.)
 

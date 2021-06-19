@@ -22,197 +22,245 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-'use strict';
+"use strict";
 
-var fs = require('fs'),
-    path = require('path'),
-    root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
-    esprima = require('./3rdparty/esprima'),
-    escodegen = require(root),
-    chai = require('chai'),
-    expect = chai.expect,
-    fixtures;
+var fs = require("fs"),
+  path = require("path"),
+  root = path.join(path.dirname(fs.realpathSync(__filename)), ".."),
+  esprima = require("./3rdparty/esprima"),
+  escodegen = require(root),
+  chai = require("chai"),
+  expect = chai.expect,
+  fixtures;
 
 function slug(name) {
-    return name.toLowerCase().replace(/\s/g, '-');
+  return name.toLowerCase().replace(/\s/g, "-");
 }
 
 function adjustRegexLiteral(key, value) {
-    if (key === 'value' && value instanceof RegExp) {
-        value = value.toString();
-    }
-    return value;
+  if (key === "value" && value instanceof RegExp) {
+    value = value.toString();
+  }
+  return value;
 }
 
 fixtures = {
-    'generate with no options': {
-        call: 'generate',
-        args: [{
-            type: 'Program',
-            body: [{
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'Identifier',
-                        name: 'test'
-                    }
-                }]
-            }]
-        }],
-        result: '{\n    test;\n}'
-    },
-    'generate with indent 2': {
-        call: 'generate',
-        args: [{
-            type: 'Program',
-            body: [{
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'Identifier',
-                        name: 'test'
-                    }
-                }]
-            }]
-        }, {
-            format: {
-                indent: {
-                    style: '  '
-                }
-            }
-        }],
-        result: '{\n  test;\n}'
-    },
-    'generate with base 2': {
-        call: 'generate',
-        args: [{
-            type: 'Program',
-            body: [{
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'Identifier',
-                        name: 'test'
-                    }
-                }]
-            }]
-        }, {
-            format: {
-                indent: {
-                    base: 2
-                }
-            }
-        }],
-        result: '        {\n            test;\n        }'
-    },
-    'generate with base 2 + indent 2': {
-        call: 'generate',
-        args: [{
-            type: 'Program',
-            body: [{
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'Identifier',
-                        name: 'test'
-                    }
-                }]
-            }]
-        }, {
-            format: {
-                indent: {
-                    style: '  ',
-                    base: 2
-                }
-            }
-        }],
-        result: '    {\n      test;\n    }'
-    },
+  "generate with no options": {
+    call: "generate",
+    args: [
+      {
+        type: "Program",
+        body: [
+          {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "Identifier",
+                  name: "test",
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    result: "{\n    test;\n}",
+  },
+  "generate with indent 2": {
+    call: "generate",
+    args: [
+      {
+        type: "Program",
+        body: [
+          {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "Identifier",
+                  name: "test",
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        format: {
+          indent: {
+            style: "  ",
+          },
+        },
+      },
+    ],
+    result: "{\n  test;\n}",
+  },
+  "generate with base 2": {
+    call: "generate",
+    args: [
+      {
+        type: "Program",
+        body: [
+          {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "Identifier",
+                  name: "test",
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        format: {
+          indent: {
+            base: 2,
+          },
+        },
+      },
+    ],
+    result: "        {\n            test;\n        }",
+  },
+  "generate with base 2 + indent 2": {
+    call: "generate",
+    args: [
+      {
+        type: "Program",
+        body: [
+          {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "Identifier",
+                  name: "test",
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        format: {
+          indent: {
+            style: "  ",
+            base: 2,
+          },
+        },
+      },
+    ],
+    result: "    {\n      test;\n    }",
+  },
 
-    // obsolete api
-    'obsolete generate with base 2': {
-        call: 'generate',
-        args: [{
-            type: 'Program',
-            body: [{
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'Identifier',
-                        name: 'test'
-                    }
-                }]
-            }]
-        }, {
-            base: '    '
-        }],
-        result: '    {\n        test;\n    }'
-    },
+  // obsolete api
+  "obsolete generate with base 2": {
+    call: "generate",
+    args: [
+      {
+        type: "Program",
+        body: [
+          {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "Identifier",
+                  name: "test",
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        base: "    ",
+      },
+    ],
+    result: "    {\n        test;\n    }",
+  },
 
-    'obsolete generate with indent 2': {
-        call: 'generate',
-        args: [{
-            type: 'Program',
-            body: [{
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'Identifier',
-                        name: 'test'
-                    }
-                }]
-            }]
-        }, {
-            indent: '  ',
-        }],
-        result: '{\n  test;\n}'
-    },
+  "obsolete generate with indent 2": {
+    call: "generate",
+    args: [
+      {
+        type: "Program",
+        body: [
+          {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "Identifier",
+                  name: "test",
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        indent: "  ",
+      },
+    ],
+    result: "{\n  test;\n}",
+  },
 
-    'obsolete generate with base 2 + indent 2': {
-        call: 'generate',
-        args: [{
-            type: 'Program',
-            body: [{
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'Identifier',
-                        name: 'test'
-                    }
-                }]
-            }]
-        }, {
-            indent: '  ',
-            base: '    '
-        }],
-        result: '    {\n      test;\n    }'
-    }
+  "obsolete generate with base 2 + indent 2": {
+    call: "generate",
+    args: [
+      {
+        type: "Program",
+        body: [
+          {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "Identifier",
+                  name: "test",
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        indent: "  ",
+        base: "    ",
+      },
+    ],
+    result: "    {\n      test;\n    }",
+  },
 };
 
 function testAPI(code, result) {
-    var expected, res, actual;
-    expected = JSON.stringify(result.result, null, 4);
-    if (typeof result.property !== 'undefined') {
-        res = escodegen[result.property];
-    } else {
-        res = escodegen[result.call].apply(escodegen, result.args);
-    }
-    actual = JSON.stringify(res, adjustRegexLiteral, 4);
-    expect(actual).to.be.equal(expected);
+  var expected, res, actual;
+  expected = JSON.stringify(result.result, null, 4);
+  if (typeof result.property !== "undefined") {
+    res = escodegen[result.property];
+  } else {
+    res = escodegen[result.call].apply(escodegen, result.args);
+  }
+  actual = JSON.stringify(res, adjustRegexLiteral, 4);
+  expect(actual).to.be.equal(expected);
 }
 
-describe('API test', function () {
-    Object.keys(fixtures).forEach(function(key) {
-        it(key, function () {
-            testAPI(key, fixtures[key]);
-        });
+describe("API test", function () {
+  Object.keys(fixtures).forEach(function (key) {
+    it(key, function () {
+      testAPI(key, fixtures[key]);
     });
+  });
 });
 /* vim: set sw=4 ts=4 et tw=80 : */

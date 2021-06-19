@@ -1,5 +1,5 @@
-var utils = require('cordova/utils'),
-    exec = require('cordova/exec');
+var utils = require("cordova/utils"),
+  exec = require("cordova/exec");
 
 var mediaObjects = {};
 
@@ -15,35 +15,34 @@ var mediaObjects = {};
  * @param statusCallback        The callback to be called when media status has changed.
  *                                  statusCallback(int statusCode) - OPTIONAL
  */
-var Media = function(src, successCallback, errorCallback, statusCallback) {
+var Media = function (src, successCallback, errorCallback, statusCallback) {
+  // successCallback optional
+  if (successCallback && typeof successCallback !== "function") {
+    console.log("Media Error: successCallback is not a function");
+    return;
+  }
 
-    // successCallback optional
-    if (successCallback && (typeof successCallback !== "function")) {
-        console.log("Media Error: successCallback is not a function");
-        return;
-    }
+  // errorCallback optional
+  if (errorCallback && typeof errorCallback !== "function") {
+    console.log("Media Error: errorCallback is not a function");
+    return;
+  }
 
-    // errorCallback optional
-    if (errorCallback && (typeof errorCallback !== "function")) {
-        console.log("Media Error: errorCallback is not a function");
-        return;
-    }
+  // statusCallback optional
+  if (statusCallback && typeof statusCallback !== "function") {
+    console.log("Media Error: statusCallback is not a function");
+    return;
+  }
 
-    // statusCallback optional
-    if (statusCallback && (typeof statusCallback !== "function")) {
-        console.log("Media Error: statusCallback is not a function");
-        return;
-    }
-
-    this.id = utils.createUUID();
-    mediaObjects[this.id] = this;
-    this.src = src;
-    this.successCallback = successCallback;
-    this.errorCallback = errorCallback;
-    this.statusCallback = statusCallback;
-    this._duration = -1;
-    this._position = -1;
-    exec(null, this.errorCallback, "Media", "create", [this.id, this.src]);
+  this.id = utils.createUUID();
+  mediaObjects[this.id] = this;
+  this.src = src;
+  this.successCallback = successCallback;
+  this.errorCallback = errorCallback;
+  this.statusCallback = statusCallback;
+  this._duration = -1;
+  this._position = -1;
+  exec(null, this.errorCallback, "Media", "create", [this.id, this.src]);
 };
 
 // Media messages
@@ -61,42 +60,54 @@ Media.MEDIA_STOPPED = 4;
 Media.MEDIA_MSG = ["None", "Starting", "Running", "Paused", "Stopped"];
 
 // "static" function to return existing objs.
-Media.get = function(id) {
-    return mediaObjects[id];
+Media.get = function (id) {
+  return mediaObjects[id];
 };
 
 /**
  * Start or resume playing audio file.
  */
-Media.prototype.play = function(options) {
-    exec(null, null, "Media", "startPlayingAudio", [this.id, this.src, options]);
+Media.prototype.play = function (options) {
+  exec(null, null, "Media", "startPlayingAudio", [this.id, this.src, options]);
 };
 
 /**
  * Stop playing audio file.
  */
-Media.prototype.stop = function() {
-    var me = this;
-    exec(function() {
-        me._position = 0;
-    }, this.errorCallback, "Media", "stopPlayingAudio", [this.id]);
+Media.prototype.stop = function () {
+  var me = this;
+  exec(
+    function () {
+      me._position = 0;
+    },
+    this.errorCallback,
+    "Media",
+    "stopPlayingAudio",
+    [this.id]
+  );
 };
 
 /**
  * Seek or jump to a new time in the track..
  */
-Media.prototype.seekTo = function(milliseconds) {
-    var me = this;
-    exec(function(p) {
-        me._position = p;
-    }, this.errorCallback, "Media", "seekToAudio", [this.id, milliseconds]);
+Media.prototype.seekTo = function (milliseconds) {
+  var me = this;
+  exec(
+    function (p) {
+      me._position = p;
+    },
+    this.errorCallback,
+    "Media",
+    "seekToAudio",
+    [this.id, milliseconds]
+  );
 };
 
 /**
  * Pause playing audio file.
  */
-Media.prototype.pause = function() {
-    exec(null, this.errorCallback, "Media", "pausePlayingAudio", [this.id]);
+Media.prototype.pause = function () {
+  exec(null, this.errorCallback, "Media", "pausePlayingAudio", [this.id]);
 };
 
 /**
@@ -105,47 +116,56 @@ Media.prototype.pause = function() {
  *
  * @return      duration or -1 if not known.
  */
-Media.prototype.getDuration = function() {
-    return this._duration;
+Media.prototype.getDuration = function () {
+  return this._duration;
 };
 
 /**
  * Get position of audio.
  */
-Media.prototype.getCurrentPosition = function(success, fail) {
-    var me = this;
-    exec(function(p) {
-        me._position = p;
-        success(p);
-    }, fail, "Media", "getCurrentPositionAudio", [this.id]);
+Media.prototype.getCurrentPosition = function (success, fail) {
+  var me = this;
+  exec(
+    function (p) {
+      me._position = p;
+      success(p);
+    },
+    fail,
+    "Media",
+    "getCurrentPositionAudio",
+    [this.id]
+  );
 };
 
 /**
  * Start recording audio file.
  */
-Media.prototype.startRecord = function() {
-    exec(null, this.errorCallback, "Media", "startRecordingAudio", [this.id, this.src]);
+Media.prototype.startRecord = function () {
+  exec(null, this.errorCallback, "Media", "startRecordingAudio", [
+    this.id,
+    this.src,
+  ]);
 };
 
 /**
  * Stop recording audio file.
  */
-Media.prototype.stopRecord = function() {
-    exec(null, this.errorCallback, "Media", "stopRecordingAudio", [this.id]);
+Media.prototype.stopRecord = function () {
+  exec(null, this.errorCallback, "Media", "stopRecordingAudio", [this.id]);
 };
 
 /**
  * Release the resources.
  */
-Media.prototype.release = function() {
-    exec(null, this.errorCallback, "Media", "release", [this.id]);
+Media.prototype.release = function () {
+  exec(null, this.errorCallback, "Media", "release", [this.id]);
 };
 
 /**
  * Adjust the volume.
  */
-Media.prototype.setVolume = function(volume) {
-    exec(null, null, "Media", "setVolume", [this.id, volume]);
+Media.prototype.setVolume = function (volume) {
+  exec(null, null, "Media", "setVolume", [this.id, volume]);
 };
 
 /**
@@ -156,31 +176,28 @@ Media.prototype.setVolume = function(volume) {
  * @param status        The status code (int)
  * @param msg           The status message (string)
  */
-Media.onStatus = function(id, msg, value) {
-    var media = mediaObjects[id];
-    // If state update
-    if (msg === Media.MEDIA_STATE) {
-        if (media.statusCallback) {
-            media.statusCallback(value);
-        }
-        if (value === Media.MEDIA_STOPPED) {
-            if (media.successCallback) {
-                media.successCallback();
-            }
-        }
+Media.onStatus = function (id, msg, value) {
+  var media = mediaObjects[id];
+  // If state update
+  if (msg === Media.MEDIA_STATE) {
+    if (media.statusCallback) {
+      media.statusCallback(value);
     }
-    else if (msg === Media.MEDIA_DURATION) {
-        media._duration = value;
+    if (value === Media.MEDIA_STOPPED) {
+      if (media.successCallback) {
+        media.successCallback();
+      }
     }
-    else if (msg === Media.MEDIA_ERROR) {
-        if (media.errorCallback) {
-            // value should be a MediaError object when msg == MEDIA_ERROR
-            media.errorCallback(value);
-        }
+  } else if (msg === Media.MEDIA_DURATION) {
+    media._duration = value;
+  } else if (msg === Media.MEDIA_ERROR) {
+    if (media.errorCallback) {
+      // value should be a MediaError object when msg == MEDIA_ERROR
+      media.errorCallback(value);
     }
-    else if (msg === Media.MEDIA_POSITION) {
-        media._position = value;
-    }
+  } else if (msg === Media.MEDIA_POSITION) {
+    media._position = value;
+  }
 };
 
 module.exports = Media;

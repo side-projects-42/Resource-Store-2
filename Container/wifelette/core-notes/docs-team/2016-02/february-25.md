@@ -27,7 +27,7 @@
     - Would like to see this automatically showing up at /current
     - seems like this would really help work through SEO stuff as well (easier to test out changes quickly instead of current, somewhat cumbersome deploy process)
   - documenting LTS releases as part of guides? - David
-  - Bring back "Understanding Ember" section?  quite useful from a "big picture" perspective about how Ember works
+  - Bring back "Understanding Ember" section? quite useful from a "big picture" perspective about how Ember works
 
 # Minutes
 
@@ -47,20 +47,21 @@
 
 ### New Content Proposals
 
-Discussed each briefly between TJ and DB.  To bring up again with larger group
+Discussed each briefly between TJ and DB. To bring up again with larger group
 
-- DB: Needshelp status board.  For each Ember Subteam.  This could be hosted on emberjs website, or ember watch.  Could also highlight some important ember addons in need of help.
+- DB: Needshelp status board. For each Ember Subteam. This could be hosted on emberjs website, or ember watch. Could also highlight some important ember addons in need of help.
 
-- DB: Also would like a website page on how the ember community and core team works.  It would provide information on how decisions are made and the community governed.
+- DB: Also would like a website page on how the ember community and core team works. It would provide information on how decisions are made and the community governed.
 
 - Pull Request Template: Take advantage of the github feature to encourage reporters to provide the right information.
 
 ### Misc
 
-- Discussed having Todd join the Docs team, overall we're a thumbs up :-)  Congrats Todd!
-- Thumbsup'd Dave's highlight style change.  Todd did his first homu merge \o/
+- Discussed having Todd join the Docs team, overall we're a thumbs up :-) Congrats Todd!
+- Thumbsup'd Dave's highlight style change. Todd did his first homu merge \o/
 
 ### Additional Status from RM
+
 - emberjs/api dev is halted, we'll coordinate with @fivetanley to share resources for the guides viewer as well
 - translations phase 1 are going well for emberconf, need to figure out infrastructure
 - getting some emberwatch help

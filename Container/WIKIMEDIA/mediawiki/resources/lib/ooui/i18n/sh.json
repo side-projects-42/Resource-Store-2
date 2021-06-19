@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"OC Ripper",
-			"Sf",
-			"Vlad5250"
-		]
+		"authors": ["OC Ripper", "Sf", "Vlad5250"]
 	},
 	"ooui-outline-control-move-down": "Pomakni stavku dolje",
 	"ooui-outline-control-move-up": "Premjesti stavku gore",

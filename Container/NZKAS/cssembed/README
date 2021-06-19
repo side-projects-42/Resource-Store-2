@@ -1,16 +1,16 @@
 CSSEmbed
 Copyright (c) 2009 Nicholas C. Zakas. All rights reserved.
 
--------------------------------------------------------------------------------
- About
--------------------------------------------------------------------------------
+---
+
+## About
 
 CSSEmbed is a small program/library to automate embedding of data URIs in
 CSS files.
 
--------------------------------------------------------------------------------
- License
--------------------------------------------------------------------------------
+---
+
+## License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

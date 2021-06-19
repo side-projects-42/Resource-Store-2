@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"BaRaN6161 TURK"
-		]
+		"authors": ["BaRaN6161 TURK"]
 	},
 	"paramvalidator-badbool": "\"$1\" boole parametresi için geçersiz \"$2\" değeri. True için $3 veya false için $5 iletin.",
 	"paramvalidator-badexpiry": "\"$1\" sona erme parametresi için geçersiz \"$2\" değeri.",

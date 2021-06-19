@@ -16,9 +16,7 @@
       "nr.referringTransactionGuid": "b854df4feb2b1f06",
       "nr.referringPathHash": "5d2957be"
     },
-    "nonExpectedIntrinsicFields": [
-      "nr.alternatePathHashes"
-    ]
+    "nonExpectedIntrinsicFields": ["nr.alternatePathHashes"]
   },
   {
     "name": "new_cat_path_hash_with_leading_zero",
@@ -37,9 +35,7 @@
       "nr.referringTransactionGuid": "b854df4feb2b1f06",
       "nr.referringPathHash": "5d2957be"
     },
-    "nonExpectedIntrinsicFields": [
-      "nr.alternatePathHashes"
-    ]
+    "nonExpectedIntrinsicFields": ["nr.alternatePathHashes"]
   },
   {
     "name": "new_cat_path_hash_with_unicode_name",
@@ -51,16 +47,14 @@
       false,
       "7e249074f277923d",
       "5d2957be"
-      ],
+    ],
     "expectedIntrinsicFields": {
       "nr.guid": "9323dc260548ed0e",
       "nr.pathHash": "3d015d23",
       "nr.referringTransactionGuid": "b854df4feb2b1f06",
       "nr.referringPathHash": "5d2957be"
     },
-    "nonExpectedIntrinsicFields": [
-      "nr.alternatePathHashes"
-      ]
+    "nonExpectedIntrinsicFields": ["nr.alternatePathHashes"]
   },
   {
     "name": "new_cat_no_referring_payload",
@@ -437,11 +431,7 @@
     "appName": "testAppName",
     "transactionName": "WebTransaction/Custom/testTxnName",
     "transactionGuid": "9323dc260548ed0e",
-    "inboundPayload": [
-      "b854df4feb2b1f06",
-      false,
-      "7e249074f277923d"
-    ],
+    "inboundPayload": ["b854df4feb2b1f06", false, "7e249074f277923d"],
     "expectedIntrinsicFields": {
       "nr.guid": "9323dc260548ed0e",
       "nr.pathHash": "3b0939af",
@@ -457,12 +447,7 @@
     "appName": "testAppName",
     "transactionName": "WebTransaction/Custom/testTxnName",
     "transactionGuid": "9323dc260548ed0e",
-    "inboundPayload": [
-      "b854df4feb2b1f06",
-      false,
-      "7e249074f277923d",
-      null
-    ],
+    "inboundPayload": ["b854df4feb2b1f06", false, "7e249074f277923d", null],
     "expectedIntrinsicFields": {
       "nr.guid": "9323dc260548ed0e",
       "nr.pathHash": "3b0939af",
@@ -482,10 +467,7 @@
       "b854df4feb2b1f06",
       false,
       "7e249074f277923d",
-      [
-        "scrambled",
-        "eggs"
-      ]
+      ["scrambled", "eggs"]
     ],
     "expectedIntrinsicFields": {
       "nr.guid": "9323dc260548ed0e",
@@ -514,40 +496,28 @@
       "nr.referringTransactionGuid": "b854df4feb2b1f06",
       "nr.referringPathHash": "ZXYQEDABC"
     },
-    "nonExpectedIntrinsicFields": [
-      "nr.alternatePathHashes"
-    ]
+    "nonExpectedIntrinsicFields": ["nr.alternatePathHashes"]
   },
   {
     "name": "new_cat_malformed_trip_id",
     "appName": "testAppName",
     "transactionName": "WebTransaction/Custom/testTxnName",
     "transactionGuid": "9323dc260548ed0e",
-    "inboundPayload": [
-      "b854df4feb2b1f06",
-      false,
-      ["scrambled"],
-      "5d2957be"
-    ],
+    "inboundPayload": ["b854df4feb2b1f06", false, ["scrambled"], "5d2957be"],
     "expectedIntrinsicFields": {
       "nr.guid": "9323dc260548ed0e",
       "nr.pathHash": "815b96d3",
       "nr.referringTransactionGuid": "b854df4feb2b1f06",
       "nr.referringPathHash": "5d2957be"
     },
-    "nonExpectedIntrinsicFields": [
-      "nr.alternatePathHashes"
-    ]
+    "nonExpectedIntrinsicFields": ["nr.alternatePathHashes"]
   },
   {
     "name": "new_cat_missing_trip_id",
     "appName": "testAppName",
     "transactionName": "WebTransaction/Custom/testTxnName",
     "transactionGuid": "9323dc260548ed0e",
-    "inboundPayload": [
-      "b854df4feb2b1f06",
-      false
-    ],
+    "inboundPayload": ["b854df4feb2b1f06", false],
     "expectedIntrinsicFields": {
       "nr.guid": "9323dc260548ed0e",
       "nr.pathHash": "3b0939af",
@@ -563,11 +533,7 @@
     "appName": "testAppName",
     "transactionName": "WebTransaction/Custom/testTxnName",
     "transactionGuid": "9323dc260548ed0e",
-    "inboundPayload": [
-      "b854df4feb2b1f06",
-      false,
-      null
-    ],
+    "inboundPayload": ["b854df4feb2b1f06", false, null],
     "expectedIntrinsicFields": {
       "nr.guid": "9323dc260548ed0e",
       "nr.pathHash": "3b0939af",

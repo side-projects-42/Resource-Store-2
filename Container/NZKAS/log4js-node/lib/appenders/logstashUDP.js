@@ -1,27 +1,27 @@
 "use strict";
-var layouts = require('../layouts')
-, dgram = require('dgram')
-, util = require('util');
+var layouts = require("../layouts"),
+  dgram = require("dgram"),
+  util = require("util");
 
-function logstashUDP (config, layout) {
-  var udp = dgram.createSocket('udp4');
+function logstashUDP(config, layout) {
+  var udp = dgram.createSocket("udp4");
   var type = config.logType ? config.logType : config.category;
   layout = layout || layouts.colouredLayout;
-  if(!config.fields) {
+  if (!config.fields) {
     config.fields = {};
   }
-  return function(loggingEvent) {
+  return function (loggingEvent) {
     var logMessage = layout(loggingEvent);
     var fields = {};
-    for(var i in config.fields) {
+    for (var i in config.fields) {
       fields[i] = config.fields[i];
     }
-    fields['level'] = loggingEvent.level.levelStr;
+    fields["level"] = loggingEvent.level.levelStr;
     var logObject = {
-      '@timestamp': (new Date(loggingEvent.startTime)).toISOString(),
+      "@timestamp": new Date(loggingEvent.startTime).toISOString(),
       type: type,
       message: logMessage,
-      fields: fields
+      fields: fields,
     };
     sendLog(udp, config.host, config.port, logObject);
   };
@@ -29,10 +29,13 @@ function logstashUDP (config, layout) {
 
 function sendLog(udp, host, port, logObject) {
   var buffer = new Buffer(JSON.stringify(logObject));
-  udp.send(buffer, 0, buffer.length, port, host, function(err, bytes) {
-    if(err) {
+  udp.send(buffer, 0, buffer.length, port, host, function (err, bytes) {
+    if (err) {
       console.error(
-        "log4js.logstashUDP - %s:%p Error: %s", host, port, util.inspect(err)
+        "log4js.logstashUDP - %s:%p Error: %s",
+        host,
+        port,
+        util.inspect(err)
       );
     }
   });

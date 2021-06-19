@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Dani",
-			"Glanthor Reviol",
-			"Tacsipacsi"
-		]
+		"authors": ["Dani", "Glanthor Reviol", "Tacsipacsi"]
 	},
 	"config-localsettings-upgrade": "Már létezik a <code>LocalSettings.php</code> fájl.\nA telepített szoftver frissítéséhez írja be az alábbi mezőbe a <code>$wgUpgradeKey</code> beállítás értékét, melyet a <code>LocalSettings.php</code> nevű fájlban találhat meg.",
 	"config-session-expired": "Úgy tűnik, hogy a munkamenetadatok lejártak.\nA munkamenetek élettartama a következőre van beállítva: $1.\nAz érték növelhető a php.ini <code>session.gc_maxlifetime</code> beállításának módosításával.\nIndítsa újra a telepítési folyamatot.",

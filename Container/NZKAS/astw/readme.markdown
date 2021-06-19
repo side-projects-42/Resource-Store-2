@@ -12,21 +12,21 @@ that only does ast walking and `.parent` tracking, not source transforms.
 
 # example
 
-``` js
-var astw = require('astw');
-var deparse = require('escodegen').generate;
-var walk = astw('4 + beep(5 * 2)');
+```js
+var astw = require("astw");
+var deparse = require("escodegen").generate;
+var walk = astw("4 + beep(5 * 2)");
 
 walk(function (node) {
-    var src = deparse(node);
-    console.log(node.type + ' :: ' + JSON.stringify(src));
+  var src = deparse(node);
+  console.log(node.type + " :: " + JSON.stringify(src));
 });
 ```
 
 # methods
 
-``` js
-var astw = require('astw')
+```js
+var astw = require("astw");
 ```
 
 ## var walk = astw(src)

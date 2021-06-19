@@ -15,10 +15,7 @@
   "description": "Open Dashboarding",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "JavaScript",
-  "projectTags": [
-    "nrlabs",
-    "nr1-app"
-  ],
+  "projectTags": ["nrlabs", "nr1-app"],
   "acceptsContributions": true,
   "website": {
     "title": "Open Boards",

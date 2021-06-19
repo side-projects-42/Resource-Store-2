@@ -27,10 +27,10 @@ $ npm install globby
 ```
 
 ```js
-const globby = require('globby');
+const globby = require("globby");
 
 (async () => {
-	const paths = await globby(['*', '!cake']);
+	const paths = await globby(["*", "!cake"]);
 
 	console.log(paths);
 	//=> ['unicorn', 'rainbow']
@@ -65,14 +65,14 @@ Default: `true`
 If set to `true`, `globby` will automatically glob directories for you. If you define an `Array` it will only glob files that matches the patterns inside the `Array`. You can also define an `object` with `files` and `extensions` like below:
 
 ```js
-const globby = require('globby');
+const globby = require("globby");
 
 (async () => {
-	const paths = await globby('images', {
+	const paths = await globby("images", {
 		expandDirectories: {
-			files: ['cat', 'unicorn', '*.jpg'],
-			extensions: ['png']
-		}
+			files: ["cat", "unicorn", "*.jpg"],
+			extensions: ["png"],
+		},
 	});
 
 	console.log(paths);
@@ -100,10 +100,10 @@ Returns a [`stream.Readable`](https://nodejs.org/api/stream.html#stream_readable
 Since Node.js 10, [readable streams are iterable](https://nodejs.org/api/stream.html#stream_readable_symbol_asynciterator), so you can loop over glob matches in a [`for await...of` loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) like this:
 
 ```js
-const globby = require('globby');
+const globby = require("globby");
 
 (async () => {
-	for await (const path of globby.stream('*.tmp')) {
+	for await (const path of globby.stream("*.tmp")) {
 		console.log(path);
 	}
 })();
@@ -130,11 +130,11 @@ Returns a `Promise<(path: string) => boolean>` indicating whether a given path i
 Takes `cwd?: string` and `ignore?: string[]` as options. `.gitignore` files matched by the ignore config are not used for the resulting filter function.
 
 ```js
-const {gitignore} = require('globby');
+const { gitignore } = require("globby");
 
 (async () => {
 	const isIgnored = await gitignore();
-	console.log(isIgnored('some/file'));
+	console.log(isIgnored("some/file"));
 })();
 ```
 

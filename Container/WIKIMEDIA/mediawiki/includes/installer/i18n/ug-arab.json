@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"AlimOmar",
-			"Sahran",
-			"Uzdil"
-		]
+		"authors": ["AlimOmar", "Sahran", "Uzdil"]
 	},
 	"config-install-tables": "جەدۋەل قۇرۇش ، بىرىنچى قەدەم",
 	"config-install-tables-manual": "جەدۋەل قۇرۇش ، ئىككىنچى قەدەم",

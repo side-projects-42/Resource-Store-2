@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Sfic"
-		]
-	},
-	"activeabstract-desc": "याहू के सक्रिय एबस्ट्रैक्स परियोजना हेतु XML फीड निर्मित करता है।"
+  "@metadata": {
+    "authors": ["Sfic"]
+  },
+  "activeabstract-desc": "याहू के सक्रिय एबस्ट्रैक्स परियोजना हेतु XML फीड निर्मित करता है।"
 }

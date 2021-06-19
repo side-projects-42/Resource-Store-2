@@ -1,4 +1,4 @@
-{ 
+{
   "node": true,
   "laxcomma": true,
   "indent": 2,
@@ -11,5 +11,5 @@
   "globals": {
     "describe": true,
     "it": true
-  } 
+  }
 }

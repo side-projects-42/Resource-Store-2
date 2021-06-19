@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Avicennasis",
-			"John Reid",
-			"MJL"
-		]
+		"authors": ["Avicennasis", "John Reid", "MJL"]
 	},
 	"exif-imagewidth": "Width",
 	"exif-imagelength": "Heicht",

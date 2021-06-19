@@ -1,6 +1,6 @@
 /*global console*/
 
-this.myx = 'mineX';
+this.myx = "mineX";
 
 (function () {
   "use strict";

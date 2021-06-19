@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"DRIHEM"
-		]
-	},
-	"akismetklik-desc": "يرفض التعديلات من معلقي السبام المشتبه فيهم على القائمة السوداء لـ Akismet"
+  "@metadata": {
+    "authors": ["DRIHEM"]
+  },
+  "akismetklik-desc": "يرفض التعديلات من معلقي السبام المشتبه فيهم على القائمة السوداء لـ Akismet"
 }

@@ -15,11 +15,11 @@
  *
  */
 
-elementFindMatchingChildren = function(element, selector) {
+elementFindMatchingChildren = function (element, selector) {
   var matches = [];
 
   var childCount = element.childNodes.length;
-  for (var i=0; i<childCount; i++) {
+  for (var i = 0; i < childCount; i++) {
     var child = element.childNodes[i];
     if (selector(child)) {
       matches.push(child);
@@ -30,14 +30,13 @@ elementFindMatchingChildren = function(element, selector) {
   }
 
   return matches.flatten();
-}
+};
 
 ELEMENT_NODE_TYPE = 1;
 
-elementFindFirstMatchingChild = function(element, selector) {
-
+elementFindFirstMatchingChild = function (element, selector) {
   var childCount = element.childNodes.length;
-  for (var i=0; i<childCount; i++) {
+  for (var i = 0; i < childCount; i++) {
     var child = element.childNodes[i];
     if (child.nodeType == ELEMENT_NODE_TYPE) {
       if (selector(child)) {
@@ -50,9 +49,9 @@ elementFindFirstMatchingChild = function(element, selector) {
     }
   }
   return null;
-}
+};
 
-elementFindFirstMatchingParent = function(element, selector) {
+elementFindFirstMatchingParent = function (element, selector) {
   var current = element.parentNode;
   while (current != null) {
     if (selector(current)) {
@@ -61,9 +60,10 @@ elementFindFirstMatchingParent = function(element, selector) {
     current = current.parentNode;
   }
   return current;
-}
+};
 
-elementFindMatchingChildById = function(element, id) {
-  return elementFindFirstMatchingChild(element, function(element){return element.id==id} );
-}
-
+elementFindMatchingChildById = function (element, id) {
+  return elementFindFirstMatchingChild(element, function (element) {
+    return element.id == id;
+  });
+};

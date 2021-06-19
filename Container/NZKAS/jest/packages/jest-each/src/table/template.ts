@@ -22,7 +22,7 @@ export default (
 ): EachTests => {
   const table = convertRowToTable(row, headings);
   const templates = convertTableToTemplates(table, headings);
-  return templates.map(template => ({
+  return templates.map((template) => ({
     arguments: [template],
     title: interpolate(title, template),
   }));
@@ -40,7 +40,7 @@ const convertTableToTemplates = (
   table: Global.Table,
   headings: Headings,
 ): Templates =>
-  table.map(row =>
+  table.map((row) =>
     row.reduce<Template>(
       (acc, value, index) => Object.assign(acc, {[headings[index]]: value}),
       {},
@@ -52,23 +52,20 @@ const interpolate = (title: string, template: Template) =>
     .reduce(getMatchingKeyPaths(title), []) // aka flatMap
     .reduce(replaceKeyPathWithValue(template), title);
 
-const getMatchingKeyPaths = (title: string) => (
-  matches: Headings,
-  key: string,
-) => matches.concat(title.match(new RegExp(`\\$${key}[\\.\\w]*`, 'g')) || []);
+const getMatchingKeyPaths =
+  (title: string) => (matches: Headings, key: string) =>
+    matches.concat(title.match(new RegExp(`\\$${key}[\\.\\w]*`, 'g')) || []);
 
-const replaceKeyPathWithValue = (template: Template) => (
-  title: string,
-  match: string,
-) => {
-  const keyPath = match.replace('$', '').split('.');
-  const value = getPath(template, keyPath);
+const replaceKeyPathWithValue =
+  (template: Template) => (title: string, match: string) => {
+    const keyPath = match.replace('$', '').split('.');
+    const value = getPath(template, keyPath);
 
-  if (isPrimitive(value)) {
-    return title.replace(match, String(value));
-  }
-  return title.replace(match, pretty(value, {maxDepth: 1, min: true}));
-};
+    if (isPrimitive(value)) {
+      return title.replace(match, String(value));
+    }
+    return title.replace(match, pretty(value, {maxDepth: 1, min: true}));
+  };
 
 const getPath = (
   template: Template | any,

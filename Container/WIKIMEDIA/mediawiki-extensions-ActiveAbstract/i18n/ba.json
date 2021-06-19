@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Sagan"
-		]
-	},
-	"activeabstract-desc": "Проекты өсөн Yahoo's Active Abstracts XML-фид  булдырырға"
+  "@metadata": {
+    "authors": ["Sagan"]
+  },
+  "activeabstract-desc": "Проекты өсөн Yahoo's Active Abstracts XML-фид  булдырырға"
 }

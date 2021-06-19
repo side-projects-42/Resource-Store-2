@@ -1,6 +1,6 @@
-@import 'mediawiki.mixins.less';
-@import 'mediawiki.ui/variables.less';
-@import 'mw.rcfilters.variables.less';
+@import "mediawiki.mixins.less";
+@import "mediawiki.ui/variables.less";
+@import "mw.rcfilters.variables.less";
 
 .mw-rcfilters-ui-filterMenuOptionWidget {
 	.mw-rcfilters-ui-filterMenuSectionOptionWidget ~ & {
@@ -9,7 +9,7 @@
 	}
 
 	&.oo-ui-flaggedElement-muted {
-		&:not( .oo-ui-optionWidget-selected ) {
+		&:not(.oo-ui-optionWidget-selected) {
 			// Namespaces are muted 'the other way around' when they
 			// are also inverted, so if they are also selected, we
 			// should make sure the selected background is shown rather
@@ -33,7 +33,10 @@
 	// Override OOUI's pretty specific
 	// `.oo-ui-fieldLayout.oo-ui-labelElement.oo-ui-fieldLayout-align-inline > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-header`
 	// selector
-	.mw-rcfilters-ui-itemMenuOptionWidget-itemCheckbox > .oo-ui-fieldLayout > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-header {
+	.mw-rcfilters-ui-itemMenuOptionWidget-itemCheckbox
+		> .oo-ui-fieldLayout
+		> .oo-ui-fieldLayout-body
+		> .oo-ui-fieldLayout-header {
 		padding-top: 0;
 		padding-bottom: 0;
 		padding-left: 12 / @font-size-system-ui / @font-size-vector;

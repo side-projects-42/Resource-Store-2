@@ -22,32 +22,33 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-'use strict'
+"use strict";
 
 module.exports = function (context) {
-    var MESSAGE = '"push" with multiple arguments hurts performance since optimizing compiler would not support it';
-    function checkPush(node) {
-        var member;
-        if (node.callee.type !== 'MemberExpression') {
-            return;
-        }
-        member = node.callee;
-        if (member.computed) {
-            return;
-        }
-        if (member.property.type !== 'Identifier') {
-            return;
-        }
-        if (member.property.name !== 'push') {
-            return;
-        }
-        // Ensure arguments length is 1.
-        if (node.arguments.length !== 1) {
-            context.report(node, MESSAGE);
-        }
+  var MESSAGE =
+    '"push" with multiple arguments hurts performance since optimizing compiler would not support it';
+  function checkPush(node) {
+    var member;
+    if (node.callee.type !== "MemberExpression") {
+      return;
     }
+    member = node.callee;
+    if (member.computed) {
+      return;
+    }
+    if (member.property.type !== "Identifier") {
+      return;
+    }
+    if (member.property.name !== "push") {
+      return;
+    }
+    // Ensure arguments length is 1.
+    if (node.arguments.length !== 1) {
+      context.report(node, MESSAGE);
+    }
+  }
 
-    return {
-        'CallExpression': checkPush
-    };
+  return {
+    CallExpression: checkPush,
+  };
 };

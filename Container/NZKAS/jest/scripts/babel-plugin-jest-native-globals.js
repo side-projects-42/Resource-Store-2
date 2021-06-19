@@ -37,16 +37,16 @@ module.exports = ({template}) => {
         if (path.node.name === 'Promise' && !state.jestInjectedPromise) {
           state.jestInjectedPromise = true;
           path
-            .findParent(p => p.isProgram())
+            .findParent((p) => p.isProgram())
             .unshiftContainer('body', promiseDeclaration());
           path
-            .findParent(p => p.isProgram())
+            .findParent((p) => p.isProgram())
             .unshiftContainer('body', symbolDeclaration());
         }
         if (path.node.name === 'Symbol' && !state.jestInjectedSymbol) {
           state.jestInjectedSymbol = true;
           path
-            .findParent(p => p.isProgram())
+            .findParent((p) => p.isProgram())
             .unshiftContainer('body', symbolDeclaration());
         }
         if (
@@ -57,10 +57,10 @@ module.exports = ({template}) => {
           if (!state.jestInjectedNow) {
             state.jestInjectedNow = true;
             path
-              .findParent(p => p.isProgram())
+              .findParent((p) => p.isProgram())
               .unshiftContainer('body', nowDeclaration());
             path
-              .findParent(p => p.isProgram())
+              .findParent((p) => p.isProgram())
               .unshiftContainer('body', symbolDeclaration());
           }
 
@@ -79,10 +79,10 @@ module.exports = ({template}) => {
           ) {
             state.jestInjectedRead = true;
             path
-              .findParent(p => p.isProgram())
+              .findParent((p) => p.isProgram())
               .unshiftContainer('body', fsReadFileDeclaration());
             path
-              .findParent(p => p.isProgram())
+              .findParent((p) => p.isProgram())
               .unshiftContainer('body', symbolDeclaration());
 
             path.parentPath.replaceWithSourceString('jestReadFile');
@@ -93,10 +93,10 @@ module.exports = ({template}) => {
           ) {
             state.jestInjectedWrite = true;
             path
-              .findParent(p => p.isProgram())
+              .findParent((p) => p.isProgram())
               .unshiftContainer('body', fsWriteFileDeclaration());
             path
-              .findParent(p => p.isProgram())
+              .findParent((p) => p.isProgram())
               .unshiftContainer('body', symbolDeclaration());
 
             path.parentPath.replaceWithSourceString('jestWriteFile');
@@ -107,10 +107,10 @@ module.exports = ({template}) => {
           ) {
             state.jestInjectedExists = true;
             path
-              .findParent(p => p.isProgram())
+              .findParent((p) => p.isProgram())
               .unshiftContainer('body', fsExistsFileDeclaration());
             path
-              .findParent(p => p.isProgram())
+              .findParent((p) => p.isProgram())
               .unshiftContainer('body', symbolDeclaration());
 
             path.parentPath.replaceWithSourceString('jestExistsFile');

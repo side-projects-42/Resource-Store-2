@@ -29,10 +29,10 @@ Camba
   to pick.
 - Ron White, engineering manager at Ibotta, love to have website use
   FastBoot. Using prerender.io but would love to use FastBoot instead.
-Wrote an ember-addon that does meta tags for FB, Twitter.
+  Wrote an ember-addon that does meta tags for FB, Twitter.
 - Ruslan Zavacky - Frontend Software Engineer @ Kayako. Doing pet
   project - Vetoza. I want Google to be able to index it. I use
-prerender now but it's not great.
+  prerender now but it's not great.
 - Terence Lee, Heroku, want a great experience for FastBoot users
 
 RW: Got an existing addon that exposes a `head` service. Trying to get
@@ -79,11 +79,11 @@ that case.
 ### Action Items
 
 - [ ] Ron is going to update the `ember-cli-head` to try to
-  render-a-component approach.
+      render-a-component approach.
 - [ ] Robert is going to work on ember-cli internals to make generating
-  the config to JSON as the primitive instead of generating index.html.
+      the config to JSON as the primitive instead of generating index.html.
 - [ ] Miguel is collecting pain points for dual testing addons in both
-  FastBoot and the browser
+      FastBoot and the browser
 - [ ] Tom will expose `FastBoot.request`
 - [ ] Ruslan will submit a PR for disabling `<script>` tags that point
-  at the JavaScript payload for the SEO case
+      at the JavaScript payload for the SEO case

@@ -1,4 +1,4 @@
-( function () {
+(function () {
 	/**
 	 * This is the abstract base class for MessagePoster implementations.
 	 *
@@ -10,7 +10,7 @@
 	 */
 	mw.messagePoster.MessagePoster = function MwMessagePoster() {};
 
-	OO.initClass( mw.messagePoster.MessagePoster );
+	OO.initClass(mw.messagePoster.MessagePoster);
 
 	/**
 	 * Post a message (with subject and body) to a talk page.
@@ -38,4 +38,4 @@
 	 * something.
 	 */
 	mw.messagePoster.MessagePoster.prototype.post = function () {};
-}() );
+})();

@@ -2,10 +2,9 @@
 
 ## Attendees
 
-* MKN - Michael
-* LS - Leah
-* BM - Brendan McLoughlin
-
+- MKN - Michael
+- LS - Leah
+- BM - Brendan McLoughlin
 
 **MKN**: The models section. A lot is stuff I’m not super familiar with, but I took a look, and so did Wecc, and it looks good! It’s been out there for about 4 days and I want to release it.
 

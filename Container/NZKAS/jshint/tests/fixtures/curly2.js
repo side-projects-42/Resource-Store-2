@@ -1,11 +1,11 @@
 if (cond) {
-    return true;
+  return true;
 }
 
 for (;;) {
-    doSomething();
+  doSomething();
 }
 
 while (true) {
-    doSomething();
+  doSomething();
 }

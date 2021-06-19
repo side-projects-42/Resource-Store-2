@@ -24,7 +24,7 @@ let expectedPathFooQux;
 let expectedPathAbs;
 let expectedPathAbsAnother;
 
-const findNodeModule = jest.fn(name => {
+const findNodeModule = jest.fn((name) => {
   if (name.match(/jest-jasmine2|babel-jest/)) {
     return name;
   }
@@ -309,7 +309,7 @@ describe('transform', () => {
   let Resolver;
   beforeEach(() => {
     Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name => name);
+    Resolver.findNodeModule = jest.fn((name) => name);
   });
 
   it('normalizes the path', () => {
@@ -337,7 +337,7 @@ describe('haste', () => {
   let Resolver;
   beforeEach(() => {
     Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name => name);
+    Resolver.findNodeModule = jest.fn((name) => name);
   });
 
   it('normalizes the path for hasteImplModulePath', () => {
@@ -361,7 +361,7 @@ describe('setupFilesAfterEnv', () => {
   let Resolver;
   beforeEach(() => {
     Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name =>
+    Resolver.findNodeModule = jest.fn((name) =>
       name.startsWith('/') ? name : '/root/path/foo' + path.sep + name,
     );
   });
@@ -409,7 +409,7 @@ describe('setupTestFrameworkScriptFile', () => {
   beforeEach(() => {
     console.warn.mockImplementation(() => {});
     Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name =>
+    Resolver.findNodeModule = jest.fn((name) =>
       name.startsWith('/') ? name : '/root/path/foo' + path.sep + name,
     );
   });
@@ -658,7 +658,7 @@ describe('testRunner', () => {
 
   it('is overwritten by argv', () => {
     const Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name => name);
+    Resolver.findNodeModule = jest.fn((name) => name);
     const {options} = normalize(
       {
         rootDir: '/root/path/foo',
@@ -689,7 +689,7 @@ describe('testEnvironment', () => {
   let Resolver;
   beforeEach(() => {
     Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name => {
+    Resolver.findNodeModule = jest.fn((name) => {
       if (['jsdom', 'jest-environment-jsdom'].includes(name)) {
         return `node_modules/${name}`;
       }
@@ -743,7 +743,7 @@ describe('babel-jest', () => {
   let Resolver;
   beforeEach(() => {
     Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name =>
+    Resolver.findNodeModule = jest.fn((name) =>
       name.indexOf('babel-jest') === -1
         ? path.sep + 'node_modules' + path.sep + name
         : name,
@@ -784,7 +784,7 @@ describe('Upgrade help', () => {
     console.warn.mockImplementation(() => {});
 
     const Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name => {
+    Resolver.findNodeModule = jest.fn((name) => {
       if (name == 'bar/baz') {
         return '/node_modules/bar/baz';
       }
@@ -929,7 +929,7 @@ describe('moduleDirectories', () => {
 describe('preset', () => {
   beforeEach(() => {
     const Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name => {
+    Resolver.findNodeModule = jest.fn((name) => {
       if (name === 'react-native/jest-preset') {
         return '/node_modules/react-native/jest-preset.json';
       }
@@ -1099,7 +1099,10 @@ describe('preset', () => {
       {},
     );
 
-    expect(options.moduleNameMapper).toEqual([['a', 'a'], ['b', 'b']]);
+    expect(options.moduleNameMapper).toEqual([
+      ['a', 'a'],
+      ['b', 'b'],
+    ]);
     expect(options.modulePathIgnorePatterns).toEqual(['b', 'a']);
     expect(options.setupFiles.sort()).toEqual([
       '/node_modules/a',
@@ -1181,7 +1184,7 @@ describe('preset without setupFiles', () => {
   beforeEach(() => {
     Resolver = require('jest-resolve');
     Resolver.findNodeModule = jest.fn(
-      name => path.sep + 'node_modules' + path.sep + name,
+      (name) => path.sep + 'node_modules' + path.sep + name,
     );
   });
 
@@ -1220,7 +1223,7 @@ describe('runner', () => {
   let Resolver;
   beforeEach(() => {
     Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name => {
+    Resolver.findNodeModule = jest.fn((name) => {
       if (['eslint', 'jest-runner-eslint', 'my-runner-foo'].includes(name)) {
         return `node_modules/${name}`;
       }
@@ -1278,7 +1281,7 @@ describe('watchPlugins', () => {
   let Resolver;
   beforeEach(() => {
     Resolver = require('jest-resolve');
-    Resolver.findNodeModule = jest.fn(name => {
+    Resolver.findNodeModule = jest.fn((name) => {
       if (
         ['typeahead', 'jest-watch-typeahead', 'my-watch-plugin'].includes(name)
       ) {
@@ -1484,7 +1487,7 @@ describe('moduleFileExtensions', () => {
   });
 
   it('throws if missing `js` but using jest-runner', () => {
-    [undefined, 'jest-runner'].forEach(runner =>
+    [undefined, 'jest-runner'].forEach((runner) =>
       expect(() =>
         normalize(
           {

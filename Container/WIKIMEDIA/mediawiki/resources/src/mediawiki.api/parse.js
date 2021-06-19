@@ -1,9 +1,8 @@
 /**
  * @class mw.Api.plugin.parse
  */
-( function () {
-
-	$.extend( mw.Api.prototype, {
+(function () {
+	$.extend(mw.Api.prototype, {
 		/**
 		 * Convenience method for 'action=parse'.
 		 *
@@ -15,35 +14,37 @@
 		 * @return {Function} return.done
 		 * @return {string} return.done.data Parsed HTML of `wikitext`.
 		 */
-		parse: function ( content, additionalParams ) {
+		parse: function (content, additionalParams) {
 			var apiPromise,
-				config = $.extend( {
-					formatversion: 2,
-					action: 'parse',
-					contentmodel: 'wikitext'
-				}, additionalParams );
+				config = $.extend(
+					{
+						formatversion: 2,
+						action: "parse",
+						contentmodel: "wikitext",
+					},
+					additionalParams
+				);
 
-			if ( mw.Title && content instanceof mw.Title ) {
+			if (mw.Title && content instanceof mw.Title) {
 				// Parse existing page
 				config.page = content.getPrefixedDb();
-				apiPromise = this.get( config );
+				apiPromise = this.get(config);
 			} else {
 				// Parse wikitext from input
-				config.text = String( content );
-				apiPromise = this.post( config );
+				config.text = String(content);
+				apiPromise = this.post(config);
 			}
 
 			return apiPromise
-				.then( function ( data ) {
+				.then(function (data) {
 					return data.parse.text;
-				} )
-				.promise( { abort: apiPromise.abort } );
-		}
-	} );
+				})
+				.promise({ abort: apiPromise.abort });
+		},
+	});
 
 	/**
 	 * @class mw.Api
 	 * @mixins mw.Api.plugin.parse
 	 */
-
-}() );
+})();

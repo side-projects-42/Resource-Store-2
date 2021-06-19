@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Giromin Cangiaxo"
-		]
-	},
-	"activeabstract-desc": "O genera di feed XML pe-o progetto abstracts attivo de Yahoo"
+  "@metadata": {
+    "authors": ["Giromin Cangiaxo"]
+  },
+  "activeabstract-desc": "O genera di feed XML pe-o progetto abstracts attivo de Yahoo"
 }

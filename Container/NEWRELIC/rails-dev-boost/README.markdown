@@ -20,9 +20,9 @@ If you are using **Rails 2.1** or **Rails 2.0** or **anything older**: you are o
 
 If your app doesn't work with `rails-dev-boost`:
 
- * make sure you are not keeping "class-level" references to reloadable constants (see "Known limitations" section below)
- * otherwise **please open an [issue](https://github.com/thedarkone/rails-dev-boost/issues)**!
- 
+- make sure you are not keeping "class-level" references to reloadable constants (see "Known limitations" section below)
+- otherwise **please open an [issue](https://github.com/thedarkone/rails-dev-boost/issues)**!
+
 I'm very interested in making the plugin as robust as possible and will work with you on fixing any issues.
 
 ### Debug mode
@@ -59,7 +59,7 @@ Installing as a plugin:
 
     script/plugin install git://github.com/thedarkone/rails-dev-boost -r rails-2-3
 
-When the server is started in *development* mode, the special unloading mechanism takes over.
+When the server is started in _development_ mode, the special unloading mechanism takes over.
 
 It can also be used in combination with [RailsTestServing](https://github.com/Roman2K/rails-test-serving) for even faster test runs by forcefully enabling it in test mode. To do so, add the following in `config/environments/test.rb`:
 
@@ -165,7 +165,7 @@ However all of the `Blog`'s references to the `Article` class are still valid, s
     => 2182186060
     irb(main):011:0> Object.const_defined?('Article')
     => false
-    
+
 Now lets try calling the newly added method:
 
     irb(main):012:0> Blog::ARTICLE_CLASS.new.say_hello
@@ -217,7 +217,7 @@ Now we've ended up with 2 distinct `Article` classes. To fix the situation we ca
     irb(main):027:0> Blog::ARTICLE_CLASS.new.say_hello
     Hello world!
     => nil
-    
+
 ### The fix
 
 #### Code refactor
@@ -269,7 +269,7 @@ class Blog < ActiveRecord::Base
   def self.all_articles
     @all_articles ||= Article.all
   end
-  
+
   def self.authors
     @all_authors ||= begin
       require_dependency 'author' # dynamic require_dependency is also fine
@@ -282,21 +282,27 @@ end
 ## FAQ
 
 ### Q: Since the plugin uses its special "unloading mechanism" won't everything break down?
+
 A: Very unlikely... of course there are some edge cases where you might see some breakage (mainly if you're deviating from the Rails 1 file = 1 class conventions or doing some weird `require`s). This is a 99% solution and the seconds you're wasting waiting for the Rails to spit out a page in the dev mode do add up in the long run.
 
 ### Q: How big of a boost is it going to give me?
+
 A: It depends on the size of your app (the bigger it is the bigger your boost is going to be). The speed is then approximately equal to that of production env. plus the time it takes to stat all your app's `*.rb` files (which is surprisingly fast as it is cached by OS). Empty 1 controller 2 views app will become about 4x times faster more complex apps will see huge improvements.
 
 ### Q: I'm using an older version of Rails than 2.2, will this work for me?
+
 A: Unfortunately you are on your own right now :(.
 
 ### Q: My `Article` model does not pick up changes from the `articles` table.
+
 A: You need to force it to be reloaded (just hit the save button in your editor for `article.rb` file).
 
 ### Q: I used `require 'article'` and the `Article` model is not being reloaded.
+
 A: You really shouldn't be using `require` to load your files in the Rails app (if you want them to be automatically reloaded) and let automatic constant loading handle the require for you. You can also use `require_dependency 'article'`, as it goes through the Rails stack.
 
 ### Q: I'm using JRuby, is it going to work?
+
 A: I haven't tested the plugin with JRuby, but the plugin does use `ObjectSpace` to do its magic. `ObjectSpace` is AFAIK disabled by default on JRuby.
 
 FAQ added by [thedarkone](http://github.com/thedarkone).

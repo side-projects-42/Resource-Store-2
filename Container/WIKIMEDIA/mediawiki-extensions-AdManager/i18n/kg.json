@@ -1,9 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Rkupsala"
-		]
-	},
-	"admanager_Page": "Mikânda",
-	"admanager_Category": "Mitîndu"
+  "@metadata": {
+    "authors": ["Rkupsala"]
+  },
+  "admanager_Page": "Mikânda",
+  "admanager_Category": "Mitîndu"
 }

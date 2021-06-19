@@ -19,22 +19,22 @@ export const findSiblingsWithFileExtension = (
 
       const matches = glob
         .sync(`${pathToModule}.*`)
-        .map(match => slash(match))
-        .map(match => {
+        .map((match) => slash(match))
+        .map((match) => {
           const relativePath = path.posix.relative(slashedDirname, match);
 
           return path.posix.dirname(match) === slashedDirname
             ? `./${relativePath}`
             : relativePath;
         })
-        .map(match => `\t'${match}'`)
+        .map((match) => `\t'${match}'`)
         .join('\n');
 
       if (matches) {
         const foundMessage = `\n\nHowever, Jest was able to find:\n${matches}`;
 
         const mappedModuleFileExtensions = moduleFileExtensions
-          .map(ext => `'${ext}'`)
+          .map((ext) => `'${ext}'`)
           .join(', ');
 
         return (

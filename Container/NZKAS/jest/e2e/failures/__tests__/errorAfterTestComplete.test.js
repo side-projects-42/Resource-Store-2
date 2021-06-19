@@ -8,7 +8,7 @@
  */
 'use strict';
 
-test('a failing test', done => {
+test('a failing test', (done) => {
   setTimeout(() => done('fail async'), 5);
   done();
 });

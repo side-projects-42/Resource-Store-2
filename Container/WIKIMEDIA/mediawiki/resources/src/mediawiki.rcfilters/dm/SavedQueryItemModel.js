@@ -11,11 +11,16 @@
  * @param {Object} [config] Configuration options
  * @cfg {boolean} [default] This item is the default
  */
-var SavedQueryItemModel = function MwRcfiltersDmSavedQueriesModel( id, label, data, config ) {
+var SavedQueryItemModel = function MwRcfiltersDmSavedQueriesModel(
+	id,
+	label,
+	data,
+	config
+) {
 	config = config || {};
 
 	// Mixin constructor
-	OO.EventEmitter.call( this );
+	OO.EventEmitter.call(this);
 
 	this.id = id;
 	this.label = label;
@@ -25,8 +30,8 @@ var SavedQueryItemModel = function MwRcfiltersDmSavedQueriesModel( id, label, da
 
 /* Initialization */
 
-OO.initClass( SavedQueryItemModel );
-OO.mixinClass( SavedQueryItemModel, OO.EventEmitter );
+OO.initClass(SavedQueryItemModel);
+OO.mixinClass(SavedQueryItemModel, OO.EventEmitter);
 
 /* Events */
 
@@ -47,7 +52,7 @@ OO.mixinClass( SavedQueryItemModel, OO.EventEmitter );
 SavedQueryItemModel.prototype.getState = function () {
 	return {
 		data: this.getData(),
-		label: this.getLabel()
+		label: this.getLabel(),
 	};
 };
 
@@ -74,10 +79,10 @@ SavedQueryItemModel.prototype.getLabel = function () {
  *
  * @param {string} newLabel New label
  */
-SavedQueryItemModel.prototype.updateLabel = function ( newLabel ) {
-	if ( newLabel && this.label !== newLabel ) {
+SavedQueryItemModel.prototype.updateLabel = function (newLabel) {
+	if (newLabel && this.label !== newLabel) {
 		this.label = newLabel;
-		this.emit( 'update' );
+		this.emit("update");
 	}
 };
 
@@ -96,7 +101,7 @@ SavedQueryItemModel.prototype.getData = function () {
  * @return {Object} Combined parameter data
  */
 SavedQueryItemModel.prototype.getCombinedData = function () {
-	return $.extend( true, {}, this.data.params, this.data.highlights );
+	return $.extend(true, {}, this.data.params, this.data.highlights);
 };
 
 /**
@@ -113,12 +118,12 @@ SavedQueryItemModel.prototype.isDefault = function () {
  *
  * @param {boolean} isDefault Query is default
  */
-SavedQueryItemModel.prototype.toggleDefault = function ( isDefault ) {
+SavedQueryItemModel.prototype.toggleDefault = function (isDefault) {
 	isDefault = isDefault === undefined ? !this.default : isDefault;
 
-	if ( this.default !== isDefault ) {
+	if (this.default !== isDefault) {
 		this.default = isDefault;
-		this.emit( 'update' );
+		this.emit("update");
 	}
 };
 

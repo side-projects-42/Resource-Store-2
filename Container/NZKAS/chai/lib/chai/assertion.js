@@ -10,8 +10,8 @@ module.exports = function (_chai, util) {
    * Module dependencies.
    */
 
-  var AssertionError = _chai.AssertionError
-    , flag = util.flag;
+  var AssertionError = _chai.AssertionError,
+    flag = util.flag;
 
   /*!
    * Module export.
@@ -27,23 +27,23 @@ module.exports = function (_chai, util) {
    * @api private
    */
 
-  function Assertion (obj, msg, stack) {
-    flag(this, 'ssfi', stack || arguments.callee);
-    flag(this, 'object', obj);
-    flag(this, 'message', msg);
+  function Assertion(obj, msg, stack) {
+    flag(this, "ssfi", stack || arguments.callee);
+    flag(this, "object", obj);
+    flag(this, "message", msg);
   }
 
   /*!
-    * ### Assertion.includeStack
-    *
-    * User configurable property, influences whether stack trace
-    * is included in Assertion error message. Default of false
-    * suppresses stack trace in the error message
-    *
-    *     Assertion.includeStack = true;  // enable stack on error
-    *
-    * @api public
-    */
+   * ### Assertion.includeStack
+   *
+   * User configurable property, influences whether stack trace
+   * is included in Assertion error message. Default of false
+   * suppresses stack trace in the error message
+   *
+   *     Assertion.includeStack = true;  // enable stack on error
+   *
+   * @api public
+   */
 
   Assertion.includeStack = false;
 
@@ -95,19 +95,30 @@ module.exports = function (_chai, util) {
    * @api private
    */
 
-  Assertion.prototype.assert = function (expr, msg, negateMsg, expected, _actual, showDiff) {
+  Assertion.prototype.assert = function (
+    expr,
+    msg,
+    negateMsg,
+    expected,
+    _actual,
+    showDiff
+  ) {
     var ok = util.test(this, arguments);
     if (true !== showDiff) showDiff = false;
     if (true !== Assertion.showDiff) showDiff = false;
 
     if (!ok) {
-      var msg = util.getMessage(this, arguments)
-        , actual = util.getActual(this, arguments);
-      throw new AssertionError(msg, {
-          actual: actual
-        , expected: expected
-        , showDiff: showDiff
-      }, (Assertion.includeStack) ? this.assert : flag(this, 'ssfi'));
+      var msg = util.getMessage(this, arguments),
+        actual = util.getActual(this, arguments);
+      throw new AssertionError(
+        msg,
+        {
+          actual: actual,
+          expected: expected,
+          showDiff: showDiff,
+        },
+        Assertion.includeStack ? this.assert : flag(this, "ssfi")
+      );
     }
   };
 
@@ -119,12 +130,12 @@ module.exports = function (_chai, util) {
    * @api private
    */
 
-  Object.defineProperty(Assertion.prototype, '_obj',
-    { get: function () {
-        return flag(this, 'object');
-      }
-    , set: function (val) {
-        flag(this, 'object', val);
-      }
+  Object.defineProperty(Assertion.prototype, "_obj", {
+    get: function () {
+      return flag(this, "object");
+    },
+    set: function (val) {
+      flag(this, "object", val);
+    },
   });
 };

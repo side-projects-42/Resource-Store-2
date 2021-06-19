@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"DCLXVI",
-			"Dimi z"
-		]
-	},
-	"alltimezones-desc": "Добавяне на етикет за показване на дати във всички часови зони"
+  "@metadata": {
+    "authors": ["DCLXVI", "Dimi z"]
+  },
+  "alltimezones-desc": "Добавяне на етикет за показване на дати във всички часови зони"
 }

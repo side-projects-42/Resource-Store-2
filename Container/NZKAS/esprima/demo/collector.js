@@ -29,168 +29,184 @@
 var timerId;
 
 function collectRegex() {
-    'use strict';
+  "use strict";
 
-    function id(i) {
-        return document.getElementById(i);
+  function id(i) {
+    return document.getElementById(i);
+  }
+
+  function escaped(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function setText(id, str) {
+    var el = document.getElementById(id);
+    if (typeof el.innerText === "string") {
+      el.innerText = str;
+    } else {
+      el.textContent = str;
+    }
+  }
+
+  function isLineTerminator(ch) {
+    return ch === "\n" || ch === "\r" || ch === "\u2028" || ch === "\u2029";
+  }
+
+  function process(delay) {
+    if (timerId) {
+      window.clearTimeout(timerId);
     }
 
-    function escaped(str) {
-        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
+    timerId = window.setTimeout(function () {
+      var code, result, occurrences, model, i, str;
 
-    function setText(id, str) {
-        var el = document.getElementById(id);
-        if (typeof el.innerText === 'string') {
-            el.innerText = str;
+      if (typeof window.editor === "undefined") {
+        code = document.getElementById("code").value;
+      } else {
+        code = window.editor.getText();
+      }
+
+      // Executes f on the object and its children (recursively).
+      function visit(object, f) {
+        var key, child;
+
+        if (f.call(null, object) === false) {
+          return;
+        }
+        for (key in object) {
+          if (object.hasOwnProperty(key)) {
+            child = object[key];
+            if (typeof child === "object" && child !== null) {
+              visit(child, f);
+            }
+          }
+        }
+      }
+
+      function createRegex(pattern, mode) {
+        var literal;
+        try {
+          literal = new RegExp(pattern, mode);
+        } catch (e) {
+          // Invalid regular expression.
+          return;
+        }
+        return literal;
+      }
+
+      function collect(node) {
+        var str, arg, value;
+        if (node.type === "Literal") {
+          if (node.value instanceof RegExp) {
+            str = node.value.toString();
+            if (str[0] === "/") {
+              result.push({
+                type: "Literal",
+                value: node.value,
+                line: node.loc.start.line,
+                column: node.loc.start.column,
+                range: node.range,
+              });
+            }
+          }
+        }
+        if (node.type === "NewExpression" || node.type === "CallExpression") {
+          if (
+            node.callee.type === "Identifier" &&
+            node.callee.name === "RegExp"
+          ) {
+            arg = node["arguments"];
+            if (arg.length === 1 && arg[0].type === "Literal") {
+              if (typeof arg[0].value === "string") {
+                value = createRegex(arg[0].value);
+                if (value) {
+                  result.push({
+                    type: "Literal",
+                    value: value,
+                    line: node.loc.start.line,
+                    column: node.loc.start.column,
+                    range: node.range,
+                  });
+                }
+              }
+            }
+            if (
+              arg.length === 2 &&
+              arg[0].type === "Literal" &&
+              arg[1].type === "Literal"
+            ) {
+              if (
+                typeof arg[0].value === "string" &&
+                typeof arg[1].value === "string"
+              ) {
+                value = createRegex(arg[0].value, arg[1].value);
+                if (value) {
+                  result.push({
+                    type: "Literal",
+                    value: value,
+                    line: node.loc.start.line,
+                    column: node.loc.start.column,
+                    range: node.range,
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+
+      occurrences = [];
+      try {
+        result = [];
+        visit(window.esprima.parse(code, { loc: true, range: true }), collect);
+
+        if (result.length > 0) {
+          id("info").innerHTML = "Total regular expressions: " + result.length;
+          id("info").setAttribute("class", "alert-box success");
+          model = window.editor.getModel();
+          for (i = 0; i < result.length; i += 1) {
+            occurrences.push({
+              line: result[i].line,
+              start:
+                1 + result[i].range[0] - model.getLineStart(result[i].line - 1),
+              end: result[i].range[1] - model.getLineStart(result[i].line - 1),
+              readAccess: true,
+              description: result[i].value.toString(),
+            });
+          }
         } else {
-            el.textContent = str;
+          setText("info", "No regex found.");
+          id("info").setAttribute("class", "alert-box secondary");
         }
-    }
+      } catch (e) {
+        setText("info", e.toString());
+        id("info").setAttribute("class", "alert-box alert");
+      } finally {
+        window.editor.showOccurrences(occurrences);
+      }
 
-    function isLineTerminator(ch) {
-        return (ch === '\n' || ch === '\r' || ch === '\u2028' || ch === '\u2029');
-    }
+      timerId = undefined;
+    }, delay || 811);
+  }
 
-    function process(delay) {
-        if (timerId) {
-            window.clearTimeout(timerId);
-        }
-
-        timerId = window.setTimeout(function () {
-            var code, result, occurrences, model, i, str;
-
-            if (typeof window.editor === 'undefined') {
-                code = document.getElementById('code').value;
-            } else {
-                code = window.editor.getText();
-            }
-
-            // Executes f on the object and its children (recursively).
-            function visit(object, f) {
-                var key, child;
-
-                if (f.call(null, object) === false) {
-                    return;
-                }
-                for (key in object) {
-                    if (object.hasOwnProperty(key)) {
-                        child = object[key];
-                        if (typeof child === 'object' && child !== null) {
-                            visit(child, f);
-                        }
-                    }
-                }
-            }
-
-            function createRegex(pattern, mode) {
-                var literal;
-                try {
-                    literal = new RegExp(pattern, mode);
-                } catch (e) {
-                    // Invalid regular expression.
-                    return;
-                }
-                return literal;
-            }
-
-            function collect(node) {
-                var str, arg, value;
-                if (node.type === 'Literal') {
-                    if (node.value instanceof RegExp) {
-                        str = node.value.toString();
-                        if (str[0] === '/') {
-                            result.push({
-                                type: 'Literal',
-                                value: node.value,
-                                line: node.loc.start.line,
-                                column: node.loc.start.column,
-                                range: node.range
-                            });
-                        }
-                    }
-                }
-                if (node.type === 'NewExpression' || node.type === 'CallExpression') {
-                    if (node.callee.type === 'Identifier' && node.callee.name === 'RegExp') {
-                        arg = node['arguments'];
-                        if (arg.length === 1 && arg[0].type === 'Literal') {
-                            if (typeof arg[0].value === 'string') {
-                                value = createRegex(arg[0].value);
-                                if (value) {
-                                    result.push({
-                                        type: 'Literal',
-                                        value: value,
-                                        line: node.loc.start.line,
-                                        column: node.loc.start.column,
-                                        range: node.range
-                                    });
-                                }
-                            }
-                        }
-                        if (arg.length === 2 && arg[0].type === 'Literal' && arg[1].type === 'Literal') {
-                            if (typeof arg[0].value === 'string' && typeof arg[1].value === 'string') {
-                                value = createRegex(arg[0].value, arg[1].value);
-                                if (value) {
-                                    result.push({
-                                        type: 'Literal',
-                                        value: value,
-                                        line: node.loc.start.line,
-                                        column: node.loc.start.column,
-                                        range: node.range
-                                    });
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            occurrences = [];
-            try {
-                result = [];
-                visit(window.esprima.parse(code, { loc: true, range: true }), collect);
-
-                if (result.length > 0) {
-                    id('info').innerHTML = 'Total regular expressions: ' + result.length;
-                    id('info').setAttribute('class', 'alert-box success');
-                    model = window.editor.getModel();
-                    for (i = 0; i < result.length; i += 1) {
-                        occurrences.push({
-                            line: result[i].line,
-                            start: 1 + result[i].range[0] - model.getLineStart(result[i].line - 1),
-                            end: result[i].range[1] - model.getLineStart(result[i].line - 1),
-                            readAccess: true,
-                            description: result[i].value.toString()
-                        });
-                    }
-                } else {
-                    setText('info', 'No regex found.');
-                    id('info').setAttribute('class', 'alert-box secondary');
-                }
-            } catch (e) {
-                setText('info', e.toString());
-                id('info').setAttribute('class', 'alert-box alert');
-            } finally {
-                window.editor.showOccurrences(occurrences);
-            }
-
-            timerId = undefined;
-        }, delay || 811);
-    }
-
-    process(1);
+  process(1);
 }
 
 window.onload = function () {
-    'use strict';
+  "use strict";
 
-    try {
-        require(['custom/editor'], function (editor) {
-            window.editor = editor({ parent: 'editor', lang: 'js' });
-            window.editor.onGotoLine(3, 0);
-            window.editor.getTextView().getModel().addEventListener("Changed", collectRegex);
-            collectRegex();
-        });
-    } catch (e) {
-    }
+  try {
+    require(["custom/editor"], function (editor) {
+      window.editor = editor({ parent: "editor", lang: "js" });
+      window.editor.onGotoLine(3, 0);
+      window.editor
+        .getTextView()
+        .getModel()
+        .addEventListener("Changed", collectRegex);
+      collectRegex();
+    });
+  } catch (e) {}
 };

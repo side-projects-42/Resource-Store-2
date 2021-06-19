@@ -140,7 +140,7 @@ describe('moduleMocker', () => {
     });
 
     it('wont interfere with previous mocks on a shared prototype', () => {
-      const ClassFoo = function() {};
+      const ClassFoo = function () {};
       ClassFoo.prototype.x = () => {};
       const ClassFooMock = moduleMocker.generateFromMetadata(
         moduleMocker.getMetadata(ClassFoo),
@@ -405,7 +405,10 @@ describe('moduleMocker', () => {
         expect(fn.mock.calls).toEqual([[1, 2, 3]]);
 
         fn('a', 'b', 'c');
-        expect(fn.mock.calls).toEqual([[1, 2, 3], ['a', 'b', 'c']]);
+        expect(fn.mock.calls).toEqual([
+          [1, 2, 3],
+          ['a', 'b', 'c'],
+        ]);
       });
 
       it('tracks instances made by mocks', () => {
@@ -534,7 +537,7 @@ describe('moduleMocker', () => {
       });
 
       it('maintains function arity', () => {
-        const mockFunctionArity1 = moduleMocker.fn(x => x);
+        const mockFunctionArity1 = moduleMocker.fn((x) => x);
         const mockFunctionArity2 = moduleMocker.fn((x, y) => y);
 
         expect(mockFunctionArity1.length).toBe(1);
@@ -563,7 +566,7 @@ describe('moduleMocker', () => {
     });
 
     it('mockReturnValueOnce mocks value just once', () => {
-      const fake = jest.fn(a => a + 2);
+      const fake = jest.fn((a) => a + 2);
       fake.mockReturnValueOnce(42);
       expect(fake(2)).toEqual(42);
       expect(fake(2)).toEqual(4);
@@ -618,7 +621,7 @@ describe('moduleMocker', () => {
 
     describe('return values', () => {
       it('tracks return values', () => {
-        const fn = moduleMocker.fn(x => x * 2);
+        const fn = moduleMocker.fn((x) => x * 2);
 
         expect(fn.mock.results).toEqual([]);
 
@@ -638,7 +641,7 @@ describe('moduleMocker', () => {
       });
 
       it('tracks mocked return values', () => {
-        const fn = moduleMocker.fn(x => x * 2);
+        const fn = moduleMocker.fn((x) => x * 2);
         fn.mockReturnValueOnce('MOCKED!');
 
         fn(1);
@@ -657,7 +660,7 @@ describe('moduleMocker', () => {
       });
 
       it('supports resetting return values', () => {
-        const fn = moduleMocker.fn(x => x * 2);
+        const fn = moduleMocker.fn((x) => x * 2);
 
         expect(fn.mock.results).toEqual([]);
 
@@ -706,7 +709,11 @@ describe('moduleMocker', () => {
       expect(fn(6, 3)).toBe(18);
 
       // All call args tracked
-      expect(fn.mock.calls).toEqual([[2, 4], [3, 5], [6, 3]]);
+      expect(fn.mock.calls).toEqual([
+        [2, 4],
+        [3, 5],
+        [6, 3],
+      ]);
       // Results are tracked
       expect(fn.mock.results).toEqual([
         {
@@ -749,7 +756,7 @@ describe('moduleMocker', () => {
 
     it('results of recursive calls are tracked properly', () => {
       // sums up all integers from 0 -> value, using recursion
-      const fn = moduleMocker.fn(value => {
+      const fn = moduleMocker.fn((value) => {
         if (value === 0) {
           return 0;
         } else {
@@ -789,7 +796,7 @@ describe('moduleMocker', () => {
 
     it('test results of recursive calls from within the recursive call', () => {
       // sums up all integers from 0 -> value, using recursion
-      const fn = moduleMocker.fn(value => {
+      const fn = moduleMocker.fn((value) => {
         if (value === 0) {
           return 0;
         } else {
@@ -832,7 +839,7 @@ describe('moduleMocker', () => {
 
     it('call mockClear inside recursive mock', () => {
       // sums up all integers from 0 -> value, using recursion
-      const fn = moduleMocker.fn(value => {
+      const fn = moduleMocker.fn((value) => {
         if (value === 3) {
           fn.mockClear();
         }
@@ -953,7 +960,7 @@ describe('moduleMocker', () => {
       const mock1 = jest.fn();
       const mock2 = jest.fn();
       const Module = jest.fn(() => ({someFn: mock1}));
-      const testFn = function() {
+      const testFn = function () {
         const m = new Module();
         m.someFn();
       };
@@ -1141,7 +1148,7 @@ describe('moduleMocker', () => {
       let originalCallArguments;
       const obj = {
         get method() {
-          return function() {
+          return function () {
             isOriginalCalled = true;
             originalCallThis = this;
             originalCallArguments = arguments;
@@ -1214,12 +1221,12 @@ describe('moduleMocker', () => {
       let methodTwoCalls = 0;
       const obj = {
         get methodOne() {
-          return function() {
+          return function () {
             methodOneCalls++;
           };
         },
         get methodTwo() {
-          return function() {
+          return function () {
             methodTwoCalls++;
           };
         },
@@ -1255,7 +1262,7 @@ describe('moduleMocker', () => {
       let originalCallArguments;
       const prototype = {
         get method() {
-          return function() {
+          return function () {
             isOriginalCalled = true;
             originalCallThis = this;
             originalCallArguments = arguments;
@@ -1318,12 +1325,12 @@ describe('moduleMocker', () => {
       let methodTwoCalls = 0;
       const prototype = {
         get methodOne() {
-          return function() {
+          return function () {
             methodOneCalls++;
           };
         },
         get methodTwo() {
-          return function() {
+          return function () {
             methodTwoCalls++;
           };
         },

@@ -1,3 +1,1 @@
-do {
-}    // LINE
-while (true);
+do {} while (true); // LINE

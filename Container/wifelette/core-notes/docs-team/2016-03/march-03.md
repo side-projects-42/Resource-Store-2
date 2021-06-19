@@ -1,12 +1,14 @@
 # Topics
 
 ### Previous Action Items
-  - [ ] David: still want to contact Trek re: SEO questions, ask for original context
-  - [x] Matt: will see about having the survey intern help with new styling for header 
-  - [ ] Todd: will check on private api info leaking through on API viewer (waiting on this until next week)
-  - [ ] Ryan: update on screencast
+
+- [ ] David: still want to contact Trek re: SEO questions, ask for original context
+- [x] Matt: will see about having the survey intern help with new styling for header
+- [ ] Todd: will check on private api info leaking through on API viewer (waiting on this until next week)
+- [ ] Ryan: update on screencast
 
 ### Agenda
+
 - Template for core-notes minutes
   - easier to extract data (possible viewer, or at least for The EmberWatch Times)
 - Translations
@@ -54,27 +56,27 @@ _Name (Initials) `slackid`_
 
 ### Header Styling
 
-Header style:  LS: comment on new header style about not using the emberconf brand.
+Header style: LS: comment on new header style about not using the emberconf brand.
 
-Header width is different than currently with the guides.  This was because the responsive grid used on the site is different than the guides.
+Header width is different than currently with the guides. This was because the responsive grid used on the site is different than the guides.
 
 LS: To hesitate to rip it out of the website so that it works. Would rather not deploy with the different widths.
 
-History (LS)  Guides page was done by a third part company and then dropped it.  Would be great to finish it off ourselves. 
+History (LS) Guides page was done by a third part company and then dropped it. Would be great to finish it off ourselves.
 
-LS: Could both the guides and the website use the same CSS?  
+LS: Could both the guides and the website use the same CSS?
 
-RL to take restyle forward and and propagate guide style to the rest of the website.  Agreed it makes sense to deploy a header and footer restyle together.
+RL to take restyle forward and and propagate guide style to the rest of the website. Agreed it makes sense to deploy a header and footer restyle together.
 
 ### Screencast Update (RT)
 
-Bring voice in quickstart (me vs you vs I) into consistency.  Trying to align the two (screencast and docs) as close as possible.
+Bring voice in quickstart (me vs you vs I) into consistency. Trying to align the two (screencast and docs) as close as possible.
 
 Fine to work on, but RM will not merge any quickstart changes until emberconf because of the translation efforts.
 
 ### Private Classes in API Docs Issue Update
 
-PR from Kris Seldon that updates website to not render private classes.  This doesn't fix privates showing on other renderings of the API.  
+PR from Kris Seldon that updates website to not render private classes. This doesn't fix privates showing on other renderings of the API.
 
 Todd to submit a PR removing @class, from privates/deprecated, or filtering out from generated YUIDoc JSON to get a discussion going with core.
 
@@ -82,26 +84,26 @@ Todd to submit a PR removing @class, from privates/deprecated, or filtering out 
 
 Currently inconsistent across teams. RM would like a template to guide teams, and possible someone (RM can find) to retroactively apply to old minutes.
 
-LS: make sure it doesn't add arduous steps, but consistency would be useful.  Will bring up the idea to the core team.  
+LS: make sure it doesn't add arduous steps, but consistency would be useful. Will bring up the idea to the core team.
 
 RM: Could be a pull request template on the repository.
 
 ### Translations
 
-RM: Put out a request for new translators on twitter.  No positive responses thusfar.
+RM: Put out a request for new translators on twitter. No positive responses thusfar.
 
 ### Website
 
-RM: MB is not able to continue at the moment, so if someone wants to pick up the feature dashboard that would be good.  DB to look at it.
+RM: MB is not able to continue at the moment, so if someone wants to pick up the feature dashboard that would be good. DB to look at it.
 
-RM: a phased approach might be good to get something tangible.  (manual-> more automated).
+RM: a phased approach might be good to get something tangible. (manual-> more automated).
 DB: Doesn't want to deal with manual, will work forward on automated.
 
-Build page redesign/feature dashboard: Someone showed interest about implementing a design that Yehuda mentioned on an issue (vertical layout) (`@miracleblue`)  DB may reach out.
+Build page redesign/feature dashboard: Someone showed interest about implementing a design that Yehuda mentioned on an issue (vertical layout) (`@miracleblue`) DB may reach out.
 
 ### Issue/PR templates
 
-Proposing a Pull Request Template (markdown file).  RM to create one for RFCs and Core notes, and get comment from core.
+Proposing a Pull Request Template (markdown file). RM to create one for RFCs and Core notes, and get comment from core.
 
 DB proposes doing something for guides and trying it there first.
 
@@ -111,7 +113,7 @@ LS to chat with Yehuda about concerns over barrier to entry.
 
 DB: Propose Step by step section in guides to go from 1.13 to 2
 
-RM: Doesn't think its a guides thing.  Wants it to start on Ember Watch and make it a testing ground for the website.  (wants to do this in general for iterating and experimenting.
+RM: Doesn't think its a guides thing. Wants it to start on Ember Watch and make it a testing ground for the website. (wants to do this in general for iterating and experimenting.
 
 DB: What about a link to the ember-cli release page? RM: Send me a PR and I'll think about it some.
 
@@ -121,9 +123,9 @@ RM: If we are going to make the header an ember component, we could but the styl
 
 RL: Style guide would be great to ensure consistency across the ember ecosystem.
 
-RM: would love that.  Thoughtbot broke it down into SASS components.  Would be conducive to a style guide.
+RM: would love that. Thoughtbot broke it down into SASS components. Would be conducive to a style guide.
 
-RM: Will create a repo under embertown where it could start and "graduate" to Ember.  Will use embertown as an incubator for ember projects
+RM: Will create a repo under embertown where it could start and "graduate" to Ember. Will use embertown as an incubator for ember projects
 
 ### Ember Data Build Promotions
 
@@ -131,12 +133,8 @@ DB should note in the site/build redesign
 
 ### Task Tracking for Docs team
 
-RM: Lets use Trello to coordinate back channel communication amongst the docs team.  The docs team is not just guides anymore.  Lots of cross cutting concerns that probably shouldn't be tracked in guides repo.
+RM: Lets use Trello to coordinate back channel communication amongst the docs team. The docs team is not just guides anymore. Lots of cross cutting concerns that probably shouldn't be tracked in guides repo.
 
 ### Infrastructure
 
-Might be a new infrastructure subteam created.   Also still some discussion on how they will work, and dissemenate information to the outside world on this.  Discussion is happening amongst the core team and will reveal more info by emberconf
-
-
-
-
+Might be a new infrastructure subteam created. Also still some discussion on how they will work, and dissemenate information to the outside world on this. Discussion is happening amongst the core team and will reveal more info by emberconf

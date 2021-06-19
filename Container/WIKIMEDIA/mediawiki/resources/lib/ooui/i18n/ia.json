@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"McDutchie"
-		]
+		"authors": ["McDutchie"]
 	},
 	"ooui-outline-control-move-down": "Displaciar elemento in basso",
 	"ooui-outline-control-move-up": "Displaciar elemento in alto",

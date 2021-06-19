@@ -18,7 +18,7 @@
 - Algolia: thumbs up/down?
 - Getting RM's website changes live
 - Discuss Learning team blog post content https://usecanvas.com/ember-docs/learning-team-~-road-ahead/4QYf1yGIB0kHrZxIItbBKS
-- Tutorial Update: Services Tutorial PR out for review, Starting on autocomplete/filter update/ futhey still working CSS, has an addon created.  Next week, nested routes
+- Tutorial Update: Services Tutorial PR out for review, Starting on autocomplete/filter update/ futhey still working CSS, has an addon created. Next week, nested routes
 
 # Action Items
 
@@ -50,9 +50,9 @@
 
 ### SEO
 
-- LS: YK is not getting love from the google team.  Exploring other avenues
-- DB: Canonical URL is a way, but it wipes out old versions from google's index, but YK was wondering if a schema would work, that's why he was seeking advice.  Canonical is better than we have now.
-- TD: we have algolia, and if we are good about semver, things should stay somewhat compatible.  We've spent a lot of time on this and am not confident google will have anything useful for us, so lets go canonical.  Do it after our switch to algolia.
+- LS: YK is not getting love from the google team. Exploring other avenues
+- DB: Canonical URL is a way, but it wipes out old versions from google's index, but YK was wondering if a schema would work, that's why he was seeking advice. Canonical is better than we have now.
+- TD: we have algolia, and if we are good about semver, things should stay somewhat compatible. We've spent a lot of time on this and am not confident google will have anything useful for us, so lets go canonical. Do it after our switch to algolia.
 - DB: since I'm touching all that anyway, I might as well do them both at the same time.
 
 ### Tutorial update
@@ -67,26 +67,26 @@
 
 ### Blog Post
 
-- LS: locks wants to write a blog post for the learning team, but that's dependent on TD writing a blog post introducing the teams.  Just a reminder to TD
+- LS: locks wants to write a blog post for the learning team, but that's dependent on TD writing a blog post introducing the teams. Just a reminder to TD
 
 - TD: On it
 
 ### Responsiveness/Website
 
-- RM: Did a couple of PRs around some of the easier pages for responsive design.  Working with Ryan L on that.  Someone created big PR on redoing the contributions page.  Kinda stalled, so will close if no action. 
-- RM: Found out how to do continuous deployment, need to figure out the permissions so that right user (bot) can kick it off (commit).  Also working out the new learning page.
-- DB: Slowly working on the help wanted app.  If you want me to get people in my meetup to work on lmk
+- RM: Did a couple of PRs around some of the easier pages for responsive design. Working with Ryan L on that. Someone created big PR on redoing the contributions page. Kinda stalled, so will close if no action.
+- RM: Found out how to do continuous deployment, need to figure out the permissions so that right user (bot) can kick it off (commit). Also working out the new learning page.
+- DB: Slowly working on the help wanted app. If you want me to get people in my meetup to work on lmk
 
 ### Landing Page
 
 - RM: would want to replace home page examples with twiddles
-- MB: home page downloads tons of javascript and is slow.  Should look at lazy loading or something to make that faster.
+- MB: home page downloads tons of javascript and is slow. Should look at lazy loading or something to make that faster.
 
 ### Newsletter
 
 - RM: working on this week in Ember newsletter will send LS a draft
 - LS: what's the difference between this an ember weekly.
-- RM: weekly is more about the community from the perspective of users of Ember.  Newsletter will be geared toward contributors and maintainers.
+- RM: weekly is more about the community from the perspective of users of Ember. Newsletter will be geared toward contributors and maintainers.
 - LS: would like to know thoughts on the future of this offline.
 
 ### Triage

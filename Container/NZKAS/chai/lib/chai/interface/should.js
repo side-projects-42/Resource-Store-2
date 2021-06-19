@@ -7,33 +7,32 @@
 module.exports = function (chai, util) {
   var Assertion = chai.Assertion;
 
-  function loadShould () {
+  function loadShould() {
     // modify Object.prototype to have `should`
-    Object.defineProperty(Object.prototype, 'should',
-      {
-        set: function (value) {
-          // See https://github.com/chaijs/chai/issues/86: this makes
-          // `whatever.should = someValue` actually set `someValue`, which is
-          // especially useful for `global.should = require('chai').should()`.
-          //
-          // Note that we have to use [[DefineProperty]] instead of [[Put]]
-          // since otherwise we would trigger this very setter!
-          Object.defineProperty(this, 'should', {
-            value: value,
-            enumerable: true,
-            configurable: true,
-            writable: true
-          });
+    Object.defineProperty(Object.prototype, "should", {
+      set: function (value) {
+        // See https://github.com/chaijs/chai/issues/86: this makes
+        // `whatever.should = someValue` actually set `someValue`, which is
+        // especially useful for `global.should = require('chai').should()`.
+        //
+        // Note that we have to use [[DefineProperty]] instead of [[Put]]
+        // since otherwise we would trigger this very setter!
+        Object.defineProperty(this, "should", {
+          value: value,
+          enumerable: true,
+          configurable: true,
+          writable: true,
+        });
+      },
+      get: function () {
+        if (this instanceof String || this instanceof Number) {
+          return new Assertion(this.constructor(this));
+        } else if (this instanceof Boolean) {
+          return new Assertion(this == true);
         }
-      , get: function(){
-          if (this instanceof String || this instanceof Number) {
-            return new Assertion(this.constructor(this));
-          } else if (this instanceof Boolean) {
-            return new Assertion(this == true);
-          }
-          return new Assertion(this);
-        }
-      , configurable: true
+        return new Assertion(this);
+      },
+      configurable: true,
     });
 
     var should = {};
@@ -48,10 +47,10 @@ module.exports = function (chai, util) {
 
     should.exist = function (val, msg) {
       new Assertion(val, msg).to.exist;
-    }
+    };
 
     // negation
-    should.not = {}
+    should.not = {};
 
     should.not.equal = function (val1, val2, msg) {
       new Assertion(val1, msg).to.not.equal(val2);
@@ -63,13 +62,13 @@ module.exports = function (chai, util) {
 
     should.not.exist = function (val, msg) {
       new Assertion(val, msg).to.not.exist;
-    }
+    };
 
-    should['throw'] = should['Throw'];
-    should.not['throw'] = should.not['Throw'];
+    should["throw"] = should["Throw"];
+    should.not["throw"] = should.not["Throw"];
 
     return should;
-  };
+  }
 
   chai.should = loadShould;
   chai.Should = loadShould;

@@ -1,15 +1,16 @@
-# PhoneGap ActionSheet Plugin #
+# PhoneGap ActionSheet Plugin
+
 by `Olivier Louvignes`
 
-## DESCRIPTION ##
+## DESCRIPTION
 
-* This plugin provides a simple way to use the `UIActionSheet` native component from IOS. It does comply with the latest (future-2.x) phonegap standards.
+- This plugin provides a simple way to use the `UIActionSheet` native component from IOS. It does comply with the latest (future-2.x) phonegap standards.
 
-* Compared to the `iPhone/NativeControls` plugin, it is more documented & simpler to understand (only handle actionSheets). It does also provide new options (style).
+- Compared to the `iPhone/NativeControls` plugin, it is more documented & simpler to understand (only handle actionSheets). It does also provide new options (style).
 
-* There is a `Sencha Touch 2.0` plugin to easily leverage this plugin [here](https://github.com/mgcrea/sencha-touch-plugins/blob/master/PhonegapActionSheet.js)
+- There is a `Sencha Touch 2.0` plugin to easily leverage this plugin [here](https://github.com/mgcrea/sencha-touch-plugins/blob/master/PhonegapActionSheet.js)
 
-## SETUP ##
+## SETUP
 
 Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap-iphone).
 
@@ -18,7 +19,7 @@ Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap
 3. Add the .js files to your `www` folder on disk, and add reference(s) to the .js files as <link> tags in your html file(s)
 4. Add new entry with key `ActionSheet` and value `ActionSheet` to `Plugins` in `PhoneGap.plist`
 
-## JAVASCRIPT INTERFACE ##
+## JAVASCRIPT INTERFACE
 
     // After device ready, create a local alias
     var actionSheet = window.plugins.actionSheet;
@@ -29,9 +30,9 @@ Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap
     // Complex
     actionSheet.create(null, ['Add', 'Delete', 'Cancel'], function(buttonValue, buttonIndex) { console.warn('create', [this, arguments]); }, {destructiveButtonIndex: 1, cancelButtonIndex: 2});
 
-* Check [source](http://github.com/mgcrea/phonegap-plugins/tree/master/iPhone/ActionSheet/ActionSheet.js) for additional configuration.
+- Check [source](http://github.com/mgcrea/phonegap-plugins/tree/master/iPhone/ActionSheet/ActionSheet.js) for additional configuration.
 
-## BUGS AND CONTRIBUTIONS ##
+## BUGS AND CONTRIBUTIONS
 
 Patches welcome! Send a pull request. Since this is not a part of PhoneGap Core (which requires a CLA), this should be easier.
 
@@ -39,7 +40,7 @@ Post issues on [Github](http://github.com/phonegap/phonegap-plugins/issues)
 
 The latest code (my fork) will always be [here](http://github.com/mgcrea/phonegap-plugins/tree/master/iPhone/ActionSheet/)
 
-## LICENSE ##
+## LICENSE
 
 Copyright 2011 Olivier Louvignes. All rights reserved.
 
@@ -51,10 +52,10 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-## CREDITS ##
+## CREDITS
 
 Inspired by :
 
-* [NativeControls Phonegap plugin](https://github.com/phonegap/phonegap-plugins/tree/master/iPhone/NativeControls)
+- [NativeControls Phonegap plugin](https://github.com/phonegap/phonegap-plugins/tree/master/iPhone/NativeControls)
 
-* [ActionSheet Sencha Touch 2.0 class](http://docs.sencha.com/touch/2-0/#!/api/Ext.ActionSheet)
+- [ActionSheet Sencha Touch 2.0 class](http://docs.sencha.com/touch/2-0/#!/api/Ext.ActionSheet)

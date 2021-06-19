@@ -1,5 +1,4 @@
-( function () {
-
+(function () {
 	/**
 	 * @class mw.Rest
 	 */
@@ -12,9 +11,9 @@
 	 */
 	var defaultOptions = {
 		ajax: {
-			url: mw.util.wikiScript( 'rest' ),
-			timeout: 30 * 1000 // 30 seconds
-		}
+			url: mw.util.wikiScript("rest"),
+			timeout: 30 * 1000, // 30 seconds
+		},
 	};
 
 	/**
@@ -24,11 +23,15 @@
 	 * @return {Object}
 	 * @private
 	 */
-	function objectKeysToLowerCase( headers ) {
-		return Object.keys( headers || {} ).reduce( function ( updatedHeaders, key ) {
-			updatedHeaders[ key.toLowerCase() ] = headers[ key ];
+	function objectKeysToLowerCase(headers) {
+		return Object.keys(headers || {}).reduce(function (
+			updatedHeaders,
+			key
+		) {
+			updatedHeaders[key.toLowerCase()] = headers[key];
 			return updatedHeaders;
-		}, {} );
+		},
+		{});
 	}
 
 	/**
@@ -56,9 +59,9 @@
 	 * @constructor
 	 * @param {Object} [options] See #defaultOptions documentation above.
 	 */
-	mw.Rest = function ( options ) {
-		var defaults = $.extend( {}, options );
-		defaults.ajax = $.extend( {}, defaultOptions.ajax, defaults.ajax );
+	mw.Rest = function (options) {
+		var defaults = $.extend({}, options);
+		defaults.ajax = $.extend({}, defaultOptions.ajax, defaults.ajax);
 
 		this.url = defaults.ajax.url;
 		delete defaults.ajax.url;
@@ -74,11 +77,11 @@
 		 * @method
 		 */
 		abort: function () {
-			this.requests.forEach( function ( request ) {
-				if ( request ) {
+			this.requests.forEach(function (request) {
+				if (request) {
 					request.abort();
 				}
-			} );
+			});
 		},
 
 		/**
@@ -90,12 +93,12 @@
 		 * @param {Object} [headers]
 		 * @return {jQuery.Promise}
 		 */
-		get: function ( path, query, headers ) {
-			return this.ajax( path, {
-				type: 'GET',
+		get: function (path, query, headers) {
+			return this.ajax(path, {
+				type: "GET",
 				data: query,
-				headers: headers || {}
-			} );
+				headers: headers || {},
+			});
 		},
 
 		/**
@@ -109,14 +112,16 @@
 		 * @param {Object} [headers]
 		 * @return {jQuery.Promise}
 		 */
-		post: function ( path, body, headers ) {
-			headers = objectKeysToLowerCase( headers );
-			return this.ajax( path, {
-				type: 'POST',
-				headers: $.extend( headers, { 'content-type': 'application/json' } ),
-				data: JSON.stringify( body ),
-				dataType: 'json'
-			} );
+		post: function (path, body, headers) {
+			headers = objectKeysToLowerCase(headers);
+			return this.ajax(path, {
+				type: "POST",
+				headers: $.extend(headers, {
+					"content-type": "application/json",
+				}),
+				data: JSON.stringify(body),
+				dataType: "json",
+			});
 		},
 
 		/**
@@ -128,42 +133,43 @@
 		 * @return {jQuery.Promise} Done: API response data and the jqXHR object.
 		 *  Fail: Error code
 		 */
-		ajax: function ( path, ajaxOptions ) {
+		ajax: function (path, ajaxOptions) {
 			var self = this,
 				apiDeferred = $.Deferred(),
-				xhr, requestIndex;
+				xhr,
+				requestIndex;
 
-			ajaxOptions = $.extend( {}, this.defaults.ajax, ajaxOptions );
+			ajaxOptions = $.extend({}, this.defaults.ajax, ajaxOptions);
 			ajaxOptions.url = this.url + path;
 
 			// Make the AJAX request.
-			xhr = $.ajax( ajaxOptions );
+			xhr = $.ajax(ajaxOptions);
 
 			// Save it to to make it possible to abort.
 			requestIndex = this.requests.length;
-			this.requests.push( xhr );
-			xhr.always( function () {
-				self.requests[ requestIndex ] = null;
-			} );
+			this.requests.push(xhr);
+			xhr.always(function () {
+				self.requests[requestIndex] = null;
+			});
 
 			xhr.then(
 				// AJAX success just means "200 OK" response.
-				function ( result, textStatus, jqXHR ) {
-					apiDeferred.resolve( result, jqXHR );
+				function (result, textStatus, jqXHR) {
+					apiDeferred.resolve(result, jqXHR);
 				},
 				// If AJAX fails, reject API call with error code 'http'
 				// and details in second argument.
-				function ( jqXHR, textStatus, exception ) {
-					apiDeferred.reject( 'http', {
+				function (jqXHR, textStatus, exception) {
+					apiDeferred.reject("http", {
 						xhr: jqXHR,
 						textStatus: textStatus,
-						exception: exception
-					} );
+						exception: exception,
+					});
 				}
 			);
 
 			// Return the Promise
-			return apiDeferred.promise( { abort: xhr.abort } );
-		}
+			return apiDeferred.promise({ abort: xhr.abort });
+		},
 	};
-}() );
+})();

@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Benoit Rochon"
-		]
-	},
-	"admanager_Page": "Masinahikana"
+  "@metadata": {
+    "authors": ["Benoit Rochon"]
+  },
+  "admanager_Page": "Masinahikana"
 }

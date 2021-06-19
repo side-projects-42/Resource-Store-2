@@ -11,51 +11,53 @@ var ViewSwitchWidget;
  * @param {mw.rcfilters.dm.FiltersViewModel} model View model
  * @param {Object} [config] Configuration object
  */
-ViewSwitchWidget = function MwRcfiltersUiViewSwitchWidget( controller, model, config ) {
+ViewSwitchWidget = function MwRcfiltersUiViewSwitchWidget(
+	controller,
+	model,
+	config
+) {
 	config = config || {};
 
 	// Parent
-	ViewSwitchWidget.parent.call( this, config );
+	ViewSwitchWidget.parent.call(this, config);
 
 	this.controller = controller;
 	this.model = model;
 
-	this.buttons = new OO.ui.ButtonGroupWidget( {
+	this.buttons = new OO.ui.ButtonGroupWidget({
 		items: [
-			new OO.ui.ButtonWidget( {
-				data: 'namespaces',
-				icon: 'article',
-				label: mw.msg( 'namespaces' )
-			} ),
-			new OO.ui.ButtonWidget( {
-				data: 'tags',
-				icon: 'tag',
-				label: mw.msg( 'rcfilters-view-tags' )
-			} )
-		]
-	} );
+			new OO.ui.ButtonWidget({
+				data: "namespaces",
+				icon: "article",
+				label: mw.msg("namespaces"),
+			}),
+			new OO.ui.ButtonWidget({
+				data: "tags",
+				icon: "tag",
+				label: mw.msg("rcfilters-view-tags"),
+			}),
+		],
+	});
 
-	this.buttons.aggregate( { click: 'buttonClick' } );
+	this.buttons.aggregate({ click: "buttonClick" });
 
 	// Events
-	this.model.connect( this, { update: 'onModelUpdate' } );
-	this.buttons.connect( this, { buttonClick: 'onButtonClick' } );
+	this.model.connect(this, { update: "onModelUpdate" });
+	this.buttons.connect(this, { buttonClick: "onButtonClick" });
 
-	this.$element
-		.addClass( 'mw-rcfilters-ui-viewSwitchWidget' )
-		.append(
-			new OO.ui.LabelWidget( {
-				label: mw.msg( 'rcfilters-advancedfilters' )
-			} ).$element,
-			$( '<div>' )
-				.addClass( 'mw-rcfilters-ui-viewSwitchWidget-buttons' )
-				.append( this.buttons.$element )
-		);
+	this.$element.addClass("mw-rcfilters-ui-viewSwitchWidget").append(
+		new OO.ui.LabelWidget({
+			label: mw.msg("rcfilters-advancedfilters"),
+		}).$element,
+		$("<div>")
+			.addClass("mw-rcfilters-ui-viewSwitchWidget-buttons")
+			.append(this.buttons.$element)
+	);
 };
 
 /* Initialize */
 
-OO.inheritClass( ViewSwitchWidget, OO.ui.Widget );
+OO.inheritClass(ViewSwitchWidget, OO.ui.Widget);
 
 /**
  * Respond to model update event
@@ -63,9 +65,9 @@ OO.inheritClass( ViewSwitchWidget, OO.ui.Widget );
 ViewSwitchWidget.prototype.onModelUpdate = function () {
 	var currentView = this.model.getCurrentView();
 
-	this.buttons.getItems().forEach( function ( buttonWidget ) {
-		buttonWidget.setActive( buttonWidget.getData() === currentView );
-	} );
+	this.buttons.getItems().forEach(function (buttonWidget) {
+		buttonWidget.setActive(buttonWidget.getData() === currentView);
+	});
 };
 
 /**
@@ -73,8 +75,8 @@ ViewSwitchWidget.prototype.onModelUpdate = function () {
  *
  * @param {OO.ui.ButtonWidget} buttonWidget Clicked button
  */
-ViewSwitchWidget.prototype.onButtonClick = function ( buttonWidget ) {
-	this.controller.switchView( buttonWidget.getData() );
+ViewSwitchWidget.prototype.onButtonClick = function (buttonWidget) {
+	this.controller.switchView(buttonWidget.getData());
 };
 
 module.exports = ViewSwitchWidget;

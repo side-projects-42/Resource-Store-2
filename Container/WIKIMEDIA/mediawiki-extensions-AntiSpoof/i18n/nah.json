@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Akapochtli",
-			"Fluence"
-		]
-	},
-	"antispoof-badtype": "Ahcualli tlahcuiloliztli"
+  "@metadata": {
+    "authors": ["Akapochtli", "Fluence"]
+  },
+  "antispoof-badtype": "Ahcualli tlahcuiloliztli"
 }

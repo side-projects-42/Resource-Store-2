@@ -49,7 +49,7 @@ test('updates the file size when a file changes', async () => {
   writeFiles(DIR, {
     'file.js': '"asdf"',
   });
-  const {hasteFS} = await new Promise(resolve =>
+  const {hasteFS} = await new Promise((resolve) =>
     hasteMap.once('change', resolve),
   );
   hasteMap.end();

@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Bachounda"
-		]
+		"authors": ["Bachounda"]
 	},
 	"ooui-outline-control-move-down": "هبط الشيئ للتحت",
 	"ooui-outline-control-move-up": "طلع الشيئ للفوق",

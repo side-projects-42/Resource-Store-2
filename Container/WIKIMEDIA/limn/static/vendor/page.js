@@ -1,6 +1,4 @@
-
-;(function(){
-
+(function () {
   /**
    * Perform initial dispatch.
    */
@@ -11,7 +9,7 @@
    * Base path.
    */
 
-  var base = '';
+  var base = "";
 
   /**
    * Running flag.
@@ -37,20 +35,20 @@
 
   function page(path, fn) {
     // <callback>
-    if ('function' == typeof path) {
-      return page('*', path);
+    if ("function" == typeof path) {
+      return page("*", path);
     }
 
     // route <path> to <callback ...>
-    if ('function' == typeof fn) {
+    if ("function" == typeof fn) {
       var route = new Route(path);
       for (var i = 1; i < arguments.length; ++i) {
         page.callbacks.push(route.middleware(arguments[i]));
       }
-    // show <path> with [state]
-    } else if ('string' == typeof path) {
+      // show <path> with [state]
+    } else if ("string" == typeof path) {
       page.show(path, fn);
-    // start [options]
+      // start [options]
     } else {
       page.start(path);
     }
@@ -69,7 +67,7 @@
    * @api public
    */
 
-  page.base = function(path){
+  page.base = function (path) {
     if (0 == arguments.length) return base;
     base = path;
   };
@@ -87,13 +85,14 @@
    * @api public
    */
 
-  page.start = function(options){
+  page.start = function (options) {
     options = options || {};
     if (running) return;
     running = true;
     if (false === options.dispatch) dispatch = false;
-    if (false !== options.popstate) addEventListener('popstate', onpopstate, false);
-    if (false !== options.click) addEventListener('click', onclick, false);
+    if (false !== options.popstate)
+      addEventListener("popstate", onpopstate, false);
+    if (false !== options.click) addEventListener("click", onclick, false);
     if (!dispatch) return;
     page.replace(location.pathname + location.search, null, true, dispatch);
   };
@@ -104,10 +103,10 @@
    * @api public
    */
 
-  page.stop = function(){
+  page.stop = function () {
     running = false;
-    removeEventListener('click', onclick, false);
-    removeEventListener('popstate', onpopstate, false);
+    removeEventListener("click", onclick, false);
+    removeEventListener("popstate", onpopstate, false);
   };
 
   /**
@@ -119,7 +118,7 @@
    * @api public
    */
 
-  page.show = function(path, state){
+  page.show = function (path, state) {
     var ctx = new Context(path, state);
     page.dispatch(ctx);
     if (!ctx.unhandled) ctx.pushState();
@@ -135,7 +134,7 @@
    * @api public
    */
 
-  page.replace = function(path, state, init, dispatch){
+  page.replace = function (path, state, init, dispatch) {
     var ctx = new Context(path, state);
     ctx.init = init;
     if (null == dispatch) dispatch = true;
@@ -151,7 +150,7 @@
    * @api private
    */
 
-  page.dispatch = function(ctx){
+  page.dispatch = function (ctx) {
     var i = 0;
 
     function next() {
@@ -173,7 +172,8 @@
    */
 
   function unhandled(ctx) {
-    if (window.location.pathname + window.location.search == ctx.canonicalPath) return;
+    if (window.location.pathname + window.location.search == ctx.canonicalPath)
+      return;
     page.stop();
     ctx.unhandled = true;
     window.location = ctx.canonicalPath;
@@ -189,14 +189,14 @@
    */
 
   function Context(path, state) {
-    if ('/' == path[0] && 0 != path.indexOf(base)) path = base + path;
-    var i = path.indexOf('?');
+    if ("/" == path[0] && 0 != path.indexOf(base)) path = base + path;
+    var i = path.indexOf("?");
     this.canonicalPath = path;
-    this.path = path.replace(base, '') || '/';
+    this.path = path.replace(base, "") || "/";
     this.title = document.title;
     this.state = state || {};
     this.state.path = path;
-    this.querystring = ~i ? path.slice(i + 1) : '';
+    this.querystring = ~i ? path.slice(i + 1) : "";
     this.pathname = ~i ? path.slice(0, i) : path;
     this.params = [];
   }
@@ -213,7 +213,7 @@
    * @api private
    */
 
-  Context.prototype.pushState = function(){
+  Context.prototype.pushState = function () {
     history.pushState(this.state, this.title, this.canonicalPath);
   };
 
@@ -223,7 +223,7 @@
    * @api public
    */
 
-  Context.prototype.save = function(){
+  Context.prototype.save = function () {
     history.replaceState(this.state, this.title, this.canonicalPath);
   };
 
@@ -244,11 +244,13 @@
   function Route(path, options) {
     options = options || {};
     this.path = path;
-    this.method = 'GET';
-    this.regexp = pathtoRegexp(path
-      , this.keys = []
-      , options.sensitive
-      , options.strict);
+    this.method = "GET";
+    this.regexp = pathtoRegexp(
+      path,
+      (this.keys = []),
+      options.sensitive,
+      options.strict
+    );
   }
 
   /**
@@ -266,12 +268,12 @@
    * @api public
    */
 
-  Route.prototype.middleware = function(fn){
+  Route.prototype.middleware = function (fn) {
     var self = this;
-    return function(ctx, next){
+    return function (ctx, next) {
       if (self.match(ctx.path, ctx.params)) return fn(ctx, next);
       next();
-    }
+    };
   };
 
   /**
@@ -284,25 +286,22 @@
    * @api private
    */
 
-  Route.prototype.match = function(path, params){
-    var keys = this.keys
-      , qsIndex = path.indexOf('?')
-      , pathname = ~qsIndex ? path.slice(0, qsIndex) : path
-      , m = this.regexp.exec(pathname);
-  
+  Route.prototype.match = function (path, params) {
+    var keys = this.keys,
+      qsIndex = path.indexOf("?"),
+      pathname = ~qsIndex ? path.slice(0, qsIndex) : path,
+      m = this.regexp.exec(pathname);
+
     if (!m) return false;
 
     for (var i = 1, len = m.length; i < len; ++i) {
       var key = keys[i - 1];
 
-      var val = 'string' == typeof m[i]
-        ? decodeURIComponent(m[i])
-        : m[i];
+      var val = "string" == typeof m[i] ? decodeURIComponent(m[i]) : m[i];
 
       if (key) {
-        params[key.name] = undefined !== params[key.name]
-          ? params[key.name]
-          : val;
+        params[key.name] =
+          undefined !== params[key.name] ? params[key.name] : val;
       } else {
         params.push(val);
       }
@@ -330,26 +329,33 @@
 
   function pathtoRegexp(path, keys, sensitive, strict) {
     if (path instanceof RegExp) return path;
-    if (path instanceof Array) path = '(' + path.join('|') + ')';
+    if (path instanceof Array) path = "(" + path.join("|") + ")";
     path = path
-      .concat(strict ? '' : '/?')
-      .replace(/\/\(/g, '(?:/')
-      .replace(/\+/g, '__plus__')
-      .replace(/(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g, function(_, slash, format, key, capture, optional){
-        keys.push({ name: key, optional: !! optional });
-        slash = slash || '';
-        return ''
-          + (optional ? '' : slash)
-          + '(?:'
-          + (optional ? slash : '')
-          + (format || '') + (capture || (format && '([^/.]+?)' || '([^/]+?)')) + ')'
-          + (optional || '');
-      })
-      .replace(/([\/.])/g, '\\$1')
-      .replace(/__plus__/g, '(.+)')
-      .replace(/\*/g, '(.*)');
-    return new RegExp('^' + path + '$', sensitive ? '' : 'i');
-  };
+      .concat(strict ? "" : "/?")
+      .replace(/\/\(/g, "(?:/")
+      .replace(/\+/g, "__plus__")
+      .replace(
+        /(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g,
+        function (_, slash, format, key, capture, optional) {
+          keys.push({ name: key, optional: !!optional });
+          slash = slash || "";
+          return (
+            "" +
+            (optional ? "" : slash) +
+            "(?:" +
+            (optional ? slash : "") +
+            (format || "") +
+            (capture || (format && "([^/.]+?)") || "([^/]+?)") +
+            ")" +
+            (optional || "")
+          );
+        }
+      )
+      .replace(/([\/.])/g, "\\$1")
+      .replace(/__plus__/g, "(.+)")
+      .replace(/\*/g, "(.*)");
+    return new RegExp("^" + path + "$", sensitive ? "" : "i");
+  }
 
   /**
    * Handle "populate" events.
@@ -368,16 +374,16 @@
 
   function onclick(e) {
     if (1 != which(e)) return;
-    if (e.defaultPrevented) return; 
+    if (e.defaultPrevented) return;
     var el = e.target;
-    while (el && 'A' != el.nodeName) el = el.parentNode;
-    if (!el || 'A' != el.nodeName) return;
+    while (el && "A" != el.nodeName) el = el.parentNode;
+    if (!el || "A" != el.nodeName) return;
     var href = el.href;
     var path = el.pathname + el.search;
     if (el.hash) return;
     if (!sameOrigin(href)) return;
     var orig = path;
-    path = path.replace(base, '');
+    path = path.replace(base, "");
     if (base && orig == path) return;
     e.preventDefault();
     page.show(orig);
@@ -389,9 +395,7 @@
 
   function which(e) {
     e = e || window.event;
-    return null == e.which
-      ? e.button
-      : e.which;
+    return null == e.which ? e.button : e.which;
   }
 
   /**
@@ -399,8 +403,8 @@
    */
 
   function sameOrigin(href) {
-    var origin = location.protocol + '//' + location.hostname;
-    if (location.port) origin += ':' + location.port;
+    var origin = location.protocol + "//" + location.hostname;
+    if (location.port) origin += ":" + location.port;
     return 0 == href.indexOf(origin);
   }
 
@@ -408,10 +412,9 @@
    * Expose `page`.
    */
 
-  if ('undefined' == typeof module) {
+  if ("undefined" == typeof module) {
     window.page = page;
   } else {
     module.exports = page;
   }
-
 })();

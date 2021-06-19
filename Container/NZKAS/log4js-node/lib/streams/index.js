@@ -1,2 +1,2 @@
-exports.RollingFileStream = require('./RollingFileStream');
-exports.DateRollingFileStream = require('./DateRollingFileStream');
+exports.RollingFileStream = require("./RollingFileStream");
+exports.DateRollingFileStream = require("./DateRollingFileStream");

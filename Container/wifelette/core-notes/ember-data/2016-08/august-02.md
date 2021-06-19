@@ -19,7 +19,6 @@
   - API lock in for `store.pushPayload` to always return `DS.Model`s
   - performance concerns since we can't refactor in the future to not return materialized models
 
-
 ##### Discussion / Resolution
 
 - pangratz: I've opened [RFC#161](https://github.com/emberjs/rfcs/pull/161) to

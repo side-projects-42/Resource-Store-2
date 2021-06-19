@@ -2,5 +2,5 @@
 
 export default {
   authorize: () => 'token',
-  isAuthorized: secret => secret === 'wizard',
+  isAuthorized: (secret) => secret === 'wizard',
 };

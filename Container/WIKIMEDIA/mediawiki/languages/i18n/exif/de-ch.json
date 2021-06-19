@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Filzstift",
-			"MichaelFrey"
-		]
+		"authors": ["Filzstift", "MichaelFrey"]
 	},
 	"exif-jpeginterchangeformatlength": "Grösse der JPEG-Daten in Bytes",
 	"exif-referenceblackwhite": "Schwarz/Weiss-Referenzpunkte",

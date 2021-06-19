@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Dferg",
-			"MarcoAurelio",
-			"Seb35"
-		]
+		"authors": ["Dferg", "MarcoAurelio", "Seb35"]
 	},
 	"config-localsettings-upgrade": "Se ha encontrado un archivo <code>LocalSettings.php</code>.\nPara actualizar esta instalación, escriba el valor de <code>$wgUpgradeKey</code> en el cuadro de abajo.\nLo encontrará en <code>LocalSettings.php</code>.",
 	"config-localsettings-cli-upgrade": "Se ha detectado un archivo <code>LocalSettings.php</code>.\nPara actualizar la instalación, en su lugar ejecute <code>update.php</code>",

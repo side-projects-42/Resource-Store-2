@@ -10,7 +10,7 @@
 const mockFiles = new Map();
 function __setMockFiles(newMockFiles) {
   mockFiles.clear();
-  Object.keys(newMockFiles).forEach(fileName => {
+  Object.keys(newMockFiles).forEach((fileName) => {
     mockFiles.set(fileName, newMockFiles[fileName]);
   });
 }

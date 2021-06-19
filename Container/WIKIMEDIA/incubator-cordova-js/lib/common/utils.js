@@ -3,95 +3,106 @@ var utils = exports;
 /**
  * Returns an indication of whether the argument is an array or not
  */
-utils.isArray = function(a) {
-    return Object.prototype.toString.call(a) == '[object Array]';
+utils.isArray = function (a) {
+  return Object.prototype.toString.call(a) == "[object Array]";
 };
 
 /**
  * Returns an indication of whether the argument is a Date or not
  */
-utils.isDate = function(d) {
-    return Object.prototype.toString.call(d) == '[object Date]';
+utils.isDate = function (d) {
+  return Object.prototype.toString.call(d) == "[object Date]";
 };
 
 /**
  * Does a deep clone of the object.
  */
-utils.clone = function(obj) {
-    if(!obj || typeof obj == 'function' || utils.isDate(obj) || typeof obj != 'object') {
-        return obj;
-    }
+utils.clone = function (obj) {
+  if (
+    !obj ||
+    typeof obj == "function" ||
+    utils.isDate(obj) ||
+    typeof obj != "object"
+  ) {
+    return obj;
+  }
 
-    var retVal, i;
+  var retVal, i;
 
-    if(utils.isArray(obj)){
-        retVal = [];
-        for(i = 0; i < obj.length; ++i){
-            retVal.push(utils.clone(obj[i]));
-        }
-        return retVal;
-    }
-
-    retVal = {};
-    for(i in obj){
-        if(!(i in retVal) || retVal[i] != obj[i]) {
-            retVal[i] = utils.clone(obj[i]);
-        }
+  if (utils.isArray(obj)) {
+    retVal = [];
+    for (i = 0; i < obj.length; ++i) {
+      retVal.push(utils.clone(obj[i]));
     }
     return retVal;
+  }
+
+  retVal = {};
+  for (i in obj) {
+    if (!(i in retVal) || retVal[i] != obj[i]) {
+      retVal[i] = utils.clone(obj[i]);
+    }
+  }
+  return retVal;
 };
 
 /**
  * Returns a wrappered version of the function
  */
-utils.close = function(context, func, params) {
-    if (typeof params == 'undefined') {
-        return function() {
-            return func.apply(context, arguments);
-        };
-    } else {
-        return function() {
-            return func.apply(context, params);
-        };
-    }
+utils.close = function (context, func, params) {
+  if (typeof params == "undefined") {
+    return function () {
+      return func.apply(context, arguments);
+    };
+  } else {
+    return function () {
+      return func.apply(context, params);
+    };
+  }
 };
 
 /**
  * Create a UUID
  */
-utils.createUUID = function() {
-    return UUIDcreatePart(4) + '-' +
-        UUIDcreatePart(2) + '-' +
-        UUIDcreatePart(2) + '-' +
-        UUIDcreatePart(2) + '-' +
-        UUIDcreatePart(6);
+utils.createUUID = function () {
+  return (
+    UUIDcreatePart(4) +
+    "-" +
+    UUIDcreatePart(2) +
+    "-" +
+    UUIDcreatePart(2) +
+    "-" +
+    UUIDcreatePart(2) +
+    "-" +
+    UUIDcreatePart(6)
+  );
 };
 
 /**
  * Extends a child object from a parent object using classical inheritance
  * pattern.
  */
-utils.extend = (function() {
-    // proxy used to establish prototype chain
-    var F = function() {};
-    // extend Child from Parent
-    return function(Child, Parent) {
-        F.prototype = Parent.prototype;
-        Child.prototype = new F();
-        Child.__super__ = Parent.prototype;
-        Child.prototype.constructor = Child;
-    };
-}());
+utils.extend = (function () {
+  // proxy used to establish prototype chain
+  var F = function () {};
+  // extend Child from Parent
+  return function (Child, Parent) {
+    F.prototype = Parent.prototype;
+    Child.prototype = new F();
+    Child.__super__ = Parent.prototype;
+    Child.prototype.constructor = Child;
+  };
+})();
 
 /**
  * Alerts a message in any available way: alert or console.log.
  */
-utils.alert = function(msg) {
-    if (alert) {
-        alert(msg);
-    } else if (console && console.log) {
-        console.log(msg);
-    }
+utils.alert = function (msg) {
+  if (alert) {
+    alert(msg);
+  } else if (console && console.log) {
+    console.log(msg);
+  }
 };
 
 /**
@@ -99,9 +110,9 @@ utils.alert = function(msg) {
  *
  * see utils.vformat() for more information
  */
-utils.format = function(formatString /* ,... */) {
-    var args = [].slice.call(arguments, 1);
-    return utils.vformat(formatString, args);
+utils.format = function (formatString /* ,... */) {
+  var args = [].slice.call(arguments, 1);
+  return utils.vformat(formatString, args);
 };
 
 /**
@@ -118,69 +129,69 @@ utils.format = function(formatString /* ,... */) {
  * for rationale, see FireBug's Console API:
  *    http://getfirebug.com/wiki/index.php/Console_API
  */
-utils.vformat = function(formatString, args) {
-    if (formatString === null || formatString === undefined) return "";
-    if (arguments.length == 1) return formatString.toString();
-    if (typeof formatString != "string") return formatString.toString();
+utils.vformat = function (formatString, args) {
+  if (formatString === null || formatString === undefined) return "";
+  if (arguments.length == 1) return formatString.toString();
+  if (typeof formatString != "string") return formatString.toString();
 
-    var pattern = /(.*?)%(.)(.*)/;
-    var rest    = formatString;
-    var result  = [];
+  var pattern = /(.*?)%(.)(.*)/;
+  var rest = formatString;
+  var result = [];
 
-    while (args.length) {
-        var arg   = args.shift();
-        var match = pattern.exec(rest);
+  while (args.length) {
+    var arg = args.shift();
+    var match = pattern.exec(rest);
 
-        if (!match) break;
+    if (!match) break;
 
-        rest = match[3];
+    rest = match[3];
 
-        result.push(match[1]);
+    result.push(match[1]);
 
-        if (match[2] == '%') {
-            result.push('%');
-            args.unshift(arg);
-            continue;
-        }
-
-        result.push(formatted(arg, match[2]));
+    if (match[2] == "%") {
+      result.push("%");
+      args.unshift(arg);
+      continue;
     }
 
-    result.push(rest);
+    result.push(formatted(arg, match[2]));
+  }
 
-    return result.join('');
+  result.push(rest);
+
+  return result.join("");
 };
 
 //------------------------------------------------------------------------------
 function UUIDcreatePart(length) {
-    var uuidpart = "";
-    for (var i=0; i<length; i++) {
-        var uuidchar = parseInt((Math.random() * 256), 10).toString(16);
-        if (uuidchar.length == 1) {
-            uuidchar = "0" + uuidchar;
-        }
-        uuidpart += uuidchar;
+  var uuidpart = "";
+  for (var i = 0; i < length; i++) {
+    var uuidchar = parseInt(Math.random() * 256, 10).toString(16);
+    if (uuidchar.length == 1) {
+      uuidchar = "0" + uuidchar;
     }
-    return uuidpart;
+    uuidpart += uuidchar;
+  }
+  return uuidpart;
 }
 
 //------------------------------------------------------------------------------
 function formatted(object, formatChar) {
-
-    try {
-        switch(formatChar) {
-            case 'j':
-            case 'o': return JSON.stringify(object);
-            case 'c': return '';
-        }
+  try {
+    switch (formatChar) {
+      case "j":
+      case "o":
+        return JSON.stringify(object);
+      case "c":
+        return "";
     }
-    catch (e) {
-        return "error JSON.stringify()ing argument: " + e;
-    }
+  } catch (e) {
+    return "error JSON.stringify()ing argument: " + e;
+  }
 
-    if ((object === null) || (object === undefined)) {
-        return Object.prototype.toString.call(object);
-    }
+  if (object === null || object === undefined) {
+    return Object.prototype.toString.call(object);
+  }
 
-    return object.toString();
+  return object.toString();
 }

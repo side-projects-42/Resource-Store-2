@@ -35,7 +35,7 @@ export default class Jasmine2Reporter implements Reporter {
     this._testResults = [];
     this._currentSuites = [];
     this._resolve = null;
-    this._resultsPromise = new Promise(resolve => (this._resolve = resolve));
+    this._resultsPromise = new Promise((resolve) => (this._resolve = resolve));
     this._startTimes = new Map();
   }
 
@@ -65,7 +65,7 @@ export default class Jasmine2Reporter implements Reporter {
     let numPendingTests = 0;
     let numTodoTests = 0;
     const testResults = this._testResults;
-    testResults.forEach(testResult => {
+    testResults.forEach((testResult) => {
       if (testResult.status === 'failed') {
         numFailingTests++;
       } else if (testResult.status === 'pending') {
@@ -152,7 +152,7 @@ export default class Jasmine2Reporter implements Reporter {
       title: specResult.description,
     };
 
-    specResult.failedExpectations.forEach(failed => {
+    specResult.failedExpectations.forEach((failed) => {
       const message =
         !failed.matcherName && failed.stack
           ? this._addMissingMessageToStack(failed.stack, failed.message)

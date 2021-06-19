@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Joao Xavier"
-		]
-	},
-	"akismetklik-desc": "refuzas redakti de suspektita 'spammers' sur la nigra listo de Akismet"
+  "@metadata": {
+    "authors": ["Joao Xavier"]
+  },
+  "akismetklik-desc": "refuzas redakti de suspektita 'spammers' sur la nigra listo de Akismet"
 }

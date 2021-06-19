@@ -1,9 +1,7 @@
 {
-	"@metadata": {
-		"authors": [
-			"Bugoslav"
-		]
-	},
-	"accesscontrol-info": "Ova je stranica zaštićena.",
-	"accesscontrol-info-box": "Za ove su stranice zadana ograničenja pristupa. Ukoliko vidite ovu poruku, nemate pristup uređivanju ove stranice."
+  "@metadata": {
+    "authors": ["Bugoslav"]
+  },
+  "accesscontrol-info": "Ova je stranica zaštićena.",
+  "accesscontrol-info-box": "Za ove su stranice zadana ograničenja pristupa. Ukoliko vidite ovu poruku, nemate pristup uređivanju ove stranice."
 }

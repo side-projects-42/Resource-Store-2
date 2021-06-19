@@ -22,14 +22,7 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-
-
-function test() { }
-
-
-
-
+function test() {}
 
 /*
   Copyright (C) 2012 Yusuke Suzuki <utatane.tea@gmail.com>

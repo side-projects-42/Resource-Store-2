@@ -1,8 +1,8 @@
 /* global Mustache */
-( function () {
+(function () {
 	// Register mustache compiler
-	mw.template.registerCompiler( 'mustache', {
-		compile: function ( src ) {
+	mw.template.registerCompiler("mustache", {
+		compile: function (src) {
 			return {
 				/**
 				 * @ignore
@@ -18,18 +18,17 @@
 				 *  returned by mw.template.get()
 				 * @return {jQuery} Rendered HTML
 				 */
-				render: function ( data, partialTemplates ) {
+				render: function (data, partialTemplates) {
 					var partials = {};
-					if ( partialTemplates ) {
+					if (partialTemplates) {
 						// eslint-disable-next-line no-jquery/no-each-util
-						$.each( partialTemplates, function ( name, template ) {
-							partials[ name ] = template.getSource();
-						} );
+						$.each(partialTemplates, function (name, template) {
+							partials[name] = template.getSource();
+						});
 					}
-					return $( $.parseHTML( Mustache.render( src, data, partials ) ) );
-				}
+					return $($.parseHTML(Mustache.render(src, data, partials)));
+				},
 			};
-		}
-	} );
-
-}() );
+		},
+	});
+})();

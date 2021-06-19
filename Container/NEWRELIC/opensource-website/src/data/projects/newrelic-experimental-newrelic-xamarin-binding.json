@@ -15,10 +15,7 @@
   "description": "Xamarin bindings for both the Android and iOS version of the New Relic Mobile agent/SDK.",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "C#",
-  "projectTags": [
-    "nrlabs",
-    "mobile"
-  ],
+  "projectTags": ["nrlabs", "mobile"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Mobile Agent - Xamarin Bindings",

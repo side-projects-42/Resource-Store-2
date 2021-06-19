@@ -8,24 +8,24 @@ and vibrant community of third-party users and developers.
 
 MediaWiki is:
 
-* feature-rich and extensible, both on-wiki and with hundreds of extensions;
-* scalable and suitable for both small and large sites;
-* simple to install, working on most hardware/software combinations; and
-* available in your language.
+- feature-rich and extensible, both on-wiki and with hundreds of extensions;
+- scalable and suitable for both small and large sites;
+- simple to install, working on most hardware/software combinations; and
+- available in your language.
 
 For system requirements, installation, and upgrade details, see the files
 RELEASE-NOTES, INSTALL, and UPGRADE.
 
-* Ready to get started?
-** https://www.mediawiki.org/wiki/Special:MyLanguage/Download
-* Looking for the technical manual?
-** https://www.mediawiki.org/wiki/Special:MyLanguage/Manual:Contents
-* Seeking help from a person?
-** https://www.mediawiki.org/wiki/Special:MyLanguage/Communication
-* Looking to file a bug report or a feature request?
-** https://bugs.mediawiki.org/
-* Interested in helping out?
-** https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute
+- Ready to get started?
+  \*\* https://www.mediawiki.org/wiki/Special:MyLanguage/Download
+- Looking for the technical manual?
+  \*\* https://www.mediawiki.org/wiki/Special:MyLanguage/Manual:Contents
+- Seeking help from a person?
+  \*\* https://www.mediawiki.org/wiki/Special:MyLanguage/Communication
+- Looking to file a bug report or a feature request?
+  \*\* https://bugs.mediawiki.org/
+- Interested in helping out?
+  \*\* https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute
 
 MediaWiki is the result of global collaboration and cooperation. The CREDITS
 file lists technical contributors to the project. The COPYING file explains

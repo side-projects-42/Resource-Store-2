@@ -9,7 +9,7 @@ test('implementation created by automock', () => {
 
 test('implementation created by jest.genMockFromModule', () => {
   const utils = jest.genMockFromModule('../utils').default;
-  utils.isAuthorized = jest.fn(secret => secret === 'not wizard');
+  utils.isAuthorized = jest.fn((secret) => secret === 'not wizard');
 
   expect(utils.authorize.mock).toBeTruthy();
   expect(utils.isAuthorized('not wizard')).toEqual(true);

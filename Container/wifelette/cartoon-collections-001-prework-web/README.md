@@ -2,7 +2,7 @@
 
 ## Objectives
 
-1. Get familiar iterating through arrays with enumerator methods like `.collect` or `.map`, `.find`, and `.include`. 
+1. Get familiar iterating through arrays with enumerator methods like `.collect` or `.map`, `.find`, and `.include`.
 2. Build methods and control their return values.
 3. Practice control flow with `if` and `else` statements.
 
@@ -32,7 +32,7 @@ It should then print out each name using `puts`. The print-out should look like 
 > 3. Bashful
 > 4. Grumpy
 
-Look into the [`each_with_index`](http://ruby-doc.org/core-2.2.2/Enumerable.html#method-i-each_with_index) method. 
+Look into the [`each_with_index`](http://ruby-doc.org/core-2.2.2/Enumerable.html#method-i-each_with_index) method.
 
 Once the test for this method is passing, move on to the next method.
 
@@ -81,7 +81,7 @@ Once the test for this method is passing, move on to the last method.
 
 ![dancing-mice](https://s3-us-west-2.amazonaws.com/web-dev-readme-photos/cartoon-collections/cheese.jpg)
 
-The `find_the_cheese` method should accept an array of strings. It should then look through these strings to find and return the first string that is a type of cheese. The types of cheese that appear are  `"cheddar"`, `"gouda"`, and `"camembert"`.
+The `find_the_cheese` method should accept an array of strings. It should then look through these strings to find and return the first string that is a type of cheese. The types of cheese that appear are `"cheddar"`, `"gouda"`, and `"camembert"`.
 
 For example:
 
@@ -108,6 +108,6 @@ You can assume that all strings will be lowercase. Take a look a the [`.include`
 
 ## Resources
 
-* The [`.include` method](http://www.ruby-doc.org/core-2.2.0/Array.html#method-i-include-3F)
-* The [`.each_with_index` method](http://ruby-doc.org/core-2.2.0/Enumerable.html#method-i-each_with_index)
-* The [`.map` method](http://www.ruby-doc.org/core-2.2.0/Array.html#method-i-map)
+- The [`.include` method](http://www.ruby-doc.org/core-2.2.0/Array.html#method-i-include-3F)
+- The [`.each_with_index` method](http://ruby-doc.org/core-2.2.0/Enumerable.html#method-i-each_with_index)
+- The [`.map` method](http://www.ruby-doc.org/core-2.2.0/Array.html#method-i-map)

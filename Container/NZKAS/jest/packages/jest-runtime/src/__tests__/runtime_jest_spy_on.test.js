@@ -17,7 +17,7 @@ describe('Runtime', () => {
 
   describe('jest.spyOn', () => {
     it('calls the original function', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const root = runtime.requireModule(runtime.__mockRootPath);
 
         let isOriginalCalled = false;
@@ -38,7 +38,7 @@ describe('Runtime', () => {
 
   describe('jest.spyOnProperty', () => {
     it('calls the original function', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         const root = runtime.requireModule(runtime.__mockRootPath);
 
         let isOriginalCalled = false;

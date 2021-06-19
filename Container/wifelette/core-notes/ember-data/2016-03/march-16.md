@@ -28,7 +28,7 @@
 
 - People are falling over it and it seems that JSONAPI has no spec for it at the moment
 - Issues: [#4212](https://github.com/emberjs/data/issues/4212) and [#3720](https://github.com/emberjs/data/issues/3720)
-- use in combination with JSON-API [discouraged here](https://github.com/emberjs/data/issues/3720#issuecomment-137176580) 
+- use in combination with JSON-API [discouraged here](https://github.com/emberjs/data/issues/3720#issuecomment-137176580)
 
 ##### Discussion
 
@@ -67,9 +67,9 @@
 
 ##### Discussion
 
-Consider the following code: 
+Consider the following code:
 
-``` javascript
+```javascript
 {
   "blog/post": {
     "type": "Api::V1::Docs::Post"
@@ -79,18 +79,18 @@ Consider the following code:
 
 then the following hooks are invoked:
 
-``` javascript
-modelNameFromPayloadKey("blog/post") === "post"
+```javascript
+modelNameFromPayloadKey("blog/post") === "post";
 // payloadKeyFromModelName("post") === "blog/post"
 
-modelNameFromPayloadKey("Api::V1::Docs::Post")
+modelNameFromPayloadKey("Api::V1::Docs::Post");
 ```
 
 Proposal of new hooks:
 
-``` javascript
-modelNameFromPayloadType("Api::V1::Docs::Post") == "post"
-payloadTypeFromModelName("post") == "Api::V1::Docs::Post"
+```javascript
+modelNameFromPayloadType("Api::V1::Docs::Post") == "post";
+payloadTypeFromModelName("post") == "Api::V1::Docs::Post";
 ```
 
 ##### Resolution

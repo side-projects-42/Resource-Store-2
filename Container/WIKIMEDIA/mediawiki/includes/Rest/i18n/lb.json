@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Robby"
-		]
+		"authors": ["Robby"]
 	},
 	"rest-nonexistent-title": "Den Titel \"$1\" deen ugi gouf gëtt et net.",
 	"rest-nonexistent-revision": "Déi spezifizéiert Versioun ($1) gëtt et net",

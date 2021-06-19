@@ -20,8 +20,8 @@ const findChangedFilesUsingCommand = async (
 
   return result.stdout
     .split('\n')
-    .filter(s => s !== '')
-    .map(changedPath => path.resolve(cwd, changedPath));
+    .filter((s) => s !== '')
+    .map((changedPath) => path.resolve(cwd, changedPath));
 };
 
 const adapter: SCMAdapter = {
@@ -32,7 +32,7 @@ const adapter: SCMAdapter = {
     const includePaths: Array<Config.Path> = (
       (options && options.includePaths) ||
       []
-    ).map(absoluteRoot => path.normalize(path.relative(cwd, absoluteRoot)));
+    ).map((absoluteRoot) => path.normalize(path.relative(cwd, absoluteRoot)));
 
     if (options && options.lastCommit) {
       return findChangedFilesUsingCommand(
@@ -73,7 +73,7 @@ const adapter: SCMAdapter = {
     }
   },
 
-  getRoot: async cwd => {
+  getRoot: async (cwd) => {
     const options = ['rev-parse', '--show-cdup'];
 
     try {

@@ -4,37 +4,37 @@
 
 SP: is taking minutes (at the bottom of this page, feel free to help)
 
-  * SP: is using use-canvas (has beta invites)
-  * this is a ember app!
-  * somewhat normal markdown, but still WIP
+- SP: is using use-canvas (has beta invites)
+- this is a ember app!
+- somewhat normal markdown, but still WIP
 
 SP: at google continuing the effort with Ron on the HTMLBars security/XSS document
 
-* transposing the document to  markdown + private GH repo for ease of development
-* splitting the document into several more focused documents
-* our goal today is a easier to consume more actionable document
+- transposing the document to markdown + private GH repo for ease of development
+- splitting the document into several more focused documents
+- our goal today is a easier to consume more actionable document
 
 SP & EF: IE8 enables Ember[properties] to be lazy!
 
 MB: Have discussed a splat syntax for component args w/ mmun and Kris (and some other yappers):
 
-* `<my-comp *someHash as |yielded|>`
-* `{{my-comp *someHash someProp=override}}`
-* `{{my-comp save=(some-helper *foo)}}`
+- `<my-comp *someHash as |yielded|>`
+- `{{my-comp *someHash someProp=override}}`
+- `{{my-comp save=(some-helper *foo)}}`
 
 @wycats is nervous about adding new microsyntax to HTML without a great deal of thought and care. Also, shouldn't this be `...someHash` for compliance with JS splatting (`*` is more of a Ruby thing)
 
 RJ: "Urgent" RFCs
 
-* [ES6 Modules](https://github.com/emberjs/rfcs/pull/68)
-* [Deprecation / Warning Handlers](https://github.com/emberjs/rfcs/pull/65)
-* Pods (urgent @wycats/@tomdale? TODO)
+- [ES6 Modules](https://github.com/emberjs/rfcs/pull/68)
+- [Deprecation / Warning Handlers](https://github.com/emberjs/rfcs/pull/65)
+- Pods (urgent @wycats/@tomdale? TODO)
 
 RJ: "Urgent" 1.13 Issues
 
-* [{{each}} fails with duplicate items](https://github.com/emberjs/ember.js/issues/11549)
-* [No cleanup of route views](https://github.com/emberjs/ember.js/issues/11539)
-* [infinite loop](https://github.com/emberjs/ember.js/issues/11519)
+- [{{each}} fails with duplicate items](https://github.com/emberjs/ember.js/issues/11549)
+- [No cleanup of route views](https://github.com/emberjs/ember.js/issues/11539)
+- [infinite loop](https://github.com/emberjs/ember.js/issues/11519)
 
 ##### LTS Concerns?
 
@@ -50,34 +50,32 @@ RJ: "Urgent" 1.13 Issues
 
 [#11437 - BUGFIX release - Ember.View.views should be present](https://github.com/emberjs/ember.js/pull/11437)
 
-* ember-inspector related issue/pr from @teddy
+- ember-inspector related issue/pr from @teddy
 
 [#11547 - Revert "Fixes: Safari's 'double finally on error bug'" #11547](https://github.com/emberjs/ember.js/pull/11547)
 
-* 4% of iOS users have Safari 6.x
-* iOS 6.1 apparently fixed this, trying to track down a machine (don't want to install the old xCode)
-* if 6.1 fixes it, can we remove this?
-* code-size + extra debugging pain on some platforms, and that annoying extra throw/catch on boot.
+- 4% of iOS users have Safari 6.x
+- iOS 6.1 apparently fixed this, trying to track down a machine (don't want to install the old xCode)
+- if 6.1 fixes it, can we remove this?
+- code-size + extra debugging pain on some platforms, and that annoying extra throw/catch on boot.
 
 [#11513 - Move away from ArrayComputed/ReduceComputed #11513](https://github.com/emberjs/ember.js/pull/11513)
 
-* converts AC/RC to simple CP's
-* drops support for custom AC/RC macros, users can just use array methods thanks to glimmer
-* needs more people trying it out
+- converts AC/RC to simple CP's
+- drops support for custom AC/RC macros, users can just use array methods thanks to glimmer
+- needs more people trying it out
 
-[#11484 -  CLEANUP beta Remove object controller](https://github.com/emberjs/ember.js/pull/11479)
+[#11484 - CLEANUP beta Remove object controller](https://github.com/emberjs/ember.js/pull/11479)
 
-* include in embers default tests?
-* drop support for auto-generated controllers (even with the addon)?
-* [#11484 -  CLEANUP beta Remove array controller](https://github.com/emberjs/ember.js/pull/11484)
+- include in embers default tests?
+- drop support for auto-generated controllers (even with the addon)?
+- [#11484 - CLEANUP beta Remove array controller](https://github.com/emberjs/ember.js/pull/11484)
 
 [#11468 - BUGFIX release – Deprecate Freezable and frozenCopy. Resolves #11452](https://github.com/emberjs/ember.js/pull/11468)
-
 
 #### Minutes
 
 Attendees: Alex, Edward, Kris, Martin, Robert, Leah, Trek, Stef, Yehuda, Tom, Matthew, Igor
-
 
 Discussed further bug fix releases in 1.13.x
 
@@ -93,7 +91,7 @@ rob will release 1.13.3 with the improved error message this weekend. Error mess
 
 route views don't appear to be cleaned up in 1.13 (`willDestroyElement`) is never called EF4 will take a look. RW will provide a concise JSBIN
 
-RW: used yielded block params changing, can cause infinite loop and crash. 
+RW: used yielded block params changing, can cause infinite loop and crash.
 
 MM: ^ [emberjs/ember.js/#11519](https://github.com/emberjs/ember.js/issues/11519)
 
@@ -130,11 +128,3 @@ ES6-module API deferred to 2.1, merely just because of time constraints today
 RW: `Ember.View.views` comes back as a deprecation, PR catches a bug and needs to be fixed.
 
 land [emberjs/ember.js#11468](https://github.com/emberjs/ember.js/pull/11468) just get tests working (rob has it)
-
-
-
-
-
-
-
-

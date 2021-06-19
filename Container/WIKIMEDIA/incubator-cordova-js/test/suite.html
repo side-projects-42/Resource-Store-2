@@ -1,52 +1,53 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-  <title>EXTERMINATE!</title>
+  <head>
+    <title>EXTERMINATE!</title>
 
-  <link rel="shortcut icon" type="image/png" href="jasmine/jasmine_favicon.png">
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="jasmine/jasmine_favicon.png"
+    />
 
-  <link rel="stylesheet" type="text/css" href="jasmine/jasmine.css">
-  <script type="text/javascript" src="jasmine/jasmine.js"></script>
-  <script type="text/javascript" src="jasmine/jasmine-html.js"></script>
+    <link rel="stylesheet" type="text/css" href="jasmine/jasmine.css" />
+    <script type="text/javascript" src="jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="jasmine/jasmine-html.js"></script>
 
-  <script type="text/javascript">
-    (function() {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
+    <script type="text/javascript">
+      (function () {
+        var jasmineEnv = jasmine.getEnv();
+        jasmineEnv.updateInterval = 1000;
 
-      var trivialReporter = new jasmine.TrivialReporter();
+        var trivialReporter = new jasmine.TrivialReporter();
 
-      jasmineEnv.addReporter(trivialReporter);
+        jasmineEnv.addReporter(trivialReporter);
 
-      jasmineEnv.specFilter = function(spec) {
-        return trivialReporter.specFilter(spec);
-      };
+        jasmineEnv.specFilter = function (spec) {
+          return trivialReporter.specFilter(spec);
+        };
 
-      window.cordova = {
-         platform: ""
-      };
+        window.cordova = {
+          platform: "",
+        };
 
-      window.addEventListener("load", function () {
+        window.addEventListener("load", function () {
           jasmineEnv.execute();
-      });
+        });
+      })();
+    </script>
 
-    })();
-  </script>
-
-  <script type="text/javascript">
-      "##MODULES##"
+    <script type="text/javascript">
+      "##MODULES##";
       var define = cordova.define;
       var require = cordova.require;
-  </script>
+    </script>
 
-	<!-- ##TESTS## -->
-	
-	<!-- Note: if you want to run individual tests, remove the tests placeholder above and include the individual tests yourself -->
-	
-	<!-- <script src="test.accelerometer.js" type="text/javascript" charset="utf-8"></script> -->
+    <!-- ##TESTS## -->
 
-</head>
+    <!-- Note: if you want to run individual tests, remove the tests placeholder above and include the individual tests yourself -->
 
-<body>
-</body>
+    <!-- <script src="test.accelerometer.js" type="text/javascript" charset="utf-8"></script> -->
+  </head>
+
+  <body></body>
 </html>

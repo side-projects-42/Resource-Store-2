@@ -1,12 +1,10 @@
 {
-	"@metadata": {
-		"authors": [
-			"Mirin"
-		]
-	},
-	"apihelp-antispoof-description": "Kontroli uzantnomon kontraŭ normigado de AntiSpoof.",
-	"apihelp-antispoof-summary": "Kontroli uzantnomon kontraŭ normigado de AntiSpoof.",
-	"apihelp-antispoof-param-username": "La uzantnomo kontrolota kontraŭ AntiSpoof.",
-	"apihelp-antispoof-example-1": "Kontroli la uzantnomono \"Foo\" kontraŭ AntiSpoof",
-	"apihelp-createaccount-param-ignoreantispoof": "Ignori kontroladon pri uzantnomo-trompado (postulas la rajton <code>override-antispoof</code>)."
+  "@metadata": {
+    "authors": ["Mirin"]
+  },
+  "apihelp-antispoof-description": "Kontroli uzantnomon kontraŭ normigado de AntiSpoof.",
+  "apihelp-antispoof-summary": "Kontroli uzantnomon kontraŭ normigado de AntiSpoof.",
+  "apihelp-antispoof-param-username": "La uzantnomo kontrolota kontraŭ AntiSpoof.",
+  "apihelp-antispoof-example-1": "Kontroli la uzantnomono \"Foo\" kontraŭ AntiSpoof",
+  "apihelp-createaccount-param-ignoreantispoof": "Ignori kontroladon pri uzantnomo-trompado (postulas la rajton <code>override-antispoof</code>)."
 }

@@ -4,7 +4,7 @@
 
 - [ ] RT continues with consistent voice updates in quickstart (no merge 'til emberconf)
 - [x] SV: Take a look at welcome page PR to see if he can take it forward (done by DB)
-- [x] DB: Research schema.org as an SEO solution 
+- [x] DB: Research schema.org as an SEO solution
 - [ ] YK: Reach out to google contacts for SEO guidance of ember docs
 
 # Topics
@@ -18,7 +18,7 @@
 - Ember CLI Developer Tools
 - Standardize "need help"/"good for new contributors"/etc
   - your first pr ?
-- API Effort: 
+- API Effort:
   - https://usecanvas.com/ember-docs/legacy-api-doc-improvements/6b9Ag2BUCRrn55E2Pyi0Yj
 - [TodoMVC](https://github.com/tastejs/todomvc/pull/1582)
 
@@ -49,17 +49,17 @@ DB: I propose removing infrastructure, changing planning to "active", and changi
 
 ### API docs:
 
-TJ: will try to fix krisseldon's pr on hiding privates as a stop gap until Stanley's api doc rewrite lands.  Will also look at the privates approach in the new API docs effort
+TJ: will try to fix krisseldon's pr on hiding privates as a stop gap until Stanley's api doc rewrite lands. Will also look at the privates approach in the new API docs effort
 
 ### Issue cleanup
 
-DB: propose removing internal pie-in-the-sky ideas out of the issues boards and onto trello.  Issues would be reserved for external people issues, and tracking implementation of tasks.
+DB: propose removing internal pie-in-the-sky ideas out of the issues boards and onto trello. Issues would be reserved for external people issues, and tracking implementation of tasks.
 
 ### Learning Navigation
 
 RM: Propose to replace the "Guides" with "Learn" and encompass Guides, Fastboot, CLI, Contributing, etc
 
-RM: Also propose a learning team github org.  Would give us more control over learning-specific projects. Would house guides, api, super-rentals, etc.  
+RM: Also propose a learning team github org. Would give us more control over learning-specific projects. Would house guides, api, super-rentals, etc.
 
 RM: Will talk with Leah about next steps.
 

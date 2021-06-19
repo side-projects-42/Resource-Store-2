@@ -4,17 +4,17 @@
 :nodeid: 330
 :created: 1312872249
 :tags:
-- development
-- core
-- jenkinsci
-- ruby
-- jruby
+  - development
+  - core
+  - jenkinsci
+  - ruby
+  - jruby
 :author: cowboyd
 ---
+
 <img src="http://agentdero.cachefly.net/continuousblog/jruby.png" align="right" width="150"/> Yesterday, [Kohsuke](http://twitter.com/kohsukekawa) [announced](http://groups.google.com/group/jenkinsrb/msg/32815b1ea917355d) that the 'jruby' branch of jenkins-core had been [merged to master](https://github.com/jenkinsci/jenkins/commit/f6373f7ada14a7914f4ae08b6af4c1b27d343c21).
 
-This doesn't mean that we're done and that you can go forth and write pure ruby plugins... not by any stretch of the imagination. Instead, what it *does* mean, is that the Jenkins mainline is much more friendly to runtime analysis of classes with which it is not familiar.
-
+This doesn't mean that we're done and that you can go forth and write pure ruby plugins... not by any stretch of the imagination. Instead, what it _does_ mean, is that the Jenkins mainline is much more friendly to runtime analysis of classes with which it is not familiar.
 
 ## The problem
 
@@ -38,5 +38,6 @@ There is still much work to be done to enable a writing Jenkins plugins in Ruby,
 
 If you're interested, most of the action is happening on the [jenkinsrb@googlegroups.com](http://groups.google.com/group/jenkinsrb) mailing list, so join us!
 
-----
+---
+
 <!--break-->

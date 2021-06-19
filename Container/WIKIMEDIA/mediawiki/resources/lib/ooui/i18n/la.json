@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fitoschido",
-			"Jdforrester"
-		]
+		"authors": ["Fitoschido", "Jdforrester"]
 	},
 	"ooui-toolbar-more": "Plus",
 	"ooui-toolgroup-expand": "Plus",

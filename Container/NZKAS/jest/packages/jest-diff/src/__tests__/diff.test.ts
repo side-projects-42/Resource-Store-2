@@ -27,7 +27,7 @@ describe('different types', () => {
     [[], 2, 'array', 'number'],
     [null, undefined, 'null', 'undefined'],
     [() => {}, 3, 'function', 'number'],
-  ].forEach(values => {
+  ].forEach((values) => {
     const a = values[0];
     const b = values[1];
     const typeA = values[2];
@@ -47,7 +47,10 @@ describe('no visual difference', () => {
     ['a', 'a'],
     [{}, {}],
     [[], []],
-    [[1, 2], [1, 2]],
+    [
+      [1, 2],
+      [1, 2],
+    ],
     [11, 11],
     [NaN, NaN],
     [Number.NaN, NaN],
@@ -57,7 +60,7 @@ describe('no visual difference', () => {
     [false, false],
     [{a: 1}, {a: 1}],
     [{a: {b: 5}}, {a: {b: 5}}],
-  ].forEach(values => {
+  ].forEach((values) => {
     test(`'${JSON.stringify(values[0])}' and '${JSON.stringify(
       values[1],
     )}' (unexpanded)`, () => {
@@ -71,8 +74,14 @@ describe('no visual difference', () => {
   });
 
   test('Map key order should be irrelevant', () => {
-    const arg1 = new Map([[1, 'foo'], [2, 'bar']]);
-    const arg2 = new Map([[2, 'bar'], [1, 'foo']]);
+    const arg1 = new Map([
+      [1, 'foo'],
+      [2, 'bar'],
+    ]);
+    const arg2 = new Map([
+      [2, 'bar'],
+      [1, 'foo'],
+    ]);
 
     expect(stripped(arg1, arg2)).toBe(NO_DIFF_MESSAGE);
   });

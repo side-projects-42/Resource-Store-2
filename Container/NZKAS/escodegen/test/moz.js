@@ -28,873 +28,926 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-'use strict';
+"use strict";
 
-var fs = require('fs'),
-    path = require('path'),
-    root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
-    esprima = require('esprima-moz'),
-    escodegen = require(root),
-    chai = require('chai'),
-    expect = chai.expect,
-    data;
+var fs = require("fs"),
+  path = require("path"),
+  root = path.join(path.dirname(fs.realpathSync(__filename)), ".."),
+  esprima = require("esprima-moz"),
+  escodegen = require(root),
+  chai = require("chai"),
+  expect = chai.expect,
+  data;
 
 data = {
-    'Yield with starless generator': {
-        'function a() { yield* test; }': {
-            type: 'Program',
-            body: [{
-                type: 'FunctionDeclaration',
-                id: {
-                    type: 'Identifier',
-                    name: 'a',
-                    range: [10, 11],
-                    loc: {
-                        start: { line: 1, column: 10 },
-                        end: { line: 1, column: 11 }
-                    }
-                },
-                params: [],
-                defaults: [],
-                body: {
-                    type: 'BlockStatement',
-                    body: [{
-                        type: 'ExpressionStatement',
-                        expression: {
-                            type: 'YieldExpression',
-                            argument: {
-                                type: 'Identifier',
-                                name: 'test',
-                                range: [23, 27],
-                                loc: {
-                                    start: { line: 1, column: 23 },
-                                    end: { line: 1, column: 27 }
-                                }
-                            },
-                            delegate: true,
-                            range: [16, 27],
-                            loc: {
-                                start: { line: 1, column: 16 },
-                                end: { line: 1, column: 27 }
-                            }
-                        },
-                        range: [16, 28],
-                        loc: {
-                            start: { line: 1, column: 16 },
-                            end: { line: 1, column: 28 }
-                        }
-                    }],
-                    range: [14, 30],
-                    loc: {
-                        start: { line: 1, column: 14 },
-                        end: { line: 1, column: 30 }
-                    }
-                },
-                rest: null,
-                generator: true,
-                expression: false,
-                range: [0, 30],
-                loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 30 }
-                }
-            }],
-            range: [0, 30],
+  "Yield with starless generator": {
+    "function a() { yield* test; }": {
+      type: "Program",
+      body: [
+        {
+          type: "FunctionDeclaration",
+          id: {
+            type: "Identifier",
+            name: "a",
+            range: [10, 11],
             loc: {
-                start: { line: 1, column: 0 },
-                end: { line: 1, column: 30 }
-            }
-        },
-
-        'function a() { yield* (42,42); }': {
-            type: 'Program',
-            body: [{
-                type: 'FunctionDeclaration',
-                id: {
-                    type: 'Identifier',
-                    name: 'a',
-                    range: [10, 11],
+              start: { line: 1, column: 10 },
+              end: { line: 1, column: 11 },
+            },
+          },
+          params: [],
+          defaults: [],
+          body: {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "YieldExpression",
+                  argument: {
+                    type: "Identifier",
+                    name: "test",
+                    range: [23, 27],
                     loc: {
-                        start: { line: 1, column: 10 },
-                        end: { line: 1, column: 11 }
-                    }
+                      start: { line: 1, column: 23 },
+                      end: { line: 1, column: 27 },
+                    },
+                  },
+                  delegate: true,
+                  range: [16, 27],
+                  loc: {
+                    start: { line: 1, column: 16 },
+                    end: { line: 1, column: 27 },
+                  },
                 },
-                params: [],
-                defaults: [],
-                body: {
-                    type: 'BlockStatement',
-                    body: [{
-                        type: 'ExpressionStatement',
-                        expression: {
-                            type: 'YieldExpression',
-                            argument: {
-                                type: 'SequenceExpression',
-                                expressions: [{
-                                    type: 'Literal',
-                                    value: 42,
-                                    raw: '42',
-                                    range: [24, 26],
-                                    loc: {
-                                        start: { line: 1, column: 24 },
-                                        end: { line: 1, column: 26 }
-                                    }
-                                }, {
-                                    type: 'Literal',
-                                    value: 42,
-                                    raw: '42',
-                                    range: [27, 29],
-                                    loc: {
-                                        start: { line: 1, column: 27 },
-                                        end: { line: 1, column: 29 }
-                                    }
-                                }],
-                                range: [24, 29],
-                                loc: {
-                                    start: { line: 1, column: 24 },
-                                    end: { line: 1, column: 29 }
-                                }
-                            },
-                            delegate: true,
-                            range: [16, 30],
-                            loc: {
-                                start: { line: 1, column: 16 },
-                                end: { line: 1, column: 30 }
-                            }
-                        },
-                        range: [16, 31],
-                        loc: {
-                            start: { line: 1, column: 16 },
-                            end: { line: 1, column: 31 }
-                        }
-                    }],
-                    range: [14, 33],
-                    loc: {
-                        start: { line: 1, column: 14 },
-                        end: { line: 1, column: 33 }
-                    }
-                },
-                rest: null,
-                generator: true,
-                expression: false,
-                range: [0, 33],
+                range: [16, 28],
                 loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 33 }
-                }
-            }],
-            range: [0, 33],
+                  start: { line: 1, column: 16 },
+                  end: { line: 1, column: 28 },
+                },
+              },
+            ],
+            range: [14, 30],
             loc: {
-                start: { line: 1, column: 0 },
-                end: { line: 1, column: 33 }
-            }
+              start: { line: 1, column: 14 },
+              end: { line: 1, column: 30 },
+            },
+          },
+          rest: null,
+          generator: true,
+          expression: false,
+          range: [0, 30],
+          loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 30 },
+          },
         },
-
-        'function a() {\n    yield 1;\n}': {
-            generateFrom:           {
-                type: 'Program',
-                body: [{
-                    type: 'FunctionDeclaration',
-                    id: {
-                        type: 'Identifier',
-                        name: 'a',
-                        range: [10, 11],
-                        loc: {
-                            start: { line: 1, column: 10 },
-                            end: { line: 1, column: 11 }
-                        }
-                    },
-                    params: [],
-                    defaults: [],
-                    body: {
-                        type: 'BlockStatement',
-                        body: [{
-                            type: 'ExpressionStatement',
-                            expression: {
-                                type: 'YieldExpression',
-                                argument: {
-                                    type: 'Literal',
-                                    value: 1,
-                                    raw: '1',
-                                    range: [21, 22],
-                                    loc: {
-                                        start: { line: 1, column: 21 },
-                                        end: { line: 1, column: 22 }
-                                    }
-                                },
-                                delegate: false,
-                                range: [15, 22],
-                                loc: {
-                                    start: { line: 1, column: 15 },
-                                    end: { line: 1, column: 22 }
-                                }
-                            },
-                            range: [15, 22],
-                            loc: {
-                                start: { line: 1, column: 15 },
-                                end: { line: 1, column: 22 }
-                            }
-                        }],
-                        range: [14, 23],
-                        loc: {
-                            start: { line: 1, column: 14 },
-                            end: { line: 1, column: 23 }
-                        }
-                    },
-                    rest: null,
-                    generator: true,
-                    expression: false,
-                    range: [0, 23],
-                    loc: {
-                        start: { line: 1, column: 0 },
-                        end: { line: 1, column: 23 }
-                    }
-                }],
-                range: [0, 23],
-                loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 23 }
-                }
-            }
-        }
+      ],
+      range: [0, 30],
+      loc: {
+        start: { line: 1, column: 0 },
+        end: { line: 1, column: 30 },
+      },
     },
 
-    'Array Comprehension with parenthesized ComprehensionBlock': {
-
-        '[x for (x in [])];':{
-            generateFrom: {
-                type: 'Program',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'ComprehensionExpression',
-                        filter: null,
-                        blocks: [{
-                            type: 'ComprehensionBlock',
-                            left: {
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [8, 9],
-                                loc: {
-                                    start: { line: 1, column: 8 },
-                                    end: { line: 1, column: 9 }
-                                }
-                            },
-                            right: {
-                                type: 'ArrayExpression',
-                                elements: [],
-                                range: [13, 15],
-                                loc: {
-                                    start: { line: 1, column: 13 },
-                                    end: { line: 1, column: 15 }
-                                }
-                            },
-                            each: false,
-                            of: false
-                        }],
-                        body: {
-                            type: 'Identifier',
-                            name: 'x',
-                            range: [1, 2],
-                            loc: {
-                                start: { line: 1, column: 1 },
-                                end: { line: 1, column: 2 }
-                            }
-                        },
-                        range: [0, 17],
+    "function a() { yield* (42,42); }": {
+      type: "Program",
+      body: [
+        {
+          type: "FunctionDeclaration",
+          id: {
+            type: "Identifier",
+            name: "a",
+            range: [10, 11],
+            loc: {
+              start: { line: 1, column: 10 },
+              end: { line: 1, column: 11 },
+            },
+          },
+          params: [],
+          defaults: [],
+          body: {
+            type: "BlockStatement",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "YieldExpression",
+                  argument: {
+                    type: "SequenceExpression",
+                    expressions: [
+                      {
+                        type: "Literal",
+                        value: 42,
+                        raw: "42",
+                        range: [24, 26],
                         loc: {
-                            start: { line: 1, column: 0 },
-                            end: { line: 1, column: 17 }
-                        }
-                    },
-                    range: [0, 17],
+                          start: { line: 1, column: 24 },
+                          end: { line: 1, column: 26 },
+                        },
+                      },
+                      {
+                        type: "Literal",
+                        value: 42,
+                        raw: "42",
+                        range: [27, 29],
+                        loc: {
+                          start: { line: 1, column: 27 },
+                          end: { line: 1, column: 29 },
+                        },
+                      },
+                    ],
+                    range: [24, 29],
                     loc: {
-                        start: { line: 1, column: 0 },
-                        end: { line: 1, column: 17 }
-                    }
-                }],
-                range: [0, 17],
+                      start: { line: 1, column: 24 },
+                      end: { line: 1, column: 29 },
+                    },
+                  },
+                  delegate: true,
+                  range: [16, 30],
+                  loc: {
+                    start: { line: 1, column: 16 },
+                    end: { line: 1, column: 30 },
+                  },
+                },
+                range: [16, 31],
                 loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 17 }
-                }
-            }
+                  start: { line: 1, column: 16 },
+                  end: { line: 1, column: 31 },
+                },
+              },
+            ],
+            range: [14, 33],
+            loc: {
+              start: { line: 1, column: 14 },
+              end: { line: 1, column: 33 },
+            },
+          },
+          rest: null,
+          generator: true,
+          expression: false,
+          range: [0, 33],
+          loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 33 },
+          },
         },
+      ],
+      range: [0, 33],
+      loc: {
+        start: { line: 1, column: 0 },
+        end: { line: 1, column: 33 },
+      },
+    },
 
-        '[x for (x of [])];': {
-            generateFrom: {
-                type: 'Program',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'ComprehensionExpression',
-                        filter: null,
-                        blocks: [{
-                            type: 'ComprehensionBlock',
-                            left: {
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [8, 9],
-                                loc: {
-                                    start: { line: 1, column: 8 },
-                                    end: { line: 1, column: 9 }
-                                }
-                            },
-                            right: {
-                                type: 'ArrayExpression',
-                                elements: [],
-                                range: [13, 15],
-                                loc: {
-                                    start: { line: 1, column: 13 },
-                                    end: { line: 1, column: 15 }
-                                }
-                            },
-                            each: false,
-                            of: true
-                        }],
-                        body: {
-                            type: 'Identifier',
-                            name: 'x',
-                            range: [1, 2],
-                            loc: {
-                                start: { line: 1, column: 1 },
-                                end: { line: 1, column: 2 }
-                            }
-                        },
-                        range: [0, 17],
-                        loc: {
-                            start: { line: 1, column: 0 },
-                            end: { line: 1, column: 17 }
-                        }
+    "function a() {\n    yield 1;\n}": {
+      generateFrom: {
+        type: "Program",
+        body: [
+          {
+            type: "FunctionDeclaration",
+            id: {
+              type: "Identifier",
+              name: "a",
+              range: [10, 11],
+              loc: {
+                start: { line: 1, column: 10 },
+                end: { line: 1, column: 11 },
+              },
+            },
+            params: [],
+            defaults: [],
+            body: {
+              type: "BlockStatement",
+              body: [
+                {
+                  type: "ExpressionStatement",
+                  expression: {
+                    type: "YieldExpression",
+                    argument: {
+                      type: "Literal",
+                      value: 1,
+                      raw: "1",
+                      range: [21, 22],
+                      loc: {
+                        start: { line: 1, column: 21 },
+                        end: { line: 1, column: 22 },
+                      },
                     },
-                    range: [0, 17],
+                    delegate: false,
+                    range: [15, 22],
                     loc: {
-                        start: { line: 1, column: 0 },
-                        end: { line: 1, column: 17 }
-                    }
-                }],
-                range: [0, 17],
-                loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 17 }
-                }
-            }
+                      start: { line: 1, column: 15 },
+                      end: { line: 1, column: 22 },
+                    },
+                  },
+                  range: [15, 22],
+                  loc: {
+                    start: { line: 1, column: 15 },
+                    end: { line: 1, column: 22 },
+                  },
+                },
+              ],
+              range: [14, 23],
+              loc: {
+                start: { line: 1, column: 14 },
+                end: { line: 1, column: 23 },
+              },
+            },
+            rest: null,
+            generator: true,
+            expression: false,
+            range: [0, 23],
+            loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 23 },
+            },
+          },
+        ],
+        range: [0, 23],
+        loc: {
+          start: { line: 1, column: 0 },
+          end: { line: 1, column: 23 },
         },
+      },
+    },
+  },
 
-        '[1 for (x in y) if (f(x))];': {
-            generateFrom: {
-                type: 'Program',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'ComprehensionExpression',
-                        filter: {
-                            type: 'CallExpression',
-                            callee: {
-                                type: 'Identifier',
-                                name: 'f',
-                                range: [20, 21],
-                                loc: {
-                                    start: { line: 1, column: 20 },
-                                    end: { line: 1, column: 21 }
-                                }
-                            },
-                            'arguments': [{
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [22, 23],
-                                loc: {
-                                    start: { line: 1, column: 22 },
-                                    end: { line: 1, column: 23 }
-                                }
-                            }],
-                            range: [20, 24],
-                            loc: {
-                                start: { line: 1, column: 20 },
-                                end: { line: 1, column: 24 }
-                            }
-                        },
-                        blocks: [{
-                            type: 'ComprehensionBlock',
-                            left: {
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [8, 9],
-                                loc: {
-                                    start: { line: 1, column: 8 },
-                                    end: { line: 1, column: 9 }
-                                }
-                            },
-                            right: {
-                                type: 'Identifier',
-                                name: 'y',
-                                range: [13, 14],
-                                loc: {
-                                    start: { line: 1, column: 13 },
-                                    end: { line: 1, column: 14 }
-                                }
-                            },
-                            each: false,
-                            of: false
-                        }],
-                        body: {
-                            type: 'Literal',
-                            value: 1,
-                            raw: '1',
-                            range: [1, 2],
-                            loc: {
-                                start: { line: 1, column: 1 },
-                                end: { line: 1, column: 2 }
-                            }
-                        },
-                        range: [0, 26],
-                        loc: {
-                            start: { line: 1, column: 0 },
-                            end: { line: 1, column: 26 }
-                        }
-                    },
-                    range: [0, 26],
+  "Array Comprehension with parenthesized ComprehensionBlock": {
+    "[x for (x in [])];": {
+      generateFrom: {
+        type: "Program",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: {
+              type: "ComprehensionExpression",
+              filter: null,
+              blocks: [
+                {
+                  type: "ComprehensionBlock",
+                  left: {
+                    type: "Identifier",
+                    name: "x",
+                    range: [8, 9],
                     loc: {
-                        start: { line: 1, column: 0 },
-                        end: { line: 1, column: 26 }
-                    }
-                }],
-                range: [0, 26],
+                      start: { line: 1, column: 8 },
+                      end: { line: 1, column: 9 },
+                    },
+                  },
+                  right: {
+                    type: "ArrayExpression",
+                    elements: [],
+                    range: [13, 15],
+                    loc: {
+                      start: { line: 1, column: 13 },
+                      end: { line: 1, column: 15 },
+                    },
+                  },
+                  each: false,
+                  of: false,
+                },
+              ],
+              body: {
+                type: "Identifier",
+                name: "x",
+                range: [1, 2],
                 loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 26 }
-                }
-            }
+                  start: { line: 1, column: 1 },
+                  end: { line: 1, column: 2 },
+                },
+              },
+              range: [0, 17],
+              loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 17 },
+              },
+            },
+            range: [0, 17],
+            loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 17 },
+            },
+          },
+        ],
+        range: [0, 17],
+        loc: {
+          start: { line: 1, column: 0 },
+          end: { line: 1, column: 17 },
         },
+      },
+    },
 
-        '[1 for (x of y) if (f(x))];': {
-            generateFrom: {
-                type: 'Program',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'ComprehensionExpression',
-                        filter: {
-                            type: 'CallExpression',
-                            callee: {
-                                type: 'Identifier',
-                                name: 'f',
-                                range: [20, 21],
-                                loc: {
-                                    start: { line: 1, column: 20 },
-                                    end: { line: 1, column: 21 }
-                                }
-                            },
-                            'arguments': [{
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [22, 23],
-                                loc: {
-                                    start: { line: 1, column: 22 },
-                                    end: { line: 1, column: 23 }
-                                }
-                            }],
-                            range: [20, 24],
-                            loc: {
-                                start: { line: 1, column: 20 },
-                                end: { line: 1, column: 24 }
-                            }
-                        },
-                        blocks: [{
-                            type: 'ComprehensionBlock',
-                            left: {
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [8, 9],
-                                loc: {
-                                    start: { line: 1, column: 8 },
-                                    end: { line: 1, column: 9 }
-                                }
-                            },
-                            right: {
-                                type: 'Identifier',
-                                name: 'y',
-                                range: [13, 14],
-                                loc: {
-                                    start: { line: 1, column: 13 },
-                                    end: { line: 1, column: 14 }
-                                }
-                            },
-                            each: false,
-                            of: true
-                        }],
-                        body: {
-                            type: 'Literal',
-                            value: 1,
-                            raw: '1',
-                            range: [1, 2],
-                            loc: {
-                                start: { line: 1, column: 1 },
-                                end: { line: 1, column: 2 }
-                            }
-                        },
-                        range: [0, 26],
-                        loc: {
-                            start: { line: 1, column: 0 },
-                            end: { line: 1, column: 26 }
-                        }
-                    },
-                    range: [0, 26],
+    "[x for (x of [])];": {
+      generateFrom: {
+        type: "Program",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: {
+              type: "ComprehensionExpression",
+              filter: null,
+              blocks: [
+                {
+                  type: "ComprehensionBlock",
+                  left: {
+                    type: "Identifier",
+                    name: "x",
+                    range: [8, 9],
                     loc: {
-                        start: { line: 1, column: 0 },
-                        end: { line: 1, column: 26 }
-                    }
-                }],
-                range: [0, 26],
+                      start: { line: 1, column: 8 },
+                      end: { line: 1, column: 9 },
+                    },
+                  },
+                  right: {
+                    type: "ArrayExpression",
+                    elements: [],
+                    range: [13, 15],
+                    loc: {
+                      start: { line: 1, column: 13 },
+                      end: { line: 1, column: 15 },
+                    },
+                  },
+                  each: false,
+                  of: true,
+                },
+              ],
+              body: {
+                type: "Identifier",
+                name: "x",
+                range: [1, 2],
                 loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 26 }
-                }
-            }
+                  start: { line: 1, column: 1 },
+                  end: { line: 1, column: 2 },
+                },
+              },
+              range: [0, 17],
+              loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 17 },
+              },
+            },
+            range: [0, 17],
+            loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 17 },
+            },
+          },
+        ],
+        range: [0, 17],
+        loc: {
+          start: { line: 1, column: 0 },
+          end: { line: 1, column: 17 },
         },
+      },
+    },
 
-        '[[\n    x,\n    b,\n    c\n] for (x in []) for (b in []) if (b && c)];': {
-            generateFrom: {
-                type: 'Program',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'ComprehensionExpression',
-                        filter: {
-                            type: 'LogicalExpression',
-                            operator: '&&',
-                            left: {
-                                type: 'Identifier',
-                                name: 'b',
-                                range: [41, 42],
-                                loc: {
-                                    start: { line: 1, column: 41 },
-                                    end: { line: 1, column: 42 }
-                                }
-                            },
-                            right: {
-                                type: 'Identifier',
-                                name: 'c',
-                                range: [46, 47],
-                                loc: {
-                                    start: { line: 1, column: 46 },
-                                    end: { line: 1, column: 47 }
-                                }
-                            },
-                            range: [41, 47],
-                            loc: {
-                                start: { line: 1, column: 41 },
-                                end: { line: 1, column: 47 }
-                            }
-                        },
-                        blocks: [{
-                            type: 'ComprehensionBlock',
-                            left: {
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [14, 15],
-                                loc: {
-                                    start: { line: 1, column: 14 },
-                                    end: { line: 1, column: 15 }
-                                }
-                            },
-                            right: {
-                                type: 'ArrayExpression',
-                                elements: [],
-                                range: [19, 21],
-                                loc: {
-                                    start: { line: 1, column: 19 },
-                                    end: { line: 1, column: 21 }
-                                }
-                            },
-                            each: false,
-                            of: false
-                        }, {
-                            type: 'ComprehensionBlock',
-                            left: {
-                                type: 'Identifier',
-                                name: 'b',
-                                range: [28, 29],
-                                loc: {
-                                    start: { line: 1, column: 28 },
-                                    end: { line: 1, column: 29 }
-                                }
-                            },
-                            right: {
-                                type: 'ArrayExpression',
-                                elements: [],
-                                range: [33, 35],
-                                loc: {
-                                    start: { line: 1, column: 33 },
-                                    end: { line: 1, column: 35 }
-                                }
-                            },
-                            each: false,
-                            of: false
-                        }],
-                        body: {
-                            type: 'ArrayExpression',
-                            elements: [{
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [2, 3],
-                                loc: {
-                                    start: { line: 1, column: 2 },
-                                    end: { line: 1, column: 3 }
-                                }
-                            }, {
-                                type: 'Identifier',
-                                name: 'b',
-                                range: [4, 5],
-                                loc: {
-                                    start: { line: 1, column: 4 },
-                                    end: { line: 1, column: 5 }
-                                }
-                            }, {
-                                type: 'Identifier',
-                                name: 'c',
-                                range: [6, 7],
-                                loc: {
-                                    start: { line: 1, column: 6 },
-                                    end: { line: 1, column: 7 }
-                                }
-                            }],
-                            range: [1, 8],
-                            loc: {
-                                start: { line: 1, column: 1 },
-                                end: { line: 1, column: 8 }
-                            }
-                        },
-                        range: [0, 49],
-                        loc: {
-                            start: { line: 1, column: 0 },
-                            end: { line: 1, column: 49 }
-                        }
-                    },
-                    range: [0, 49],
+    "[1 for (x in y) if (f(x))];": {
+      generateFrom: {
+        type: "Program",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: {
+              type: "ComprehensionExpression",
+              filter: {
+                type: "CallExpression",
+                callee: {
+                  type: "Identifier",
+                  name: "f",
+                  range: [20, 21],
+                  loc: {
+                    start: { line: 1, column: 20 },
+                    end: { line: 1, column: 21 },
+                  },
+                },
+                arguments: [
+                  {
+                    type: "Identifier",
+                    name: "x",
+                    range: [22, 23],
                     loc: {
-                        start: { line: 1, column: 0 },
-                        end: { line: 1, column: 49 }
-                    }
-                }],
-                range: [0, 49],
+                      start: { line: 1, column: 22 },
+                      end: { line: 1, column: 23 },
+                    },
+                  },
+                ],
+                range: [20, 24],
                 loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 49 }
-                }
-            }
+                  start: { line: 1, column: 20 },
+                  end: { line: 1, column: 24 },
+                },
+              },
+              blocks: [
+                {
+                  type: "ComprehensionBlock",
+                  left: {
+                    type: "Identifier",
+                    name: "x",
+                    range: [8, 9],
+                    loc: {
+                      start: { line: 1, column: 8 },
+                      end: { line: 1, column: 9 },
+                    },
+                  },
+                  right: {
+                    type: "Identifier",
+                    name: "y",
+                    range: [13, 14],
+                    loc: {
+                      start: { line: 1, column: 13 },
+                      end: { line: 1, column: 14 },
+                    },
+                  },
+                  each: false,
+                  of: false,
+                },
+              ],
+              body: {
+                type: "Literal",
+                value: 1,
+                raw: "1",
+                range: [1, 2],
+                loc: {
+                  start: { line: 1, column: 1 },
+                  end: { line: 1, column: 2 },
+                },
+              },
+              range: [0, 26],
+              loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 26 },
+              },
+            },
+            range: [0, 26],
+            loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 26 },
+            },
+          },
+        ],
+        range: [0, 26],
+        loc: {
+          start: { line: 1, column: 0 },
+          end: { line: 1, column: 26 },
         },
+      },
+    },
 
-        '[[\n    x,\n    b,\n    c\n] for (x of []) for (b of []) if (b && c)];': {
-            generateFrom: {
-                type: 'Program',
-                body: [{
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'ComprehensionExpression',
-                        filter: {
-                            type: 'LogicalExpression',
-                            operator: '&&',
-                            left: {
-                                type: 'Identifier',
-                                name: 'b',
-                                range: [41, 42],
-                                loc: {
-                                    start: { line: 1, column: 41 },
-                                    end: { line: 1, column: 42 }
-                                }
-                            },
-                            right: {
-                                type: 'Identifier',
-                                name: 'c',
-                                range: [46, 47],
-                                loc: {
-                                    start: { line: 1, column: 46 },
-                                    end: { line: 1, column: 47 }
-                                }
-                            },
-                            range: [41, 47],
-                            loc: {
-                                start: { line: 1, column: 41 },
-                                end: { line: 1, column: 47 }
-                            }
-                        },
-                        blocks: [{
-                            type: 'ComprehensionBlock',
-                            left: {
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [14, 15],
-                                loc: {
-                                    start: { line: 1, column: 14 },
-                                    end: { line: 1, column: 15 }
-                                }
-                            },
-                            right: {
-                                type: 'ArrayExpression',
-                                elements: [],
-                                range: [19, 21],
-                                loc: {
-                                    start: { line: 1, column: 19 },
-                                    end: { line: 1, column: 21 }
-                                }
-                            },
-                            each: false,
-                            of: true
-                        }, {
-                            type: 'ComprehensionBlock',
-                            left: {
-                                type: 'Identifier',
-                                name: 'b',
-                                range: [28, 29],
-                                loc: {
-                                    start: { line: 1, column: 28 },
-                                    end: { line: 1, column: 29 }
-                                }
-                            },
-                            right: {
-                                type: 'ArrayExpression',
-                                elements: [],
-                                range: [33, 35],
-                                loc: {
-                                    start: { line: 1, column: 33 },
-                                    end: { line: 1, column: 35 }
-                                }
-                            },
-                            each: false,
-                            of: true
-                        }],
-                        body: {
-                            type: 'ArrayExpression',
-                            elements: [{
-                                type: 'Identifier',
-                                name: 'x',
-                                range: [2, 3],
-                                loc: {
-                                    start: { line: 1, column: 2 },
-                                    end: { line: 1, column: 3 }
-                                }
-                            }, {
-                                type: 'Identifier',
-                                name: 'b',
-                                range: [4, 5],
-                                loc: {
-                                    start: { line: 1, column: 4 },
-                                    end: { line: 1, column: 5 }
-                                }
-                            }, {
-                                type: 'Identifier',
-                                name: 'c',
-                                range: [6, 7],
-                                loc: {
-                                    start: { line: 1, column: 6 },
-                                    end: { line: 1, column: 7 }
-                                }
-                            }],
-                            range: [1, 8],
-                            loc: {
-                                start: { line: 1, column: 1 },
-                                end: { line: 1, column: 8 }
-                            }
-                        },
-                        range: [0, 49],
-                        loc: {
-                            start: { line: 1, column: 0 },
-                            end: { line: 1, column: 49 }
-                        }
-                    },
-                    range: [0, 49],
+    "[1 for (x of y) if (f(x))];": {
+      generateFrom: {
+        type: "Program",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: {
+              type: "ComprehensionExpression",
+              filter: {
+                type: "CallExpression",
+                callee: {
+                  type: "Identifier",
+                  name: "f",
+                  range: [20, 21],
+                  loc: {
+                    start: { line: 1, column: 20 },
+                    end: { line: 1, column: 21 },
+                  },
+                },
+                arguments: [
+                  {
+                    type: "Identifier",
+                    name: "x",
+                    range: [22, 23],
                     loc: {
-                        start: { line: 1, column: 0 },
-                        end: { line: 1, column: 49 }
-                    }
-                }],
-                range: [0, 49],
+                      start: { line: 1, column: 22 },
+                      end: { line: 1, column: 23 },
+                    },
+                  },
+                ],
+                range: [20, 24],
                 loc: {
-                    start: { line: 1, column: 0 },
-                    end: { line: 1, column: 49 }
-                }
-            }
-        }
-    }
+                  start: { line: 1, column: 20 },
+                  end: { line: 1, column: 24 },
+                },
+              },
+              blocks: [
+                {
+                  type: "ComprehensionBlock",
+                  left: {
+                    type: "Identifier",
+                    name: "x",
+                    range: [8, 9],
+                    loc: {
+                      start: { line: 1, column: 8 },
+                      end: { line: 1, column: 9 },
+                    },
+                  },
+                  right: {
+                    type: "Identifier",
+                    name: "y",
+                    range: [13, 14],
+                    loc: {
+                      start: { line: 1, column: 13 },
+                      end: { line: 1, column: 14 },
+                    },
+                  },
+                  each: false,
+                  of: true,
+                },
+              ],
+              body: {
+                type: "Literal",
+                value: 1,
+                raw: "1",
+                range: [1, 2],
+                loc: {
+                  start: { line: 1, column: 1 },
+                  end: { line: 1, column: 2 },
+                },
+              },
+              range: [0, 26],
+              loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 26 },
+              },
+            },
+            range: [0, 26],
+            loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 26 },
+            },
+          },
+        ],
+        range: [0, 26],
+        loc: {
+          start: { line: 1, column: 0 },
+          end: { line: 1, column: 26 },
+        },
+      },
+    },
+
+    "[[\n    x,\n    b,\n    c\n] for (x in []) for (b in []) if (b && c)];": {
+      generateFrom: {
+        type: "Program",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: {
+              type: "ComprehensionExpression",
+              filter: {
+                type: "LogicalExpression",
+                operator: "&&",
+                left: {
+                  type: "Identifier",
+                  name: "b",
+                  range: [41, 42],
+                  loc: {
+                    start: { line: 1, column: 41 },
+                    end: { line: 1, column: 42 },
+                  },
+                },
+                right: {
+                  type: "Identifier",
+                  name: "c",
+                  range: [46, 47],
+                  loc: {
+                    start: { line: 1, column: 46 },
+                    end: { line: 1, column: 47 },
+                  },
+                },
+                range: [41, 47],
+                loc: {
+                  start: { line: 1, column: 41 },
+                  end: { line: 1, column: 47 },
+                },
+              },
+              blocks: [
+                {
+                  type: "ComprehensionBlock",
+                  left: {
+                    type: "Identifier",
+                    name: "x",
+                    range: [14, 15],
+                    loc: {
+                      start: { line: 1, column: 14 },
+                      end: { line: 1, column: 15 },
+                    },
+                  },
+                  right: {
+                    type: "ArrayExpression",
+                    elements: [],
+                    range: [19, 21],
+                    loc: {
+                      start: { line: 1, column: 19 },
+                      end: { line: 1, column: 21 },
+                    },
+                  },
+                  each: false,
+                  of: false,
+                },
+                {
+                  type: "ComprehensionBlock",
+                  left: {
+                    type: "Identifier",
+                    name: "b",
+                    range: [28, 29],
+                    loc: {
+                      start: { line: 1, column: 28 },
+                      end: { line: 1, column: 29 },
+                    },
+                  },
+                  right: {
+                    type: "ArrayExpression",
+                    elements: [],
+                    range: [33, 35],
+                    loc: {
+                      start: { line: 1, column: 33 },
+                      end: { line: 1, column: 35 },
+                    },
+                  },
+                  each: false,
+                  of: false,
+                },
+              ],
+              body: {
+                type: "ArrayExpression",
+                elements: [
+                  {
+                    type: "Identifier",
+                    name: "x",
+                    range: [2, 3],
+                    loc: {
+                      start: { line: 1, column: 2 },
+                      end: { line: 1, column: 3 },
+                    },
+                  },
+                  {
+                    type: "Identifier",
+                    name: "b",
+                    range: [4, 5],
+                    loc: {
+                      start: { line: 1, column: 4 },
+                      end: { line: 1, column: 5 },
+                    },
+                  },
+                  {
+                    type: "Identifier",
+                    name: "c",
+                    range: [6, 7],
+                    loc: {
+                      start: { line: 1, column: 6 },
+                      end: { line: 1, column: 7 },
+                    },
+                  },
+                ],
+                range: [1, 8],
+                loc: {
+                  start: { line: 1, column: 1 },
+                  end: { line: 1, column: 8 },
+                },
+              },
+              range: [0, 49],
+              loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 49 },
+              },
+            },
+            range: [0, 49],
+            loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 49 },
+            },
+          },
+        ],
+        range: [0, 49],
+        loc: {
+          start: { line: 1, column: 0 },
+          end: { line: 1, column: 49 },
+        },
+      },
+    },
+
+    "[[\n    x,\n    b,\n    c\n] for (x of []) for (b of []) if (b && c)];": {
+      generateFrom: {
+        type: "Program",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: {
+              type: "ComprehensionExpression",
+              filter: {
+                type: "LogicalExpression",
+                operator: "&&",
+                left: {
+                  type: "Identifier",
+                  name: "b",
+                  range: [41, 42],
+                  loc: {
+                    start: { line: 1, column: 41 },
+                    end: { line: 1, column: 42 },
+                  },
+                },
+                right: {
+                  type: "Identifier",
+                  name: "c",
+                  range: [46, 47],
+                  loc: {
+                    start: { line: 1, column: 46 },
+                    end: { line: 1, column: 47 },
+                  },
+                },
+                range: [41, 47],
+                loc: {
+                  start: { line: 1, column: 41 },
+                  end: { line: 1, column: 47 },
+                },
+              },
+              blocks: [
+                {
+                  type: "ComprehensionBlock",
+                  left: {
+                    type: "Identifier",
+                    name: "x",
+                    range: [14, 15],
+                    loc: {
+                      start: { line: 1, column: 14 },
+                      end: { line: 1, column: 15 },
+                    },
+                  },
+                  right: {
+                    type: "ArrayExpression",
+                    elements: [],
+                    range: [19, 21],
+                    loc: {
+                      start: { line: 1, column: 19 },
+                      end: { line: 1, column: 21 },
+                    },
+                  },
+                  each: false,
+                  of: true,
+                },
+                {
+                  type: "ComprehensionBlock",
+                  left: {
+                    type: "Identifier",
+                    name: "b",
+                    range: [28, 29],
+                    loc: {
+                      start: { line: 1, column: 28 },
+                      end: { line: 1, column: 29 },
+                    },
+                  },
+                  right: {
+                    type: "ArrayExpression",
+                    elements: [],
+                    range: [33, 35],
+                    loc: {
+                      start: { line: 1, column: 33 },
+                      end: { line: 1, column: 35 },
+                    },
+                  },
+                  each: false,
+                  of: true,
+                },
+              ],
+              body: {
+                type: "ArrayExpression",
+                elements: [
+                  {
+                    type: "Identifier",
+                    name: "x",
+                    range: [2, 3],
+                    loc: {
+                      start: { line: 1, column: 2 },
+                      end: { line: 1, column: 3 },
+                    },
+                  },
+                  {
+                    type: "Identifier",
+                    name: "b",
+                    range: [4, 5],
+                    loc: {
+                      start: { line: 1, column: 4 },
+                      end: { line: 1, column: 5 },
+                    },
+                  },
+                  {
+                    type: "Identifier",
+                    name: "c",
+                    range: [6, 7],
+                    loc: {
+                      start: { line: 1, column: 6 },
+                      end: { line: 1, column: 7 },
+                    },
+                  },
+                ],
+                range: [1, 8],
+                loc: {
+                  start: { line: 1, column: 1 },
+                  end: { line: 1, column: 8 },
+                },
+              },
+              range: [0, 49],
+              loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 49 },
+              },
+            },
+            range: [0, 49],
+            loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 49 },
+            },
+          },
+        ],
+        range: [0, 49],
+        loc: {
+          start: { line: 1, column: 0 },
+          end: { line: 1, column: 49 },
+        },
+      },
+    },
+  },
 };
 
 // Special handling for regular expression literal since we need to
 // convert it to a string literal, otherwise it will be decoded
 // as object "{}" and the regular expression would be lost.
 function adjustRegexLiteral(key, value) {
-    'use strict';
-    if (key === 'value' && value instanceof RegExp) {
-        value = value.toString();
-    }
-    return value;
+  "use strict";
+  if (key === "value" && value instanceof RegExp) {
+    value = value.toString();
+  }
+  return value;
 }
 
 function testIdentity(code, syntax) {
-    'use strict';
-    var expected, tree, actual, actual2, options, StringObject;
+  "use strict";
+  var expected, tree, actual, actual2, options, StringObject;
 
-    // alias, so that JSLint does not complain.
-    StringObject = String;
+  // alias, so that JSLint does not complain.
+  StringObject = String;
 
-    options = {
-        comment: false,
-        range: false,
-        loc: false,
-        tokens: false,
-        raw: false
-    };
+  options = {
+    comment: false,
+    range: false,
+    loc: false,
+    tokens: false,
+    raw: false,
+  };
 
-    tree = esprima.parse(code, options);
-    expected = JSON.stringify(tree, adjustRegexLiteral, 4);
-    tree = esprima.parse(escodegen.generate(tree), options);
-    actual = JSON.stringify(tree, adjustRegexLiteral, 4);
-    tree = esprima.parse(escodegen.generate(syntax), options);
-    actual2 = JSON.stringify(tree, adjustRegexLiteral, 4);
-    expect(actual).to.be.equal(expected);
-    expect(actual2).to.be.equal(expected);
+  tree = esprima.parse(code, options);
+  expected = JSON.stringify(tree, adjustRegexLiteral, 4);
+  tree = esprima.parse(escodegen.generate(tree), options);
+  actual = JSON.stringify(tree, adjustRegexLiteral, 4);
+  tree = esprima.parse(escodegen.generate(syntax), options);
+  actual2 = JSON.stringify(tree, adjustRegexLiteral, 4);
+  expect(actual).to.be.equal(expected);
+  expect(actual2).to.be.equal(expected);
 }
 
 function testGenerate(expected, result) {
-    'use strict';
-    var actual, options;
+  "use strict";
+  var actual, options;
 
-    options = {
-        indent: '    ',
-        parse: esprima.parse,
-        moz: {
-            starlessGenerator: true,
-            parenthesizedComprehensionBlock: true,
-            comprehensionExpressionStartsWithAssignment: true
-        }
-    };
+  options = {
+    indent: "    ",
+    parse: esprima.parse,
+    moz: {
+      starlessGenerator: true,
+      parenthesizedComprehensionBlock: true,
+      comprehensionExpressionStartsWithAssignment: true,
+    },
+  };
 
-    actual = escodegen.generate(result.generateFrom, options);
-    expect(actual).to.be.equal(expected);
+  actual = escodegen.generate(result.generateFrom, options);
+  expect(actual).to.be.equal(expected);
 }
 
 function isGeneratorIdentityFixture(result) {
-    'use strict';
-    return !result.hasOwnProperty('generateFrom') &&
-        !result.hasOwnProperty('result');
+  "use strict";
+  return (
+    !result.hasOwnProperty("generateFrom") && !result.hasOwnProperty("result")
+  );
 }
 
 function runTest(code, result) {
-    'use strict';
-    if (result.hasOwnProperty('generateFrom')) {
-        testGenerate(code, result);
-    } else {
-        testIdentity(code, result);
-    }
+  "use strict";
+  if (result.hasOwnProperty("generateFrom")) {
+    testGenerate(code, result);
+  } else {
+    testIdentity(code, result);
+  }
 }
 
-describe('moz test', function () {
-    Object.keys(data).forEach(function (category) {
-        Object.keys(data[category]).forEach(function (source) {
-            it(category, function () {
-                var expected = data[category][source];
-                runTest(source, expected);
-            });
-        });
+describe("moz test", function () {
+  Object.keys(data).forEach(function (category) {
+    Object.keys(data[category]).forEach(function (source) {
+      it(category, function () {
+        var expected = data[category][source];
+        runTest(source, expected);
+      });
     });
+  });
 });
 /* vim: set sw=4 ts=4 et tw=80 : */

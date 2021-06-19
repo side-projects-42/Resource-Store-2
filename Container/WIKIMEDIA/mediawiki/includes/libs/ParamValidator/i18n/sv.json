@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Sabelöga",
-			"WikiPhoenix"
-		]
+		"authors": ["Sabelöga", "WikiPhoenix"]
 	},
 	"paramvalidator-badbool": "\"$2\" är ett ogiltigt värde för booleska parametern \"$1\". Ange $3 för true eller $5 för false.",
 	"paramvalidator-badexpiry": "Ogiltigt värde \"$2\" för utgångsparametern \"$1\".",

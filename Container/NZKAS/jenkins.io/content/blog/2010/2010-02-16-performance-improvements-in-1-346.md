@@ -4,9 +4,10 @@
 :nodeid: 199
 :created: 1266333900
 :tags:
-- development
+  - development
 :author: rtyler
 ---
+
 From time to time, we get a report of out of memory problems in Hudson. It's frequent enough that <a href="http://wiki.hudson-ci.org/display/HUDSON/I'm+getting+OutOfMemoryError">we have a dedicated Wiki page</a> that talks about how to obtain information to help devs work on the problem.
 
 So <a href="http://n4.nabble.com/Restarting-hudson-every-day-memory-leaks-td1311161.html">the latest thread</a> from <a id="aptureLink_RTb6QLKuCh" href="http://www.linkedin.com/in/davidwoon">David Woon</a> was assumed to be one of those ordinary trouble-shooting sessions, but thanks to Gustaf Lundh, it turned out to be a very interesting exercise.
@@ -19,6 +20,8 @@ I monitor my production Hudson deployment with <a href="http://java.sun.com/perf
 
 All these changes are a part of the latest 1.346 release.
 
-----
+---
+
 **Editor's Note:** Kohsuke Kawaguchi a senior engineer at Oracle (formerly Sun) and is the founder and author of the Hudson project. To learn more about Kohsuke, you can [follow him on Twitter](http://twitter.com/kohsukekawa) or subscribe to [his blog](http://weblogs.java.net/blog/kohsuke/).
+
 <!--break-->

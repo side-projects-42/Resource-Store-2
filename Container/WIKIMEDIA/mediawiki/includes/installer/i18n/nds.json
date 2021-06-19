@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Joachim Mos"
-		]
+		"authors": ["Joachim Mos"]
 	},
 	"config-page-name": "Naam",
 	"config-ns-generic": "Projekt",

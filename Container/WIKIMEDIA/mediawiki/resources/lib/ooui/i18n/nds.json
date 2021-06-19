@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Joachim Mos",
-			"Slomox",
-			"Zylbath"
-		]
+		"authors": ["Joachim Mos", "Slomox", "Zylbath"]
 	},
 	"ooui-outline-control-move-down": "Element na ünnen schuven",
 	"ooui-outline-control-move-up": "Element na baven schuven",

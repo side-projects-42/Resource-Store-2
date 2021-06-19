@@ -12,6 +12,6 @@
   category: generic
 - luke: Skywalker
   white: Walker
-- error.message: '500: Internal Server Error'
+- error.message: "500: Internal Server Error"
   error.class: ApplicationController::ExternalApiError
   error.expected: true

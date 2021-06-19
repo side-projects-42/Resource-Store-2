@@ -4,8 +4,7 @@
  * @copyright 2011-2016 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * MediaWiki media resource provider.
 	 *
@@ -17,22 +16,25 @@
 	 * @param {Object} [config] Configuration options
 	 * @cfg {string} [scriptDirUrl] The url of the API script
 	 */
-	mw.widgets.MediaResourceProvider = function MwWidgetsMediaResourceProvider( apiurl, config ) {
+	mw.widgets.MediaResourceProvider = function MwWidgetsMediaResourceProvider(
+		apiurl,
+		config
+	) {
 		config = config || {};
 
 		// Parent constructor
-		mw.widgets.MediaResourceProvider.super.call( this, apiurl, config );
+		mw.widgets.MediaResourceProvider.super.call(this, apiurl, config);
 
 		// Fetching configuration
 		this.scriptDirUrl = config.scriptDirUrl;
 		this.isLocal = config.local !== undefined;
 
-		if ( this.isLocal ) {
-			this.setAPIurl( mw.util.wikiScript( 'api' ) );
+		if (this.isLocal) {
+			this.setAPIurl(mw.util.wikiScript("api"));
 		} else {
 			// If 'apiurl' is set, use that. Otherwise, build the url
 			// from scriptDirUrl and /api.php suffix
-			this.setAPIurl( this.getAPIurl() || ( this.scriptDirUrl + '/api.php' ) );
+			this.setAPIurl(this.getAPIurl() || this.scriptDirUrl + "/api.php");
 		}
 
 		this.siteInfoPromise = null;
@@ -41,7 +43,10 @@
 	};
 
 	/* Inheritance */
-	OO.inheritClass( mw.widgets.MediaResourceProvider, mw.widgets.APIResultsProvider );
+	OO.inheritClass(
+		mw.widgets.MediaResourceProvider,
+		mw.widgets.APIResultsProvider
+	);
 
 	/* Methods */
 
@@ -52,12 +57,14 @@
 		return $.extend(
 			{},
 			// Parent method
-			mw.widgets.MediaResourceProvider.super.prototype.getStaticParams.call( this ),
+			mw.widgets.MediaResourceProvider.super.prototype.getStaticParams.call(
+				this
+			),
 			{
-				action: 'query',
-				iiprop: 'dimensions|url|mediatype|extmetadata|timestamp|user',
+				action: "query",
+				iiprop: "dimensions|url|mediatype|extmetadata|timestamp|user",
 				iiextmetadatalanguage: this.getLang(),
-				prop: 'imageinfo'
+				prop: "imageinfo",
 			}
 		);
 	};
@@ -74,19 +81,24 @@
 	mw.widgets.MediaResourceProvider.prototype.loadSiteInfo = function () {
 		var provider = this;
 
-		if ( !this.siteInfoPromise ) {
-			this.siteInfoPromise = new mw.Api().get( {
-				action: 'query',
-				meta: 'siteinfo'
-			} )
-				.then( function ( data ) {
-					provider.setImageSizes( data.query.general.imagelimits || [] );
-					provider.setThumbSizes( data.query.general.thumblimits || [] );
-					provider.setUserParams( {
+		if (!this.siteInfoPromise) {
+			this.siteInfoPromise = new mw.Api()
+				.get({
+					action: "query",
+					meta: "siteinfo",
+				})
+				.then(function (data) {
+					provider.setImageSizes(
+						data.query.general.imagelimits || []
+					);
+					provider.setThumbSizes(
+						data.query.general.thumblimits || []
+					);
+					provider.setUserParams({
 						// Standard width per resource
-						iiurlwidth: provider.getStandardWidth()
-					} );
-				} );
+						iiurlwidth: provider.getStandardWidth(),
+					});
+				});
 		}
 		return this.siteInfoPromise;
 	};
@@ -98,39 +110,41 @@
 	 * @return {jQuery.Promise} Promise that is resolved into an array
 	 * of available results, or is rejected if no results are available.
 	 */
-	mw.widgets.MediaResourceProvider.prototype.getResults = function ( howMany ) {
+	mw.widgets.MediaResourceProvider.prototype.getResults = function (howMany) {
 		var xhr,
 			aborted = false,
 			provider = this;
 
 		return this.loadSiteInfo()
-			.then( function () {
-				if ( aborted ) {
+			.then(function () {
+				if (aborted) {
 					return $.Deferred().reject();
 				}
-				xhr = provider.fetchAPIresults( howMany );
+				xhr = provider.fetchAPIresults(howMany);
 				return xhr;
-			} )
+			})
 			.then(
-				function ( results ) {
-					if ( !results || results.length === 0 ) {
-						provider.toggleDepleted( true );
+				function (results) {
+					if (!results || results.length === 0) {
+						provider.toggleDepleted(true);
 						return [];
 					}
 					return results;
 				},
 				// Process failed, return an empty promise
 				function () {
-					provider.toggleDepleted( true );
-					return $.Deferred().resolve( [] );
+					provider.toggleDepleted(true);
+					return $.Deferred().resolve([]);
 				}
 			)
-			.promise( { abort: function () {
-				aborted = true;
-				if ( xhr ) {
-					xhr.abort();
-				}
-			} } );
+			.promise({
+				abort: function () {
+					aborted = true;
+					if (xhr) {
+						xhr.abort();
+					}
+				},
+			});
 	};
 
 	/**
@@ -148,8 +162,7 @@
 	 *
 	 * @param {Object} continueData Continuation data
 	 */
-	mw.widgets.MediaResourceProvider.prototype.setContinue = function () {
-	};
+	mw.widgets.MediaResourceProvider.prototype.setContinue = function () {};
 
 	/**
 	 * Sort the results
@@ -157,7 +170,7 @@
 	 * @param {Object[]} results API results
 	 * @return {Object[]} Sorted results
 	 */
-	mw.widgets.MediaResourceProvider.prototype.sort = function ( results ) {
+	mw.widgets.MediaResourceProvider.prototype.sort = function (results) {
 		return results;
 	};
 
@@ -168,42 +181,58 @@
 	 * @return {jQuery.Promise} Promise that resolves with an array of objects that contain
 	 *  the fetched data.
 	 */
-	mw.widgets.MediaResourceProvider.prototype.fetchAPIresults = function ( howMany ) {
-		var xhr, api,
+	mw.widgets.MediaResourceProvider.prototype.fetchAPIresults = function (
+		howMany
+	) {
+		var xhr,
+			api,
 			provider = this;
 
-		if ( !this.isValid() ) {
-			return $.Deferred().reject().promise( { abort: function () {} } );
+		if (!this.isValid()) {
+			return $.Deferred()
+				.reject()
+				.promise({ abort: function () {} });
 		}
 
-		api = this.isLocal ? new mw.Api() : new mw.ForeignApi( this.getAPIurl(), { anonymous: true } );
-		xhr = api.get( $.extend( {}, this.getStaticParams(), this.getUserParams(), this.getContinueData( howMany ) ) );
+		api = this.isLocal
+			? new mw.Api()
+			: new mw.ForeignApi(this.getAPIurl(), { anonymous: true });
+		xhr = api.get(
+			$.extend(
+				{},
+				this.getStaticParams(),
+				this.getUserParams(),
+				this.getContinueData(howMany)
+			)
+		);
 		return xhr
-			.then( function ( data ) {
-				var page, newObj, raw,
+			.then(function (data) {
+				var page,
+					newObj,
+					raw,
 					results = [];
 
-				if ( data.error ) {
-					provider.toggleDepleted( true );
+				if (data.error) {
+					provider.toggleDepleted(true);
 					return [];
 				}
 
-				if ( data.continue ) {
+				if (data.continue) {
 					// Update the offset for next time
-					provider.setContinue( data.continue );
+					provider.setContinue(data.continue);
 				} else {
 					// This is the last available set of results. Mark as depleted!
-					provider.toggleDepleted( true );
+					provider.toggleDepleted(true);
 				}
 
 				// If the source returned no results, it will not have a
 				// query property
-				if ( data.query ) {
+				if (data.query) {
 					raw = data.query.pages;
-					if ( raw ) {
+					if (raw) {
 						// Strip away the page ids
-						for ( page in raw ) {
-							if ( !raw[ page ].imageinfo ) {
+						for (page in raw) {
+							if (!raw[page].imageinfo) {
 								// The search may give us pages that belong to the File:
 								// namespace but have no files in them, either because
 								// they were deleted or imported wrongly, or just started
@@ -211,16 +240,16 @@
 								// imageinfo. Skip those files.
 								continue;
 							}
-							newObj = raw[ page ].imageinfo[ 0 ];
-							newObj.title = raw[ page ].title;
-							newObj.index = raw[ page ].index;
-							results.push( newObj );
+							newObj = raw[page].imageinfo[0];
+							newObj.title = raw[page].title;
+							newObj.index = raw[page].index;
+							results.push(newObj);
 						}
 					}
 				}
-				return provider.sort( results );
-			} )
-			.promise( { abort: xhr.abort } );
+				return provider.sort(results);
+			})
+			.promise({ abort: xhr.abort });
 	};
 
 	/**
@@ -228,7 +257,7 @@
 	 *
 	 * @param {string} name
 	 */
-	mw.widgets.MediaResourceProvider.prototype.setName = function ( name ) {
+	mw.widgets.MediaResourceProvider.prototype.setName = function (name) {
 		this.name = name;
 	};
 
@@ -247,10 +276,12 @@
 	 * @return {number|undefined} fetchWidth
 	 */
 	mw.widgets.MediaResourceProvider.prototype.getStandardWidth = function () {
-		return ( this.thumbSizes && this.thumbSizes[ this.thumbSizes.length - 1 ] ) ||
-			( this.imageSizes && this.imageSizes[ 0 ] ) ||
+		return (
+			(this.thumbSizes && this.thumbSizes[this.thumbSizes.length - 1]) ||
+			(this.imageSizes && this.imageSizes[0]) ||
 			// Fall back on a number
-			300;
+			300
+		);
 	};
 
 	/**
@@ -267,7 +298,7 @@
 	 *
 	 * @param {string} prop
 	 */
-	mw.widgets.MediaResourceProvider.prototype.setFetchProp = function ( prop ) {
+	mw.widgets.MediaResourceProvider.prototype.setFetchProp = function (prop) {
 		this.fetchProp = prop;
 	};
 
@@ -276,7 +307,9 @@
 	 *
 	 * @param {number[]} sizes Available thumbnail sizes
 	 */
-	mw.widgets.MediaResourceProvider.prototype.setThumbSizes = function ( sizes ) {
+	mw.widgets.MediaResourceProvider.prototype.setThumbSizes = function (
+		sizes
+	) {
 		this.thumbSizes = sizes;
 	};
 
@@ -285,7 +318,9 @@
 	 *
 	 * @param {number[]} sizes Available image sizes
 	 */
-	mw.widgets.MediaResourceProvider.prototype.setImageSizes = function ( sizes ) {
+	mw.widgets.MediaResourceProvider.prototype.setImageSizes = function (
+		sizes
+	) {
 		this.imageSizes = sizes;
 	};
 
@@ -313,10 +348,12 @@
 	 * @return {boolean} Source is valid
 	 */
 	mw.widgets.MediaResourceProvider.prototype.isValid = function () {
-		return this.isLocal ||
+		return (
+			this.isLocal ||
 			// If we don't have either 'apiurl' or 'scriptDirUrl'
 			// the source is invalid, and we will skip it
 			this.apiurl !== undefined ||
-			this.scriptDirUrl !== undefined;
+			this.scriptDirUrl !== undefined
+		);
 	};
-}() );
+})();

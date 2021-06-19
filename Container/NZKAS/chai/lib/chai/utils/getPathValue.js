@@ -35,10 +35,10 @@
  * @api public
  */
 
-var getPathValue = module.exports = function (path, obj) {
+var getPathValue = (module.exports = function (path, obj) {
   var parsed = parsePath(path);
   return _getPathValue(parsed, obj);
-};
+});
 
 /*!
  * ## parsePath(path)
@@ -58,16 +58,16 @@ var getPathValue = module.exports = function (path, obj) {
  * @api private
  */
 
-function parsePath (path) {
-  var str = path.replace(/\[/g, '.[')
-    , parts = str.match(/(\\\.|[^.]+?)+/g);
+function parsePath(path) {
+  var str = path.replace(/\[/g, ".["),
+    parts = str.match(/(\\\.|[^.]+?)+/g);
   return parts.map(function (value) {
-    var re = /\[(\d+)\]$/
-      , mArr = re.exec(value)
+    var re = /\[(\d+)\]$/,
+      mArr = re.exec(value);
     if (mArr) return { i: parseFloat(mArr[1]) };
     else return { p: value };
   });
-};
+}
 
 /*!
  * ## _getPathValue(parsed, obj)
@@ -83,20 +83,18 @@ function parsePath (path) {
  * @api private
  */
 
-function _getPathValue (parsed, obj) {
-  var tmp = obj
-    , res;
+function _getPathValue(parsed, obj) {
+  var tmp = obj,
+    res;
   for (var i = 0, l = parsed.length; i < l; i++) {
     var part = parsed[i];
     if (tmp) {
-      if ('undefined' !== typeof part.p)
-        tmp = tmp[part.p];
-      else if ('undefined' !== typeof part.i)
-        tmp = tmp[part.i];
-      if (i == (l - 1)) res = tmp;
+      if ("undefined" !== typeof part.p) tmp = tmp[part.p];
+      else if ("undefined" !== typeof part.i) tmp = tmp[part.i];
+      if (i == l - 1) res = tmp;
     } else {
       res = undefined;
     }
   }
   return res;
-};
+}

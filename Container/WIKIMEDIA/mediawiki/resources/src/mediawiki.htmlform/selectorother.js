@@ -2,8 +2,7 @@
  * HTMLForm enhancements:
  * Animate the SelectOrOther fields, to only show the text field when 'other' is selected.
  */
-( function () {
-
+(function () {
 	/**
 	 * @class jQuery.plugin.htmlform
 	 */
@@ -15,11 +14,11 @@
 	 * @return {jQuery}
 	 * @chainable
 	 */
-	$.fn.goIn = function ( instantToggle ) {
-		if ( instantToggle === true ) {
+	$.fn.goIn = function (instantToggle) {
+		if (instantToggle === true) {
 			return this.show();
 		}
-		return this.stop( true, true ).fadeIn();
+		return this.stop(true, true).fadeIn();
 	};
 
 	/**
@@ -29,34 +28,33 @@
 	 * @return {jQuery}
 	 * @chainable
 	 */
-	$.fn.goOut = function ( instantToggle ) {
-		if ( instantToggle === true ) {
+	$.fn.goOut = function (instantToggle) {
+		if (instantToggle === true) {
 			return this.hide();
 		}
-		return this.stop( true, true ).fadeOut();
+		return this.stop(true, true).fadeOut();
 	};
 
-	mw.hook( 'htmlform.enhance' ).add( function ( $root ) {
+	mw.hook("htmlform.enhance").add(function ($root) {
 		/**
 		 * @ignore
 		 * @param {boolean|jQuery.Event} instant
 		 */
-		function handleSelectOrOther( instant ) {
-			var $other = $root.find( '#' + $( this ).attr( 'id' ) + '-other' );
-			$other = $other.add( $other.siblings( 'br' ) );
-			if ( $( this ).val() === 'other' ) {
-				$other.goIn( instant );
+		function handleSelectOrOther(instant) {
+			var $other = $root.find("#" + $(this).attr("id") + "-other");
+			$other = $other.add($other.siblings("br"));
+			if ($(this).val() === "other") {
+				$other.goIn(instant);
 			} else {
-				$other.goOut( instant );
+				$other.goOut(instant);
 			}
 		}
 
 		$root
-			.on( 'change', '.mw-htmlform-select-or-other', handleSelectOrOther )
-			.find( '.mw-htmlform-select-or-other' )
-			.each( function () {
-				handleSelectOrOther.call( this, true );
-			} );
-	} );
-
-}() );
+			.on("change", ".mw-htmlform-select-or-other", handleSelectOrOther)
+			.find(".mw-htmlform-select-or-other")
+			.each(function () {
+				handleSelectOrOther.call(this, true);
+			});
+	});
+})();

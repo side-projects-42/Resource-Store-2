@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Kizule",
-			"Zoranzoki21"
-		]
-	},
-	"alltimezones-desc": "Додаје ознаку за приказивање датума у свим временским зонама"
+  "@metadata": {
+    "authors": ["Kizule", "Zoranzoki21"]
+  },
+  "alltimezones-desc": "Додаје ознаку за приказивање датума у свим временским зонама"
 }

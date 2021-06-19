@@ -77,7 +77,7 @@ export default class SnapshotState {
   }
 
   markSnapshotsAsCheckedForTest(testName: string) {
-    this._uncheckedKeys.forEach(uncheckedKey => {
+    this._uncheckedKeys.forEach((uncheckedKey) => {
       if (keyToTestName(uncheckedKey) === testName) {
         this._uncheckedKeys.delete(uncheckedKey);
       }
@@ -149,7 +149,7 @@ export default class SnapshotState {
   removeUncheckedKeys(): void {
     if (this._updateSnapshot === 'all' && this._uncheckedKeys.size) {
       this._dirty = true;
-      this._uncheckedKeys.forEach(key => delete this._snapshotData[key]);
+      this._uncheckedKeys.forEach((key) => delete this._snapshotData[key]);
       this._uncheckedKeys.clear();
     }
   }

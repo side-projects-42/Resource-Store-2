@@ -12,12 +12,10 @@
  * @description:
  * Tests to see if there are any `describeXYZ.only` tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	describeAnimal.only('tiger', function () {
-		it('should do stuff', function () {
-
-		});
+	describeAnimal.only("tiger", function () {
+		it("should do stuff", function () {});
 	});
-}(this));
+})(this);

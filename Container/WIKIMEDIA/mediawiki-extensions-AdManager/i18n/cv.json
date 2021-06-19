@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Chuvash2014"
-		]
-	},
-	"admanager_Category": "Категорисем"
+  "@metadata": {
+    "authors": ["Chuvash2014"]
+  },
+  "admanager_Category": "Категорисем"
 }

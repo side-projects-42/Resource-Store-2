@@ -11,14 +11,13 @@ By default `local` scheme is enabled and preconfigured. You can set `strategies.
 To do a password based login by sending credentials in request body as a JSON object:
 
 ```js
-this.$auth.loginWith('local', {
+this.$auth.loginWith("local", {
   data: {
-    username: 'your_username',
-    password: 'your_password'
-  }
-})
+    username: "your_username",
+    password: "your_password",
+  },
+});
 ```
-
 
 ## Options
 
@@ -76,4 +75,4 @@ This option can be used to disable all token handling. Useful for Cookie only fl
 
 - Default: `Bearer`
 
- Authorization header type to be used in axios requests.
+Authorization header type to be used in axios requests.

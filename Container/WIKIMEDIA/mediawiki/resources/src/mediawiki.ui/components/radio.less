@@ -1,5 +1,5 @@
-@import 'mediawiki.mixins.less';
-@import 'mediawiki.ui/variables.less';
+@import "mediawiki.mixins.less";
+@import "mediawiki.ui/variables.less";
 
 // Radio
 //
@@ -43,7 +43,7 @@
 		vertical-align: middle;
 	}
 
-	[ type='radio' ] {
+	[type="radio"] {
 		// ensure the invisible radio takes up the required width
 		width: @size-input-binary;
 		height: @size-input-binary;
@@ -58,7 +58,7 @@
 
 			// Pseudo `:before` element of the label after the radio now looks like a radio
 			&:before {
-				content: '';
+				content: "";
 				background-color: #fff;
 				.box-sizing( border-box );
 				position: absolute;
@@ -71,7 +71,7 @@
 
 			// Needed for `:focus` state's inner white circle
 			&:after {
-				content: ' ';
+				content: " ";
 				position: absolute;
 				top: 2px; // `px` unit due to pixel rounding error when using `@size-input-binary / 4`
 				left: 2px;
@@ -92,7 +92,7 @@
 
 			& + label:before {
 				cursor: pointer;
-				.transition( ~'background-color 100ms, color 100ms, border-color 100ms' );
+				.transition( ~"background-color 100ms, color 100ms, border-color 100ms" );
 			}
 
 			&:hover + label:before {

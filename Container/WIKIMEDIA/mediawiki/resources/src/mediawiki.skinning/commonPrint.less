@@ -42,7 +42,7 @@ body {
 	padding: 0;
 }
 
-@import 'content.body-print.less';
+@import "content.body-print.less";
 
 /* Prevent citations and subscripts from interfering with the line-height */
 sup,
@@ -77,11 +77,11 @@ sub {
 }
 
 /* (T280929) As this is a CSS file, we need to import it inline lest LESS parses the CSS and gets paths wrong. */
-@import (inline) 'toc/print.css';
-@import 'elements-print.less';
-@import 'content.thumbnails-print.less';
-@import 'content.tables-print.less';
-@import 'interface.category-print.less';
+@import (inline) "toc/print.css";
+@import "elements-print.less";
+@import "content.thumbnails-print.less";
+@import "content.tables-print.less";
+@import "interface.category-print.less";
 
 /**
  * Footer

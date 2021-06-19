@@ -4,17 +4,20 @@
 :nodeid: 242
 :created: 1283428800
 :tags:
-- development
-- core
-- tutorial
+  - development
+  - core
+  - tutorial
 :author: kohsuke
 ---
+
 Today, I’d highlight two recent improvements to the label and matrix projects.
 
 When you have multiple slaves in your Hudson build farm, you can use labels to classify slaves by their capability/environment/architecture/etc. For example, your one slave might have “32bit” and “windows” label, while another one might have “linux”, “ubuntu”, and “64bit.” (with plugins like <a href=”http://wiki.hudson-ci.org/display/HUDSON/PlatformLabeler+Plugin”>platform-labeler plugin</a>, you can attach labels automatically, too.) Or if you do Selenium testing, you might add browser names as labels to indicate which slave has which browser available.
 
 With such set up, you then specify that such and such jobs can be only run on such and such labels. For example, you might say your “test-foo” job requires the “windows” label, while your “compile-bar” job might require the “macos” label.
+
 <!--break-->
+
 Starting 1.372, Hudson now lets you use boolean expressions here, instead of just specifying one label as the requirement. For example, your “seleniumTest-zot” job can now say it requires “windows&&firefox” since it’s meant to run on Windows with Firefox. Or if your job requires a shell script, you might say “!windows” to indicate that it has to be run somewhere that’s not Windows.
 
 Labels are also often used in the context of the multi-configuration project (a.k.a. matrix project.) In a multi-configuration project, you specify what to execute to build your project, then specify a number of “axes” that represents the variable and their possible values to execute a build. There are several different kinds of axes (and this is of course extensible), and one of them is the label axis.

@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"ChrisPtDe"
-		]
-	},
-	"addthis": "Partagiér"
+  "@metadata": {
+    "authors": ["ChrisPtDe"]
+  },
+  "addthis": "Partagiér"
 }

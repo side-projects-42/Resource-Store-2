@@ -1,5 +1,5 @@
-( function () {
-	'use strict';
+(function () {
+	"use strict";
 
 	var notification,
 		// The .mw-notification-area div that all notifications are contained inside.
@@ -26,62 +26,68 @@
 	 * @param {mw.Message|jQuery|HTMLElement|string} message
 	 * @param {Object} options
 	 */
-	function Notification( message, options ) {
+	function Notification(message, options) {
 		var $notification, $notificationContent;
 
-		$notification = $( '<div>' )
-			.data( 'mw-notification', this )
-			.attr( 'role', 'status' )
-			.addClass( [
-				'mw-notification',
-				options.autoHide ? 'mw-notification-autohide' : 'mw-notification-noautohide'
-			] );
+		$notification = $("<div>")
+			.data("mw-notification", this)
+			.attr("role", "status")
+			.addClass([
+				"mw-notification",
+				options.autoHide
+					? "mw-notification-autohide"
+					: "mw-notification-noautohide",
+			]);
 
-		if ( options.tag ) {
+		if (options.tag) {
 			// Sanitize options.tag before it is used by any code. (Including Notification class methods)
-			options.tag = options.tag.replace( /[ _-]+/g, '-' ).replace( /[^-a-z0-9]+/ig, '' );
-			if ( options.tag ) {
+			options.tag = options.tag
+				.replace(/[ _-]+/g, "-")
+				.replace(/[^-a-z0-9]+/gi, "");
+			if (options.tag) {
 				// eslint-disable-next-line mediawiki/class-doc
-				$notification.addClass( 'mw-notification-tag-' + options.tag );
+				$notification.addClass("mw-notification-tag-" + options.tag);
 			} else {
 				delete options.tag;
 			}
 		}
 
-		if ( options.type ) {
+		if (options.type) {
 			// Sanitize options.type
-			options.type = options.type.replace( /[ _-]+/g, '-' ).replace( /[^-a-z0-9]+/ig, '' );
+			options.type = options.type
+				.replace(/[ _-]+/g, "-")
+				.replace(/[^-a-z0-9]+/gi, "");
 			// The following classes are used here:
 			// * mw-notification-type-error
 			// * mw-notification-type-warn
-			$notification.addClass( 'mw-notification-type-' + options.type );
+			$notification.addClass("mw-notification-type-" + options.type);
 		}
 
-		if ( options.title ) {
-			$( '<div>' )
-				.addClass( 'mw-notification-title' )
-				.text( options.title )
-				.appendTo( $notification );
+		if (options.title) {
+			$("<div>")
+				.addClass("mw-notification-title")
+				.text(options.title)
+				.appendTo($notification);
 		}
 
-		if ( options.id ) {
-			$notification.attr( 'id', options.id );
+		if (options.id) {
+			$notification.attr("id", options.id);
 		}
 
-		$notificationContent = $( '<div>' ).addClass( 'mw-notification-content' );
+		$notificationContent = $("<div>").addClass("mw-notification-content");
 
-		if ( typeof message === 'object' ) {
+		if (typeof message === "object") {
 			// Handle mw.Message objects separately from DOM nodes and jQuery objects
-			if ( message instanceof mw.Message ) {
-				$notificationContent.html( message.parse() );
+			if (message instanceof mw.Message) {
+				$notificationContent.html(message.parse());
 			} else {
-				$notificationContent.append( message );
+				$notificationContent.append(message);
 			}
 		} else {
-			$notificationContent.text( message );
+			$notificationContent.text(message);
 		}
 
-		$notificationContent.appendTo( $notification );
+		$notificationContent.appendTo($notification);
 
 		// Private state parameters, meant for internal use only
 		// autoHideSeconds: String alias for number of seconds for timeout of auto-hiding notifications.
@@ -94,20 +100,21 @@
 		// options: The options passed to the notification with a little sanitization. Used by various methods.
 		// $notification: jQuery object containing the notification DOM node.
 		// timeout: Holds appropriate methods to set/clear timeouts
-		this.autoHideSeconds = options.autoHideSeconds &&
-			notification.autoHideSeconds[ options.autoHideSeconds ] ||
+		this.autoHideSeconds =
+			(options.autoHideSeconds &&
+				notification.autoHideSeconds[options.autoHideSeconds]) ||
 			notification.autoHideSeconds.short;
 		this.isOpen = false;
 		this.isPaused = true;
 		this.message = message;
 		this.options = options;
 		this.$notification = $notification;
-		if ( options.visibleTimeout ) {
-			this.timeout = require( 'mediawiki.visibleTimeout' );
+		if (options.visibleTimeout) {
+			this.timeout = require("mediawiki.visibleTimeout");
 		} else {
 			this.timeout = {
 				set: setTimeout,
-				clear: clearTimeout
+				clear: clearTimeout,
 			};
 		}
 	}
@@ -124,9 +131,9 @@
 	Notification.prototype.start = function () {
 		var options, $notification, $tagMatches, autohideCount;
 
-		$area.css( 'display', '' );
+		$area.css("display", "");
 
-		if ( this.isOpen ) {
+		if (this.isOpen) {
 			return;
 		}
 
@@ -136,50 +143,49 @@
 		options = this.options;
 		$notification = this.$notification;
 
-		if ( options.tag ) {
+		if (options.tag) {
 			// Find notifications with the same tag
-			$tagMatches = $area.find( '.mw-notification-tag-' + options.tag );
+			$tagMatches = $area.find(".mw-notification-tag-" + options.tag);
 		}
 
 		// If we found existing notification with the same tag, replace them
-		if ( options.tag && $tagMatches.length ) {
-
+		if (options.tag && $tagMatches.length) {
 			// While there can be only one "open" notif with a given tag, there can be several
 			// matches here because they remain in the DOM until the animation is finished.
-			$tagMatches.each( function () {
-				var notif = $( this ).data( 'mw-notification' );
-				if ( notif && notif.isOpen ) {
+			$tagMatches.each(function () {
+				var notif = $(this).data("mw-notification");
+				if (notif && notif.isOpen) {
 					// Detach from render flow with position absolute so that the new tag can
 					// occupy its space instead.
 					notif.$notification
-						.css( {
-							position: 'absolute',
-							width: notif.$notification.width()
-						} )
-						.css( notif.$notification.position() )
-						.addClass( 'mw-notification-replaced' );
+						.css({
+							position: "absolute",
+							width: notif.$notification.width(),
+						})
+						.css(notif.$notification.position())
+						.addClass("mw-notification-replaced");
 					notif.close();
 				}
-			} );
+			});
 
 			$notification
-				.insertBefore( $tagMatches.first() )
-				.addClass( 'mw-notification-visible' );
+				.insertBefore($tagMatches.first())
+				.addClass("mw-notification-visible");
 		} else {
-			$area.append( $notification );
-			rAF( function () {
+			$area.append($notification);
+			rAF(function () {
 				// This frame renders the element in the area (invisible)
-				rAF( function () {
-					$notification.addClass( 'mw-notification-visible' );
-				} );
-			} );
+				rAF(function () {
+					$notification.addClass("mw-notification-visible");
+				});
+			});
 		}
 
 		// By default a notification is paused.
 		// If this notification is within the first {autoHideLimit} notifications then
 		// start the auto-hide timer as soon as it's created.
-		autohideCount = $area.find( '.mw-notification-autohide' ).length;
-		if ( autohideCount <= notification.autoHideLimit ) {
+		autohideCount = $area.find(".mw-notification-autohide").length;
+		if (autohideCount <= notification.autoHideLimit) {
 			this.resume();
 		}
 	};
@@ -188,13 +194,13 @@
 	 * Pause any running auto-hide timer for this notification
 	 */
 	Notification.prototype.pause = function () {
-		if ( this.isPaused ) {
+		if (this.isPaused) {
 			return;
 		}
 		this.isPaused = true;
 
-		if ( this.timeoutId ) {
-			this.timeout.clear( this.timeoutId );
+		if (this.timeoutId) {
+			this.timeout.clear(this.timeoutId);
 			delete this.timeoutId;
 		}
 	};
@@ -207,17 +213,17 @@
 	Notification.prototype.resume = function () {
 		var notif = this;
 
-		if ( !notif.isPaused ) {
+		if (!notif.isPaused) {
 			return;
 		}
 		// Start any autoHide timeouts
-		if ( notif.options.autoHide ) {
+		if (notif.options.autoHide) {
 			notif.isPaused = false;
-			notif.timeoutId = notif.timeout.set( function () {
+			notif.timeoutId = notif.timeout.set(function () {
 				// Already finished, so don't try to re-clear it
 				delete notif.timeoutId;
 				notif.close();
-			}, this.autoHideSeconds * 1000 );
+			}, this.autoHideSeconds * 1000);
 		}
 	};
 
@@ -227,7 +233,7 @@
 	Notification.prototype.close = function () {
 		var notif = this;
 
-		if ( !this.isOpen ) {
+		if (!this.isOpen) {
 			return;
 		}
 
@@ -240,30 +246,30 @@
 		// Remove the mw-notification-autohide class from the notification to avoid
 		// having a half-closed notification counted as a notification to resume
 		// when handling {autoHideLimit}.
-		this.$notification.removeClass( 'mw-notification-autohide' );
+		this.$notification.removeClass("mw-notification-autohide");
 
 		// Now that a notification is being closed. Start auto-hide timers for any
 		// notification that has now become one of the first {autoHideLimit} notifications.
 		notification.resume();
 
-		rAF( function () {
-			notif.$notification.removeClass( 'mw-notification-visible' );
+		rAF(function () {
+			notif.$notification.removeClass("mw-notification-visible");
 
-			setTimeout( function () {
-				if ( openNotificationCount === 0 ) {
+			setTimeout(function () {
+				if (openNotificationCount === 0) {
 					// Hide the area after the last notification closes. Otherwise, the padding on
 					// the area can be obscure content, despite the area being empty/invisible (T54659). // FIXME
-					$area.css( 'display', 'none' );
+					$area.css("display", "none");
 					notif.$notification.remove();
 				} else {
 					// FIXME: Use CSS transition
 					// eslint-disable-next-line no-jquery/no-slide
-					notif.$notification.slideUp( 'fast', function () {
-						$( this ).remove();
-					} );
+					notif.$notification.slideUp("fast", function () {
+						$(this).remove();
+					});
 				}
-			}, 500 );
-		} );
+			}, 500);
+		});
 	};
 
 	/**
@@ -275,13 +281,13 @@
 	 * @param {jQuery} $notifications A jQuery object containing notification divs
 	 * @param {string} fn The name of the function to call on the Notification instance
 	 */
-	function callEachNotification( $notifications, fn ) {
-		$notifications.each( function () {
-			var notif = $( this ).data( 'mw-notification' );
-			if ( notif ) {
-				notif[ fn ]();
+	function callEachNotification($notifications, fn) {
+		$notifications.each(function () {
+			var notif = $(this).data("mw-notification");
+			if (notif) {
+				notif[fn]();
 			}
-		} );
+		});
 	}
 
 	/**
@@ -291,59 +297,61 @@
 	 * @ignore
 	 */
 	function init() {
-		var offset, $overlay, skinHasArea,
+		var offset,
+			$overlay,
+			skinHasArea,
 			isFloating = false;
 
 		function updateAreaMode() {
 			var shouldFloat = window.pageYOffset > offset.top;
-			if ( isFloating === shouldFloat ) {
+			if (isFloating === shouldFloat) {
 				return;
 			}
 			isFloating = shouldFloat;
 			$area
-				.toggleClass( 'mw-notification-area-floating', isFloating )
-				.toggleClass( 'mw-notification-area-layout', !isFloating );
+				.toggleClass("mw-notification-area-floating", isFloating)
+				.toggleClass("mw-notification-area-layout", !isFloating);
 		}
 
 		// Look for a preset notification area in the skin.
 		// 'data-mw*' attributes are banned from user content in Sanitizer.
-		$area = $( '.mw-notification-area[data-mw="interface"]' ).first();
+		$area = $('.mw-notification-area[data-mw="interface"]').first();
 		skinHasArea = $area.length > 0;
-		if ( !skinHasArea ) {
-			$area = $( '<div>' ).addClass( 'mw-notification-area' );
+		if (!skinHasArea) {
+			$area = $("<div>").addClass("mw-notification-area");
 			// Create overlay div for the notification area
-			$overlay = $( '<div>' ).addClass( 'mw-notification-area-overlay' );
+			$overlay = $("<div>").addClass("mw-notification-area-overlay");
 			// Append the notification area to the overlay wrapper area
-			$overlay.append( $area );
-			$( document.body ).append( $overlay );
+			$overlay.append($area);
+			$(document.body).append($overlay);
 		}
 		$area
-			.addClass( 'mw-notification-area-layout' )
+			.addClass("mw-notification-area-layout")
 			// The ID attribute here is deprecated.
-			.attr( 'id', 'mw-notification-area' )
+			.attr("id", "mw-notification-area")
 			// Pause auto-hide timers when the mouse is in the notification area.
-			.on( {
+			.on({
 				mouseenter: notification.pause,
-				mouseleave: notification.resume
-			} )
+				mouseleave: notification.resume,
+			})
 			// When clicking on a notification close it.
-			.on( 'click', '.mw-notification', function () {
-				var notif = $( this ).data( 'mw-notification' );
-				if ( notif ) {
+			.on("click", ".mw-notification", function () {
+				var notif = $(this).data("mw-notification");
+				if (notif) {
 					notif.close();
 				}
-			} )
+			})
 			// Stop click events from <a> and <select> tags from propagating to prevent clicks
 			// from hiding a notification. stopPropagation() bubbles up, not down,
 			// hence this should not conflict with OOUI's own click handlers.
-			.on( 'click', 'a, select, .oo-ui-dropdownInputWidget', function ( e ) {
+			.on("click", "a, select, .oo-ui-dropdownInputWidget", function (e) {
 				e.stopPropagation();
-			} );
+			});
 
 		// Read from the DOM:
 		// Must be in the next frame to avoid synchronous layout
 		// computation from offset()/getBoundingClientRect().
-		rAF( function () {
+		rAF(function () {
 			var notif;
 
 			// If a skin provides its own notification area, use its offset. Otherwise, use the
@@ -356,17 +364,17 @@
 
 			// Once we have the offset for where it would normally render, set the
 			// initial state of the (currently empty) notification area to be hidden.
-			$area.css( 'display', 'none' );
+			$area.css("display", "none");
 
-			$( window ).on( 'scroll', updateAreaMode );
+			$(window).on("scroll", updateAreaMode);
 
 			// Handle pre-ready queue.
 			isPageReady = true;
-			while ( preReadyNotifQueue.length ) {
+			while (preReadyNotifQueue.length) {
 				notif = preReadyNotifQueue.shift();
 				notif.start();
 			}
-		} );
+		});
 	}
 
 	/**
@@ -381,10 +389,7 @@
 		 * @see mw.Notification#pause
 		 */
 		pause: function () {
-			callEachNotification(
-				$area.children( '.mw-notification' ),
-				'pause'
-			);
+			callEachNotification($area.children(".mw-notification"), "pause");
 		},
 
 		/**
@@ -397,8 +402,10 @@
 				// Exclude noautohide notifications to avoid bugs where #autoHideLimit
 				// `{ autoHide: false }` notifications are at the start preventing any
 				// auto-hide notifications from being autohidden.
-				$area.children( '.mw-notification-autohide' ).slice( 0, notification.autoHideLimit ),
-				'resume'
+				$area
+					.children(".mw-notification-autohide")
+					.slice(0, notification.autoHideLimit),
+				"resume"
 			);
 		},
 
@@ -410,16 +417,16 @@
 		 *  See #defaults for details.
 		 * @return {mw.Notification} Notification object
 		 */
-		notify: function ( message, options ) {
+		notify: function (message, options) {
 			var notif;
-			options = $.extend( {}, notification.defaults, options );
+			options = $.extend({}, notification.defaults, options);
 
-			notif = new Notification( message, options );
+			notif = new Notification(message, options);
 
-			if ( isPageReady ) {
+			if (isPageReady) {
 				notif.start();
 			} else {
-				preReadyNotifQueue.push( notif );
+				preReadyNotifQueue.push(notif);
 			}
 
 			return notif;
@@ -461,12 +468,12 @@
 		 */
 		defaults: {
 			autoHide: true,
-			autoHideSeconds: 'short',
+			autoHideSeconds: "short",
 			tag: null,
 			title: null,
 			type: null,
 			visibleTimeout: true,
-			id: false
+			id: false,
 		},
 
 		/**
@@ -475,7 +482,7 @@
 		 */
 		autoHideSeconds: {
 			short: 5,
-			long: 30
+			long: 30,
 		},
 
 		/**
@@ -488,17 +495,16 @@
 		 * This basically represents the minimal number of notifications the user should
 		 * be able to process during the {@link #defaults default} #autoHideSeconds time.
 		 */
-		autoHideLimit: 3
+		autoHideLimit: 3,
 	};
 
-	if ( window.QUnit ) {
-		$area = $( document.body );
+	if (window.QUnit) {
+		$area = $(document.body);
 	} else {
 		// Don't run UI logic while under test.
 		// Let the test control this instead.
-		$( init );
+		$(init);
 	}
 
 	mw.notification = notification;
-
-}() );
+})();

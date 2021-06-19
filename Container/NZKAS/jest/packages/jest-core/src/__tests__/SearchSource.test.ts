@@ -41,7 +41,7 @@ describe('SearchSource', () => {
         {} as Config.Argv,
       ).options;
       return Runtime.createContext(config, {maxWorkers, watchman: false}).then(
-        context => {
+        (context) => {
           searchSource = new SearchSource(context);
         },
       );
@@ -64,7 +64,7 @@ describe('SearchSource', () => {
         return Runtime.createContext(config, {
           maxWorkers,
           watchman: false,
-        }).then(context => {
+        }).then((context) => {
           searchSource = new SearchSource(context);
 
           const path = '/path/to/__tests__/foo/bar/baz/../../../test.js';
@@ -96,7 +96,7 @@ describe('SearchSource', () => {
         Runtime.createContext(config, {
           maxWorkers,
           watchman: false,
-        }).then(context => new SearchSource(context).findMatchingTests());
+        }).then((context) => new SearchSource(context).findMatchingTests());
     });
 
     it('finds tests matching a pattern via testRegex', () => {
@@ -110,9 +110,9 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
+      return findMatchingTests(config).then((data) => {
         const relPaths = toPaths(data.tests)
-          .map(absPath => path.relative(rootDir, absPath))
+          .map((absPath) => path.relative(rootDir, absPath))
           .sort();
         expect(relPaths).toEqual(
           [
@@ -134,9 +134,9 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
+      return findMatchingTests(config).then((data) => {
         const relPaths = toPaths(data.tests)
-          .map(absPath => path.relative(rootDir, absPath))
+          .map((absPath) => path.relative(rootDir, absPath))
           .sort();
         expect(relPaths).toEqual(
           [
@@ -158,8 +158,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -180,8 +180,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -201,8 +201,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -222,8 +222,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -243,8 +243,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -263,8 +263,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -284,8 +284,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -305,8 +305,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -326,8 +326,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -347,8 +347,8 @@ describe('SearchSource', () => {
         },
         {} as Config.Argv,
       );
-      return findMatchingTests(config).then(data => {
-        const relPaths = toPaths(data.tests).map(absPath =>
+      return findMatchingTests(config).then((data) => {
+        const relPaths = toPaths(data.tests).map((absPath) =>
           path.relative(rootDir, absPath),
         );
         expect(relPaths.sort()).toEqual([
@@ -372,7 +372,7 @@ describe('SearchSource', () => {
     );
     const rootPath = path.join(rootDir, 'root.js');
 
-    beforeEach(done => {
+    beforeEach((done) => {
       const {options: config} = normalize(
         {
           haste: {
@@ -394,7 +394,7 @@ describe('SearchSource', () => {
         {} as Config.Argv,
       );
       Runtime.createContext(config, {maxWorkers, watchman: false}).then(
-        context => {
+        (context) => {
           searchSource = new SearchSource(context);
           done();
         },
@@ -437,7 +437,7 @@ describe('SearchSource', () => {
   });
 
   describe('findRelatedTestsFromPattern', () => {
-    beforeEach(done => {
+    beforeEach((done) => {
       const {options: config} = normalize(
         {
           moduleFileExtensions: ['js', 'jsx', 'foobar'],
@@ -448,7 +448,7 @@ describe('SearchSource', () => {
         {} as Config.Argv,
       );
       Runtime.createContext(config, {maxWorkers, watchman: false}).then(
-        context => {
+        (context) => {
           searchSource = new SearchSource(context);
           done();
         },

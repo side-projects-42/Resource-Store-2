@@ -4,8 +4,7 @@
  * @copyright 2011-2016 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * MediaWiki media resource queue.
 	 *
@@ -17,17 +16,19 @@
 	 * @cfg {number} maxHeight The maximum height of the media, used in the
 	 *  search call to the API.
 	 */
-	mw.widgets.MediaResourceQueue = function MwWidgetsMediaResourceQueue( config ) {
+	mw.widgets.MediaResourceQueue = function MwWidgetsMediaResourceQueue(
+		config
+	) {
 		config = config || {};
 
 		// Parent constructor
-		mw.widgets.MediaResourceQueue.super.call( this, config );
+		mw.widgets.MediaResourceQueue.super.call(this, config);
 
 		this.maxHeight = config.maxHeight || 200;
 	};
 
 	/* Inheritance */
-	OO.inheritClass( mw.widgets.MediaResourceQueue, mw.widgets.APIResultsQueue );
+	OO.inheritClass(mw.widgets.MediaResourceQueue, mw.widgets.APIResultsQueue);
 
 	/**
 	 * Fetch the file repos.
@@ -35,23 +36,29 @@
 	 * @return {jQuery.Promise} Promise that resolves when the resources are set up
 	 */
 	mw.widgets.MediaResourceQueue.prototype.getFileRepos = function () {
-		var defaultSource = [ {
-			url: mw.util.wikiScript( 'api' ),
-			local: ''
-		} ];
+		var defaultSource = [
+			{
+				url: mw.util.wikiScript("api"),
+				local: "",
+			},
+		];
 
-		if ( !this.fileRepoPromise ) {
-			this.fileRepoPromise = new mw.Api().get( {
-				action: 'query',
-				meta: 'filerepoinfo'
-			} ).then(
-				function ( resp ) {
-					return resp.query && resp.query.repos || defaultSource;
-				},
-				function () {
-					return $.Deferred().resolve( defaultSource );
-				}
-			);
+		if (!this.fileRepoPromise) {
+			this.fileRepoPromise = new mw.Api()
+				.get({
+					action: "query",
+					meta: "filerepoinfo",
+				})
+				.then(
+					function (resp) {
+						return (
+							(resp.query && resp.query.repos) || defaultSource
+						);
+					},
+					function () {
+						return $.Deferred().resolve(defaultSource);
+					}
+				);
 		}
 
 		return this.fileRepoPromise;
@@ -65,4 +72,4 @@
 	mw.widgets.MediaResourceQueue.prototype.getMaxHeight = function () {
 		return this.maxHeight;
 	};
-}() );
+})();

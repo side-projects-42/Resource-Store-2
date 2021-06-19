@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Kaszeba"
-		]
+		"authors": ["Kaszeba"]
 	},
 	"config-desc": "Jinstalownik MediaWiki",
 	"config-title": "Jinstalowanié MediaWiki $1",

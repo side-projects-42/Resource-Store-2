@@ -23,7 +23,7 @@ const getOutputStream = (resolve: (message: string) => void) =>
 
 it('prints the jest version', async () => {
   expect.assertions(1);
-  const message = await new Promise<string>(resolve => {
+  const message = await new Promise<string>((resolve) => {
     logDebugMessages(
       makeGlobalConfig({watch: true}),
       makeProjectConfig({testRunner: 'myRunner'}),
@@ -36,7 +36,7 @@ it('prints the jest version', async () => {
 
 it('prints the test framework name', async () => {
   expect.assertions(1);
-  const message = await new Promise<string>(resolve => {
+  const message = await new Promise<string>((resolve) => {
     logDebugMessages(
       makeGlobalConfig({watch: true}),
       makeProjectConfig({testRunner: 'myRunner'}),
@@ -58,7 +58,7 @@ it('prints the config object', async () => {
     roots: ['path/to/dir/test'],
     testRunner: 'myRunner',
   });
-  const message = await new Promise<string>(resolve => {
+  const message = await new Promise<string>((resolve) => {
     logDebugMessages(globalConfig, config, getOutputStream(resolve));
   });
   expect(wrap(message)).toMatchSnapshot();

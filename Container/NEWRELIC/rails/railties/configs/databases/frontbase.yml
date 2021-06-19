@@ -8,7 +8,7 @@ development:
   host: localhost
   database: <%= app_name %>_development
   username: <%= app_name %>
-  password: ''
+  password: ""
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -18,11 +18,11 @@ test:
   host: localhost
   database: <%= app_name %>_test
   username: <%= app_name %>
-  password: ''
+  password: ""
 
 production:
   adapter: frontbase
   host: localhost
   database: <%= app_name %>_production
   username: <%= app_name %>
-  password: ''
+  password: ""

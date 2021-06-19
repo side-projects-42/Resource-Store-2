@@ -1,19 +1,19 @@
-'use strict';
-const fs = require('fs');
-const arrayUnion = require('array-union');
-const merge2 = require('merge2');
-const fastGlob = require('fast-glob');
-const dirGlob = require('dir-glob');
-const gitignore = require('./gitignore');
-const {FilterStream, UniqueStream} = require('./stream-utils');
+"use strict";
+const fs = require("fs");
+const arrayUnion = require("array-union");
+const merge2 = require("merge2");
+const fastGlob = require("fast-glob");
+const dirGlob = require("dir-glob");
+const gitignore = require("./gitignore");
+const { FilterStream, UniqueStream } = require("./stream-utils");
 
 const DEFAULT_FILTER = () => false;
 
-const isNegative = pattern => pattern[0] === '!';
+const isNegative = (pattern) => pattern[0] === "!";
 
-const assertPatternsInput = patterns => {
-	if (!patterns.every(pattern => typeof pattern === 'string')) {
-		throw new TypeError('Patterns must be a string or an array of strings');
+const assertPatternsInput = (patterns) => {
+	if (!patterns.every((pattern) => typeof pattern === "string")) {
+		throw new TypeError("Patterns must be a string or an array of strings");
 	}
 };
 
@@ -30,11 +30,11 @@ const checkCwdOption = (options = {}) => {
 	}
 
 	if (!stat.isDirectory()) {
-		throw new Error('The `cwd` option must be a path to a directory');
+		throw new Error("The `cwd` option must be a path to a directory");
 	}
 };
 
-const getPathString = p => p.stats instanceof fs.Stats ? p.path : p;
+const getPathString = (p) => (p.stats instanceof fs.Stats ? p.path : p);
 
 const generateGlobTasks = (patterns, taskOptions) => {
 	patterns = arrayUnion([].concat(patterns));
@@ -46,7 +46,7 @@ const generateGlobTasks = (patterns, taskOptions) => {
 	taskOptions = {
 		ignore: [],
 		expandDirectories: true,
-		...taskOptions
+		...taskOptions,
 	};
 
 	for (const [index, pattern] of patterns.entries()) {
@@ -57,14 +57,14 @@ const generateGlobTasks = (patterns, taskOptions) => {
 		const ignore = patterns
 			.slice(index)
 			.filter(isNegative)
-			.map(pattern => pattern.slice(1));
+			.map((pattern) => pattern.slice(1));
 
 		const options = {
 			...taskOptions,
-			ignore: taskOptions.ignore.concat(ignore)
+			ignore: taskOptions.ignore.concat(ignore),
 		};
 
-		globTasks.push({pattern, options});
+		globTasks.push({ pattern, options });
 	}
 
 	return globTasks;
@@ -79,35 +79,40 @@ const globDirs = (task, fn) => {
 	if (Array.isArray(task.options.expandDirectories)) {
 		options = {
 			...options,
-			files: task.options.expandDirectories
+			files: task.options.expandDirectories,
 		};
-	} else if (typeof task.options.expandDirectories === 'object') {
+	} else if (typeof task.options.expandDirectories === "object") {
 		options = {
 			...options,
-			...task.options.expandDirectories
+			...task.options.expandDirectories,
 		};
 	}
 
 	return fn(task.pattern, options);
 };
 
-const getPattern = (task, fn) => task.options.expandDirectories ? globDirs(task, fn) : [task.pattern];
+const getPattern = (task, fn) =>
+	task.options.expandDirectories ? globDirs(task, fn) : [task.pattern];
 
-const getFilterSync = options => {
-	return options && options.gitignore ?
-		gitignore.sync({cwd: options.cwd, ignore: options.ignore}) :
-		DEFAULT_FILTER;
+const getFilterSync = (options) => {
+	return options && options.gitignore
+		? gitignore.sync({ cwd: options.cwd, ignore: options.ignore })
+		: DEFAULT_FILTER;
 };
 
-const globToTask = task => glob => {
-	const {options} = task;
-	if (options.ignore && Array.isArray(options.ignore) && options.expandDirectories) {
+const globToTask = (task) => (glob) => {
+	const { options } = task;
+	if (
+		options.ignore &&
+		Array.isArray(options.ignore) &&
+		options.expandDirectories
+	) {
 		options.ignore = dirGlob.sync(options.ignore);
 	}
 
 	return {
 		pattern: glob,
-		options
+		options,
 	};
 };
 
@@ -115,24 +120,28 @@ module.exports = async (patterns, options) => {
 	const globTasks = generateGlobTasks(patterns, options);
 
 	const getFilter = async () => {
-		return options && options.gitignore ?
-			gitignore({cwd: options.cwd, ignore: options.ignore}) :
-			DEFAULT_FILTER;
+		return options && options.gitignore
+			? gitignore({ cwd: options.cwd, ignore: options.ignore })
+			: DEFAULT_FILTER;
 	};
 
 	const getTasks = async () => {
-		const tasks = await Promise.all(globTasks.map(async task => {
-			const globs = await getPattern(task, dirGlob);
-			return Promise.all(globs.map(globToTask(task)));
-		}));
+		const tasks = await Promise.all(
+			globTasks.map(async (task) => {
+				const globs = await getPattern(task, dirGlob);
+				return Promise.all(globs.map(globToTask(task)));
+			})
+		);
 
 		return arrayUnion(...tasks);
 	};
 
 	const [filter, tasks] = await Promise.all([getFilter(), getTasks()]);
-	const paths = await Promise.all(tasks.map(task => fastGlob(task.pattern, task.options)));
+	const paths = await Promise.all(
+		tasks.map((task) => fastGlob(task.pattern, task.options))
+	);
 
-	return arrayUnion(...paths).filter(path_ => !filter(getPathString(path_)));
+	return arrayUnion(...paths).filter((path_) => !filter(getPathString(path_)));
 };
 
 module.exports.sync = (patterns, options) => {
@@ -145,10 +154,13 @@ module.exports.sync = (patterns, options) => {
 
 	const filter = getFilterSync(options);
 
-	return tasks.reduce(
-		(matches, task) => arrayUnion(matches, fastGlob.sync(task.pattern, task.options)),
-		[]
-	).filter(path_ => !filter(path_));
+	return tasks
+		.reduce(
+			(matches, task) =>
+				arrayUnion(matches, fastGlob.sync(task.pattern, task.options)),
+			[]
+		)
+		.filter((path_) => !filter(path_));
 };
 
 module.exports.stream = (patterns, options) => {
@@ -160,18 +172,21 @@ module.exports.stream = (patterns, options) => {
 	}, []);
 
 	const filter = getFilterSync(options);
-	const filterStream = new FilterStream(p => !filter(p));
+	const filterStream = new FilterStream((p) => !filter(p));
 	const uniqueStream = new UniqueStream();
 
-	return merge2(tasks.map(task => fastGlob.stream(task.pattern, task.options)))
+	return merge2(
+		tasks.map((task) => fastGlob.stream(task.pattern, task.options))
+	)
 		.pipe(filterStream)
 		.pipe(uniqueStream);
 };
 
 module.exports.generateGlobTasks = generateGlobTasks;
 
-module.exports.hasMagic = (patterns, options) => []
-	.concat(patterns)
-	.some(pattern => fastGlob.isDynamicPattern(pattern, options));
+module.exports.hasMagic = (patterns, options) =>
+	[]
+		.concat(patterns)
+		.some((pattern) => fastGlob.isDynamicPattern(pattern, options));
 
 module.exports.gitignore = gitignore;

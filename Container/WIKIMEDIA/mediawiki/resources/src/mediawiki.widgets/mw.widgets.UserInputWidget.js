@@ -4,8 +4,7 @@
  * @copyright 2011-2015 MediaWiki Widgets Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * Creates a mw.widgets.UserInputWidget object.
 	 *
@@ -18,29 +17,32 @@
 	 * @cfg {number} [limit=10] Number of results to show
 	 * @cfg {mw.Api} [api] API object to use, creates a default mw.Api instance if not specified
 	 */
-	mw.widgets.UserInputWidget = function MwWidgetsUserInputWidget( config ) {
+	mw.widgets.UserInputWidget = function MwWidgetsUserInputWidget(config) {
 		// Config initialization
 		config = config || {};
 
 		// Parent constructor
-		mw.widgets.UserInputWidget.parent.call( this, $.extend( {}, config, { autocomplete: false } ) );
+		mw.widgets.UserInputWidget.parent.call(
+			this,
+			$.extend({}, config, { autocomplete: false })
+		);
 
 		// Mixin constructors
-		OO.ui.mixin.LookupElement.call( this, config );
+		OO.ui.mixin.LookupElement.call(this, config);
 
 		// Properties
 		this.limit = config.limit || 10;
 		this.api = config.api || new mw.Api();
 
 		// Initialization
-		this.$element.addClass( 'mw-widget-userInputWidget' );
-		this.lookupMenu.$element.addClass( 'mw-widget-userInputWidget-menu' );
+		this.$element.addClass("mw-widget-userInputWidget");
+		this.lookupMenu.$element.addClass("mw-widget-userInputWidget-menu");
 	};
 
 	/* Setup */
 
-	OO.inheritClass( mw.widgets.UserInputWidget, OO.ui.TextInputWidget );
-	OO.mixinClass( mw.widgets.UserInputWidget, OO.ui.mixin.LookupElement );
+	OO.inheritClass(mw.widgets.UserInputWidget, OO.ui.TextInputWidget);
+	OO.mixinClass(mw.widgets.UserInputWidget, OO.ui.mixin.LookupElement);
 
 	/* Methods */
 
@@ -49,11 +51,11 @@
 	 *
 	 * @param {OO.ui.MenuOptionWidget} item Selected item
 	 */
-	mw.widgets.UserInputWidget.prototype.onLookupMenuChoose = function ( item ) {
+	mw.widgets.UserInputWidget.prototype.onLookupMenuChoose = function (item) {
 		this.closeLookupMenu();
-		this.setLookupsDisabled( true );
-		this.setValue( item.getData() );
-		this.setLookupsDisabled( false );
+		this.setLookupsDisabled(true);
+		this.setValue(item.getData());
+		this.setLookupsDisabled(false);
 	};
 
 	/**
@@ -63,12 +65,15 @@
 		var retval;
 
 		// Prevent programmatic focus from opening the menu
-		this.setLookupsDisabled( true );
+		this.setLookupsDisabled(true);
 
 		// Parent method
-		retval = mw.widgets.UserInputWidget.parent.prototype.focus.apply( this, arguments );
+		retval = mw.widgets.UserInputWidget.parent.prototype.focus.apply(
+			this,
+			arguments
+		);
 
-		this.setLookupsDisabled( false );
+		this.setLookupsDisabled(false);
 
 		return retval;
 	};
@@ -79,14 +84,14 @@
 	mw.widgets.UserInputWidget.prototype.getLookupRequest = function () {
 		var inputValue = this.value;
 
-		return this.api.get( {
-			action: 'query',
-			list: 'allusers',
+		return this.api.get({
+			action: "query",
+			list: "allusers",
 			// Prefix of list=allusers is case sensitive. Normalise first
 			// character to uppercase so that "fo" may yield "Foo".
-			auprefix: inputValue[ 0 ].toUpperCase() + inputValue.slice( 1 ),
-			aulimit: this.limit
-		} );
+			auprefix: inputValue[0].toUpperCase() + inputValue.slice(1),
+			aulimit: this.limit,
+		});
 	};
 
 	/**
@@ -96,9 +101,10 @@
 	 * @param {Mixed} response Response from server
 	 * @return {Object}
 	 */
-	mw.widgets.UserInputWidget.prototype.getLookupCacheDataFromResponse = function ( response ) {
-		return response.query.allusers || {};
-	};
+	mw.widgets.UserInputWidget.prototype.getLookupCacheDataFromResponse =
+		function (response) {
+			return response.query.allusers || {};
+		};
 
 	/**
 	 * Get list of menu items from a server response.
@@ -106,19 +112,23 @@
 	 * @param {Object} data Query result
 	 * @return {OO.ui.MenuOptionWidget[]} Menu items
 	 */
-	mw.widgets.UserInputWidget.prototype.getLookupMenuOptionsFromData = function ( data ) {
-		var len, i, user,
-			items = [];
+	mw.widgets.UserInputWidget.prototype.getLookupMenuOptionsFromData =
+		function (data) {
+			var len,
+				i,
+				user,
+				items = [];
 
-		for ( i = 0, len = data.length; i < len; i++ ) {
-			user = data[ i ] || {};
-			items.push( new OO.ui.MenuOptionWidget( {
-				label: user.name,
-				data: user.name
-			} ) );
-		}
+			for (i = 0, len = data.length; i < len; i++) {
+				user = data[i] || {};
+				items.push(
+					new OO.ui.MenuOptionWidget({
+						label: user.name,
+						data: user.name,
+					})
+				);
+			}
 
-		return items;
-	};
-
-}() );
+			return items;
+		};
+})();

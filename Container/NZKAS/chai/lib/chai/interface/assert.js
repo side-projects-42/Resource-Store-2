@@ -4,15 +4,13 @@
  * MIT Licensed
  */
 
-
 module.exports = function (chai, util) {
-
   /*!
    * Chai dependencies.
    */
 
-  var Assertion = chai.Assertion
-    , flag = util.flag;
+  var Assertion = chai.Assertion,
+    flag = util.flag;
 
   /*!
    * Module export.
@@ -32,14 +30,10 @@ module.exports = function (chai, util) {
    * @api public
    */
 
-  var assert = chai.assert = function (express, errmsg) {
+  var assert = (chai.assert = function (express, errmsg) {
     var test = new Assertion(null);
-    test.assert(
-        express
-      , errmsg
-      , '[ negation message unavailable ]'
-    );
-  };
+    test.assert(express, errmsg, "[ negation message unavailable ]");
+  });
 
   /**
    * ### .fail(actual, expected, [message], [operator])
@@ -56,11 +50,11 @@ module.exports = function (chai, util) {
 
   assert.fail = function (actual, expected, message, operator) {
     throw new chai.AssertionError({
-        actual: actual
-      , expected: expected
-      , message: message
-      , operator: operator
-      , stackStartFunction: assert.fail
+      actual: actual,
+      expected: expected,
+      message: message,
+      operator: operator,
+      stackStartFunction: assert.fail,
     });
   };
 
@@ -118,11 +112,11 @@ module.exports = function (chai, util) {
     var test = new Assertion(act, msg);
 
     test.assert(
-        exp == flag(test, 'object')
-      , 'expected #{this} to equal #{exp}'
-      , 'expected #{this} to not equal #{act}'
-      , exp
-      , act
+      exp == flag(test, "object"),
+      "expected #{this} to equal #{exp}",
+      "expected #{this} to not equal #{act}",
+      exp,
+      act
     );
   };
 
@@ -144,11 +138,11 @@ module.exports = function (chai, util) {
     var test = new Assertion(act, msg);
 
     test.assert(
-        exp != flag(test, 'object')
-      , 'expected #{this} to not equal #{exp}'
-      , 'expected #{this} to equal #{act}'
-      , exp
-      , act
+      exp != flag(test, "object"),
+      "expected #{this} to not equal #{exp}",
+      "expected #{this} to equal #{act}",
+      exp,
+      act
     );
   };
 
@@ -239,7 +233,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isTrue = function (val, msg) {
-    new Assertion(val, msg).is['true'];
+    new Assertion(val, msg).is["true"];
   };
 
   /**
@@ -257,7 +251,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isFalse = function (val, msg) {
-    new Assertion(val, msg).is['false'];
+    new Assertion(val, msg).is["false"];
   };
 
   /**
@@ -346,7 +340,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isFunction = function (val, msg) {
-    new Assertion(val, msg).to.be.a('function');
+    new Assertion(val, msg).to.be.a("function");
   };
 
   /**
@@ -364,7 +358,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isNotFunction = function (val, msg) {
-    new Assertion(val, msg).to.not.be.a('function');
+    new Assertion(val, msg).to.not.be.a("function");
   };
 
   /**
@@ -383,7 +377,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isObject = function (val, msg) {
-    new Assertion(val, msg).to.be.a('object');
+    new Assertion(val, msg).to.be.a("object");
   };
 
   /**
@@ -402,7 +396,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isNotObject = function (val, msg) {
-    new Assertion(val, msg).to.not.be.a('object');
+    new Assertion(val, msg).to.not.be.a("object");
   };
 
   /**
@@ -420,7 +414,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isArray = function (val, msg) {
-    new Assertion(val, msg).to.be.an('array');
+    new Assertion(val, msg).to.be.an("array");
   };
 
   /**
@@ -438,7 +432,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isNotArray = function (val, msg) {
-    new Assertion(val, msg).to.not.be.an('array');
+    new Assertion(val, msg).to.not.be.an("array");
   };
 
   /**
@@ -456,7 +450,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isString = function (val, msg) {
-    new Assertion(val, msg).to.be.a('string');
+    new Assertion(val, msg).to.be.a("string");
   };
 
   /**
@@ -474,7 +468,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isNotString = function (val, msg) {
-    new Assertion(val, msg).to.not.be.a('string');
+    new Assertion(val, msg).to.not.be.a("string");
   };
 
   /**
@@ -492,7 +486,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isNumber = function (val, msg) {
-    new Assertion(val, msg).to.be.a('number');
+    new Assertion(val, msg).to.be.a("number");
   };
 
   /**
@@ -510,7 +504,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isNotNumber = function (val, msg) {
-    new Assertion(val, msg).to.not.be.a('number');
+    new Assertion(val, msg).to.not.be.a("number");
   };
 
   /**
@@ -531,7 +525,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isBoolean = function (val, msg) {
-    new Assertion(val, msg).to.be.a('boolean');
+    new Assertion(val, msg).to.be.a("boolean");
   };
 
   /**
@@ -552,7 +546,7 @@ module.exports = function (chai, util) {
    */
 
   assert.isNotBoolean = function (val, msg) {
-    new Assertion(val, msg).to.not.be.a('boolean');
+    new Assertion(val, msg).to.not.be.a("boolean");
   };
 
   /**
@@ -661,13 +655,13 @@ module.exports = function (chai, util) {
 
     if (Array.isArray(exp)) {
       obj.to.include(inc);
-    } else if ('string' === typeof exp) {
+    } else if ("string" === typeof exp) {
       obj.to.contain.string(inc);
     } else {
       throw new chai.AssertionError(
-          'expected an array or string'
-        , null
-        , assert.include
+        "expected an array or string",
+        null,
+        assert.include
       );
     }
   };
@@ -693,13 +687,13 @@ module.exports = function (chai, util) {
 
     if (Array.isArray(exp)) {
       obj.to.not.include(inc);
-    } else if ('string' === typeof exp) {
+    } else if ("string" === typeof exp) {
       obj.to.not.contain.string(inc);
     } else {
       throw new chai.AssertionError(
-          'expected an array or string'
-        , null
-        , assert.notInclude
+        "expected an array or string",
+        null,
+        assert.notInclude
       );
     }
   };
@@ -940,7 +934,7 @@ module.exports = function (chai, util) {
    */
 
   assert.Throw = function (fn, errt, errs, msg) {
-    if ('string' === typeof errt || errt instanceof RegExp) {
+    if ("string" === typeof errt || errt instanceof RegExp) {
       errs = errt;
       errt = null;
     }
@@ -967,7 +961,7 @@ module.exports = function (chai, util) {
    */
 
   assert.doesNotThrow = function (fn, type, msg) {
-    if ('string' === typeof type) {
+    if ("string" === typeof type) {
       msg = type;
       type = null;
     }
@@ -992,14 +986,25 @@ module.exports = function (chai, util) {
    */
 
   assert.operator = function (val, operator, val2, msg) {
-    if (!~['==', '===', '>', '>=', '<', '<=', '!=', '!=='].indexOf(operator)) {
+    if (!~["==", "===", ">", ">=", "<", "<=", "!=", "!=="].indexOf(operator)) {
       throw new Error('Invalid operator "' + operator + '"');
     }
     var test = new Assertion(eval(val + operator + val2), msg);
     test.assert(
-        true === flag(test, 'object')
-      , 'expected ' + util.inspect(val) + ' to be ' + operator + ' ' + util.inspect(val2)
-      , 'expected ' + util.inspect(val) + ' to not be ' + operator + ' ' + util.inspect(val2) );
+      true === flag(test, "object"),
+      "expected " +
+        util.inspect(val) +
+        " to be " +
+        operator +
+        " " +
+        util.inspect(val2),
+      "expected " +
+        util.inspect(val) +
+        " to not be " +
+        operator +
+        " " +
+        util.inspect(val2)
+    );
   };
 
   /**
@@ -1038,7 +1043,7 @@ module.exports = function (chai, util) {
 
   assert.sameMembers = function (set1, set2, msg) {
     new Assertion(set1, msg).to.have.same.members(set2);
-  }
+  };
 
   /**
    * ### .includeMembers(superset, subset, [message])
@@ -1057,7 +1062,7 @@ module.exports = function (chai, util) {
 
   assert.includeMembers = function (superset, subset, msg) {
     new Assertion(superset, msg).to.include.members(subset);
-  }
+  };
 
   /*!
    * Undocumented / untested
@@ -1071,10 +1076,8 @@ module.exports = function (chai, util) {
    * Aliases.
    */
 
-  (function alias(name, as){
+  (function alias(name, as) {
     assert[as] = assert[name];
     return alias;
-  })
-  ('Throw', 'throw')
-  ('Throw', 'throws');
+  })("Throw", "throw")("Throw", "throws");
 };

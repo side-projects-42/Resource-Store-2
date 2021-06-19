@@ -6,13 +6,13 @@
  * @description
  * ESLint plugin rule errors
  */
-'use strict';
+"use strict";
 
 module.exports = {
 	Focus: {
-		ToHaveNone: "Expected to find no focus tests"
+		ToHaveNone: "Expected to find no focus tests",
 	},
 	Exclude: {
-		ToHaveNone: "Expected to not exclude tests"
-	}
+		ToHaveNone: "Expected to not exclude tests",
+	},
 };

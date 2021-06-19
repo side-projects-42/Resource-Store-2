@@ -3,8 +3,8 @@
  *  An error code assigned by an implementation when an error has occured
  * @constructor
  */
-var ContactError = function(err) {
-    this.code = (typeof err != 'undefined' ? err : null);
+var ContactError = function (err) {
+  this.code = typeof err != "undefined" ? err : null;
 };
 
 /**

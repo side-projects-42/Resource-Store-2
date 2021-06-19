@@ -1,10 +1,8 @@
 {
-	"@metadata": {
-		"authors": [
-			"Growingup"
-		]
-	},
-	"admanager_submit": "Жөнөтүү",
-	"admanager_Page": "Барактар",
-	"admanager_Category": "Категориялар"
+  "@metadata": {
+    "authors": ["Growingup"]
+  },
+  "admanager_submit": "Жөнөтүү",
+  "admanager_Page": "Барактар",
+  "admanager_Category": "Категориялар"
 }

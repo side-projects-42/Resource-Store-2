@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Schläsinger",
-			"Äberlausitzer"
-		]
+		"authors": ["Schläsinger", "Äberlausitzer"]
 	},
 	"exif-imagelength": "Länge",
 	"exif-bitspersample": "Bits pro Forbkomponente",

@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"HalanTul"
-		]
-	},
-	"addthis": "Тарҕат"
+  "@metadata": {
+    "authors": ["HalanTul"]
+  },
+  "addthis": "Тарҕат"
 }

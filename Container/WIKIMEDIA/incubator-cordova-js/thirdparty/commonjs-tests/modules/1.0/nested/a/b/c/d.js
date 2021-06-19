@@ -1,3 +1,3 @@
 exports.foo = function () {
-    return 1;
+  return 1;
 };

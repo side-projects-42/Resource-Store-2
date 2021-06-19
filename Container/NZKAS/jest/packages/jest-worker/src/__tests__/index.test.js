@@ -27,8 +27,8 @@ beforeEach(() => {
     const fakeWorker = jest.fn(() => ({
       createWorker: jest.fn(),
       end: jest.fn(),
-      getStderr: () => jest.fn(a => a),
-      getStdout: () => jest.fn(a => a),
+      getStderr: () => jest.fn((a) => a),
+      getStdout: () => jest.fn((a) => a),
       send: jest.fn(),
     }));
 
@@ -75,8 +75,8 @@ it('exposes the right API using passed worker', () => {
   const WorkerPool = jest.fn(() => ({
     createWorker: jest.fn(),
     end: jest.fn(),
-    getStderr: () => jest.fn(a => a),
-    getStdout: () => jest.fn(a => a),
+    getStderr: () => jest.fn((a) => a),
+    getStdout: () => jest.fn((a) => a),
     send: jest.fn(),
   }));
 

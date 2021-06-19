@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"McDutchie"
-		]
+		"authors": ["McDutchie"]
 	},
 	"rest-prefix-mismatch": "Le cammino requestate ($1) non es intra le cammino radice del REST API ($2)",
 	"rest-wrong-method": "Le methodo del requesta ($1) non es {{PLURAL:$3|le methodo|inter le methodos}} permittite pro iste cammino ($2)",

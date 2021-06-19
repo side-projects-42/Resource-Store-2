@@ -1,10 +1,10 @@
 "use strict";
-var layouts = require('../layouts')
-, consoleLog = console.log.bind(console);
+var layouts = require("../layouts"),
+  consoleLog = console.log.bind(console);
 
-function consoleAppender (layout) {
+function consoleAppender(layout) {
   layout = layout || layouts.colouredLayout;
-  return function(loggingEvent) {
+  return function (loggingEvent) {
     consoleLog(layout(loggingEvent));
   };
 }

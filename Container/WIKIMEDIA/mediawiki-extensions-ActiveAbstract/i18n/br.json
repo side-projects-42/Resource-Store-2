@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Fulup"
-		]
-	},
-	"activeabstract-desc": "Genel al lanvad XML evit raktres Active Abstract Yahoo."
+  "@metadata": {
+    "authors": ["Fulup"]
+  },
+  "activeabstract-desc": "Genel al lanvad XML evit raktres Active Abstract Yahoo."
 }

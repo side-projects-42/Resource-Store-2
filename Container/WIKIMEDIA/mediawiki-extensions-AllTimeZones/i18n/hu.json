@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Bináris",
-			"Dj"
-		]
-	},
-	"alltimezones-desc": "Hozzáad egy taget, amellyel az időpont megjeleníthető bármely időzónában"
+  "@metadata": {
+    "authors": ["Bináris", "Dj"]
+  },
+  "alltimezones-desc": "Hozzáad egy taget, amellyel az időpont megjeleníthető bármely időzónában"
 }

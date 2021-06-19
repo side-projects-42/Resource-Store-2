@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Jagwar",
-			"Seb35"
-		]
+		"authors": ["Jagwar", "Seb35"]
 	},
 	"config-desc": "Fandaharana mametraka an'i MediaWiki",
 	"config-title": "Fametrahana an'i MediaWiki $1",

@@ -55,7 +55,7 @@ Each week we will specify the RFCs we'll review in the following meeting. These 
 
 ### Blueprint Hooks
 
-- Nathan created an issue on RFCs repo which covers the details we discussed:  [Blueprint Hooks](https://github.com/ember-cli/rfcs/issues/36)
+- Nathan created an issue on RFCs repo which covers the details we discussed: [Blueprint Hooks](https://github.com/ember-cli/rfcs/issues/36)
 - Well-positioned with extracted blueprints.
 
 ### ember-data test blueprints

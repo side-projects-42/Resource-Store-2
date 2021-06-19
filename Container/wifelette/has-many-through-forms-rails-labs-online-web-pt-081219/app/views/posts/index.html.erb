@@ -1,0 +1,13 @@
+<h1>All Posts</h1>
+
+<ul>
+  <% @posts.each do |post| %>
+  <li>
+    <%= link_to post.title, post %>
+  </li>
+  <% post.categories.all.each do |c| %>
+  <strong>Categories: </strong><%= link_to c.name, c %><br>
+  <% end %>
+  <strong>Comments: </strong> <%= post.comments.count %><br><br>
+  <% end %>
+</ul>

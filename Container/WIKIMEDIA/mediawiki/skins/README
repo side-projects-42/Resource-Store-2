@@ -11,14 +11,13 @@ and more information about installing and configuring skins at
 If you are a developer, you might want to fetch the skin tree in another
 directory and make a symbolic link:
 
- mediawiki/skins$ ln -s ../../skins-trunk/FooBar
+mediawiki/skins$ ln -s ../../skins-trunk/FooBar
 
 The default skin Vector can be installed by cloning from Git:
-    git clone https://phabricator.wikimedia.org/diffusion/SVEC/Vector
+git clone https://phabricator.wikimedia.org/diffusion/SVEC/Vector
 
 Other skins are also available:
-    https://phabricator.wikimedia.org/diffusion/SKIN/
-
+https://phabricator.wikimedia.org/diffusion/SKIN/
 
 Please note that under POSIX systems (Linux...), parent of a symbolic path
 refers to the link source, NOT to the target! You should check the env
@@ -26,7 +25,7 @@ variable MW_INSTALL_PATH in case the extension is not in the default location.
 
 The following code snippet lets you override the default path:
 
- $IP = getenv( 'MW_INSTALL_PATH' );
+$IP = getenv( 'MW_INSTALL_PATH' );
  if( $IP === false ) {
 	$IP = __DIR__ . '/../..';
  }

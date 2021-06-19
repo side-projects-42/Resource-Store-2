@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"John Reid"
-		]
-	},
-	"akismetklik-desc": "Rejects edits fae suspected comment spammers on Akismet's blaickleet"
+  "@metadata": {
+    "authors": ["John Reid"]
+  },
+  "akismetklik-desc": "Rejects edits fae suspected comment spammers on Akismet's blaickleet"
 }

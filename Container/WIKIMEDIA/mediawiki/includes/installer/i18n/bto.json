@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Filipinayzd"
-		]
+		"authors": ["Filipinayzd"]
 	},
 	"config-title": "Pabutang ka MediaWiki $1",
 	"config-information": "Impormasyon",

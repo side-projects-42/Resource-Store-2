@@ -58,12 +58,11 @@ export default class CoverageReporter extends BaseReporter {
       // Remove coverage data to free up some memory.
       delete testResult.coverage;
 
-      Object.keys(testResult.sourceMaps).forEach(sourcePath => {
+      Object.keys(testResult.sourceMaps).forEach((sourcePath) => {
         let inputSourceMap: RawSourceMap | undefined;
         try {
-          const coverage: FileCoverage = this._coverageMap.fileCoverageFor(
-            sourcePath,
-          );
+          const coverage: FileCoverage =
+            this._coverageMap.fileCoverageFor(sourcePath);
           ({inputSourceMap} = coverage.toJSON() as any);
         } finally {
           if (inputSourceMap) {
@@ -122,7 +121,7 @@ export default class CoverageReporter extends BaseReporter {
   ): Promise<void> {
     const files: Array<{config: Config.ProjectConfig; path: string}> = [];
 
-    contexts.forEach(context => {
+    contexts.forEach((context) => {
       const config = context.config;
       if (
         globalConfig.collectCoverageFrom &&
@@ -130,7 +129,7 @@ export default class CoverageReporter extends BaseReporter {
       ) {
         context.hasteFS
           .matchFilesWithGlob(globalConfig.collectCoverageFrom, config.rootDir)
-          .forEach(filePath =>
+          .forEach((filePath) =>
             files.push({
               config,
               path: filePath,
@@ -161,7 +160,7 @@ export default class CoverageReporter extends BaseReporter {
       });
     }
 
-    const instrumentation = files.map(async fileObj => {
+    const instrumentation = files.map(async (fileObj) => {
       const filename = fileObj.path;
       const config = fileObj.config;
 
@@ -222,9 +221,11 @@ export default class CoverageReporter extends BaseReporter {
         thresholds: {[index: string]: number},
         actuals: CoverageSummaryData,
       ) {
-        return (['statements', 'branches', 'lines', 'functions'] as Array<
-          keyof CoverageSummaryData
-        >).reduce<Array<string>>((errors, key) => {
+        return (
+          ['statements', 'branches', 'lines', 'functions'] as Array<
+            keyof CoverageSummaryData
+          >
+        ).reduce<Array<string>>((errors, key) => {
           const actual = actuals[key].pct;
           const actualUncovered = actuals[key].total - actuals[key].covered;
           const threshold = thresholds[key];
@@ -281,7 +282,7 @@ export default class CoverageReporter extends BaseReporter {
           if (filesByGlob[absoluteThresholdGroup] === undefined) {
             filesByGlob[absoluteThresholdGroup] = glob
               .sync(absoluteThresholdGroup)
-              .map(filePath => path.resolve(filePath));
+              .map((filePath) => path.resolve(filePath));
           }
 
           if (filesByGlob[absoluteThresholdGroup].indexOf(file) > -1) {
@@ -310,12 +311,12 @@ export default class CoverageReporter extends BaseReporter {
 
       const getFilesInThresholdGroup = (thresholdGroup: string) =>
         coveredFilesSortedIntoThresholdGroup
-          .filter(fileAndGroup => fileAndGroup[1] === thresholdGroup)
-          .map(fileAndGroup => fileAndGroup[0]);
+          .filter((fileAndGroup) => fileAndGroup[1] === thresholdGroup)
+          .map((fileAndGroup) => fileAndGroup[0]);
 
       function combineCoverage(filePaths: Array<string>) {
         return filePaths
-          .map(filePath => map.fileCoverageFor(filePath))
+          .map((filePath) => map.fileCoverageFor(filePath))
           .reduce(
             (
               combinedCoverage: CoverageSummary | null | undefined,
@@ -332,7 +333,7 @@ export default class CoverageReporter extends BaseReporter {
 
       let errors: Array<string> = [];
 
-      thresholdGroups.forEach(thresholdGroup => {
+      thresholdGroups.forEach((thresholdGroup) => {
         switch (groupTypeByThresholdGroup[thresholdGroup]) {
           case THRESHOLD_GROUP_TYPES.GLOBAL: {
             const coverage = combineCoverage(
@@ -366,7 +367,7 @@ export default class CoverageReporter extends BaseReporter {
           }
           case THRESHOLD_GROUP_TYPES.GLOB:
             getFilesInThresholdGroup(thresholdGroup).forEach(
-              fileMatchingGlob => {
+              (fileMatchingGlob) => {
                 errors = errors.concat(
                   check(
                     fileMatchingGlob,
@@ -391,7 +392,7 @@ export default class CoverageReporter extends BaseReporter {
       });
 
       errors = errors.filter(
-        err => err !== undefined && err !== null && err.length > 0,
+        (err) => err !== undefined && err !== null && err.length > 0,
       );
 
       if (errors.length > 0) {

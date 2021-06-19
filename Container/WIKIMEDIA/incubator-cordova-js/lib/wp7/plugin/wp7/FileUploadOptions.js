@@ -6,21 +6,20 @@
  * @param mimeType {String}  Mimetype of the uploaded file. Defaults to image/jpeg.
  * @param params {Object}    Object with key: value params to send to the server.
  */
-var FileUploadOptions = function(fileKey, fileName, mimeType, params) {
-    this.fileKey = fileKey || null;
-    this.fileName = fileName || null;
-    this.mimeType = mimeType || null;
+var FileUploadOptions = function (fileKey, fileName, mimeType, params) {
+  this.fileKey = fileKey || null;
+  this.fileName = fileName || null;
+  this.mimeType = mimeType || null;
 
-    if(params && typeof params != typeof "") {
-        var arrParams = [];
-        for(var v in params) {
-            arrParams.push(v + "=" + params[v]);
-        }
-        this.params = encodeURIComponent(arrParams.join("&"));
+  if (params && typeof params != typeof "") {
+    var arrParams = [];
+    for (var v in params) {
+      arrParams.push(v + "=" + params[v]);
     }
-    else {
-        this.params = params || null;
-    }
+    this.params = encodeURIComponent(arrParams.join("&"));
+  } else {
+    this.params = params || null;
+  }
 };
 
 module.exports = FileUploadOptions;

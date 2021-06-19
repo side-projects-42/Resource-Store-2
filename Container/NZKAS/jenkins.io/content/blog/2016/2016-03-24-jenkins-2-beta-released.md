@@ -2,7 +2,7 @@
 layout: post
 title: Jenkins 2.0 beta released
 tags:
-- jenkins2
+  - jenkins2
 author: daniel-beck
 ---
 
@@ -18,11 +18,10 @@ Additionally, item types can now define a category they belong to (such as "Proj
 
 ### Separate configuration page for tools
 
-The length and complexity of the *Configure Jenkins* page once a few dozen plugins are installed made it unnecessarily difficult to use. To improve that we're moving the tools configuration (Git, Maven, Gradle, Ant, etc.) out of that page, into the new *Global Tools Configuration*.
+The length and complexity of the _Configure Jenkins_ page once a few dozen plugins are installed made it unnecessarily difficult to use. To improve that we're moving the tools configuration (Git, Maven, Gradle, Ant, etc.) out of that page, into the new _Global Tools Configuration_.
 
 ### Upgrade notice and plugin installer
 
 The Pipeline plugin suite is a big part of Jenkins 2. Over the past few weeks, open-source plugins adding support for visualization (Pipeline Stage View), automatic GitHub project creation (GitHub Branch Source Plugin) and Bitbucket project creation (Bitbucket Branch Source Plugin) have been released. However, when upgrading from Jenkins 1.x, users weren't even given any information on these features.
 
 To address this, users upgrading from Jenkins 1.x will now be shown a banner when they first log into Jenkins as administrator, offering them to install the suite of Pipeline plugins.
-

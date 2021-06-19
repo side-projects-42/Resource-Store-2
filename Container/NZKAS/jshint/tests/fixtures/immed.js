@@ -1,11 +1,11 @@
-var a = function () {
-    return;
-}();
+var a = (function () {
+  return;
+})();
 
 var b = (function () {
-    return;
+  return;
 })();
 
 var c = (function () {
-    return;
-}());
+  return;
+})();

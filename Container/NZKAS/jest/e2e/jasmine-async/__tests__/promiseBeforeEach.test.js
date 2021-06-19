@@ -9,7 +9,7 @@
 
 describe('promise beforeEach', () => {
   beforeEach(() =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       process.nextTick(resolve);
     }).then(() => {
       this.flag = 1;
@@ -23,7 +23,7 @@ describe('promise beforeEach', () => {
 
   // failing tests
   describe('done - with error thrown', () => {
-    beforeEach(done => {
+    beforeEach((done) => {
       throw new Error('fail');
       done(); // eslint-disable-line
     });
@@ -31,7 +31,7 @@ describe('promise beforeEach', () => {
   });
 
   describe('done - with error called back', () => {
-    beforeEach(done => {
+    beforeEach((done) => {
       done(new Error('fail'));
     });
     it('fails', () => {});

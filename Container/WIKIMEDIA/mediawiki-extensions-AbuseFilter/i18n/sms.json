@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Yupik"
-		]
-	},
-	"abusefilter-edit-throttle-groups-help": "Ǩiičč $1."
+  "@metadata": {
+    "authors": ["Yupik"]
+  },
+  "abusefilter-edit-throttle-groups-help": "Ǩiičč $1."
 }

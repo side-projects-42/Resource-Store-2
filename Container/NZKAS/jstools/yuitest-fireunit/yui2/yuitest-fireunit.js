@@ -34,78 +34,80 @@
  * @class FireUnit
  * @static
  */
-YAHOO.tool.FireUnit = function(){
-
-    /*(intentionally not documented)
-     * Handles testrunner events and calls the appropriate
-     * FireUnit API methods to output information to the
-     * FireUnit console.
-     * @param {Object} event The TestRunner event object.
-     * @return {Void}
-     */
-    function handleEvent(event){
-        switch(event.type){
-            case "pass":
-                fireunit.ok(true, event.testName + " passed.");
-                break;
-            case "fail":            
-                if (event.error instanceof YAHOO.util.ComparisonFailure){
-                    fireunit.ok(false, event.testName + "failed: " + event.error.message, event.error.expected, event.error.actual);
-                } else {            
-                    fireunit.ok(false, event.testName + "failed: " + event.error.message);
-                }
-                break;
-            case "testsuitebegin":
-                fireunit.group(event.testSuite.name);
-                break;            
-            case "testcasebegin":
-                fireunit.group(event.testCase.name);
-                break;                
-            case "testsuitecomplete":
-            case "testcasecomplete":
-                fireunit.groupEnd();
-                break;
-            case "complete":
-                fireunit.testDone();
-                break;       
+YAHOO.tool.FireUnit = (function () {
+  /*(intentionally not documented)
+   * Handles testrunner events and calls the appropriate
+   * FireUnit API methods to output information to the
+   * FireUnit console.
+   * @param {Object} event The TestRunner event object.
+   * @return {Void}
+   */
+  function handleEvent(event) {
+    switch (event.type) {
+      case "pass":
+        fireunit.ok(true, event.testName + " passed.");
+        break;
+      case "fail":
+        if (event.error instanceof YAHOO.util.ComparisonFailure) {
+          fireunit.ok(
+            false,
+            event.testName + "failed: " + event.error.message,
+            event.error.expected,
+            event.error.actual
+          );
+        } else {
+          fireunit.ok(false, event.testName + "failed: " + event.error.message);
         }
+        break;
+      case "testsuitebegin":
+        fireunit.group(event.testSuite.name);
+        break;
+      case "testcasebegin":
+        fireunit.group(event.testCase.name);
+        break;
+      case "testsuitecomplete":
+      case "testcasecomplete":
+        fireunit.groupEnd();
+        break;
+      case "complete":
+        fireunit.testDone();
+        break;
     }
+  }
 
-    return {
-    
-        /**
-         * Attaches the FireUnit object to the YUI TestRunner.
-         * @return {void}
-         * @method attach
-         * @static
-         */
-        attach: function(){
-            var testRunner = YAHOO.tool.TestRunner;
-            testRunner.subscribe("pass", handleEvent);
-            testRunner.subscribe("fail", handleEvent);
-            testRunner.subscribe("complete", handleEvent);
-            testRunner.subscribe("testsuitebegin", handleEvent);
-            testRunner.subscribe("testsuitecomplete", handleEvent);
-            testRunner.subscribe("testcasebegin", handleEvent);
-            testRunner.subscribe("testcasecomplete", handleEvent);
-        },
-        
-        /**
-         * Detaches the FireUnit object from the YUI TestRunner.
-         * @return {void}
-         * @method detach
-         * @static
-         */
-        detach: function(){
-            var testRunner = YAHOO.tool.TestRunner;
-            testRunner.unsubscribe("pass", handleEvent);
-            testRunner.unsubscribe("fail", handleEvent);
-            testRunner.unsubscribe("complete", handleEvent);
-            testRunner.unsubscribe("testsuitebegin", handleEvent);
-            testRunner.unsubscribe("testsuitecomplete", handleEvent);
-            testRunner.unsubscribe("testcasebegin", handleEvent);
-            testRunner.unsubscribe("testcasecomplete", handleEvent);            
-        }
-    };
+  return {
+    /**
+     * Attaches the FireUnit object to the YUI TestRunner.
+     * @return {void}
+     * @method attach
+     * @static
+     */
+    attach: function () {
+      var testRunner = YAHOO.tool.TestRunner;
+      testRunner.subscribe("pass", handleEvent);
+      testRunner.subscribe("fail", handleEvent);
+      testRunner.subscribe("complete", handleEvent);
+      testRunner.subscribe("testsuitebegin", handleEvent);
+      testRunner.subscribe("testsuitecomplete", handleEvent);
+      testRunner.subscribe("testcasebegin", handleEvent);
+      testRunner.subscribe("testcasecomplete", handleEvent);
+    },
 
-}();
+    /**
+     * Detaches the FireUnit object from the YUI TestRunner.
+     * @return {void}
+     * @method detach
+     * @static
+     */
+    detach: function () {
+      var testRunner = YAHOO.tool.TestRunner;
+      testRunner.unsubscribe("pass", handleEvent);
+      testRunner.unsubscribe("fail", handleEvent);
+      testRunner.unsubscribe("complete", handleEvent);
+      testRunner.unsubscribe("testsuitebegin", handleEvent);
+      testRunner.unsubscribe("testsuitecomplete", handleEvent);
+      testRunner.unsubscribe("testcasebegin", handleEvent);
+      testRunner.unsubscribe("testcasecomplete", handleEvent);
+    },
+  };
+})();

@@ -1,8 +1,8 @@
 {
-	"@metadata": {
-		"authors": []
-	},
-	"epub-title-page": "Titolo",
-	"epub-exported-date": "Esportà da Wikisource el $1",
-	"epub-about": "Informassion"
+  "@metadata": {
+    "authors": []
+  },
+  "epub-title-page": "Titolo",
+  "epub-exported-date": "Esportà da Wikisource el $1",
+  "epub-about": "Informassion"
 }

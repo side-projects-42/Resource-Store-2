@@ -4,9 +4,10 @@
 :nodeid: 406
 :created: 1352923793
 :tags:
-- development
+  - development
 :author: kohsuke
 ---
+
 (This is a guest post by Tony França)
 
 <div style="float:right">
@@ -55,7 +56,7 @@ And guess who was the first person I wanted to tell? Kohsuke Kawaguchi :-)
 It was just fair. So I sent him this email.
 
 > On Sun, Jul 8, 2012 at 3:36 AM, Tony França <tonylampada@gmail.com> wrote:
-> 
+>
 > Hi Kohsuke.
 > My name is Tony, I'm a Software Architect.
 > I'm a big fan and a (very) heavy user of Hudson - Jenkins.

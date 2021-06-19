@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fitoschido",
-			"Fwolff",
-			"Naudefj"
-		]
+		"authors": ["Fitoschido", "Fwolff", "Naudefj"]
 	},
 	"ooui-outline-control-move-down": "Skuif item af",
 	"ooui-outline-control-move-up": "Skuif item op",

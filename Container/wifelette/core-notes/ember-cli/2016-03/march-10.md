@@ -21,7 +21,7 @@
 
 ## Discussion Notes
 
-### X-Forwarded-*
+### X-Forwarded-\*
 
 - [Initial change landed.](https://github.com/ember-cli/ember-cli/pull/5524)
 - [...but it breaks Symfony.](https://github.com/ember-cli/ember-cli/pull/5599)

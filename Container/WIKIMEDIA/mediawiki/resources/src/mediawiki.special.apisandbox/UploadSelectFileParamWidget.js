@@ -6,16 +6,16 @@
  * @constructor
  */
 function UploadSelectFileParamWidget() {
-	UploadSelectFileParamWidget.parent.call( this );
+	UploadSelectFileParamWidget.parent.call(this);
 }
 
-OO.inheritClass( UploadSelectFileParamWidget, OO.ui.SelectFileWidget );
+OO.inheritClass(UploadSelectFileParamWidget, OO.ui.SelectFileWidget);
 
 /**
  * @return {string}
  */
 UploadSelectFileParamWidget.prototype.getApiValueForDisplay = function () {
-	return '...';
+	return "...";
 };
 
 /**
@@ -37,11 +37,15 @@ UploadSelectFileParamWidget.prototype.setApiValue = function () {
  * @param {boolean} shouldSuppressErrors
  * @return {jQuery.Promise}
  */
-UploadSelectFileParamWidget.prototype.apiCheckValid = function ( shouldSuppressErrors ) {
-	var ok = this.getValue() !== null && this.getValue() !== undefined || shouldSuppressErrors;
-	this.info.setIcon( ok ? null : 'alert' );
-	this.setTitle( ok ? '' : mw.message( 'apisandbox-alert-field' ).plain() );
-	return $.Deferred().resolve( ok ).promise();
+UploadSelectFileParamWidget.prototype.apiCheckValid = function (
+	shouldSuppressErrors
+) {
+	var ok =
+		(this.getValue() !== null && this.getValue() !== undefined) ||
+		shouldSuppressErrors;
+	this.info.setIcon(ok ? null : "alert");
+	this.setTitle(ok ? "" : mw.message("apisandbox-alert-field").plain());
+	return $.Deferred().resolve(ok).promise();
 };
 
 module.exports = UploadSelectFileParamWidget;

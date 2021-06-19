@@ -7,7 +7,7 @@ Cambda
 
 ## Agenda
 
-- [x]  `head` tag support (@ronco)
+- [x] `head` tag support (@ronco)
 - [x] Fingerprinted assets (@tomdale)
 - [x] Cookies & auth (@tomdale)
 - [x] Dynamic index.html (@ef4)
@@ -108,8 +108,8 @@ TD: Yes, there was a PR from James Murphy but I think it needs updating.
 
 - [ ] @tomdale to expose `_request` on FastBoot
 - [ ] @ef4 to design API for "session" service that uses cookies to sync
-  stateful info across browser and FastBoot server
+      stateful info across browser and FastBoot server
 - [ ] @ronco to add automated testing for `ember-cli-head`
 - [ ] @cibernox will try to create generic harness for FastBoot
-  extracted from ember-power-select
+      extracted from ember-power-select
 - [ ] @krati to update sandbox adapter PR

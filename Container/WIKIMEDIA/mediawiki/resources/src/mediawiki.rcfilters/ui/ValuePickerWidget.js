@@ -14,41 +14,42 @@
  *  handle item models and return a boolean whether the item is included
  *  or not. Example: function ( itemModel ) { return itemModel.isSelected(); }
  */
-var ValuePickerWidget = function MwRcfiltersUiValuePickerWidget( model, config ) {
+var ValuePickerWidget = function MwRcfiltersUiValuePickerWidget(model, config) {
 	config = config || {};
 
 	// Parent
-	ValuePickerWidget.parent.call( this, config );
+	ValuePickerWidget.parent.call(this, config);
 	// Mixin constructors
-	OO.ui.mixin.LabelElement.call( this, config );
+	OO.ui.mixin.LabelElement.call(this, config);
 
 	this.model = model;
-	this.itemFilter = config.itemFilter || function () {
-		return true;
-	};
+	this.itemFilter =
+		config.itemFilter ||
+		function () {
+			return true;
+		};
 
 	// Build the selection from the item models
 	this.selectWidget = new OO.ui.ButtonSelectWidget();
 	this.initializeSelectWidget();
 
 	// Events
-	this.model.connect( this, { update: 'onModelUpdate' } );
-	this.selectWidget.connect( this, { choose: 'onSelectWidgetChoose' } );
+	this.model.connect(this, { update: "onModelUpdate" });
+	this.selectWidget.connect(this, { choose: "onSelectWidgetChoose" });
 
 	// Initialize
 	this.$element
-		.addClass( 'mw-rcfilters-ui-valuePickerWidget' )
+		.addClass("mw-rcfilters-ui-valuePickerWidget")
 		.append(
-			this.$label
-				.addClass( 'mw-rcfilters-ui-valuePickerWidget-title' ),
+			this.$label.addClass("mw-rcfilters-ui-valuePickerWidget-title"),
 			this.selectWidget.$element
 		);
 };
 
 /* Initialization */
 
-OO.inheritClass( ValuePickerWidget, OO.ui.Widget );
-OO.mixinClass( ValuePickerWidget, OO.ui.mixin.LabelElement );
+OO.inheritClass(ValuePickerWidget, OO.ui.Widget);
+OO.mixinClass(ValuePickerWidget, OO.ui.mixin.LabelElement);
 
 /* Events */
 
@@ -74,25 +75,26 @@ ValuePickerWidget.prototype.onModelUpdate = function () {
  * @param {OO.ui.ButtonOptionWidget} chosenItem Chosen item
  * @fires choose
  */
-ValuePickerWidget.prototype.onSelectWidgetChoose = function ( chosenItem ) {
-	this.emit( 'choose', chosenItem.getData() );
+ValuePickerWidget.prototype.onSelectWidgetChoose = function (chosenItem) {
+	this.emit("choose", chosenItem.getData());
 };
 
 /**
  * Initialize the select widget
  */
 ValuePickerWidget.prototype.initializeSelectWidget = function () {
-	var items = this.model.getItems()
-		.filter( this.itemFilter )
-		.map( function ( filterItem ) {
-			return new OO.ui.ButtonOptionWidget( {
+	var items = this.model
+		.getItems()
+		.filter(this.itemFilter)
+		.map(function (filterItem) {
+			return new OO.ui.ButtonOptionWidget({
 				data: filterItem.getName(),
-				label: filterItem.getLabel()
-			} );
-		} );
+				label: filterItem.getLabel(),
+			});
+		});
 
 	this.selectWidget.clearItems();
-	this.selectWidget.addItems( items );
+	this.selectWidget.addItems(items);
 
 	this.selectCurrentModelItem();
 };
@@ -102,10 +104,10 @@ ValuePickerWidget.prototype.initializeSelectWidget = function () {
  * that is currently selected
  */
 ValuePickerWidget.prototype.selectCurrentModelItem = function () {
-	var selectedItem = this.model.findSelectedItems()[ 0 ];
+	var selectedItem = this.model.findSelectedItems()[0];
 
-	if ( selectedItem ) {
-		this.selectWidget.selectItemByData( selectedItem.getName() );
+	if (selectedItem) {
+		this.selectWidget.selectItemByData(selectedItem.getName());
 	}
 };
 

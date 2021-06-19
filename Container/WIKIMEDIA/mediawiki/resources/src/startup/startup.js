@@ -48,62 +48,65 @@
  * @param {string} ua User agent string
  * @return {boolean} User agent is compatible with MediaWiki JS
  */
-function isCompatible( ua ) {
+function isCompatible(ua) {
 	return !!(
 		// https://caniuse.com/#feat=es5
 		// https://caniuse.com/#feat=use-strict
 		// https://caniuse.com/#feat=json / https://phabricator.wikimedia.org/T141344#2784065
-		( function () {
-			'use strict';
-			return !this && Function.prototype.bind && window.JSON;
-		}() ) &&
-
-		// https://caniuse.com/#feat=queryselector
-		'querySelector' in document &&
-
-		// https://caniuse.com/#feat=namevalue-storage
-		// https://developer.blackberry.com/html5/apis/v1_0/localstorage.html
-		// https://blog.whatwg.org/this-week-in-html-5-episode-30
-		'localStorage' in window &&
-
-		// https://caniuse.com/#feat=addeventlistener
-		'addEventListener' in window &&
-
-		// Hardcoded exceptions for browsers that pass the requirement but we don't
-		// want to support in the modern run-time.
-		//
-		// Please extend the regex instead of adding new ones!
-		// And add a test case to startup.test.js
-		!ua.match( /MSIE 10|NetFront|Opera Mini|S40OviBrowser|MeeGo|Android.+Glass|^Mozilla\/5\.0 .+ Gecko\/$|googleweblight|PLAYSTATION|PlayStation/ )
+		(
+			(function () {
+				"use strict";
+				return !this && Function.prototype.bind && window.JSON;
+			})() &&
+			// https://caniuse.com/#feat=queryselector
+			"querySelector" in document &&
+			// https://caniuse.com/#feat=namevalue-storage
+			// https://developer.blackberry.com/html5/apis/v1_0/localstorage.html
+			// https://blog.whatwg.org/this-week-in-html-5-episode-30
+			"localStorage" in window &&
+			// https://caniuse.com/#feat=addeventlistener
+			"addEventListener" in window &&
+			// Hardcoded exceptions for browsers that pass the requirement but we don't
+			// want to support in the modern run-time.
+			//
+			// Please extend the regex instead of adding new ones!
+			// And add a test case to startup.test.js
+			!ua.match(
+				/MSIE 10|NetFront|Opera Mini|S40OviBrowser|MeeGo|Android.+Glass|^Mozilla\/5\.0 .+ Gecko\/$|googleweblight|PLAYSTATION|PlayStation/
+			)
+		)
 	);
 }
 
-if ( !isCompatible( navigator.userAgent ) ) {
+if (!isCompatible(navigator.userAgent)) {
 	// Handle basic supported browsers (Grade C).
 	// Undo speculative modern (Grade A) root CSS class `<html class="client-js">`.
 	// See ResourceLoaderClientHtml::getDocumentAttributes().
-	document.documentElement.className = document.documentElement.className
-		.replace( /(^|\s)client-js(\s|$)/, '$1client-nojs$2' );
+	document.documentElement.className =
+		document.documentElement.className.replace(
+			/(^|\s)client-js(\s|$)/,
+			"$1client-nojs$2"
+		);
 
 	// Process any callbacks for basic support (Grade C).
-	while ( window.NORLQ && NORLQ[ 0 ] ) {
+	while (window.NORLQ && NORLQ[0]) {
 		NORLQ.shift()();
 	}
 	NORLQ = {
-		push: function ( fn ) {
+		push: function (fn) {
 			fn();
-		}
+		},
 	};
 
 	// Clear and disable the modern (Grade A) queue.
 	RLQ = {
-		push: function () {}
+		push: function () {},
 	};
 } else {
 	// Handle modern (Grade A).
 
-	if ( window.performance && performance.mark ) {
-		performance.mark( 'mwStartup' );
+	if (window.performance && performance.mark) {
+		performance.mark("mwStartup");
 	}
 
 	// This embeds mediawiki.js, which defines 'mw' and 'mw.loader'.
@@ -112,16 +115,16 @@ if ( !isCompatible( navigator.userAgent ) ) {
 	/**
 	 * The $CODE placeholder is substituted in ResourceLoaderStartUpModule.php.
 	 */
-	( function () {
+	(function () {
 		/* global mw */
 		var queue;
 
 		$CODE.registrations();
 
 		// For the current page
-		mw.config.set( window.RLCONF || {} ); // mw.loader needs wgCSPNonce and wgUserName
-		mw.loader.state( window.RLSTATE || {} );
-		mw.loader.load( window.RLPAGEMODULES || [] );
+		mw.config.set(window.RLCONF || {}); // mw.loader needs wgCSPNonce and wgUserName
+		mw.loader.state(window.RLSTATE || {});
+		mw.loader.load(window.RLPAGEMODULES || []);
 
 		// Process RLQ callbacks
 		//
@@ -142,25 +145,25 @@ if ( !isCompatible( navigator.userAgent ) ) {
 		// in RLQ previously. We have to do this to avoid an infinite loop:
 		// non-function items are added back to RLQ by the processing step.
 		RLQ = [];
-		RLQ.push = function ( fn ) {
-			if ( typeof fn === 'function' ) {
+		RLQ.push = function (fn) {
+			if (typeof fn === "function") {
 				fn();
 			} else {
 				// If the first parameter is not a function, then it is an array
 				// containing a list of required module names and a function.
 				// Do an actual push for now, as this signature is handled
 				// later by mediawiki.base.js.
-				RLQ[ RLQ.length ] = fn;
+				RLQ[RLQ.length] = fn;
 			}
 		};
-		while ( queue[ 0 ] ) {
+		while (queue[0]) {
 			// Process all values gathered so far
-			RLQ.push( queue.shift() );
+			RLQ.push(queue.shift());
 		}
 
 		// Clear and disable the basic (Grade C) queue.
 		NORLQ = {
-			push: function () {}
+			push: function () {},
 		};
-	}() );
+	})();
 }

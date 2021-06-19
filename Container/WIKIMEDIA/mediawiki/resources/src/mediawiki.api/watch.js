@@ -2,8 +2,7 @@
  * @class mw.Api.plugin.watch
  * @since 1.19
  */
-( function () {
-
+(function () {
 	/**
 	 * @private
 	 * @static
@@ -20,29 +19,30 @@
 	 * @return {string} return.done.watch.title Full pagename
 	 * @return {boolean} return.done.watch.watched Whether the page is now watched or unwatched
 	 */
-	function doWatchInternal( pages, addParams ) {
+	function doWatchInternal(pages, addParams) {
 		// XXX: Parameter addParams is undocumented because we inherit this
 		// documentation in the public method...
-		var apiPromise = this.postWithToken( 'watch',
+		var apiPromise = this.postWithToken(
+			"watch",
 			$.extend(
 				{
 					formatversion: 2,
-					action: 'watch',
-					titles: Array.isArray( pages ) ? pages : String( pages )
+					action: "watch",
+					titles: Array.isArray(pages) ? pages : String(pages),
 				},
 				addParams
 			)
 		);
 
 		return apiPromise
-			.then( function ( data ) {
+			.then(function (data) {
 				// If a single page was given (not an array) respond with a single item as well.
-				return Array.isArray( pages ) ? data.watch : data.watch[ 0 ];
-			} )
-			.promise( { abort: apiPromise.abort } );
+				return Array.isArray(pages) ? data.watch : data.watch[0];
+			})
+			.promise({ abort: apiPromise.abort });
 	}
 
-	$.extend( mw.Api.prototype, {
+	$.extend(mw.Api.prototype, {
 		/**
 		 * Convenience method for `action=watch`.
 		 *
@@ -50,8 +50,8 @@
 		 * @since 1.35 - expiry parameter can be passed when
 		 * Watchlist Expiry is enabled
 		 */
-		watch: function ( pages, expiry ) {
-			return doWatchInternal.call( this, pages, { expiry: expiry } );
+		watch: function (pages, expiry) {
+			return doWatchInternal.call(this, pages, { expiry: expiry });
 		},
 
 		/**
@@ -59,14 +59,13 @@
 		 *
 		 * @inheritdoc #doWatchInternal
 		 */
-		unwatch: function ( pages ) {
-			return doWatchInternal.call( this, pages, { unwatch: 1 } );
-		}
-	} );
+		unwatch: function (pages) {
+			return doWatchInternal.call(this, pages, { unwatch: 1 });
+		},
+	});
 
 	/**
 	 * @class mw.Api
 	 * @mixins mw.Api.plugin.watch
 	 */
-
-}() );
+})();

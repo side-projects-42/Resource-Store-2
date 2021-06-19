@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Paxt"
-		]
-	},
-	"akismetklik-desc": "Odmítá úpravy od podezřelých spamerů z Akismetovy černé listiny"
+  "@metadata": {
+    "authors": ["Paxt"]
+  },
+  "akismetklik-desc": "Odmítá úpravy od podezřelých spamerů z Akismetovy černé listiny"
 }

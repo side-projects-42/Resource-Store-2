@@ -21,25 +21,19 @@
 
 var logger = exports;
 
-var exec    = require('cordova/exec');
-var utils   = require('cordova/utils');
+var exec = require("cordova/exec");
+var utils = require("cordova/utils");
 
-var UseConsole   = true;
-var Queued       = [];
-var DeviceReady  = false;
+var UseConsole = true;
+var Queued = [];
+var DeviceReady = false;
 var CurrentLevel;
 
 /**
  * Logging levels
  */
 
-var Levels = [
-    "LOG",
-    "ERROR",
-    "WARN",
-    "INFO",
-    "DEBUG"
-];
+var Levels = ["LOG", "ERROR", "WARN", "INFO", "DEBUG"];
 
 /*
  * add the logging levels to the logger object and
@@ -47,10 +41,10 @@ var Levels = [
  */
 
 var LevelsMap = {};
-for (var i=0; i<Levels.length; i++) {
-    var level = Levels[i];
-    LevelsMap[level] = i;
-    logger[level]    = level;
+for (var i = 0; i < Levels.length; i++) {
+  var level = Levels[i];
+  LevelsMap[level] = i;
+  logger[level] = level;
 }
 
 CurrentLevel = LevelsMap.WARN;
@@ -75,14 +69,14 @@ CurrentLevel = LevelsMap.WARN;
  * WARN will be displayed; INFO and DEBUG messages will be ignored.
  */
 logger.level = function (value) {
-    if (arguments.length) {
-        if (LevelsMap[value] === null) {
-            throw new Error("invalid logging level: " + value);
-        }
-        CurrentLevel = LevelsMap[value];
+  if (arguments.length) {
+    if (LevelsMap[value] === null) {
+      throw new Error("invalid logging level: " + value);
     }
+    CurrentLevel = LevelsMap[value];
+  }
 
-    return Levels[CurrentLevel];
+  return Levels[CurrentLevel];
 };
 
 /**
@@ -93,25 +87,25 @@ logger.level = function (value) {
  * native Logger plugin.
  */
 logger.useConsole = function (value) {
-    if (arguments.length) UseConsole = !!value;
+  if (arguments.length) UseConsole = !!value;
 
-    if (UseConsole) {
-        if (typeof console == "undefined") {
-            throw new Error("global console object is not defined");
-        }
-
-        if (typeof console.log != "function") {
-            throw new Error("global console object does not have a log function");
-        }
-
-        if (typeof console.useLogger == "function") {
-            if (console.useLogger()) {
-                throw new Error("console and logger are too intertwingly");
-            }
-        }
+  if (UseConsole) {
+    if (typeof console == "undefined") {
+      throw new Error("global console object is not defined");
     }
 
-    return UseConsole;
+    if (typeof console.log != "function") {
+      throw new Error("global console object does not have a log function");
+    }
+
+    if (typeof console.useLogger == "function") {
+      if (console.useLogger()) {
+        throw new Error("console and logger are too intertwingly");
+      }
+    }
+  }
+
+  return UseConsole;
 };
 
 /**
@@ -120,7 +114,9 @@ logger.useConsole = function (value) {
  * Parameters passed after message are used applied to
  * the message with utils.format()
  */
-logger.log   = function(message) { logWithArgs("LOG",   arguments); };
+logger.log = function (message) {
+  logWithArgs("LOG", arguments);
+};
 
 /**
  * Logs a message at the ERROR level.
@@ -128,7 +124,9 @@ logger.log   = function(message) { logWithArgs("LOG",   arguments); };
  * Parameters passed after message are used applied to
  * the message with utils.format()
  */
-logger.error = function(message) { logWithArgs("ERROR", arguments); };
+logger.error = function (message) {
+  logWithArgs("ERROR", arguments);
+};
 
 /**
  * Logs a message at the WARN level.
@@ -136,7 +134,9 @@ logger.error = function(message) { logWithArgs("ERROR", arguments); };
  * Parameters passed after message are used applied to
  * the message with utils.format()
  */
-logger.warn  = function(message) { logWithArgs("WARN",  arguments); };
+logger.warn = function (message) {
+  logWithArgs("WARN", arguments);
+};
 
 /**
  * Logs a message at the INFO level.
@@ -144,7 +144,9 @@ logger.warn  = function(message) { logWithArgs("WARN",  arguments); };
  * Parameters passed after message are used applied to
  * the message with utils.format()
  */
-logger.info  = function(message) { logWithArgs("INFO",  arguments); };
+logger.info = function (message) {
+  logWithArgs("INFO", arguments);
+};
 
 /**
  * Logs a message at the DEBUG level.
@@ -152,12 +154,14 @@ logger.info  = function(message) { logWithArgs("INFO",  arguments); };
  * Parameters passed after message are used applied to
  * the message with utils.format()
  */
-logger.debug = function(message) { logWithArgs("DEBUG", arguments); };
+logger.debug = function (message) {
+  logWithArgs("DEBUG", arguments);
+};
 
 // log at the specified level with args
 function logWithArgs(level, args) {
-    args = [level].concat([].slice.call(args));
-    logger.logLevel.apply(logger, args);
+  args = [level].concat([].slice.call(args));
+  logger.logLevel.apply(logger, args);
 }
 
 /**
@@ -166,56 +170,66 @@ function logWithArgs(level, args) {
  * Parameters passed after message are used applied to
  * the message with utils.format()
  */
-logger.logLevel = function(level, message /* , ... */) {
-    // format the message with the parameters
-    var formatArgs = [].slice.call(arguments, 2);
-    message    = utils.vformat(message, formatArgs);
+logger.logLevel = function (level, message /* , ... */) {
+  // format the message with the parameters
+  var formatArgs = [].slice.call(arguments, 2);
+  message = utils.vformat(message, formatArgs);
 
-    if (LevelsMap[level] === null) {
-        throw new Error("invalid logging level: " + level);
-    }
+  if (LevelsMap[level] === null) {
+    throw new Error("invalid logging level: " + level);
+  }
 
-    if (LevelsMap[level] > CurrentLevel) return;
+  if (LevelsMap[level] > CurrentLevel) return;
 
-    // queue the message if not yet at deviceready
-    if (!DeviceReady && !UseConsole) {
-        Queued.push([level, message]);
-        return;
-    }
+  // queue the message if not yet at deviceready
+  if (!DeviceReady && !UseConsole) {
+    Queued.push([level, message]);
+    return;
+  }
 
-    // if not using the console, use the native logger
-    if (!UseConsole) {
-        exec(null, null, "Logger", "logLevel", [level, message]);
-        return;
-    }
+  // if not using the console, use the native logger
+  if (!UseConsole) {
+    exec(null, null, "Logger", "logLevel", [level, message]);
+    return;
+  }
 
-    // make sure console is not using logger
-    if (console.__usingCordovaLogger) {
-        throw new Error("console and logger are too intertwingly");
-    }
+  // make sure console is not using logger
+  if (console.__usingCordovaLogger) {
+    throw new Error("console and logger are too intertwingly");
+  }
 
-    // log to the console
-    switch (level) {
-        case logger.LOG:   console.log(message); break;
-        case logger.ERROR: console.log("ERROR: " + message); break;
-        case logger.WARN:  console.log("WARN: "  + message); break;
-        case logger.INFO:  console.log("INFO: "  + message); break;
-        case logger.DEBUG: console.log("DEBUG: " + message); break;
-    }
+  // log to the console
+  switch (level) {
+    case logger.LOG:
+      console.log(message);
+      break;
+    case logger.ERROR:
+      console.log("ERROR: " + message);
+      break;
+    case logger.WARN:
+      console.log("WARN: " + message);
+      break;
+    case logger.INFO:
+      console.log("INFO: " + message);
+      break;
+    case logger.DEBUG:
+      console.log("DEBUG: " + message);
+      break;
+  }
 };
 
 // when deviceready fires, log queued messages
-logger.__onDeviceReady = function() {
-    if (DeviceReady) return;
+logger.__onDeviceReady = function () {
+  if (DeviceReady) return;
 
-    DeviceReady = true;
+  DeviceReady = true;
 
-    for (var i=0; i<Queued.length; i++) {
-        var messageArgs = Queued[i];
-        logger.logLevel(messageArgs[0], messageArgs[1]);
-    }
+  for (var i = 0; i < Queued.length; i++) {
+    var messageArgs = Queued[i];
+    logger.logLevel(messageArgs[0], messageArgs[1]);
+  }
 
-    Queued = null;
+  Queued = null;
 };
 
 // add a deviceready event to log queued messages

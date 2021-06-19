@@ -13,7 +13,7 @@
 - 2.5 feature train is shortly leaving the station (MB)
 - reclaiming the `ember` package on npm as the primary installation point (YK)
 - Docs translation work (LS)
-- ISSUES\_TEMPLATE.md (YK)
+- ISSUES_TEMPLATE.md (YK)
 
 ### Attendees
 

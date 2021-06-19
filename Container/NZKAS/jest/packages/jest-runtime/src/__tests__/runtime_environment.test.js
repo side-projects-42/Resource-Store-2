@@ -17,7 +17,7 @@ describe('Runtime', () => {
 
   describe('requireModule', () => {
     it('emulates a node stack trace during module load', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         let hasThrown = false;
         try {
           runtime.requireModule(runtime.__mockRootPath, './throwing.js');
@@ -29,7 +29,7 @@ describe('Runtime', () => {
       }));
 
     it('emulates a node stack trace during function execution', () =>
-      createRuntime(__filename).then(runtime => {
+      createRuntime(__filename).then((runtime) => {
         let hasThrown = false;
         const sum = runtime.requireModule(
           runtime.__mockRootPath,

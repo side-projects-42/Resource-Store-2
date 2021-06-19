@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Aursani",
-			"Mehtab ahmed"
-		]
+		"authors": ["Aursani", "Mehtab ahmed"]
 	},
 	"apihelp-edit-param-contentmodel": "نئين مواد جو مواد نمونو.",
 	"apihelp-feedcontributions-summary": "ڪنھن واپرائيندڙ جي ڀاڱيدارين جي رسد ورائي ٿو.",

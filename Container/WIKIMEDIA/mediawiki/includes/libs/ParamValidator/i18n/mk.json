@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Bjankuloski06"
-		]
+		"authors": ["Bjankuloski06"]
 	},
 	"paramvalidator-badbool": "Неважечка вредност „$2“ за Буловиот параметар „$1“. Задајте $3 за точно или $5 за неточно.",
 	"paramvalidator-badexpiry": "Неважечка вредност „$2“ за параметарот за истек \"$1\".",

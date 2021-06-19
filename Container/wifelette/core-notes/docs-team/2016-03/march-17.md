@@ -1,4 +1,4 @@
-#  Previously
+# Previously
 
 - [x] DB: Reach out to Core on deploying Algolia search on just 2.4
 - [x] TJ: Reach out to RM about taking on contextual components for the guides
@@ -43,7 +43,7 @@
 - Todd Jordan (TJ) @todd.jordan
 - Ricardo Mendes (RM) @locks
 - Leah Silber (LS) @wifelette
-- Steven Valladolid (SV)  @mellatone
+- Steven Valladolid (SV) @mellatone
 
 ## Notes
 
@@ -51,17 +51,17 @@
 
 DB: Update on Algolia Search? Would like to prototype with guides to try it out with 2.4.
 
-LS: Pulled up email to see who to talk to (Matt).  
+LS: Pulled up email to see who to talk to (Matt).
 
-RM: Lets do it on staging.   Will let us try it without being open to public.
+RM: Lets do it on staging. Will let us try it without being open to public.
 
-LS:  Lets keep moving forward.  If it ends up the best thing, LS will contact Matt, explaining the move and thanking them.
+LS: Lets keep moving forward. If it ends up the best thing, LS will contact Matt, explaining the move and thanking them.
 
 ### Contextual components
 
-TJ: discussed them with RM.  To create a draft next week as part of block components to get feedback.
+TJ: discussed them with RM. To create a draft next week as part of block components to get feedback.
 
------
+---
 
 ### API docs
 
@@ -69,7 +69,7 @@ TJ: things are sorted out, how do I get started on getting the subdomain
 
 LS: probably should talk to Robert
 
-----
+---
 
 ### locks
 
@@ -79,25 +79,25 @@ DB: How can we help?
 
 RM: Creating some issues on the repos
 
-----
+---
 
 ### Welcome Page PR
 
-DB: Having trouble getting tests running with it in ember-cli.  Crunched for time so not much progress
+DB: Having trouble getting tests running with it in ember-cli. Crunched for time so not much progress
 
-LS: Would you need any help? 
+LS: Would you need any help?
 
-DB: Absolutely.  Not tied to it.  
+DB: Absolutely. Not tied to it.
 
-SV:  Will take a look at it to see how far I can get.
+SV: Will take a look at it to see how far I can get.
 
-----
+---
 
 ### Search/SEO
 
 DB: talked to Trek and our options are limited
 
-YK: will talk to google contacts.  May not be the right guys.  schema.org may be the right thing to research next.  other thing to research is to include information in text as a change log.
+YK: will talk to google contacts. May not be the right guys. schema.org may be the right thing to research next. other thing to research is to include information in text as a change log.
 
 DB: I can look into schema.org
 

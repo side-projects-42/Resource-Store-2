@@ -57,11 +57,11 @@ const regexToMatcher = (testRegex: Array<string>) => {
   }
 
   return (path: Config.Path) =>
-    testRegex.some(testRegex => new RegExp(testRegex).test(path));
+    testRegex.some((testRegex) => new RegExp(testRegex).test(path));
 };
 
 const toTests = (context: Context, tests: Array<Config.Path>) =>
-  tests.map(path => ({
+  tests.map((path) => ({
     context,
     duration: undefined,
     path,
@@ -77,7 +77,7 @@ export default class SearchSource {
     const {config} = context;
     this._context = context;
     this._rootPattern = new RegExp(
-      config.roots.map(dir => escapePathForRegex(dir + path.sep)).join('|'),
+      config.roots.map((dir) => escapePathForRegex(dir + path.sep)).join('|'),
     );
 
     const ignorePattern = config.testPathIgnorePatterns;
@@ -86,9 +86,9 @@ export default class SearchSource {
       : null;
 
     this._testPathCases = {
-      roots: path => this._rootPattern.test(path),
+      roots: (path) => this._rootPattern.test(path),
       testMatch: globsToMatcher(config.testMatch),
-      testPathIgnorePatterns: path =>
+      testPathIgnorePatterns: (path) =>
         !this._testIgnorePattern || !this._testIgnorePattern.test(path),
       testRegex: regexToMatcher(config.testRegex),
     };
@@ -123,7 +123,7 @@ export default class SearchSource {
     }
 
     const testCasesKeys = Object.keys(testCases) as Array<keyof Stats>;
-    data.tests = allPaths.filter(test =>
+    data.tests = allPaths.filter((test) =>
       testCasesKeys.reduce<boolean>((flag, key) => {
         const {stats} = data;
         if (testCases[key](test.path)) {
@@ -146,9 +146,9 @@ export default class SearchSource {
   }
 
   isTestFilePath(path: Config.Path): boolean {
-    return (Object.keys(this._testPathCases) as Array<
-      keyof TestPathCases
-    >).every(key => this._testPathCases[key](path));
+    return (
+      Object.keys(this._testPathCases) as Array<keyof TestPathCases>
+    ).every((key) => this._testPathCases[key](path));
   }
 
   findMatchingTests(testPathPattern?: string): SearchResult {
@@ -184,18 +184,18 @@ export default class SearchSource {
       {skipNodeResolution: this._context.config.skipNodeResolution},
     );
 
-    const allPathsAbsolute = Array.from(allPaths).map(p => path.resolve(p));
+    const allPathsAbsolute = Array.from(allPaths).map((p) => path.resolve(p));
 
     const collectCoverageFrom = new Set();
 
-    testModulesMap.forEach(testModule => {
+    testModulesMap.forEach((testModule) => {
       if (!testModule.dependencies) {
         return;
       }
 
       testModule.dependencies
-        .filter(p => allPathsAbsolute.includes(p))
-        .map(filename => {
+        .filter((p) => allPathsAbsolute.includes(p))
+        .map((filename) => {
           filename = replaceRootDirInPath(
             this._context.config.rootDir,
             filename,
@@ -204,14 +204,14 @@ export default class SearchSource {
             ? path.relative(this._context.config.rootDir, filename)
             : filename;
         })
-        .forEach(filename => collectCoverageFrom.add(filename));
+        .forEach((filename) => collectCoverageFrom.add(filename));
     });
 
     return {
       collectCoverageFrom,
       tests: toTests(
         this._context,
-        testModulesMap.map(testModule => testModule.file),
+        testModulesMap.map((testModule) => testModule.file),
       ),
     };
   }
@@ -221,7 +221,7 @@ export default class SearchSource {
       tests: toTests(
         this._context,
         paths
-          .map(p => path.resolve(this._context.config.cwd, p))
+          .map((p) => path.resolve(this._context.config.cwd, p))
           .filter(this.isTestFilePath.bind(this)),
       ),
     };
@@ -232,7 +232,7 @@ export default class SearchSource {
     collectCoverage: boolean,
   ): SearchResult {
     if (Array.isArray(paths) && paths.length) {
-      const resolvedPaths = paths.map(p =>
+      const resolvedPaths = paths.map((p) =>
         path.resolve(this._context.config.cwd, p),
       );
       return this.findRelatedTests(new Set(resolvedPaths), collectCoverage);
@@ -246,9 +246,9 @@ export default class SearchSource {
   ) {
     const {repos, changedFiles} = changedFilesInfo;
     // no SCM (git/hg/...) is found in any of the roots.
-    const noSCM = (Object.keys(repos) as Array<
-      keyof ChangedFiles['repos']
-    >).every(scm => repos[scm].size === 0);
+    const noSCM = (
+      Object.keys(repos) as Array<keyof ChangedFiles['repos']>
+    ).every((scm) => repos[scm].size === 0);
     return noSCM
       ? {noSCM: true, tests: []}
       : this.findRelatedTests(changedFiles, collectCoverage);
@@ -295,7 +295,7 @@ export default class SearchSource {
     if (filter) {
       const tests = searchResult.tests;
 
-      const filterResult = await filter(tests.map(test => test.path));
+      const filterResult = await filter(tests.map((test) => test.path));
 
       if (!Array.isArray(filterResult.filtered)) {
         throw new Error(
@@ -304,12 +304,12 @@ export default class SearchSource {
       }
 
       const filteredSet = new Set(
-        filterResult.filtered.map(result => result.test),
+        filterResult.filtered.map((result) => result.test),
       );
 
       return {
         ...searchResult,
-        tests: tests.filter(test => filteredSet.has(test.path)),
+        tests: tests.filter((test) => filteredSet.has(test.path)),
       };
     }
 

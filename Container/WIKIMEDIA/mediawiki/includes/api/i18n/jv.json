@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"NoiX180"
-		]
+		"authors": ["NoiX180"]
 	},
 	"apihelp-delete-example-simple": "Busak <kbd>Pendhapa</kbd>.",
 	"apihelp-query+backlinks-example-simple": "Tuduhaké pranala menyang <kbd>Pendhapa</kbd>.",

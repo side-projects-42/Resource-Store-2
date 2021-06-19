@@ -1,13 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fohanno",
-			"Fulup",
-			"Gwendal",
-			"Macofe",
-			"Y-M D",
-			"아라"
-		]
+		"authors": ["Fohanno", "Fulup", "Gwendal", "Macofe", "Y-M D", "아라"]
 	},
 	"config-desc": "Poellad staliañ MediaWiki",
 	"config-title": "Staliadur MediaWiki $1",

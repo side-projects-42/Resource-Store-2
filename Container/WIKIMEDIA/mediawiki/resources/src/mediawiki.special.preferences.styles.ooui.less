@@ -1,4 +1,4 @@
-@import 'mediawiki.mixins.less';
+@import "mediawiki.mixins.less";
 
 /* Uses standard message block colors, compare mediawiki.legacy/shared.css */
 .mw-email-not-authenticated .oo-ui-labelWidget,
@@ -46,7 +46,7 @@
 // disappear in RTL languages on Microsoft Edge. This magically fixes the issue. See T220706.
 #preferences {
 	/* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-	filter: brightness( 1 );
+	filter: brightness(1);
 }
 
 /* This is needed because add extra buttons in a weird way */
@@ -62,7 +62,7 @@
 /*
  * Hide, when not keyboard focussed.
  */
-.client-js .mw-navigation-hint:not( :focus ) {
+.client-js .mw-navigation-hint:not(:focus) {
 	height: 0;
 	overflow: hidden;
 }
@@ -83,7 +83,10 @@
 }
 
 .mw-prefs-tabs-wrapper.oo-ui-panelLayout-framed,
-.mw-prefs-tabs > .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout {
+.mw-prefs-tabs
+	> .oo-ui-menuLayout-content
+	> .oo-ui-indexLayout-stackLayout
+	> .oo-ui-tabPanelLayout {
 	/* Decrease contrast of `border` slightly as padding/border combination is sufficient
 	 * accessibility wise and focus of content is more important here. */
 	border-color: #c8ccd1;
@@ -111,13 +114,17 @@
 			}
 
 			// Remove spacing between legend and underline
-			&.oo-ui-labelElement > .oo-ui-fieldsetLayout-header > .oo-ui-labelElement-label {
+			&.oo-ui-labelElement
+				> .oo-ui-fieldsetLayout-header
+				> .oo-ui-labelElement-label {
 				margin-bottom: 0;
 			}
 		}
 
 		// Spacing between sections
-		> .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout:not( :last-child ) {
+		> .oo-ui-menuLayout-content
+			> .oo-ui-indexLayout-stackLayout
+			> .oo-ui-tabPanelLayout:not(:last-child) {
 			margin-bottom: 1em;
 		}
 	}
@@ -136,8 +143,8 @@
 	}
 
 	// Hide all but the first panel before infusion
-	&:not( .mw-prefs-tabs-infused ) {
-		.oo-ui-tabPanelLayout:not( :first-child ) {
+	&:not(.mw-prefs-tabs-infused) {
+		.oo-ui-tabPanelLayout:not(:first-child) {
 			display: none;
 		}
 	}
@@ -146,7 +153,9 @@
 /* Make the "Basic information" section more compact */
 /* OOUI's `align: 'left'` for FieldLayouts sucks, so we do our own */
 #mw-htmlform-info {
-	> .oo-ui-fieldLayout-align-top > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-header {
+	> .oo-ui-fieldLayout-align-top
+		> .oo-ui-fieldLayout-body
+		> .oo-ui-fieldLayout-header {
 		display: inline-block;
 		width: 20%;
 		padding: 0;
@@ -157,7 +166,9 @@
 		margin-right: 0;
 	}
 
-	> .oo-ui-fieldLayout.oo-ui-fieldLayout-align-top > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-field {
+	> .oo-ui-fieldLayout.oo-ui-fieldLayout-align-top
+		> .oo-ui-fieldLayout-body
+		> .oo-ui-fieldLayout-field {
 		display: inline-block;
 		width: 80%;
 		vertical-align: middle;
@@ -186,6 +197,8 @@
 
 /* HACK: expand width of gadget descriptions.
  * This should be moved to the Gadgets extension */
-#mw-htmlform-gadgets .oo-ui-fieldLayout.oo-ui-fieldLayout-align-inline > .oo-ui-fieldLayout-body {
+#mw-htmlform-gadgets
+	.oo-ui-fieldLayout.oo-ui-fieldLayout-align-inline
+	> .oo-ui-fieldLayout-body {
 	max-width: none;
 }

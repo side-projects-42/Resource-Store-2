@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Moris231"
-		]
+		"authors": ["Moris231"]
 	},
 	"config-desc": "Programme installasion pu MediaWiki",
 	"config-title": "Installasion MediaWiki $1",

@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ammartivari",
-			"Arianit",
-			"Besnik b",
-			"Kosovastar"
-		]
+		"authors": ["Ammartivari", "Arianit", "Besnik b", "Kosovastar"]
 	},
 	"config-desc": "Instaluesi për MediaWiki",
 	"config-title": "Instalim MediaWiki $1",

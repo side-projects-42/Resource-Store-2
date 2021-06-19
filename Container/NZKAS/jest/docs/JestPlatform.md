@@ -20,7 +20,7 @@ const {getChangedFilesForRoots} = require('jest-changed-files');
 // print the set of modified files since last commit in the current repo
 getChangedFilesForRoots(['./'], {
   lastCommit: true,
-}).then(result => console.log(result.changedFiles));
+}).then((result) => console.log(result.changedFiles));
 ```
 
 You can read more about `jest-changed-files` in the [readme file](https://github.com/facebook/jest/blob/master/packages/jest-changed-files/README.md).
@@ -127,7 +127,7 @@ Module used for parallelization of tasks. Exports a class `Worker` that takes th
 // heavy-task.js
 
 module.exports = {
-  myHeavyTask: args => {
+  myHeavyTask: (args) => {
     // long running CPU intensive task.
   },
 };

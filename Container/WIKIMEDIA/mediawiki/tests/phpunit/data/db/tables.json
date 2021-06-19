@@ -23,9 +23,9 @@
 			}
 		],
 		"indexes": [
-			{ "name": "actor_user", "columns": [ "actor_user" ], "unique": true },
-			{ "name": "actor_name", "columns": [ "actor_name" ], "unique": true }
+			{ "name": "actor_user", "columns": ["actor_user"], "unique": true },
+			{ "name": "actor_name", "columns": ["actor_name"], "unique": true }
 		],
-		"pk": [ "actor_id" ]
+		"pk": ["actor_id"]
 	}
 ]

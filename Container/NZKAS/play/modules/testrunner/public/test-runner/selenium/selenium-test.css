@@ -1,42 +1,44 @@
-body, table {
-    font-family: Verdana, Arial, sans-serif;
-    font-size: 12;
-    margin: 0;
+body,
+table {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 12;
+  margin: 0;
 }
 
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 
-th, td {
-    padding-left: 0.3em;
-    padding-right: 0.3em;
+th,
+td {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .title {
 }
 
 .selected {
-    background-color: #ffffcc;
+  background-color: #ffffcc;
 }
 
 .status_done {
-    background-color: #eeffee;
+  background-color: #eeffee;
 }
 
 .status_passed {
-    background-color: #ccffcc;
+  background-color: #ccffcc;
 }
 
 .status_failed {
-    background-color: #ffcccc;
+  background-color: #ffcccc;
 }
 
 .breakpoint {
-    background-color: #cccccc;
-    border: 1px solid black;
+  background-color: #cccccc;
+  border: 1px solid black;
 }

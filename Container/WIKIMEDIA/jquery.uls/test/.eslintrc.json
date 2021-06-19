@@ -1,7 +1,4 @@
 {
-	"root": true,
-	"extends": [
-		"wikimedia/qunit",
-		"../.eslintrc.json"
-	]
+  "root": true,
+  "extends": ["wikimedia/qunit", "../.eslintrc.json"]
 }

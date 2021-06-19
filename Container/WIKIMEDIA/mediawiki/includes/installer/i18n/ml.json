@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Praveenp",
-			"Sadik Khalid"
-		]
+		"authors": ["Praveenp", "Sadik Khalid"]
 	},
 	"config-desc": "മീഡിയവിക്കി ഇൻസ്റ്റോളർ",
 	"config-title": "മീഡിയവിക്കി $1 ഇൻസ്റ്റലേഷൻ",

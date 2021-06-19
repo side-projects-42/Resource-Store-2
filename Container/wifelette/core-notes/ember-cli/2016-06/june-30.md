@@ -23,6 +23,7 @@
 - `git clean -fdx` should probably be documented to make sure we're using most up-to-date deps.
 
 ### Run top N Addons in Ember Observer
+
 - Works-ish, but addons doing things like using firefox as a test target breaks it.
 
 ### Bring ember-addon-secrets blog post into docs

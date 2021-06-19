@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"DCLXVI"
-		]
-	},
-	"ajaxpoll-percent-votes": "$1% от всички гласове"
+  "@metadata": {
+    "authors": ["DCLXVI"]
+  },
+  "ajaxpoll-percent-votes": "$1% от всички гласове"
 }

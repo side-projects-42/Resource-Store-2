@@ -4,26 +4,26 @@
  * MIT Licensed
  */
 
-var used = []
-  , exports = module.exports = {};
+var used = [],
+  exports = (module.exports = {});
 
 /*!
  * Chai version
  */
 
-exports.version = '1.8.1';
+exports.version = "1.8.1";
 
 /*!
  * Assertion Error
  */
 
-exports.AssertionError = require('assertion-error');
+exports.AssertionError = require("assertion-error");
 
 /*!
  * Utils for plugins (not exported)
  */
 
-var util = require('./chai/utils');
+var util = require("./chai/utils");
 
 /**
  * # .use(function)
@@ -48,33 +48,33 @@ exports.use = function (fn) {
  * Primary `Assertion` prototype
  */
 
-var assertion = require('./chai/assertion');
+var assertion = require("./chai/assertion");
 exports.use(assertion);
 
 /*!
  * Core Assertions
  */
 
-var core = require('./chai/core/assertions');
+var core = require("./chai/core/assertions");
 exports.use(core);
 
 /*!
  * Expect interface
  */
 
-var expect = require('./chai/interface/expect');
+var expect = require("./chai/interface/expect");
 exports.use(expect);
 
 /*!
  * Should interface
  */
 
-var should = require('./chai/interface/should');
+var should = require("./chai/interface/should");
 exports.use(should);
 
 /*!
  * Assert interface
  */
 
-var assert = require('./chai/interface/assert');
+var assert = require("./chai/interface/assert");
 exports.use(assert);

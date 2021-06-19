@@ -1,21 +1,21 @@
-# October 8, 2015 
+# October 8, 2015
 
 ## Atendees
 
-* [LS][LS] - Leah
-* [LK][LK] - locks
-* [MK][MK] - Michael
-* [BM][BM] - Brendan
-* [TD][TD] - Tom
+- [LS][ls] - Leah
+- [LK][lk] - locks
+- [MK][mk] - Michael
+- [BM][bm] - Brendan
+- [TD][td] - Tom
 
 ## Topic
 
-* Backporting version switcher to 1.13.0
-* Tutorial
-* Redesign
-* Guides index page
-* Homepage
-* Prose style
+- Backporting version switcher to 1.13.0
+- Tutorial
+- Redesign
+- Guides index page
+- Homepage
+- Prose style
 
 **MK**: 1.13 rebasing / backporting
 
@@ -29,7 +29,7 @@
 
 **LK**: with the 2.1 release I haven't had a chance to dive into it
 
-* **MK** checks tutorial *
+- **MK** checks tutorial \*
 
 **MK**: I don't think kelly is going to have time again to contribute to this
 
@@ -39,7 +39,7 @@
 
 **LK**: I'm going to fill out the Guides' index with a bit more information
 
-**LK**: I want to make it a bit more welcoming and also add assumptions like the [Ruby on Rails Guides][RoRG]
+**LK**: I want to make it a bit more welcoming and also add assumptions like the [Ruby on Rails Guides][rorg]
 
 **MK**: Kelly explains and links to when introducing a new technology/concept
 
@@ -77,24 +77,23 @@
 
 **LS**: yes, can one of you do it this time?
 
-* **MK** goes robot *
+- **MK** goes robot \*
 
 **LK**: **TD** has the most reach, can you do it?
 
 **TD**: I will tweet about it and post to Slack
 
-* **LS** goes full robot *
+- **LS** goes full robot \*
 
 **TD**: you never go full robot
 
-* smalltalk *
+- smalltalk \*
 
-* **MK** closes out the meeting *
+- **MK** closes out the meeting \*
 
-[LS]: https://github.com/wifelette
-[LK]: https://github.com/locks
-[MK]: https://github.com/michaelrkn
-[BM]: https://github.com/bmac
-[TD]: https://github.com/tomdale
-
-[RoRG]: http://guides.rubyonrails.org/getting_started.html#guide-assumptions
+[ls]: https://github.com/wifelette
+[lk]: https://github.com/locks
+[mk]: https://github.com/michaelrkn
+[bm]: https://github.com/bmac
+[td]: https://github.com/tomdale
+[rorg]: http://guides.rubyonrails.org/getting_started.html#guide-assumptions

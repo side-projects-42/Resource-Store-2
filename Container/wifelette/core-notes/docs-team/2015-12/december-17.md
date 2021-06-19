@@ -1,11 +1,11 @@
 Attending:
 
-* David Baker
-* Lead Silber
-* Michael Kaiser-Nyman
-* Ricardo Mendes
-* Ryan Tablada
-* Todd Jordan
+- David Baker
+- Lead Silber
+- Michael Kaiser-Nyman
+- Ricardo Mendes
+- Ryan Tablada
+- Todd Jordan
 
 ---
 

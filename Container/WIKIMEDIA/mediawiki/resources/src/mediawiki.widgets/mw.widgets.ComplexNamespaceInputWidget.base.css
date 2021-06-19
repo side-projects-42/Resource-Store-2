@@ -17,7 +17,10 @@
 	margin-bottom: 0;
 }
 
-.mw-widget-complexNamespaceInputWidget .oo-ui-fieldLayout.oo-ui-fieldLayout-align-inline.oo-ui-labelElement > .oo-ui-fieldLayout-body > .oo-ui-labelElement-label {
+.mw-widget-complexNamespaceInputWidget
+	.oo-ui-fieldLayout.oo-ui-fieldLayout-align-inline.oo-ui-labelElement
+	> .oo-ui-fieldLayout-body
+	> .oo-ui-labelElement-label {
 	padding-left: 0.5em;
 }
 

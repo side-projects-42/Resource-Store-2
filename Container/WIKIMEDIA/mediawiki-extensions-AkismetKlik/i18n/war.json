@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Harvzsf"
-		]
-	},
-	"akismetklik-desc": "Nagbabaribad hin mga pagliwat tikang hin mga nahunahunaan nga mga spammer hin comment dida han kan Akismet blacklist"
+  "@metadata": {
+    "authors": ["Harvzsf"]
+  },
+  "akismetklik-desc": "Nagbabaribad hin mga pagliwat tikang hin mga nahunahunaan nga mga spammer hin comment dida han kan Akismet blacklist"
 }

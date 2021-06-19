@@ -1,14 +1,14 @@
 "use strict";
-var streams = require('../streams')
-, layouts = require('../layouts')
-, async = require('async')
-, path = require('path')
-, os = require('os')
-, eol = os.EOL || '\n'
-, openFiles = [];
+var streams = require("../streams"),
+  layouts = require("../layouts"),
+  async = require("async"),
+  path = require("path"),
+  os = require("os"),
+  eol = os.EOL || "\n",
+  openFiles = [];
 
 //close open files on process exit.
-process.on('exit', function() {
+process.on("exit", function () {
   openFiles.forEach(function (file) {
     file.end();
   });
@@ -24,17 +24,14 @@ process.on('exit', function() {
 function appender(filename, pattern, alwaysIncludePattern, layout) {
   layout = layout || layouts.basicLayout;
 
-  var logFile = new streams.DateRollingFileStream(
-    filename,
-    pattern,
-    { alwaysIncludePattern: alwaysIncludePattern }
-  );
+  var logFile = new streams.DateRollingFileStream(filename, pattern, {
+    alwaysIncludePattern: alwaysIncludePattern,
+  });
   openFiles.push(logFile);
 
-  return function(logEvent) {
+  return function (logEvent) {
     logFile.write(layout(logEvent) + eol, "utf8");
   };
-
 }
 
 function configure(config, options) {
@@ -52,19 +49,28 @@ function configure(config, options) {
     config.filename = path.join(options.cwd, config.filename);
   }
 
-  return appender(config.filename, config.pattern, config.alwaysIncludePattern, layout);
+  return appender(
+    config.filename,
+    config.pattern,
+    config.alwaysIncludePattern,
+    layout
+  );
 }
 
 function shutdown(cb) {
-  async.each(openFiles, function(file, done) {
-    if (!file.write(eol, "utf-8")) {
-      file.once('drain', function() {
+  async.each(
+    openFiles,
+    function (file, done) {
+      if (!file.write(eol, "utf-8")) {
+        file.once("drain", function () {
+          file.end(done);
+        });
+      } else {
         file.end(done);
-      });
-    } else {
-      file.end(done);
-    }
-  }, cb);
+      }
+    },
+    cb
+  );
 }
 
 exports.appender = appender;

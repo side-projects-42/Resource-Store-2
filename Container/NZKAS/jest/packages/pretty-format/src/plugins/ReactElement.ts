@@ -19,7 +19,7 @@ import {
 // return flattened array of children.
 const getChildren = (arg: Array<any>, children = []) => {
   if (Array.isArray(arg)) {
-    arg.forEach(item => {
+    arg.forEach((item) => {
       getChildren(item, children);
     });
   } else if (arg != null && arg !== false) {
@@ -70,7 +70,7 @@ const getPropKeys = (element: any) => {
   const {props} = element;
 
   return Object.keys(props)
-    .filter(key => key !== 'children' && props[key] !== undefined)
+    .filter((key) => key !== 'children' && props[key] !== undefined)
     .sort();
 };
 

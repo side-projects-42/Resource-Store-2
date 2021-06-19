@@ -96,7 +96,19 @@
 					"notnull": false,
 					"default": null,
 					"CustomSchemaOptions": {
-						"enum_values": [ "UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE", "3D" ]
+						"enum_values": [
+							"UNKNOWN",
+							"BITMAP",
+							"DRAWING",
+							"AUDIO",
+							"VIDEO",
+							"MULTIMEDIA",
+							"OFFICE",
+							"TEXT",
+							"EXECUTABLE",
+							"ARCHIVE",
+							"3D"
+						]
 					}
 				}
 			},
@@ -107,7 +119,18 @@
 					"notnull": true,
 					"default": "unknown",
 					"CustomSchemaOptions": {
-						"enum_values": [ "unknown", "application", "audio", "image", "text", "video", "message", "model", "multipart", "chemical" ]
+						"enum_values": [
+							"unknown",
+							"application",
+							"audio",
+							"image",
+							"text",
+							"video",
+							"message",
+							"model",
+							"multipart",
+							"chemical"
+						]
 					}
 				}
 			},
@@ -142,37 +165,26 @@
 		"indexes": [
 			{
 				"name": "oi_actor_timestamp",
-				"columns": [
-					"oi_actor",
-					"oi_timestamp"
-				],
+				"columns": ["oi_actor", "oi_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "oi_name_timestamp",
-				"columns": [
-					"oi_name",
-					"oi_timestamp"
-				],
+				"columns": ["oi_name", "oi_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "oi_name_archive_name",
 				"comment": "oi_archive_name truncated to 14 to avoid key length overflow",
-				"columns": [
-					"oi_name",
-					"oi_archive_name"
-				],
+				"columns": ["oi_name", "oi_archive_name"],
 				"unique": false,
-				"options": { "lengths": [ null, 14 ] }
+				"options": { "lengths": [null, 14] }
 			},
 			{
 				"name": "oi_sha1",
-				"columns": [
-					"oi_sha1"
-				],
+				"columns": ["oi_sha1"],
 				"unique": false,
-				"options": { "lengths": [ 10 ] }
+				"options": { "lengths": [10] }
 			}
 		]
 	},
@@ -272,7 +284,19 @@
 					"notnull": false,
 					"default": null,
 					"CustomSchemaOptions": {
-						"enum_values": [ "UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE", "3D" ]
+						"enum_values": [
+							"UNKNOWN",
+							"BITMAP",
+							"DRAWING",
+							"AUDIO",
+							"VIDEO",
+							"MULTIMEDIA",
+							"OFFICE",
+							"TEXT",
+							"EXECUTABLE",
+							"ARCHIVE",
+							"3D"
+						]
 					}
 				}
 			},
@@ -283,7 +307,18 @@
 					"notnull": true,
 					"default": "unknown",
 					"CustomSchemaOptions": {
-						"enum_values": [ "unknown", "application", "audio", "image", "text", "video", "message", "model", "multipart", "chemical" ]
+						"enum_values": [
+							"unknown",
+							"application",
+							"audio",
+							"image",
+							"text",
+							"video",
+							"message",
+							"model",
+							"multipart",
+							"chemical"
+						]
 					}
 				}
 			},
@@ -318,44 +353,31 @@
 		"indexes": [
 			{
 				"name": "oi_actor_timestamp",
-				"columns": [
-					"oi_actor",
-					"oi_timestamp"
-				],
+				"columns": ["oi_actor", "oi_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "oi_name_timestamp",
-				"columns": [
-					"oi_name",
-					"oi_timestamp"
-				],
+				"columns": ["oi_name", "oi_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "oi_name_archive_name",
 				"comment": "oi_archive_name truncated to 14 to avoid key length overflow",
-				"columns": [
-					"oi_name",
-					"oi_archive_name"
-				],
+				"columns": ["oi_name", "oi_archive_name"],
 				"unique": false,
-				"options": { "lengths": [ null, 14 ] }
+				"options": { "lengths": [null, 14] }
 			},
 			{
 				"name": "oi_sha1",
-				"columns": [
-					"oi_sha1"
-				],
+				"columns": ["oi_sha1"],
 				"unique": false,
-				"options": { "lengths": [ 10 ] }
+				"options": { "lengths": [10] }
 			},
 			{
 				"name": "oi_timestamp",
 				"comment": "Used by Special:ListFiles",
-				"columns": [
-					"oi_timestamp"
-				],
+				"columns": ["oi_timestamp"],
 				"unique": false
 			}
 		]

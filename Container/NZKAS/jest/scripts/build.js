@@ -40,7 +40,8 @@ const TS_FILES_PATTERN = '**/*.ts';
 const IGNORE_PATTERN = '**/__{tests,mocks}__/**';
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 
-const INLINE_REQUIRE_BLACKLIST = /packages\/expect|(jest-(circus|diff|get-type|jasmine2|matcher-utils|message-util|regex-util|snapshot))|pretty-format\//;
+const INLINE_REQUIRE_BLACKLIST =
+  /packages\/expect|(jest-(circus|diff|get-type|jasmine2|matcher-utils|message-util|regex-util|snapshot))|pretty-format\//;
 
 const transformOptions = require('../babel.config.js');
 
@@ -67,7 +68,7 @@ function buildNodePackage(p) {
 
   process.stdout.write(adjustToTerminalWidth(`${path.basename(p)}\n`));
 
-  files.forEach(file => buildFile(file, true));
+  files.forEach((file) => buildFile(file, true));
 
   process.stdout.write(`${OK}\n`);
 }
@@ -98,7 +99,7 @@ function buildBrowserPackage(p) {
         process.stdout.write(adjustToTerminalWidth(`${path.basename(p)}\n`));
         process.stdout.write(`${OK}\n`);
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         process.exit(1);
       });
@@ -144,7 +145,7 @@ function buildFile(file, silent) {
         require.resolve('./babel-plugin-jest-native-globals')
       );
     } else {
-      options.plugins = options.plugins.map(plugin => {
+      options.plugins = options.plugins.map((plugin) => {
         if (
           Array.isArray(plugin) &&
           plugin[0] === '@babel/plugin-transform-modules-commonjs'

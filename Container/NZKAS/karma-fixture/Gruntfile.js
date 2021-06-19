@@ -1,13 +1,13 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON("package.json"),
 
     bump: {
       options: {
-        pushTo: 'origin',
-      }
+        pushTo: "origin",
+      },
     },
   });
 
-  grunt.loadNpmTasks('grunt-bump');
+  grunt.loadNpmTasks("grunt-bump");
 };

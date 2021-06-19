@@ -19,20 +19,20 @@ Please note that this tool only parses source code to JSX AST, which is useful f
 You can use module directly in order to get Acorn instance with plugin installed:
 
 ```javascript
-var acorn = require('acorn-jsx');
+var acorn = require("acorn-jsx");
 ```
 
 Or you can use `inject.js` for injecting plugin into your own version of Acorn like following:
 
 ```javascript
-var acorn = require('acorn-jsx/inject')(require('./custom-acorn'));
+var acorn = require("acorn-jsx/inject")(require("./custom-acorn"));
 ```
 
 Then, use `plugins` option whenever you need to support JSX while parsing:
 
 ```javascript
 var ast = acorn.parse(code, {
-  plugins: { jsx: true }
+  plugins: { jsx: true },
 });
 ```
 

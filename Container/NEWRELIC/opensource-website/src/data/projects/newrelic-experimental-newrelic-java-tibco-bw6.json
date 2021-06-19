@@ -15,10 +15,7 @@
   "description": "Provides instrumentation for Tibco BusinessWorks v6",
   "ossCategory": "new-relic-experimental",
   "primaryLanguage": "Java",
-  "projectTags": [
-    "nrlabs",
-    "instrumentation"
-  ],
+  "projectTags": ["nrlabs", "instrumentation"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic Java Instrumentation for Tibco BusinessWorks 6",

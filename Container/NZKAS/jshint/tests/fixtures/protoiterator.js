@@ -4,7 +4,8 @@ function RangeIterator(range) {
 }
 
 function hasKey(object, key) {
-  var original = object.__proto__, result;
+  var original = object.__proto__,
+    result;
   object.__proto__ = null;
   result = key in object;
   object.__proto__ = original;
@@ -29,7 +30,8 @@ Range.prototype.__iterator__ = function __iterator__() {
 };
 
 function SubArray(length) {
-  var result = arguments.length === 1 ? Array(length) : Array.apply(this, arguments);
+  var result =
+    arguments.length === 1 ? Array(length) : Array.apply(this, arguments);
   result.__proto__ = SubArray.prototype;
   return result;
 }

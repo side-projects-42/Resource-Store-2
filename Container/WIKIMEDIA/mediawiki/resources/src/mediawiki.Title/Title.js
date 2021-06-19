@@ -30,59 +30,50 @@
 /* Private members */
 
 var toUpperMap,
-	mwString = require( 'mediawiki.String' ),
-
-	namespaceIds = mw.config.get( 'wgNamespaceIds' ),
-
+	mwString = require("mediawiki.String"),
+	namespaceIds = mw.config.get("wgNamespaceIds"),
 	/**
 	 * @private
 	 * @static
 	 * @property {number} NS_MAIN
 	 */
-	NS_MAIN = namespaceIds[ '' ],
-
+	NS_MAIN = namespaceIds[""],
 	/**
 	 * @private
 	 * @static
 	 * @property {number} NS_TALK
 	 */
 	NS_TALK = namespaceIds.talk,
-
 	/**
 	 * @private
 	 * @static
 	 * @property {number} NS_SPECIAL
 	 */
 	NS_SPECIAL = namespaceIds.special,
-
 	/**
 	 * @private
 	 * @static
 	 * @property {number} NS_MEDIA
 	 */
 	NS_MEDIA = namespaceIds.media,
-
 	/**
 	 * @private
 	 * @static
 	 * @property {number} NS_FILE
 	 */
 	NS_FILE = namespaceIds.file,
-
 	/**
 	 * @private
 	 * @static
 	 * @property {number} FILENAME_MAX_BYTES
 	 */
 	FILENAME_MAX_BYTES = 240,
-
 	/**
 	 * @private
 	 * @static
 	 * @property {number} TITLE_MAX_BYTES
 	 */
 	TITLE_MAX_BYTES = 255,
-
 	/**
 	 * Get the namespace id from a namespace name (either from the localized, canonical or alias
 	 * name).
@@ -96,34 +87,35 @@ var toUpperMap,
 	 * @param {string} ns Namespace name (case insensitive, leading/trailing space ignored)
 	 * @return {number|boolean} Namespace id or boolean false
 	 */
-	getNsIdByName = function ( ns ) {
+	getNsIdByName = function (ns) {
 		var id;
 
 		// Don't cast non-strings to strings, because null or undefined should not result in
 		// returning the id of a potential namespace called "Null:" (e.g. on null.example.org/wiki)
 		// Also, toLowerCase throws exception on null/undefined, because it is a String method.
-		if ( typeof ns !== 'string' ) {
+		if (typeof ns !== "string") {
 			return false;
 		}
 		// TODO: Should just use local var namespaceIds here but it
 		// breaks test which modify the config
-		id = mw.config.get( 'wgNamespaceIds' )[ ns.toLowerCase() ];
-		if ( id === undefined ) {
+		id = mw.config.get("wgNamespaceIds")[ns.toLowerCase()];
+		if (id === undefined) {
 			return false;
 		}
 		return id;
 	},
-
 	/**
 	 * @private
 	 * @method isKnownNamespace
 	 * @param {number} namespace that may or may not exist
 	 * @return {boolean}
 	 */
-	isKnownNamespace = function ( namespace ) {
-		return namespace === NS_MAIN || mw.config.get( 'wgFormattedNamespaces' )[ namespace ] !== undefined;
+	isKnownNamespace = function (namespace) {
+		return (
+			namespace === NS_MAIN ||
+			mw.config.get("wgFormattedNamespaces")[namespace] !== undefined
+		);
 	},
-
 	/**
 	 * @private
 	 * @method getNamespacePrefix_
@@ -131,35 +123,34 @@ var toUpperMap,
 	 *  `isKnownNamespace` before executing this method.
 	 * @return {string}
 	 */
-	getNamespacePrefix = function ( namespace ) {
-		return namespace === NS_MAIN ?
-			'' :
-			( mw.config.get( 'wgFormattedNamespaces' )[ namespace ].replace( / /g, '_' ) + ':' );
+	getNamespacePrefix = function (namespace) {
+		return namespace === NS_MAIN
+			? ""
+			: mw.config
+					.get("wgFormattedNamespaces")
+					[namespace].replace(/ /g, "_") + ":";
 	},
-
 	rUnderscoreTrim = /^_+|_+$/g,
-
 	rSplit = /^(.+?)_*:_*(.*)$/,
-
 	// See MediaWikiTitleCodec.php#getTitleInvalidRegex
 	rInvalid = new RegExp(
-		'[^' + mw.config.get( 'wgLegalTitleChars' ) + ']' +
-		// URL percent encoding sequences interfere with the ability
-		// to round-trip titles -- you can't link to them consistently.
-		'|%[\\dA-Fa-f]{2}' +
-		// XML/HTML character references produce similar issues.
-		'|&[\\dA-Za-z\u0080-\uFFFF]+;' +
-		'|&#\\d+;' +
-		'|&#x[\\dA-Fa-f]+;'
+		"[^" +
+			mw.config.get("wgLegalTitleChars") +
+			"]" +
+			// URL percent encoding sequences interfere with the ability
+			// to round-trip titles -- you can't link to them consistently.
+			"|%[\\dA-Fa-f]{2}" +
+			// XML/HTML character references produce similar issues.
+			"|&[\\dA-Za-z\u0080-\uFFFF]+;" +
+			"|&#\\d+;" +
+			"|&#x[\\dA-Fa-f]+;"
 	),
-
 	// From MediaWikiTitleCodec::splitTitleString() in PHP
 	// Note that this is not equivalent to /\s/, e.g. underscore is included, tab is not included.
-	rWhitespace = /[ _\u00A0\u1680\u180E\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g,
-
+	rWhitespace =
+		/[ _\u00A0\u1680\u180E\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g,
 	// From MediaWikiTitleCodec::splitTitleString() in PHP
 	rUnicodeBidi = /[\u200E\u200F\u202A-\u202E]+/g,
-
 	/**
 	 * Slightly modified from Flinfo. Credit goes to Lupo and Flominator.
 	 *
@@ -171,60 +162,63 @@ var toUpperMap,
 		// "signature"
 		{
 			pattern: /~{3}/g,
-			replace: '',
-			generalRule: true
+			replace: "",
+			generalRule: true,
 		},
 		// control characters
 		{
 			// eslint-disable-next-line no-control-regex
 			pattern: /[\x00-\x1f\x7f]/g,
-			replace: '',
-			generalRule: true
+			replace: "",
+			generalRule: true,
 		},
 		// URL encoding (possibly)
 		{
 			pattern: /%([\dA-Fa-f]{2})/g,
-			replace: '% $1',
-			generalRule: true
+			replace: "% $1",
+			generalRule: true,
 		},
 		// HTML-character-entities
 		{
 			pattern: /&(([\dA-Za-z\x80-\xff]+|#\d+|#x[\dA-Fa-f]+);)/g,
-			replace: '& $1',
-			generalRule: true
+			replace: "& $1",
+			generalRule: true,
 		},
 		// slash, colon (not supported by file systems like NTFS/Windows, Mac OS 9 [:], ext4 [/])
 		{
-			pattern: new RegExp( '[' + mw.config.get( 'wgIllegalFileChars', '' ) + ']', 'g' ),
-			replace: '-',
-			fileRule: true
+			pattern: new RegExp(
+				"[" + mw.config.get("wgIllegalFileChars", "") + "]",
+				"g"
+			),
+			replace: "-",
+			fileRule: true,
 		},
 		// brackets, greater than
 		{
 			pattern: /[}\]>]/g,
-			replace: ')',
-			generalRule: true
+			replace: ")",
+			generalRule: true,
 		},
 		// brackets, lower than
 		{
 			pattern: /[{[<]/g,
-			replace: '(',
-			generalRule: true
+			replace: "(",
+			generalRule: true,
 		},
 		// everything that wasn't covered yet
 		{
-			pattern: new RegExp( rInvalid.source, 'g' ),
-			replace: '-',
-			generalRule: true
+			pattern: new RegExp(rInvalid.source, "g"),
+			replace: "-",
+			generalRule: true,
 		},
 		// directory structures
 		{
-			pattern: /^(\.|\.\.|\.\/.*|\.\.\/.*|.*\/\.\/.*|.*\/\.\.\/.*|.*\/\.|.*\/\.\.)$/g,
-			replace: '',
-			generalRule: true
-		}
+			pattern:
+				/^(\.|\.\.|\.\/.*|\.\.\/.*|.*\/\.\/.*|.*\/\.\.\/.*|.*\/\.|.*\/\.\.)$/g,
+			replace: "",
+			generalRule: true,
+		},
 	],
-
 	/**
 	 * Internal helper for #constructor and #newFromText.
 	 *
@@ -237,47 +231,47 @@ var toUpperMap,
 	 * @param {number} [defaultNamespace=NS_MAIN]
 	 * @return {Object|boolean}
 	 */
-	parse = function ( title, defaultNamespace ) {
+	parse = function (title, defaultNamespace) {
 		var namespace, m, id, i, fragment;
 
 		namespace = defaultNamespace === undefined ? NS_MAIN : defaultNamespace;
 
 		title = title
 			// Strip Unicode bidi override characters
-			.replace( rUnicodeBidi, '' )
+			.replace(rUnicodeBidi, "")
 			// Normalise whitespace to underscores and remove duplicates
-			.replace( rWhitespace, '_' )
+			.replace(rWhitespace, "_")
 			// Trim underscores
-			.replace( rUnderscoreTrim, '' );
+			.replace(rUnderscoreTrim, "");
 
 		// Process initial colon
-		if ( title !== '' && title[ 0 ] === ':' ) {
+		if (title !== "" && title[0] === ":") {
 			// Initial colon means main namespace instead of specified default
 			namespace = NS_MAIN;
 			title = title
 				// Strip colon
-				.slice( 1 )
+				.slice(1)
 				// Trim underscores
-				.replace( rUnderscoreTrim, '' );
+				.replace(rUnderscoreTrim, "");
 		}
 
-		if ( title === '' ) {
+		if (title === "") {
 			return false;
 		}
 
 		// Process namespace prefix (if any)
-		m = title.match( rSplit );
-		if ( m ) {
-			id = getNsIdByName( m[ 1 ] );
-			if ( id !== false ) {
+		m = title.match(rSplit);
+		if (m) {
+			id = getNsIdByName(m[1]);
+			if (id !== false) {
 				// Ordinary namespace
 				namespace = id;
-				title = m[ 2 ];
+				title = m[2];
 
 				// For Talk:X pages, make sure X has no "namespace" prefix
-				if ( namespace === NS_TALK && ( m = title.match( rSplit ) ) ) {
+				if (namespace === NS_TALK && (m = title.match(rSplit))) {
 					// Disallow titles like Talk:File:x (subject should roundtrip: talk:file:x -> file:x -> file_talk:x)
-					if ( getNsIdByName( m[ 1 ] ) !== false ) {
+					if (getNsIdByName(m[1]) !== false) {
 						return false;
 					}
 				}
@@ -285,46 +279,46 @@ var toUpperMap,
 		}
 
 		// Process fragment
-		i = title.indexOf( '#' );
-		if ( i === -1 ) {
+		i = title.indexOf("#");
+		if (i === -1) {
 			fragment = null;
 		} else {
 			fragment = title
 				// Get segment starting after the hash
-				.slice( i + 1 )
+				.slice(i + 1)
 				// Convert to text
 				// NB: Must not be trimmed ("Example#_foo" is not the same as "Example#foo")
-				.replace( /_/g, ' ' );
+				.replace(/_/g, " ");
 
 			title = title
 				// Strip hash
-				.slice( 0, i )
+				.slice(0, i)
 				// Trim underscores, again (strips "_" from "bar" in "Foo_bar_#quux")
-				.replace( rUnderscoreTrim, '' );
+				.replace(rUnderscoreTrim, "");
 		}
 
 		// Reject illegal characters
-		if ( rInvalid.test( title ) ) {
+		if (rInvalid.test(title)) {
 			return false;
 		}
 
 		// Disallow titles that browsers or servers might resolve as directory navigation
 		if (
-			title.indexOf( '.' ) !== -1 && (
-				title === '.' || title === '..' ||
-				title.indexOf( './' ) === 0 ||
-				title.indexOf( '../' ) === 0 ||
-				title.indexOf( '/./' ) !== -1 ||
-				title.indexOf( '/../' ) !== -1 ||
-				title.slice( -2 ) === '/.' ||
-				title.slice( -3 ) === '/..'
-			)
+			title.indexOf(".") !== -1 &&
+			(title === "." ||
+				title === ".." ||
+				title.indexOf("./") === 0 ||
+				title.indexOf("../") === 0 ||
+				title.indexOf("/./") !== -1 ||
+				title.indexOf("/../") !== -1 ||
+				title.slice(-2) === "/." ||
+				title.slice(-3) === "/..")
 		) {
 			return false;
 		}
 
 		// Disallow magic tilde sequence
-		if ( title.indexOf( '~~~' ) !== -1 ) {
+		if (title.indexOf("~~~") !== -1) {
 			return false;
 		}
 
@@ -332,27 +326,29 @@ var toUpperMap,
 		// Except for special pages, e.g. [[Special:Block/Long name]]
 		// Note: The PHP implementation also asserts that even in NS_SPECIAL, the title should
 		// be less than 512 bytes.
-		if ( namespace !== NS_SPECIAL && mwString.byteLength( title ) > TITLE_MAX_BYTES ) {
+		if (
+			namespace !== NS_SPECIAL &&
+			mwString.byteLength(title) > TITLE_MAX_BYTES
+		) {
 			return false;
 		}
 
 		// Can't make a link to a namespace alone.
-		if ( title === '' && namespace !== NS_MAIN ) {
+		if (title === "" && namespace !== NS_MAIN) {
 			return false;
 		}
 
 		// Any remaining initial :s are illegal.
-		if ( title[ 0 ] === ':' ) {
+		if (title[0] === ":") {
 			return false;
 		}
 
 		return {
 			namespace: namespace,
 			title: title,
-			fragment: fragment
+			fragment: fragment,
 		};
 	},
-
 	/**
 	 * Convert db-key to readable text.
 	 *
@@ -362,10 +358,9 @@ var toUpperMap,
 	 * @param {string} s
 	 * @return {string}
 	 */
-	text = function ( s ) {
-		return s.replace( /_/g, ' ' );
+	text = function (s) {
+		return s.replace(/_/g, " ");
 	},
-
 	/**
 	 * Sanitizes a string based on a rule set and a filter
 	 *
@@ -376,21 +371,24 @@ var toUpperMap,
 	 * @param {Array} filter
 	 * @return {string}
 	 */
-	sanitize = function ( s, filter ) {
-		var i, ruleLength, rule, m, filterLength,
+	sanitize = function (s, filter) {
+		var i,
+			ruleLength,
+			rule,
+			m,
+			filterLength,
 			rules = sanitationRules;
 
-		for ( i = 0, ruleLength = rules.length; i < ruleLength; ++i ) {
-			rule = rules[ i ];
-			for ( m = 0, filterLength = filter.length; m < filterLength; ++m ) {
-				if ( rule[ filter[ m ] ] ) {
-					s = s.replace( rule.pattern, rule.replace );
+		for (i = 0, ruleLength = rules.length; i < ruleLength; ++i) {
+			rule = rules[i];
+			for (m = 0, filterLength = filter.length; m < filterLength; ++m) {
+				if (rule[filter[m]]) {
+					s = s.replace(rule.pattern, rule.replace);
 				}
 			}
 		}
 		return s;
 	},
-
 	/**
 	 * Cuts a string to a specific byte length, assuming UTF-8
 	 * or less, if the last character is a multi-byte one
@@ -402,10 +400,9 @@ var toUpperMap,
 	 * @param {number} length
 	 * @return {string}
 	 */
-	trimToByteLength = function ( s, length ) {
-		return mwString.trimByteLength( '', s, length ).newVal;
+	trimToByteLength = function (s, length) {
+		return mwString.trimByteLength("", s, length).newVal;
 	},
-
 	/**
 	 * Cuts a file name to a specific byte length
 	 *
@@ -416,9 +413,13 @@ var toUpperMap,
 	 * @param {string} extension file extension
 	 * @return {string} The full name, including extension
 	 */
-	trimFileNameToByteLength = function ( name, extension ) {
+	trimFileNameToByteLength = function (name, extension) {
 		// There is a special byte limit for file names and ... remember the dot
-		return trimToByteLength( name, FILENAME_MAX_BYTES - extension.length - 1 ) + '.' + extension;
+		return (
+			trimToByteLength(name, FILENAME_MAX_BYTES - extension.length - 1) +
+			"." +
+			extension
+		);
 	};
 
 /**
@@ -428,10 +429,10 @@ var toUpperMap,
  * @param {number} [namespace=NS_MAIN] If given, will used as default namespace for the given title
  * @throws {Error} When the title is invalid
  */
-function Title( title, namespace ) {
-	var parsed = parse( title, namespace );
-	if ( !parsed ) {
-		throw new Error( 'Unable to parse title' );
+function Title(title, namespace) {
+	var parsed = parse(title, namespace);
+	if (!parsed) {
+		throw new Error("Unable to parse title");
 	}
 
 	this.namespace = parsed.namespace;
@@ -453,13 +454,14 @@ function Title( title, namespace ) {
  * @param {number} [namespace=NS_MAIN] Default namespace
  * @return {mw.Title|null} A valid Title object or null if the title is invalid
  */
-Title.newFromText = function ( title, namespace ) {
-	var t, parsed = parse( title, namespace );
-	if ( !parsed ) {
+Title.newFromText = function (title, namespace) {
+	var t,
+		parsed = parse(title, namespace);
+	if (!parsed) {
 		return null;
 	}
 
-	t = Object.create( Title.prototype );
+	t = Object.create(Title.prototype);
 	t.namespace = parsed.namespace;
 	t.title = parsed.title;
 	t.fragment = parsed.fragment;
@@ -481,11 +483,11 @@ Title.newFromText = function ( title, namespace ) {
  * @param {string} title
  * @return {mw.Title|null} A valid Title object or null if the title is invalid
  */
-Title.makeTitle = function ( namespace, title ) {
-	if ( !isKnownNamespace( namespace ) ) {
+Title.makeTitle = function (namespace, title) {
+	if (!isKnownNamespace(namespace)) {
 		return null;
 	} else {
-		return mw.Title.newFromText( getNamespacePrefix( namespace ) + title );
+		return mw.Title.newFromText(getNamespacePrefix(namespace) + title);
 	}
 };
 
@@ -504,78 +506,84 @@ Title.makeTitle = function ( namespace, title ) {
  *  Automatically assumed if the title is created in the Media namespace.
  * @return {mw.Title|null} A valid Title object or null if the input cannot be turned into a valid title
  */
-Title.newFromUserInput = function ( title, defaultNamespace, options ) {
-	var m, id, ext, lastDot,
-		namespace = parseInt( defaultNamespace ) || NS_MAIN;
+Title.newFromUserInput = function (title, defaultNamespace, options) {
+	var m,
+		id,
+		ext,
+		lastDot,
+		namespace = parseInt(defaultNamespace) || NS_MAIN;
 
 	// merge options into defaults
-	options = $.extend( {
-		forUploading: true
-	}, options );
+	options = $.extend(
+		{
+			forUploading: true,
+		},
+		options
+	);
 
 	// Normalise additional whitespace
-	title = title.replace( /\s/g, ' ' ).trim();
+	title = title.replace(/\s/g, " ").trim();
 
 	// Process initial colon
-	if ( title !== '' && title[ 0 ] === ':' ) {
+	if (title !== "" && title[0] === ":") {
 		// Initial colon means main namespace instead of specified default
 		namespace = NS_MAIN;
 		title = title
 			// Strip colon
-			.substr( 1 )
+			.substr(1)
 			// Trim underscores
-			.replace( rUnderscoreTrim, '' );
+			.replace(rUnderscoreTrim, "");
 	}
 
 	// Process namespace prefix (if any)
-	m = title.match( rSplit );
-	if ( m ) {
-		id = getNsIdByName( m[ 1 ] );
-		if ( id !== false ) {
+	m = title.match(rSplit);
+	if (m) {
+		id = getNsIdByName(m[1]);
+		if (id !== false) {
 			// Ordinary namespace
 			namespace = id;
-			title = m[ 2 ];
+			title = m[2];
 		}
 	}
 
 	if (
 		namespace === NS_MEDIA ||
-		( options.forUploading && ( namespace === NS_FILE ) )
+		(options.forUploading && namespace === NS_FILE)
 	) {
-		title = sanitize( title, [ 'generalRule', 'fileRule' ] );
+		title = sanitize(title, ["generalRule", "fileRule"]);
 
 		// Operate on the file extension
 		// Although it is possible having spaces between the name and the ".ext" this isn't nice for
 		// operating systems hiding file extensions -> strip them later on
-		lastDot = title.lastIndexOf( '.' );
+		lastDot = title.lastIndexOf(".");
 
 		// No or empty file extension
-		if ( lastDot === -1 || lastDot >= title.length - 1 ) {
+		if (lastDot === -1 || lastDot >= title.length - 1) {
 			return null;
 		}
 
 		// Get the last part, which is supposed to be the file extension
-		ext = title.slice( lastDot + 1 );
+		ext = title.slice(lastDot + 1);
 
 		// Remove whitespace of the name part (that without extension)
-		title = title.slice( 0, lastDot ).trim();
+		title = title.slice(0, lastDot).trim();
 
 		// Cut, if too long and append file extension
-		title = trimFileNameToByteLength( title, ext );
+		title = trimFileNameToByteLength(title, ext);
 	} else {
-		title = sanitize( title, [ 'generalRule' ] );
+		title = sanitize(title, ["generalRule"]);
 
 		// Cut titles exceeding the TITLE_MAX_BYTES byte size limit
 		// (size of underlying database field)
-		if ( namespace !== NS_SPECIAL ) {
-			title = trimToByteLength( title, TITLE_MAX_BYTES );
+		if (namespace !== NS_SPECIAL) {
+			title = trimToByteLength(title, TITLE_MAX_BYTES);
 		}
 	}
 
 	// Any remaining initial :s are illegal.
-	title = title.replace( /^:+/, '' );
+	title = title.replace(/^:+/, "");
 
-	return Title.newFromText( title, namespace );
+	return Title.newFromText(title, namespace);
 };
 
 /**
@@ -588,8 +596,8 @@ Title.newFromUserInput = function ( title, defaultNamespace, options ) {
  *   without namespace
  * @return {mw.Title|null} A valid Title object or null if the title is invalid
  */
-Title.newFromFileName = function ( uncleanName ) {
-	return Title.newFromUserInput( 'File:' + uncleanName );
+Title.newFromFileName = function (uncleanName) {
+	return Title.newFromUserInput("File:" + uncleanName);
 };
 
 /**
@@ -601,11 +609,11 @@ Title.newFromFileName = function ( uncleanName ) {
  * @param {HTMLElement|jQuery} img The image to use as a base
  * @return {mw.Title|null} The file title or null if unsuccessful
  */
-Title.newFromImg = function ( img ) {
-	var src = img.jquery ? img[ 0 ].src : img.src,
-		data = mw.util.parseImageUrl( src );
+Title.newFromImg = function (img) {
+	var src = img.jquery ? img[0].src : img.src,
+		data = mw.util.parseImageUrl(src);
 
-	return data ? mw.Title.newFromText( 'File:' + data.name ) : null;
+	return data ? mw.Title.newFromText("File:" + data.name) : null;
 };
 
 /**
@@ -616,8 +624,8 @@ Title.newFromImg = function ( img ) {
  * @param {number} namespaceId Namespace ID
  * @return {boolean} Namespace is a talk namespace
  */
-Title.isTalkNamespace = function ( namespaceId ) {
-	return !!( namespaceId > NS_MAIN && namespaceId % 2 );
+Title.isTalkNamespace = function (namespaceId) {
+	return !!(namespaceId > NS_MAIN && namespaceId % 2);
 };
 
 /**
@@ -628,9 +636,11 @@ Title.isTalkNamespace = function ( namespaceId ) {
  * @param {number} namespaceId Namespace ID
  * @return {boolean} Namespace is a signature namespace
  */
-Title.wantSignaturesNamespace = function ( namespaceId ) {
-	return Title.isTalkNamespace( namespaceId ) ||
-		mw.config.get( 'wgExtraSignatureNamespaces' ).indexOf( namespaceId ) !== -1;
+Title.wantSignaturesNamespace = function (namespaceId) {
+	return (
+		Title.isTalkNamespace(namespaceId) ||
+		mw.config.get("wgExtraSignatureNamespaces").indexOf(namespaceId) !== -1
+	);
 };
 
 /**
@@ -641,19 +651,21 @@ Title.wantSignaturesNamespace = function ( namespaceId ) {
  * @return {boolean|null} Boolean if the information is available, otherwise null
  * @throws {Error} If title is not a string or mw.Title
  */
-Title.exists = function ( title ) {
+Title.exists = function (title) {
 	var match,
 		obj = Title.exist.pages;
 
-	if ( typeof title === 'string' ) {
-		match = obj[ title ];
-	} else if ( title instanceof Title ) {
-		match = obj[ title.toString() ];
+	if (typeof title === "string") {
+		match = obj[title];
+	} else if (title instanceof Title) {
+		match = obj[title.toString()];
 	} else {
-		throw new Error( 'mw.Title.exists: title must be a string or an instance of Title' );
+		throw new Error(
+			"mw.Title.exists: title must be a string or an instance of Title"
+		);
 	}
 
-	if ( typeof match !== 'boolean' ) {
+	if (typeof match !== "boolean") {
 		return null;
 	}
 
@@ -684,18 +696,19 @@ Title.exists = function ( title ) {
 Title.exist = {
 	pages: {},
 
-	set: function ( titles, state ) {
-		var i, len,
+	set: function (titles, state) {
+		var i,
+			len,
 			pages = this.pages;
 
-		titles = Array.isArray( titles ) ? titles : [ titles ];
+		titles = Array.isArray(titles) ? titles : [titles];
 		state = state === undefined ? true : !!state;
 
-		for ( i = 0, len = titles.length; i < len; i++ ) {
-			pages[ titles[ i ] ] = state;
+		for (i = 0, len = titles.length; i < len; i++) {
+			pages[titles[i]] = state;
 		}
 		return true;
-	}
+	},
 };
 
 /**
@@ -706,22 +719,21 @@ Title.exist = {
  * @param {string} extension File extension (without the leading dot)
  * @return {string} File extension in canonical form
  */
-Title.normalizeExtension = function ( extension ) {
-	var
-		lower = extension.toLowerCase(),
+Title.normalizeExtension = function (extension) {
+	var lower = extension.toLowerCase(),
 		normalizations = {
-			htm: 'html',
-			jpeg: 'jpg',
-			mpeg: 'mpg',
-			tiff: 'tif',
-			ogv: 'ogg'
+			htm: "html",
+			jpeg: "jpg",
+			mpeg: "mpg",
+			tiff: "tif",
+			ogv: "ogg",
 		};
-	if ( Object.hasOwnProperty.call( normalizations, lower ) ) {
-		return normalizations[ lower ];
-	} else if ( /^[\da-z]+$/.test( lower ) ) {
+	if (Object.hasOwnProperty.call(normalizations, lower)) {
+		return normalizations[lower];
+	} else if (/^[\da-z]+$/.test(lower)) {
 		return lower;
 	} else {
-		return '';
+		return "";
 	}
 };
 
@@ -731,16 +743,16 @@ Title.normalizeExtension = function ( extension ) {
  * @param {string} chr Unicode character
  * @return {string} Unicode character, in upper case, according to the same rules as in PHP
  */
-Title.phpCharToUpper = function ( chr ) {
-	if ( !toUpperMap ) {
-		toUpperMap = require( './phpCharToUpper.json' );
+Title.phpCharToUpper = function (chr) {
+	if (!toUpperMap) {
+		toUpperMap = require("./phpCharToUpper.json");
 	}
-	if ( toUpperMap[ chr ] === '' ) {
+	if (toUpperMap[chr] === "") {
 		// Optimisation: When the override is to keep the character unchanged,
 		// we use an empty string in JSON. This reduces the data by 50%.
 		return chr;
 	}
-	return toUpperMap[ chr ] || chr.toUpperCase();
+	return toUpperMap[chr] || chr.toUpperCase();
 };
 
 /* Public members */
@@ -768,7 +780,7 @@ Title.prototype = {
 	 * @return {string}
 	 */
 	getNamespacePrefix: function () {
-		return getNamespacePrefix( this.namespace );
+		return getNamespacePrefix(this.namespace);
 	},
 
 	/**
@@ -782,10 +794,10 @@ Title.prototype = {
 	 */
 	getName: function () {
 		var ext = this.getExtension();
-		if ( ext === null ) {
+		if (ext === null) {
 			return this.getMain();
 		}
-		return this.getMain().slice( 0, -ext.length - 1 );
+		return this.getMain().slice(0, -ext.length - 1);
 	},
 
 	/**
@@ -798,7 +810,7 @@ Title.prototype = {
 	 *  "Example image".
 	 */
 	getNameText: function () {
-		return text( this.getName() );
+		return text(this.getName());
 	},
 
 	/**
@@ -807,11 +819,11 @@ Title.prototype = {
 	 * @return {string|null} Name extension or null if there is none
 	 */
 	getExtension: function () {
-		var lastDot = this.title.lastIndexOf( '.' );
-		if ( lastDot === -1 ) {
+		var lastDot = this.title.lastIndexOf(".");
+		if (lastDot === -1) {
 			return null;
 		}
-		return this.title.slice( lastDot + 1 ) || null;
+		return this.title.slice(lastDot + 1) || null;
 	},
 
 	/**
@@ -823,12 +835,14 @@ Title.prototype = {
 	 */
 	getMain: function () {
 		if (
-			mw.config.get( 'wgCaseSensitiveNamespaces' ).indexOf( this.namespace ) !== -1 ||
+			mw.config
+				.get("wgCaseSensitiveNamespaces")
+				.indexOf(this.namespace) !== -1 ||
 			!this.title.length
 		) {
 			return this.title;
 		}
-		return mw.Title.phpCharToUpper( this.title[ 0 ] ) + this.title.slice( 1 );
+		return mw.Title.phpCharToUpper(this.title[0]) + this.title.slice(1);
 	},
 
 	/**
@@ -839,7 +853,7 @@ Title.prototype = {
 	 * @return {string}
 	 */
 	getMainText: function () {
-		return text( this.getMain() );
+		return text(this.getMain());
 	},
 
 	/**
@@ -862,7 +876,7 @@ Title.prototype = {
 	 * @return {string}
 	 */
 	getPrefixedText: function () {
-		return text( this.getPrefixedDb() );
+		return text(this.getPrefixedDb());
 	},
 
 	/**
@@ -877,11 +891,11 @@ Title.prototype = {
 	 * @param {number} namespace The namespace to be relative to
 	 * @return {string}
 	 */
-	getRelativeText: function ( namespace ) {
-		if ( this.getNamespaceId() === namespace ) {
+	getRelativeText: function (namespace) {
+		if (this.getNamespaceId() === namespace) {
 			return this.getMainText();
-		} else if ( this.getNamespaceId() === NS_MAIN ) {
-			return ':' + this.getPrefixedText();
+		} else if (this.getNamespaceId() === NS_MAIN) {
+			return ":" + this.getPrefixedText();
 		} else {
 			return this.getPrefixedText();
 		}
@@ -907,12 +921,12 @@ Title.prototype = {
 	 *     e.g. `{ action: 'edit' }`.
 	 * @return {string}
 	 */
-	getUrl: function ( params ) {
+	getUrl: function (params) {
 		var fragment = this.getFragment();
-		if ( fragment ) {
-			return mw.util.getUrl( this.toString() + '#' + fragment, params );
+		if (fragment) {
+			return mw.util.getUrl(this.toString() + "#" + fragment, params);
 		} else {
-			return mw.util.getUrl( this.toString(), params );
+			return mw.util.getUrl(this.toString(), params);
 		}
 	},
 
@@ -922,7 +936,7 @@ Title.prototype = {
 	 * @return {boolean} The title is in a talk namespace
 	 */
 	isTalkPage: function () {
-		return Title.isTalkNamespace( this.getNamespaceId() );
+		return Title.isTalkNamespace(this.getNamespaceId());
 	},
 
 	/**
@@ -931,12 +945,12 @@ Title.prototype = {
 	 * @return {mw.Title|null} The title for the associated talk page, null if not available
 	 */
 	getTalkPage: function () {
-		if ( !this.canHaveTalkPage() ) {
+		if (!this.canHaveTalkPage()) {
 			return null;
 		}
-		return this.isTalkPage() ?
-			this :
-			Title.makeTitle( this.getNamespaceId() + 1, this.getMainText() );
+		return this.isTalkPage()
+			? this
+			: Title.makeTitle(this.getNamespaceId() + 1, this.getMainText());
 	},
 
 	/**
@@ -945,9 +959,9 @@ Title.prototype = {
 	 * @return {mw.Title|null} The title for the subject page of a talk page, null if not available
 	 */
 	getSubjectPage: function () {
-		return this.isTalkPage() ?
-			Title.makeTitle( this.getNamespaceId() - 1, this.getMainText() ) :
-			this;
+		return this.isTalkPage()
+			? Title.makeTitle(this.getNamespaceId() - 1, this.getMainText())
+			: this;
 	},
 
 	/**
@@ -966,8 +980,8 @@ Title.prototype = {
 	 * @return {boolean|null} Boolean if the information is available, otherwise null
 	 */
 	exists: function () {
-		return Title.exists( this );
-	}
+		return Title.exists(this);
+	},
 };
 
 /**

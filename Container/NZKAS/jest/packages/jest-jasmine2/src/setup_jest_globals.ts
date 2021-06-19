@@ -32,7 +32,7 @@ const addSuppressedErrors = (result: SpecResult) => {
   if (suppressedErrors.length) {
     result.status = 'failed';
 
-    result.failedExpectations = suppressedErrors.map(error => ({
+    result.failedExpectations = suppressedErrors.map((error) => ({
       actual: '',
       // passing error for custom test reporters
       error,
@@ -60,11 +60,11 @@ const addAssertionErrors = (result: SpecResult) => {
 };
 
 const patchJasmine = () => {
-  (global.jasmine as Jasmine).Spec = (realSpec => {
+  (global.jasmine as Jasmine).Spec = ((realSpec) => {
     class Spec extends realSpec {
       constructor(attr: Attributes) {
         const resultCallback = attr.resultCallback;
-        attr.resultCallback = function(result: SpecResult) {
+        attr.resultCallback = function (result: SpecResult) {
           addSuppressedErrors(result);
           addAssertionErrors(result);
           resultCallback.call(attr, result);
@@ -93,7 +93,7 @@ export default ({
   config.snapshotSerializers
     .concat()
     .reverse()
-    .forEach(path => {
+    .forEach((path) => {
       addSerializer(localRequire(path));
     });
 

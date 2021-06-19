@@ -6,7 +6,7 @@
 #
 common: &default_settings
   log_level: info
-  license_key: '<%= license_key %>'
+  license_key: "<%= license_key %>"
 
   app_name: System Monitor
   ssl: false
@@ -14,13 +14,13 @@ common: &default_settings
   # Set the array of nodes for the memcache monitor
   memcached_nodes:
     - localhost:11211
-#   - localhost:11212
-#   - localhost:11213
+  #   - localhost:11212
+  #   - localhost:11213
 
   # These settings ensure we don't end up actually monitoring
   # the IA agent itself--we aren't really interested in that.
   # Don't change these.
-  disable_samplers: true  
+  disable_samplers: true
   capture_params: false
   transaction_tracer:
     enabled: false
@@ -32,4 +32,3 @@ production:
 
 development:
   <<: *default_settings
-

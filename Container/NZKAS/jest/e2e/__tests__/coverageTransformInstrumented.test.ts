@@ -27,7 +27,7 @@ it('code coverage for transform instrumented code', () => {
   const coverageMap = JSON.parse(readFileSync(coverageMapFile, 'utf-8'));
 
   // reduce absolute paths embedded in the coverage map to just filenames
-  Object.keys(coverageMap).forEach(filename => {
+  Object.keys(coverageMap).forEach((filename) => {
     coverageMap[filename].path = path.basename(coverageMap[filename].path);
     delete coverageMap[filename].hash;
     coverageMap[path.basename(filename)] = coverageMap[filename];

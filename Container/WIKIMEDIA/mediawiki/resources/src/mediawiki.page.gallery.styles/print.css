@@ -33,7 +33,9 @@ ul.mw-gallery-packed-hover div.gallerytextwrapper {
 
 ul.mw-gallery-packed-hover li.gallerybox:hover div.gallerytextwrapper,
 ul.mw-gallery-packed-overlay li.gallerybox div.gallerytextwrapper,
-ul.mw-gallery-packed-hover li.gallerybox.mw-gallery-focused div.gallerytextwrapper {
+ul.mw-gallery-packed-hover
+	li.gallerybox.mw-gallery-focused
+	div.gallerytextwrapper {
 	position: static;
 	background: transparent;
 	padding: 0;
@@ -45,7 +47,10 @@ ul.mw-gallery-packed-hover li.gallerybox.mw-gallery-focused div.gallerytextwrapp
 
 ul.mw-gallery-packed-hover li.gallerybox:hover div.gallerytextwrapper p,
 ul.mw-gallery-packed-overlay li.gallerybox div.gallerytextwrapper p,
-ul.mw-gallery-packed-hover li.gallerybox.mw-gallery-focused div.gallerytextwrapper p {
+ul.mw-gallery-packed-hover
+	li.gallerybox.mw-gallery-focused
+	div.gallerytextwrapper
+	p {
 	text-overflow: clip;
 	white-space: normal;
 	overflow: visible;

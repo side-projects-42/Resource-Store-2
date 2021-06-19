@@ -225,63 +225,43 @@
 			{
 				"name": "rc_timestamp",
 				"comment": "Special:Recentchanges",
-				"columns": [
-					"rc_timestamp"
-				],
+				"columns": ["rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_namespace_title_timestamp",
 				"comment": "Special:Watchlist",
-				"columns": [
-					"rc_namespace",
-					"rc_title",
-					"rc_timestamp"
-				],
+				"columns": ["rc_namespace", "rc_title", "rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_cur_id",
 				"comment": "Special:Recentchangeslinked when finding changes in pages linked from a page",
-				"columns": [
-					"rc_cur_id"
-				],
+				"columns": ["rc_cur_id"],
 				"unique": false
 			},
 			{
 				"name": "new_name_timestamp",
 				"comment": "Special:Newpages",
-				"columns": [
-					"rc_new",
-					"rc_namespace",
-					"rc_timestamp"
-				],
+				"columns": ["rc_new", "rc_namespace", "rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_ip",
 				"comment": "Blank unless $wgPutIPinRC=true (false at WMF), possibly used by extensions, but mostly replaced by CheckUser.",
-				"columns": [
-					"rc_ip"
-				],
+				"columns": ["rc_ip"],
 				"unique": false
 			},
 			{
 				"name": "rc_ns_actor",
 				"comment": "Probably intended for Special:NewPages namespace filter",
-				"columns": [
-					"rc_namespace",
-					"rc_actor"
-				],
+				"columns": ["rc_namespace", "rc_actor"],
 				"unique": false
 			},
 			{
 				"name": "rc_actor",
 				"comment": "SiteStats active user count, Special:ActiveUsers, Special:NewPages user filter",
-				"columns": [
-					"rc_actor",
-					"rc_timestamp"
-				],
+				"columns": ["rc_actor", "rc_timestamp"],
 				"unique": false
 			},
 			{
@@ -298,15 +278,11 @@
 			{
 				"name": "rc_this_oldid",
 				"comment": "Article.php and friends (T139012)",
-				"columns": [
-					"rc_this_oldid"
-				],
+				"columns": ["rc_this_oldid"],
 				"unique": false
 			}
 		],
-		"pk": [
-			"rc_id"
-		]
+		"pk": ["rc_id"]
 	},
 	"after": {
 		"name": "recentchanges",
@@ -534,63 +510,43 @@
 			{
 				"name": "rc_timestamp",
 				"comment": "Special:Recentchanges",
-				"columns": [
-					"rc_timestamp"
-				],
+				"columns": ["rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_namespace_title_timestamp",
 				"comment": "Special:Watchlist",
-				"columns": [
-					"rc_namespace",
-					"rc_title",
-					"rc_timestamp"
-				],
+				"columns": ["rc_namespace", "rc_title", "rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_cur_id",
 				"comment": "Special:Recentchangeslinked when finding changes in pages linked from a page",
-				"columns": [
-					"rc_cur_id"
-				],
+				"columns": ["rc_cur_id"],
 				"unique": false
 			},
 			{
 				"name": "new_name_timestamp",
 				"comment": "Special:Newpages",
-				"columns": [
-					"rc_new",
-					"rc_namespace",
-					"rc_timestamp"
-				],
+				"columns": ["rc_new", "rc_namespace", "rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_ip",
 				"comment": "Blank unless $wgPutIPinRC=true (false at WMF), possibly used by extensions, but mostly replaced by CheckUser.",
-				"columns": [
-					"rc_ip"
-				],
+				"columns": ["rc_ip"],
 				"unique": false
 			},
 			{
 				"name": "rc_ns_actor",
 				"comment": "Probably intended for Special:NewPages namespace filter",
-				"columns": [
-					"rc_namespace",
-					"rc_actor"
-				],
+				"columns": ["rc_namespace", "rc_actor"],
 				"unique": false
 			},
 			{
 				"name": "rc_actor",
 				"comment": "SiteStats active user count, Special:ActiveUsers, Special:NewPages user filter",
-				"columns": [
-					"rc_actor",
-					"rc_timestamp"
-				],
+				"columns": ["rc_actor", "rc_timestamp"],
 				"unique": false
 			},
 			{
@@ -607,14 +563,10 @@
 			{
 				"name": "rc_this_oldid",
 				"comment": "Article.php and friends (T139012)",
-				"columns": [
-					"rc_this_oldid"
-				],
+				"columns": ["rc_this_oldid"],
 				"unique": false
 			}
 		],
-		"pk": [
-			"rc_id"
-		]
+		"pk": ["rc_id"]
 	}
 }

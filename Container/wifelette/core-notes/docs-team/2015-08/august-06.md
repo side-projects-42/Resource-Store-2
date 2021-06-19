@@ -3,40 +3,45 @@
 ## Topics
 
 Guides: Ember CLI
-* "Installing addons" top-level section (+1 MK, TD, TG)
-* CLI Config
-  * Move "Understanding Ember" config to config section
-  * Move debugging section ([PR #529](https://github.com/emberjs/guides/pull/529))
-* Should we include an `ember generate` command with code snippets?
+
+- "Installing addons" top-level section (+1 MK, TD, TG)
+- CLI Config
+  - Move "Understanding Ember" config to config section
+  - Move debugging section ([PR #529](https://github.com/emberjs/guides/pull/529))
+- Should we include an `ember generate` command with code snippets?
 
 Guides: Services
-* Merge [PR #532](https://github.com/emberjs/guides/pull/532) and then flesh it out
-* What would make good examples?
-  * Radio player
-  * Flash notifications
+
+- Merge [PR #532](https://github.com/emberjs/guides/pull/532) and then flesh it out
+- What would make good examples?
+  - Radio player
+  - Flash notifications
 
 Guides: Test helpers documentation breaks JSHint
-* Globals are legacy cruft
-* How to properly fix this going forward?
+
+- Globals are legacy cruft
+- How to properly fix this going forward?
 
 Guides: Maintenance
-* Version switcher
-* `need help` issue tag introduced to signal beginner-friendly issues
-* Google still points to `v1.10`
-* New architecture/deploy pipeline
-* Should we update old versions?
 
+- Version switcher
+- `need help` issue tag introduced to signal beginner-friendly issues
+- Google still points to `v1.10`
+- New architecture/deploy pipeline
+- Should we update old versions?
 
 Guides: Animations
-* Ping Edward, TD, and TG
+
+- Ping Edward, TD, and TG
 
 Guides: Ember Data
-* No advances (LK)
-* Redistribute to BM/SP/CP
+
+- No advances (LK)
+- Redistribute to BM/SP/CP
 
 Guides: Closure Actions
-* Ping MB
 
+- Ping MB
 
 ## Minutes
 
@@ -102,7 +107,7 @@ have bandwidth to update, change is good
 
 TG: agreed
 
-TD: given situation is a clusterf**, what do we do?
+TD: given situation is a clusterf\*\*, what do we do?
 
 TG: real fix is to make test helpers behave properly, not document
 

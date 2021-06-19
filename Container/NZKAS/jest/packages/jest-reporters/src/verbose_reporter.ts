@@ -35,13 +35,13 @@ export default class VerboseReporter extends DefaultReporter {
 
   static groupTestsBySuites(testResults: Array<AssertionResult>) {
     const root: Suite = {suites: [], tests: [], title: ''};
-    testResults.forEach(testResult => {
+    testResults.forEach((testResult) => {
       let targetSuite = root;
 
       // Find the target suite for this test,
       // creating nested suites as necessary.
       for (const title of testResult.ancestorTitles) {
-        let matchingSuite = targetSuite.suites.find(s => s.title === title);
+        let matchingSuite = targetSuite.suites.find((s) => s.title === title);
         if (!matchingSuite) {
           matchingSuite = {suites: [], tests: [], title};
           targetSuite.suites.push(matchingSuite);
@@ -90,7 +90,7 @@ export default class VerboseReporter extends DefaultReporter {
 
     this._logTests(suite.tests, indentLevel + 1);
 
-    suite.suites.forEach(suite => this._logSuite(suite, indentLevel + 1));
+    suite.suites.forEach((suite) => this._logSuite(suite, indentLevel + 1));
   }
 
   private _getIcon(status: string) {
@@ -113,7 +113,7 @@ export default class VerboseReporter extends DefaultReporter {
 
   private _logTests(tests: Array<AssertionResult>, indentLevel: number) {
     if (this._globalConfig.expand) {
-      tests.forEach(test => this._logTest(test, indentLevel));
+      tests.forEach((test) => this._logTest(test, indentLevel));
     } else {
       const summedTests = tests.reduce<{
         pending: Array<AssertionResult>;

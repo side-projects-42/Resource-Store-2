@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Dbc334",
-			"Eleassar",
-			"Pinky sl",
-			"Upwinxp",
-			"Yerpo"
-		]
+		"authors": ["Dbc334", "Eleassar", "Pinky sl", "Upwinxp", "Yerpo"]
 	},
 	"ooui-outline-control-move-down": "Prestavi predmet nižje",
 	"ooui-outline-control-move-up": "Prestavi predmet višje",

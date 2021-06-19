@@ -62,20 +62,17 @@ export const buildArgv = (maybeArgv?: Array<string>): Config.Argv => {
     {...args.options, deprecationEntries},
     // strip leading dashes
     Array.isArray(rawArgv)
-      ? rawArgv.map(rawArgv => rawArgv.replace(/^--?/, ''))
+      ? rawArgv.map((rawArgv) => rawArgv.replace(/^--?/, ''))
       : Object.keys(rawArgv),
   );
 
   // strip dashed args
-  return Object.keys(argv).reduce(
-    (result, key) => {
-      if (!key.includes('-')) {
-        result[key] = argv[key];
-      }
-      return result;
-    },
-    {} as Config.Argv,
-  );
+  return Object.keys(argv).reduce((result, key) => {
+    if (!key.includes('-')) {
+      result[key] = argv[key];
+    }
+    return result;
+  }, {} as Config.Argv);
 };
 
 const getProjectListFromCLIArgs = (

@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Vlad5250"
-		]
-	},
-	"akismetklik-desc": "Odbija izmjene sumnjivih spamera zavedenih na crnom popisu Akismeta"
+  "@metadata": {
+    "authors": ["Vlad5250"]
+  },
+  "akismetklik-desc": "Odbija izmjene sumnjivih spamera zavedenih na crnom popisu Akismeta"
 }

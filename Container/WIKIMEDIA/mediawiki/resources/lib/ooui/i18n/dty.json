@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"जनक राज भट्ट"
-		]
+		"authors": ["जनक राज भट्ट"]
 	},
 	"ooui-outline-control-move-down": "वस्तुलाई तल साददे",
 	"ooui-outline-control-move-up": "वस्तुलाई मथि साददे",

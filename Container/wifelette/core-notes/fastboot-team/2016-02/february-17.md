@@ -16,9 +16,9 @@ Ron White, Miguel Camba
 
 ## Notes
 
-MC: created `ember-fastboot-test-helpers` allows clients to include lib that supports a `visit` api similar to standard acceptance tests.  Very basic jsdom selectors for assertion.  No jquery to keep testng jquery free.
+MC: created `ember-fastboot-test-helpers` allows clients to include lib that supports a `visit` api similar to standard acceptance tests. Very basic jsdom selectors for assertion. No jquery to keep testng jquery free.
 
-MC: looking for help to get ES6 support in this node code to achieve: `let [status, headers, document] = await visit('/foobar')`.  Will reach out to @krisselden for help here.
+MC: looking for help to get ES6 support in this node code to achieve: `let [status, headers, document] = await visit('/foobar')`. Will reach out to @krisselden for help here.
 
 MC: Ideally fastboot compatibility becomes an extra score in ember-observer.
 

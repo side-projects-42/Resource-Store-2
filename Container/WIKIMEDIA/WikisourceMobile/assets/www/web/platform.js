@@ -7,16 +7,19 @@
 
 // @todo need menus!
 
-window.addEventListener('load', function() {
-	chrome.initialize();
-}, true);
+window.addEventListener(
+  "load",
+  function () {
+    chrome.initialize();
+  },
+  true
+);
 
 // @Override
 function getPhoneGapVersion(callback, error) {
-	callback('n/a');
+  callback("n/a");
 }
 
 function getAboutVersionString() {
-	return "1.1.web";
+  return "1.1.web";
 }
-

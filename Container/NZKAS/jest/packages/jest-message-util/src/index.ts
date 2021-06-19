@@ -45,8 +45,10 @@ const PATH_NODE_MODULES = `${path.sep}node_modules${path.sep}`;
 const PATH_JEST_PACKAGES = `${path.sep}jest${path.sep}packages${path.sep}`;
 
 // filter for noisy stack trace lines
-const JASMINE_IGNORE = /^\s+at(?:(?:.jasmine\-)|\s+jasmine\.buildExpectationResult)/;
-const JEST_INTERNALS_IGNORE = /^\s+at.*?jest(-.*?)?(\/|\\)(build|node_modules|packages)(\/|\\)/;
+const JASMINE_IGNORE =
+  /^\s+at(?:(?:.jasmine\-)|\s+jasmine\.buildExpectationResult)/;
+const JEST_INTERNALS_IGNORE =
+  /^\s+at.*?jest(-.*?)?(\/|\\)(build|node_modules|packages)(\/|\\)/;
 const ANONYMOUS_FN_IGNORE = /^\s+at <anonymous>.*$/;
 const ANONYMOUS_PROMISE_IGNORE = /^\s+at (new )?Promise \(<anonymous>\).*$/;
 const ANONYMOUS_GENERATOR_IGNORE = /^\s+at Generator.next \(<anonymous>\).*$/;
@@ -153,7 +155,7 @@ const removeInternalStackEntries = (
 ): Array<string> => {
   let pathCounter = 0;
 
-  return lines.filter(line => {
+  return lines.filter((line) => {
     if (ANONYMOUS_FN_IGNORE.test(line)) {
       return false;
     }
@@ -170,7 +172,7 @@ const removeInternalStackEntries = (
       return false;
     }
 
-    if (nodeInternals.some(internal => internal.test(line))) {
+    if (nodeInternals.some((internal) => internal.test(line))) {
       return false;
     }
 
@@ -275,7 +277,7 @@ export const formatStackTrace = (
   const stacktrace = lines
     .filter(Boolean)
     .map(
-      line =>
+      (line) =>
         STACK_INDENT + formatPaths(config, relativeTestPath, trimPaths(line)),
     )
     .join('\n');
@@ -294,13 +296,10 @@ export const formatResultsErrors = (
     result: AssertionResult;
   }>;
 
-  const failedResults: FailedResults = testResults.reduce(
-    (errors, result) => {
-      result.failureMessages.forEach(content => errors.push({content, result}));
-      return errors;
-    },
-    [] as FailedResults,
-  );
+  const failedResults: FailedResults = testResults.reduce((errors, result) => {
+    result.failureMessages.forEach((content) => errors.push({content, result}));
+    return errors;
+  }, [] as FailedResults);
 
   if (!failedResults.length) {
     return null;

@@ -28,10 +28,7 @@ interface Result extends ExecaReturns {
 }
 
 export const runTest = (source: string) => {
-  const filename = crypto
-    .createHash('md5')
-    .update(source)
-    .digest('hex');
+  const filename = crypto.createHash('md5').update(source).digest('hex');
   const tmpFilename = path.join(os.tmpdir(), filename);
 
   const content = `

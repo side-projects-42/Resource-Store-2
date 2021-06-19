@@ -56,7 +56,7 @@ const snapshotEscapeSubstitutionFile = path.resolve(
 
 const initialTestData = fs.readFileSync(snapshotEscapeTestFile, 'utf8');
 
-const fileExists = filePath => {
+const fileExists = (filePath) => {
   try {
     return fs.statSync(filePath).isFile();
   } catch (e) {}
@@ -79,7 +79,7 @@ describe('Snapshot', () => {
       snapshotEscapeFile,
       snapshotEscapeRegexFile,
       snapshotEscapeSubstitutionFile,
-    ].forEach(file => {
+    ].forEach((file) => {
       if (fileExists(file)) {
         fs.unlinkSync(file);
       }

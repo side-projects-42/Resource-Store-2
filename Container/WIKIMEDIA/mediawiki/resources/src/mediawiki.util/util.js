@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 var util,
-	config = require( './config.json' );
+	config = require("./config.json");
 
-require( './jquery.accessKeyLabel.js' );
+require("./jquery.accessKeyLabel.js");
 
 /**
  * Encode the string like PHP's rawurlencode
@@ -12,10 +12,14 @@ require( './jquery.accessKeyLabel.js' );
  * @param {string} str String to be encoded.
  * @return {string} Encoded string
  */
-function rawurlencode( str ) {
-	return encodeURIComponent( String( str ) )
-		.replace( /!/g, '%21' ).replace( /'/g, '%27' ).replace( /\(/g, '%28' )
-		.replace( /\)/g, '%29' ).replace( /\*/g, '%2A' ).replace( /~/g, '%7E' );
+function rawurlencode(str) {
+	return encodeURIComponent(String(str))
+		.replace(/!/g, "%21")
+		.replace(/'/g, "%27")
+		.replace(/\(/g, "%28")
+		.replace(/\)/g, "%29")
+		.replace(/\*/g, "%2A")
+		.replace(/~/g, "%7E");
 }
 
 /**
@@ -27,18 +31,18 @@ function rawurlencode( str ) {
  *     in DefaultSettings.php
  * @return {string} Encoded string
  */
-function escapeIdInternal( str, mode ) {
-	str = String( str );
+function escapeIdInternal(str, mode) {
+	str = String(str);
 
-	switch ( mode ) {
-		case 'html5':
-			return str.replace( / /g, '_' );
-		case 'legacy':
-			return rawurlencode( str.replace( / /g, '_' ) )
-				.replace( /%3A/g, ':' )
-				.replace( /%/g, '.' );
+	switch (mode) {
+		case "html5":
+			return str.replace(/ /g, "_");
+		case "legacy":
+			return rawurlencode(str.replace(/ /g, "_"))
+				.replace(/%3A/g, ":")
+				.replace(/%/g, ".");
 		default:
-			throw new Error( 'Unrecognized ID escaping mode ' + mode );
+			throw new Error("Unrecognized ID escaping mode " + mode);
 	}
 }
 
@@ -49,7 +53,6 @@ function escapeIdInternal( str, mode ) {
  * @singleton
  */
 util = {
-
 	/**
 	 * Encode the string like PHP's rawurlencode
 	 *
@@ -67,8 +70,8 @@ util = {
 	 * @param {string} str String to encode
 	 * @return {string} Encoded string
 	 */
-	escapeIdForAttribute: function ( str ) {
-		return escapeIdInternal( str, config.FragmentMode[ 0 ] );
+	escapeIdForAttribute: function (str) {
+		return escapeIdInternal(str, config.FragmentMode[0]);
 	},
 
 	/**
@@ -80,8 +83,8 @@ util = {
 	 * @param {string} str String to encode
 	 * @return {string} Encoded string
 	 */
-	escapeIdForLink: function ( str ) {
-		return escapeIdInternal( str, config.FragmentMode[ 0 ] );
+	escapeIdForLink: function (str) {
+		return escapeIdInternal(str, config.FragmentMode[0]);
 	},
 
 	/**
@@ -97,11 +100,14 @@ util = {
 	 * @param {Function} callback
 	 * @return {Function}
 	 */
-	debounce: function ( delay, callback ) {
+	debounce: function (delay, callback) {
 		var timeout;
 		return function () {
-			clearTimeout( timeout );
-			timeout = setTimeout( Function.prototype.apply.bind( callback, this, arguments ), delay );
+			clearTimeout(timeout);
+			timeout = setTimeout(
+				Function.prototype.apply.bind(callback, this, arguments),
+				delay
+			);
 		};
 	},
 
@@ -117,21 +123,24 @@ util = {
 	 * @param {string} str String to be encoded.
 	 * @return {string} Encoded string
 	 */
-	wikiUrlencode: function ( str ) {
-		return util.rawurlencode( str )
-			.replace( /%20/g, '_' )
-			// wfUrlencode replacements
-			.replace( /%3B/g, ';' )
-			.replace( /%40/g, '@' )
-			.replace( /%24/g, '$' )
-			.replace( /%21/g, '!' )
-			.replace( /%2A/g, '*' )
-			.replace( /%28/g, '(' )
-			.replace( /%29/g, ')' )
-			.replace( /%2C/g, ',' )
-			.replace( /%2F/g, '/' )
-			.replace( /%7E/g, '~' )
-			.replace( /%3A/g, ':' );
+	wikiUrlencode: function (str) {
+		return (
+			util
+				.rawurlencode(str)
+				.replace(/%20/g, "_")
+				// wfUrlencode replacements
+				.replace(/%3B/g, ";")
+				.replace(/%40/g, "@")
+				.replace(/%24/g, "$")
+				.replace(/%21/g, "!")
+				.replace(/%2A/g, "*")
+				.replace(/%28/g, "(")
+				.replace(/%29/g, ")")
+				.replace(/%2C/g, ",")
+				.replace(/%2F/g, "/")
+				.replace(/%7E/g, "~")
+				.replace(/%3A/g, ":")
+		);
 	},
 
 	/**
@@ -142,34 +151,48 @@ util = {
 	 *  e.g. `{ action: 'edit' }`
 	 * @return {string} Url of the page with name of `pageName`
 	 */
-	getUrl: function ( pageName, params ) {
-		var fragmentIdx, url, query, fragment,
-			title = typeof pageName === 'string' ? pageName : mw.config.get( 'wgPageName' );
+	getUrl: function (pageName, params) {
+		var fragmentIdx,
+			url,
+			query,
+			fragment,
+			title =
+				typeof pageName === "string"
+					? pageName
+					: mw.config.get("wgPageName");
 
 		// Find any fragment
-		fragmentIdx = title.indexOf( '#' );
-		if ( fragmentIdx !== -1 ) {
-			fragment = title.slice( fragmentIdx + 1 );
+		fragmentIdx = title.indexOf("#");
+		if (fragmentIdx !== -1) {
+			fragment = title.slice(fragmentIdx + 1);
 			// Exclude the fragment from the page name
-			title = title.slice( 0, fragmentIdx );
+			title = title.slice(0, fragmentIdx);
 		}
 
 		// Produce query string
-		if ( params ) {
-			query = $.param( params );
+		if (params) {
+			query = $.param(params);
 		}
-		if ( query ) {
-			url = title ?
-				util.wikiScript() + '?title=' + util.wikiUrlencode( title ) + '&' + query :
-				util.wikiScript() + '?' + query;
+		if (query) {
+			url = title
+				? util.wikiScript() +
+				  "?title=" +
+				  util.wikiUrlencode(title) +
+				  "&" +
+				  query
+				: util.wikiScript() + "?" + query;
 		} else {
-			url = mw.config.get( 'wgArticlePath' )
-				.replace( '$1', util.wikiUrlencode( title ).replace( /\$/g, '$$$$' ) );
+			url = mw.config
+				.get("wgArticlePath")
+				.replace(
+					"$1",
+					util.wikiUrlencode(title).replace(/\$/g, "$$$$")
+				);
 		}
 
 		// Append the encoded fragment
-		if ( fragment && fragment.length ) {
-			url += '#' + util.escapeIdForLink( fragment );
+		if (fragment && fragment.length) {
+			url += "#" + util.escapeIdForLink(fragment);
 		}
 
 		return url;
@@ -182,13 +205,13 @@ util = {
 	 * @param {string} [str="index"] Name of MW entry point (e.g. 'index' or 'api')
 	 * @return {string} URL to the script file (e.g. '/w/api.php' )
 	 */
-	wikiScript: function ( str ) {
-		if ( !str || str === 'index' ) {
-			return mw.config.get( 'wgScript' );
-		} else if ( str === 'load' ) {
+	wikiScript: function (str) {
+		if (!str || str === "index") {
+			return mw.config.get("wgScript");
+		} else if (str === "load") {
 			return config.LoadScript;
 		} else {
-			return mw.config.get( 'wgScriptPath' ) + '/' + str + '.php';
+			return mw.config.get("wgScriptPath") + "/" + str + ".php";
 		}
 	},
 
@@ -207,8 +230,8 @@ util = {
 	 * @param {string} text CSS to be appended
 	 * @return {CSSStyleSheet} Use .ownerNode to get to the `<style>` element.
 	 */
-	addCSS: function ( text ) {
-		var s = mw.loader.addStyleTag( text );
+	addCSS: function (text) {
+		var s = mw.loader.addStyleTag(text);
 		return s.sheet;
 	},
 
@@ -220,17 +243,19 @@ util = {
 	 * @param {string} [url=location.href] URL to search through, defaulting to the current browsing location.
 	 * @return {string|null} Parameter value or null when the parameter cannot be decoded or is absent.
 	 */
-	getParamValue: function ( param, url ) {
+	getParamValue: function (param, url) {
 		// Get last match, stop at hash
-		var re = new RegExp( '^[^#]*[&?]' + util.escapeRegExp( param ) + '=([^&#]*)' ),
-			m = re.exec( url !== undefined ? url : location.href );
+		var re = new RegExp(
+				"^[^#]*[&?]" + util.escapeRegExp(param) + "=([^&#]*)"
+			),
+			m = re.exec(url !== undefined ? url : location.href);
 
-		if ( m ) {
+		if (m) {
 			// Beware that decodeURIComponent is not required to understand '+'
 			// by spec, as encodeURIComponent does not produce it.
 			try {
-				return decodeURIComponent( m[ 1 ].replace( /\+/g, '%20' ) );
-			} catch ( e ) {
+				return decodeURIComponent(m[1].replace(/\+/g, "%20"));
+			} catch (e) {
 				// catch URIError if parameter is invalid UTF-8
 				// due to malformed or double-decoded values (T106244),
 				// e.g. "Autom%F3vil" instead of "Autom%C3%B3vil".
@@ -265,10 +290,10 @@ util = {
 	 *
 	 * @param {string} portletId ID of the target portlet (e.g. 'p-cactions' or 'p-personal')
 	 */
-	hidePortlet: function ( portletId ) {
-		var portlet = document.getElementById( portletId );
-		if ( portlet ) {
-			portlet.classList.add( 'emptyPortlet' );
+	hidePortlet: function (portletId) {
+		var portlet = document.getElementById(portletId);
+		if (portlet) {
+			portlet.classList.add("emptyPortlet");
 		}
 	},
 
@@ -278,9 +303,9 @@ util = {
 	 * @param {string} portletId ID of the target portlet (e.g. 'p-cactions' or 'p-personal')
 	 * @return {boolean}
 	 */
-	isPortletVisible: function ( portletId ) {
-		var portlet = document.getElementById( portletId );
-		return portlet && !portlet.classList.contains( 'emptyPortlet' );
+	isPortletVisible: function (portletId) {
+		var portlet = document.getElementById(portletId);
+		return portlet && !portlet.classList.contains("emptyPortlet");
 	},
 
 	/**
@@ -288,10 +313,10 @@ util = {
 	 *
 	 * @param {string} portletId ID of the target portlet (e.g. 'p-cactions' or 'p-personal')
 	 */
-	showPortlet: function ( portletId ) {
-		var portlet = document.getElementById( portletId );
-		if ( portlet ) {
-			portlet.classList.remove( 'emptyPortlet' );
+	showPortlet: function (portletId) {
+		var portlet = document.getElementById(portletId);
+		if (portlet) {
+			portlet.classList.remove("emptyPortlet");
 		}
 	},
 
@@ -338,83 +363,99 @@ util = {
 	 *  Can be specified as DOM reference, as jQuery object, or as CSS selector string.
 	 * @return {HTMLElement|null} The added list item, or null if no element was added.
 	 */
-	addPortletLink: function ( portletId, href, text, id, tooltip, accesskey, nextnode ) {
+	addPortletLink: function (
+		portletId,
+		href,
+		text,
+		id,
+		tooltip,
+		accesskey,
+		nextnode
+	) {
 		var item, link, portlet, portletDiv, ul, next;
 
-		if ( !portletId ) {
+		if (!portletId) {
 			// Avoid confusing id="undefined" lookup
 			return null;
 		}
 
-		portlet = document.getElementById( portletId );
-		if ( !portlet ) {
+		portlet = document.getElementById(portletId);
+		if (!portlet) {
 			// Invalid portlet ID
 			return null;
 		}
 
 		// Setup the anchor tag and set any the properties
-		link = document.createElement( 'a' );
+		link = document.createElement("a");
 		link.href = href;
 		link.textContent = text;
 
-		if ( tooltip ) {
+		if (tooltip) {
 			link.title = tooltip;
 		}
-		if ( accesskey ) {
+		if (accesskey) {
 			link.accessKey = accesskey;
 		}
 
 		// Unhide portlet if it was hidden before
-		util.showPortlet( portletId );
+		util.showPortlet(portletId);
 
-		item = $( '<li>' ).append( link )[ 0 ];
+		item = $("<li>").append(link)[0];
 
-		if ( id ) {
+		if (id) {
 			item.id = id;
 		}
 
 		// Select the first (most likely only) unordered list inside the portlet
-		ul = portlet.tagName.toLowerCase() === 'ul' ? portlet : portlet.querySelector( 'ul' );
-		if ( !ul ) {
+		ul =
+			portlet.tagName.toLowerCase() === "ul"
+				? portlet
+				: portlet.querySelector("ul");
+		if (!ul) {
 			// If it didn't have an unordered list yet, create one
-			ul = document.createElement( 'ul' );
-			portletDiv = portlet.querySelector( 'div' );
-			if ( portletDiv ) {
+			ul = document.createElement("ul");
+			portletDiv = portlet.querySelector("div");
+			if (portletDiv) {
 				// Support: Legacy skins have a div (such as div.body or div.pBody).
 				// Append the <ul> to that.
-				portletDiv.appendChild( ul );
+				portletDiv.appendChild(ul);
 			} else {
 				// Append it to the portlet directly
-				portlet.appendChild( ul );
+				portlet.appendChild(ul);
 			}
 		}
 
-		if ( nextnode && ( typeof nextnode === 'string' || nextnode.nodeType || nextnode.jquery ) ) {
+		if (
+			nextnode &&
+			(typeof nextnode === "string" ||
+				nextnode.nodeType ||
+				nextnode.jquery)
+		) {
 			// eslint-disable-next-line no-jquery/variable-pattern
-			nextnode = $( ul ).find( nextnode );
-			if ( nextnode.length === 1 && nextnode[ 0 ].parentNode === ul ) {
+			nextnode = $(ul).find(nextnode);
+			if (nextnode.length === 1 && nextnode[0].parentNode === ul) {
 				// Insertion point: Before nextnode
-				nextnode.before( item );
+				nextnode.before(item);
 				next = true;
 			}
 			// Else: Invalid nextnode value (no match, more than one match, or not a direct child)
 			// Else: Invalid nextnode type
 		}
 
-		if ( !next ) {
+		if (!next) {
 			// Insertion point: End of list (default)
-			ul.appendChild( item );
+			ul.appendChild(item);
 		}
 
 		// Update tooltip for the access key after inserting into DOM
 		// to get a localized access key label (T69946).
-		if ( accesskey ) {
-			$( link ).updateTooltipAccessKeys();
+		if (accesskey) {
+			$(link).updateTooltipAccessKeys();
 		}
 
-		mw.hook( 'util.addPortletLink' ).fire( item, {
-			id: id
-		} );
+		mw.hook("util.addPortletLink").fire(item, {
+			id: id,
+		});
 		return item;
 	},
 
@@ -429,10 +470,10 @@ util = {
 	 * @return {boolean|null} Null if `mailtxt` was an empty string, otherwise true/false
 	 * as determined by validation.
 	 */
-	validateEmail: function ( mailtxt ) {
+	validateEmail: function (mailtxt) {
 		var rfc5322Atext, rfc1034LdhStr, html5EmailRegexp;
 
-		if ( mailtxt === '' ) {
+		if (mailtxt === "") {
 			return null;
 		}
 
@@ -456,7 +497,7 @@ util = {
 		//     "`" / "{" /
 		//     "|" / "}" /
 		//     "~"
-		rfc5322Atext = 'a-z0-9!#$%&\'*+\\-/=?^_`{|}~';
+		rfc5322Atext = "a-z0-9!#$%&'*+\\-/=?^_`{|}~";
 
 		// Next define the RFC 1034 'ldh-str'
 		//     <domain> ::= <subdomain> | " "
@@ -465,25 +506,31 @@ util = {
 		//     <ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>
 		//     <let-dig-hyp> ::= <let-dig> | "-"
 		//     <let-dig> ::= <letter> | <digit>
-		rfc1034LdhStr = 'a-z0-9\\-';
+		rfc1034LdhStr = "a-z0-9\\-";
 
 		html5EmailRegexp = new RegExp(
 			// start of string
-			'^' +
-			// User part which is liberal :p
-			'[' + rfc5322Atext + '\\.]+' +
-			// 'at'
-			'@' +
-			// Domain first part
-			'[' + rfc1034LdhStr + ']+' +
-			// Optional second part and following are separated by a dot
-			'(?:\\.[' + rfc1034LdhStr + ']+)*' +
-			// End of string
-			'$',
+			"^" +
+				// User part which is liberal :p
+				"[" +
+				rfc5322Atext +
+				"\\.]+" +
+				// 'at'
+				"@" +
+				// Domain first part
+				"[" +
+				rfc1034LdhStr +
+				"]+" +
+				// Optional second part and following are separated by a dot
+				"(?:\\.[" +
+				rfc1034LdhStr +
+				"]+)*" +
+				// End of string
+				"$",
 			// RegExp is case insensitive
-			'i'
+			"i"
 		);
-		return ( mailtxt.match( html5EmailRegexp ) !== null );
+		return mailtxt.match(html5EmailRegexp) !== null;
 	},
 
 	/**
@@ -493,18 +540,18 @@ util = {
 	 * @param {boolean} [allowBlock=false]
 	 * @return {boolean}
 	 */
-	isIPv4Address: function ( address, allowBlock ) {
+	isIPv4Address: function (address, allowBlock) {
 		var block,
-			RE_IP_BYTE = '(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|0?[0-9]?[0-9])',
-			RE_IP_ADD = '(?:' + RE_IP_BYTE + '\\.){3}' + RE_IP_BYTE;
+			RE_IP_BYTE = "(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|0?[0-9]?[0-9])",
+			RE_IP_ADD = "(?:" + RE_IP_BYTE + "\\.){3}" + RE_IP_BYTE;
 
-		if ( typeof address !== 'string' ) {
+		if (typeof address !== "string") {
 			return false;
 		}
 
-		block = allowBlock ? '(?:\\/(?:3[0-2]|[12]?\\d))?' : '';
+		block = allowBlock ? "(?:\\/(?:3[0-2]|[12]?\\d))?" : "";
 
-		return ( new RegExp( '^' + RE_IP_ADD + block + '$' ).test( address ) );
+		return new RegExp("^" + RE_IP_ADD + block + "$").test(address);
 	},
 
 	/**
@@ -514,46 +561,43 @@ util = {
 	 * @param {boolean} [allowBlock=false]
 	 * @return {boolean}
 	 */
-	isIPv6Address: function ( address, allowBlock ) {
+	isIPv6Address: function (address, allowBlock) {
 		var block, RE_IPV6_ADD;
 
-		if ( typeof address !== 'string' ) {
+		if (typeof address !== "string") {
 			return false;
 		}
 
-		block = allowBlock ? '(?:\\/(?:12[0-8]|1[01][0-9]|[1-9]?\\d))?' : '';
+		block = allowBlock ? "(?:\\/(?:12[0-8]|1[01][0-9]|[1-9]?\\d))?" : "";
 		RE_IPV6_ADD =
-			'(?:' + // starts with "::" (including "::")
-				':(?::|(?::' +
-					'[0-9A-Fa-f]{1,4}' +
-				'){1,7})' +
-				'|' + // ends with "::" (except "::")
-				'[0-9A-Fa-f]{1,4}' +
-				'(?::' +
-					'[0-9A-Fa-f]{1,4}' +
-				'){0,6}::' +
-				'|' + // contains no "::"
-				'[0-9A-Fa-f]{1,4}' +
-				'(?::' +
-					'[0-9A-Fa-f]{1,4}' +
-				'){7}' +
-			')';
+			"(?:" + // starts with "::" (including "::")
+			":(?::|(?::" +
+			"[0-9A-Fa-f]{1,4}" +
+			"){1,7})" +
+			"|" + // ends with "::" (except "::")
+			"[0-9A-Fa-f]{1,4}" +
+			"(?::" +
+			"[0-9A-Fa-f]{1,4}" +
+			"){0,6}::" +
+			"|" + // contains no "::"
+			"[0-9A-Fa-f]{1,4}" +
+			"(?::" +
+			"[0-9A-Fa-f]{1,4}" +
+			"){7}" +
+			")";
 
-		if ( new RegExp( '^' + RE_IPV6_ADD + block + '$' ).test( address ) ) {
+		if (new RegExp("^" + RE_IPV6_ADD + block + "$").test(address)) {
 			return true;
 		}
 
 		// contains one "::" in the middle (single '::' check below)
 		RE_IPV6_ADD =
-			'[0-9A-Fa-f]{1,4}' +
-			'(?:::?' +
-				'[0-9A-Fa-f]{1,4}' +
-			'){1,6}';
+			"[0-9A-Fa-f]{1,4}" + "(?:::?" + "[0-9A-Fa-f]{1,4}" + "){1,6}";
 
 		return (
-			new RegExp( '^' + RE_IPV6_ADD + block + '$' ).test( address ) &&
-			/::/.test( address ) &&
-			!/::.*::/.test( address )
+			new RegExp("^" + RE_IPV6_ADD + block + "$").test(address) &&
+			/::/.test(address) &&
+			!/::.*::/.test(address)
 		);
 	},
 
@@ -565,9 +609,11 @@ util = {
 	 * @param {boolean} [allowBlock=false] If a block of IPs should be allowed
 	 * @return {boolean}
 	 */
-	isIPAddress: function ( address, allowBlock ) {
-		return util.isIPv4Address( address, allowBlock ) ||
-			util.isIPv6Address( address, allowBlock );
+	isIPAddress: function (address, allowBlock) {
+		return (
+			util.isIPv4Address(address, allowBlock) ||
+			util.isIPv6Address(address, allowBlock)
+		);
 	},
 
 	/**
@@ -589,8 +635,13 @@ util = {
 	 *   On wikis with $wgGenerateThumbnailOnParse set to true, this will fall back to using
 	 *   Special:Redirect which is less efficient. Otherwise, it is a direct thumbnail URL.
 	 */
-	parseImageUrl: function ( url ) {
-		var i, name, decodedName, width, match, strippedUrl,
+	parseImageUrl: function (url) {
+		var i,
+			name,
+			decodedName,
+			width,
+			match,
+			strippedUrl,
 			urlTemplate = null,
 			// thumb.php-generated thumbnails
 			// thumb.php?f=<name>&w[idth]=<width>[px]
@@ -612,51 +663,60 @@ util = {
 
 				// Full-size images in non-hashed upload directories
 				// /<name>
-				/\/([^\s/]+)$/
+				/\/([^\s/]+)$/,
 			];
 
-		if ( thumbPhpRegex.test( url ) ) {
-			decodedName = mw.util.getParamValue( 'f', url );
-			name = encodeURIComponent( decodedName );
-			width = mw.util.getParamValue( 'width', url ) || mw.util.getParamValue( 'w', url );
-			urlTemplate = url.replace( /([&?])w(?:idth)?=[^&]+/g, '' ) + '&width={width}';
+		if (thumbPhpRegex.test(url)) {
+			decodedName = mw.util.getParamValue("f", url);
+			name = encodeURIComponent(decodedName);
+			width =
+				mw.util.getParamValue("width", url) ||
+				mw.util.getParamValue("w", url);
+			urlTemplate =
+				url.replace(/([&?])w(?:idth)?=[^&]+/g, "") + "&width={width}";
 		} else {
-			for ( i = 0; i < regexes.length; i++ ) {
-				match = url.match( regexes[ i ] );
-				if ( match ) {
-					name = match[ 1 ];
-					decodedName = decodeURIComponent( name );
-					width = match[ 2 ] || null;
+			for (i = 0; i < regexes.length; i++) {
+				match = url.match(regexes[i]);
+				if (match) {
+					name = match[1];
+					decodedName = decodeURIComponent(name);
+					width = match[2] || null;
 					break;
 				}
 			}
 		}
 
-		if ( name ) {
-			if ( width !== null ) {
-				width = parseInt( width, 10 ) || null;
+		if (name) {
+			if (width !== null) {
+				width = parseInt(width, 10) || null;
 			}
-			if ( config.GenerateThumbnailOnParse ) {
+			if (config.GenerateThumbnailOnParse) {
 				// The wiki cannot generate thumbnails on demand. Use a special page - this means
 				// an extra redirect and PHP request, but it will generate the thumbnail if it does
 				// not exist.
-				urlTemplate = mw.util.getUrl( 'Special:Redirect/file/' + decodedName, { width: '{width}' } )
+				urlTemplate = mw.util
+					.getUrl("Special:Redirect/file/" + decodedName, {
+						width: "{width}",
+					})
 					// getUrl urlencodes the template variable, fix that
-					.replace( '%7Bwidth%7D', '{width}' );
-			} else if ( width && !urlTemplate ) {
+					.replace("%7Bwidth%7D", "{width}");
+			} else if (width && !urlTemplate) {
 				// Javascript does not expose regexp capturing group indexes, and the width
 				// part could in theory also occur in the filename so hide that first.
-				strippedUrl = url.replace( name, '{name}' )
-					.replace( name, '{name}' )
-					.replace( width + 'px-', '{width}px-' );
-				urlTemplate = strippedUrl.replace( /\{name\}/g, name );
+				strippedUrl = url
+					.replace(name, "{name}")
+					.replace(name, "{name}")
+					.replace(width + "px-", "{width}px-");
+				urlTemplate = strippedUrl.replace(/\{name\}/g, name);
 			}
 			return {
-				name: decodedName.replace( /_/g, ' ' ),
+				name: decodedName.replace(/_/g, " "),
 				width: width,
-				resizeUrl: urlTemplate ? function ( w ) {
-					return urlTemplate.replace( '{width}', w );
-				} : null
+				resizeUrl: urlTemplate
+					? function (w) {
+							return urlTemplate.replace("{width}", w);
+					  }
+					: null,
 			};
 		}
 		return null;
@@ -673,10 +733,10 @@ util = {
 	 * @param {string} str String to escape
 	 * @return {string} Escaped string
 	 */
-	escapeRegExp: function ( str ) {
+	escapeRegExp: function (str) {
 		// eslint-disable-next-line no-useless-escape
-		return str.replace( /([\\{}()|.?*+\-^$\[\]])/g, '\\$1' );
-	}
+		return str.replace(/([\\{}()|.?*+\-^$\[\]])/g, "\\$1");
+	},
 };
 
 /**
@@ -689,31 +749,38 @@ function init() {
 	// You may also use class "mw-body mw-body-primary" if you use
 	// mw-body in multiple locations. Or class "mw-body-primary" if
 	// you use mw-body deeper in the DOM.
-	var content = document.querySelector( '.mw-body-primary' ) ||
-		document.querySelector( '.mw-body' ) ||
+	var content =
+		document.querySelector(".mw-body-primary") ||
+		document.querySelector(".mw-body") ||
 		// If the skin has no such class, fall back to the parser output
-		document.querySelector( '#mw-content-text' ) ||
+		document.querySelector("#mw-content-text") ||
 		// Should never happen..., except if the skin is still in development.
 		document.body;
 
-	util.$content = $( content );
+	util.$content = $(content);
 }
 
 // Backwards-compatible alias for mediawiki.RegExp module.
 // @deprecated since 1.34
 mw.RegExp = {};
-mw.log.deprecate( mw.RegExp, 'escape', util.escapeRegExp, 'Use mw.util.escapeRegExp() instead.', 'mw.RegExp.escape' );
+mw.log.deprecate(
+	mw.RegExp,
+	"escape",
+	util.escapeRegExp,
+	"Use mw.util.escapeRegExp() instead.",
+	"mw.RegExp.escape"
+);
 
-if ( window.QUnit ) {
+if (window.QUnit) {
 	// Not allowed outside unit tests
-	util.setOptionsForTest = function ( opts ) {
+	util.setOptionsForTest = function (opts) {
 		var oldConfig = config;
-		config = $.extend( {}, config, opts );
+		config = $.extend({}, config, opts);
 		return oldConfig;
 	};
 	util.init = init;
 } else {
-	$( init );
+	$(init);
 }
 
 mw.util = util;

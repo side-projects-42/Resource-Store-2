@@ -12,12 +12,12 @@ const fs = jest.genMockFromModule('fs');
 const mockFiles = new Map();
 function __setMockFiles(newMockFiles) {
   mockFiles.clear();
-  Object.keys(newMockFiles).forEach(fileName => {
+  Object.keys(newMockFiles).forEach((fileName) => {
     mockFiles.set(fileName, newMockFiles[fileName]);
   });
 }
 
 fs.__setMockFiles = __setMockFiles;
-fs.readFileSync = jest.fn(file => mockFiles.get(file));
+fs.readFileSync = jest.fn((file) => mockFiles.get(file));
 
 module.exports = fs;

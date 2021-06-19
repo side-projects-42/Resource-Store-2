@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ykhwong"
-		]
+		"authors": ["Ykhwong"]
 	},
 	"paramvalidator-missingparam": "\"$1\" 변수는 설정이 필수입니다.",
 	"paramvalidator-outofrange-max": "\"$1\" 변수의 \"$2\" 값은 $4 미만이어야 합니다.",

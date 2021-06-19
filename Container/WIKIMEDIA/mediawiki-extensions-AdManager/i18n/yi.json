@@ -1,10 +1,8 @@
 {
-	"@metadata": {
-		"authors": [
-			"פוילישער"
-		]
-	},
-	"admanager_submit": "אײַנגעבן",
-	"admanager_Page": "בלעטער",
-	"admanager_Category": "קאַטעגאריעס"
+  "@metadata": {
+    "authors": ["פוילישער"]
+  },
+  "admanager_submit": "אײַנגעבן",
+  "admanager_Page": "בלעטער",
+  "admanager_Category": "קאַטעגאריעס"
 }

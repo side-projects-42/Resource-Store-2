@@ -4,8 +4,9 @@
 
 /* if you'd like to add custom styles to cruise, add them here */
 /* the following will make successful builds green */
-a.success, a.success:visited {
-  color: #0A0;
+a.success,
+a.success:visited {
+  color: #0a0;
 }
 
 .build_success {

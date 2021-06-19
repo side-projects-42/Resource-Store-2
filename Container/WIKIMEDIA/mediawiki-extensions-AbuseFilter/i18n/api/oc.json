@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Cedric31"
-		]
-	},
-	"apihelp-query+abusefilters-param-prop": "Quinas proprietats obténer."
+  "@metadata": {
+    "authors": ["Cedric31"]
+  },
+  "apihelp-query+abusefilters-param-prop": "Quinas proprietats obténer."
 }

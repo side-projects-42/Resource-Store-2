@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Mashoi7"
-		]
-	},
-	"abusefilter-list-edit": "Kohentele"
+  "@metadata": {
+    "authors": ["Mashoi7"]
+  },
+  "abusefilter-list-edit": "Kohentele"
 }

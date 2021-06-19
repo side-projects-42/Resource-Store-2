@@ -1,19 +1,17 @@
 ---
 :layout: post
-:title: 'December JAM World Tour: Jenkins Developers and Users Meetup Group, SF'
+:title: "December JAM World Tour: Jenkins Developers and Users Meetup Group, SF"
 :nodeid: 661
 :created: 1450504018
 :tags:
-- general
-- meetup
-- jenkinsci
+  - general
+  - meetup
+  - jenkinsci
 :author: alyssat
 ---
 
-
 <img src="/sites/default/files/images/Jenkins_Butler_0.png" width="150"
 align="right"/>
-
 
 Thank you to [Netflix](http://www.netflix.com/) for sponsoring the yummy
 burrito bar and offered up their brand new auditorium to host Jenkins
@@ -29,12 +27,10 @@ externally. Slides are listed below. The video will be posted on [the meetup
 page](http://www.meetup.com/jenkinsmeetup/events/226844066/)) once it becomes
 available.
 
-
 Slides for the talks are linked below:
 
-* [Scaling Jenkins](https://www.cloudbees.com/jenkins/juc-2015/presentations/JUC-2015-USWest-Scaling-Jenkins-Dayal.pdf)
-* [External Project](http://files.meetup.com/1695538/Jenkins%20ExternalProject.pdf)
-
+- [Scaling Jenkins](https://www.cloudbees.com/jenkins/juc-2015/presentations/JUC-2015-USWest-Scaling-Jenkins-Dayal.pdf)
+- [External Project](http://files.meetup.com/1695538/Jenkins%20ExternalProject.pdf)
 
 Check out where [Jenkins Area Meetups](http://www.meetup.com/pro/Jenkins/)
 (JAMs) are located in the world. Don't see a JAM in your area? why not start

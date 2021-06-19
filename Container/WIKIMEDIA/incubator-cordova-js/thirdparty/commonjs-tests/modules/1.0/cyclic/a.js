@@ -1,4 +1,4 @@
 exports.a = function () {
-    return b;
+  return b;
 };
-var b = require('b');
+var b = require("b");

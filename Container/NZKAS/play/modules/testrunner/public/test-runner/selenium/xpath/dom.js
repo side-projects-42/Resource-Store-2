@@ -16,12 +16,11 @@
 // Spec. However, different browsers actually pass very different
 // values at the API. See <http://mesch.nyc/test-xml-quote>.
 function xmlResolveEntities(s) {
-
-  var parts = stringSplit(s, '&');
+  var parts = stringSplit(s, "&");
 
   var ret = parts[0];
   for (var i = 1; i < parts.length; ++i) {
-    var rp = parts[i].indexOf(';');
+    var rp = parts[i].indexOf(";");
     if (rp == -1) {
       // no entity reference: just a & but no ;
       ret += parts[i];
@@ -33,22 +32,22 @@ function xmlResolveEntities(s) {
 
     var ch;
     switch (entityName) {
-      case 'lt':
-        ch = '<';
+      case "lt":
+        ch = "<";
         break;
-      case 'gt':
-        ch = '>';
+      case "gt":
+        ch = ">";
         break;
-      case 'amp':
-        ch = '&';
+      case "amp":
+        ch = "&";
         break;
-      case 'quot':
+      case "quot":
         ch = '"';
         break;
-      case 'apos':
-        ch = '\'';
+      case "apos":
+        ch = "'";
         break;
-      case 'nbsp':
+      case "nbsp":
         ch = String.fromCharCode(160);
         break;
       default:
@@ -56,8 +55,8 @@ function xmlResolveEntities(s) {
         // the entity text through non-W3C DOM properties and read it
         // through the W3C DOM. W3C DOM access is specified to resolve
         // entities.
-        var span = domCreateElement(window.document, 'span');
-        span.innerHTML = '&' + entityName + '; ';
+        var span = domCreateElement(window.document, "span");
+        span.innerHTML = "&" + entityName + "; ";
         ch = span.childNodes[0].nodeValue.charAt(0);
     }
     ret += ch + remainderText;
@@ -66,11 +65,11 @@ function xmlResolveEntities(s) {
   return ret;
 }
 
-var XML10_TAGNAME_REGEXP = new RegExp('^(' + XML10_NAME + ')');
-var XML10_ATTRIBUTE_REGEXP = new RegExp(XML10_ATTRIBUTE, 'g');
+var XML10_TAGNAME_REGEXP = new RegExp("^(" + XML10_NAME + ")");
+var XML10_ATTRIBUTE_REGEXP = new RegExp(XML10_ATTRIBUTE, "g");
 
-var XML11_TAGNAME_REGEXP = new RegExp('^(' + XML11_NAME + ')');
-var XML11_ATTRIBUTE_REGEXP = new RegExp(XML11_ATTRIBUTE, 'g');
+var XML11_TAGNAME_REGEXP = new RegExp("^(" + XML11_NAME + ")");
+var XML11_ATTRIBUTE_REGEXP = new RegExp(XML11_ATTRIBUTE, "g");
 
 // Parses the given XML string with our custom, JavaScript XML parser. Written
 // by Steffen Meschkat (mesch@google.com).
@@ -91,7 +90,7 @@ function xmlParse(xml) {
     } else {
       // VersionInfo is missing, or unknown version number.
       // TODO : Fallback to XML 1.0 or XML 1.1, or just return null?
-      alert('VersionInfo is missing, or unknown version number.');
+      alert("VersionInfo is missing, or unknown version number.");
     }
   } else {
     // When an XML declaration is missing it's an XML 1.0 document.
@@ -117,13 +116,13 @@ function xmlParse(xml) {
 
   // The token that delimits a section that contains markup as
   // content: CDATA or comments.
-  var slurp = '';
+  var slurp = "";
 
-  var x = stringSplit(xml, '<');
+  var x = stringSplit(xml, "<");
   for (var i = 1; i < x.length; ++i) {
-    var xx = stringSplit(x[i], '>');
+    var xx = stringSplit(x[i], ">");
     var tag = xx[0];
-    var text = xmlResolveEntities(xx[1] || '');
+    var text = xmlResolveEntities(xx[1] || "");
 
     if (slurp) {
       // In a "slurp" section (CDATA or comment): only check for the
@@ -131,19 +130,18 @@ function xmlParse(xml) {
       var end = x[i].indexOf(slurp);
       if (end != -1) {
         var data = x[i].substring(0, end);
-        parent.nodeValue += '<' + data;
+        parent.nodeValue += "<" + data;
         stack.pop();
-        parent = stack[stack.length-1];
+        parent = stack[stack.length - 1];
         text = x[i].substring(end + slurp.length);
-        slurp = '';
+        slurp = "";
       } else {
-        parent.nodeValue += '<' + x[i];
+        parent.nodeValue += "<" + x[i];
         text = null;
       }
-
-    } else if (tag.indexOf('![CDATA[') == 0) {
-      var start = '![CDATA['.length;
-      var end = x[i].indexOf(']]>');
+    } else if (tag.indexOf("![CDATA[") == 0) {
+      var start = "![CDATA[".length;
+      var end = x[i].indexOf("]]>");
       if (end != -1) {
         var data = x[i].substring(start, end);
         var node = domCreateCDATASection(xmldoc, data);
@@ -155,12 +153,11 @@ function xmlParse(xml) {
         domAppendChild(parent, node);
         parent = node;
         stack.push(node);
-        slurp = ']]>';
+        slurp = "]]>";
       }
-
-    } else if (tag.indexOf('!--') == 0) {
-      var start = '!--'.length;
-      var end = x[i].indexOf('-->');
+    } else if (tag.indexOf("!--") == 0) {
+      var start = "!--".length;
+      var end = x[i].indexOf("-->");
       if (end != -1) {
         var data = x[i].substring(start, end);
         var node = domCreateComment(xmldoc, data);
@@ -172,16 +169,14 @@ function xmlParse(xml) {
         domAppendChild(parent, node);
         parent = node;
         stack.push(node);
-        slurp = '-->';
+        slurp = "-->";
       }
-
-    } else if (tag.charAt(0) == '/') {
+    } else if (tag.charAt(0) == "/") {
       stack.pop();
-      parent = stack[stack.length-1];
-
-    } else if (tag.charAt(0) == '?') {
+      parent = stack[stack.length - 1];
+    } else if (tag.charAt(0) == "?") {
       // Ignore XML declaration and processing instructions
-    } else if (tag.charAt(0) == '!') {
+    } else if (tag.charAt(0) == "!") {
       // Ignore notation and comments
     } else {
       var empty = tag.match(regex_empty);
@@ -189,8 +184,8 @@ function xmlParse(xml) {
       var node = domCreateElement(xmldoc, tagname);
 
       var att;
-      while (att = regex_attribute.exec(tag)) {
-        var val = xmlResolveEntities(att[5] || att[7] || '');
+      while ((att = regex_attribute.exec(tag))) {
+        var val = xmlResolveEntities(att[5] || att[7] || "");
         domSetAttribute(node, att[1], val);
       }
 
@@ -235,7 +230,7 @@ function domTraverseElements(node, opt_pre, opt_post) {
   var ret;
   if (opt_pre) {
     ret = opt_pre.call(null, node);
-    if (typeof ret == 'boolean' && !ret) {
+    if (typeof ret == "boolean" && !ret) {
       return false;
     }
   }
@@ -243,7 +238,7 @@ function domTraverseElements(node, opt_pre, opt_post) {
   for (var c = node.firstChild; c; c = c.nextSibling) {
     if (c.nodeType == DOM_ELEMENT_NODE) {
       ret = arguments.callee.call(this, c, opt_pre, opt_post);
-      if (typeof ret == 'boolean' && !ret) {
+      if (typeof ret == "boolean" && !ret) {
         return false;
       }
     }
@@ -251,7 +246,7 @@ function domTraverseElements(node, opt_pre, opt_post) {
 
   if (opt_post) {
     ret = opt_post.call(null, node);
-    if (typeof ret == 'boolean' && !ret) {
+    if (typeof ret == "boolean" && !ret) {
       return false;
     }
   }
@@ -270,10 +265,10 @@ function XNode(type, name, opt_value, opt_owner) {
 }
 
 // Don't call as method, use apply() or call().
-XNode.init = function(type, name, value, owner) {
+XNode.init = function (type, name, value, owner) {
   this.nodeType = type - 0;
-  this.nodeName = '' + name;
-  this.nodeValue = '' + value;
+  this.nodeName = "" + name;
+  this.nodeValue = "" + value;
   this.ownerDocument = owner;
 
   this.firstChild = null;
@@ -281,11 +276,11 @@ XNode.init = function(type, name, value, owner) {
   this.nextSibling = null;
   this.previousSibling = null;
   this.parentNode = null;
-}
+};
 
 XNode.unused_ = [];
 
-XNode.recycle = function(node) {
+XNode.recycle = function (node) {
   if (!node) {
     return;
   }
@@ -308,10 +303,10 @@ XNode.recycle = function(node) {
   }
   node.attributes.length = 0;
   node.childNodes.length = 0;
-  XNode.init.call(node, 0, '', '', null);
-}
+  XNode.init.call(node, 0, "", "", null);
+};
 
-XNode.create = function(type, name, value, owner) {
+XNode.create = function (type, name, value, owner) {
   if (XNode.unused_.length > 0) {
     var node = XNode.unused_.pop();
     XNode.init.call(node, type, name, value, owner);
@@ -319,9 +314,9 @@ XNode.create = function(type, name, value, owner) {
   } else {
     return new XNode(type, name, value, owner);
   }
-}
+};
 
-XNode.prototype.appendChild = function(node) {
+XNode.prototype.appendChild = function (node) {
   // firstChild
   if (this.childNodes.length == 0) {
     this.firstChild = node;
@@ -344,10 +339,9 @@ XNode.prototype.appendChild = function(node) {
 
   // childNodes
   this.childNodes.push(node);
-}
+};
 
-
-XNode.prototype.replaceChild = function(newNode, oldNode) {
+XNode.prototype.replaceChild = function (newNode, oldNode) {
   if (oldNode == newNode) {
     return;
   }
@@ -385,10 +379,9 @@ XNode.prototype.replaceChild = function(newNode, oldNode) {
       break;
     }
   }
-}
+};
 
-
-XNode.prototype.insertBefore = function(newNode, oldNode) {
+XNode.prototype.insertBefore = function (newNode, oldNode) {
   if (oldNode == newNode) {
     return;
   }
@@ -424,10 +417,9 @@ XNode.prototype.insertBefore = function(newNode, oldNode) {
     newChildren.push(c);
   }
   this.childNodes = newChildren;
-}
+};
 
-
-XNode.prototype.removeChild = function(node) {
+XNode.prototype.removeChild = function (node) {
   var newChildren = [];
   for (var i = 0; i < this.childNodes.length; ++i) {
     var c = this.childNodes[i];
@@ -449,36 +441,32 @@ XNode.prototype.removeChild = function(node) {
     }
   }
   this.childNodes = newChildren;
-}
+};
 
-
-XNode.prototype.hasAttributes = function() {
+XNode.prototype.hasAttributes = function () {
   return this.attributes.length > 0;
-}
+};
 
-
-XNode.prototype.setAttribute = function(name, value) {
+XNode.prototype.setAttribute = function (name, value) {
   for (var i = 0; i < this.attributes.length; ++i) {
     if (this.attributes[i].nodeName == name) {
-      this.attributes[i].nodeValue = '' + value;
+      this.attributes[i].nodeValue = "" + value;
       return;
     }
   }
   this.attributes.push(XNode.create(DOM_ATTRIBUTE_NODE, name, value, this));
-}
+};
 
-
-XNode.prototype.getAttribute = function(name) {
+XNode.prototype.getAttribute = function (name) {
   for (var i = 0; i < this.attributes.length; ++i) {
     if (this.attributes[i].nodeName == name) {
       return this.attributes[i].nodeValue;
     }
   }
   return null;
-}
+};
 
-
-XNode.prototype.removeAttribute = function(name) {
+XNode.prototype.removeAttribute = function (name) {
   var a = [];
   for (var i = 0; i < this.attributes.length; ++i) {
     if (this.attributes[i].nodeName != name) {
@@ -486,81 +474,94 @@ XNode.prototype.removeAttribute = function(name) {
     }
   }
   this.attributes = a;
-}
+};
 
-
-XNode.prototype.getElementsByTagName = function(name) {
+XNode.prototype.getElementsByTagName = function (name) {
   var ret = [];
   var self = this;
   if ("*" == name) {
-    domTraverseElements(this, function(node) {
-      if (self == node) return;
-      ret.push(node);
-    }, null);
-  } else {
-    domTraverseElements(this, function(node) {
-      if (self == node) return;
-      if (node.nodeName == name) {
+    domTraverseElements(
+      this,
+      function (node) {
+        if (self == node) return;
         ret.push(node);
-      }
-    }, null);
+      },
+      null
+    );
+  } else {
+    domTraverseElements(
+      this,
+      function (node) {
+        if (self == node) return;
+        if (node.nodeName == name) {
+          ret.push(node);
+        }
+      },
+      null
+    );
   }
   return ret;
-}
+};
 
-
-XNode.prototype.getElementById = function(id) {
+XNode.prototype.getElementById = function (id) {
   var ret = null;
-  domTraverseElements(this, function(node) {
-    if (node.getAttribute('id') == id) {
-      ret = node;
-      return false;
-    }
-  }, null);
+  domTraverseElements(
+    this,
+    function (node) {
+      if (node.getAttribute("id") == id) {
+        ret = node;
+        return false;
+      }
+    },
+    null
+  );
   return ret;
-}
-
+};
 
 function XDocument() {
   // NOTE(mesch): Acocording to the DOM Spec, ownerDocument of a
   // document node is null.
-  XNode.call(this, DOM_DOCUMENT_NODE, '#document', null, null);
+  XNode.call(this, DOM_DOCUMENT_NODE, "#document", null, null);
   this.documentElement = null;
 }
 
-XDocument.prototype = new XNode(DOM_DOCUMENT_NODE, '#document');
+XDocument.prototype = new XNode(DOM_DOCUMENT_NODE, "#document");
 
-XDocument.prototype.clear = function() {
+XDocument.prototype.clear = function () {
   XNode.recycle(this.documentElement);
   this.documentElement = null;
-}
+};
 
-XDocument.prototype.appendChild = function(node) {
+XDocument.prototype.appendChild = function (node) {
   XNode.prototype.appendChild.call(this, node);
   this.documentElement = this.childNodes[0];
-}
+};
 
-XDocument.prototype.createElement = function(name) {
+XDocument.prototype.createElement = function (name) {
   return XNode.create(DOM_ELEMENT_NODE, name, null, this);
-}
+};
 
-XDocument.prototype.createDocumentFragment = function() {
-  return XNode.create(DOM_DOCUMENT_FRAGMENT_NODE, '#document-fragment',
-                    null, this);
-}
+XDocument.prototype.createDocumentFragment = function () {
+  return XNode.create(
+    DOM_DOCUMENT_FRAGMENT_NODE,
+    "#document-fragment",
+    null,
+    this
+  );
+};
 
-XDocument.prototype.createTextNode = function(value) {
-  return XNode.create(DOM_TEXT_NODE, '#text', value, this);
-}
+XDocument.prototype.createTextNode = function (value) {
+  return XNode.create(DOM_TEXT_NODE, "#text", value, this);
+};
 
-XDocument.prototype.createAttribute = function(name) {
+XDocument.prototype.createAttribute = function (name) {
   return XNode.create(DOM_ATTRIBUTE_NODE, name, null, this);
-}
+};
 
-XDocument.prototype.createComment = function(data) {
-  return XNode.create(DOM_COMMENT_NODE, '#comment', data, this);
-}
+XDocument.prototype.createComment = function (data) {
+  return XNode.create(DOM_COMMENT_NODE, "#comment", data, this);
+};
 
-XDocument.prototype.createCDATASection = function(data) {
-  return XNode.create(DOM_CDATA_SECTION_NODE, '#cdata-section', data, this);
-}
+XDocument.prototype.createCDATASection = function (data) {
+  return XNode.create(DOM_CDATA_SECTION_NODE, "#cdata-section", data, this);
+};

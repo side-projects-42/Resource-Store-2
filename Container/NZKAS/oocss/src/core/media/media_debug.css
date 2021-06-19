@@ -2,4 +2,6 @@
 .media .img,
 .media .imgExt,
 .media .bd,
-.media {background-color: rgba(195,0,38,.30);}
+.media {
+  background-color: rgba(195, 0, 38, 0.3);
+}

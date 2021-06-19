@@ -1,5 +1,4 @@
-Schema
-======
+# Schema
 
 The most up-to-date schema for the tables in the database
 will always be `tables.sql` in the maintenance directory,

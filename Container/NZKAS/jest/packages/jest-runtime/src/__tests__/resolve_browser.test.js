@@ -18,7 +18,7 @@ describe('resolve', () => {
   it('respects "browser" dependency when browser:true configured', () =>
     createRuntime(__filename, {
       browser: true,
-    }).then(runtime => {
+    }).then((runtime) => {
       const exports = runtime.requireModuleOrMock(
         runtime.__mockRootPath,
         'jest-resolve-test',
@@ -33,7 +33,7 @@ describe('resolve', () => {
       {
         browser: false,
       },
-    ).then(runtime => {
+    ).then((runtime) => {
       const exports = runtime.requireModuleOrMock(
         runtime.__mockRootPath,
         'jest-resolve-test',

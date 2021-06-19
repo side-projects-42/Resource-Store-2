@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"1917 Ekim Devrimi"
-		]
+		"authors": ["1917 Ekim Devrimi"]
 	},
 	"paramvalidator-emptystring": "rêza venge",
 	"paramvalidator-missingparam": "Gani parametrey \"$1\" eyar bo.",

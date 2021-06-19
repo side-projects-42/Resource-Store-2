@@ -60,14 +60,14 @@ will work on adding an Ember.onerror handler to catch these.
 ## Action Items
 
 - [ ] @tomdale to deprecate Node 0.10 support by removing from Travis
-  build matrix
-    - [ ] We will not explicitly remove Contextify support until 1.0.0
-    - [ ] We will add a deprecation warning
+      build matrix
+  - [ ] We will not explicitly remove Contextify support until 1.0.0
+  - [ ] We will add a deprecation warning
 - [ ] @danmcclain will push PR for deferring rendering via promise chain
 - [ ] @danmcclain will update FastBootRequest PR to implement get for
-  headers so users don't have to call `toLowerCase` on headers
+      headers so users don't have to call `toLowerCase` on headers
 - [ ] @danmcclain will submit PR to update FastBoot service to deprecate
-  old access to request details
+      old access to request details
 - [ ] @kratiahuja will add error handling via `Ember.onerror` and other
-  mechanisms to avoid crashing the process
+      mechanisms to avoid crashing the process
 - [ ] @tomdale will sync up with @fivetanley to merge in build refactor

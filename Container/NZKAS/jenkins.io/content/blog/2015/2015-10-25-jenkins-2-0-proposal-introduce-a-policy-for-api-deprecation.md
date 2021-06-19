@@ -1,18 +1,19 @@
 ---
 :layout: post
-:title: 'Jenkins 2.0 Proposal: Introduce a policy for API deprecation'
+:title: "Jenkins 2.0 Proposal: Introduce a policy for API deprecation"
 :nodeid: 636
 :created: 1445833065
 :tags:
-- general
-- core
-- feedback
+  - general
+  - core
+  - feedback
 :author: rtyler
 ---
+
 Over the past few weeks there has been a vibrant discussion happening on the
 [jenkinsci-dev@](http://groups.google.com/group/jenkinsci-dev/topics) mailing
 list as to what "[Jenkins
-2.0](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+2.0)" means.  While
+2.0](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+2.0)" means. While
 Jenkins does not currently adhere to [semantic versioning](http://semver.org/),
 the change of a major version number does indicate a major milestone for the community.
 
@@ -24,11 +25,9 @@ Presentation](https://docs.google.com/presentation/d/12ikbbQoMvus_l_q23BxXhYXnW9
 Roughly paraphrasing Kohsuke's vision, 2.0 is primarily about making things
 better for the thousands of users out there.
 
-
-This week, we'll be reviewing some *key areas* of the "Jenkins 2.0" proposal.
+This week, we'll be reviewing some _key areas_ of the "Jenkins 2.0" proposal.
 Asking you, the user community, to provide feedback on these proposals, going
 from Jenkins internals to user interface.
-
 
 Today's post involves a proposal to introduce a policy for **API
 deprecation** from community members [Oliver
@@ -60,7 +59,6 @@ I highly encourage you to read the entire proposal [on the issue
 tracker](https://issues.jenkins-ci.org/browse/JENKINS-31035), where we are
 trying to collect feedback/history.
 
-
 ### Providing Feedback
 
 We're asking you to read the proposal in
@@ -73,9 +71,8 @@ tracker](https://issues.jenkins-ci.org) or the
 means you'll be able to log into the issue tracker and vote for, or comment on
 the issue linked above.
 
-(*note*: if you have forgotten your password, use [the account
+(_note_: if you have forgotten your password, use [the account
 app](https://jenkins-ci.org/account/) to reset it.)
-
 
 We're going to review feedback, make any necessary adjustments and either
 approve or reject the proposal two weeks from today.

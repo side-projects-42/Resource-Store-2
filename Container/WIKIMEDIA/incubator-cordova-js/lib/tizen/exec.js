@@ -13,47 +13,55 @@
  * @param {String[]} [args]     Zero or more arguments to pass to the method
  */
 
-var tizen = require('cordova/plugin/tizen/manager'),
-    cordova = require('cordova'),
-    utils = require('cordova/utils');
+var tizen = require("cordova/plugin/tizen/manager"),
+  cordova = require("cordova"),
+  utils = require("cordova/utils");
 
-module.exports = function(successCB, failCB, service, action, args) {
+module.exports = function (successCB, failCB, service, action, args) {
+  try {
+    var v = tizen.exec(successCB, failCB, service, action, args);
 
-    try {
-        var v = tizen.exec(successCB, failCB, service, action, args);
-
-        // If status is OK, then return value back to caller
-        if (v.status == cordova.callbackStatus.OK) {
-
-            // If there is a success callback, then call it now with returned value
-            if (successCB) {
-                try {
-                    successCB(v.message);
-                }
-                catch (e) {
-                    console.log("Error in success callback: "+ service + "." + action + " = " + e);
-                }
-
-            }
-            return v.message;
-        } else if (v.status == cordova.callbackStatus.NO_RESULT) {
-            // Nothing to do here
-        } else {
-            // If error, then display error
-            console.log("Error: " + service + "." + action + " Status=" + v.status + " Message=" + v.message);
-
-            // If there is a fail callback, then call it now with returned value
-            if (failCB) {
-                try {
-                    failCB(v.message);
-                }
-                catch (e) {
-                    console.log("Error in error callback: " + service + "." + action + " = "+e);
-                }
-            }
-            return null;
+    // If status is OK, then return value back to caller
+    if (v.status == cordova.callbackStatus.OK) {
+      // If there is a success callback, then call it now with returned value
+      if (successCB) {
+        try {
+          successCB(v.message);
+        } catch (e) {
+          console.log(
+            "Error in success callback: " + service + "." + action + " = " + e
+          );
         }
-    } catch (e) {
-        utils.alert("Error: " + e);
+      }
+      return v.message;
+    } else if (v.status == cordova.callbackStatus.NO_RESULT) {
+      // Nothing to do here
+    } else {
+      // If error, then display error
+      console.log(
+        "Error: " +
+          service +
+          "." +
+          action +
+          " Status=" +
+          v.status +
+          " Message=" +
+          v.message
+      );
+
+      // If there is a fail callback, then call it now with returned value
+      if (failCB) {
+        try {
+          failCB(v.message);
+        } catch (e) {
+          console.log(
+            "Error in error callback: " + service + "." + action + " = " + e
+          );
+        }
+      }
+      return null;
     }
+  } catch (e) {
+    utils.alert("Error: " + e);
+  }
 };

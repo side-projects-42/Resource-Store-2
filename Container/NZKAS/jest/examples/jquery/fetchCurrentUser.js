@@ -11,7 +11,7 @@ function parseJSON(user) {
 
 function fetchCurrentUser(callback) {
   return $.ajax({
-    success: user => callback(parseJSON(user)),
+    success: (user) => callback(parseJSON(user)),
     type: 'GET',
     url: 'http://example.com/currentUser',
   });

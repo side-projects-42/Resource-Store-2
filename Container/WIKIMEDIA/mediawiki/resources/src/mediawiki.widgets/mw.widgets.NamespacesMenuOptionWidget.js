@@ -4,8 +4,7 @@
  * @copyright 2011-2015 MediaWiki Widgets Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-( function () {
-
+(function () {
 	/**
 	 * Creates an mw.widgets.NamespacesMenuOptionWidget object
 	 *
@@ -18,20 +17,23 @@
 	 * @constructor
 	 * @param {Object} [config] Configuration options
 	 */
-	mw.widgets.NamespacesMenuOptionWidget = function MwWidgetsNamespacesMenuOptionWidget( config ) {
-		// Parent
-		mw.widgets.NamespacesMenuOptionWidget.parent.call( this, config );
-	};
+	mw.widgets.NamespacesMenuOptionWidget =
+		function MwWidgetsNamespacesMenuOptionWidget(config) {
+			// Parent
+			mw.widgets.NamespacesMenuOptionWidget.parent.call(this, config);
+		};
 
 	/* Setup */
 
-	OO.inheritClass( mw.widgets.NamespacesMenuOptionWidget, OO.ui.MenuOptionWidget );
+	OO.inheritClass(
+		mw.widgets.NamespacesMenuOptionWidget,
+		OO.ui.MenuOptionWidget
+	);
 
 	/**
 	 * @inheritdoc
 	 */
 	mw.widgets.NamespacesMenuOptionWidget.prototype.getMatchText = function () {
-		return this.getData() + ' ' + this.getLabel();
+		return this.getData() + " " + this.getLabel();
 	};
-
-}() );
+})();

@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ninonino",
-			"Salvemm el lombard"
-		]
+		"authors": ["Ninonino", "Salvemm el lombard"]
 	},
 	"ooui-outline-control-move-down": "Sposta in sgiò",
 	"ooui-outline-control-move-up": "Sposta in alt",

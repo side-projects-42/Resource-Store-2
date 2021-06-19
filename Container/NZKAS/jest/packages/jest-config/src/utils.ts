@@ -92,7 +92,7 @@ export const _replaceRootDirTags = (rootDir: Config.Path, config: any): any => {
   switch (typeof config) {
     case 'object':
       if (Array.isArray(config)) {
-        return config.map(item => _replaceRootDirTags(rootDir, item));
+        return config.map((item) => _replaceRootDirTags(rootDir, item));
       }
       if (config instanceof RegExp) {
         return config;

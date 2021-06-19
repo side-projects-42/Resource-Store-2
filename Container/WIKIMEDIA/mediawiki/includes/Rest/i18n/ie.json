@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"OIS"
-		]
+		"authors": ["OIS"]
 	},
 	"rest-prefix-mismatch": "Li demandat rute ($1) ne esset intra li radical rute de REST API ($2)",
 	"rest-wrong-method": "Li metode de demanda ($1) ne esset {{PLURAL:$3|li|un}} permisset metode por ti-ci rute ($2)",

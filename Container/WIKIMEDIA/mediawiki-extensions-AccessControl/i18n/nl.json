@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Sjoerddebruin"
-		]
-	},
-	"accesscontrol-info": "Dit is een beveiligde pagina."
+  "@metadata": {
+    "authors": ["Sjoerddebruin"]
+  },
+  "accesscontrol-info": "Dit is een beveiligde pagina."
 }

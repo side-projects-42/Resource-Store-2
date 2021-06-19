@@ -29,7 +29,7 @@ test(`Returns source string with inline maps when no transformOptions is passed`
   const result = babelJest.process(
     sourceString,
     'dummy_path.js',
-    (mockConfig as unknown) as Config.ProjectConfig,
+    mockConfig as unknown as Config.ProjectConfig,
   ) as any;
   expect(typeof result).toBe('object');
   expect(result.code).toBeDefined();

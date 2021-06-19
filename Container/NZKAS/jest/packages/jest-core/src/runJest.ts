@@ -53,7 +53,7 @@ const getTestPaths = async (
   }
 
   const shouldTestArray = await Promise.all(
-    data.tests.map(test =>
+    data.tests.map((test) =>
       jestHooks.shouldRunTestSuite({
         config: test.context.config,
         duration: test.duration,
@@ -149,9 +149,9 @@ export default (async function runJest({
   if (changedFilesPromise && globalConfig.watch) {
     const {repos} = await changedFilesPromise;
 
-    const noSCM = (Object.keys(repos) as Array<
-      keyof ChangedFiles['repos']
-    >).every(scm => repos[scm].size === 0);
+    const noSCM = (
+      Object.keys(repos) as Array<keyof ChangedFiles['repos']>
+    ).every((scm) => repos[scm].size === 0);
     if (noSCM) {
       process.stderr.write(
         '\n' +
@@ -164,7 +164,7 @@ export default (async function runJest({
   }
 
   const testRunData: TestRunData = await Promise.all(
-    contexts.map(async context => {
+    contexts.map(async (context) => {
       const matches = await getTestPaths(
         globalConfig,
         context,
@@ -182,7 +182,7 @@ export default (async function runJest({
   allTests = sequencer.sort(allTests);
 
   if (globalConfig.listTests) {
-    const testsPaths = Array.from(new Set(allTests.map(test => test.path)));
+    const testsPaths = Array.from(new Set(allTests.map((test) => test.path)));
     if (globalConfig.json) {
       console.log(JSON.stringify(testsPaths));
     } else {
@@ -238,7 +238,9 @@ export default (async function runJest({
   }
 
   if (changedFilesPromise) {
-    testSchedulerContext.changedFiles = (await changedFilesPromise).changedFiles;
+    testSchedulerContext.changedFiles = (
+      await changedFilesPromise
+    ).changedFiles;
   }
 
   const results = await new TestScheduler(

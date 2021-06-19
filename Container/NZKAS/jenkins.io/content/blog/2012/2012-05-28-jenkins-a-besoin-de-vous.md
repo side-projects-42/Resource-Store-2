@@ -4,11 +4,12 @@
 :nodeid: 383
 :created: 1338206400
 :tags:
-- general
-- feedback
-- guest post
+  - general
+  - feedback
+  - guest post
 :author: rtyler
 ---
+
 [**Editor's Note**: _The following is a guest post by Jenkins contributor [Baptiste Mathus](https://twitter.com/bmathus). For the non-French speakers, we're looking for French speakers to help translate "Jenkins: The Definitive Guide"_ ]
 
 <img src="http://batmat.net/dotclear/public/images/Superdupont_we_need_you.jpg" align="right" width="180" alt="Woui Nide You!"/>
@@ -30,14 +31,14 @@ Mais si vous ne le sentez pas ou n'avez pas le temps, ce n'est pas grave. Vous d
 
 ### Super ! Par où je commence alors ?
 
-  * Comment se signaler : 
-    * Il y a une [page wiki qui récapitule l'état de la traduction](https://github.com/Jenkins-Le-guide-complet/jenkins-the-definitive-guide-book/wiki), chapitre par chapitre. Indiquez votre nom en tant que relecteur, et c'est parti.
-    * Si vous le souhaitez, mais ce n'est pas une obligation, vous pouvez vous présenter sur la [liste de diffusion du projet](https://groups.google.com/forum/#%21forum/jenkins-le-guide-complet).
-  * Comment relire les chapitres ? 
-    * Le plus simple est de lire la [version HTML publiée en continu grâce à CloudBees](http://jenkins-le-guide-complet.github.com/).
-  * Comment faire part de mes corrections ? Deux solutions : 
-    * Git : vous forkez le projet [GitHub : Jenkins - Le Guide Complet](https://github.com/Jenkins-Le-guide-complet/jenkins-the-definitive-guide-book), vous créez une branche pour la relecture, vous committez vos vos corrections, et vous faites une [pull-request](http://help.github.com/send-pull-requests/).
-    * Copiez le [fichier XML du chapitre qui vous intéresse à partir de la page du projet](https://github.com/Jenkins-Le-guide-complet/jenkins-the-definitive-guide-book/tree/master/hudsonbook-content-fr/src/main/resources) puis vous l'envoyez sur la liste de diffusion lorsque vous avez fini.
+- Comment se signaler :
+  - Il y a une [page wiki qui récapitule l'état de la traduction](https://github.com/Jenkins-Le-guide-complet/jenkins-the-definitive-guide-book/wiki), chapitre par chapitre. Indiquez votre nom en tant que relecteur, et c'est parti.
+  - Si vous le souhaitez, mais ce n'est pas une obligation, vous pouvez vous présenter sur la [liste de diffusion du projet](https://groups.google.com/forum/#%21forum/jenkins-le-guide-complet).
+- Comment relire les chapitres ?
+  - Le plus simple est de lire la [version HTML publiée en continu grâce à CloudBees](http://jenkins-le-guide-complet.github.com/).
+- Comment faire part de mes corrections ? Deux solutions :
+  - Git : vous forkez le projet [GitHub : Jenkins - Le Guide Complet](https://github.com/Jenkins-Le-guide-complet/jenkins-the-definitive-guide-book), vous créez une branche pour la relecture, vous committez vos vos corrections, et vous faites une [pull-request](http://help.github.com/send-pull-requests/).
+  - Copiez le [fichier XML du chapitre qui vous intéresse à partir de la page du projet](https://github.com/Jenkins-Le-guide-complet/jenkins-the-definitive-guide-book/tree/master/hudsonbook-content-fr/src/main/resources) puis vous l'envoyez sur la liste de diffusion lorsque vous avez fini.
 
 Si vous êtes intéressé, mais que vous avez des questions, surtout n'hésitez pas à les poser.
 

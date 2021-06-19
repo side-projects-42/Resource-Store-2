@@ -32,7 +32,7 @@ const coverage = require('../coverage/coverage-final.json');
 const map = istanbulCoverage.createCoverageMap();
 const reporter = createReporter();
 
-const mapFileCoverage = fileCoverage => {
+const mapFileCoverage = (fileCoverage) => {
   fileCoverage.path = fileCoverage.path.replace(
     /(.*packages\/.*\/)(build)(\/.*)/,
     '$1src$3'
@@ -40,7 +40,7 @@ const mapFileCoverage = fileCoverage => {
   return fileCoverage;
 };
 
-Object.keys(coverage).forEach(filename =>
+Object.keys(coverage).forEach((filename) =>
   map.addFileCoverage(mapFileCoverage(coverage[filename]))
 );
 

@@ -25,8 +25,8 @@ jest.mock('fb-watchman', () => {
   return {Client};
 });
 
-const forcePOSIXPaths = path => path.replace(/\\/g, '/');
-const pearMatcher = path => /pear/.test(path);
+const forcePOSIXPaths = (path) => path.replace(/\\/g, '/');
+const pearMatcher = (path) => /pear/.test(path);
 
 let watchman;
 let watchmanCrawl;
@@ -57,7 +57,8 @@ const WATCH_PROJECT_MOCK = {
   },
 };
 
-const createMap = obj => new Map(Object.keys(obj).map(key => [key, obj[key]]));
+const createMap = (obj) =>
+  new Map(Object.keys(obj).map((key) => [key, obj[key]]));
 
 describe('watchman watch', () => {
   beforeEach(() => {
@@ -206,7 +207,7 @@ describe('watchman watch', () => {
       },
       extensions: ['js', 'json', 'zip'],
       ignore: pearMatcher,
-      mapper: n =>
+      mapper: (n) =>
         n.endsWith('.zip')
           ? [path.join(n, 'foo.1.js'), path.join(n, 'foo.2.js')]
           : null,

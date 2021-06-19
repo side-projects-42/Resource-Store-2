@@ -1,10 +1,8 @@
 {
-	"@metadata": {
-		"authors": [
-			"Marwan Mohamad"
-		]
-	},
-	"antispoof-conflict-bottom": "Toduwolo molulawoto tanggulo ohu'uwo uwewo",
-	"antispoof-badtype": "Tipe data tilala",
-	"antispoof-empty": "Data kosongi"
+  "@metadata": {
+    "authors": ["Marwan Mohamad"]
+  },
+  "antispoof-conflict-bottom": "Toduwolo molulawoto tanggulo ohu'uwo uwewo",
+  "antispoof-badtype": "Tipe data tilala",
+  "antispoof-empty": "Data kosongi"
 }

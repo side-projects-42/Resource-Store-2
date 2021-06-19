@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Maxí",
-			"Snævar",
-			"Sveinn í Felli"
-		]
+		"authors": ["Maxí", "Snævar", "Sveinn í Felli"]
 	},
 	"ooui-outline-control-move-down": "Færa atriði niður",
 	"ooui-outline-control-move-up": "Færa atriði upp",

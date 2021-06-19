@@ -118,11 +118,7 @@
 				"ltr": "images/icons/tag-ltr.svg",
 				"rtl": "images/icons/tag-rtl.svg"
 			},
-			"variants": [
-				"destructive",
-				"error",
-				"warning"
-			]
+			"variants": ["destructive", "error", "warning"]
 		},
 		"upload": {
 			"file": "images/icons/upload.svg"

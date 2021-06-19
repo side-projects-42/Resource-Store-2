@@ -39,13 +39,13 @@ class JestHooks {
 
   getSubscriber(): JestHookSubscriber {
     return {
-      onFileChange: fn => {
+      onFileChange: (fn) => {
         this._listeners.onFileChange.push(fn);
       },
-      onTestRunComplete: fn => {
+      onTestRunComplete: (fn) => {
         this._listeners.onTestRunComplete.push(fn);
       },
-      shouldRunTestSuite: fn => {
+      shouldRunTestSuite: (fn) => {
         this._listeners.shouldRunTestSuite.push(fn);
       },
     };
@@ -53,15 +53,15 @@ class JestHooks {
 
   getEmitter(): JestHookEmitter {
     return {
-      onFileChange: fs =>
-        this._listeners.onFileChange.forEach(listener => listener(fs)),
-      onTestRunComplete: results =>
-        this._listeners.onTestRunComplete.forEach(listener =>
+      onFileChange: (fs) =>
+        this._listeners.onFileChange.forEach((listener) => listener(fs)),
+      onTestRunComplete: (results) =>
+        this._listeners.onTestRunComplete.forEach((listener) =>
           listener(results),
         ),
-      shouldRunTestSuite: async testSuiteInfo => {
+      shouldRunTestSuite: async (testSuiteInfo) => {
         const result = await Promise.all(
-          this._listeners.shouldRunTestSuite.map(listener =>
+          this._listeners.shouldRunTestSuite.map((listener) =>
             listener(testSuiteInfo),
           ),
         );

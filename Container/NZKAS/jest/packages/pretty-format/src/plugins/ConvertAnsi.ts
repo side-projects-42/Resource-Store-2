@@ -10,7 +10,7 @@ import style from 'ansi-styles';
 import {Config, Printer, NewPlugin, Refs} from '../types';
 
 const toHumanReadableAnsi = (text: string) =>
-  text.replace(ansiRegex(), match => {
+  text.replace(ansiRegex(), (match) => {
     switch (match) {
       case style.red.close:
       case style.green.close:

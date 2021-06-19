@@ -2,12 +2,12 @@
 
 [Source Code](https://github.com/nuxt-community/auth-module/blob/dev/lib/schemes/oauth2.js)
 
-`oauth2` supports various oauth2 login flows. There are many pre-configured [providers](../providers/README.md)  that you may use instead of directly using this scheme.
+`oauth2` supports various oauth2 login flows. There are many pre-configured [providers](../providers/README.md) that you may use instead of directly using this scheme.
 
 ## Usage
 
 ```js
-this.$auth.loginWith('social')
+this.$auth.loginWith("social");
 ```
 
 ## Options
@@ -45,7 +45,7 @@ If a `false` value is set, we only do login without fetching user profile.
 
 ### `scope`
 
-**REQUIRED** -  Oauth2 access scopes.
+**REQUIRED** - Oauth2 access scopes.
 
 ### `response_type`
 

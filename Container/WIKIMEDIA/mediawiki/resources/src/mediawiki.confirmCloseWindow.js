@@ -1,4 +1,4 @@
-( function () {
+(function () {
 	/**
 	 * Prevent the closing of a window with a confirm message (the onbeforeunload event seems to
 	 * work in most browsers.)
@@ -33,20 +33,25 @@
 	 * @param {boolean} [options.test.return=true] Whether to show the dialog to the user.
 	 * @return {Object} An object of functions to work with this module
 	 */
-	mw.confirmCloseWindow = function ( options ) {
-		var beforeunloadEvent = 'beforeunload',
+	mw.confirmCloseWindow = function (options) {
+		var beforeunloadEvent = "beforeunload",
 			message;
 
-		options = $.extend( {
-			message: mw.message( 'confirmleave-warning' ).text(),
-			test: function () { return true; }
-		}, options );
+		options = $.extend(
+			{
+				message: mw.message("confirmleave-warning").text(),
+				test: function () {
+					return true;
+				},
+			},
+			options
+		);
 
-		if ( options.namespace ) {
-			beforeunloadEvent += '.' + options.namespace;
+		if (options.namespace) {
+			beforeunloadEvent += "." + options.namespace;
 		}
 
-		if ( typeof options.message === 'function' ) {
+		if (typeof options.message === "function") {
 			message = options.message();
 		} else {
 			message = options.message;
@@ -58,13 +63,13 @@
 		 * @return {string|undefined}
 		 */
 		function onBeforeunload() {
-			if ( options.test() ) {
+			if (options.test()) {
 				// show an alert with this message
 				return message;
 			}
 		}
 
-		$( window ).on( beforeunloadEvent, onBeforeunload );
+		$(window).on(beforeunloadEvent, onBeforeunload);
 
 		return {
 			/**
@@ -74,7 +79,7 @@
 			 * @ignore
 			 */
 			release: function () {
-				$( window ).off( beforeunloadEvent, onBeforeunload );
+				$(window).off(beforeunloadEvent, onBeforeunload);
 			},
 			/**
 			 * Trigger the module's function manually: Check, if options.test() returns true and show
@@ -87,13 +92,13 @@
 			trigger: function () {
 				// use confirm to show the message to the user (if options.text() is true)
 				// eslint-disable-next-line no-alert
-				if ( options.test() && !confirm( message ) ) {
+				if (options.test() && !confirm(message)) {
 					// the user want to keep the actual page
 					return false;
 				}
 				// otherwise return true
 				return true;
-			}
+			},
 		};
 	};
-}() );
+})();

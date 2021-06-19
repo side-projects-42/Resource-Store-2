@@ -31,7 +31,7 @@ request(
       }
     }
 
-    fs.writeFile(path.resolve(__dirname, 'backers.json'), body, err => {
+    fs.writeFile(path.resolve(__dirname, 'backers.json'), body, (err) => {
       if (err) {
         console.error('Failed to write backers file: ', err);
       } else console.log('Fetched 1 file: backers.json');

@@ -2,7 +2,7 @@
 
 Authors: Markus Roberts and Bill Kayser
 
-Tendersync allows you to sync documents stored in the 
+Tendersync allows you to sync documents stored in the
 [ENTP Tender](http://www.tenderapp.com)
 `faqs` section with a local filesystem, allowing you to manage your
 documents with git or subversion.
@@ -14,12 +14,12 @@ Find out more about Tender by visiting [the Tender site](http://www.tenderapp.co
 
 ## Features
 
-* List remote sections and documents under the `/faqs` area
-* Pull single documents or entire tree from Tender site to local
+- List remote sections and documents under the `/faqs` area
+- Pull single documents or entire tree from Tender site to local
   filesystem
-* Push local changes back to Tender one at a time or en masse
-* Manage document meta-data, like keywords, in headers
-* Push changed versions to the server
+- Push local changes back to Tender one at a time or en masse
+- Manage document meta-data, like keywords, in headers
+- Push changed versions to the server
 
 ## Synopsis
 
@@ -32,8 +32,8 @@ and run tendersync from there.
 
 ## Using Tendersync
 
-To get started, you need to pass in your account information.  You
-only need to do this once.  A local file `.tendersync` is created with
+To get started, you need to pass in your account information. You
+only need to do this once. A local file `.tendersync` is created with
 the configuration information.
 
 This will get you set up:
@@ -44,8 +44,8 @@ To verify it worked run the `ls` command:
 
     tendersync ls
 
-Tender documents are organized into sections defined by you.  At New
-Relic, we have faqs, docs, and troubleshooting.  You can specify
+Tender documents are organized into sections defined by you. At New
+Relic, we have faqs, docs, and troubleshooting. You can specify
 commands to apply to one or more sections by passing in section names
 with -s:
 
@@ -59,7 +59,7 @@ Start with:
 
 Download all your docs:
 
-    tendersync pull 
+    tendersync pull
 
 Download just the faq docs:
 
@@ -79,18 +79,18 @@ Upload docs to the server:
 
 Upload everything to the server (regardless of whether the content has
 changed or not):
-  
+
     tendersync post
 
 ### Using the `index` Command
 
 You can generate a table of contents for any section with the index
-command.  By default index will generate a single file named
+command. By default index will generate a single file named
 `SECTION_table_of_contents`.
 
 In this file will be a list of all the files in the given section with
-links to those files.  Under each file link will be a bullet list of
-the topmost sections in the document.  If these sections are preceeded
+links to those files. Under each file link will be a bullet list of
+the topmost sections in the document. If these sections are preceeded
 by anchor links (A elements with the name attribute) then the bullets
 will have links to those sections.
 
@@ -106,7 +106,7 @@ It will look something like this:
 #### Customizing the amount of detail in the Index
 
 You can show sections deeper than one level in a particular document
-using the `-d` option.  The default is 1.
+using the `-d` option. The default is 1.
 
     tendersync index -d 2
 
@@ -126,7 +126,7 @@ You can add multiple groups with additional -g options:
 
     tendersync index -g "Page Details;/page/i" -g "Installation Info;/installation/i"
 
-If you want to remove a group definition, you need to remove it 
+If you want to remove a group definition, you need to remove it
 manually from the `.tendersync` file.
 
 ## THANKS

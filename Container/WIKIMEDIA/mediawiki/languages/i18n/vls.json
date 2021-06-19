@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"DasRakel",
-			"Tbc",
-			"לערי ריינהארט"
-		]
+		"authors": ["DasRakel", "Tbc", "לערי ריינהארט"]
 	},
 	"tog-underline": "Links ounderstreepn:",
 	"tog-hideminor": "Klêne veranderiengn verdukn van juste veranderd",

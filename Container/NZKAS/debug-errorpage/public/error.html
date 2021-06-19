@@ -22,48 +22,48 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <html>
-    <head>
-        <title>Application error</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    </head>
-    <body>
-
-<style type="text/css">
-    html, body {
+  <head>
+    <title>Application error</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <style type="text/css">
+      html,
+      body {
         margin: 0;
         padding: 0;
         font-family: Helvetica, Arial, Sans;
-        background: #EEEEEE;
-    }
-    .block {
+        background: #eeeeee;
+      }
+      .block {
         padding: 20px;
         border-bottom: 1px solid #aaa;
-    }
-    #header h1 {
+      }
+      #header h1 {
         font-weight: normal;
         font-size: 28px;
         margin: 0;
-    }
-    #more {
+      }
+      #more {
         color: #666;
         font-size: 80%;
         border: none;
-    }
-    #header {
+      }
+      #header {
         background: #fcd2da;
-    }
-    #header p {
+      }
+      #header p {
         color: #333;
-    }
-    #source {
+      }
+      #source {
         background: #f6f6f6;
-    }
-    #source h2 {
+      }
+      #source h2 {
         font-weight: normal;
         font-size: 18px;
         margin: 0 0 10px 0;
-    }
-    #source .lineNumber {
+      }
+      #source .lineNumber {
         float: left;
         display: block;
         width: 40px;
@@ -73,67 +73,60 @@ limitations under the License.
         font-family: monospace;
         background: #333;
         color: #fff;
-    }
-    #source .line {
+      }
+      #source .line {
         clear: both;
         color: #333;
         margin-bottom: 1px;
-    }
-    #source pre {
+      }
+      #source pre {
         font-size: 14px;
         margin: 0;
         overflow-x: hidden;
-    }
-    #source .error {
+      }
+      #source .error {
         color: #c00 !important;
-    }
-    #source .error .lineNumber {
+      }
+      #source .error .lineNumber {
         background: #c00;
-    }
-    #source a {
+      }
+      #source a {
         text-decoration: none;
-    }
-    #source a:hover * {
+      }
+      #source a:hover * {
         cursor: pointer !important;
-    }
-    #source a:hover pre {
-        background: #FAFFCF !important;
-    }
-    #source em {
+      }
+      #source a:hover pre {
+        background: #faffcf !important;
+      }
+      #source em {
         font-style: normal;
         text-decoration: underline;
         font-weight: bold;
-    }
-    #source strong {
+      }
+      #source strong {
         font-style: normal;
         font-weight: bold;
-    }
-</style>
+      }
+    </style>
 
     <div id="header" class="block">
-        <h1>
-            Error!
-        </h1>
-                <p>
-            <strong>{{status}} Error</strong> occurred : {{message}}
-        </p>
-                    </div>
-        <div id="source" class="block">
-        <h2>In {{filename}} (around line {{lineNumber}})</h2>
-
-        {{#lines}}
-
-                <div class="line {{#error}}error{{/error}}">
-                    <span class="lineNumber">{{number}}:</span>
-                    <pre>&nbsp;{{code}}</pre>
-                </div>
-        {{/lines}}
-
-        </div>
-        <div id="more" class="block">
-            <pre>{{stack}}</pre>
+      <h1>Error!</h1>
+      <p><strong>{{status}} Error</strong> occurred : {{message}}</p>
     </div>
+    <div id="source" class="block">
+      <h2>In {{filename}} (around line {{lineNumber}})</h2>
 
+      {{#lines}}
 
-    </body>
+      <div class="line {{#error}}error{{/error}}">
+        <span class="lineNumber">{{number}}:</span>
+        <pre>&nbsp;{{code}}</pre>
+      </div>
+      {{/lines}}
+    </div>
+    <div id="more" class="block">
+      <pre>{{stack}}</pre>
+    </div>
+  </body>
 </html>

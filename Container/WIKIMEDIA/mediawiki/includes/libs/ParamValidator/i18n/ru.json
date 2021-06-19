@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Okras",
-			"Stjn",
-			"WindEwriX"
-		]
+		"authors": ["Okras", "Stjn", "WindEwriX"]
 	},
 	"paramvalidator-badexpiry": "Недопустимое значение «$2» для параметра истечения срока «$1».",
 	"paramvalidator-badexpiry-past": "Значение «$2» для параметра истечения срока «$1» уже в прошлом.",

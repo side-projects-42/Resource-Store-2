@@ -1,8 +1,6 @@
-FileBackend Architecture {#filebackendarch}
-========================
+# FileBackend Architecture {#filebackendarch}
 
-Introduction
-------------
+## Introduction
 
 To abstract away the differences among different types of storage media,
 MediaWiki is providing an interface known as FileBackend. Any MediaWiki
@@ -11,15 +9,14 @@ interaction with stored files should thus use a FileBackend object.
 Different types of backing storage media are supported (ranging from local
 file system to distributed object stores). The types include:
 
-* FSFileBackend (used for mounted file systems)
-* SwiftFileBackend (used for Swift or Ceph Rados+RGW object stores)
-* FileBackendMultiWrite (useful for transitioning from one backend to another)
+- FSFileBackend (used for mounted file systems)
+- SwiftFileBackend (used for Swift or Ceph Rados+RGW object stores)
+- FileBackendMultiWrite (useful for transitioning from one backend to another)
 
 Configuration documentation for each type of backend is to be found in their
-__construct() inline documentation.
+\_\_construct() inline documentation.
 
-Setup
------
+## Setup
 
 File backends are registered in LocalSettings.php via the global variable
 $wgFileBackends. To access one of those defined backends, one would use
@@ -42,17 +39,19 @@ directories. See FileBackend.php for full documentation for each function.
 The following basic operations are supported for reading from a backend:
 
 On files:
-* stat a file for basic information (timestamp, size)
-* read a file into a string or  several files into a map of path names to strings
-* download a file or set of files to a temporary file (on a mounted file system)
-* get the SHA1 hash of a file
-* get various properties of a file (stat information, content time, MIME information, ...)
+
+- stat a file for basic information (timestamp, size)
+- read a file into a string or several files into a map of path names to strings
+- download a file or set of files to a temporary file (on a mounted file system)
+- get the SHA1 hash of a file
+- get various properties of a file (stat information, content time, MIME information, ...)
 
 On directories:
-* get a list of files directly under a directory
-* get a recursive list of files under a directory
-* get a list of directories directly under a directory
-* get a recursive list of directories under a directory
+
+- get a list of files directly under a directory
+- get a recursive list of files under a directory
+- get a list of directories directly under a directory
+- get a recursive list of directories under a directory
 
 Note: Backend handles should return directory listings as iterators, all though in some cases
 they may just be simple arrays (which can still be iterated over). Iterators allow for
@@ -66,18 +65,20 @@ or it is proportional to the depth of the portion of the directory tree being tr
 The following basic operations are supported for writing or changing in the backend:
 
 On files:
-* store (copying a mounted file system file into storage)
-* create (creating a file within storage from a string)
-* copy (within storage)
-* move (within storage)
-* delete (within storage)
-* lock/unlock (lock or unlock a file in storage)
+
+- store (copying a mounted file system file into storage)
+- create (creating a file within storage from a string)
+- copy (within storage)
+- move (within storage)
+- delete (within storage)
+- lock/unlock (lock or unlock a file in storage)
 
 The following operations are supported for writing directories in the backend:
-* prepare (create parent container and directories for a path)
-* secure (try to lock-down access to a container)
-* publish (try to reverse the effects of secure)
-* clean (remove empty containers or directories)
+
+- prepare (create parent container and directories for a path)
+- secure (try to lock-down access to a container)
+- publish (try to reverse the effects of secure)
+- clean (remove empty containers or directories)
 
 ### Invoking an operation
 
@@ -121,23 +122,25 @@ using the $wgLockManagers global configuration variable.
 For object stores, locking is not generally useful for avoiding partially
 written or read objects, since most stores use Multi Version Concurrency
 Control (MVCC) to avoid this. However, locking can be important when:
-* One or more operations must be done without objects changing in the meantime.
-* It can also be useful when a file read is used to determine a file write or DB change.
+
+- One or more operations must be done without objects changing in the meantime.
+- It can also be useful when a file read is used to determine a file write or DB change.
   For example, doOperations() first checks that there will be no "file already exists"
   or "file does not exist" type errors before attempting an operation batch. This works
   by stating the files first, and is only safe if the files are locked in the meantime.
 
 When locking, callers should use the latest available file data for reads.
-Also, one should always lock the file *before* reading it, not after. If stale data is
+Also, one should always lock the file _before_ reading it, not after. If stale data is
 used to determine a write, there will be some data corruption, even when reads of the
 original file finally start returning the updated data without needing the "latest"
 option (eventual consistency). The "scoped" lock functions are preferable since
 there is not the problem of forgetting to unlock due to early returns or exceptions.
 
 Since acquiring locks can fail, and lock managers can be non-blocking, callers should:
-* Acquire all required locks up font
-* Be prepared for the case where locks fail to be acquired
-* Possible retry acquiring certain locks
+
+- Acquire all required locks up font
+- Be prepared for the case where locks fail to be acquired
+- Possible retry acquiring certain locks
 
 MVCC is also a useful pattern to use on top of the backend interface, because operations
 are not atomic, even with doOperations(), so doing complex batch file changes or changing
@@ -169,6 +172,7 @@ File systems like btrfs and xfs use tree structures, which scale better.
 For both object stores and file systems, using "/" in filenames will allow for the
 intuitive use of directory functions. For example, creating a file in Swift
 called "container/a/b/file1" will mean that:
+
 - a "directory listing" of "container/a" will contain "b",
 - and a "file listing" of "b" will contain "file1"
 
@@ -176,20 +180,20 @@ This means that switching from an object store to a file system and vise versa
 using the FileBackend interface will generally be harmless. However, one must be
 aware of some important differences:
 
-* In a file system, you cannot have a file and a directory within the same path
+- In a file system, you cannot have a file and a directory within the same path
   whereas it is possible in an object stores. Calling code should avoid any layouts
   which allow files and directories at the same path.
-* Some file systems have file name length restrictions or overall path length
+- Some file systems have file name length restrictions or overall path length
   restrictions that others do not. The same goes with object stores which might
   have a maximum object length or a limitation regarding the number of files
   under a container or volume.
-* Latency varies among systems, certain access patterns may not be tolerable for
+- Latency varies among systems, certain access patterns may not be tolerable for
   certain backends but may hold up for others. Some backend subclasses use
   MediaWiki's object caching for serving stat requests, which can greatly
   reduce latency. Making sure that the backend has pipelining (see the
   "parallelize" and "concurrency" settings) enabled can also mask latency in
   batch operation scenarios.
-* File systems may implement directories as linked-lists or other structures
+- File systems may implement directories as linked-lists or other structures
   with poor scalability, so calling code should use layouts that shard the data.
   Instead of storing files like "container/file.txt", one can store files like
   "container/<x>/<y>/file.txt". It is best if "sharding" optional or configurable.

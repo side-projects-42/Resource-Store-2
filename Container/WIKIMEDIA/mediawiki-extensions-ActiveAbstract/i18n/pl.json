@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Rail",
-			"Railfail536"
-		]
-	},
-	"activeabstract-desc": "Generuje kanał XML dla projektu Active Abstracts firmy Yahoo"
+  "@metadata": {
+    "authors": ["Rail", "Railfail536"]
+  },
+  "activeabstract-desc": "Generuje kanał XML dla projektu Active Abstracts firmy Yahoo"
 }

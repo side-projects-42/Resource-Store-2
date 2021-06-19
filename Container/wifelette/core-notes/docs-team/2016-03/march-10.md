@@ -41,6 +41,7 @@ _Name (Initials) `slackid`_
 ## Notes
 
 ### New Action Items
+
 - [ ] DB: Reach out to Core on deploying angolia search on just 2.4
 - [ ] TJ: Reach out to RM about taking on contextual components for the guides
 - [ ] RT: Write an issue on guides nav linking for Getting Started
@@ -52,7 +53,7 @@ YK: What's the status of the URL ---? How much is tech work and how much is grun
 
 DB: We're not super sure _what_ we want to be doing yet. We have some theoretical ideas but we're not sure about the exact plan.
 
-DB: Locks is working on an Ember app for the Guides. He's hoping to have it in a few weeks. Assuming he _does_ that, I want to wait on the SEO stuff. 
+DB: Locks is working on an Ember app for the Guides. He's hoping to have it in a few weeks. Assuming he _does_ that, I want to wait on the SEO stuff.
 
 YK: We should pick a date and check in then so it doesn't become a runaway project (where we suddenly notice in six months that we haven't made any progress :p).
 
@@ -82,7 +83,7 @@ RT: Yep, that's the script I referenced moving to collective voice.
 
 #### Style Guide
 
-TJ: I don't think the style guide stuff has happened yet, but unsure. Hopefully RL will get in touch.  RL mentioned he would be working on it tonight.
+TJ: I don't think the style guide stuff has happened yet, but unsure. Hopefully RL will get in touch. RL mentioned he would be working on it tonight.
 
 RL: (joined) Still in idea phase. Looking at the several links RM posted
 
@@ -98,7 +99,7 @@ YK: I think the homepage version from before the changes is the canonical versio
 
 ### Hiding Private/Deprecated Classes in the API
 
-TJ: Submitted a PR around updating the yuidoc json to filter out private/deprecated classes.  Kris Seldon also has a PR for updating the rendering side.  TJ's PR to address other docs clients as well.
+TJ: Submitted a PR around updating the yuidoc json to filter out private/deprecated classes. Kris Seldon also has a PR for updating the rendering side. TJ's PR to address other docs clients as well.
 
 YK: Send me PR(s) and I will review merge
 
@@ -118,7 +119,7 @@ DB: Will send in a PR.
 
 ### Guide Navigation Link Issues
 
-RT: Under getting started there's a quick start and installing ember section.  Installing ember is at the index root, but is the second item in navigation.  Best fix might be to use Quick start as the index and give installing a first class link.
+RT: Under getting started there's a quick start and installing ember section. Installing ember is at the index root, but is the second item in navigation. Best fix might be to use Quick start as the index and give installing a first class link.
 
 DB: also main guides page isn't linked to on left... Can't get back
 
@@ -126,8 +127,8 @@ DB: Make and issue and deal with it later after translation drops (seo concerns)
 
 ### Search
 
-DB: Lets try algolia search on 2.4 guides.  Will run it by Leah and possibly merge tonight.
+DB: Lets try algolia search on 2.4 guides. Will run it by Leah and possibly merge tonight.
 
 ### Documenting Contextual Components
 
-TJ: Would like to get Contextual Components in the Guide so I can share.  Issue owned by RM.  Will get in touch with him to see if I can take it since his plate is pretty full.
+TJ: Would like to get Contextual Components in the Guide so I can share. Issue owned by RM. Will get in touch with him to see if I can take it since his plate is pretty full.

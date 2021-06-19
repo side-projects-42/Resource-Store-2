@@ -23,10 +23,10 @@
 			}
 		],
 		"indexes": [
-			{ "name": "si_site", "columns": [ "si_site" ], "unique": false },
-			{ "name": "si_key", "columns": [ "si_key" ], "unique": false }
+			{ "name": "si_site", "columns": ["si_site"], "unique": false },
+			{ "name": "si_key", "columns": ["si_key"], "unique": false }
 		],
-		"pk": [ "si_type", "si_key" ]
+		"pk": ["si_type", "si_key"]
 	},
 	{
 		"name": "updatelog",
@@ -44,7 +44,7 @@
 			}
 		],
 		"indexes": [],
-		"pk": [ "ul_key" ]
+		"pk": ["ul_key"]
 	},
 	{
 		"name": "actor",
@@ -54,7 +54,11 @@
 				"name": "actor_id",
 				"comment": "Unique ID to identify each actor",
 				"type": "bigint",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "actor_user",
@@ -70,10 +74,10 @@
 			}
 		],
 		"indexes": [
-			{ "name": "actor_user", "columns": [ "actor_user" ], "unique": true },
-			{ "name": "actor_name", "columns": [ "actor_name" ], "unique": true }
+			{ "name": "actor_user", "columns": ["actor_user"], "unique": true },
+			{ "name": "actor_name", "columns": ["actor_name"], "unique": true }
 		],
-		"pk": [ "actor_id" ]
+		"pk": ["actor_id"]
 	},
 	{
 		"name": "user_former_groups",
@@ -92,7 +96,7 @@
 			}
 		],
 		"indexes": [],
-		"pk": [ "ufg_user", "ufg_group" ]
+		"pk": ["ufg_user", "ufg_group"]
 	},
 	{
 		"name": "bot_passwords",
@@ -120,7 +124,12 @@
 				"name": "bp_token",
 				"comment": "Like user.user_token",
 				"type": "binary",
-				"options": { "length": 32, "notnull": true, "default": "", "fixed": true }
+				"options": {
+					"length": 32,
+					"notnull": true,
+					"default": "",
+					"fixed": true
+				}
 			},
 			{
 				"name": "bp_restrictions",
@@ -136,7 +145,7 @@
 			}
 		],
 		"indexes": [],
-		"pk": [ "bp_user", "bp_app_id" ]
+		"pk": ["bp_user", "bp_app_id"]
 	},
 	{
 		"name": "comment",
@@ -146,7 +155,11 @@
 				"name": "comment_id",
 				"comment": "Unique ID to identify each comment",
 				"type": "bigint",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "comment_hash",
@@ -168,9 +181,13 @@
 			}
 		],
 		"indexes": [
-			{ "name": "comment_hash", "columns": [ "comment_hash" ], "unique": false }
+			{
+				"name": "comment_hash",
+				"columns": ["comment_hash"],
+				"unique": false
+			}
 		],
-		"pk": [ "comment_id" ]
+		"pk": ["comment_id"]
 	},
 	{
 		"name": "slots",
@@ -204,12 +221,12 @@
 		"indexes": [
 			{
 				"name": "slot_revision_origin_role",
-				"columns": [ "slot_revision_id", "slot_origin", "slot_role_id" ],
+				"columns": ["slot_revision_id", "slot_origin", "slot_role_id"],
 				"comment": "Index for finding revisions that modified a specific slot",
 				"unique": false
 			}
 		],
-		"pk": [ "slot_revision_id", "slot_role_id" ]
+		"pk": ["slot_revision_id", "slot_role_id"]
 	},
 	{
 		"name": "site_stats",
@@ -225,41 +242,65 @@
 				"name": "ss_total_edits",
 				"comment": "Total number of edits performed.",
 				"type": "bigint",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ss_good_articles",
 				"comment": "See SiteStatsInit::articles().",
 				"type": "bigint",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ss_total_pages",
 				"comment": "Total pages, theoretically equal to SELECT COUNT(*) FROM page.",
 				"type": "bigint",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ss_users",
 				"comment": "Number of users, theoretically equal to SELECT COUNT(*) FROM user.",
 				"type": "bigint",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ss_active_users",
 				"comment": "Number of users that still edit.",
 				"type": "bigint",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ss_images",
 				"comment": "Number of images, equivalent to SELECT COUNT(*) FROM image.",
 				"type": "bigint",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			}
 		],
 		"indexes": [],
-		"pk": [ "ss_row_id" ]
+		"pk": ["ss_row_id"]
 	},
 	{
 		"name": "user_properties",
@@ -285,9 +326,13 @@
 			}
 		],
 		"indexes": [
-			{ "name": "up_property", "columns": [ "up_property" ], "unique": false }
+			{
+				"name": "up_property",
+				"columns": ["up_property"],
+				"unique": false
+			}
 		],
-		"pk": [ "up_user", "up_property" ]
+		"pk": ["up_user", "up_property"]
 	},
 	{
 		"name": "log_search",
@@ -312,9 +357,9 @@
 			}
 		],
 		"indexes": [
-			{ "name": "ls_log_id", "columns": [ "ls_log_id" ], "unique": false }
+			{ "name": "ls_log_id", "columns": ["ls_log_id"], "unique": false }
 		],
-		"pk": [ "ls_field", "ls_value", "ls_log_id" ]
+		"pk": ["ls_field", "ls_value", "ls_log_id"]
 	},
 	{
 		"name": "change_tag",
@@ -323,31 +368,51 @@
 			{
 				"name": "ct_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "ct_rc_id",
 				"comment": "RCID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_log_id",
 				"comment": "LOGID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_rev_id",
 				"comment": "REVID for the change",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": false, "default": null }
+				"options": {
+					"unsigned": true,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_params",
 				"comment": "Parameters for the tag; used by some extensions",
 				"type": "blob",
-				"options": { "length": 65530, "notnull": false, "default": null }
+				"options": {
+					"length": 65530,
+					"notnull": false,
+					"default": null
+				}
 			},
 			{
 				"name": "ct_tag_id",
@@ -357,17 +422,29 @@
 			}
 		],
 		"indexes": [
-			{ "name": "ct_rc_tag_id", "columns": [ "ct_rc_id", "ct_tag_id" ], "unique": true },
-			{ "name": "ct_log_tag_id", "columns": [ "ct_log_id", "ct_tag_id" ], "unique": true },
-			{ "name": "ct_rev_tag_id", "columns": [ "ct_rev_id", "ct_tag_id" ], "unique": true },
+			{
+				"name": "ct_rc_tag_id",
+				"columns": ["ct_rc_id", "ct_tag_id"],
+				"unique": true
+			},
+			{
+				"name": "ct_log_tag_id",
+				"columns": ["ct_log_id", "ct_tag_id"],
+				"unique": true
+			},
+			{
+				"name": "ct_rev_tag_id",
+				"columns": ["ct_rev_id", "ct_tag_id"],
+				"unique": true
+			},
 			{
 				"name": "ct_tag_id_id",
 				"comment": "Covering index, so we can pull all the info only out of the index.",
-				"columns": [ "ct_tag_id", "ct_rc_id", "ct_rev_id", "ct_log_id" ],
+				"columns": ["ct_tag_id", "ct_rc_id", "ct_rev_id", "ct_log_id"],
 				"unique": false
 			}
 		],
-		"pk": [ "ct_id" ]
+		"pk": ["ct_id"]
 	},
 	{
 		"name": "content",
@@ -377,7 +454,11 @@
 				"name": "content_id",
 				"comment": "ID of the content object",
 				"type": "bigint",
-				"options": { "notnull": true, "unsigned": true, "autoincrement": true }
+				"options": {
+					"notnull": true,
+					"unsigned": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "content_size",
@@ -405,7 +486,7 @@
 			}
 		],
 		"indexes": [],
-		"pk": [ "content_id" ]
+		"pk": ["content_id"]
 	},
 	{
 		"name": "l10n_cache",
@@ -431,7 +512,7 @@
 			}
 		],
 		"indexes": [],
-		"pk": [ "lc_lang", "lc_key" ]
+		"pk": ["lc_lang", "lc_key"]
 	},
 	{
 		"name": "module_deps",
@@ -457,7 +538,7 @@
 			}
 		],
 		"indexes": [],
-		"pk": [ "md_module", "md_skin" ]
+		"pk": ["md_module", "md_skin"]
 	},
 	{
 		"name": "redirect",
@@ -491,9 +572,13 @@
 			}
 		],
 		"indexes": [
-			{ "name": "rd_ns_title", "columns": [ "rd_namespace", "rd_title", "rd_from" ], "unique": false }
+			{
+				"name": "rd_ns_title",
+				"columns": ["rd_namespace", "rd_title", "rd_from"],
+				"unique": false
+			}
 		],
-		"pk": [ "rd_from" ]
+		"pk": ["rd_from"]
 	},
 	{
 		"name": "pagelinks",
@@ -525,18 +610,23 @@
 		"indexes": [
 			{
 				"name": "pl_namespace",
-				"columns": [ "pl_namespace", "pl_title", "pl_from" ],
+				"columns": ["pl_namespace", "pl_title", "pl_from"],
 				"comment": "Reverse index, for Special:Whatlinkshere",
 				"unique": false
 			},
 			{
 				"name": "pl_backlinks_namespace",
-				"columns": [ "pl_from_namespace", "pl_namespace", "pl_title", "pl_from" ],
+				"columns": [
+					"pl_from_namespace",
+					"pl_namespace",
+					"pl_title",
+					"pl_from"
+				],
 				"comment": "Index for Special:Whatlinkshere with namespace filter",
 				"unique": false
 			}
 		],
-		"pk": [ "pl_from", "pl_namespace", "pl_title" ]
+		"pk": ["pl_from", "pl_namespace", "pl_title"]
 	},
 	{
 		"name": "templatelinks",
@@ -568,18 +658,23 @@
 		"indexes": [
 			{
 				"name": "tl_namespace",
-				"columns": [ "tl_namespace", "tl_title", "tl_from" ],
+				"columns": ["tl_namespace", "tl_title", "tl_from"],
 				"comment": "Reverse index, for Special:Whatlinkshere",
 				"unique": false
 			},
 			{
 				"name": "tl_backlinks_namespace",
-				"columns": [ "tl_from_namespace", "tl_namespace", "tl_title", "tl_from" ],
+				"columns": [
+					"tl_from_namespace",
+					"tl_namespace",
+					"tl_title",
+					"tl_from"
+				],
 				"comment": "Index for Special:Whatlinkshere with namespace filter",
 				"unique": false
 			}
 		],
-		"pk": [ "tl_from", "tl_namespace", "tl_title" ]
+		"pk": ["tl_from", "tl_namespace", "tl_title"]
 	},
 	{
 		"name": "imagelinks",
@@ -607,18 +702,18 @@
 		"indexes": [
 			{
 				"name": "il_to",
-				"columns": [ "il_to", "il_from" ],
+				"columns": ["il_to", "il_from"],
 				"comment": "Reverse index, for Special:Whatlinkshere and file description page local usage",
 				"unique": false
 			},
 			{
 				"name": "il_backlinks_namespace",
-				"columns": [ "il_from_namespace", "il_to", "il_from" ],
+				"columns": ["il_from_namespace", "il_to", "il_from"],
 				"comment": "Index for Special:Whatlinkshere with namespace filter",
 				"unique": false
 			}
 		],
-		"pk": [ "il_from", "il_to" ]
+		"pk": ["il_from", "il_to"]
 	},
 	{
 		"name": "langlinks",
@@ -646,12 +741,12 @@
 		"indexes": [
 			{
 				"name": "ll_lang",
-				"columns": [ "ll_lang", "ll_title" ],
+				"columns": ["ll_lang", "ll_title"],
 				"comment": "Index for ApiQueryLangbacklinks",
 				"unique": false
 			}
 		],
-		"pk": [ "ll_from", "ll_lang" ]
+		"pk": ["ll_from", "ll_lang"]
 	},
 	{
 		"name": "iwlinks",
@@ -679,18 +774,18 @@
 		"indexes": [
 			{
 				"name": "iwl_prefix_title_from",
-				"columns": [ "iwl_prefix", "iwl_title", "iwl_from" ],
+				"columns": ["iwl_prefix", "iwl_title", "iwl_from"],
 				"comment": "Index for ApiQueryIWBacklinks",
 				"unique": false
 			},
 			{
 				"name": "iwl_prefix_from_title",
-				"columns": [ "iwl_prefix", "iwl_from", "iwl_title" ],
+				"columns": ["iwl_prefix", "iwl_from", "iwl_title"],
 				"comment": "Index for ApiQueryIWLinks",
 				"unique": false
 			}
 		],
-		"pk": [ "iwl_from", "iwl_prefix", "iwl_title" ]
+		"pk": ["iwl_from", "iwl_prefix", "iwl_title"]
 	},
 	{
 		"name": "category",
@@ -700,7 +795,11 @@
 				"name": "cat_id",
 				"comment": "Primary key",
 				"type": "integer",
-				"options": { "notnull": true, "unsigned": true, "autoincrement": true }
+				"options": {
+					"notnull": true,
+					"unsigned": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "cat_title",
@@ -727,17 +826,17 @@
 		"indexes": [
 			{
 				"name": "cat_title",
-				"columns": [ "cat_title" ],
+				"columns": ["cat_title"],
 				"unique": true
 			},
 			{
 				"name": "cat_pages",
-				"columns": [ "cat_pages" ],
+				"columns": ["cat_pages"],
 				"comment": "For Special:Mostlinkedcategories",
 				"unique": false
 			}
 		],
-		"pk": [ "cat_id" ]
+		"pk": ["cat_id"]
 	},
 	{
 		"name": "watchlist_expiry",
@@ -759,11 +858,11 @@
 		"indexes": [
 			{
 				"name": "we_expiry",
-				"columns": [ "we_expiry" ],
+				"columns": ["we_expiry"],
 				"unique": false
 			}
 		],
-		"pk": [ "we_item" ]
+		"pk": ["we_item"]
 	},
 	{
 		"name": "change_tag_def",
@@ -773,7 +872,11 @@
 				"name": "ctd_id",
 				"comment": "Numerical ID of the tag (ct_tag_id refers to this)",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "ctd_name",
@@ -795,11 +898,15 @@
 			}
 		],
 		"indexes": [
-			{ "name": "ctd_name", "columns": [ "ctd_name" ], "unique": true },
-			{ "name": "ctd_count", "columns": [ "ctd_count" ], "unique": false },
-			{ "name": "ctd_user_defined", "columns": [ "ctd_user_defined" ], "unique": false }
+			{ "name": "ctd_name", "columns": ["ctd_name"], "unique": true },
+			{ "name": "ctd_count", "columns": ["ctd_count"], "unique": false },
+			{
+				"name": "ctd_user_defined",
+				"columns": ["ctd_user_defined"],
+				"unique": false
+			}
 		],
-		"pk": [ "ctd_id" ]
+		"pk": ["ctd_id"]
 	},
 	{
 		"name": "ipblocks_restrictions",
@@ -828,11 +935,11 @@
 			{
 				"name": "ir_type_value",
 				"comment": "Index to query restrictions by the page or namespace.",
-				"columns": [ "ir_type", "ir_value" ],
+				"columns": ["ir_type", "ir_value"],
 				"unique": false
 			}
 		],
-		"pk": [ "ir_ipb_id", "ir_type", "ir_value" ]
+		"pk": ["ir_ipb_id", "ir_type", "ir_value"]
 	},
 	{
 		"name": "querycache",
@@ -862,7 +969,11 @@
 			}
 		],
 		"indexes": [
-			{ "name": "qc_type", "columns": [ "qc_type", "qc_value" ], "unique": false }
+			{
+				"name": "qc_type",
+				"columns": ["qc_type", "qc_value"],
+				"unique": false
+			}
 		],
 		"pk": []
 	},
@@ -904,9 +1015,21 @@
 			}
 		],
 		"indexes": [
-			{ "name": "qcc_type", "columns": [ "qcc_type", "qcc_value" ], "unique": false },
-			{ "name": "qcc_title", "columns": [ "qcc_type", "qcc_namespace", "qcc_title" ], "unique": false },
-			{ "name": "qcc_titletwo", "columns": [ "qcc_type", "qcc_namespacetwo", "qcc_titletwo" ], "unique": false }
+			{
+				"name": "qcc_type",
+				"columns": ["qcc_type", "qcc_value"],
+				"unique": false
+			},
+			{
+				"name": "qcc_title",
+				"columns": ["qcc_type", "qcc_namespace", "qcc_title"],
+				"unique": false
+			},
+			{
+				"name": "qcc_titletwo",
+				"columns": ["qcc_type", "qcc_namespacetwo", "qcc_titletwo"],
+				"unique": false
+			}
 		],
 		"pk": []
 	},
@@ -918,7 +1041,11 @@
 				"name": "pr_id",
 				"comment": "Field for an ID for this restrictions row (sort-key for Special:ProtectedPages)",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "pr_page",
@@ -962,12 +1089,20 @@
 			}
 		],
 		"indexes": [
-			{ "name": "pr_pagetype", "columns": [ "pr_page", "pr_type" ], "unique": true },
-			{ "name": "pr_typelevel", "columns": [ "pr_type", "pr_level" ], "unique": false },
-			{ "name": "pr_level", "columns": [ "pr_level" ], "unique": false },
-			{ "name": "pr_cascade", "columns": [ "pr_cascade" ], "unique": false }
+			{
+				"name": "pr_pagetype",
+				"columns": ["pr_page", "pr_type"],
+				"unique": true
+			},
+			{
+				"name": "pr_typelevel",
+				"columns": ["pr_type", "pr_level"],
+				"unique": false
+			},
+			{ "name": "pr_level", "columns": ["pr_level"], "unique": false },
+			{ "name": "pr_cascade", "columns": ["pr_cascade"], "unique": false }
 		],
-		"pk": [ "pr_id" ]
+		"pk": ["pr_id"]
 	},
 	{
 		"name": "user_groups",
@@ -999,10 +1134,10 @@
 			}
 		],
 		"indexes": [
-			{ "name": "ug_group", "columns": [ "ug_group" ], "unique": false },
-			{ "name": "ug_expiry", "columns": [ "ug_expiry" ], "unique": false }
+			{ "name": "ug_group", "columns": ["ug_group"], "unique": false },
+			{ "name": "ug_expiry", "columns": ["ug_expiry"], "unique": false }
 		],
-		"pk": [ "ug_user", "ug_group" ]
+		"pk": ["ug_user", "ug_group"]
 	},
 	{
 		"name": "querycache_info",
@@ -1018,11 +1153,15 @@
 				"name": "qci_timestamp",
 				"comment": "Timestamp of last update",
 				"type": "mwtimestamp",
-				"options": { "length": 14, "notnull": true, "default": "19700101000000" }
+				"options": {
+					"length": 14,
+					"notnull": true,
+					"default": "19700101000000"
+				}
 			}
 		],
 		"indexes": [],
-		"pk": [ "qci_type" ]
+		"pk": ["qci_type"]
 	},
 	{
 		"name": "watchlist",
@@ -1030,7 +1169,11 @@
 			{
 				"name": "wl_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "wl_user",
@@ -1057,24 +1200,24 @@
 		"indexes": [
 			{
 				"name": "wl_user",
-				"columns": [ "wl_user", "wl_namespace", "wl_title" ],
+				"columns": ["wl_user", "wl_namespace", "wl_title"],
 				"comment": "Special:Watchlist",
 				"unique": true
 			},
 			{
 				"name": "wl_namespace_title",
-				"columns": [ "wl_namespace", "wl_title" ],
+				"columns": ["wl_namespace", "wl_title"],
 				"comment": "Special:Movepage (WatchedItemStore::duplicateEntry)",
 				"unique": false
 			},
 			{
 				"name": "wl_user_notificationtimestamp",
-				"columns": [ "wl_user", "wl_notificationtimestamp" ],
+				"columns": ["wl_user", "wl_notificationtimestamp"],
 				"comment": "ApiQueryWatchlistRaw changed filter",
 				"unique": false
 			}
 		],
-		"pk": [ "wl_id" ]
+		"pk": ["wl_id"]
 	},
 	{
 		"name": "sites",
@@ -1084,7 +1227,11 @@
 				"name": "site_id",
 				"type": "integer",
 				"comment": "Numeric id of the site",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "site_global_key",
@@ -1148,16 +1295,44 @@
 			}
 		],
 		"indexes": [
-			{ "name": "site_global_key", "columns": [ "site_global_key" ], "unique": true },
-			{ "name": "site_type", "columns": [ "site_type" ], "unique": false },
-			{ "name": "site_group", "columns": [ "site_group" ], "unique": false },
-			{ "name": "site_source", "columns": [ "site_source" ], "unique": false },
-			{ "name": "site_language", "columns": [ "site_language" ], "unique": false },
-			{ "name": "site_protocol", "columns": [ "site_protocol" ], "unique": false },
-			{ "name": "site_domain", "columns": [ "site_domain" ], "unique": false },
-			{ "name": "site_forward", "columns": [ "site_forward" ], "unique": false }
+			{
+				"name": "site_global_key",
+				"columns": ["site_global_key"],
+				"unique": true
+			},
+			{ "name": "site_type", "columns": ["site_type"], "unique": false },
+			{
+				"name": "site_group",
+				"columns": ["site_group"],
+				"unique": false
+			},
+			{
+				"name": "site_source",
+				"columns": ["site_source"],
+				"unique": false
+			},
+			{
+				"name": "site_language",
+				"columns": ["site_language"],
+				"unique": false
+			},
+			{
+				"name": "site_protocol",
+				"columns": ["site_protocol"],
+				"unique": false
+			},
+			{
+				"name": "site_domain",
+				"columns": ["site_domain"],
+				"unique": false
+			},
+			{
+				"name": "site_forward",
+				"columns": ["site_forward"],
+				"unique": false
+			}
 		],
-		"pk": [ "site_id" ]
+		"pk": ["site_id"]
 	},
 	{
 		"name": "user_newtalk",
@@ -1182,8 +1357,8 @@
 			}
 		],
 		"indexes": [
-			{ "name": "un_user_id", "columns": [ "user_id" ], "unique": false },
-			{ "name": "un_user_ip", "columns": [ "user_ip" ], "unique": false }
+			{ "name": "un_user_id", "columns": ["user_id"], "unique": false },
+			{ "name": "un_user_ip", "columns": ["user_ip"], "unique": false }
 		],
 		"pk": []
 	},
@@ -1229,7 +1404,7 @@
 			}
 		],
 		"indexes": [],
-		"pk": [ "iw_prefix" ]
+		"pk": ["iw_prefix"]
 	},
 	{
 		"name": "protected_titles",
@@ -1276,8 +1451,14 @@
 				"options": { "length": 60, "notnull": true }
 			}
 		],
-		"indexes": [ { "name": "pt_timestamp", "columns": [ "pt_timestamp" ], "unique": false } ],
-		"pk": [ "pt_namespace", "pt_title" ]
+		"indexes": [
+			{
+				"name": "pt_timestamp",
+				"columns": ["pt_timestamp"],
+				"unique": false
+			}
+		],
+		"pk": ["pt_namespace", "pt_title"]
 	},
 	{
 		"name": "externallinks",
@@ -1286,7 +1467,11 @@
 			{
 				"name": "el_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "el_from",
@@ -1314,13 +1499,36 @@
 			}
 		],
 		"indexes": [
-			{ "name": "el_from", "columns": [ "el_from", "el_to" ], "unique": false, "options": { "lengths": [ null, 40 ] } },
-			{ "name": "el_to", "columns": [ "el_to", "el_from" ], "unique": false, "options": { "lengths": [ 60, null ] } },
-			{ "name": "el_index", "columns": [ "el_index" ], "unique": false, "options": { "lengths": [ 60 ] } },
-			{ "name": "el_index_60", "columns": [ "el_index_60", "el_id" ], "unique": false },
-			{ "name": "el_from_index_60", "columns": [ "el_from", "el_index_60", "el_id" ], "unique": false }
+			{
+				"name": "el_from",
+				"columns": ["el_from", "el_to"],
+				"unique": false,
+				"options": { "lengths": [null, 40] }
+			},
+			{
+				"name": "el_to",
+				"columns": ["el_to", "el_from"],
+				"unique": false,
+				"options": { "lengths": [60, null] }
+			},
+			{
+				"name": "el_index",
+				"columns": ["el_index"],
+				"unique": false,
+				"options": { "lengths": [60] }
+			},
+			{
+				"name": "el_index_60",
+				"columns": ["el_index_60", "el_id"],
+				"unique": false
+			},
+			{
+				"name": "el_from_index_60",
+				"columns": ["el_from", "el_index_60", "el_id"],
+				"unique": false
+			}
 		],
-		"pk": [ "el_id" ]
+		"pk": ["el_id"]
 	},
 	{
 		"name": "ip_changes",
@@ -1346,10 +1554,18 @@
 			}
 		],
 		"indexes": [
-			{ "name": "ipc_rev_timestamp", "columns": [ "ipc_rev_timestamp" ], "unique": false },
-			{ "name": "ipc_hex_time", "columns": [ "ipc_hex", "ipc_rev_timestamp" ], "unique": false }
+			{
+				"name": "ipc_rev_timestamp",
+				"columns": ["ipc_rev_timestamp"],
+				"unique": false
+			},
+			{
+				"name": "ipc_hex_time",
+				"columns": ["ipc_hex", "ipc_rev_timestamp"],
+				"unique": false
+			}
 		],
-		"pk": [ "ipc_rev_id" ]
+		"pk": ["ipc_rev_id"]
 	},
 	{
 		"name": "revision_comment_temp",
@@ -1369,9 +1585,13 @@
 			}
 		],
 		"indexes": [
-			{ "name": "revcomment_rev", "columns": [ "revcomment_rev" ], "unique": true }
+			{
+				"name": "revcomment_rev",
+				"columns": ["revcomment_rev"],
+				"unique": true
+			}
 		],
-		"pk": [ "revcomment_rev", "revcomment_comment_id" ]
+		"pk": ["revcomment_rev", "revcomment_comment_id"]
 	},
 	{
 		"name": "revision_actor_temp",
@@ -1403,11 +1623,27 @@
 			}
 		],
 		"indexes": [
-			{ "name": "revactor_rev", "columns": [ "revactor_rev" ], "unique": true },
-			{ "name": "actor_timestamp", "columns": [ "revactor_actor", "revactor_timestamp" ], "unique": false },
-			{ "name": "page_actor_timestamp", "columns": [ "revactor_page", "revactor_actor", "revactor_timestamp" ], "unique": false }
+			{
+				"name": "revactor_rev",
+				"columns": ["revactor_rev"],
+				"unique": true
+			},
+			{
+				"name": "actor_timestamp",
+				"columns": ["revactor_actor", "revactor_timestamp"],
+				"unique": false
+			},
+			{
+				"name": "page_actor_timestamp",
+				"columns": [
+					"revactor_page",
+					"revactor_actor",
+					"revactor_timestamp"
+				],
+				"unique": false
+			}
 		],
-		"pk": [ "revactor_rev", "revactor_actor" ]
+		"pk": ["revactor_rev", "revactor_actor"]
 	},
 	{
 		"name": "page_props",
@@ -1435,10 +1671,19 @@
 			}
 		],
 		"indexes": [
-			{ "name": "pp_propname_page", "columns": [ "pp_propname", "pp_page" ], "unique": true },
-			{ "name": "pp_propname_sortkey_page", "columns": [ "pp_propname", "pp_sortkey", "pp_page" ], "unique": true, "options": { "where": "(pp_sortkey IS NOT NULL)" } }
+			{
+				"name": "pp_propname_page",
+				"columns": ["pp_propname", "pp_page"],
+				"unique": true
+			},
+			{
+				"name": "pp_propname_sortkey_page",
+				"columns": ["pp_propname", "pp_sortkey", "pp_page"],
+				"unique": true,
+				"options": { "where": "(pp_sortkey IS NOT NULL)" }
+			}
 		],
-		"pk": [ "pp_page", "pp_propname" ]
+		"pk": ["pp_page", "pp_propname"]
 	},
 	{
 		"name": "job",
@@ -1447,7 +1692,11 @@
 			{
 				"name": "job_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "job_cmd",
@@ -1511,16 +1760,35 @@
 			}
 		],
 		"indexes": [
-			{ "name": "job_sha1", "columns": [ "job_sha1" ], "unique": false },
-			{ "name": "job_cmd_token", "columns": [ "job_cmd", "job_token", "job_random" ], "unique": false },
-			{ "name": "job_cmd_token_id", "columns": [ "job_cmd", "job_token", "job_id" ], "unique": false },
-			{ "name": "job_cmd", "columns": [ "job_cmd", "job_namespace", "job_title", "job_params" ],
-				"unique": false,
-				"options": { "lengths": [ null, null, null, 128 ] }
+			{ "name": "job_sha1", "columns": ["job_sha1"], "unique": false },
+			{
+				"name": "job_cmd_token",
+				"columns": ["job_cmd", "job_token", "job_random"],
+				"unique": false
 			},
-			{ "name": "job_timestamp", "columns": [ "job_timestamp" ], "unique": false }
+			{
+				"name": "job_cmd_token_id",
+				"columns": ["job_cmd", "job_token", "job_id"],
+				"unique": false
+			},
+			{
+				"name": "job_cmd",
+				"columns": [
+					"job_cmd",
+					"job_namespace",
+					"job_title",
+					"job_params"
+				],
+				"unique": false,
+				"options": { "lengths": [null, null, null, 128] }
+			},
+			{
+				"name": "job_timestamp",
+				"columns": ["job_timestamp"],
+				"unique": false
+			}
 		],
-		"pk": [ "job_id" ]
+		"pk": ["job_id"]
 	},
 	{
 		"name": "slot_roles",
@@ -1540,12 +1808,12 @@
 		"indexes": [
 			{
 				"name": "role_name",
-				"columns": [ "role_name" ],
+				"columns": ["role_name"],
 				"comment": "Index for looking up the internal ID of a role",
 				"unique": true
 			}
 		],
-		"pk": [ "role_id" ]
+		"pk": ["role_id"]
 	},
 	{
 		"name": "content_models",
@@ -1565,12 +1833,12 @@
 		"indexes": [
 			{
 				"name": "model_name",
-				"columns": [ "model_name" ],
+				"columns": ["model_name"],
 				"comment": "Index for looking up the internal ID of a model",
 				"unique": true
 			}
 		],
-		"pk": [ "model_id" ]
+		"pk": ["model_id"]
 	},
 	{
 		"name": "categorylinks",
@@ -1604,7 +1872,10 @@
 				"name": "cl_timestamp",
 				"comment": "This isn't really used at present. Provided for an optional sorting method by approximate addition time.",
 				"type": "datetimetz",
-				"options": { "notnull": true, "PlatformOptions": { "version": true } }
+				"options": {
+					"notnull": true,
+					"PlatformOptions": { "version": true }
+				}
 			},
 			{
 				"name": "cl_collation",
@@ -1616,9 +1887,11 @@
 				"name": "cl_type",
 				"comment": "Stores whether cl_from is a category, file, or other page, so we can paginate the three categories separately.  This only has to be updated when moving pages into or out of the category namespace, since file pages cannot be moved to other namespaces, nor can non-files be moved into the file namespace.",
 				"type": "mwenum",
-				"options": { "notnull": true, "default": "page",
+				"options": {
+					"notnull": true,
+					"default": "page",
 					"CustomSchemaOptions": {
-						"enum_values": [ "page", "subcat", "file" ]
+						"enum_values": ["page", "subcat", "file"]
 					}
 				}
 			}
@@ -1627,23 +1900,23 @@
 			{
 				"name": "cl_sortkey",
 				"comment": "We always sort within a given category, and within a given type.  FIXME: Formerly this index didn't cover cl_type (since that didn't exist), so old callers won't be using an index: fix this?",
-				"columns": [ "cl_to", "cl_type", "cl_sortkey", "cl_from" ],
+				"columns": ["cl_to", "cl_type", "cl_sortkey", "cl_from"],
 				"unique": false
 			},
 			{
 				"name": "cl_timestamp",
 				"comment": "Used by the API (and some extensions)",
-				"columns": [ "cl_to", "cl_timestamp" ],
+				"columns": ["cl_to", "cl_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "cl_collation_ext",
 				"comment": "Used when updating collation (e.g. updateCollation.php)",
-				"columns": [ "cl_collation", "cl_to", "cl_type", "cl_from" ],
+				"columns": ["cl_collation", "cl_to", "cl_type", "cl_from"],
 				"unique": false
 			}
 		],
-		"pk": [ "cl_from", "cl_to" ]
+		"pk": ["cl_from", "cl_to"]
 	},
 	{
 		"name": "logging",
@@ -1652,7 +1925,11 @@
 				"name": "log_id",
 				"comment": "Log ID, for referring to this specific log entry, probably for deletion and such.",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "log_type",
@@ -1717,47 +1994,47 @@
 			{
 				"name": "log_type_time",
 				"comment": "Special:Log type filter",
-				"columns": [ "log_type", "log_timestamp" ],
+				"columns": ["log_type", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_actor_time",
 				"comment": "Special:Log performer filter",
-				"columns": [ "log_actor", "log_timestamp" ],
+				"columns": ["log_actor", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_page_time",
 				"comment": "Special:Log title filter, log extract",
-				"columns": [ "log_namespace", "log_title", "log_timestamp" ],
+				"columns": ["log_namespace", "log_title", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_times",
 				"comment": "Special:Log unfiltered",
-				"columns": [ "log_timestamp" ],
+				"columns": ["log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_actor_type_time",
 				"comment": "Special:Log filter by performer and type",
-				"columns": [ "log_actor", "log_type", "log_timestamp" ],
+				"columns": ["log_actor", "log_type", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_page_id_time",
 				"comment": "Apparently just used for a few maintenance pages (findMissingFiles.php, Flow). Could be removed?",
-				"columns": [ "log_page", "log_timestamp" ],
+				"columns": ["log_page", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_type_action",
 				"comment": "Special:Log action filter",
-				"columns": [ "log_type", "log_action", "log_timestamp" ],
+				"columns": ["log_type", "log_action", "log_timestamp"],
 				"unique": false
 			}
 		],
-		"pk": [ "log_id" ]
+		"pk": ["log_id"]
 	},
 	{
 		"name": "uploadstash",
@@ -1882,10 +2159,24 @@
 				"name": "us_media_type",
 				"comment": "Media type as defined by the MEDIATYPE_xxx constants, should duplicate definition in the image table",
 				"type": "mwenum",
-				"options": { "notnull": false, "default": null,
+				"options": {
+					"notnull": false,
+					"default": null,
 					"fixed": true,
 					"CustomSchemaOptions": {
-						"enum_values": [ "UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE", "3D" ]
+						"enum_values": [
+							"UNKNOWN",
+							"BITMAP",
+							"DRAWING",
+							"AUDIO",
+							"VIDEO",
+							"MULTIMEDIA",
+							"OFFICE",
+							"TEXT",
+							"EXECUTABLE",
+							"ARCHIVE",
+							"3D"
+						]
 					}
 				}
 			},
@@ -1919,31 +2210,23 @@
 			{
 				"name": "us_user",
 				"comment": "sometimes there's a delete for all of a user's stuff.",
-				"columns": [
-					"us_user"
-				],
+				"columns": ["us_user"],
 				"unique": false
 			},
 			{
 				"name": "us_key",
 				"comment": "pick out files by key, enforce key uniqueness",
-				"columns": [
-					"us_key"
-				],
+				"columns": ["us_key"],
 				"unique": true
 			},
 			{
 				"name": "us_timestamp",
 				"comment": "the abandoned upload cleanup script needs this",
-				"columns": [
-					"us_timestamp"
-				],
+				"columns": ["us_timestamp"],
 				"unique": false
 			}
 		],
-		"pk": [
-			"us_id"
-		]
+		"pk": ["us_id"]
 	},
 	{
 		"name": "filearchive",
@@ -2068,7 +2351,19 @@
 					"notnull": false,
 					"default": null,
 					"CustomSchemaOptions": {
-						"enum_values": [ "UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE", "3D" ]
+						"enum_values": [
+							"UNKNOWN",
+							"BITMAP",
+							"DRAWING",
+							"AUDIO",
+							"VIDEO",
+							"MULTIMEDIA",
+							"OFFICE",
+							"TEXT",
+							"EXECUTABLE",
+							"ARCHIVE",
+							"3D"
+						]
 					}
 				}
 			},
@@ -2079,7 +2374,18 @@
 					"notnull": false,
 					"default": "unknown",
 					"CustomSchemaOptions": {
-						"enum_values": [ "unknown", "application", "audio", "image", "text", "video", "message", "model", "multipart", "chemical" ]
+						"enum_values": [
+							"unknown",
+							"application",
+							"audio",
+							"image",
+							"text",
+							"video",
+							"message",
+							"model",
+							"multipart",
+							"chemical"
+						]
 					}
 				}
 			},
@@ -2141,51 +2447,36 @@
 			{
 				"name": "fa_name",
 				"comment": "pick out by image name",
-				"columns": [
-					"fa_name",
-					"fa_timestamp"
-				],
+				"columns": ["fa_name", "fa_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "fa_storage_group",
 				"comment": "pick out dupe files",
-				"columns": [
-					"fa_storage_group",
-					"fa_storage_key"
-				],
+				"columns": ["fa_storage_group", "fa_storage_key"],
 				"unique": false
 			},
 			{
 				"name": "fa_deleted_timestamp",
 				"comment": "sort by deletion time",
-				"columns": [
-					"fa_deleted_timestamp"
-				],
+				"columns": ["fa_deleted_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "fa_actor_timestamp",
 				"comment": "sort by uploader",
-				"columns": [
-					"fa_actor",
-					"fa_timestamp"
-				],
+				"columns": ["fa_actor", "fa_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "fa_sha1",
 				"comment": "find file by sha1, 10 bytes will be enough for hashes to be indexed",
-				"columns": [
-					"fa_sha1"
-				],
+				"columns": ["fa_sha1"],
 				"unique": false,
-				"options": { "lengths": [ 10 ] }
+				"options": { "lengths": [10] }
 			}
 		],
-		"pk": [
-			"fa_id"
-		]
+		"pk": ["fa_id"]
 	},
 	{
 		"name": "text",
@@ -2221,9 +2512,7 @@
 			}
 		],
 		"indexes": [],
-		"pk": [
-			"old_id"
-		]
+		"pk": ["old_id"]
 	},
 	{
 		"name": "oldimage",
@@ -2321,7 +2610,19 @@
 					"notnull": false,
 					"default": null,
 					"CustomSchemaOptions": {
-						"enum_values": [ "UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE", "3D" ]
+						"enum_values": [
+							"UNKNOWN",
+							"BITMAP",
+							"DRAWING",
+							"AUDIO",
+							"VIDEO",
+							"MULTIMEDIA",
+							"OFFICE",
+							"TEXT",
+							"EXECUTABLE",
+							"ARCHIVE",
+							"3D"
+						]
 					}
 				}
 			},
@@ -2332,7 +2633,18 @@
 					"notnull": true,
 					"default": "unknown",
 					"CustomSchemaOptions": {
-						"enum_values": [ "unknown", "application", "audio", "image", "text", "video", "message", "model", "multipart", "chemical" ]
+						"enum_values": [
+							"unknown",
+							"application",
+							"audio",
+							"image",
+							"text",
+							"video",
+							"message",
+							"model",
+							"multipart",
+							"chemical"
+						]
 					}
 				}
 			},
@@ -2367,44 +2679,31 @@
 		"indexes": [
 			{
 				"name": "oi_actor_timestamp",
-				"columns": [
-					"oi_actor",
-					"oi_timestamp"
-				],
+				"columns": ["oi_actor", "oi_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "oi_name_timestamp",
-				"columns": [
-					"oi_name",
-					"oi_timestamp"
-				],
+				"columns": ["oi_name", "oi_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "oi_name_archive_name",
 				"comment": "oi_archive_name truncated to 14 to avoid key length overflow",
-				"columns": [
-					"oi_name",
-					"oi_archive_name"
-				],
+				"columns": ["oi_name", "oi_archive_name"],
 				"unique": false,
-				"options": { "lengths": [ null, 14 ] }
+				"options": { "lengths": [null, 14] }
 			},
 			{
 				"name": "oi_sha1",
-				"columns": [
-					"oi_sha1"
-				],
+				"columns": ["oi_sha1"],
 				"unique": false,
-				"options": { "lengths": [ 10 ] }
+				"options": { "lengths": [10] }
 			},
 			{
 				"name": "oi_timestamp",
 				"comment": "Used by Special:ListFiles",
-				"columns": [
-					"oi_timestamp"
-				],
+				"columns": ["oi_timestamp"],
 				"unique": false
 			}
 		]
@@ -2431,18 +2730,26 @@
 			{
 				"name": "modtoken",
 				"type": "string",
-				"options": { "notnull": true, "length": 17, "default": "00000000000000000" }
+				"options": {
+					"notnull": true,
+					"length": 17,
+					"default": "00000000000000000"
+				}
 			},
 			{
 				"name": "flags",
 				"type": "integer",
-				"options": { "notnull": false, "unsigned": true, "default": null }
+				"options": {
+					"notnull": false,
+					"unsigned": true,
+					"default": null
+				}
 			}
 		],
 		"indexes": [
-			{ "name": "exptime", "columns": [ "exptime" ], "unique": false }
+			{ "name": "exptime", "columns": ["exptime"], "unique": false }
 		],
-		"pk": [ "keyname" ]
+		"pk": ["keyname"]
 	},
 	{
 		"name": "ipblocks",
@@ -2625,60 +2932,43 @@
 			{
 				"name": "ipb_address_unique",
 				"comment": "Unique index to support \"user already blocked\" messages. Any new options which prevent collisions should be included",
-				"columns": [
-					"ipb_address",
-					"ipb_user",
-					"ipb_auto"
-				],
+				"columns": ["ipb_address", "ipb_user", "ipb_auto"],
 				"unique": true,
-				"options": { "lengths": [ 255, null, null ] }
+				"options": { "lengths": [255, null, null] }
 			},
 			{
 				"name": "ipb_user",
 				"comment": "For querying whether a logged-in user is blocked",
-				"columns": [
-					"ipb_user"
-				],
+				"columns": ["ipb_user"],
 				"unique": false
 			},
 			{
 				"name": "ipb_range",
 				"comment": "For querying whether an IP address is in any range",
-				"columns": [
-					"ipb_range_start",
-					"ipb_range_end"
-				],
+				"columns": ["ipb_range_start", "ipb_range_end"],
 				"unique": false,
-				"options": { "lengths": [ 8, 8 ] }
+				"options": { "lengths": [8, 8] }
 			},
 			{
 				"name": "ipb_timestamp",
 				"comment": "Index for Special:BlockList",
-				"columns": [
-					"ipb_timestamp"
-				],
+				"columns": ["ipb_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "ipb_expiry",
 				"comment": "Index for table pruning",
-				"columns": [
-					"ipb_expiry"
-				],
+				"columns": ["ipb_expiry"],
 				"unique": false
 			},
 			{
 				"name": "ipb_parent_block_id",
 				"comment": "Index for removing autoblocks when a parent block is removed",
-				"columns": [
-					"ipb_parent_block_id"
-				],
+				"columns": ["ipb_parent_block_id"],
 				"unique": false
 			}
 		],
-		"pk": [
-			"ipb_id"
-		]
+		"pk": ["ipb_id"]
 	},
 	{
 		"name": "image",
@@ -2748,7 +3038,19 @@
 					"notnull": false,
 					"default": null,
 					"CustomSchemaOptions": {
-						"enum_values": [ "UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE", "3D" ]
+						"enum_values": [
+							"UNKNOWN",
+							"BITMAP",
+							"DRAWING",
+							"AUDIO",
+							"VIDEO",
+							"MULTIMEDIA",
+							"OFFICE",
+							"TEXT",
+							"EXECUTABLE",
+							"ARCHIVE",
+							"3D"
+						]
 					}
 				}
 			},
@@ -2760,7 +3062,18 @@
 					"notnull": true,
 					"default": "unknown",
 					"CustomSchemaOptions": {
-						"enum_values": [ "unknown", "application", "audio", "image", "text", "video", "message", "model", "multipart", "chemical" ]
+						"enum_values": [
+							"unknown",
+							"application",
+							"audio",
+							"image",
+							"text",
+							"video",
+							"message",
+							"model",
+							"multipart",
+							"chemical"
+						]
 					}
 				}
 			},
@@ -2816,36 +3129,27 @@
 			{
 				"name": "img_actor_timestamp",
 				"comment": "Used by Special:Newimages and ApiQueryAllImages",
-				"columns": [
-					"img_actor",
-					"img_timestamp"
-				],
+				"columns": ["img_actor", "img_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "img_size",
 				"comment": "Used by Special:ListFiles for sort-by-size",
-				"columns": [
-					"img_size"
-				],
+				"columns": ["img_size"],
 				"unique": false
 			},
 			{
 				"name": "img_timestamp",
 				"comment": "Used by Special:Newimages and Special:ListFiles",
-				"columns": [
-					"img_timestamp"
-				],
+				"columns": ["img_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "img_sha1",
 				"comment": "Used in API and duplicate search",
-				"columns": [
-					"img_sha1"
-				],
+				"columns": ["img_sha1"],
 				"unique": false,
-				"options": { "lengths": [ 10 ] }
+				"options": { "lengths": [10] }
 			},
 			{
 				"name": "img_media_mime",
@@ -2858,9 +3162,7 @@
 				"unique": false
 			}
 		],
-		"pk": [
-			"img_name"
-		]
+		"pk": ["img_name"]
 	},
 	{
 		"name": "recentchanges",
@@ -3088,63 +3390,43 @@
 			{
 				"name": "rc_timestamp",
 				"comment": "Special:Recentchanges",
-				"columns": [
-					"rc_timestamp"
-				],
+				"columns": ["rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_namespace_title_timestamp",
 				"comment": "Special:Watchlist",
-				"columns": [
-					"rc_namespace",
-					"rc_title",
-					"rc_timestamp"
-				],
+				"columns": ["rc_namespace", "rc_title", "rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_cur_id",
 				"comment": "Special:Recentchangeslinked when finding changes in pages linked from a page",
-				"columns": [
-					"rc_cur_id"
-				],
+				"columns": ["rc_cur_id"],
 				"unique": false
 			},
 			{
 				"name": "rc_new_name_timestamp",
 				"comment": "Special:Newpages",
-				"columns": [
-					"rc_new",
-					"rc_namespace",
-					"rc_timestamp"
-				],
+				"columns": ["rc_new", "rc_namespace", "rc_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "rc_ip",
 				"comment": "Blank unless $wgPutIPinRC=true (false at WMF), possibly used by extensions, but mostly replaced by CheckUser.",
-				"columns": [
-					"rc_ip"
-				],
+				"columns": ["rc_ip"],
 				"unique": false
 			},
 			{
 				"name": "rc_ns_actor",
 				"comment": "Probably intended for Special:NewPages namespace filter",
-				"columns": [
-					"rc_namespace",
-					"rc_actor"
-				],
+				"columns": ["rc_namespace", "rc_actor"],
 				"unique": false
 			},
 			{
 				"name": "rc_actor",
 				"comment": "SiteStats active user count, Special:ActiveUsers, Special:NewPages user filter",
-				"columns": [
-					"rc_actor",
-					"rc_timestamp"
-				],
+				"columns": ["rc_actor", "rc_timestamp"],
 				"unique": false
 			},
 			{
@@ -3161,15 +3443,11 @@
 			{
 				"name": "rc_this_oldid",
 				"comment": "Article.php and friends (T139012)",
-				"columns": [
-					"rc_this_oldid"
-				],
+				"columns": ["rc_this_oldid"],
 				"unique": false
 			}
 		],
-		"pk": [
-			"rc_id"
-		]
+		"pk": ["rc_id"]
 	},
 	{
 		"name": "archive",
@@ -3302,34 +3580,23 @@
 			{
 				"name": "ar_name_title_timestamp",
 				"comment": "Index for Special:Undelete to page through deleted revisions",
-				"columns": [
-					"ar_namespace",
-					"ar_title",
-					"ar_timestamp"
-				],
+				"columns": ["ar_namespace", "ar_title", "ar_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "ar_actor_timestamp",
 				"comment": "Index for Special:DeletedContributions",
-				"columns": [
-					"ar_actor",
-					"ar_timestamp"
-				],
+				"columns": ["ar_actor", "ar_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "ar_revid_uniq",
 				"comment": "Index for linking archive rows with tables that normally link with revision rows, such as change_tag.",
-				"columns": [
-					"ar_rev_id"
-				],
+				"columns": ["ar_rev_id"],
 				"unique": true
 			}
 		],
-		"pk": [
-			"ar_id"
-		]
+		"pk": ["ar_id"]
 	},
 	{
 		"name": "page",
@@ -3339,7 +3606,11 @@
 				"name": "page_id",
 				"comment": "Unique identifier number. The page_id will be preserved across edits and rename operations, but not deletions and recreations.",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "page_namespace",
@@ -3429,30 +3700,30 @@
 		"indexes": [
 			{
 				"name": "page_name_title",
-				"columns": [ "page_namespace", "page_title" ],
+				"columns": ["page_namespace", "page_title"],
 				"comment": "The title index. Care must be taken to always specify a namespace when by title, so that the index is used. Even listing all known namespaces with IN() is better than omitting page_namespace from the WHERE clause.",
 				"unique": true
 			},
 			{
 				"name": "page_random",
-				"columns": [ "page_random" ],
+				"columns": ["page_random"],
 				"comment": "Index for Special:Random",
 				"unique": false
 			},
 			{
 				"name": "page_len",
-				"columns": [ "page_len" ],
+				"columns": ["page_len"],
 				"comment": "Questionable utility, used by ProofreadPage, possibly DynamicPageList. ApiQueryAllPages unconditionally filters on namespace and so hopefully does not use it.",
 				"unique": false
 			},
 			{
 				"name": "page_redirect_namespace_len",
-				"columns": [ "page_is_redirect", "page_namespace", "page_len" ],
+				"columns": ["page_is_redirect", "page_namespace", "page_len"],
 				"comment": "The index for Special:Shortpages and Special:Longpages. Also SiteStats::articles() in 'comma' counting mode, MessageCache::loadFromDB().",
 				"unique": false
 			}
 		],
-		"pk": [ "page_id" ]
+		"pk": ["page_id"]
 	},
 	{
 		"name": "user",
@@ -3461,7 +3732,11 @@
 			{
 				"name": "user_id",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "user_name",
@@ -3509,7 +3784,12 @@
 				"name": "user_token",
 				"comment": "A pseudorandomly generated value that is stored in a cookie when the 'remember password' feature is used (previously, a hash of the password was used, but this was vulnerable to cookie-stealing attacks)",
 				"type": "binary",
-				"options": { "notnull": true, "default": "", "length": 32, "fixed": true }
+				"options": {
+					"notnull": true,
+					"default": "",
+					"length": 32,
+					"fixed": true
+				}
 			},
 			{
 				"name": "user_email_authenticated",
@@ -3554,11 +3834,20 @@
 			}
 		],
 		"indexes": [
-			{ "name": "user_name", "columns": [ "user_name" ], "unique": true },
-			{ "name": "user_email_token", "columns": [ "user_email_token" ], "unique": false },
-			{ "name": "user_email", "columns": [ "user_email" ], "unique": false, "options": { "lengths": [ 50, null, null ] } }
+			{ "name": "user_name", "columns": ["user_name"], "unique": true },
+			{
+				"name": "user_email_token",
+				"columns": ["user_email_token"],
+				"unique": false
+			},
+			{
+				"name": "user_email",
+				"columns": ["user_email"],
+				"unique": false,
+				"options": { "lengths": [50, null, null] }
+			}
 		],
-		"pk": [ "user_id" ]
+		"pk": ["user_id"]
 	},
 	{
 		"name": "revision",
@@ -3568,7 +3857,11 @@
 				"name": "rev_id",
 				"comment": "Unique ID to identify each revision",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "rev_page",
@@ -3628,36 +3921,36 @@
 		"indexes": [
 			{
 				"name": "rev_page_id",
-				"columns": [ "rev_page", "rev_id" ],
+				"columns": ["rev_page", "rev_id"],
 				"comment": "The index is proposed for removal, do not use it in new code: T163532. Used for ordering revisions within a page by rev_id, which is usually incorrect, since rev_timestamp is normally the correct order. It can also be used by dumpBackup.php, if a page and rev_id range is specified.",
 				"unique": false
 			},
 			{
 				"name": "rev_timestamp",
-				"columns": [ "rev_timestamp" ],
+				"columns": ["rev_timestamp"],
 				"comment": "Used by ApiQueryAllRevisions",
 				"unique": false
 			},
 			{
 				"name": "rev_page_timestamp",
-				"columns": [ "rev_page", "rev_timestamp" ],
+				"columns": ["rev_page", "rev_timestamp"],
 				"comment": "History index",
 				"unique": false
 			},
 			{
 				"name": "rev_actor_timestamp",
-				"columns": [ "rev_actor", "rev_timestamp", "rev_id" ],
+				"columns": ["rev_actor", "rev_timestamp", "rev_id"],
 				"comment": "User contributions index",
 				"unique": false
 			},
 			{
 				"name": "rev_page_actor_timestamp",
-				"columns": [ "rev_page", "rev_actor", "rev_timestamp" ],
+				"columns": ["rev_page", "rev_actor", "rev_timestamp"],
 				"comment": "Credits index. This is scanned in order to compile credits lists for pages, in ApiQueryContributors. Also for ApiQueryRevisions if rvuser is specified",
 				"unique": false
 			}
 		],
-		"pk": [ "rev_id" ]
+		"pk": ["rev_id"]
 	},
 	{
 		"name": "searchindex",
@@ -3685,31 +3978,24 @@
 		"indexes": [
 			{
 				"name": "si_page",
-				"columns": [ "si_page" ],
+				"columns": ["si_page"],
 				"unique": true
 			},
 			{
 				"name": "si_title",
-				"columns": [ "si_title" ],
+				"columns": ["si_title"],
 				"unique": false,
-				"flags": [
-					"fulltext"
-				]
+				"flags": ["fulltext"]
 			},
 			{
 				"name": "si_text",
-				"columns": [ "si_text" ],
+				"columns": ["si_text"],
 				"fulltext": true,
 				"unique": false,
-				"flags": [
-					"fulltext"
-				]
+				"flags": ["fulltext"]
 			}
 		],
 		"pk": [],
-		"table_options": [
-			"ENGINE=MyISAM",
-			"DEFAULT CHARSET=utf8"
-		]
+		"table_options": ["ENGINE=MyISAM", "DEFAULT CHARSET=utf8"]
 	}
 ]

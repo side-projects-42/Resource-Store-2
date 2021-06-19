@@ -79,7 +79,7 @@ export const makeTest = (
 const hasEnabledTest = (describeBlock: DescribeBlock): boolean => {
   const {hasFocusedTests, testNamePattern} = getState();
   const hasOwnEnabledTests = describeBlock.tests.some(
-    test =>
+    (test) =>
       !(
         test.mode === 'skip' ||
         (hasFocusedTests && test.mode !== 'only') ||
@@ -237,7 +237,7 @@ export const callAsyncCircusFn = (
       timeoutID.unref && timeoutID.unref();
       clearTimeout(timeoutID);
     })
-    .catch(error => {
+    .catch((error) => {
       completed = true;
       timeoutID.unref && timeoutID.unref();
       clearTimeout(timeoutID);

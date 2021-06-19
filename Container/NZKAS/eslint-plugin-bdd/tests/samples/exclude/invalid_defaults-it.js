@@ -10,10 +10,10 @@
  * @description:
  * Tests to see if there are any empty `it` tests
  */
-'use strict';
+"use strict";
 
 (function (root) {
-	describe('something', function () {
-		it('should do stuff');
+	describe("something", function () {
+		it("should do stuff");
 	});
-}(this));
+})(this);

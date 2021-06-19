@@ -1,0 +1,25 @@
+<div class="card-header h3">
+  <%= @package.name %> Package @ <%= @package.event.name %>
+</div>
+<div class="card body container-fluid">
+
+  <h5>Price </h5>
+  <%= in_money(@package.price) %></p>
+
+  <h3>Package Perks</h3>
+  <ul>
+    <% @package.specs.each do |spec| %>
+    <li><%= spec.perk.name %>
+      <%# If the quantity is more than one, show the Qty inline—otherwise skip it %>
+      <% if spec.qty > 1 %>(<%= spec.qty %>) <% end %></li>
+    <% end %>
+  </ul>
+
+  <p><%= link_to "Edit Package", edit_event_package_path, class: "btn btn-warning" %></p>
+
+  <p><%= button_to "Delete Package", [@event, @package], method: :delete, class: "btn btn-danger" %></p>
+
+  <hr>
+
+  <p><%= link_to "Back to Event", event_path(@event), class: "btn btn-primary"  %></p>
+</div>

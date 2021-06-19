@@ -89,8 +89,8 @@ class TestRunner {
                 this._context,
               );
             })
-            .then(result => onResult(test, result))
-            .catch(err => onFailure(test, err)),
+            .then((result) => onResult(test, result))
+            .catch((err) => onFailure(test, err)),
         ),
       Promise.resolve(),
     );
@@ -161,10 +161,10 @@ class TestRunner {
     });
 
     const runAllTests = Promise.all(
-      tests.map(test =>
+      tests.map((test) =>
         runTestInWorker(test)
-          .then(testResult => onResult(test, testResult))
-          .catch(error => onError(error, test)),
+          .then((testResult) => onResult(test, testResult))
+          .catch((error) => onError(error, test)),
       ),
     );
 

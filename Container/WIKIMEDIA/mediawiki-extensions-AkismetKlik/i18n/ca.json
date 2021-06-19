@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Jmarchn",
-			"Oç"
-		]
-	},
-	"akismetklik-desc": "Rebutja edicions provinents de suposats creadors de correu brossa presents a la llista de correu brossa d'Akismet"
+  "@metadata": {
+    "authors": ["Jmarchn", "Oç"]
+  },
+  "akismetklik-desc": "Rebutja edicions provinents de suposats creadors de correu brossa presents a la llista de correu brossa d'Akismet"
 }

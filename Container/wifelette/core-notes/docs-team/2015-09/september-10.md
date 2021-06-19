@@ -2,10 +2,10 @@
 
 ## Attendees
 
-* MKN - Michael
-* LS - Leah
-* YK - Yehuda
-* RM - Locks / Roberto
+- MKN - Michael
+- LS - Leah
+- YK - Yehuda
+- RM - Locks / Roberto
 
 **MKN**: My staff member who was wanting to help should hopefully get started tomorrow. She wanted to take the first crack of the tutorial; routing, templates, building out some of the basic features. The homepage, listings, etc. The first parts of the outline that Lauren started and Locks and MKN worked on. We should have the beginning of a tutorial by next week. Her name is **Kelly**.
 
@@ -26,7 +26,6 @@
 **RM**: Will do. I’ll report back at next Thursday’s meeting.
 
 **MKN**: I’ll assign the Dependency Injection one to you and remove the Help Wanted label.
-
 
 **MKN**: Really that leaves Models. **Igor** said he was going to put together an outline but I haven’t heard from him this week about it. **BMac** said he thinks **Igor** is still working on it. **BMac** is also going to start on some parts of the guides where he have ideas and him and **Igor** are going to communicate and keep each other informed.
 
@@ -52,7 +51,7 @@
 
 **MKN**: Given finite resources, updating design is not a high priority.
 
-*YK joins*
+_YK joins_
 
 **YK**: What did I miss?
 

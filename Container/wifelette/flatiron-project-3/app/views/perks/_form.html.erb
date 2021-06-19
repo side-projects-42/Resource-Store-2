@@ -1,0 +1,32 @@
+<%= form_for perk do |f| %>
+<p class="formy">
+  <%= f.label :name, "Name" %>
+  <%= f.text_field :name, size: "50x2" %>
+  <% if perk.errors.any? %>
+  <span class="error_details">
+    <%= "Name " + perk.errors[:name].join + "." %>
+  </span>
+  <% end %>
+</p>
+<p class="formy">
+  <%= f.label :description %>
+  <%= f.text_area :description, size: "50x3" %>
+</p>
+<p class="formy">
+  <%= f.label :deliverable %>
+  <%= f.text_area :deliverable, size: "50x3" %>
+</p>
+<p class="formy">
+  <div class="custom-control custom-switch">
+    <%= f.check_box :limited, class: "custom-control-input", id: "customSwitch1"%>
+    <%= f.label :limited, class: "custom-control-label", for: "customSwitch1" %>
+  </div>
+</p>
+<p class="formy">
+  <div class="custom-control custom-switch">
+    <%= f.check_box :paid_addon, class: "custom-control-input", id: "customSwitch2"%>
+    <%= f.label "Paid Addon", class: "custom-control-label", for: "customSwitch2" %>
+  </div>
+</p>
+<p><%= f.submit "Submit", class: "btn btn-success" %></p>
+<% end %>

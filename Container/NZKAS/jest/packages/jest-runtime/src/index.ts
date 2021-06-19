@@ -157,7 +157,7 @@ class Runtime {
     }
 
     if (config.automock) {
-      config.setupFiles.forEach(filePath => {
+      config.setupFiles.forEach((filePath) => {
         if (filePath && filePath.includes(NODE_MODULES)) {
           const moduleID = this._resolver.getModuleID(
             this._virtualMocks,
@@ -204,13 +204,13 @@ class Runtime {
       watchman: options.watchman,
     });
     return instance.build().then(
-      hasteMap => ({
+      (hasteMap) => ({
         config,
         hasteFS: hasteMap.hasteFS,
         moduleMap: hasteMap.moduleMap,
         resolver: Runtime.createResolver(config, hasteMap.moduleMap),
       }),
-      error => {
+      (error) => {
         throw error;
       },
     );
@@ -261,7 +261,9 @@ class Runtime {
     return new Resolver(moduleMap, {
       browser: config.browser,
       defaultPlatform: config.haste.defaultPlatform,
-      extensions: config.moduleFileExtensions.map(extension => '.' + extension),
+      extensions: config.moduleFileExtensions.map(
+        (extension) => '.' + extension,
+      ),
       hasCoreModules: true,
       moduleDirectories: config.moduleDirectories,
       moduleNameMapper: getModuleNameMapper(config),
@@ -511,16 +513,18 @@ class Runtime {
     if (this._environment) {
       if (this._environment.global) {
         const envGlobal = this._environment.global;
-        (Object.keys(envGlobal) as Array<keyof NodeJS.Global>).forEach(key => {
-          const globalMock = envGlobal[key];
-          if (
-            ((typeof globalMock === 'object' && globalMock !== null) ||
-              typeof globalMock === 'function') &&
-            globalMock._isMockFunction === true
-          ) {
-            globalMock.mockClear();
-          }
-        });
+        (Object.keys(envGlobal) as Array<keyof NodeJS.Global>).forEach(
+          (key) => {
+            const globalMock = envGlobal[key];
+            if (
+              ((typeof globalMock === 'object' && globalMock !== null) ||
+                typeof globalMock === 'function') &&
+              globalMock._isMockFunction === true
+            ) {
+              globalMock.mockClear();
+            }
+          },
+        );
       }
 
       if (this._environment.fakeTimers) {
@@ -729,7 +733,7 @@ class Runtime {
         filename,
         localModule.require as LocalModuleRequire,
       ), // jest object
-      ...extraGlobals.map(globalVariable => {
+      ...extraGlobals.map((globalVariable) => {
         if (this._environment.global[globalVariable]) {
           return this._environment.global[globalVariable];
         }
@@ -870,13 +874,12 @@ class Runtime {
     resolve.paths = (moduleName: string) =>
       this._requireResolvePaths(from.filename, moduleName);
 
-    const moduleRequire = (options && options.isInternalModule
-      ? (moduleName: string) =>
-          this.requireInternalModule(from.filename, moduleName)
-      : this.requireModuleOrMock.bind(
-          this,
-          from.filename,
-        )) as LocalModuleRequire;
+    const moduleRequire = (
+      options && options.isInternalModule
+        ? (moduleName: string) =>
+            this.requireInternalModule(from.filename, moduleName)
+        : this.requireModuleOrMock.bind(this, from.filename)
+    ) as LocalModuleRequire;
     moduleRequire.cache = Object.create(null);
     moduleRequire.extensions = Object.create(null);
     moduleRequire.requireActual = this.requireActual.bind(this, from.filename);
@@ -1060,7 +1063,7 @@ class Runtime {
     const originalStack = new ReferenceError(errorMessage)
       .stack!.split('\n')
       // Remove this file from the stack (jest-message-utils will keep one line)
-      .filter(line => line.indexOf(__filename) === -1)
+      .filter((line) => line.indexOf(__filename) === -1)
       .join('\n');
 
     const {message, stack} = separateMessageFromStack(originalStack);

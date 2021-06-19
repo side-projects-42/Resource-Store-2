@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Ashok modhvadia",
-			"Dineshjk",
-			"KartikMistry"
-		]
+		"authors": ["Ashok modhvadia", "Dineshjk", "KartikMistry"]
 	},
 	"config-desc": "મીડિઆવિકિ માટે સ્થાપક",
 	"config-title": "મીડિઆવિકિ $1 સ્થાપન",

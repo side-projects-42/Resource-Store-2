@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Hello903hello",
-			"Moon0319"
-		]
+		"authors": ["Hello903hello", "Moon0319"]
 	},
 	"config-desc": "MediaWiki安裝程式",
 	"config-title": "安裝MediaWiki$1",

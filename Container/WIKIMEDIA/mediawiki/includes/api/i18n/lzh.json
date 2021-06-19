@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"RalfX"
-		]
+		"authors": ["RalfX"]
 	},
 	"apihelp-feedcontributions-param-toponly": "僅示至新審之纂"
 }

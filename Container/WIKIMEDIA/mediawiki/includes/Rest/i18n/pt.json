@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Hamilton Abreu",
-			"Mansil alfalb"
-		]
+		"authors": ["Hamilton Abreu", "Mansil alfalb"]
 	},
 	"rest-prefix-mismatch": "O caminho pedido ($1) não estava no interior do caminho raiz da API REST ($2)",
 	"rest-wrong-method": "O método pedido ($1) não era {{PLURAL:$3|o método permitido para este caminho|um dos métodos permitidos para este caminho}} ($2)",

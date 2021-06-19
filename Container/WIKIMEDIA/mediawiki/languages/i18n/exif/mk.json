@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Bjankuloski06",
-			"Brest",
-			"FlavrSavr"
-		]
+		"authors": ["Bjankuloski06", "Brest", "FlavrSavr"]
 	},
 	"exif-imagewidth": "Ширина",
 	"exif-imagelength": "Висина",

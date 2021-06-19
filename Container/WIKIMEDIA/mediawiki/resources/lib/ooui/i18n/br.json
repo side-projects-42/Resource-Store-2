@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fohanno",
-			"Fulup",
-			"Gwendal",
-			"Maoris",
-			"Y-M D"
-		]
+		"authors": ["Fohanno", "Fulup", "Gwendal", "Maoris", "Y-M D"]
 	},
 	"ooui-outline-control-move-down": "Lakaat an elfenn da ziskenn",
 	"ooui-outline-control-move-up": "Lakaat an elfenn da bignat",

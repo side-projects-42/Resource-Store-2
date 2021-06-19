@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Srdjan m",
-			"Srđan"
-		]
-	},
-	"alltimezones-desc": "Dodaje oznaku koja prikazuje datume u svim vremenskim zonama"
+  "@metadata": {
+    "authors": ["Srdjan m", "Srđan"]
+  },
+  "alltimezones-desc": "Dodaje oznaku koja prikazuje datume u svim vremenskim zonama"
 }

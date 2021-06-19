@@ -2,10 +2,8 @@
  * @class mw.Api.plugin.user
  * @since 1.27
  */
-( function () {
-
-	$.extend( mw.Api.prototype, {
-
+(function () {
+	$.extend(mw.Api.prototype, {
 		/**
 		 * Get the current user's groups and rights.
 		 *
@@ -16,16 +14,16 @@
 		 * @return {string[]} return.done.userInfo.rights Current user's rights
 		 */
 		getUserInfo: function () {
-			return this.get( {
-				action: 'query',
-				meta: 'userinfo',
-				uiprop: [ 'groups', 'rights' ]
-			} ).then( function ( data ) {
-				if ( data.query && data.query.userinfo ) {
+			return this.get({
+				action: "query",
+				meta: "userinfo",
+				uiprop: ["groups", "rights"],
+			}).then(function (data) {
+				if (data.query && data.query.userinfo) {
 					return data.query.userinfo;
 				}
 				return $.Deferred().reject().promise();
-			} );
+			});
 		},
 
 		/**
@@ -51,25 +49,23 @@
 		 * @param {Object} query Query parameters. The object will not be changed.
 		 * @return {Object}
 		 */
-		assertCurrentUser: function ( query ) {
-			var user = mw.config.get( 'wgUserName' ),
+		assertCurrentUser: function (query) {
+			var user = mw.config.get("wgUserName"),
 				assertParams = {};
 
-			if ( user !== null ) {
-				assertParams.assert = 'user';
+			if (user !== null) {
+				assertParams.assert = "user";
 				assertParams.assertuser = user;
 			} else {
-				assertParams.assert = 'anon';
+				assertParams.assert = "anon";
 			}
 
-			return $.extend( assertParams, query );
-		}
-
-	} );
+			return $.extend(assertParams, query);
+		},
+	});
 
 	/**
 	 * @class mw.Api
 	 * @mixins mw.Api.plugin.user
 	 */
-
-}() );
+})();

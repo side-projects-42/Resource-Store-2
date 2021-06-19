@@ -12,9 +12,9 @@ Sun Morn
 - Ember 3.0 deprecations (Trek)
   - I'd like to start the discussion now about what can be deprecated now (replacement exists or we simply don't recommend a 1.x holdover) or soon (new programming model invalidates existing pattern) to avoid some of the 1.13 -> 2.0 pains (see above). Pretty important for Guides contributors (deprecation is a signal to audit guides for removals/updates)
     - _DON'T_ want to bikeshed specific deprecations (we can do that in core calls), just hoping on consensus on whether this is the inflection point for starting some of these.
-    - Major release ~ 18 month cadence 2.x  Thu, 13 Aug 2015 -> Mon, 13 Feb 2017
-    - Remaining Releases  (9)
-    -  2015-03-04 2.4   2015-04-15 2.5   2015-05-27 2.6   2015-07-08 2.7   2015-08-19 2.8   2015-09-30 2.9   2015-11-11 2.10   2015-12-23 2.11   2015-02-03 2.12
+    - Major release ~ 18 month cadence 2.x Thu, 13 Aug 2015 -> Mon, 13 Feb 2017
+    - Remaining Releases (9)
+    - 2015-03-04 2.4 2015-04-15 2.5 2015-05-27 2.6 2015-07-08 2.7 2015-08-19 2.8 2015-09-30 2.9 2015-11-11 2.10 2015-12-23 2.11 2015-02-03 2.12
   - \#soon classNameBindings
   - \#now reopen/reopenClass
   - \#now Ember.CoreObject (previously used as super class for Set/Object, could just be moved into Object, but needs to be deprecated; unfortunately marked @public)

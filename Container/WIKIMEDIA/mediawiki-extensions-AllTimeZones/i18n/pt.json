@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Malafaya"
-		]
-	},
-	"alltimezones-desc": "Adiciona uma marca para mostrar datas em todos os fusos horários"
+  "@metadata": {
+    "authors": ["Malafaya"]
+  },
+  "alltimezones-desc": "Adiciona uma marca para mostrar datas em todos os fusos horários"
 }

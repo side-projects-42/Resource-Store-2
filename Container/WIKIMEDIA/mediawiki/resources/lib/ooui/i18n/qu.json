@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"AlimanRuna",
-			"Fitoschido",
-			"Jduranboger"
-		]
+		"authors": ["AlimanRuna", "Fitoschido", "Jduranboger"]
 	},
 	"ooui-outline-control-move-down": "Qallawata uraykuchiy",
 	"ooui-outline-control-move-up": "Qallawata huqariy",

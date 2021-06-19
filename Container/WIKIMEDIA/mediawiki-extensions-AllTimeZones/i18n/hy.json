@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Vahe Gharakhanyan"
-		]
-	},
-	"alltimezones-desc": "Ավելացնում է պիտակներ բոլոր ժամային գոտիներում ամսաթվերը ցույց տալու համար"
+  "@metadata": {
+    "authors": ["Vahe Gharakhanyan"]
+  },
+  "alltimezones-desc": "Ավելացնում է պիտակներ բոլոր ժամային գոտիներում ամսաթվերը ցույց տալու համար"
 }

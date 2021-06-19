@@ -29,11 +29,10 @@ export function run(cliArgv?: Config.Argv, cliInfo?: Array<string>) {
   if (cliArgv) {
     argv = cliArgv;
   } else {
-    argv = <Config.Argv>yargs
-      .usage(args.usage)
-      .help(false)
-      .version(false)
-      .options(args.options).argv;
+    argv = <Config.Argv>(
+      yargs.usage(args.usage).help(false).version(false).options(args.options)
+        .argv
+    );
 
     // @ts-ignore: fix this at some point
     validateCLIOptions(argv, {...args.options, deprecationEntries});
@@ -77,11 +76,13 @@ export function run(cliArgv?: Config.Argv, cliInfo?: Array<string>) {
   // Break circular dependency
   const Runtime: any = require('..');
 
-  (Runtime.createContext(config, {
-    maxWorkers: Math.max(os.cpus().length - 1, 1),
-    watchman: globalConfig.watchman,
-  }) as Promise<Context>)
-    .then(hasteMap => {
+  (
+    Runtime.createContext(config, {
+      maxWorkers: Math.max(os.cpus().length - 1, 1),
+      watchman: globalConfig.watchman,
+    }) as Promise<Context>
+  )
+    .then((hasteMap) => {
       const Environment: typeof JestEnvironment = require(config.testEnvironment);
       const environment = new Environment(config);
       setGlobal(
@@ -95,7 +96,7 @@ export function run(cliArgv?: Config.Argv, cliInfo?: Array<string>) {
       const runtime = new Runtime(config, environment, hasteMap.resolver);
       runtime.requireModule(filePath);
     })
-    .catch(e => {
+    .catch((e) => {
       console.error(chalk.red(e.stack || e));
       process.on('exit', () => (process.exitCode = 1));
     });

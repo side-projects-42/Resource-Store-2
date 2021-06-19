@@ -1,4 +1,4 @@
 # Backlog
 
-- Combine redundant AST checks and what not
-- Additional bdd rules?
+-   Combine redundant AST checks and what not
+-   Additional bdd rules?

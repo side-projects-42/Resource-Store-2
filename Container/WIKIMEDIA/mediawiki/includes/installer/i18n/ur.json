@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Noor2020",
-			"පසිඳු කාවින්ද"
-		]
+		"authors": ["Noor2020", "පසිඳු කාවින්ද"]
 	},
 	"config-information": "معلومات",
 	"config-git": "Git ورژن کنٹرول مصنع لطیف ملا: <code>$1</code> ۔",

@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Sveinn í Felli"
-		]
+		"authors": ["Sveinn í Felli"]
 	},
 	"apihelp-feedrecentchanges-param-showlinkedto": "Sýna í staðinn breytingar á síðum sem tengjast í völdu síðuna.",
 	"api-help-license": "Notkunarleyfi: [[$1|$2]]",

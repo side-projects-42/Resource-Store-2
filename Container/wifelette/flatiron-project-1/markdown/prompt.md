@@ -1,0 +1,1 @@
+_Hello friend! This tool is designed to help you look up information about the developer candidate you've been tasked with assessing. So first thing's first: what's the Github username of the candidate?_

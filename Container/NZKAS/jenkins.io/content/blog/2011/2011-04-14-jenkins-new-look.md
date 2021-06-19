@@ -4,10 +4,11 @@
 :nodeid: 299
 :created: 1302801052
 :tags:
-- general
-- news
+  - general
+  - news
 :author: rtyler
 ---
+
 As you might have noticed [Jenkins](http://twitter.com/jenkinsci/) finally has
 a **brand spankin' new logo!** Over the past couple weeks we've run two series
 of votes, [one for the initial 11 logo
@@ -25,6 +26,6 @@ At the end of the votes, there was a clear winner though, everybody seems to
 really love the submission by the folks over at [The
 FrontSide](http://thefrontside.net/) which you can see adorning this very page.
 
-If you'd like to download the SVG version of the logo, or the variants in different sizes, I've gone ahead and uploaded a tarball and all the variants to [this directory](http://mirrors.jenkins-ci.org/art/), there is also a good [color palette here](http://mirrors.jenkins-ci.org/art/jenkins_colors.pdf) (*obligatory PDF warning*).
+If you'd like to download the SVG version of the logo, or the variants in different sizes, I've gone ahead and uploaded a tarball and all the variants to [this directory](http://mirrors.jenkins-ci.org/art/), there is also a good [color palette here](http://mirrors.jenkins-ci.org/art/jenkins_colors.pdf) (_obligatory PDF warning_).
 
-Once again, thank you to **everybody** that participated! 
+Once again, thank you to **everybody** that participated!

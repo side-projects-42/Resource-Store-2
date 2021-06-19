@@ -4,11 +4,12 @@
 :nodeid: 609
 :created: 1440528635
 :tags:
-- general
-- meetup
-- news
+  - general
+  - meetup
+  - news
 :author: daniel-beck
 ---
+
 We're currently setting up a program to support community members' travel to Jenkins community events. Our goal is to enable more members of the community to meet each other and exchange ideas in person.
 
 We're still hashing out the details, but it'll be available to every Jenkins community member. Apply, telling us what Jenkins-related event you'd like to attend and how awesome you are, and we may support your travel with up to 500 USD. For details on how this will work, see the [current draft of the travel grant program](https://wiki.jenkins-ci.org/display/JENKINS/Travel+Grant+Program).

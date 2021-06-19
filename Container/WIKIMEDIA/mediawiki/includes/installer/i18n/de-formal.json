@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Kghbln",
-			"MichaelFrey",
-			"Umherirrender"
-		]
+		"authors": ["Kghbln", "MichaelFrey", "Umherirrender"]
 	},
 	"config-welcome": "=== Prüfung der Installationsumgebung ===\nDie Basisprüfungen werden jetzt durchgeführt, um festzustellen, ob die Installationsumgebung für MediaWiki geeignet ist.\nNotieren Sie diese Informationen und geben Sie sie an, sofern Sie Hilfe beim Installieren benötigen.",
 	"config-extension-link": "Wussten Sie, dass Ihr Wiki die Nutzung von [https://www.mediawiki.org/wiki/Special:MyLanguage/Manual:Extensions Erweiterungen] unterstützt?\n\nSie können [https://www.mediawiki.org/wiki/Special:MyLanguage/Category:Extensions_by_category Erweiterungen nach Kategorie] durchsuchen oder die [https://www.mediawiki.org/wiki/Extension_Matrix Matrix der Erweiterungen] ansehen, um eine Übersicht zu verfügbaren Erweiterungen zu erhalten.",

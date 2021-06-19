@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"EileenSanda"
-		]
+		"authors": ["EileenSanda"]
 	},
 	"ooui-outline-control-move-down": "Flyt lutin niður",
 	"ooui-outline-control-move-up": "Flyt lutin upp",

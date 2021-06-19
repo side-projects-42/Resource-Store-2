@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-module.exports = config => {
+module.exports = (config) => {
   config.set({
     browsers: ['ChromeHeadless'],
     files: ['e2e/browser-support/browserTest.js'],

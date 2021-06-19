@@ -196,7 +196,7 @@
   - *1
 - - type: Span
     traceId: 96ee853f28dd78c32c9ba4d786c22c9f
-    guid: '09f8f6d6763948b4'
+    guid: "09f8f6d6763948b4"
     transactionId: 6814c38f38352b47
     sampled: true
     priority: 1.059144
@@ -216,7 +216,7 @@
     timestamp: 1586870745682
     duration: 0.0
     name: Middleware/Rack/ActionDispatch::ActionableExceptions/call
-    parentId: '09f8f6d6763948b4'
+    parentId: "09f8f6d6763948b4"
     category: generic
   - *1
   - *1
@@ -401,7 +401,7 @@
     parentId: 93a722666b2699f5
     category: generic
   - *1
-  - error.message: '500: Internal Server Error'
+  - error.message: "500: Internal Server Error"
     error.class: ApplicationController::ExternalApiError
     error.expected: true
 - - type: Span

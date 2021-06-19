@@ -12,13 +12,13 @@
 
 The first data model we're going to be working with today is a recipe with ingredients.
 
-  * Recipe
-    * has many ingredients
-    * title:string
-  * Ingredient
-    * belongs to a recipe
-    * ingredient.name: string
-    * ingredient.quantity: string
+- Recipe
+  - has many ingredients
+  - title:string
+- Ingredient
+  - belongs to a recipe
+  - ingredient.name: string
+  - ingredient.quantity: string
 
 The models and show routes and associations have been set up for you.
 

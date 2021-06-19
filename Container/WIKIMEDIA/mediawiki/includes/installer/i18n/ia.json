@@ -1,12 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Fanjiayi",
-			"Fitoschido",
-			"Macofe",
-			"McDutchie",
-			"아라"
-		]
+		"authors": ["Fanjiayi", "Fitoschido", "Macofe", "McDutchie", "아라"]
 	},
 	"config-desc": "Le installator de MediaWiki",
 	"config-title": "Installation de MediaWiki $1",

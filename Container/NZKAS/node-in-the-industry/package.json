@@ -6,5 +6,7 @@
   "homepage": "http://nodejs.org/",
   "repository": "git@github.com:joyent/node-in-the-industry.git",
   "bin": "main.js",
-  "dependencies": { "trumpet": "" }
+  "dependencies": {
+    "trumpet": ""
+  }
 }

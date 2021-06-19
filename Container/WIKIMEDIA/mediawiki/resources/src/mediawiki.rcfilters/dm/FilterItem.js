@@ -1,4 +1,4 @@
-var ItemModel = require( './ItemModel.js' ),
+var ItemModel = require("./ItemModel.js"),
 	FilterItem;
 
 /**
@@ -17,17 +17,24 @@ var ItemModel = require( './ItemModel.js' ),
  * @cfg {Object} [conflicts] Defines the conflicts for this filter
  * @cfg {boolean} [visible=true] The visibility of the group
  */
-FilterItem = function MwRcfiltersDmFilterItem( param, groupModel, config ) {
+FilterItem = function MwRcfiltersDmFilterItem(param, groupModel, config) {
 	config = config || {};
 
 	this.groupModel = groupModel;
 
 	// Parent
-	FilterItem.parent.call( this, param, $.extend( {
-		namePrefix: this.groupModel.getNamePrefix()
-	}, config ) );
+	FilterItem.parent.call(
+		this,
+		param,
+		$.extend(
+			{
+				namePrefix: this.groupModel.getNamePrefix(),
+			},
+			config
+		)
+	);
 	// Mixin constructor
-	OO.EventEmitter.call( this );
+	OO.EventEmitter.call(this);
 
 	// Interaction definitions
 	this.subset = config.subset || [];
@@ -43,7 +50,7 @@ FilterItem = function MwRcfiltersDmFilterItem( param, groupModel, config ) {
 
 /* Initialization */
 
-OO.inheritClass( FilterItem, ItemModel );
+OO.inheritClass(FilterItem, ItemModel);
 
 /* Methods */
 
@@ -57,7 +64,7 @@ FilterItem.prototype.getState = function () {
 		selected: this.isSelected(),
 		included: this.isIncluded(),
 		conflicted: this.isConflicted(),
-		fullyCovered: this.isFullyCovered()
+		fullyCovered: this.isFullyCovered(),
 	};
 };
 
@@ -70,10 +77,16 @@ FilterItem.prototype.getCurrentConflictResultMessage = function () {
 	var details;
 
 	// First look in filter's own conflicts
-	details = this.getConflictDetails( this.getOwnConflicts(), 'globalDescription' );
-	if ( !details.message ) {
+	details = this.getConflictDetails(
+		this.getOwnConflicts(),
+		"globalDescription"
+	);
+	if (!details.message) {
 		// Fall back onto conflicts in the group
-		details = this.getConflictDetails( this.getGroupModel().getConflicts(), 'globalDescription' );
+		details = this.getConflictDetails(
+			this.getGroupModel().getConflicts(),
+			"globalDescription"
+		);
 	}
 
 	return details.message;
@@ -89,79 +102,86 @@ FilterItem.prototype.getCurrentConflictResultMessage = function () {
  * @return {string} return.message Conflict message
  * @return {string[]} return.names Conflicting item labels
  */
-FilterItem.prototype.getConflictDetails = function ( conflicts, key ) {
+FilterItem.prototype.getConflictDetails = function (conflicts, key) {
 	var group,
-		conflictMessage = '',
+		conflictMessage = "",
 		itemLabels = [];
 
-	key = key || 'contextDescription';
+	key = key || "contextDescription";
 
 	// eslint-disable-next-line no-jquery/no-each-util
-	$.each( conflicts, function ( filterName, conflict ) {
-		if ( !conflict.item.isSelected() ) {
+	$.each(conflicts, function (filterName, conflict) {
+		if (!conflict.item.isSelected()) {
 			return;
 		}
 
-		if ( !conflictMessage ) {
-			conflictMessage = conflict[ key ];
+		if (!conflictMessage) {
+			conflictMessage = conflict[key];
 			group = conflict.group;
 		}
 
-		if ( group === conflict.group ) {
-			itemLabels.push( mw.msg( 'quotation-marks', conflict.item.getLabel() ) );
+		if (group === conflict.group) {
+			itemLabels.push(
+				mw.msg("quotation-marks", conflict.item.getLabel())
+			);
 		}
-	} );
+	});
 
 	return {
 		message: conflictMessage,
-		names: itemLabels
+		names: itemLabels,
 	};
-
 };
 
 /**
  * @inheritdoc
  */
 FilterItem.prototype.getStateMessage = function () {
-	var messageKey, details, superset,
+	var messageKey,
+		details,
+		superset,
 		affectingItems = [];
 
-	if ( this.isSelected() ) {
-		if ( this.isConflicted() ) {
+	if (this.isSelected()) {
+		if (this.isConflicted()) {
 			// First look in filter's own conflicts
-			details = this.getConflictDetails( this.getOwnConflicts() );
-			if ( !details.message ) {
+			details = this.getConflictDetails(this.getOwnConflicts());
+			if (!details.message) {
 				// Fall back onto conflicts in the group
-				details = this.getConflictDetails( this.getGroupModel().getConflicts() );
+				details = this.getConflictDetails(
+					this.getGroupModel().getConflicts()
+				);
 			}
 
 			messageKey = details.message;
 			affectingItems = details.names;
-		} else if ( this.isIncluded() && !this.isHighlighted() ) {
+		} else if (this.isIncluded() && !this.isHighlighted()) {
 			// We only show the 'no effect' full-coverage message
 			// if the item is also not highlighted. See T161273
 			superset = this.getSuperset();
 			// For this message we need to collect the affecting superset
-			affectingItems = this.getGroupModel().findSelectedItems( this )
-				.filter( function ( item ) {
-					return superset.indexOf( item.getName() ) !== -1;
-				} )
-				.map( function ( item ) {
-					return mw.msg( 'quotation-marks', item.getLabel() );
-				} );
+			affectingItems = this.getGroupModel()
+				.findSelectedItems(this)
+				.filter(function (item) {
+					return superset.indexOf(item.getName()) !== -1;
+				})
+				.map(function (item) {
+					return mw.msg("quotation-marks", item.getLabel());
+				});
 
-			messageKey = 'rcfilters-state-message-subset';
-		} else if ( this.isFullyCovered() && !this.isHighlighted() ) {
-			affectingItems = this.getGroupModel().findSelectedItems( this )
-				.map( function ( item ) {
-					return mw.msg( 'quotation-marks', item.getLabel() );
-				} );
+			messageKey = "rcfilters-state-message-subset";
+		} else if (this.isFullyCovered() && !this.isHighlighted()) {
+			affectingItems = this.getGroupModel()
+				.findSelectedItems(this)
+				.map(function (item) {
+					return mw.msg("quotation-marks", item.getLabel());
+				});
 
-			messageKey = 'rcfilters-state-message-fullcoverage';
+			messageKey = "rcfilters-state-message-fullcoverage";
 		}
 	}
 
-	if ( messageKey ) {
+	if (messageKey) {
 		// Build message
 		// The following messages are used here:
 		// * rcfilters-state-message-subset
@@ -169,7 +189,7 @@ FilterItem.prototype.getStateMessage = function () {
 		// * conflict.message values...
 		return mw.msg(
 			messageKey,
-			mw.language.listToText( affectingItems ),
+			mw.language.listToText(affectingItems),
 			affectingItems.length
 		);
 	}
@@ -269,7 +289,7 @@ FilterItem.prototype.isFullyCovered = function () {
  * @return {Object} Filter conflicts
  */
 FilterItem.prototype.getConflicts = function () {
-	return $.extend( {}, this.conflicts, this.getGroupModel().getConflicts() );
+	return $.extend({}, this.conflicts, this.getGroupModel().getConflicts());
 };
 
 /**
@@ -287,7 +307,7 @@ FilterItem.prototype.getOwnConflicts = function () {
  *
  * @param {Object} conflicts Conflicts for this filter
  */
-FilterItem.prototype.setConflicts = function ( conflicts ) {
+FilterItem.prototype.setConflicts = function (conflicts) {
 	this.conflicts = conflicts || {};
 };
 
@@ -296,7 +316,7 @@ FilterItem.prototype.setConflicts = function ( conflicts ) {
  *
  * @param {string[]} superset Filter superset
  */
-FilterItem.prototype.setSuperset = function ( superset ) {
+FilterItem.prototype.setSuperset = function (superset) {
 	this.superset = superset || [];
 };
 
@@ -305,7 +325,7 @@ FilterItem.prototype.setSuperset = function ( superset ) {
  *
  * @param {string[]} subset Filter subset
  */
-FilterItem.prototype.setSubset = function ( subset ) {
+FilterItem.prototype.setSubset = function (subset) {
 	this.subset = subset || [];
 };
 
@@ -315,8 +335,8 @@ FilterItem.prototype.setSubset = function ( subset ) {
  * @param {string} filterName Filter name
  * @return {boolean} Filter name is in the subset list
  */
-FilterItem.prototype.existsInSubset = function ( filterName ) {
-	return this.subset.indexOf( filterName ) > -1;
+FilterItem.prototype.existsInSubset = function (filterName) {
+	return this.subset.indexOf(filterName) > -1;
 };
 
 /**
@@ -329,8 +349,11 @@ FilterItem.prototype.existsInSubset = function ( filterName ) {
  * @param {mw.rcfilters.dm.FilterItem} filterItem Filter item
  * @return {boolean} This item has a conflict with the given item
  */
-FilterItem.prototype.existsInConflicts = function ( filterItem ) {
-	return Object.prototype.hasOwnProperty.call( this.getConflicts(), filterItem.getName() );
+FilterItem.prototype.existsInConflicts = function (filterItem) {
+	return Object.prototype.hasOwnProperty.call(
+		this.getConflicts(),
+		filterItem.getName()
+	);
 };
 
 /**
@@ -340,12 +363,12 @@ FilterItem.prototype.existsInConflicts = function ( filterItem ) {
  * @param {boolean} [conflicted] Filter is in conflict state
  * @fires update
  */
-FilterItem.prototype.toggleConflicted = function ( conflicted ) {
+FilterItem.prototype.toggleConflicted = function (conflicted) {
 	conflicted = conflicted === undefined ? !this.conflicted : conflicted;
 
-	if ( this.conflicted !== conflicted ) {
+	if (this.conflicted !== conflicted) {
 		this.conflicted = conflicted;
-		this.emit( 'update' );
+		this.emit("update");
 	}
 };
 
@@ -356,12 +379,12 @@ FilterItem.prototype.toggleConflicted = function ( conflicted ) {
  * @param {boolean} [included] Filter is included as part of a subset
  * @fires update
  */
-FilterItem.prototype.toggleIncluded = function ( included ) {
+FilterItem.prototype.toggleIncluded = function (included) {
 	included = included === undefined ? !this.included : included;
 
-	if ( this.included !== included ) {
+	if (this.included !== included) {
 		this.included = included;
-		this.emit( 'update' );
+		this.emit("update");
 	}
 };
 
@@ -371,12 +394,13 @@ FilterItem.prototype.toggleIncluded = function ( included ) {
  * @param {boolean} [isFullyCovered] Filter is fully covered
  * @fires update
  */
-FilterItem.prototype.toggleFullyCovered = function ( isFullyCovered ) {
-	isFullyCovered = isFullyCovered === undefined ? !this.fullycovered : isFullyCovered;
+FilterItem.prototype.toggleFullyCovered = function (isFullyCovered) {
+	isFullyCovered =
+		isFullyCovered === undefined ? !this.fullycovered : isFullyCovered;
 
-	if ( this.fullyCovered !== isFullyCovered ) {
+	if (this.fullyCovered !== isFullyCovered) {
 		this.fullyCovered = isFullyCovered;
-		this.emit( 'update' );
+		this.emit("update");
 	}
 };
 
@@ -385,12 +409,12 @@ FilterItem.prototype.toggleFullyCovered = function ( isFullyCovered ) {
  *
  * @param {boolean} [isVisible] Item is visible
  */
-FilterItem.prototype.toggleVisible = function ( isVisible ) {
+FilterItem.prototype.toggleVisible = function (isVisible) {
 	isVisible = isVisible === undefined ? !this.visible : !!isVisible;
 
-	if ( this.visible !== isVisible ) {
+	if (this.visible !== isVisible) {
 		this.visible = isVisible;
-		this.emit( 'update' );
+		this.emit("update");
 	}
 };
 

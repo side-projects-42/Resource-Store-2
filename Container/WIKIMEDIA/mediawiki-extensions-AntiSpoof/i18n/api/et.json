@@ -1,10 +1,8 @@
 {
-	"@metadata": {
-		"authors": [
-			"Pikne"
-		]
-	},
-	"apihelp-antispoof-description": "Kasutajanime kontrollimine tüssamisvastaste normaliseerimiskontrollide vastu.",
-	"apihelp-antispoof-param-username": "Kasutajanimi, mida tüssamisvastase kontrolli vastu kontrollida.",
-	"apihelp-antispoof-example-1": "Kontrolli kasutajanime \"Foo\" tüssamisvastase kontrolli vastu"
+  "@metadata": {
+    "authors": ["Pikne"]
+  },
+  "apihelp-antispoof-description": "Kasutajanime kontrollimine tüssamisvastaste normaliseerimiskontrollide vastu.",
+  "apihelp-antispoof-param-username": "Kasutajanimi, mida tüssamisvastase kontrolli vastu kontrollida.",
+  "apihelp-antispoof-example-1": "Kontrolli kasutajanime \"Foo\" tüssamisvastase kontrolli vastu"
 }

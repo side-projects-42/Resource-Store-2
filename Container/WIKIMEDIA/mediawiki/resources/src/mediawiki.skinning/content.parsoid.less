@@ -14,8 +14,8 @@
 	counter-reset: mw-numbered-ext-link;
 }
 
-.mw-parser-output a[ rel~='mw:ExtLink' ]:empty:after {
-	content: '[' counter( mw-numbered-ext-link ) ']';
+.mw-parser-output a[rel~="mw:ExtLink"]:empty:after {
+	content: "[" counter(mw-numbered-ext-link) "]";
 	counter-increment: mw-numbered-ext-link;
 }
 
@@ -25,7 +25,7 @@
  */
 .mw-gallery-traditional .gallerybox .thumb {
 	&:before {
-		content: '';
+		content: "";
 		vertical-align: middle;
 		display: inline-block;
 		height: 100%;

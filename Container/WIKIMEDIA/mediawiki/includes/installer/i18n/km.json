@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Seb35",
-			"Sovichet",
-			"Thearith",
-			"គីមស៊្រុន"
-		]
+		"authors": ["Seb35", "Sovichet", "Thearith", "គីមស៊្រុន"]
 	},
 	"config-desc": "កម្មវិធី​ដំឡើង​សម្រាប់ MediaWiki",
 	"config-title": "ការតម្លើង MediaWiki $1",

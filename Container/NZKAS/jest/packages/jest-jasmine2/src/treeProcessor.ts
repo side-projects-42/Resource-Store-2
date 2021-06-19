@@ -26,13 +26,8 @@ export type TreeNode = {
 } & Pick<Suite, 'getResult' | 'parentSuite' | 'result'>;
 
 export default function treeProcessor(options: Options) {
-  const {
-    nodeComplete,
-    nodeStart,
-    queueRunnerFactory,
-    runnableIds,
-    tree,
-  } = options;
+  const {nodeComplete, nodeStart, queueRunnerFactory, runnableIds, tree} =
+    options;
 
   function isEnabled(node: TreeNode, parentEnabled: boolean) {
     return parentEnabled || runnableIds.indexOf(node.id) !== -1;
@@ -75,7 +70,7 @@ export default function treeProcessor(options: Options) {
     if (!node.children) {
       throw new Error('`node.children` is not defined.');
     }
-    const children = node.children.map(child => ({
+    const children = node.children.map((child) => ({
       fn: getNodeHandler(child, enabled),
     }));
     if (!hasEnabledTest(node)) {

@@ -4,12 +4,13 @@
 :nodeid: 227
 :created: 1278942000
 :tags:
-- general
-- just for fun
-- releases
+  - general
+  - just for fun
+  - releases
 :author: rtyler
 ---
-The developer for the Hudson extension for Google Chrome, [Sebastian Sanitz](http://github.com/sanitz), emailed the `users@` list today to inform the community of an update to his **[fantastic extension](https://chrome.google.com/extensions/detail/hfncndbfmjmafoodaigpoicpbdfhhgdo)**. 
+
+The developer for the Hudson extension for Google Chrome, [Sebastian Sanitz](http://github.com/sanitz), emailed the `users@` list today to inform the community of an update to his **[fantastic extension](https://chrome.google.com/extensions/detail/hfncndbfmjmafoodaigpoicpbdfhhgdo)**.
 
 Sebastian's extension monitors [ci.hudson-labs.org](http://ci.hudson-labs.org) by default, but the URL and polling interval are both trivial to change. When any of the builds in the configured URL fail, you'll see a red "Fail" indicator, otherwise green "Ok".
 

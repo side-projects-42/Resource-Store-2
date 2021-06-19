@@ -17,9 +17,7 @@
   "description": "The official New Relic agent for PHP",
   "ossCategory": "community-plus",
   "primaryLanguage": "PHP",
-  "projectTags": [
-    "agent"
-  ],
+  "projectTags": ["agent"],
   "acceptsContributions": true,
   "website": {
     "title": "New Relic PHP Agent",

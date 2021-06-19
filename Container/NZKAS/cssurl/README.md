@@ -15,15 +15,15 @@ The CSS URL rewriter uses a CSS tokenizer to safely find all CSS URLs. This make
 ```js
 var URLRewriter = require("cssurl").URLRewriter;
 
-var rewriter = new URLRewriter(function(url) {
-    // automatically append a query string with a unique value to bust caches
-    return url + "?v=" + Date.now();
+var rewriter = new URLRewriter(function (url) {
+  // automatically append a query string with a unique value to bust caches
+  return url + "?v=" + Date.now();
 });
 
 var result = rewriter.rewrite(cssCode);
 ```
 
-As the CSS URL rewriter goes through the CSS code, it will call the function passed to the `CSSURLRewriter` constructor and pass in each URL that it finds. The `url` is the URL as found in the CSS code with any quotes and surrounding whitespace removed (it does *not* contain the `url()`). You can then inspect the URL, modify it however you want, and return the value you want to use in its place.
+As the CSS URL rewriter goes through the CSS code, it will call the function passed to the `CSSURLRewriter` constructor and pass in each URL that it finds. The `url` is the URL as found in the CSS code with any quotes and surrounding whitespace removed (it does _not_ contain the `url()`). You can then inspect the URL, modify it however you want, and return the value you want to use in its place.
 
 ### Limitations
 
@@ -38,11 +38,14 @@ The CSS URL rewrite stream uses the URL rewriter inside of a stream so you can e
 ```js
 var URLRewriteStream = require("cssurl").URLRewriteStream;
 
-fs.createReadStream("my.css").pipe(new URLRewriteStream(function(url) {
-    // automatically append a query string with a unique value to bust caches
-    return url + "?v=" + Date.now();
-})).pipe(fs.createWriteStream("my-new.css"));
-
+fs.createReadStream("my.css")
+  .pipe(
+    new URLRewriteStream(function (url) {
+      // automatically append a query string with a unique value to bust caches
+      return url + "?v=" + Date.now();
+    })
+  )
+  .pipe(fs.createWriteStream("my-new.css"));
 ```
 
 ## CSS URL Translator
@@ -55,9 +58,13 @@ The CSS URL translator is a utility that can translate CSS URLs relative to diff
 var URLTranslator = require("cssurl").URLTranslator;
 
 var translator = new URLTranslator();
-var result = translator.translate("../../img/foo.png", "css/sprites/foo.css", "css/sprites.css");
+var result = translator.translate(
+  "../../img/foo.png",
+  "css/sprites/foo.css",
+  "css/sprites.css"
+);
 
-console.log(result);    // "../img/foo.png"
+console.log(result); // "../img/foo.png"
 ```
 
 ## Development

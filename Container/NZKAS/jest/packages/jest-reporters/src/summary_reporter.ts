@@ -136,11 +136,9 @@ export default class SummaryReporter extends BaseReporter {
       if (globalConfig.watch || globalConfig.watchAll) {
         updateCommand = 'press `u`';
       } else if (event && scriptUsesJest) {
-        updateCommand = `run \`${client +
-          ' ' +
-          prefix +
-          event +
-          (isYarn ? '' : ' --')} -u\``;
+        updateCommand = `run \`${
+          client + ' ' + prefix + event + (isYarn ? '' : ' --')
+        } -u\``;
       } else {
         updateCommand = 're-run jest with `-u`';
       }
@@ -169,7 +167,7 @@ export default class SummaryReporter extends BaseReporter {
       aggregatedResults.numTotalTestSuites > TEST_SUMMARY_THRESHOLD
     ) {
       this.log(chalk.bold('Summary of all failing tests'));
-      aggregatedResults.testResults.forEach(testResult => {
+      aggregatedResults.testResults.forEach((testResult) => {
         const {failureMessage} = testResult;
         if (failureMessage) {
           this._write(
@@ -212,7 +210,7 @@ export default class SummaryReporter extends BaseReporter {
     let nameInfo = '';
 
     if (globalConfig.runTestsByPath) {
-      nameInfo = ' ' + globalConfig.nonFlagArgs.map(p => `"${p}"`).join(', ');
+      nameInfo = ' ' + globalConfig.nonFlagArgs.map((p) => `"${p}"`).join(', ');
     } else if (globalConfig.testNamePattern) {
       nameInfo =
         chalk.dim(' with tests matching ') +

@@ -163,7 +163,7 @@ export const saveSnapshotFile = (
   const snapshots = Object.keys(snapshotData)
     .sort(naturalCompare)
     .map(
-      key =>
+      (key) =>
         'exports[' +
         printBacktickString(key) +
         '] = ' +
@@ -181,7 +181,7 @@ export const saveSnapshotFile = (
 export const deepMerge = (target: any, source: any) => {
   const mergedOutput = {...target};
   if (isObject(target) && isObject(source)) {
-    Object.keys(source).forEach(key => {
+    Object.keys(source).forEach((key) => {
       if (isObject(source[key]) && !source[key].$$typeof) {
         if (!(key in target)) Object.assign(mergedOutput, {[key]: source[key]});
         else mergedOutput[key] = deepMerge(target[key], source[key]);

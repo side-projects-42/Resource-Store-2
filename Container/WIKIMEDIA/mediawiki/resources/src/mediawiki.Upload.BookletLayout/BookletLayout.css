@@ -12,7 +12,8 @@
 	position: relative;
 }
 
-.mw-upload-bookletLayout-infoForm.mw-upload-bookletLayout-hasThumbnail .mw-upload-bookletLayout-filePreview {
+.mw-upload-bookletLayout-infoForm.mw-upload-bookletLayout-hasThumbnail
+	.mw-upload-bookletLayout-filePreview {
 	height: 10em;
 }
 

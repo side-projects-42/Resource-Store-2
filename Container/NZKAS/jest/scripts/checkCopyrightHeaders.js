@@ -11,9 +11,9 @@ const fs = require('fs');
 const {execSync} = require('child_process');
 const {isBinaryFileSync} = require('isbinaryfile');
 
-const getFileContents = path => fs.readFileSync(path, {encoding: 'utf-8'});
-const isDirectory = path => fs.lstatSync(path).isDirectory();
-const createRegExp = pattern => new RegExp(pattern);
+const getFileContents = (path) => fs.readFileSync(path, {encoding: 'utf-8'});
+const isDirectory = (path) => fs.lstatSync(path).isDirectory();
+const createRegExp = (pattern) => new RegExp(pattern);
 
 // Important: this patterns must be in sync with internal Facebook tools
 
@@ -72,7 +72,7 @@ const GENERIC_IGNORED_EXTENSIONS = [
   'ipynb',
   'htm',
   'toml',
-].map(extension => createRegExp(`\.${extension}$`));
+].map((extension) => createRegExp(`\.${extension}$`));
 
 const GENERIC_IGNORED_PATTERNS = [
   '(^|/)\\.[^/]+(/|$)',
@@ -128,9 +128,9 @@ function check() {
     .split('\n');
 
   const invalidFiles = allFiles.filter(
-    file =>
-      INCLUDED_PATTERNS.some(pattern => pattern.test(file)) &&
-      !IGNORED_PATTERNS.some(pattern => pattern.test(file)) &&
+    (file) =>
+      INCLUDED_PATTERNS.some((pattern) => pattern.test(file)) &&
+      !IGNORED_PATTERNS.some((pattern) => pattern.test(file)) &&
       !isDirectory(file) &&
       !isBinaryFileSync(file) &&
       needsCopyrightHeader(file)

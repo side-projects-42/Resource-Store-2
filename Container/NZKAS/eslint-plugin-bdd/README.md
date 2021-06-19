@@ -1,4 +1,5 @@
 # [eslint](https://github.com/eslint/eslint)-plugin-bdd
+
 [![npm](http://img.shields.io/npm/v/eslint-plugin-bdd.svg?style=flat-square)](https://www.npmjs.org/package/eslint-plugin-bdd)
 [![license](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/Nate-Wilkins/eslint-plugin-bdd/blob/master/LICENSE)
 [![status](https://img.shields.io/travis/Nate-Wilkins/eslint-plugin-bdd.svg?style=flat-square)](https://travis-ci.org/Nate-Wilkins/eslint-plugin-bdd)
@@ -11,6 +12,7 @@ $ npm install eslint-plugin-bdd
 ```
 
 ## Usage
+
 Add `bdd` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix.
 
 ```js
@@ -22,6 +24,7 @@ Add `bdd` to the plugins section of your `.eslintrc` configuration file. You can
 ```
 
 Then configure the rules you want to use under the rules section.
+
 ```js
 {
 	"rules": {
@@ -32,7 +35,8 @@ Then configure the rules you want to use under the rules section.
 ```
 
 ### Supported Rules
-- [`bdd/focus`](./docs/rules/focus.md)
-- [`bdd/exclude`](./docs/rules/exclude.md)
+
+-   [`bdd/focus`](./docs/rules/focus.md)
+-   [`bdd/exclude`](./docs/rules/exclude.md)
 
 For more examples on what each rule does take a look at the test samples.

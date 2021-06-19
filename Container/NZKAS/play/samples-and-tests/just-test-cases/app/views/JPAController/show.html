@@ -1,5 +1,3 @@
 <h1>${post?.name}</h1>
 
-#{list items:post?.tags, as:'tag'}
-    ${tag.name}
-#{/list}
+#{list items:post?.tags, as:'tag'} ${tag.name} #{/list}

@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"DannyS712",
-			"Fitoschido",
-			"Ihojose"
-		]
+		"authors": ["DannyS712", "Fitoschido", "Ihojose"]
 	},
 	"rest-prefix-mismatch": "La ruta solicitada ($1) no estaba dentro de la ruta raíz ($2) de la API REST",
 	"rest-wrong-method": "El método solicitado ($1) no estaba en {{PLURAL:$3|los métodos permitidos para esta ruta|uno de los métodos permitidos para esta ruta}} ($2)",

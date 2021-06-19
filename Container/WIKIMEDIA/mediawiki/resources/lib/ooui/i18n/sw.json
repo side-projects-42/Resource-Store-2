@@ -1,10 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Lloffiwr",
-			"Muddyb",
-			"Muddyb Blast Producer"
-		]
+		"authors": ["Lloffiwr", "Muddyb", "Muddyb Blast Producer"]
 	},
 	"ooui-outline-control-move-down": "Sogeza kipengee chini",
 	"ooui-outline-control-move-up": "Sogeza kipengee juu",

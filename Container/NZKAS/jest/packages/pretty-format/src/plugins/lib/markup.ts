@@ -22,7 +22,7 @@ export const printProps = (
   const indentationNext = indentation + config.indent;
   const colors = config.colors;
   return keys
-    .map(key => {
+    .map((key) => {
       const value = props[key];
       let printed = printer(value, config, indentationNext, depth, refs);
 
@@ -64,7 +64,7 @@ export const printChildren = (
 ): string =>
   children
     .map(
-      child =>
+      (child) =>
         config.spacingOuter +
         indentation +
         (typeof child === 'string'

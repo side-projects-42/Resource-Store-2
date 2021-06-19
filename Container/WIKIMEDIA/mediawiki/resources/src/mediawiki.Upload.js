@@ -1,4 +1,4 @@
-( function () {
+(function () {
 	var UP;
 
 	/**
@@ -47,15 +47,16 @@
 	 * @param {Object|mw.Api} [apiconfig] A mw.Api object (or subclass), or configuration
 	 *     to pass to the constructor of mw.Api.
 	 */
-	function Upload( apiconfig ) {
-		this.api = ( apiconfig instanceof mw.Api ) ? apiconfig : new mw.Api( apiconfig );
+	function Upload(apiconfig) {
+		this.api =
+			apiconfig instanceof mw.Api ? apiconfig : new mw.Api(apiconfig);
 
 		this.watchlist = false;
-		this.text = '';
-		this.comment = '';
+		this.text = "";
+		this.comment = "";
 		this.filename = null;
 		this.file = null;
-		this.setState( Upload.State.NEW );
+		this.setState(Upload.State.NEW);
 
 		this.imageinfo = undefined;
 	}
@@ -70,7 +71,7 @@
 	 * @return {mw.Api} return.done.api
 	 */
 	UP.getApi = function () {
-		return $.Deferred().resolve( this.api ).promise();
+		return $.Deferred().resolve(this.api).promise();
 	};
 
 	/**
@@ -78,7 +79,7 @@
 	 *
 	 * @param {string} text
 	 */
-	UP.setText = function ( text ) {
+	UP.setText = function (text) {
 		this.text = text;
 	};
 
@@ -87,7 +88,7 @@
 	 *
 	 * @param {string} filename
 	 */
-	UP.setFilename = function ( filename ) {
+	UP.setFilename = function (filename) {
 		this.filename = filename;
 	};
 
@@ -96,13 +97,13 @@
 	 *
 	 * @param {string} filekey
 	 */
-	UP.setFilekey = function ( filekey ) {
+	UP.setFilekey = function (filekey) {
 		var upload = this;
 
-		this.setState( Upload.State.STASHED );
-		this.stashPromise = $.Deferred().resolve( function ( data ) {
-			return upload.api.uploadFromStash( filekey, data );
-		} );
+		this.setState(Upload.State.STASHED);
+		this.stashPromise = $.Deferred().resolve(function (data) {
+			return upload.api.uploadFromStash(filekey, data);
+		});
 	};
 
 	/**
@@ -110,18 +111,18 @@
 	 */
 	UP.setFilenameFromFile = function () {
 		var file = this.getFile();
-		if ( !file ) {
+		if (!file) {
 			return;
 		}
-		if ( file.nodeType && file.nodeType === Node.ELEMENT_NODE ) {
+		if (file.nodeType && file.nodeType === Node.ELEMENT_NODE) {
 			// File input element, use getBasename to cut out the path
-			this.setFilename( this.getBasename( file.value ) );
-		} else if ( file.name ) {
+			this.setFilename(this.getBasename(file.value));
+		} else if (file.name) {
 			// HTML5 FileAPI File object, but use getBasename to be safe
-			this.setFilename( this.getBasename( file.name ) );
+			this.setFilename(this.getBasename(file.name));
 		} else {
 			// If we ever implement uploading files from clipboard, they might not have a name
-			this.setFilename( '?' );
+			this.setFilename("?");
 		}
 	};
 
@@ -130,7 +131,7 @@
 	 *
 	 * @param {HTMLInputElement|File|Blob} file
 	 */
-	UP.setFile = function ( file ) {
+	UP.setFile = function (file) {
 		this.file = file;
 	};
 
@@ -139,7 +140,7 @@
 	 *
 	 * @param {boolean} watchlist
 	 */
-	UP.setWatchlist = function ( watchlist ) {
+	UP.setWatchlist = function (watchlist) {
 		this.watchlist = watchlist;
 	};
 
@@ -148,7 +149,7 @@
 	 *
 	 * @param {string} comment
 	 */
-	UP.setComment = function ( comment ) {
+	UP.setComment = function (comment) {
 		this.comment = comment;
 	};
 
@@ -203,18 +204,15 @@
 	 * @param {string} path
 	 * @return {string}
 	 */
-	UP.getBasename = function ( path ) {
-		if ( path === undefined || path === null ) {
-			return '';
+	UP.getBasename = function (path) {
+		if (path === undefined || path === null) {
+			return "";
 		}
 
 		// Find the index of the last path separator in the
 		// path, and add 1. Then, take the entire string after that.
 		return path.slice(
-			Math.max(
-				path.lastIndexOf( '/' ),
-				path.lastIndexOf( '\\' )
-			) + 1
+			Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\")) + 1
 		);
 	};
 
@@ -224,7 +222,7 @@
 	 * @param {mw.Upload.State} state
 	 * @param {Object} stateDetails
 	 */
-	UP.setState = function ( state, stateDetails ) {
+	UP.setState = function (state, stateDetails) {
 		this.state = state;
 		this.stateDetails = stateDetails;
 	};
@@ -266,33 +264,42 @@
 	UP.upload = function () {
 		var upload = this;
 
-		if ( !this.getFile() ) {
-			return $.Deferred().reject( 'No file to upload. Call setFile to add one.' );
+		if (!this.getFile()) {
+			return $.Deferred().reject(
+				"No file to upload. Call setFile to add one."
+			);
 		}
 
-		if ( !this.getFilename() ) {
-			return $.Deferred().reject( 'No filename set. Call setFilename to add one.' );
+		if (!this.getFilename()) {
+			return $.Deferred().reject(
+				"No filename set. Call setFilename to add one."
+			);
 		}
 
-		this.setState( Upload.State.UPLOADING );
+		this.setState(Upload.State.UPLOADING);
 
-		return this.api.chunkedUpload( this.getFile(), {
-			watchlist: ( this.getWatchlist() ) ? 1 : undefined,
-			comment: this.getComment(),
-			filename: this.getFilename(),
-			text: this.getText()
-		} ).then( function ( result ) {
-			upload.setState( Upload.State.UPLOADED );
-			upload.imageinfo = result.upload.imageinfo;
-			return result;
-		}, function ( errorCode, result ) {
-			if ( result && result.upload && result.upload.warnings ) {
-				upload.setState( Upload.State.WARNING, result );
-			} else {
-				upload.setState( Upload.State.ERROR, result );
-			}
-			return $.Deferred().reject( errorCode, result );
-		} );
+		return this.api
+			.chunkedUpload(this.getFile(), {
+				watchlist: this.getWatchlist() ? 1 : undefined,
+				comment: this.getComment(),
+				filename: this.getFilename(),
+				text: this.getText(),
+			})
+			.then(
+				function (result) {
+					upload.setState(Upload.State.UPLOADED);
+					upload.imageinfo = result.upload.imageinfo;
+					return result;
+				},
+				function (errorCode, result) {
+					if (result && result.upload && result.upload.warnings) {
+						upload.setState(Upload.State.WARNING, result);
+					} else {
+						upload.setState(Upload.State.ERROR, result);
+					}
+					return $.Deferred().reject(errorCode, result);
+				}
+			);
 	};
 
 	/**
@@ -303,30 +310,37 @@
 	UP.uploadToStash = function () {
 		var upload = this;
 
-		if ( !this.getFile() ) {
-			return $.Deferred().reject( 'No file to upload. Call setFile to add one.' );
+		if (!this.getFile()) {
+			return $.Deferred().reject(
+				"No file to upload. Call setFile to add one."
+			);
 		}
 
-		if ( !this.getFilename() ) {
+		if (!this.getFilename()) {
 			this.setFilenameFromFile();
 		}
 
-		this.setState( Upload.State.UPLOADING );
+		this.setState(Upload.State.UPLOADING);
 
-		this.stashPromise = this.api.chunkedUploadToStash( this.getFile(), {
-			ignorewarnings: true,
-			filename: this.getFilename()
-		} ).then( function ( finishStash ) {
-			upload.setState( Upload.State.STASHED );
-			return finishStash;
-		}, function ( errorCode, result ) {
-			if ( result && result.upload && result.upload.warnings ) {
-				upload.setState( Upload.State.WARNING, result );
-			} else {
-				upload.setState( Upload.State.ERROR, result );
-			}
-			return $.Deferred().reject( errorCode, result );
-		} );
+		this.stashPromise = this.api
+			.chunkedUploadToStash(this.getFile(), {
+				ignorewarnings: true,
+				filename: this.getFilename(),
+			})
+			.then(
+				function (finishStash) {
+					upload.setState(Upload.State.STASHED);
+					return finishStash;
+				},
+				function (errorCode, result) {
+					if (result && result.upload && result.upload.warnings) {
+						upload.setState(Upload.State.WARNING, result);
+					} else {
+						upload.setState(Upload.State.ERROR, result);
+					}
+					return $.Deferred().reject(errorCode, result);
+				}
+			);
 
 		return this.stashPromise;
 	};
@@ -339,32 +353,37 @@
 	UP.finishStashUpload = function () {
 		var upload = this;
 
-		if ( !this.stashPromise ) {
-			return $.Deferred().reject( 'This upload has not been stashed, please upload it to the stash first.' );
+		if (!this.stashPromise) {
+			return $.Deferred().reject(
+				"This upload has not been stashed, please upload it to the stash first."
+			);
 		}
 
-		return this.stashPromise.then( function ( finishStash ) {
-			upload.setState( Upload.State.UPLOADING );
+		return this.stashPromise.then(function (finishStash) {
+			upload.setState(Upload.State.UPLOADING);
 
-			return finishStash( {
+			return finishStash({
 				ignorewarnings: false,
-				watchlist: ( upload.getWatchlist() ) ? 1 : undefined,
+				watchlist: upload.getWatchlist() ? 1 : undefined,
 				comment: upload.getComment(),
 				filename: upload.getFilename(),
-				text: upload.getText()
-			} ).then( function ( result ) {
-				upload.setState( Upload.State.UPLOADED );
-				upload.imageinfo = result.upload.imageinfo;
-				return result;
-			}, function ( errorCode, result ) {
-				if ( result && result.upload && result.upload.warnings ) {
-					upload.setState( Upload.State.WARNING, result );
-				} else {
-					upload.setState( Upload.State.ERROR, result );
+				text: upload.getText(),
+			}).then(
+				function (result) {
+					upload.setState(Upload.State.UPLOADED);
+					upload.imageinfo = result.upload.imageinfo;
+					return result;
+				},
+				function (errorCode, result) {
+					if (result && result.upload && result.upload.warnings) {
+						upload.setState(Upload.State.WARNING, result);
+					} else {
+						upload.setState(Upload.State.ERROR, result);
+					}
+					return $.Deferred().reject(errorCode, result);
 				}
-				return $.Deferred().reject( errorCode, result );
-			} );
-		} );
+			);
+		});
 	};
 
 	/**
@@ -388,8 +407,8 @@
 		STASHED: 4,
 
 		/** Upload finished and published */
-		UPLOADED: 5
+		UPLOADED: 5,
 	};
 
 	mw.Upload = Upload;
-}() );
+})();

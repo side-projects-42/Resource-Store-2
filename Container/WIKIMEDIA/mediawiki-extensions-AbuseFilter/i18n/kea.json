@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Waldyrious"
-		]
-	},
-	"abusefilter-log-hide-hide": "Sukundi"
+  "@metadata": {
+    "authors": ["Waldyrious"]
+  },
+  "abusefilter-log-hide-hide": "Sukundi"
 }

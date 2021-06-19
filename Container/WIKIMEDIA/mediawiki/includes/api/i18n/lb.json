@@ -1,11 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Les Meloures",
-			"Macofe",
-			"Robby",
-			"Soued031"
-		]
+		"authors": ["Les Meloures", "Macofe", "Robby", "Soued031"]
 	},
 	"apihelp-main-param-assertuser": "Iwwerpréifen ob den aktuelle Benotzer de Benotzer mat deem Numm ass.",
 	"apihelp-main-param-curtimestamp": "Den aktuellen Zäitstempel an d'Resultat integréieren.",

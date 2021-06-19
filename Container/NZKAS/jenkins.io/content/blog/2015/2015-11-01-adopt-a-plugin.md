@@ -4,11 +4,12 @@
 :nodeid: 640
 :created: 1446417899
 :tags:
-- development
-- meta
-- plugins
+  - development
+  - meta
+  - plugins
 :author: daniel-beck
 ---
+
 With more than a thousand public plugins in the Jenkins community now, it should come as no surprise that some of them are no longer actively maintained. Plugin authors move on when they change jobs, or lose interest in the plugin, and that's fine. Plugins are hosted on the Jenkins project infrastructure after all, and when a maintainer moves on, others can continue their work.
 
 The major problem of course is that it's often difficult to tell whether a plugin is still maintained (and there's just not a lot going on), or whether its maintainer has lost interest. Most plugins don't get released every few weeks, or even every few months, and still do their job just fine.

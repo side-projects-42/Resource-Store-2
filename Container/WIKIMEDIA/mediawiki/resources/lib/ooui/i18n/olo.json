@@ -1,8 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Mashoi7"
-		]
+		"authors": ["Mashoi7"]
 	},
 	"ooui-outline-control-move-down": "Siirrä kohteh alah",
 	"ooui-outline-control-move-up": "Siirrä kohteh yläh",

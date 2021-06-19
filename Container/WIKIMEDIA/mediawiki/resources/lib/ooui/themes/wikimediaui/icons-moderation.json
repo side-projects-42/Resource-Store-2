@@ -33,7 +33,7 @@
 		},
 		"block": {
 			"file": "images/icons/block.svg",
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		},
 		"unBlock": {
 			"file": "images/icons/unBlock.svg"
@@ -52,11 +52,11 @@
 		},
 		"lock": {
 			"file": "images/icons/lock.svg",
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		},
 		"unLock": {
 			"file": "images/icons/unLock.svg",
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		},
 		"restore": {
 			"file": "images/icons/restore.svg"
@@ -75,7 +75,7 @@
 		},
 		"trash": {
 			"file": "images/icons/trash.svg",
-			"variants": [ "destructive" ]
+			"variants": ["destructive"]
 		},
 		"pushPin": {
 			"file": "images/icons/pushPin.svg"

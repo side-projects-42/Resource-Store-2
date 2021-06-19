@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Cedric31"
-		]
-	},
-	"akismetklik-desc": "Regèta las modificacions que provenon de comentaris polluaires sospechats dins la lista negra d'Akismet"
+  "@metadata": {
+    "authors": ["Cedric31"]
+  },
+  "akismetklik-desc": "Regèta las modificacions que provenon de comentaris polluaires sospechats dins la lista negra d'Akismet"
 }

@@ -7,7 +7,11 @@
 				"name": "log_id",
 				"comment": "Log ID, for referring to this specific log entry, probably for deletion and such.",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "log_type",
@@ -72,47 +76,47 @@
 			{
 				"name": "type_time",
 				"comment": "Special:Log type filter",
-				"columns": [ "log_type", "log_timestamp" ],
+				"columns": ["log_type", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "actor_time",
 				"comment": "Special:Log performer filter",
-				"columns": [ "log_actor", "log_timestamp" ],
+				"columns": ["log_actor", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "page_time",
 				"comment": "Special:Log title filter, log extract",
-				"columns": [ "log_namespace", "log_title", "log_timestamp" ],
+				"columns": ["log_namespace", "log_title", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "times",
 				"comment": "Special:Log unfiltered",
-				"columns": [ "log_timestamp" ],
+				"columns": ["log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_actor_type_time",
 				"comment": "Special:Log filter by performer and type",
-				"columns": [ "log_actor", "log_type", "log_timestamp" ],
+				"columns": ["log_actor", "log_type", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_page_id_time",
 				"comment": "Apparently just used for a few maintenance pages (findMissingFiles.php, Flow). Could be removed?",
-				"columns": [ "log_page", "log_timestamp" ],
+				"columns": ["log_page", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_type_action",
 				"comment": "Special:Log action filter",
-				"columns": [ "log_type", "log_action", "log_timestamp" ],
+				"columns": ["log_type", "log_action", "log_timestamp"],
 				"unique": false
 			}
 		],
-		"pk": [ "log_id" ]
+		"pk": ["log_id"]
 	},
 	"after": {
 		"name": "logging",
@@ -121,7 +125,11 @@
 				"name": "log_id",
 				"comment": "Log ID, for referring to this specific log entry, probably for deletion and such.",
 				"type": "integer",
-				"options": { "unsigned": true, "notnull": true, "autoincrement": true }
+				"options": {
+					"unsigned": true,
+					"notnull": true,
+					"autoincrement": true
+				}
 			},
 			{
 				"name": "log_type",
@@ -186,46 +194,46 @@
 			{
 				"name": "log_type_time",
 				"comment": "Special:Log type filter",
-				"columns": [ "log_type", "log_timestamp" ],
+				"columns": ["log_type", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_actor_time",
 				"comment": "Special:Log performer filter",
-				"columns": [ "log_actor", "log_timestamp" ],
+				"columns": ["log_actor", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_page_time",
 				"comment": "Special:Log title filter, log extract",
-				"columns": [ "log_namespace", "log_title", "log_timestamp" ],
+				"columns": ["log_namespace", "log_title", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_times",
 				"comment": "Special:Log unfiltered",
-				"columns": [ "log_timestamp" ],
+				"columns": ["log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_actor_type_time",
 				"comment": "Special:Log filter by performer and type",
-				"columns": [ "log_actor", "log_type", "log_timestamp" ],
+				"columns": ["log_actor", "log_type", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_page_id_time",
 				"comment": "Apparently just used for a few maintenance pages (findMissingFiles.php, Flow). Could be removed?",
-				"columns": [ "log_page", "log_timestamp" ],
+				"columns": ["log_page", "log_timestamp"],
 				"unique": false
 			},
 			{
 				"name": "log_type_action",
 				"comment": "Special:Log action filter",
-				"columns": [ "log_type", "log_action", "log_timestamp" ],
+				"columns": ["log_type", "log_action", "log_timestamp"],
 				"unique": false
 			}
 		],
-		"pk": [ "log_id" ]
+		"pk": ["log_id"]
 	}
 }

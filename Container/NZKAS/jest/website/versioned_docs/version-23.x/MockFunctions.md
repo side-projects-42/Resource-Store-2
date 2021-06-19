@@ -23,7 +23,7 @@ function forEach(items, callback) {
 To test this function, we can use a mock function, and inspect the mock's state to ensure the callback is invoked as expected.
 
 ```javascript
-const mockCallback = jest.fn(x => 42 + x);
+const mockCallback = jest.fn((x) => 42 + x);
 forEach([0, 1], mockCallback);
 
 // The mock function is called twice
@@ -87,10 +87,7 @@ const myMock = jest.fn();
 console.log(myMock());
 // > undefined
 
-myMock
-  .mockReturnValueOnce(10)
-  .mockReturnValueOnce('x')
-  .mockReturnValue(true);
+myMock.mockReturnValueOnce(10).mockReturnValueOnce('x').mockReturnValue(true);
 
 console.log(myMock(), myMock(), myMock(), myMock());
 // > 10, 'x', true, true
@@ -125,7 +122,7 @@ import axios from 'axios';
 
 class Users {
   static all() {
-    return axios.get('/users.json').then(resp => resp.data);
+    return axios.get('/users.json').then((resp) => resp.data);
   }
 }
 
@@ -151,7 +148,7 @@ test('should fetch users', () => {
   // or you could use the following depending on your use case:
   // axios.get.mockImplementation(() => Promise.resolve(resp))
 
-  return Users.all().then(resp => expect(resp.data).toEqual(users));
+  return Users.all().then((resp) => expect(resp.data).toEqual(users));
 });
 ```
 
@@ -160,7 +157,7 @@ test('should fetch users', () => {
 Still, there are cases where it's useful to go beyond the ability to specify return values and full-on replace the implementation of a mock function. This can be done with `jest.fn` or the `mockImplementationOnce` method on mock functions.
 
 ```javascript
-const myMockFn = jest.fn(cb => cb(null, true));
+const myMockFn = jest.fn((cb) => cb(null, true));
 
 myMockFn((err, val) => console.log(val));
 // > true
@@ -173,7 +170,7 @@ The `mockImplementation` method is useful when you need to define the default im
 
 ```js
 // foo.js
-module.exports = function() {
+module.exports = function () {
   // some implementation;
 };
 
@@ -192,8 +189,8 @@ When you need to recreate a complex behavior of a mock function such that multip
 ```javascript
 const myMockFn = jest
   .fn()
-  .mockImplementationOnce(cb => cb(null, true))
-  .mockImplementationOnce(cb => cb(null, false));
+  .mockImplementationOnce((cb) => cb(null, true))
+  .mockImplementationOnce((cb) => cb(null, false));
 
 myMockFn((err, val) => console.log(val));
 // > true
@@ -224,7 +221,7 @@ const myObj = {
 // is the same as
 
 const otherObj = {
-  myMethod: jest.fn(function() {
+  myMethod: jest.fn(function () {
     return this;
   }),
 };
@@ -238,7 +235,7 @@ You can optionally provide a name for your mock functions, which will be display
 const myMockFn = jest
   .fn()
   .mockReturnValue('default')
-  .mockImplementation(scalar => 42 + scalar)
+  .mockImplementation((scalar) => 42 + scalar)
   .mockName('add42');
 ```
 

@@ -13,7 +13,7 @@
 - [ ] All - Think about notification process for first boot perf.
 - [x] Tobias - Improve release/branching instructions
 - [ ] Nathan - Get Stef's brain dump on release day coordination.
-- [x] Nathan - Confirm 2.7.0 target release date 
+- [x] Nathan - Confirm 2.7.0 target release date
 - [x] Kelly - Port addon output scripts into ember-cli/dev and update docs.
 - [x] Nathan - Ask Yehuda about Ember adopting Rust's Homu fork.
 - [ ] Katie - On point for lcov, ask clarifying questions on thread.

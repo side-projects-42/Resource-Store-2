@@ -1,16 +1,16 @@
 try {
-}    //
-finally {
+} finally {
+  //
 }
 try {
 } catch (e) {
-}    //
-finally {
+} finally {
+  //
 }
 {
-    try {
-    } catch (e) {
-    }    //
-    finally {
-    }
+  try {
+  } catch (e) {
+  } finally {
+    //
+  }
 }

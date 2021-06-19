@@ -36,20 +36,20 @@ used to indicate the main namespace in template inclusions.
 
 Once prefixes have been stripped, the rest of the title processed this way:
 
-* Spaces and underscores are treated as equivalent and each  is converted to the
+- Spaces and underscores are treated as equivalent and each is converted to the
   other in the appropriate context (underscore in URL and database keys, spaces
   in plain text).
-* Multiple consecutive spaces are converted to a single space.
-* Leading or trailing space is removed.
-* If $wgCapitalLinks is enabled (the default), the first letter is  capitalised,
+- Multiple consecutive spaces are converted to a single space.
+- Leading or trailing space is removed.
+- If $wgCapitalLinks is enabled (the default), the first letter is capitalised,
   using the capitalisation function of the content language object.
-* The unicode characters LRM (U+200E) and RLM (U+200F) are silently stripped.
-* Invalid UTF-8 sequences or instances of the replacement character (U+FFFD) are
+- The unicode characters LRM (U+200E) and RLM (U+200F) are silently stripped.
+- Invalid UTF-8 sequences or instances of the replacement character (U+FFFD) are
   considered illegal.
-* A percent sign followed by two hexadecimal characters is illegal
-* Anything that looks like an XML/HTML character reference is illegal
-* Any character not matched by the $wgLegalTitleChars regex is illegal
-* Zero-length titles (after whitespace stripping) are illegal
+- A percent sign followed by two hexadecimal characters is illegal
+- Anything that looks like an XML/HTML character reference is illegal
+- Any character not matched by the $wgLegalTitleChars regex is illegal
+- Zero-length titles (after whitespace stripping) are illegal
 
 All titles except special pages must be less than 255 bytes when encoded with
 UTF-8, because that is the size of the database field. Special page titles may

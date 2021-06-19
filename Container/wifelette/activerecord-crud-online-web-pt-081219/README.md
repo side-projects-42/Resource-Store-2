@@ -23,13 +23,13 @@ Start the lab by running `learn` or keep reading for more instructions.
 Try using the rake task `rake db:create_migration NAME=create_movies` to create
 your migration file. Once you have a migration file add columns like so:
 
-|Column Name|Type|
-|----|-----------|
-|`title`|\(string\)|
-|`release_date`|\(integer\)|
-|`director`|\(string\)|
-|`lead`|\(string\)|
-|`in_theaters`|\(boolean\)|
+| Column Name    | Type        |
+| -------------- | ----------- |
+| `title`        | \(string\)  |
+| `release_date` | \(integer\) |
+| `director`     | \(string\)  |
+| `lead`         | \(string\)  |
+| `in_theaters`  | \(boolean\) |
 
 After your migration is ready run `rake db:migrate` to
 migrate your table and `rake db:migrate SINATRA_ENV=test` to migrate a test
@@ -78,4 +78,3 @@ we just created. These tests will take you through:
 [Active Record Query Interface](http://guides.rubyonrails.org/active_record_querying.html).
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/activerecord-crud' title='Active Record CRUD'>Active Record CRUD</a> on Learn.co and start learning to code for free.</p>
-

@@ -29,117 +29,145 @@
 var parseTimer, syntax, context;
 
 function id(i) {
-    return document.getElementById(i);
+  return document.getElementById(i);
 }
 
 function parse() {
-    var code = editor.getText();
+  var code = editor.getText();
 
-    if (!context) {
-        context = new esrefactor.Context();
-    }
+  if (!context) {
+    context = new esrefactor.Context();
+  }
 
-    try {
-        editor.removeAllErrorMarkers();
-        editor.showOccurrences([]);
-        id('info').innerHTML = 'Ready';
-        id('info').setAttribute('class', 'alert-box secondary');
-        syntax = esprima.parse(code, {
-            loc: true,
-            range: true,
-            tolerant: true
-        });
-        context.setCode(syntax);
-        trackCursor();
-    } catch (e) {
-        id('info').innerHTML = e.toString();
-        id('info').setAttribute('class', 'alert-box alert');
-        editor.showOccurrences([]);
-    }
+  try {
+    editor.removeAllErrorMarkers();
+    editor.showOccurrences([]);
+    id("info").innerHTML = "Ready";
+    id("info").setAttribute("class", "alert-box secondary");
+    syntax = esprima.parse(code, {
+      loc: true,
+      range: true,
+      tolerant: true,
+    });
+    context.setCode(syntax);
+    trackCursor();
+  } catch (e) {
+    id("info").innerHTML = e.toString();
+    id("info").setAttribute("class", "alert-box alert");
+    editor.showOccurrences([]);
+  }
 }
 
 function triggerParse(delay) {
-    if (parseTimer) {
-        window.clearTimeout(parseTimer);
-    }
+  if (parseTimer) {
+    window.clearTimeout(parseTimer);
+  }
 
-    parseTimer = window.setTimeout(parse, delay || 811);
+  parseTimer = window.setTimeout(parse, delay || 811);
 }
 
 function trackCursor() {
-    var pos, identification, identifier, declaration, references,
-        model, occurrences, i, ref;
+  var pos,
+    identification,
+    identifier,
+    declaration,
+    references,
+    model,
+    occurrences,
+    i,
+    ref;
 
-    if (!context) {
-        parse();
+  if (!context) {
+    parse();
+  }
+
+  editor.removeAllErrorMarkers();
+  editor.showOccurrences([]);
+  id("info").innerHTML = "Ready";
+
+  pos = editor.getCaretOffset();
+  identification = context.identify(pos);
+  if (!identification) {
+    return;
+  }
+
+  identifier = identification.identifier;
+  declaration = identification.declaration;
+  references = identification.references;
+  model = editor.getModel();
+
+  occurrences = [
+    {
+      line: identifier.loc.start.line,
+      start:
+        1 +
+        identifier.range[0] -
+        model.getLineStart(identifier.loc.start.line - 1),
+      end:
+        identifier.range[1] - model.getLineStart(identifier.loc.start.line - 1),
+      readAccess: false,
+      description: identifier.name,
+    },
+  ];
+
+  if (declaration) {
+    if (declaration.range !== identifier.range) {
+      occurrences.push({
+        line: declaration.loc.start.line,
+        start:
+          1 +
+          declaration.range[0] -
+          model.getLineStart(declaration.loc.start.line - 1),
+        end:
+          declaration.range[1] -
+          model.getLineStart(declaration.loc.start.line - 1),
+        readAccess: true,
+        description:
+          "Line " + declaration.loc.start.line + ": " + declaration.name,
+      });
     }
+    editor.addErrorMarker(
+      declaration.range[0],
+      "Declaration: " + declaration.name
+    );
+    id("info").innerHTML =
+      "Identifier '" +
+      identifier.name +
+      "' is declared in line " +
+      declaration.loc.start.line +
+      ".";
+  } else {
+    id("info").innerHTML =
+      "Warning: No declaration is found for '" + identifier.name + "'.";
+  }
 
-    editor.removeAllErrorMarkers();
-    editor.showOccurrences([]);
-    id('info').innerHTML = 'Ready';
-
-    pos = editor.getCaretOffset();
-    identification = context.identify(pos);
-    if (!identification) {
-        return;
+  for (i = 0; i < references.length; ++i) {
+    ref = references[i];
+    if (ref.range !== identifier.range) {
+      occurrences.push({
+        line: ref.loc.start.line,
+        start: 1 + ref.range[0] - model.getLineStart(ref.loc.start.line - 1),
+        end: ref.range[1] - model.getLineStart(ref.loc.start.line - 1),
+        readAccess: true,
+        description: ref.name,
+      });
     }
+  }
 
-    identifier = identification.identifier;
-    declaration = identification.declaration;
-    references = identification.references;
-    model = editor.getModel();
-
-    occurrences = [{
-        line: identifier.loc.start.line,
-        start: 1 + identifier.range[0] - model.getLineStart(identifier.loc.start.line - 1),
-        end: identifier.range[1] - model.getLineStart(identifier.loc.start.line - 1),
-        readAccess: false,
-        description: identifier.name
-    }];
-
-    if (declaration) {
-        if (declaration.range !== identifier.range) {
-            occurrences.push({
-                line: declaration.loc.start.line,
-                start: 1 + declaration.range[0] - model.getLineStart(declaration.loc.start.line - 1),
-                end: declaration.range[1] - model.getLineStart(declaration.loc.start.line - 1),
-                readAccess: true,
-                description: 'Line ' + declaration.loc.start.line + ': ' + declaration.name
-            });
-        }
-        editor.addErrorMarker(declaration.range[0],
-            'Declaration: ' + declaration.name);
-        id('info').innerHTML = 'Identifier \'' + identifier.name + '\' is declared in line ' +
-            declaration.loc.start.line + '.';
-    } else {
-        id('info').innerHTML = 'Warning: No declaration is found for \'' + identifier.name + '\'.';
-    }
-
-    for (i = 0; i < references.length; ++i) {
-        ref = references[i];
-        if (ref.range !== identifier.range) {
-            occurrences.push({
-                line: ref.loc.start.line,
-                start: 1 + ref.range[0] - model.getLineStart(ref.loc.start.line - 1),
-                end: ref.range[1] - model.getLineStart(ref.loc.start.line - 1),
-                readAccess: true,
-                description: ref.name
-            });
-        }
-    }
-
-    editor.showOccurrences(occurrences);
+  editor.showOccurrences(occurrences);
 }
 
 window.onload = function () {
-    try {
-        require(['custom/editor'], function (editor) {
-            window.editor = editor({ parent: 'editor', lang: 'js' });
-            window.editor.getTextView().getModel().addEventListener("Changed", triggerParse);
-            window.editor.getTextView().addEventListener("Selection", trackCursor);
-            window.editor.onGotoLine(9, 12, 12);
-            triggerParse(50);
-        });
-    } catch (e) {
-    }
+  try {
+    require(["custom/editor"], function (editor) {
+      window.editor = editor({ parent: "editor", lang: "js" });
+      window.editor
+        .getTextView()
+        .getModel()
+        .addEventListener("Changed", triggerParse);
+      window.editor.getTextView().addEventListener("Selection", trackCursor);
+      window.editor.onGotoLine(9, 12, 12);
+      triggerParse(50);
+    });
+  } catch (e) {}
 };

@@ -5,8 +5,8 @@ Previously `connect.errorHandler()`.
 Usage:
 
 ```js
-var app = require('connect');
-app.use(require('errorhandler')())
+var app = require("connect");
+app.use(require("errorhandler")());
 ```
 
 ## License

@@ -1,9 +1,6 @@
 {
 	"@metadata": {
-		"authors": [
-			"Abbas dhothar",
-			"Saanvel"
-		]
+		"authors": ["Abbas dhothar", "Saanvel"]
 	},
 	"ooui-outline-control-move-down": "شے تھلے کرو",
 	"ooui-outline-control-move-up": "شے اتے کرو",

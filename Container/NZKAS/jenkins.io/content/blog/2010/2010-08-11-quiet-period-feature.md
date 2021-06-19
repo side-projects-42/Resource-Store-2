@@ -4,11 +4,12 @@
 :nodeid: 236
 :created: 1281590640
 :tags:
-- general
-- core
-- tutorial
+  - general
+  - core
+  - tutorial
 :author: kohsuke
 ---
+
 Commits often come in a burst. This seems to happen mainly for two reasons --- people sometimes forget to commit some files, and in the tranquility of waiting for your SCM to finish a commit, people sometimes realize the problems in the commit and they quickly make follow-up changes. The conventional wisdom is that the CI server should wait for the burst to finish before attempting a build. This is said to reduce the chance of having broken build, and it is also sometimes useful in reducing the average turn-around time for builds that take longer.
 
 As such, Hudson is capable of waiting for a commit burst to be over before it triggers a new build, and this feature is called "quiet period." There are two parts in Hudson that interacts with the quiet period. One is the SCM polling behavior and the other is the queue.
@@ -18,7 +19,6 @@ The queue portion of the quiet period is straight-forward. When a build is sched
 The above applies to all the mechanisms in Hudson that puts builds into the queue. This includes REST API call, CLI call, downstream triggers, and SCM pollings. So if you implement some kind of a "push" mechanism in your SCM to notify Hudson of a new commit, then you get the desired effect by just setting the quiet period in Hudson, and those push scripts don't have to do anything tricky.
 
 It is also possible for some of those to override the quiet period configured in the project. For example, when you click "Build Now" button in your browser, your browser is making a REST API call, but with the quiet period of zero. I used to run a "push" script that looks into a commit message and overrides the quiet period by taking advantages of this feature.
-
 
 The other portion of the quiet period that often matters is the SCM polling behaviour. Up until Hudson 1.346, the way Hudson defined the SCM abstraction made it impossible for SCMs to correctly report newly detected commits since the last polling. Instead, it was only possible to report if the repository is newer than the workspace. As a result, if the polling interval is set shorter than the quiet period, the build stayed in the quiet period forever. This was tracked in HUDSON-2180.
 

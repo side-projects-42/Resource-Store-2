@@ -2,13 +2,14 @@
 
 A Puppet module for installing and managing Apache Kafka brokers.
 
-
 ## Requirements:
+
 - Java
-- An installable Apache Kafka package.  You can use the one available at
-[kafka-debian](https://github.com/wmf-analytics/kafka-debian).
+- An installable Apache Kafka package. You can use the one available at
+  [kafka-debian](https://github.com/wmf-analytics/kafka-debian).
 
 ## Usage:
+
 ```puppet
 # install the kafka package
 include kafka
@@ -24,6 +25,6 @@ class { "kafka::server":
 }
 ```
 
-If you do not set ```broker_id``` on kafka::server, the broker_id will be
-inferred from integers in the node's hostname.  E.g. kafka01 will render
-```server.properties``` with ```brokerid``` == 1.
+If you do not set `broker_id` on kafka::server, the broker_id will be
+inferred from integers in the node's hostname. E.g. kafka01 will render
+`server.properties` with `brokerid` == 1.

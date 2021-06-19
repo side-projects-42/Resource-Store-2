@@ -19,9 +19,9 @@
  * @since 1.26
  * @param {...Mixed} msg Messages to output to console
  */
-mw.log.error = console.error ?
-	Function.prototype.bind.call( console.error, console ) :
-	function () {};
+mw.log.error = console.error
+	? Function.prototype.bind.call(console.error, console)
+	: function () {};
 
 /**
  * Create a property on a host object that, when accessed, will produce
@@ -35,22 +35,22 @@ mw.log.error = console.error ?
  *  purposes. Except for properties of the window object, tracking is only
  *  enabled if logName is set.
  */
-mw.log.deprecate = function ( obj, key, val, msg, logName ) {
+mw.log.deprecate = function (obj, key, val, msg, logName) {
 	var stacks;
 	function maybeLog() {
 		var name = logName || key,
 			trace = new Error().stack;
-		if ( !stacks ) {
+		if (!stacks) {
 			/* global Set */
 			stacks = new Set();
 		}
-		if ( !stacks.has( trace ) ) {
-			stacks.add( trace );
-			if ( logName || obj === window ) {
-				mw.track( 'mw.deprecate', name );
+		if (!stacks.has(trace)) {
+			stacks.add(trace);
+			if (logName || obj === window) {
+				mw.track("mw.deprecate", name);
 			}
 			mw.log.warn(
-				'Use of "' + name + '" is deprecated.' + ( msg ? ' ' + msg : '' )
+				'Use of "' + name + '" is deprecated.' + (msg ? " " + msg : "")
 			);
 		}
 	}
@@ -60,20 +60,20 @@ mw.log.deprecate = function ( obj, key, val, msg, logName ) {
 	// Support Safari 5.0: Object.defineProperty throws  "not supported on DOM Objects" for
 	// Node or Element objects (incl. document)
 	// Safari 4.0 doesn't have this method, and it was fixed in Safari 5.1.
-	if ( window.Set ) {
-		Object.defineProperty( obj, key, {
+	if (window.Set) {
+		Object.defineProperty(obj, key, {
 			configurable: true,
 			enumerable: true,
 			get: function () {
 				maybeLog();
 				return val;
 			},
-			set: function ( newVal ) {
+			set: function (newVal) {
 				maybeLog();
 				val = newVal;
-			}
-		} );
+			},
+		});
 	} else {
-		obj[ key ] = val;
+		obj[key] = val;
 	}
 };

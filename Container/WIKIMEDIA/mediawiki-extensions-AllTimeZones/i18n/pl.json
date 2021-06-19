@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"BeginaFelicysym"
-		]
-	},
-	"alltimezones-desc": "Dodaje znacznik, aby wyświetlić daty we wszystkich strefach czasowych"
+  "@metadata": {
+    "authors": ["BeginaFelicysym"]
+  },
+  "alltimezones-desc": "Dodaje znacznik, aby wyświetlić daty we wszystkich strefach czasowych"
 }

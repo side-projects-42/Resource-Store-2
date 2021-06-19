@@ -1,9 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Harvzsf",
-			"JinJian"
-		]
-	},
-	"antispoof-conflict-bottom": "Alayon pagpili hin iba nga ngaran-hin-gumaramit."
+  "@metadata": {
+    "authors": ["Harvzsf", "JinJian"]
+  },
+  "antispoof-conflict-bottom": "Alayon pagpili hin iba nga ngaran-hin-gumaramit."
 }

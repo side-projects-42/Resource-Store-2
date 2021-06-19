@@ -4,13 +4,14 @@
 :nodeid: 322
 :created: 1308928732
 :tags:
-- development
-- core
-- ruby
-- jruby
+  - development
+  - core
+  - ruby
+  - jruby
 :author: cowboyd
 ---
-You know that the night is going to be productive whenever @kohsukekawa shows up, and last night was no exception. We talked about problems on the horizon, potential solutions, and then I spent the last half hour ripping a bit of code. 
+
+You know that the night is going to be productive whenever @kohsukekawa shows up, and last night was no exception. We talked about problems on the horizon, potential solutions, and then I spent the last half hour ripping a bit of code.
 
 The truth of the matter is that most of the changes that have to be done to Jenkins core have already been made, so now the bulk of the heavy lifting falls to the Ruby side of things (right now, me).
 
@@ -38,7 +39,7 @@ On the Jenkins side, KK will think about how to run tests that require a full Je
 
 ### packaging reloaded (@kohsukekawa)
 
-KK is going to jump in and write some rake tasks to take a ruby plugin structure and package it into a valid .hpi file, and with no maven involved.  According to him, Ruby plugins aren't the only system that wants to run maven-free. There is desire to be able to do plugin development with Gradle (another Java build system), so this could be a double win.
+KK is going to jump in and write some rake tasks to take a ruby plugin structure and package it into a valid .hpi file, and with no maven involved. According to him, Ruby plugins aren't the only system that wants to run maven-free. There is desire to be able to do plugin development with Gradle (another Java build system), so this could be a double win.
 
 ### different schedule (@kohsukekawa)
 

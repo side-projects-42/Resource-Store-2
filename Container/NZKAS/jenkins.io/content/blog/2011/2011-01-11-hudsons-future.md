@@ -4,13 +4,14 @@
 :nodeid: 273
 :created: 1294754400
 :tags:
-- general
-- core
-- meta
-- news
-- jenkinsci
+  - general
+  - core
+  - meta
+  - news
+  - jenkinsci
 :author: abayer
 ---
+
 First, my apologies for the lack of updates on the [Hudson/Oracle situation](http://hudson-labs.org/content/whos-driving-thing) for
 the last few weeks. While talks have been ongoing, the holidays have slowed
 things down, and we didn't want to send out information that would later turn
@@ -20,7 +21,7 @@ and I believe they now have.
 Since the [java.net](http://www.java.net) migration problems, Oracle and representatives from the
 Hudson community have been involved in talks on the future of the project in a
 number of areas. The Hudson representatives have been [myself](http://twitter.com/abayer), [Kohsuke
-Kawaguchi](http://twitter.com/kohsukekawa), and [Sacha Labourey](https://twitter.com/SachaLabourey)  (CEO of CloudBees and Kohsuke's boss), who was
+Kawaguchi](http://twitter.com/kohsukekawa), and [Sacha Labourey](https://twitter.com/SachaLabourey) (CEO of CloudBees and Kohsuke's boss), who was
 brought in to help provide experience with discussions on a corporate/executive
 level which neither Kohsuke nor I have, with Alan Harder and [R. Tyler Croy](http://twitter.com/agentdero)
 advising on the side.
@@ -50,13 +51,15 @@ a direction Oracle disapproved of, Oracle would be able to take away the naming
 rights. Or, in a less dramatic scenario, Oracle could insist on certain changes
 to the code, infrastructure decisions, process, etc, regardless of opposition
 from the Hudson development community, in order to retain the rights to the
-name. 
+name.
 
 In short, we'd be living under a sword of [Damocles](https://secure.wikimedia.org/wikipedia/en/wiki/Damocles), regardless of the goodwill
 of the individuals we've been negotiating with at Oracle - Hudson as a project
 would be beholden to Oracle's whims for its continued use of its own name, and
 we believe that's not viable.
+
 <!--break-->
+
 As I see it, the only viable option facing the project now is to rename it, in
 order to free it from the burden of Oracle's ownership of its name. This is not
 a first choice, not by a long shot, but I don't see any other choice available
@@ -84,8 +87,9 @@ invitation.
 Second, out of respect for Oracle's trademark claim on Hudson, we will move our
 infrastructure off of Oracle-owned and hosted servers, and we will rename
 existing independent components of the infrastructure to no longer use "Hudson"
+
 - i.e., mailing lists, Github repos, etc. This would be a gradual process,
-obviously. 
+  obviously.
 
 Third, we will put in place an interim governance board for the project,
 consisting of three members - myself, Kohsuke and, if Oracle elects to remain
@@ -102,9 +106,9 @@ there's anything you need clarified, please ask and we'll do our best to
 answer.
 
 Once Oracle's proposal is available later this week (hopefully Wednesday,
-possibly Thursday, from what I've been told), which I strongly advise you all to 
-read and consider, we'll be putting up a poll to determine the position of the 
-community. Once that vote is done, assuming the consensus is to rename, we'll 
+possibly Thursday, from what I've been told), which I strongly advise you all to
+read and consider, we'll be putting up a poll to determine the position of the
+community. Once that vote is done, assuming the consensus is to rename, we'll
 put the mechanisms in motion and switch over as fast we can.
 
 There may be some confusion as to whether we're proposing to fork Hudson, or
@@ -115,4 +119,4 @@ development themselves under the name Hudson, they are, obviously, entirely
 welcome to do so. But with Kohsuke working on Jenkins, that's the true home and
 the future of the project for me, regardless of the name.
 
-----
+---

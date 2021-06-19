@@ -1,4 +1,4 @@
 {
-	"preset": "jquery",
-	"requireCamelCaseOrUpperCaseIdentifiers": null
+  "preset": "jquery",
+  "requireCamelCaseOrUpperCaseIdentifiers": null
 }

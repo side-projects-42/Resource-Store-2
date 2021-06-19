@@ -1,8 +1,6 @@
 {
-	"@metadata": {
-		"authors": [
-			"Mehtab ahmed"
-		]
-	},
-	"admanager_Page": "صفحا"
+  "@metadata": {
+    "authors": ["Mehtab ahmed"]
+  },
+  "admanager_Page": "صفحا"
 }

@@ -2,13 +2,13 @@
 
 #### Topics
 
-* MB: Can we get basic agreement on `<ember-component is={{someComponentName}}>` It would be good to land it in the current master cycle (for 2.1)
-* MB: https://github.com/emberjs/rfcs/pull/71 - "Action services"
-* MM: https://github.com/emberjs/rfcs/pull/66 - "Outlet focusing"
-* KS: https://github.com/wycats/handlebars.js/issues/1050 - "Splat operator"
-* SP: https://github.com/emberjs/ember.js/issues/10272
-* SP: https://github.com/emberjs/ember.js/issues/10209
-* SP: https://developer.mozilla.org/en-US/docs/Web/Events (https://html5sec.org/)
+- MB: Can we get basic agreement on `<ember-component is={{someComponentName}}>` It would be good to land it in the current master cycle (for 2.1)
+- MB: https://github.com/emberjs/rfcs/pull/71 - "Action services"
+- MM: https://github.com/emberjs/rfcs/pull/66 - "Outlet focusing"
+- KS: https://github.com/wycats/handlebars.js/issues/1050 - "Splat operator"
+- SP: https://github.com/emberjs/ember.js/issues/10272
+- SP: https://github.com/emberjs/ember.js/issues/10209
+- SP: https://developer.mozilla.org/en-US/docs/Web/Events (https://html5sec.org/)
 
 ####
 
@@ -67,8 +67,6 @@ MM: Should we hide mutable cells in 1.13?
 RJ: No.
 
 YK: There is vinegar associated to mutable cells that <discussion and summary of mutable cells>
-
-
 
 YK: Basically it is not a good thing to use before angle brackets. It is not good to encourage people to use it.
 
