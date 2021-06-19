@@ -2,7 +2,7 @@ AutoParse
 =========
 
 Homepage  
-<http://code.google.com/p/ruby-autoparse/>
+<a href="http://code.google.com/p/ruby-autoparse/" class="uri">http://code.google.com/p/ruby-autoparse/</a>
 
 Author  
 [Bob Aman](mailto:bobaman@google.com)

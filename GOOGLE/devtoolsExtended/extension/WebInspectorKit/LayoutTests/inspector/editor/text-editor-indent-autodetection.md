@@ -1,16 +1,16 @@
 This test checks text editor indent autodetection functionality
 
---------------TEST 1--------------
+————–TEST 1————–
 
     function foo() {
             return 42;
     }
 
---------------TEST 2--------------
+————–TEST 2————–
 
     console.log("Hello!");
 
---------------TEST 3--------------
+————–TEST 3————–
 
     /**
      * This is a header comment that spans
@@ -35,7 +35,7 @@ This test checks text editor indent autodetection functionality
       return 42;
     }
 
---------------TEST 4--------------
+————–TEST 4————–
 
     function MyClass()
     {
@@ -60,7 +60,7 @@ This test checks text editor indent autodetection functionality
         },
     }
 
---------------TEST 5--------------
+————–TEST 5————–
 
       a
       a
@@ -70,16 +70,16 @@ This test checks text editor indent autodetection functionality
     c
     c
 
---------------TEST 6--------------
+————–TEST 6————–
 
         tab
             tab
         tab
         tab
 
---------------TEST 7-------------- (empty content)
+————–TEST 7————– (empty content)
 
---------------TEST 8--------------
+————–TEST 8————–
 
     function foo() {
       var i = 0;

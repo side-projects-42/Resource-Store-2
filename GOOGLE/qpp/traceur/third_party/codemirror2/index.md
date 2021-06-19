@@ -148,7 +148,7 @@ Commercial support
 
 CodeMirror is developed and maintained by me, Marijn Haverbeke, in my own time. If your company is getting value out of CodeMirror, please consider purchasing a support contract.
 
--   You'll be funding further work on CodeMirror.
+-   You’ll be funding further work on CodeMirror.
 -   You ensure that you get a quick response when you have a problem, even when I am otherwise busy.
 
 CodeMirror support contracts exist in two forms—**basic** at €100 per month, and **premium** at €500 per month. [Contact me](mailto:marijnh@gmail.com) for further information.
@@ -209,13 +209,11 @@ Releases
 
 26-03-2012: [Version 2.23](http://codemirror.net/codemirror-2.23.zip):
 
--   Change **default binding for tab** [\[more\]](javascript:void(document.getElementById('tabbinding').style.display=''))
-    Starting in 2.23, these bindings are default:
+-   Change **default binding for tab** [\[more\]](javascript:void(document.getElementById('tabbinding').style.display='')) Starting in 2.23, these bindings are default:
     -   Tab: Insert tab character
     -   Shift-tab: Reset line indentation to default
     -   Ctrl/Cmd-\[: Reduce line indentation (old tab behaviour)
     -   Ctrl/Cmd-\]: Increase line indentation (old shift-tab behaviour)
-
 -   New modes: [XQuery](mode/xquery/index.html) and [VBScript](mode/vbscript/index.html).
 -   Two new themes: [lesser-dark](mode/less/index.html) and [xq-dark](mode/xquery/index.html).
 -   Differentiate between background and text styles in [`setLineClass`](doc/manual.html#setLineClass).
@@ -273,7 +271,7 @@ Fixes `TextMarker.clear`, which is broken in 2.17.
 -   Fix drag-and-drop in Firefox.
 -   Improve support for IME.
 -   Speed up content rendering.
--   Fix browser's built-in search in Webkit.
+-   Fix browser’s built-in search in Webkit.
 -   Make double- and triple-click work in IE.
 -   Various fixes to modes.
 
@@ -286,6 +284,6 @@ Fixes `TextMarker.clear`, which is broken in 2.17.
 -   **API change**: [`markText`](doc/manual.html#markText) now returns an object with `clear` and `find` methods. Marked text is now more robust when edited.
 -   Fix editing code with tabs in Internet Explorer.
 
-[Older releases...](doc/oldrelease.html)
+[Older releases…](doc/oldrelease.html)
 
  

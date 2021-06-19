@@ -20,7 +20,7 @@
 22-10-2012: [Version 2.35](http://codemirror.net/codemirror-2.35.zip):
 
 -   New (sub) mode: [TypeScript](../mode/javascript/typescript.html).
--   Don't overwrite (insert key) when pasting.
+-   Don’t overwrite (insert key) when pasting.
 -   Fix several bugs in [`markText`](manual.html#markText)/undo interaction.
 -   Better indentation of JavaScript code without semicolons.
 -   Add [`defineInitHook`](manual.html#defineInitHook) function.
@@ -86,7 +86,7 @@ Emergency fix for a bug where an editor with line wrapping on IE will break when
 -   Add [`getHistory`](manual.html#getHistory) and [`setHistory`](manual.html#setHistory) methods.
 -   Allow custom line separator string in [`getValue`](manual.html#getValue) and [`getRange`](manual.html#getRange).
 -   Support double- and triple-click drag, double-clicking whitespace.
--   And more... [(all patches)](https://github.com/marijnh/CodeMirror/compare/v2.3...v2.31)
+-   And more… [(all patches)](https://github.com/marijnh/CodeMirror/compare/v2.3...v2.31)
 
 22-06-2012: [Version 2.3](http://codemirror.net/codemirror-2.3.zip):
 
@@ -120,13 +120,11 @@ Emergency fix for a bug where an editor with line wrapping on IE will break when
 
 26-03-2012: [Version 2.23](http://codemirror.net/codemirror-2.23.zip):
 
--   Change **default binding for tab** [\[more\]](javascript:void(document.getElementById('tabbinding').style.display=''))
-    Starting in 2.23, these bindings are default:
+-   Change **default binding for tab** [\[more\]](javascript:void(document.getElementById('tabbinding').style.display='')) Starting in 2.23, these bindings are default:
     -   Tab: Insert tab character
     -   Shift-tab: Reset line indentation to default
     -   Ctrl/Cmd-\[: Reduce line indentation (old tab behaviour)
     -   Ctrl/Cmd-\]: Increase line indentation (old shift-tab behaviour)
-
 -   New modes: [XQuery](../mode/xquery/index.html) and [VBScript](../mode/vbscript/index.html).
 -   Two new themes: [lesser-dark](../mode/less/index.html) and [xq-dark](../mode/xquery/index.html).
 -   Differentiate between background and text styles in [`setLineClass`](manual.html#setLineClass).
@@ -184,7 +182,7 @@ Fixes `TextMarker.clear`, which is broken in 2.17.
 -   Fix drag-and-drop in Firefox.
 -   Improve support for IME.
 -   Speed up content rendering.
--   Fix browser's built-in search in Webkit.
+-   Fix browser’s built-in search in Webkit.
 -   Make double- and triple-click work in IE.
 -   Various fixes to modes.
 
@@ -199,7 +197,7 @@ Fixes `TextMarker.clear`, which is broken in 2.17.
 
 26-09-2011: [Version 2.15](http://codemirror.net/codemirror-2.15.zip):
 
-Fix bug that snuck into 2.14: Clicking the character that currently has the cursor didn't re-focus the editor.
+Fix bug that snuck into 2.14: Clicking the character that currently has the cursor didn’t re-focus the editor.
 
 26-09-2011: [Version 2.14](http://codemirror.net/codemirror-2.14.zip):
 
@@ -245,7 +243,7 @@ Fix bug that snuck into 2.14: Clicking the character that currently has the curs
 
 07-06-2011: [Version 2.1](http://codemirror.net/codemirror-2.1.zip):
 
-Add a [theme](manual.html#option_theme) system ([demo](../demo/theme.html)). Note that this is not backwards-compatible—you'll have to update your styles and modes!
+Add a [theme](manual.html#option_theme) system ([demo](../demo/theme.html)). Note that this is not backwards-compatible—you’ll have to update your styles and modes!
 
 07-06-2011: [Version 2.02](http://codemirror.net/codemirror-2.02.zip):
 
@@ -256,7 +254,7 @@ Add a [theme](manual.html#option_theme) system ([demo](../demo/theme.html)). Not
 -   Solve horizontal jittering on long lines.
 -   Add [runmode.js](../demo/runmode.html).
 -   Immediately re-highlight text when typing.
--   Fix problem with 'sticking' horizontal scrollbar.
+-   Fix problem with ‘sticking’ horizontal scrollbar.
 
 26-05-2011: [Version 2.01](http://codemirror.net/codemirror-2.01.zip):
 
@@ -270,14 +268,14 @@ Add a [theme](manual.html#option_theme) system ([demo](../demo/theme.html)). Not
 -   Pass information about the changed lines to `onChange`.
 -   Support cmd-up/down on OS X.
 -   Add triple-click line selection.
--   Don't handle shift when changing the selection through the API.
+-   Don’t handle shift when changing the selection through the API.
 -   Support `"nocursor"` mode for `readOnly` option.
 -   Add an `onHighlightComplete` option.
 -   Fix the context menu for Firefox.
 
 28-03-2011: [Version 2.0](http://codemirror.net/codemirror-2.0.zip):
 
-CodeMirror 2 is a complete rewrite that's faster, smaller, simpler to use, and less dependent on browser quirks. See [this](internals.html) and [this](http://groups.google.com/group/codemirror/browse_thread/thread/5a8e894024a9f580) for more information.
+CodeMirror 2 is a complete rewrite that’s faster, smaller, simpler to use, and less dependent on browser quirks. See [this](internals.html) and [this](http://groups.google.com/group/codemirror/browse_thread/thread/5a8e894024a9f580) for more information.
 
 28-03-2011: [Version 1.0](http://codemirror.net/codemirror-1.0.zip):
 
@@ -344,7 +342,7 @@ CodeMirror 2 is a complete rewrite of CodeMirror, no longer depending on an edit
 -   A number of fixes and support for more syntax in the PHP parser.
 -   Fix indentation problem with JSON-mode JS parser in Webkit.
 -   Add a [minification](compress.html) UI.
--   Support a `height: dynamic` mode, where the editor's height will adjust to the size of its content.
+-   Support a `height: dynamic` mode, where the editor’s height will adjust to the size of its content.
 -   Better support for IME input mode.
 -   Fix JavaScript parser getting confused when seeing a no-argument function call.
 -   Have CSS parser see the difference between selectors and other identifiers.

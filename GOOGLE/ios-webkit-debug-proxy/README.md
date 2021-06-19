@@ -156,7 +156,7 @@ where “null” represents the device list. The following example restricts the
 
 ### Troubleshooting
 
-##### undefined reference to symbol ‘log10@<span class="citation" data-cites="GLIBC_2.2.5">@GLIBC\_2.2.5</span>’
+##### undefined reference to symbol ‘log10@<span class="citation" data-cites="GLIBC_2.2.5"><span class="citation" data-cites="GLIBC">@GLIBC</span>\_2.2.5</span>’
 
     /usr/bin/ld: ios_webkit_debug_proxy-char_buffer.o: undefined reference to symbol 'log10@@GLIBC_2.2.5'
     //lib/x86_64-linux-gnu/libm.so.6: error adding symbols: DSO missing from command line

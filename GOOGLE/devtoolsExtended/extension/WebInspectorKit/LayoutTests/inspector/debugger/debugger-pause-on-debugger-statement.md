@@ -1,1 +1,1 @@
-Tests that debugger will stop on "debugger" statement.
+Tests that debugger will stop on “debugger” statement.

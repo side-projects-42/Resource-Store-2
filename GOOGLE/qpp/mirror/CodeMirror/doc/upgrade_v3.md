@@ -8,7 +8,7 @@
 
 Version 3 does not depart too much from 2.x API, and sites that use CodeMirror in a very simple way might be able to upgrade without trouble. But it does introduce a number of incompatibilities. Please at least skim this text before upgrading.
 
-Note that **version 3 drops full support for Internet Explorer 7**. The editor will mostly work on that browser, but it'll be significantly glitchy.
+Note that **version 3 drops full support for Internet Explorer 7**. The editor will mostly work on that browser, but it’ll be significantly glitchy.
 
 DOM structure
 -------------
@@ -17,7 +17,7 @@ This one is the most likely to cause problems. The internal structure of the edi
 
 Editor height is now set on the outer wrapper element (CSS class `CodeMirror`), not on the scroller element (`CodeMirror-scroll`).
 
-Other nodes were moved, dropped, and added. If you have any code that makes assumptions about the internal DOM structure of the editor, you'll have to re-test it and probably update it to work with v3.
+Other nodes were moved, dropped, and added. If you have any code that makes assumptions about the internal DOM structure of the editor, you’ll have to re-test it and probably update it to work with v3.
 
 See the [styling section](manual.html#styling) of the manual for more information.
 

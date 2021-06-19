@@ -1,1 +1,1 @@
-Tests that when uncaught exception in eval'ed script ending with //\# sourceURL=url is logged into console, its stack trace will have the url as the script source. [Bug 47252.](https://bugs.webkit.org/show_bug.cgi?id=47252)
+Tests that when uncaught exception in eval’ed script ending with //\# sourceURL=url is logged into console, its stack trace will have the url as the script source. [Bug 47252.](https://bugs.webkit.org/show_bug.cgi?id=47252)

@@ -1,1 +1,1 @@
-Tests that if iframe is loaded and then deleted, inspector could still show its content. Note that if iframe.src is changed to "javascript:'...some html...'" after loading, then we have different codepath, hence two tests;
+Tests that if iframe is loaded and then deleted, inspector could still show its content. Note that if iframe.src is changed to “javascript:‘…some html…’” after loading, then we have different codepath, hence two tests;

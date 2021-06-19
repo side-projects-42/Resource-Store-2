@@ -9,23 +9,23 @@
 [Directory iteration plus catching exceptions - (tut3.cpp)](#Directory-iteration)  
 [Using path decomposition, plus sorting results - (tut4.cpp)](#Using-path-decomposition)  
 [Class path: Constructors, including Unicode - (tut5.cpp)](#Class-path-Constructors)  
-[Class path: Generic format vs. Native format](#Class-path-formats)  
+[Class path: Generic format vs. Native format](#Class-path-formats)  
 [Class path: Iterators, observers, composition, decomposition, and query - (path\_info.cpp)](#Class%20path-iterators-etc)  
-[Error reporting](#Error-reporting)  
+[Error reporting](#Error-reporting)
 
 <span id="Introduction">Introduction</span>
 -------------------------------------------
 
-This tutorial develops a little command line program to list information about files and directories - essentially a much simplified version of the POSIX `ls` or Windows `dir` commands. We'll start with the simplest possible version and progress to more complex functionality. Along the way we'll digress to cover topics you'll need to know about to understand Boost.Filesystem.
+This tutorial develops a little command line program to list information about files and directories - essentially a much simplified version of the POSIX `ls` or Windows `dir` commands. We’ll start with the simplest possible version and progress to more complex functionality. Along the way we’ll digress to cover topics you’ll need to know about to understand Boost.Filesystem.
 
-Source code for each of the tutorial programs is available, and you are encouraged to compile, test, and experiment with it. To conserve space, we won't always show boilerplate code here, but the provided source is complete and ready to build.
+Source code for each of the tutorial programs is available, and you are encouraged to compile, test, and experiment with it. To conserve space, we won’t always show boilerplate code here, but the provided source is complete and ready to build.
 
 <span id="Preliminaries">Preliminaries</span>
 ---------------------------------------------
 
-Install the Boost distribution if you haven't already done so. See the [Boost Getting Started](http://www.boost.org/more/getting_started/index.html) docs.
+Install the Boost distribution if you haven’t already done so. See the [Boost Getting Started](http://www.boost.org/more/getting_started/index.html) docs.
 
-This tutorial assumes you are going to compile and test the examples using the provided scripts. That's highly recommended.
+This tutorial assumes you are going to compile and test the examples using the provided scripts. That’s highly recommended.
 
 > **If you are planning to compile and test the examples but not use the scripts, make sure your build setup knows where to locate or build the Boost library binaries.**
 
@@ -41,18 +41,18 @@ Usage: tut1 path</code></pre></td><td style="text-align: center;"><pre><code>&gt
 &gt;tut1
 Usage: tut1 path</code></pre></td></tr></tbody></table>
 
-If the `tut1` command outputs "`Usage: tut1 path`", all is well. A set of tutorial programs has been copied (by `setup`) to ***`boost-root`***`/libs/filesystem/example/test` and then built. You are encouraged to modify and experiment with them as the tutorial progresses. Just invoke the `bld` script again to rebuild.
+If the `tut1` command outputs “`Usage: tut1 path`”, all is well. A set of tutorial programs has been copied (by `setup`) to ***`boost-root`***`/libs/filesystem/example/test` and then built. You are encouraged to modify and experiment with them as the tutorial progresses. Just invoke the `bld` script again to rebuild.
 
-If something didn't work right, here are troubleshooting suggestions:
+If something didn’t work right, here are troubleshooting suggestions:
 
--   The `bjam` program executable isn't being found. Check your path environmental variable if it should have been found, otherwise see [Boost Getting Started](http://www.boost.org/more/getting_started/windows.html).  
+-   The `bjam` program executable isn’t being found. Check your path environmental variable if it should have been found, otherwise see [Boost Getting Started](http://www.boost.org/more/getting_started/windows.html).  
      
 -   Look at `bjam.log` to try to spot an indication of the problem.
 
 <span id="Reporting-size">Reporting the size of a file</span> - ([tut1.cpp](../example/tut1.cpp))
 -------------------------------------------------------------------------------------------------
 
-Let's get started. One of the simplest things we can do is report the size of a file.
+Let’s get started. One of the simplest things we can do is report the size of a file.
 
 <table><colgroup><col style="width: 100%" /></colgroup><tbody><tr class="odd"><td><pre><code>tut1.cpp</code></pre><blockquote><pre><code>#include &lt;iostream&gt;
 #include &lt;boost/filesystem.hpp&gt;
@@ -73,7 +73,7 @@ The Boost.Filesystem `file_size` function returns a `uintmax_t` containing the s
 
 >     uintmax_t file_size(const path& p);
 
-For now, all you need to know is that class path has constructors that take `const char *` and many other useful types. (If you can't wait to find out more, skip ahead to the [class path](#Class-path-Constructors) section of the tutorial.)
+For now, all you need to know is that class path has constructors that take `const char *` and many other useful types. (If you can’t wait to find out more, skip ahead to the [class path](#Class-path-Constructors) section of the tutorial.)
 
 Please take a minute to try out `tut1` on your system, using a file that is known to exist, such as `tut1.cpp`. Here is what the results look like on two different operating systems:
 
@@ -88,7 +88,7 @@ tut1.cpp 592
 
 So far, so good. The reported Linux and Windows sizes are different because the Linux tests used `"\n"` line endings, while the Windows tests used `"\r\n"` line endings.
 
-Now try again, but give a path that doesn't exist:
+Now try again, but give a path that doesn’t exist:
 
 <table><colgroup><col style="width: 50%" /><col style="width: 50%" /></colgroup><tbody><tr class="odd"><td style="text-align: center;"><em><strong>Ubuntu Linux</strong></em></td><td style="text-align: center;"><em><strong>Microsoft Windows</strong></em></td></tr><tr class="even"><td style="text-align: center;"><pre><code>$ ./tut1 foo
 terminate called after throwing an instance of &#39;boost::exception_detail::
@@ -97,7 +97,7 @@ filesystem::filesystem_error&gt; &gt;&#39;
   what(): boost::filesystem::file_size: No such file or directory: &quot;foo&quot;
 Aborted</code></pre></td><td style="text-align: center;"><pre><code>&gt;tut1 foo</code></pre><p><strong><em>An exception is thrown; the exact form of the response depends on Windows system options.</em></strong></p></td></tr></tbody></table>
 
-What happens? There's no file named `foo` in the current directory, so an exception is thrown.
+What happens? There’s no file named `foo` in the current directory, so an exception is thrown.
 
 Try this:
 
@@ -110,12 +110,12 @@ Aborted</code></pre></td><td style="text-align: center;"><pre><code>&gt;tut1 .</
 
 The current directory exists, but `file_size()` works on regular files, not directories, so again, an exception is thrown.
 
-We'll deal with those situations in `tut2.cpp`.
+We’ll deal with those situations in `tut2.cpp`.
 
 <span id="Using-status-queries">Using status queries to determine file existence and type</span> - ([tut2.cpp](../example/tut2.cpp))
 ------------------------------------------------------------------------------------------------------------------------------------
 
-Boost.Filesystem includes status query functions such as ` exists`, `is_directory`, and `         is_regular_file`. These return `bool`'s, and will return `true` if the condition described by their name is met. Otherwise they return `false`, including when any element of the path argument can't be found.
+Boost.Filesystem includes status query functions such as `exists`, `is_directory`, and `is_regular_file`. These return `bool`’s, and will return `true` if the condition described by their name is met. Otherwise they return `false`, including when any element of the path argument can’t be found.
 
 tut2.cpp uses several of the status query functions to cope with non-existent files and with different kinds of files:
 
@@ -156,9 +156,9 @@ foo does not exist
 &gt;tut2 .
 . is a directory</code></pre></td></tr></tbody></table>
 
-Although tut2 works OK in these tests, the output is less than satisfactory for a directory. We'd typically like to see a list of the directory's contents. In `tut3.cpp` we will see how to iterate over directories.
+Although tut2 works OK in these tests, the output is less than satisfactory for a directory. We’d typically like to see a list of the directory’s contents. In `tut3.cpp` we will see how to iterate over directories.
 
-But first, let's try one more test:
+But first, let’s try one more test:
 
 <table><colgroup><col style="width: 50%" /><col style="width: 50%" /></colgroup><tbody><tr class="odd"><td style="text-align: center;"><em><strong>Ubuntu Linux</strong></em></td><td style="text-align: center;"><em><strong>Microsoft Windows</strong></em></td></tr><tr class="even"><td style="text-align: center;"><pre><code>$ ls /home/jane/foo
 ls: cannot access /home/jane/foo: Permission denied
@@ -172,14 +172,14 @@ Aborted</code></pre></td><td style="text-align: center;"><pre><code>&gt;dir e:\
 The device is not ready.
 &gt;tut2 e:\</code></pre><p><strong><em>An exception is thrown; the exact form of the response depends on Windows system options.</em></strong></p></td></tr></tbody></table>
 
-On the Linux system, the test was being run from an account that did not have permission to access `/home/jane/foo`. On the Windows system, ` e:` was a Compact Disc reader/writer that was not ready. End users shouldn't have to interpret cryptic exceptions reports, so as we move on to `tut3.cpp` we will increase the robustness of the code, too.
+On the Linux system, the test was being run from an account that did not have permission to access `/home/jane/foo`. On the Windows system, `e:` was a Compact Disc reader/writer that was not ready. End users shouldn’t have to interpret cryptic exceptions reports, so as we move on to `tut3.cpp` we will increase the robustness of the code, too.
 
 <span id="Directory-iteration">Directory iteration</span> plus catching exceptions - ([tut3.cpp](../example/tut3.cpp))
 ----------------------------------------------------------------------------------------------------------------------
 
-Boost.Filesystem's `           directory_iterator` class is just what we need here. It follows the general pattern of the standard library's `istream_iterator`. Constructed from a path, it iterates over the contents of the directory. A default constructed `directory_iterator` acts as the end iterator.
+Boost.Filesystem’s `directory_iterator` class is just what we need here. It follows the general pattern of the standard library’s `istream_iterator`. Constructed from a path, it iterates over the contents of the directory. A default constructed `directory_iterator` acts as the end iterator.
 
-The value type of `directory_iterator` is ` directory_entry`. A ` directory_entry` object contains a `path` and `file_status` information.  A ` directory_entry` object can be used directly, but can also be passed to `path` arguments in function calls.
+The value type of `directory_iterator` is `directory_entry`. A `directory_entry` object contains a `path` and `file_status` information.  A `directory_entry` object can be used directly, but can also be passed to `path` arguments in function calls.
 
 The other need is increased robustness in the face of the many kinds of errors that can affect file system operations. We could do that at the level of each call to a Boost.Filesystem function (see [Error reporting](#Error-reporting)), but it is easier to supply an overall try/catch block.
 
@@ -276,7 +276,7 @@ Not bad, but we can make further improvements:
 
 -   The listing would be much easier to read if only the filename was displayed, rather than the full path.  
      
--   The Linux listing isn't sorted. That's because the ordering of directory iteration is unspecified. Ordering depends on the underlying operating system API and file system specifics. So we need to sort the results ourselves.
+-   The Linux listing isn’t sorted. That’s because the ordering of directory iteration is unspecified. Ordering depends on the underlying operating system API and file system specifics. So we need to sort the results ourselves.
 
 Move on to `tut4.cpp` to see how those changes play out!
 
@@ -336,7 +336,7 @@ to:
 >     path fn = it->path().filename();   // extract the filename from the path
 >     v.push_back(fn);                   // push into vector for later sorting
 
-`path()` is a `directory_entry` observer function. ` filename()` is one of several path decomposition functions. It extracts the filename portion (`"index.html"`) from a path (`"/home/beman/boost/trunk/index.html"`). These decomposition functions are more fully explored in the [Path iterators, observers, composition, decomposition and query](#Class%20path-iterators-etc) portion of this tutorial.
+`path()` is a `directory_entry` observer function. `filename()` is one of several path decomposition functions. It extracts the filename portion (`"index.html"`) from a path (`"/home/beman/boost/trunk/index.html"`). These decomposition functions are more fully explored in the [Path iterators, observers, composition, decomposition and query](#Class%20path-iterators-etc) portion of this tutorial.
 
 The above was written as two lines of code for clarity. It could have been written more concisely as:
 
@@ -390,7 +390,7 @@ c:\boost\trunk is a directory containing:
   tools
   wiki</code></pre></td></tr></tbody></table>
 
-That completes the main portion of this tutorial. If you haven't already worked through the [Class path](#Class-path-Constructors) sections of this tutorial, dig into them now. The [Error reporting](#Error-reporting) section may also be of interest, although it can be skipped unless you are deeply concerned about error handling issues.
+That completes the main portion of this tutorial. If you haven’t already worked through the [Class path](#Class-path-Constructors) sections of this tutorial, dig into them now. The [Error reporting](#Error-reporting) section may also be of interest, although it can be skipped unless you are deeply concerned about error handling issues.
 
 ------------------------------------------------------------------------
 
@@ -402,7 +402,7 @@ Traditional C interfaces pass paths as `const char*` arguments. C++ interfaces m
 Passing paths as `const path&` arguments is far simpler, yet far more flexible because class `path` itself is far more flexible:
 
 1.  Class `path` supports multiple character types and encodings, including Unicode, to ease internationalization.
-2.  Class `path` supports multiple source types, such as iterators for null terminated sequences, iterator ranges, containers (including `std::basic_string`), and `directory_entry`'s, so functions taking paths don't need to provide several overloads.
+2.  Class `path` supports multiple source types, such as iterators for null terminated sequences, iterator ranges, containers (including `std::basic_string`), and `directory_entry`’s, so functions taking paths don’t need to provide several overloads.
 3.  Class `path` supports both native and generic pathname formats, so programs can be portable between operating systems yet use native formats where desirable.
 4.  Class `path` supplies a full set of iterators, observers, composition, decomposition, and query functions, making pathname manipulations easy, convenient, reliable, and portable.
 
@@ -414,7 +414,7 @@ Here is how (1) and (2) work. Class path constructors, assignments, and appends 
 >     template <class InputIterator>
 >       path(InputIterator begin, InputIterator end);
 
-Let's look at a little program that shows how comfortable class `path` is with both narrow and wide characters in C-style strings, C++ strings, and via C++ iterators:
+Let’s look at a little program that shows how comfortable class `path` is with both narrow and wide characters in C-style strings, C++ strings, and via C++ iterators:
 
 <table><colgroup><col style="width: 100%" /></colgroup><tbody><tr class="odd"><td><pre><code>tut5.cpp</code></pre><blockquote><pre><code>#include &lt;boost/filesystem.hpp&gt;
 #include &lt;string&gt;
@@ -475,15 +475,15 @@ smile4
 smile4☺
 smile☺</code></pre></td></tr></tbody></table>
 
-Note that the exact appearance of the smiling face will depend on the font, font size, and other settings for your command line window. The above tests were run with out-of-the-box Ubuntu 9.10 and Windows 7, US Edition. If you don't get the above results, take a look at the `boost-root/libs/filesystem/example/test` directory with your system's GUI file browser, such as Linux Nautilus, Mac OS X Finder, or Windows Explorer. These tend to be more comfortable with international character sets than command line interpreters.
+Note that the exact appearance of the smiling face will depend on the font, font size, and other settings for your command line window. The above tests were run with out-of-the-box Ubuntu 9.10 and Windows 7, US Edition. If you don’t get the above results, take a look at the `boost-root/libs/filesystem/example/test` directory with your system’s GUI file browser, such as Linux Nautilus, Mac OS X Finder, or Windows Explorer. These tend to be more comfortable with international character sets than command line interpreters.
 
-Class `path` takes care of whatever character type or encoding conversions are required by the particular operating system. Thus as ` tut5` demonstrates, it's no problem to pass a wide character string to a Boost.Filesystem operational function even if the underlying operating system uses narrow characters, and visa versa. And the same applies to user supplied functions that take `const path&` arguments.
+Class `path` takes care of whatever character type or encoding conversions are required by the particular operating system. Thus as `tut5` demonstrates, it’s no problem to pass a wide character string to a Boost.Filesystem operational function even if the underlying operating system uses narrow characters, and visa versa. And the same applies to user supplied functions that take `const path&` arguments.
 
 Class `path` also provides path syntax that is portable across operating systems, element iterators, and observer, composition, decomposition, and query functions to manipulate the elements of a path. The next section of this tutorial deals with path syntax.
 
 ------------------------------------------------------------------------
 
-<span id="Class-path-formats">Class path: Generic format vs. Native format</span>
+<span id="Class-path-formats">Class path: Generic format vs. Native format</span>
 ---------------------------------------------------------------------------------
 
 Class `path` deals with two different pathname formats - generic format and native format. For POSIX-like file systems, these formats are the same. But for users of Windows and other non-POSIX file systems, the distinction is important. Even programmers writing for POSIX-like systems need to understand the distinction if they want their code to be portable to non-POSIX systems.
@@ -496,7 +496,7 @@ If a drive specifier or a backslash appears in a pathname on a Windows system, i
 
 Class `path` has observer functions that allow you to obtain the string representation of a path object in either the native format or the generic format. See the [next section](#Class%20path-iterators-etc) for how that plays out.
 
-The distinction between generic format and native format is important when communicating with native C-style API's and with users. Both tend to expect paths in the native format and may be confused by the generic format. The generic format is great, however, for writing portable programs that work regardless of operating system.
+The distinction between generic format and native format is important when communicating with native C-style API’s and with users. Both tend to expect paths in the native format and may be confused by the generic format. The generic format is great, however, for writing portable programs that work regardless of operating system.
 
 The next section covers class `path` observers, composition, decomposition, query, and iteration over the elements of a path.
 
@@ -505,11 +505,11 @@ The next section covers class `path` observers, composition, decomposition, quer
 <span id="Class path-iterators-etc">Class path: Iterators, observers, composition, decomposition, and query</span> - ([path\_info.cpp](../example/path_info.cpp))
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-The `path_info.cpp` program is handy for learning how class `path` iterators, observers, composition, decomposition, and query functions work on your system. If it hasn't already already been built on your system, please build it now. Run the examples below on your system, and try some different path arguments as we go along.
+The `path_info.cpp` program is handy for learning how class `path` iterators, observers, composition, decomposition, and query functions work on your system. If it hasn’t already already been built on your system, please build it now. Run the examples below on your system, and try some different path arguments as we go along.
 
-`path_info` produces several dozen output lines every time it's invoked. We will only show the output lines we are interested in at each step.
+`path_info` produces several dozen output lines every time it’s invoked. We will only show the output lines we are interested in at each step.
 
-First we'll look at iteration over the elements of a path, and then use iteration to illustrate the difference between generic and native format paths.
+First we’ll look at iteration over the elements of a path, and then use iteration to illustrate the difference between generic and native format paths.
 
 <table><colgroup><col style="width: 50%" /><col style="width: 50%" /></colgroup><tbody><tr class="odd"><td style="text-align: center;"><em><strong>Ubuntu Linux</strong></em></td><td style="text-align: center;"><em><strong>Microsoft Windows</strong></em></td></tr><tr class="even"><td style="text-align: center;"><pre><code>$ ./path_info /foo/bar/baa.txt
 ...
@@ -536,7 +536,7 @@ for (path::iterator it = p.begin(); it != p.end(); ++it)
 
 `path::iterator::value_type` is `path::string_type`, and iteration treats `path` as a container of filenames.
 
-Let's look at some of the output from a slightly different example:
+Let’s look at some of the output from a slightly different example:
 
 <table><colgroup><col style="width: 50%" /><col style="width: 50%" /></colgroup><tbody><tr class="odd"><td style="text-align: center;"><em><strong>Ubuntu Linux</strong></em></td><td style="text-align: center;"><em><strong>Microsoft Windows</strong></em></td></tr><tr class="even"><td style="text-align: center;"><pre><code>$ ./path_info /foo/bar/baa.txt
 
@@ -568,13 +568,13 @@ observers, generic format:
   generic_string()-----: /foo/bar/baa.txt
   generic_wstring()----: /foo/bar/baa.txt</code></pre></td></tr></tbody></table>
 
-Native format observers should be used when interacting with the operating system or with users; that's what they expect.
+Native format observers should be used when interacting with the operating system or with users; that’s what they expect.
 
 Generic format observers should be used when the results need to be portable and uniform regardless of the operating system.
 
 `path` objects always hold pathnames in the native format, but otherwise leave them unchanged from their source. The [preferred()](reference.html#preferred) function will convert to the preferred form, if the native format has several forms. Thus on Windows, it will convert slashes to backslashes.
 
-Let's move on to decomposition and query functions:
+Let’s move on to decomposition and query functions:
 
 <table><colgroup><col style="width: 50%" /><col style="width: 50%" /></colgroup><tbody><tr class="odd"><td style="text-align: center;"><em><strong>Ubuntu Linux</strong></em></td><td style="text-align: center;"><em><strong>Microsoft Windows</strong></em></td></tr><tr class="even"><td style="text-align: center;"><pre><code>$ ./path_info /foo/bar/baa.txt
 ...
@@ -622,11 +622,11 @@ query:
   has_stem()-----------: true
   has_extension()------: true</code></pre></td></tr></tbody></table>
 
-These are pretty self-evident, but do note the difference in the result of `is_absolute()` between Linux and Windows. Because there is no root name (i.e. drive specifier or network name), a lone slash (or backslash) is a relative path on Windows.
+These are pretty self-evident, but do note the difference in the result of `is_absolute()` between Linux and Windows. Because there is no root name (i.e. drive specifier or network name), a lone slash (or backslash) is a relative path on Windows.
 
 On to composition!
 
-Class `path` uses `/` and `/=` operators to append elements. That's a reminder that these operations append the operating system's preferred directory separator if needed. The preferred directory separator is a slash on POSIX-like systems, and a backslash on Windows-like systems.
+Class `path` uses `/` and `/=` operators to append elements. That’s a reminder that these operations append the operating system’s preferred directory separator if needed. The preferred directory separator is a slash on POSIX-like systems, and a backslash on Windows-like systems.
 
 [`path_info.cpp`](../example/path_info.cpp) composes a path by appending each of the command line elements to an initially empty path:
 
@@ -639,7 +639,7 @@ cout &lt;&lt; &quot;\ncomposed path:\n&quot;;
 cout &lt;&lt; &quot; cout &lt;&lt; -------------: &quot; &lt;&lt; p &lt;&lt; &quot;\n&quot;;
 cout &lt;&lt; &quot; preferred()----------: &quot; &lt;&lt; p.preferred() &lt;&lt; &quot;\n&quot;;</code></pre></blockquote></td></tr></tbody></table>
 
-Let's give this code a try:
+Let’s give this code a try:
 
 <table><colgroup><col style="width: 50%" /><col style="width: 50%" /></colgroup><tbody><tr class="odd"><td style="text-align: center;"><em><strong>Ubuntu Linux</strong></em></td><td style="text-align: center;"><em><strong>Microsoft Windows</strong></em></td></tr><tr class="even"><td style="text-align: center;"><pre><code>$ ./path_info / foo/bar baa.txt
 
@@ -665,9 +665,9 @@ The Boost.Filesystem `file_size` function has two overloads:
 
 The only significant difference between the two is how they report errors.
 
-The first signature will throw exceptions to report errors. A `         filesystem_error` exception will be thrown on an operational error. `filesystem_error` is derived from `std::runtime_error`. It has a member function to obtain the `         error_code` reported by the source of the error. It also has member functions to obtain the path or paths that caused the error.
+The first signature will throw exceptions to report errors. A `filesystem_error` exception will be thrown on an operational error. `filesystem_error` is derived from `std::runtime_error`. It has a member function to obtain the `error_code` reported by the source of the error. It also has member functions to obtain the path or paths that caused the error.
 
-> **Motivation for the second signature:** Throwing exceptions on errors was the entire error reporting story for the earliest versions of Boost.Filesystem, and indeed throwing exceptions on errors works very well for many applications. But user reports trickled in that some code became so littered with try and catch blocks as to be unreadable and unmaintainable. In some applications I/O errors aren't exceptional, and that's the use case for the second signature.
+> **Motivation for the second signature:** Throwing exceptions on errors was the entire error reporting story for the earliest versions of Boost.Filesystem, and indeed throwing exceptions on errors works very well for many applications. But user reports trickled in that some code became so littered with try and catch blocks as to be unreadable and unmaintainable. In some applications I/O errors aren’t exceptional, and that’s the use case for the second signature.
 
 Functions with a `system::error_code&` argument set that argument to report operational error status, and so do not throw exceptions when I/O related errors occur. For a full explanation, see [Error reporting](reference.html#Error-reporting) in the reference documentation.
 

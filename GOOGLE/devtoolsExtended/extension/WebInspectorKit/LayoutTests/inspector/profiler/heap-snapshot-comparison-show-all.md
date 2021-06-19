@@ -1,1 +1,1 @@
-Tests Comparison view of detailed heap snapshots. The "Show All" button must show all nodes.
+Tests Comparison view of detailed heap snapshots. The “Show All” button must show all nodes.

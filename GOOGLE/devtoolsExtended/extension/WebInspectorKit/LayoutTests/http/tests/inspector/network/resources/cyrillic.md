@@ -1,1 +1,1 @@
-The following line contains a word "success" written with cyrillic letters. SUССЕSS
+The following line contains a word “success” written with cyrillic letters. SUССЕSS

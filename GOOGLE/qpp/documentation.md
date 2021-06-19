@@ -21,10 +21,10 @@ Querypoint debugging reduces developer effort and time in debugging using dynami
 
 ### Demos
 
- [Simple demo.html](./test/LayoutTests/DocGen/demoSetup.html)   
+[Simple demo.html](./test/LayoutTests/DocGen/demoSetup.html)  
 Currently this Querypoint Debugger can only debug one demo project.
 
 ### Feature Walkthrus
 
- [lastChange](test/LayoutTests/DocGen/lastChange-walkthru.html)   
+[lastChange](test/LayoutTests/DocGen/lastChange-walkthru.html)  
 Find source code locations where object property values are changed

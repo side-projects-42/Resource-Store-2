@@ -1,1 +1,1 @@
-This test passes if it doesn't ASSERT.
+This test passes if it doesn’t ASSERT.

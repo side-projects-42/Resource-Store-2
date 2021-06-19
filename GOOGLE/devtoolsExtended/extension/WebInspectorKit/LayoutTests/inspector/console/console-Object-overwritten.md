@@ -1,1 +1,1 @@
-Tests that Web Inspector's console is not broken if Object is overwritten in the inspected page. Test passes if the expression is evaluated in the console and no errors printed. [Bug 101320.](https://bugs.webkit.org/show_bug.cgi?id=101320)
+Tests that Web Inspector’s console is not broken if Object is overwritten in the inspected page. Test passes if the expression is evaluated in the console and no errors printed. [Bug 101320.](https://bugs.webkit.org/show_bug.cgi?id=101320)

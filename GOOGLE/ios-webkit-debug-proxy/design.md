@@ -9,31 +9,26 @@ See the [README.md](README.md) for an overview.
 Source
 ------
 
--   [src/ios\_webkit\_debug\_proxy\_main.c](src/ios_webkit_debug_proxy_main.c)  
-    - The “main”
-
--   [src/ios\_webkit\_debug\_proxy.c](src/ios_webkit_debug_proxy.c)  
-    - WebInspector to WebKit Remote Debugging Protocol translator  
-    - See [examples/wdp\_client.js](examples/wdp_client.js) and <a href="http://localhost:9221" class="uri">http://localhost:9221</a>
-
--   [src/webinspector.c](src/webinspector.c)  
-    - iOS WebInspector library  
-    - See [examples/wi\_client.c](examples/wi_client.c) - See [src/rpc.c](src/rpc.c) parser
-
--   [src/device\_listener.c](src/device_listener.c)  
-    - iOS device add/remove listener  
-    - See [examples/dl\_client.c](examples/dl_client.c)
-
--   [src/websocket.c](src/websocket.c)  
-    - A generic WebSocket library  
-    - Uses base64.c and sha1.c from [PolarSSL](http://www.polarssl.org)  
-    - See [examples/ws\_echo1.c](examples/ws_echo1.c) and [examples/ws\_echo2.c](examples/ws_echo2.c)
-
--   Utilities:  
-    - [src/char\_buffer.c](src/char_buffer.c) byte buffer  
-    - [src/hash\_table.c](src/hash_table.c) dictionary  
-    - [src/port\_config.c](src/port_config.c) parses device\_id:port config files  
-    - [src/socket\_manager.c](src/socket_manager.c) select-based socket controller
+-   [src/ios\_webkit\_debug\_proxy\_main.c](src/ios_webkit_debug_proxy_main.c)
+    -   The “main”
+-   [src/ios\_webkit\_debug\_proxy.c](src/ios_webkit_debug_proxy.c)
+    -   WebInspector to WebKit Remote Debugging Protocol translator  
+    -   See [examples/wdp\_client.js](examples/wdp_client.js) and <a href="http://localhost:9221" class="uri">http://localhost:9221</a>
+-   [src/webinspector.c](src/webinspector.c)
+    -   iOS WebInspector library  
+    -   See [examples/wi\_client.c](examples/wi_client.c) - See [src/rpc.c](src/rpc.c) parser
+-   [src/device\_listener.c](src/device_listener.c)
+    -   iOS device add/remove listener  
+    -   See [examples/dl\_client.c](examples/dl_client.c)
+-   [src/websocket.c](src/websocket.c)
+    -   A generic WebSocket library  
+    -   Uses base64.c and sha1.c from [PolarSSL](http://www.polarssl.org)  
+    -   See [examples/ws\_echo1.c](examples/ws_echo1.c) and [examples/ws\_echo2.c](examples/ws_echo2.c)
+-   Utilities:
+    -   [src/char\_buffer.c](src/char_buffer.c) byte buffer  
+    -   [src/hash\_table.c](src/hash_table.c) dictionary  
+    -   [src/port\_config.c](src/port_config.c) parses device\_id:port config files  
+    -   [src/socket\_manager.c](src/socket_manager.c) select-based socket controller
 
 Architecture
 ------------

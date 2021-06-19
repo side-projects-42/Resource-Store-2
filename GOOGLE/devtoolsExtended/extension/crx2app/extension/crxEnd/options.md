@@ -38,15 +38,11 @@ Remove
 
 Add Extension
 
-  
-
 Console Tracing Options For Debugging This Extension
 
 Trace connection events  
 Trace messages  
 Trace Warning IO  
-Trace chrome.\* adapters  
-
-  
+Trace chrome.\* adapters
 
 <span id="warnReload" class="hidden warning">To Complete Options Update, Please click `reload` the chrome://extensions page</span>

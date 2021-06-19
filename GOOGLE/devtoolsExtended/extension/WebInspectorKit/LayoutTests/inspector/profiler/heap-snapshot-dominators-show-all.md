@@ -1,1 +1,1 @@
-Tests Dominators view of detailed heap snapshots. The "Show All" button must show all nodes.
+Tests Dominators view of detailed heap snapshots. The “Show All” button must show all nodes.

@@ -1,7 +1,7 @@
 CodeMirror: XML mode
 ====================
 
-&lt;html style="color: green"&gt; &lt;!-- this is a comment --&gt; &lt;head&gt; &lt;title&gt;HTML Example&lt;/title&gt; &lt;/head&gt; &lt;body&gt; The indentation tries to be &lt;em&gt;somewhat &quot;do what I mean&quot;&lt;/em&gt;... but might not match your style. &lt;/body&gt; &lt;/html&gt;
+&lt;html style=“color: green”&gt; &lt;!– this is a comment –&gt; &lt;head&gt; &lt;title&gt;HTML Example&lt;/title&gt; &lt;/head&gt; &lt;body&gt; The indentation tries to be &lt;em&gt;somewhat “do what I mean”&lt;/em&gt;… but might not match your style. &lt;/body&gt; &lt;/html&gt;
 
 The XML mode supports two configuration parameters:
 

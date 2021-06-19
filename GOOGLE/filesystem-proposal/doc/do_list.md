@@ -79,23 +79,23 @@ Code
 -   Add test case: relational operators on paths differing only in trailing separator. Rationale?
 -   Provide the name check functions for more character types? Templatize? take a path argument?
 -   Add codepage 936/950/etc test cases.
--   Should UDT's be supported?
+-   Should UDT’s be supported?
 -   Should path iteration to a separator result in:  
-    -- the actual separator used  
-    -- the preferred separator  
-    -- the generic separator &lt;-- makes it easier to write portable code  
-    -- a dot
+    – the actual separator used  
+    – the preferred separator  
+    – the generic separator &lt;– makes it easier to write portable code  
+    – a dot
 
 ### Operations
 
 -   Would complete(), system\_complete() be clearer if renamed absolute(), absolute\_system() (or absolute\_native())?
 -   Review all operations.cpp code for race conditions similar to \#2925. Fix or document.
 -   Enable all BOOST\_FILESYSTEM\_NO\_DEPRECATED code.
--   rename and remove names are problems. If users says "using namespace boost::filesystem"  
+-   rename and remove names are problems. If users says “using namespace boost::filesystem”  
     and some header included stdio, there is just too much chance of silent error.
 -   create\_directories error handling needs work.
 -   Fold convenience.hpp into operations.hpp
--   Two argument recursive\_directory\_iterator ctor isn't recognizing throws(). Would it be better to fold into a single two argument ctor with default?
+-   Two argument recursive\_directory\_iterator ctor isn’t recognizing throws(). Would it be better to fold into a single two argument ctor with default?
 -   Add the push\_directory class from tools/release/required\_files.cpp
 
 ### Miscellaneous

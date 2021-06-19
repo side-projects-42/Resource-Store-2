@@ -5,9 +5,9 @@ Twitter / codemirror
 
 http://twitter.com/codemirror Twitter updates from CodeMirror / codemirror. en-us 40
 
-codemirror: http://cloud-ide.com — they're springing up like mushrooms. This one uses CodeMirror as its editor.
+codemirror: http://cloud-ide.com — they’re springing up like mushrooms. This one uses CodeMirror as its editor.
 
-codemirror: http://cloud-ide.com — they're springing up like mushrooms. This one uses CodeMirror as its editor. Thu, 17 Mar 2011 23:34:47 +0000 http://twitter.com/codemirror/statuses/48527733722058752 http://twitter.com/codemirror/statuses/48527733722058752
+codemirror: http://cloud-ide.com — they’re springing up like mushrooms. This one uses CodeMirror as its editor. Thu, 17 Mar 2011 23:34:47 +0000 http://twitter.com/codemirror/statuses/48527733722058752 http://twitter.com/codemirror/statuses/48527733722058752
 
 web
 

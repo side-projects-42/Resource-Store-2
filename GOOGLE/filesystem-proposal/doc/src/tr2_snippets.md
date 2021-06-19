@@ -32,9 +32,9 @@ The motivation and scope for a filesystem library were described in [N1975](http
 <span id="Differences-Boost">Differences from Boost Filesystem</span>
 ---------------------------------------------------------------------
 
-In the Boost library, class `path` has facilities to handle narrow (i.e. `char`) character strings with encodings other than the operating system's native encoding. These facilities have been removed from the Filesystem library proposal. Instead, proposal [N3398, String Interoperation Library](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3398.html), provides general facilities that also handle the class `path` use cases.
+In the Boost library, class `path` has facilities to handle narrow (i.e. `char`) character strings with encodings other than the operating system’s native encoding. These facilities have been removed from the Filesystem library proposal. Instead, proposal [N3398, String Interoperation Library](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3398.html), provides general facilities that also handle the class `path` use cases.
 
-Otherwise, the proposal is very similar to the Boost library. Indeed, the proposed wording is generated from the same source as the Boost library's reference documentation.
+Otherwise, the proposal is very similar to the Boost library. Indeed, the proposed wording is generated from the same source as the Boost library’s reference documentation.
 
 <span id="Revision-history">Revision history</span>
 ---------------------------------------------------
@@ -53,26 +53,26 @@ Otherwise, the proposal is very similar to the Boost library. Indeed, the propos
 -   Add `path::operator+=` and `concat` functions to tack on things like suffixes or numbers. Suggested by Ed Smith-Rowland and others.
 -   Add section tags and section numbers, per LWG discussion in Kona.
 -   Minimize use of trademarked names. Enclose uses in green highlighted boxes to facilitate discussion. Apply footnote required by ISO/IEC directives.
--   Introduce a definition for "operating system dependent", and then use it to replace "implementation defined behavior" wherever the operating system's rules determine behavior.
+-   Introduce a definition for “operating system dependent”, and then use it to replace “implementation defined behavior” wherever the operating system’s rules determine behavior.
 -   Replace uses of  const string return types with non-const string return types, per LWG discussion in Kona.
 -   Remove permission for implementations to return const string& in certain cases, per LWG discussion in Kona.
 -   Remove path inserter and extractor dependency on Boost quoted manip (Issue 7).
 -   Replace use of `time_t` with `file_time_type`, a typedef for `std::chrono::system_clock::time_point`, per LWG discussion in Kona.
 -   More consistent semantics and descriptions for return values from operational functions with `error_code&` arguments that encounter an error.
--   `recursive_directory_iterator` specifications are now given in terms of behavior only. Private "for exposition only" members have been removed.
--   `recursive_directory_iterator` functions ` no_push_pending()` and `no_push()` have been renamed ` recursion_pending()` and `disable_recursion_pending()`. Option constant name `recurse` has been renamed ` follow_directory_symlinks`.  These are responses to a request from Ed Smith-Rowland to improve clarity by reducing negative logic.
--   A `recursive_directory_iterator` option ` skip_permission_denied` has been added to skip directories with permission denied, responding to several user requests.
--   `symlink_option` has been renamed ` directory_options`, since it has become more general and now covers both `follow_directory_symlinks` and `skip_permission_denied` options. 
+-   `recursive_directory_iterator` specifications are now given in terms of behavior only. Private “for exposition only” members have been removed.
+-   `recursive_directory_iterator` functions `no_push_pending()` and `no_push()` have been renamed `recursion_pending()` and `disable_recursion_pending()`. Option constant name `recurse` has been renamed `follow_directory_symlinks`.  These are responses to a request from Ed Smith-Rowland to improve clarity by reducing negative logic.
+-   A `recursive_directory_iterator` option `skip_permission_denied` has been added to skip directories with permission denied, responding to several user requests.
+-   `symlink_option` has been renamed `directory_options`, since it has become more general and now covers both `follow_directory_symlinks` and `skip_permission_denied` options. 
 -   Add missing semantics for `copy_directory`.
 -   Change template parameters for `path::string` and `path::generic_string` to the same as `std::basic_string` in response to comments from the FSG.
--   Remove `initial_path()` operational function. The functionality as currently specified is trivial for a user to duplicate using ` current_path()`. The original spec for `initial_path()` required support from the runtime library. That doesn't appear to be practical, and without it the motivation for the function is too weak for standardization.
+-   Remove `initial_path()` operational function. The functionality as currently specified is trivial for a user to duplicate using `current_path()`. The original spec for `initial_path()` required support from the runtime library. That doesn’t appear to be practical, and without it the motivation for the function is too weak for standardization.
 -   Remove required changes to `<fstream>` header. The LWG does not wish to require modifications existing headers. Also, the Dinkumware/Microsoft version of the library has come up with a clever way to make class `path` work with the existing `<fstream>` classes constructors and open functions.
 -   Remove `directory_entry` as a `Source` in \[path.req\]. It was Boost specific and is inappropriate for the standard library.
--   Change name of `recursive_directory_iterator::level()` to ` depth()`.
+-   Change name of `recursive_directory_iterator::level()` to `depth()`.
 -   Change `enum file_type` to `enum class file_type`, simplify constant names, supply explicit values for constant names; per FSG discussions.
--   Change name of `copy_directory` function to ` create_directory` to more clearly reflect semantics per FSG discussions.
+-   Change name of `copy_directory` function to `create_directory` to more clearly reflect semantics per FSG discussions.
 -   Major upgrade to `copy_options` in response to FSG discussions..
--   Major functionality upgrades to `copy()`and ` file_copy()` per FSG discussions.
+-   Major functionality upgrades to `copy()`and `file_copy()` per FSG discussions.
 -   Add path member function `replace_filename()`, suggested by Robert Stewart and others.
 -   Add C++11 features to both the proposal and the Boost implementation and test suite:
     -   R-value reference move semantics.
@@ -114,10 +114,10 @@ Otherwise, the proposal is very similar to the Boost library. Indeed, the propos
 ---------------------------
 
 -   At Portland meeting, review trademarked names with Filesystem Study Group and project editor.
--   Ion Todirel suggests "Would be nice if path::append was variadic, to improve usability".
+-   Ion Todirel suggests “Would be nice if path::append was variadic, to improve usability”.
 -   Ion Todirel: Would be nice to have a make\_relative. Need to review similar suggestions.
 -   Dinkumware/Microsoft report slightly different results for Decomposition table. Rerun table. Check discrepancies.
--   Review Nick Stoughton's email for suggestions, action items.
+-   Review Nick Stoughton’s email for suggestions, action items.
 -   Review Filesystem Study Group reflector messages for unresolved comments, particularly in the area of Permissions.
 -   Review and resolve any pending issues in the GitHub issues list.
 
@@ -179,16 +179,16 @@ Proposed Wording <span id="TOC">Table of Contents</span>
    [1.11.2 `file_status` observers](#file_status-observers)  
    [1.11.3 `file_status` modifiers](#file_status-modifiers)  
 [1.12 Class `directory_entry`](#Class-directory_entry)  
-   [1.12.1 `directory_entry ` constructors](#directory_entry-constructors)  
-   [1.12.2 `directory_entry ` modifiers](#directory_entry-modifiers)  
+   [1.12.1 `directory_entry` constructors](#directory_entry-constructors)  
+   [1.12.2 `directory_entry` modifiers](#directory_entry-modifiers)  
    [1.12.3 `directory_entry` observers](#directory_entry-observers)  
 [1.13 Class `directory_iterator`](#Class-directory_iterator)  
    [1.13.1 `directory_iterator` members](#directory_iterator-members)  
-   [1.13.2 ` directory_iterator` non-member functions](#directory_iterator-non-member-functions)  
-[1.14 Class ` recursive_directory_iterator`](#Class-recursive_directory_iterator)  
-   [1.14.1 ` recursive_directory_iterator` members](#directory_iterator-members)  
+   [1.13.2 `directory_iterator` non-member functions](#directory_iterator-non-member-functions)  
+[1.14 Class `recursive_directory_iterator`](#Class-recursive_directory_iterator)  
+   [1.14.1 `recursive_directory_iterator` members](#directory_iterator-members)  
    [1.14.2 `recursive_directory_iterator` non-member functions](#rec.dir.itr.nonmembers)  
-[1.15 Operational functions](#Operational-functions)  
+[1.15 Operational functions](#Operational-functions)
 
 <span id="Proposed-Wording">Proposed Wording</span>
 ---------------------------------------------------
@@ -212,7 +212,7 @@ This clause mentions commercially available operating systems for purposes of ex
 
 *<span style="background-color: #e0e0e0">This footnote is required by ISO/IEC Directives, Part2, section 6.6.3 Use of trade names and trademarks:</span>*
 
-<sup>\[<span id="footnote">footnote</span>\]</sup> POSIX® is a registered trademark of The IEEE. MAC OS® is a registered trademark of Apple Inc. Windows® is a registered trademark of Microsoft Corporation. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO or IEC of these products.
+<sup>\[<span id="footnote">footnote</span>\]</sup> POSIX® is a registered trademark of The IEEE. MAC OS® is a registered trademark of Apple Inc. Windows® is a registered trademark of Microsoft Corporation. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO or IEC of these products.
 
 <span style="background-color: #e0e0e0">*End of footnote.*</span>
 

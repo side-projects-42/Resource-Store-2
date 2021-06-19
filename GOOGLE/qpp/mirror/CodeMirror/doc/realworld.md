@@ -6,13 +6,13 @@
     /* Real world uses,
        full list */
 
-[Contact me](mailto:marijnh@gmail.com) if you'd like your project to be added to this list.
+[Contact me](mailto:marijnh@gmail.com) if you’d like your project to be added to this list.
 
 -   [Adobe Brackets](http://brackets.io) (code editor)
 -   [Amber](http://amber-lang.net/) (JavaScript-based Smalltalk system)
 -   [APEye](http://apeye.org/) (tool for testing & documenting APIs)
 -   [Bitbucket](http://blog.bitbucket.org/2013/05/14/edit-your-code-in-the-cloud-with-bitbucket/) (code hosting)
--   [Blogger's template editor](http://buzz.blogger.com/2013/04/improvements-to-blogger-template-html.html)
+-   [Blogger’s template editor](http://buzz.blogger.com/2013/04/improvements-to-blogger-template-html.html)
 -   [BlueGriffon](http://bluegriffon.org/) (HTML editor)
 -   [Cargo Collective](http://cargocollective.com/) (creative publishing platform)
 -   [ClickHelp](http://clickhelp.co/) (technical writing tool)
@@ -41,7 +41,7 @@
 -   [FathomJS integration](http://blog.pamelafox.org/2012/02/interactive-html5-slides-with-fathomjs.html) (slides with editors, again)
 -   [Firepad](http://www.firepad.io) (collaborative text editor)
 -   [Go language tour](http://tour.golang.org)
--   [GitHub's Android app](https://github.com/github/android)
+-   [GitHub’s Android app](https://github.com/github/android)
 -   [Google Apps Script](https://script.google.com/)
 -   [Graphit](http://web.uvic.ca/~siefkenj/graphit/graphit.html) (function graphing)
 -   [Handcraft 2](http://www.handcraft2.com/) (HTML prototyping)

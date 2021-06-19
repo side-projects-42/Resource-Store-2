@@ -11,7 +11,7 @@ There are a few things in the 2.2 release that require some care when upgrading.
 No more default.css
 -------------------
 
-The default theme is now included in [`codemirror.css`](../lib/codemirror.css), so you do not have to included it separately anymore. (It was tiny, so even if you're not using it, the extra data overhead is negligible.)
+The default theme is now included in [`codemirror.css`](../lib/codemirror.css), so you do not have to included it separately anymore. (It was tiny, so even if you’re not using it, the extra data overhead is negligible.)
 
 Different key customization
 ---------------------------
@@ -35,7 +35,7 @@ Similarly, `Enter` is bound to `"newlineAndIndent"` by default. You can bind it 
 
       extraKeys: {"Enter": false}
 
-The same works for `Tab`. If you don't want CodeMirror to handle it, bind it to `false`. The default behaviour is to indent the current line more (`"indentMore"` command), and indent it less when shift is held (`"indentLess"`). There are also `"indentAuto"` (smart indent) and `"insertTab"` commands provided for alternate behaviors. Or you can write your own handler function to do something different altogether.
+The same works for `Tab`. If you don’t want CodeMirror to handle it, bind it to `false`. The default behaviour is to indent the current line more (`"indentMore"` command), and indent it less when shift is held (`"indentLess"`). There are also `"indentAuto"` (smart indent) and `"insertTab"` commands provided for alternate behaviors. Or you can write your own handler function to do something different altogether.
 
 Tabs
 ----

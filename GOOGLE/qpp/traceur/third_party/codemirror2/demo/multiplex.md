@@ -5,7 +5,7 @@ CodeMirror: Multiplexing Parser Demo
 
 &gt;
 
-&lt;&lt; multiline not html at all : &amp; &gt;&gt;
+&lt;&lt; multiline not html at all : & &gt;&gt;
 
 this is html again
 

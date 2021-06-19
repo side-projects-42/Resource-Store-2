@@ -5,7 +5,7 @@
 
 26-09-2011: [Version 2.15](http://codemirror.net/codemirror-2.15.zip):
 
-Fix bug that snuck into 2.14: Clicking the character that currently has the cursor didn't re-focus the editor.
+Fix bug that snuck into 2.14: Clicking the character that currently has the cursor didn’t re-focus the editor.
 
 26-09-2011: [Version 2.14](http://codemirror.net/codemirror-2.14.zip):
 
@@ -51,7 +51,7 @@ Fix bug that snuck into 2.14: Clicking the character that currently has the curs
 
 07-06-2011: [Version 2.1](http://codemirror.net/codemirror-2.1.zip):
 
-Add a [theme](manual.html#option_theme) system ([demo](../demo/theme.html)). Note that this is not backwards-compatible—you'll have to update your styles and modes!
+Add a [theme](manual.html#option_theme) system ([demo](../demo/theme.html)). Note that this is not backwards-compatible—you’ll have to update your styles and modes!
 
 07-06-2011: [Version 2.02](http://codemirror.net/codemirror-2.02.zip):
 
@@ -62,7 +62,7 @@ Add a [theme](manual.html#option_theme) system ([demo](../demo/theme.html)). Not
 -   Solve horizontal jittering on long lines.
 -   Add [runmode.js](../demo/runmode.html).
 -   Immediately re-highlight text when typing.
--   Fix problem with 'sticking' horizontal scrollbar.
+-   Fix problem with ‘sticking’ horizontal scrollbar.
 
 26-05-2011: [Version 2.01](http://codemirror.net/codemirror-2.01.zip):
 
@@ -76,14 +76,14 @@ Add a [theme](manual.html#option_theme) system ([demo](../demo/theme.html)). Not
 -   Pass information about the changed lines to `onChange`.
 -   Support cmd-up/down on OS X.
 -   Add triple-click line selection.
--   Don't handle shift when changing the selection through the API.
+-   Don’t handle shift when changing the selection through the API.
 -   Support `"nocursor"` mode for `readOnly` option.
 -   Add an `onHighlightComplete` option.
 -   Fix the context menu for Firefox.
 
 28-03-2011: [Version 2.0](http://codemirror.net/codemirror-2.0.zip):
 
-CodeMirror 2 is a complete rewrite that's faster, smaller, simpler to use, and less dependent on browser quirks. See [this](internals.html) and [this](http://groups.google.com/group/codemirror/browse_thread/thread/5a8e894024a9f580) for more information.
+CodeMirror 2 is a complete rewrite that’s faster, smaller, simpler to use, and less dependent on browser quirks. See [this](internals.html) and [this](http://groups.google.com/group/codemirror/browse_thread/thread/5a8e894024a9f580) for more information.
 
 28-03-2011: [Version 1.0](http://codemirror.net/codemirror-1.0.zip):
 
@@ -150,7 +150,7 @@ CodeMirror 2 is a complete rewrite of CodeMirror, no longer depending on an edit
 -   A number of fixes and support for more syntax in the PHP parser.
 -   Fix indentation problem with JSON-mode JS parser in Webkit.
 -   Add a [minification](compress.html) UI.
--   Support a `height: dynamic` mode, where the editor's height will adjust to the size of its content.
+-   Support a `height: dynamic` mode, where the editor’s height will adjust to the size of its content.
 -   Better support for IME input mode.
 -   Fix JavaScript parser getting confused when seeing a no-argument function call.
 -   Have CSS parser see the difference between selectors and other identifiers.

@@ -22,7 +22,7 @@ Spacing control
 New Commands
 ------------
 
-Should be able to define a new command that happens to be a method on Array (e.g. `pop`):
+Should be able to define a new command that happens to be a method on Array (e.g. `pop`):
 
 Summary
 -------

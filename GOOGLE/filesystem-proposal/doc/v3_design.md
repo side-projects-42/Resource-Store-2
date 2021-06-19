@@ -15,12 +15,12 @@ Design</td></tr></tbody></table>
 <span id="Introduction">Introduction</span>
 -------------------------------------------
 
-During the review of Boost.Filesystem.V2 (Internationalization), Peter Dimov suggested that the` basic_path` class template was unwieldy, and that a single path type that accommodated multiple character types and encodings would be more flexible. Although I wasn't willing to stop development at that time to explore how this idea might be implemented, or to break from the pattern for Internationalization used the C++ standard library, I've often thought about Peter's suggestion. With the advent of C++0x `char16_t` and `char32_t` character types, the `basic_path` class template approach becomes even more unwieldy, so it is time to revisit the problem in light of Peter's suggestion.
+During the review of Boost.Filesystem.V2 (Internationalization), Peter Dimov suggested that the`basic_path` class template was unwieldy, and that a single path type that accommodated multiple character types and encodings would be more flexible. Although I wasn’t willing to stop development at that time to explore how this idea might be implemented, or to break from the pattern for Internationalization used the C++ standard library, I’ve often thought about Peter’s suggestion. With the advent of C++0x `char16_t` and `char32_t` character types, the `basic_path` class template approach becomes even more unwieldy, so it is time to revisit the problem in light of Peter’s suggestion.
 
 **<span id="Problem">Problem</span>**
 -------------------------------------
 
-With Filesystem.V2, a path argument to a user defined function that is to accommodate multiple character types and encodings must be written as a template. Do-the-right-thing overloads or template metaprogramming must be employed to allow arguments to be written as string literals. Here's what it looks like:
+With Filesystem.V2, a path argument to a user defined function that is to accommodate multiple character types and encodings must be written as a template. Do-the-right-thing overloads or template metaprogramming must be employed to allow arguments to be written as string literals. Here’s what it looks like:
 
 >     template<class Path>
 >     void foo( const Path & p );
@@ -34,7 +34,7 @@ With Filesystem.V2, a path argument to a user defined function that is to accomm
 >       return foo<wpath>( p );
 >     }
 
-That's really ugly for such a simple need, and there would be a combinatorial explosion if the function took multiple Path arguments and each could be either narrow or wide. It gets even worse if the C++0x `char16_t` and ` char32_t` types are to be supported.
+That’s really ugly for such a simple need, and there would be a combinatorial explosion if the function took multiple Path arguments and each could be either narrow or wide. It gets even worse if the C++0x `char16_t` and `char32_t` types are to be supported.
 
 <span id="Solution">Solution</span>
 -----------------------------------
@@ -49,7 +49,7 @@ The signatures presented in [Problem](#Problem) collapse to simply:
 
 >     void foo( const path & p );
 
-That's a signification reduction in code complexity. Specification becomes simpler, too. I believe it will be far easier to teach, and result in much more flexible user code.
+That’s a signification reduction in code complexity. Specification becomes simpler, too. I believe it will be far easier to teach, and result in much more flexible user code.
 
 Other benefits:
 
@@ -72,19 +72,19 @@ Possible problems:
 
 ***wide string path arguments***
 
-Systems with `char` as the native API path character type (i.e. POSIX-like systems)
+Systems with `char` as the native API path character type (i.e. POSIX-like systems)
 
 No conversion.
 
-Conversion occurs, performed by the current path locale's `codecvt` facet.
+Conversion occurs, performed by the current path locale’s `codecvt` facet.
 
-Systems with `wchar_t` as the native API path character type (i.e. Windows-like systems).
+Systems with `wchar_t` as the native API path character type (i.e. Windows-like systems).
 
-Conversion occurs, performed by the current path locale's `codecvt` facet.
+Conversion occurs, performed by the current path locale’s `codecvt` facet.
 
 No conversion.
 
-When a class path function argument type matches the the operating system's API argument type for paths, no conversion is performed rather than conversion to a specified encoding such as one of the Unicode encodings. This avoids unintended consequences, etc.
+When a class path function argument type matches the the operating system’s API argument type for paths, no conversion is performed rather than conversion to a specified encoding such as one of the Unicode encodings. This avoids unintended consequences, etc.
 
 <span id="Other-changes">Other changes</span>
 ---------------------------------------------

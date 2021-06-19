@@ -9,7 +9,7 @@ Overview
 
 CodeMirror is a code-editor component that can be embedded in Web pages. The code library provides *only* the editor component, no accompanying buttons, auto-completion, or other IDE functionality. It does provide a rich API on top of which such functionality can be straightforwardly implemented. See the [add-ons](#addons) included in the distribution, and the [CodeMirror UI](https://github.com/jagthedrummer/codemirror-ui) project, for reusable implementations of extra features.
 
-CodeMirror works with language-specific modes. Modes are JavaScript programs that help color (and optionally indent) text written in a given language. The distribution comes with a number of modes (see the `mode/` directory), and it isn't hard to [write new ones](#modeapi) for other languages.
+CodeMirror works with language-specific modes. Modes are JavaScript programs that help color (and optionally indent) text written in a given language. The distribution comes with a number of modes (see the `mode/` directory), and it isn’t hard to [write new ones](#modeapi) for other languages.
 
 Basic Usage
 -----------
@@ -33,7 +33,7 @@ The editor will be appended to the document body, will start empty, and will use
 
 This will initialize the editor with a piece of code already in it, and explicitly tell it to use the JavaScript mode (which is useful when multiple modes are loaded). See [below](#config) for a full discussion of the configuration options that CodeMirror accepts.
 
-In cases where you don't want to append the editor to an element, and need more control over the way it is inserted, the first argument to the `CodeMirror` function can also be a function that, when given a DOM element, inserts it into the document somewhere. This could be used to, for example, replace a textarea with a real editor:
+In cases where you don’t want to append the editor to an element, and need more control over the way it is inserted, the first argument to the `CodeMirror` function can also be a function that, when given a DOM element, inserts it into the document somewhere. This could be used to, for example, replace a textarea with a real editor:
 
     var myCodeMirror = CodeMirror(function(elt) {
       myTextArea.parentNode.replaceChild(elt, myTextArea);
@@ -43,7 +43,7 @@ However, for this use case, which is a common way to use CodeMirror, the library
 
     var myCodeMirror = CodeMirror.fromTextArea(myTextArea);
 
-This will, among other things, ensure that the textarea's value is updated when the form (if it is part of a form) is submitted. See the [API reference](#fromTextArea) for a full description of this method.
+This will, among other things, ensure that the textarea’s value is updated when the form (if it is part of a form) is submitted. See the [API reference](#fromTextArea) for a full description of this method.
 
 Configuration
 -------------
@@ -97,7 +97,7 @@ Whether to show line numbers to the left of the editor.
 At which number to start counting lines. Default is 1.
 
 `gutter (boolean)`  
-Can be used to force a 'gutter' (empty space on the left of the editor) to be shown even when no line numbers are active. This is useful for setting [markers](#setMarker).
+Can be used to force a ‘gutter’ (empty space on the left of the editor) to be shown even when no line numbers are active. This is useful for setting [markers](#setMarker).
 
 `fixedGutter (boolean)`  
 When enabled (off by default), this will make the gutter stay visible when the document is scrolled horizontally.
@@ -121,7 +121,7 @@ The given functions will be called whenever the editor is focused or unfocused.
 When given, will be called whenever the editor is scrolled.
 
 `onHighlightComplete (function)`  
-Whenever the editor's content has been fully highlighted, this function (if given) will be called. It'll be given a single argument, the editor instance.
+Whenever the editor’s content has been fully highlighted, this function (if given) will be called. It’ll be given a single argument, the editor instance.
 
 `onUpdate (function)`  
 Will be called whenever CodeMirror updates its DOM display.
@@ -133,7 +133,7 @@ Determines whether brackets are matched whenever the cursor is moved next to a b
 Highlighting is done by a pseudo background-thread that will work for `workTime` milliseconds, and then use timeout to sleep for `workDelay` milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.
 
 `pollInterval (number)`  
-Indicates how quickly CodeMirror should poll its input textarea for changes. Most input is captured by events, but some things, like IME input on some browsers, doesn't generate events that allow CodeMirror to properly detect it. Thus, it polls. Default is 100 milliseconds.
+Indicates how quickly CodeMirror should poll its input textarea for changes. Most input is captured by events, but some things, like IME input on some browsers, doesn’t generate events that allow CodeMirror to properly detect it. Thus, it polls. Default is 100 milliseconds.
 
 `undoDepth (integer)`  
 The maximum number of undo levels that the editor stores. Defaults to 40.
@@ -142,7 +142,7 @@ The maximum number of undo levels that the editor stores. Defaults to 40.
 The [tab index](http://www.w3.org/TR/html401/interact/forms.html#adef-tabindex) to assign to the editor. If not given, no tab index will be assigned.
 
 `autofocus (boolean)`  
-Can be used to make CodeMirror focus itself on initialization. Defaults to off. When [`fromTextArea`](#fromTextArea) is used, and no explicit value is given for this option, it will inherit the setting from the textarea's `autofocus` attribute.
+Can be used to make CodeMirror focus itself on initialization. Defaults to off. When [`fromTextArea`](#fromTextArea) is used, and no explicit value is given for this option, it will inherit the setting from the textarea’s `autofocus` attribute.
 
 `dragDrop (boolean)`  
 Controls whether drag-and-drop is enabled. On by default.
@@ -151,7 +151,7 @@ Controls whether drag-and-drop is enabled. On by default.
 When given, this will be called when the editor is handling a `dragenter`, `dragover`, or `drop` event. It will be passed the editor instance and the event object as arguments. The callback can choose to handle the event itself, in which case it should return `true` to indicate that CodeMirror should not do anything further.
 
 `onKeyEvent (function)`  
-This provides a rather low-level hook into CodeMirror's key handling. If provided, this function will be called on every `keydown`, `keyup`, and `keypress` event that CodeMirror captures. It will be passed two arguments, the editor instance and the key event. This key event is pretty much the raw key event, except that a `stop()` method is always added to it. You could feed it to, for example, `jQuery.Event` to further normalize it.  
+This provides a rather low-level hook into CodeMirror’s key handling. If provided, this function will be called on every `keydown`, `keyup`, and `keypress` event that CodeMirror captures. It will be passed two arguments, the editor instance and the key event. This key event is pretty much the raw key event, except that a `stop()` method is always added to it. You could feed it to, for example, `jQuery.Event` to further normalize it.  
 This function can inspect the key event, and handle it if it wants to. It may return true to tell CodeMirror to ignore the event. Be wary that, on some browsers, stopping a `keydown` does not stop the `keypress` from firing, whereas on others it does. If you respond to an event, you should probably inspect its `type` property and only do something when it is `keydown` (or `keypress` for actions that need character data).
 
 Keymaps
@@ -167,16 +167,16 @@ The `CodeMirror.keyMap` object associates keymaps with names. User code and keym
 
 The values of properties in keymaps can be either functions of a single argument (the CodeMirror instance), or strings. Such strings refer to properties of the `CodeMirror.commands` object, which defines a number of common commands that are used by the default keybindings, and maps them to functions. A key handler function may throw `CodeMirror.Pass` to indicate that it has decided not to handle the key, and other handlers (or the default behavior) should be given a turn.
 
-Keys mapped to command names that start with the characters `"go"` (which should be used for cursor-movement actions) will be fired even when an extra `Shift` modifier is present (i.e. `"Up":     "goLineUp"` matches both up and shift-up). This is used to easily implement shift-selection.
+Keys mapped to command names that start with the characters `"go"` (which should be used for cursor-movement actions) will be fired even when an extra `Shift` modifier is present (i.e. `"Up":     "goLineUp"` matches both up and shift-up). This is used to easily implement shift-selection.
 
 Keymaps can defer to each other by defining a `fallthrough` property. This indicates that when a key is not found in the map itself, one or more other maps should be searched. It can hold either a single keymap or an array of keymaps.
 
-When a keymap contains a `nofallthrough` property set to `true`, keys matched against that map will be ignored if they don't match any of the bindings in the map (no further child maps will be tried, and the default effect of inserting a character will not occur).
+When a keymap contains a `nofallthrough` property set to `true`, keys matched against that map will be ignored if they don’t match any of the bindings in the map (no further child maps will be tried, and the default effect of inserting a character will not occur).
 
 Customized Styling
 ------------------
 
-Up to a certain extent, CodeMirror's look can be changed by modifying style sheet files. The style sheets supplied by modes simply provide the colors for that mode, and can be adapted in a very straightforward way. To style the editor itself, it is possible to alter or override the styles defined in [`codemirror.css`](../lib/codemirror.css).
+Up to a certain extent, CodeMirror’s look can be changed by modifying style sheet files. The style sheets supplied by modes simply provide the colors for that mode, and can be adapted in a very straightforward way. To style the editor itself, it is possible to alter or override the styles defined in [`codemirror.css`](../lib/codemirror.css).
 
 Some care must be taken there, since a lot of the rules in this file are necessary to have CodeMirror function properly. Adjusting colors should be safe, of course, and with some care a lot of other things can be changed as well. The CSS classes defined in this file serve the following roles:
 
@@ -190,7 +190,7 @@ This determines whether the editor scrolls (`overflow:       auto` + fixed heigh
 Whenever the editor is focused, the top element gets this class. This is used to hide the cursor and give the selection a different color when the editor is not focused.
 
 `CodeMirror-gutter`  
-Use this for giving a background or a border to the editor gutter. Don't set any padding here, use `CodeMirror-gutter-text` for that. By default, the gutter is 'fluid', meaning it will adjust its width to the maximum line number or line marker width. You can also set a fixed width if you want.
+Use this for giving a background or a border to the editor gutter. Don’t set any padding here, use `CodeMirror-gutter-text` for that. By default, the gutter is ‘fluid’, meaning it will adjust its width to the maximum line number or line marker width. You can also set a fixed width if you want.
 
 `CodeMirror-gutter-text`  
 Used to style the actual line numbers. For the numbers to line up, you must make sure that the font in the gutter is the same as the one in the rest of the editor, so you should probably only set font style and size in the `CodeMirror` class.
@@ -207,9 +207,9 @@ The selection is represented by `span` elements with this class.
 `CodeMirror-matchingbracket`, `CodeMirror-nonmatchingbracket`  
 These are used to style matched (or unmatched) brackets.
 
-The actual lines, as well as the cursor, are represented by `pre` elements. By default no text styling (such as bold) that might change line height is applied. If you do want such effects, you'll have to give `CodeMirror pre` a fixed height.
+The actual lines, as well as the cursor, are represented by `pre` elements. By default no text styling (such as bold) that might change line height is applied. If you do want such effects, you’ll have to give `CodeMirror pre` a fixed height.
 
-If your page's style sheets do funky things to all `div` or `pre` elements (you probably shouldn't do that), you'll have to define rules to cancel these effects out again for elements under the `CodeMirror` class.
+If your page’s style sheets do funky things to all `div` or `pre` elements (you probably shouldn’t do that), you’ll have to define rules to cancel these effects out again for elements under the `CodeMirror` class.
 
 Themes are also simply CSS files, which define colors for various syntactic elements. See the files in the [`theme`](../theme/) directory.
 
@@ -218,7 +218,7 @@ Programming API
 
 A lot of CodeMirror features are only available through its API. This has the disadvantage that you need to do work to enable them, and the advantage that CodeMirror will fit seamlessly into your application.
 
-Whenever points in the document are represented, the API uses objects with `line` and `ch` properties. Both are zero-based. CodeMirror makes sure to 'clip' any positions passed by client code so that they fit inside the document, so you shouldn't worry too much about sanitizing your coordinates. If you give `ch` a value of `null`, or don't specify it, it will be replaced with the length of the specified line.
+Whenever points in the document are represented, the API uses objects with `line` and `ch` properties. Both are zero-based. CodeMirror makes sure to ‘clip’ any positions passed by client code so that they fit inside the document, so you shouldn’t worry too much about sanitizing your coordinates. If you give `ch` a value of `null`, or don’t specify it, it will be replaced with the length of the specified line.
 
 `getValue() → string`  
 Get the current editor content.
@@ -266,10 +266,10 @@ Redo one undone edit.
 Returns an object with `{undo, redo}` properties, both of which hold integers, indicating the amount of stored undo and redo operations.
 
 `clearHistory()`  
-Clears the editor's undo history.
+Clears the editor’s undo history.
 
 `indentLine(line, dir)`  
-Reset the given line's indentation to the indentation prescribed by the mode. If the second argument is given, indentation will be increased (if `dir` is true) or decreased (if false) by an [indent unit](#option_indentUnit) instead.
+Reset the given line’s indentation to the indentation prescribed by the mode. If the second argument is given, indentation will be increased (if `dir` is true) or decreased (if false) by an [indent unit](#option_indentUnit) instead.
 
 `getTokenAt(pos) → object`  
 Retrieves information about the token the current mode found before the given position (a `{line, ch}` object). The returned object has the following properties:
@@ -281,13 +281,13 @@ The character (on the given line) at which the token starts.
 The character at which the token ends.
 
 `string`  
-The token's string.
+The token’s string.
 
 `className`  
 The class the mode assigned to the token. (Can be null when no class was assigned.)
 
 `state`  
-The mode's state at the end of this token.
+The mode’s state at the end of this token.
 
 `markText(from, to, className) → object`  
 Can be used to mark a range of text with a specific CSS class name. `from` and `to` should be `{line, ch}` objects. The method will return an object with two methods, `clear()`, which removes the mark, and `find()`, which returns a `{from,       to}` (both document positions), indicating the current position of the marked range.
@@ -308,7 +308,7 @@ Clears a marker created with `setMarker`. `line` can be either a number or a han
 Set a CSS class name for the given line. `line` can be a number or a line handle (as returned by `setMarker` or this function). `className` will be used to style the text for the line, and `backgroundClassName` to style its background (which lies behind the selection). Pass `null` to clear the classes for a line.
 
 `hideLine(line) → lineHandle`  
-Hide the given line (either by number or by handle). Hidden lines don't show up in the editor, and their numbers are skipped when [line numbers](#option_lineNumbers) are enabled. Deleting a region around them does delete them, and coping a region around will include them in the copied text.
+Hide the given line (either by number or by handle). Hidden lines don’t show up in the editor, and their numbers are skipped when [line numbers](#option_lineNumbers) are enabled. Deleting a region around them does delete them, and coping a region around will include them in the copied text.
 
 `showLine(line) → lineHandle`  
 The inverse of `hideLine`—re-shows a previously hidden line, by number or by handle.
@@ -332,7 +332,7 @@ Force matching-bracket-highlighting to happen.
 Get the number of lines in the editor.
 
 `getCursor(start) → object`  
-`start` is a boolean indicating whether the start or the end of the selection must be retrieved. If it is not given, the current cursor pos, i.e. the side of the selection that would move if you pressed an arrow key, is chosen. A `{line, ch}` object will be returned.
+`start` is a boolean indicating whether the start or the end of the selection must be retrieved. If it is not given, the current cursor pos, i.e. the side of the selection that would move if you pressed an arrow key, is chosen. A `{line, ch}` object will be returned.
 
 `somethingSelected() → boolean`  
 Return true if any text is selected.
@@ -359,7 +359,7 @@ Get the text between the given points in the editor, which should be `{line, ch}
 Replace the part of the document between `from` and `to` with the given string. `from` and `to` must be `{line, ch}` objects. `to` can be left off to simply insert the string at position `from`.
 
 `posFromIndex(index) → object`  
-Calculates and returns a `{line, ch}` object for a zero-based `index` who's value is relative to the start of the editor's text. If the `index` is out of range of the text then the returned object is clipped to start or end of the text respectively.
+Calculates and returns a `{line, ch}` object for a zero-based `index` who’s value is relative to the start of the editor’s text. If the `index` is out of range of the text then the returned object is clipped to start or end of the text respectively.
 
 `indexFromPos(object) → number`  
 The reverse of [`posFromIndex`](#posFromIndex).
@@ -388,7 +388,7 @@ Returns the DOM node that is responsible for the sizing and the scrolling of the
 Fetches the DOM node that represents the editor gutter.
 
 `getStateAfter(line) → state`  
-Returns the mode's parser state, if any, at the end of the given line number. If no line number is given, the state at the end of the document is returned. This can be useful for storing parsing errors in the state, or getting other kinds of contextual information for a line.
+Returns the mode’s parser state, if any, at the end of the given line number. If no line number is given, the state at the end of the document is returned. This can be useful for storing parsing errors in the state, or getting other kinds of contextual information for a line.
 
 Finally, the `CodeMirror` object itself has a method `fromTextArea`. This takes a textarea DOM node as first argument and an optional configuration object as second. It will replace the textarea with a CodeMirror instance, and wire up the form of that textarea (if any) to make sure the editor contents are put into the textarea when the form is submitted. A CodeMirror instance created this way has two additional methods:
 
@@ -396,7 +396,7 @@ Finally, the `CodeMirror` object itself has a method `fromTextArea`. This takes 
 Copy the content of the editor into the textarea.
 
 `toTextArea()`  
-Remove the editor, and restore the original textarea (with the editor's current content).
+Remove the editor, and restore the original textarea (with the editor’s current content).
 
 `getTextArea() → textarea`  
 Returns the textarea that the instance was based on.
@@ -433,10 +433,10 @@ Helps with code folding. See [the demo](../demo/folding.html) for an example. Ca
 Can be used to run a CodeMirror mode over text without actually opening an editor instance. See [the demo](../demo/runmode.html) for an example.
 
 [`overlay.js`](../lib/util/overlay.js)  
-Mode combinator that can be used to extend a mode with an 'overlay' — a secondary mode is run over the stream, along with the base mode, and can color specific pieces of text without interfering with the base mode. Defines `CodeMirror.overlayMode`, which is used to create such a mode. See [this demo](../demo/mustache.html) for a detailed example.
+Mode combinator that can be used to extend a mode with an ‘overlay’ — a secondary mode is run over the stream, along with the base mode, and can color specific pieces of text without interfering with the base mode. Defines `CodeMirror.overlayMode`, which is used to create such a mode. See [this demo](../demo/mustache.html) for a detailed example.
 
 [`multiplex.js`](../lib/util/multiplex.js)  
-Mode combinator that can be used to easily 'multiplex' between several modes. Defines `CodeMirror.multiplexingMode` which, when given as first argument a mode object, and as other arguments any number of `{open, close, mode [, delimStyle]}` objects, will return a mode object that starts parsing using the mode passed as first argument, but will switch to another mode as soon as it encounters a string that occurs in one of the `open` fields of the passed objects. When in a sub-mode, it will go back to the top mode again when the `close` string is encountered. When `delimStyle` is specified, it will be the token style returned for the delimiter tokens. The outer mode will not see the content between the delimiters. See [this demo](../demo/multiplex.html) for an example.
+Mode combinator that can be used to easily ‘multiplex’ between several modes. Defines `CodeMirror.multiplexingMode` which, when given as first argument a mode object, and as other arguments any number of `{open, close, mode [, delimStyle]}` objects, will return a mode object that starts parsing using the mode passed as first argument, but will switch to another mode as soon as it encounters a string that occurs in one of the `open` fields of the passed objects. When in a sub-mode, it will go back to the top mode again when the `close` string is encountered. When `delimStyle` is specified, it will be the token style returned for the delimiter tokens. The outer mode will not see the content between the delimiters. See [this demo](../demo/multiplex.html) for an example.
 
 [`simple-hint.js`](../lib/util/simple-hint.js)  
 Provides a framework for showing autocompletion hints. Defines `CodeMirror.simpleHint`, which takes a CodeMirror instance and a hinting function, and pops up a widget that allows the user to select a completion. Hinting functions are function that take an editor instance, and return a `{list, from, to}` object, where `list` is an array of strings (the completions), and `from` and `to` give the start and end of the token that is being completed. Depends on `lib/util/simple-hint.css`.
@@ -451,22 +451,22 @@ Adds a `matchHighlight` method to CodeMirror instances that can be called (typic
 Provides utility functions for adding automatic tag closing to XML modes. See the [demo](../demo/closetag.html).
 
 [`loadmode.js`](../lib/util/loadmode.js)  
-Defines a `CodeMirror.requireMode(modename,       callback)` function that will try to load a given mode and call the callback when it succeeded. You'll have to set `CodeMirror.modeURL` to a string that mode paths can be constructed from, for example `"mode/%N/%N.js"`—the `%N`'s will be replaced with the mode name. Also defines `CodeMirror.autoLoadMode(instance, mode)`, which will ensure the given mode is loaded and cause the given editor instance to refresh its mode when the loading succeeded. See the [demo](../demo/loadmode.html).
+Defines a `CodeMirror.requireMode(modename,       callback)` function that will try to load a given mode and call the callback when it succeeded. You’ll have to set `CodeMirror.modeURL` to a string that mode paths can be constructed from, for example `"mode/%N/%N.js"`—the `%N`’s will be replaced with the mode name. Also defines `CodeMirror.autoLoadMode(instance, mode)`, which will ensure the given mode is loaded and cause the given editor instance to refresh its mode when the loading succeeded. See the [demo](../demo/loadmode.html).
 
 Writing CodeMirror Modes
 ------------------------
 
 Modes typically consist of a single JavaScript file. This file defines, in the simplest case, a lexer (tokenizer) for your language—a function that takes a character stream as input, advances it past a token, and returns a style for that token. More advanced modes can also handle indentation for the language.
 
-The mode script should call `CodeMirror.defineMode` to register itself with CodeMirror. This function takes two arguments. The first should be the name of the mode, for which you should use a lowercase string, preferably one that is also the name of the files that define the mode (i.e. `"xml"` is defined `xml.js`). The second argument should be a function that, given a CodeMirror configuration object (the thing passed to the `CodeMirror` function) and an optional mode configuration object (as in the [`mode`](#option_mode) option), returns a mode object.
+The mode script should call `CodeMirror.defineMode` to register itself with CodeMirror. This function takes two arguments. The first should be the name of the mode, for which you should use a lowercase string, preferably one that is also the name of the files that define the mode (i.e. `"xml"` is defined `xml.js`). The second argument should be a function that, given a CodeMirror configuration object (the thing passed to the `CodeMirror` function) and an optional mode configuration object (as in the [`mode`](#option_mode) option), returns a mode object.
 
-Typically, you should use this second argument to `defineMode` as your module scope function (modes should not leak anything into the global scope!), i.e. write your whole mode inside this function.
+Typically, you should use this second argument to `defineMode` as your module scope function (modes should not leak anything into the global scope!), i.e. write your whole mode inside this function.
 
 The main responsibility of a mode script is *parsing* the content of the editor. Depending on the language and the amount of functionality desired, this can be done in really easy or extremely complicated ways. Some parsers can be stateless, meaning that they look at one element (*token*) of the code at a time, with no memory of what came before. Most, however, will need to remember something. This is done by using a *state object*, which is an object that is always passed when reading a token, and which can be mutated by the tokenizer.
 
 Modes that use a state must define a `startState` method on their mode object. This is a function of no arguments that produces a state object to be used at the start of a document.
 
-The most important part of a mode object is its `token(stream, state)` method. All modes must define this method. It should read one token from the stream it is given as an argument, optionally update its state, and return a style string, or `null` for tokens that do not have to be styled. For your styles, you can either use the 'standard' ones defined in the themes (without the `cm-` prefix), or define your own and have people include a custom CSS file for your mode.
+The most important part of a mode object is its `token(stream, state)` method. All modes must define this method. It should read one token from the stream it is given as an argument, optionally update its state, and return a style string, or `null` for tokens that do not have to be styled. For your styles, you can either use the ‘standard’ ones defined in the themes (without the `cm-` prefix), or define your own and have people include a custom CSS file for your mode.
 
 The stream object encapsulates a line of code (tokens may never span lines) and our current position in that line. It has the following API:
 
@@ -483,7 +483,7 @@ Returns the next character in the stream without advancing it. Will return `unde
 Returns the next character in the stream and advances it. Also returns `undefined` when no more characters are available.
 
 `eat(match) → character`  
-`match` can be a character, a regular expression, or a function that takes a character and returns a boolean. If the next character in the stream 'matches' the given argument, it is consumed and returned. Otherwise, `undefined` is returned.
+`match` can be a character, a regular expression, or a function that takes a character and returns a boolean. If the next character in the stream ‘matches’ the given argument, it is consumed and returned. Otherwise, `undefined` is returned.
 
 `eatWhile(match) → boolean`  
 Repeatedly calls `eat` with the given argument, until it fails. Returns true if any characters were eaten.
@@ -495,10 +495,10 @@ Shortcut for `eatWhile` when matching white-space.
 Moves the position to the end of the line.
 
 `skipTo(ch) → boolean`  
-Skips to the next occurrence of the given character, if found on the current line (doesn't advance the stream if the character does not occur on the line). Returns true if the character was found.
+Skips to the next occurrence of the given character, if found on the current line (doesn’t advance the stream if the character does not occur on the line). Returns true if the character was found.
 
 `match(pattern, consume, caseFold) → boolean`  
-Act like a multi-character `eat`—if `consume` is true or not given—or a look-ahead that doesn't update the stream position—if it is false. `pattern` can be either a string or a regular expression starting with `^`. When it is a string, `caseFold` can be set to true to make the match case-insensitive. When successfully matching a regular expression, the returned value will be the array returned by `match`, in case you need to extract matched groups.
+Act like a multi-character `eat`—if `consume` is true or not given—or a look-ahead that doesn’t update the stream position—if it is false. `pattern` can be either a string or a regular expression starting with `^`. When it is a string, `caseFold` can be set to true to make the match case-insensitive. When successfully matching a regular expression, the returned value will be the array returned by `match`, in case you need to extract matched groups.
 
 `backUp(n)`  
 Backs up the stream `n` characters. Backing it up further than the start of the current token will cause things to break, so be careful.

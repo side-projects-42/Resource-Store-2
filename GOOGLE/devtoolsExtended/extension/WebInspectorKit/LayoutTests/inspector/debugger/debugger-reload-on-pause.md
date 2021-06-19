@@ -1,1 +1,1 @@
-Tests "reload" from within inspector window while on pause.
+Tests “reload” from within inspector window while on pause.

@@ -1,1 +1,1 @@
-Tests that passing an object which throws on string conversion into console.log won't crash inspected Page. The test passes if it doesn't crash. [Bug 57557](https://bugs.webkit.org/show_bug.cgi?id=57557)
+Tests that passing an object which throws on string conversion into console.log won’t crash inspected Page. The test passes if it doesn’t crash. [Bug 57557](https://bugs.webkit.org/show_bug.cgi?id=57557)

@@ -1,1 +1,1 @@
-Test that ProfilerAgent start/stop doesn't crash.
+Test that ProfilerAgent start/stop doesn’t crash.

@@ -1,7 +1,7 @@
 CodeMirror: PHP mode
 ====================
 
-The program says &lt;?= hello("World") ?&gt;.
+The program says &lt;?= hello(“World”) ?&gt;.
 
 Simple HTML/PHP mode based on the [C-like](../clike/) mode. Depends on XML, JavaScript, CSS, and C-like modes.
 

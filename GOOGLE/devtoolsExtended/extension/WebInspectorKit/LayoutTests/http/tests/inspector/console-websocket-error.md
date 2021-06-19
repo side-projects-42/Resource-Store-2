@@ -1,1 +1,1 @@
-WebSocket's network errors should be logged to console.
+WebSocket’s network errors should be logged to console.
