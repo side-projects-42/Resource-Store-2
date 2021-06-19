@@ -1,16 +1,14 @@
 <html>
-<head>
+  <head>
     <title>JSON Example</title>
     <script type="text/javascript" src="json2.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <script type="text/javascript">
-    
-        var jsonText = "{\"name\":\"Nicholas C. Zakas\", \"age\":29, \"author\":true }";
-        var object = JSON.parse(jsonText);
-    
-        alert(object.name);  //"Nicholas C. Zakas"
+      var jsonText = '{"name":"Nicholas C. Zakas", "age":29, "author":true }';
+      var object = JSON.parse(jsonText);
 
+      alert(object.name); //"Nicholas C. Zakas"
     </script>
-</body>
+  </body>
 </html>

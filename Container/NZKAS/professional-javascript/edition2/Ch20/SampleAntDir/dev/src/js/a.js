@@ -1,3 +1,1 @@
-function A(){
-
-}
+function A() {}

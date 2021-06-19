@@ -1,43 +1,42 @@
 <html>
-<head>
+  <head>
     <title>XML Construction Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <p>This example only works in Firefox 1.5+.</p>
     <script type="text/javascript;e4x=1">
-    
-        var employees = <employees>
-            <employee position="Software Engineer">
-                <name>Nicholas C. Zakas</name>
-            </employee>
-            <employee position="Salesperson">
-                <name>Jim Smith</name>
-            </employee>
-        </employees>;
-        
-        employees.appendChild(<employee position="Vice President">
-                             <name>Benjamin Anderson</name>
-                         </employee>);
-        
-        employees.prependChild(<employee position="User Interface Designer">
-                             <name>Michael Johnson</name>
-                          </employee>);
-        
-        employees.insertChildBefore(employees.child(2), 
-                                    <employee position="Human Resources Manager">
-                                        <name>Margaret Jones</name>
-                                    </employee>);
-        
-        employees.setChildren(<employee position="President">
-                                 <name>Richard McMichael</name>
-                              </employee> +
-                              <employee position="Vice President">
-                                  <name>Rebecca Smith</name>
-                              </employee>);
 
-        
-        alert(employees.toXMLString());
+      var employees = <employees>
+          <employee position="Software Engineer">
+              <name>Nicholas C. Zakas</name>
+          </employee>
+          <employee position="Salesperson">
+              <name>Jim Smith</name>
+          </employee>
+      </employees>;
 
+      employees.appendChild(<employee position="Vice President">
+                           <name>Benjamin Anderson</name>
+                       </employee>);
+
+      employees.prependChild(<employee position="User Interface Designer">
+                           <name>Michael Johnson</name>
+                        </employee>);
+
+      employees.insertChildBefore(employees.child(2),
+                                  <employee position="Human Resources Manager">
+                                      <name>Margaret Jones</name>
+                                  </employee>);
+
+      employees.setChildren(<employee position="President">
+                               <name>Richard McMichael</name>
+                            </employee> +
+                            <employee position="Vice President">
+                                <name>Rebecca Smith</name>
+                            </employee>);
+
+
+      alert(employees.toXMLString());
     </script>
-</body>
+  </body>
 </html>

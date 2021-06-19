@@ -1,14 +1,14 @@
 <html>
-<head>
+  <head>
     <title>OnError Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <script type="text/javascript">
-        window.onerror = function(message, url, line){
-            alert(message);
-            return false;
-        };
-        throw new Error("Something bad happened.");
+      window.onerror = function (message, url, line) {
+        alert(message);
+        return false;
+      };
+      throw new Error("Something bad happened.");
     </script>
-</body>
+  </body>
 </html>

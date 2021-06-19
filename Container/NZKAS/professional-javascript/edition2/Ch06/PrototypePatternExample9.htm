@@ -1,34 +1,27 @@
 <html>
-<head>
+  <head>
     <title>Prototype Pattern Example 7</title>
     <script type="text/javascript">
-                    
-        function Person(){
-        }
-        
-        Person.prototype = {
-            constructor: Person,
-            name : "Nicholas",
-            age : 29,
-            job : "Software Engineer",
-            sayName : function () {
-                alert(this.name);
-            }
-        };
-        
-        var person = new Person();
-        
-        Person.prototype.sayHi = function(){
-            alert("hi");
-        };
-        
-        person.sayHi();   //"hi" – works!
+      function Person() {}
 
+      Person.prototype = {
+        constructor: Person,
+        name: "Nicholas",
+        age: 29,
+        job: "Software Engineer",
+        sayName: function () {
+          alert(this.name);
+        },
+      };
 
-        
+      var person = new Person();
+
+      Person.prototype.sayHi = function () {
+        alert("hi");
+      };
+
+      person.sayHi(); //"hi" ï¿½ works!
     </script>
-</head>
-<body>
-
-</body>
+  </head>
+  <body></body>
 </html>

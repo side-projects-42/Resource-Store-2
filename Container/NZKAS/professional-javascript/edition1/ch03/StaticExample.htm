@@ -1,21 +1,19 @@
 <html>
-<head>
-<title>Example</title>
-</head>
-<body>
-<script type="text/javascript">
-function sayHi() {
-    alert("hi");
-}
+  <head>
+    <title>Example</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function sayHi() {
+        alert("hi");
+      }
 
-sayHi.alternate = function() {
-    alert("hola");
-};
+      sayHi.alternate = function () {
+        alert("hola");
+      };
 
-sayHi();              //outputs "hi"
-sayHi.alternate();    //outputs "hola"
-
-</script>
- 
-</body>
+      sayHi(); //outputs "hi"
+      sayHi.alternate(); //outputs "hola"
+    </script>
+  </body>
 </html>

@@ -1,24 +1,21 @@
 <html>
-<head>
+  <head>
     <title>Iterator Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <script type="application/javascript;version=1.7">
-        
-        var colors = ["red", "green", "blue"];
-        var iterator = new Iterator(colors, true);
-        
-        try {
-            while(true){
-                let value = iterator.next();
-                document.write(value + "<br />");
-            }
-        } catch(ex){
-            
-        }
-        
 
+      var colors = ["red", "green", "blue"];
+      var iterator = new Iterator(colors, true);
 
+      try {
+          while(true){
+              let value = iterator.next();
+              document.write(value + "<br />");
+          }
+      } catch(ex){
+
+      }
     </script>
-</body>
+  </body>
 </html>

@@ -1,17 +1,16 @@
 <html>
-<head>
+  <head>
     <title>XML Type Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <p>This example only works in Firefox 1.5+.</p>
     <script type="text/javascript;e4x=1">
-    
-        var employee =  <employee position="Software Engineer">
-                            <name>Nicholas C. Zakas</name>
-                        </employee>;
-        alert(employee.@position);
-        alert(employee.name);
 
+      var employee =  <employee position="Software Engineer">
+                          <name>Nicholas C. Zakas</name>
+                      </employee>;
+      alert(employee.@position);
+      alert(employee.name);
     </script>
-</body>
+  </body>
 </html>

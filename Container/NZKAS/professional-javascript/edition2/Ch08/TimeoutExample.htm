@@ -1,18 +1,16 @@
 <html>
-    <head>
-        <title>Timeout Example</title>
-    </head>
-    <body>
-        <script type="text/javascript">
+  <head>
+    <title>Timeout Example</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      //avoid!
+      setTimeout("alert('Hello world!') ", 1000);
 
-            //avoid!
-            setTimeout("alert('Hello world!') ", 1000);
-            
-            //preferred
-            setTimeout(function() { 
-                alert("Hello world!"); 
-            }, 1000);
-
-        </script>
-    </body>
+      //preferred
+      setTimeout(function () {
+        alert("Hello world!");
+      }, 1000);
+    </script>
+  </body>
 </html>

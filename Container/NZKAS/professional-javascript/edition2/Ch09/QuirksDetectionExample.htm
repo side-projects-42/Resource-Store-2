@@ -1,38 +1,33 @@
 <html>
-<head>
+  <head>
     <title>Quirks Detection Example</title>
     <script type="text/javascript">
-            
-        var hasDontEnumQuirk = function(){
-        
-            var o = { toString : function(){} };
-            for (var prop in o){
-                if (prop == "toString"){
-                    return false;
-                }
-            }
-        
-            return true;
-        }();
+      var hasDontEnumQuirk = (function () {
+        var o = { toString: function () {} };
+        for (var prop in o) {
+          if (prop == "toString") {
+            return false;
+          }
+        }
 
-        var hasEnumShadowsQuirk = function(){
-        
-            var o = { toString : function(){} };
-            var count = 0;
-            for (var prop in o){
-                if (prop == "toString"){
-                    count++;
-                }
-            }
-        
-            return (count > 1);
-        }();
+        return true;
+      })();
 
-        alert(hasDontEnumQuirk);
-        alert(hasEnumShadowsQuirk);
+      var hasEnumShadowsQuirk = (function () {
+        var o = { toString: function () {} };
+        var count = 0;
+        for (var prop in o) {
+          if (prop == "toString") {
+            count++;
+          }
+        }
+
+        return count > 1;
+      })();
+
+      alert(hasDontEnumQuirk);
+      alert(hasEnumShadowsQuirk);
     </script>
-</head>
-<body>
-
-</body>
+  </head>
+  <body></body>
 </html>

@@ -1,19 +1,16 @@
 <html>
-    <head>
-        <title>Timeout Example 2</title>
-    </head>
-    <body>
-        <script type="text/javascript">
+  <head>
+    <title>Timeout Example 2</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      //set the timeout
+      var timeoutId = setTimeout(function () {
+        alert("Hello world!");
+      }, 1000);
 
-            //set the timeout
-            var timeoutId = setTimeout(function() {
-                alert("Hello world!");
-            }, 1000);
-            
-            //nevermind – cancel it
-            clearTimeout(timeoutId);
-
-
-        </script>
-    </body>
+      //nevermind ï¿½ cancel it
+      clearTimeout(timeoutId);
+    </script>
+  </body>
 </html>

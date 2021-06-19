@@ -1,26 +1,24 @@
 <html>
-<head>
+  <head>
     <title>Destructuring Assignment Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <p>This is known to work only in Firefox 2+.</p>
     <script type="application/javascript;version=1.7">
-        
-        var person = {
-            name: "Nicholas",
-            age: 29
-        };
-        
-        var { name: personName, age: personAge } = person;
-        
-        alert(personName);   //"Nicholas"
-        alert(personAge);    //29
 
-        var { age: personAge2 } = person;
-        
-        alert(personAge2);    //29
+      var person = {
+          name: "Nicholas",
+          age: 29
+      };
 
-        
+      var { name: personName, age: personAge } = person;
+
+      alert(personName);   //"Nicholas"
+      alert(personAge);    //29
+
+      var { age: personAge2 } = person;
+
+      alert(personAge2);    //29
     </script>
-</body>
+  </body>
 </html>

@@ -1,25 +1,24 @@
 <html>
-<head>
+  <head>
     <title>Drag and Drop Example</title>
     <script type="text/javascript" src="EventUtil.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <p>Try dragging the image.</p>
-    <img id="smiley" src="smile.gif" style="-khtml-user-drag:element" />.
+    <img id="smiley" src="smile.gif" style="-khtml-user-drag: element" />.
     <div id="output"></div>
     <script type="text/javascript">
-        var image = document.getElementById("smiley");
-        
-        function handleEvent(event){
-            document.getElementById("output").innerHTML += event.type + "<br />";
-        }
+      var image = document.getElementById("smiley");
 
-        EventUtil.addHandler(image, "dragstart", handleEvent);
-        EventUtil.addHandler(image, "drag", handleEvent);
-        EventUtil.addHandler(image, "dragend", handleEvent);
-        
-        EventUtil.addHandler(image, "draggesture", handleEvent);
+      function handleEvent(event) {
+        document.getElementById("output").innerHTML += event.type + "<br />";
+      }
 
+      EventUtil.addHandler(image, "dragstart", handleEvent);
+      EventUtil.addHandler(image, "drag", handleEvent);
+      EventUtil.addHandler(image, "dragend", handleEvent);
+
+      EventUtil.addHandler(image, "draggesture", handleEvent);
     </script>
-</body>
+  </body>
 </html>

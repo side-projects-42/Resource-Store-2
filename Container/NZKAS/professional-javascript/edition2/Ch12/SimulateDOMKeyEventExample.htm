@@ -1,49 +1,47 @@
 <html>
-<head>
+  <head>
     <title>Simulating DOM Keyboard Events Example</title>
     <script type="text/javascript" src="EventUtil.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <input type="text" value="" id="myTextbox" />
     <input type="button" value="Send keypress to the textbox" id="myBtn" />
-    <p>This example works in DOM-compliant browsers though no text will appear in the textbox.</p>
+    <p>
+      This example works in DOM-compliant browsers though no text will appear in
+      the textbox.
+    </p>
     <script type="text/javascript">
-    
-    (function(){
+      (function () {
         var btn = document.getElementById("myBtn");
         var textbox = document.getElementById("myTextbox");
-        
-        EventUtil.addHandler(textbox, "keypress", function(event){
-            alert(event.charCode);
+
+        EventUtil.addHandler(textbox, "keypress", function (event) {
+          alert(event.charCode);
         });
 
-        EventUtil.addHandler(btn, "click", function(event){
+        EventUtil.addHandler(btn, "click", function (event) {
+          //create event object
+          var event;
 
-            //create event object
-            var event;
-            
-            try {
-                event = document.createEvent("KeyboardEvent");
-                event.initKeyboardEvent("keypress", true, true, "Shift", 0, "");
- 
-            } catch (ex){
-                event = document.createEvent("Events");
-                event.initEvent("keypress", true, true);
-                event.view = document.defaultView;
-                event.altKey = false;
-                event.ctrlKey = false;
-                event.shiftKey = false;
-                event.metaKey = false;
-                event.keyCode = 65;
-                event.charCode = 65;            
-            }            
-            
-            //fire the event
-            textbox.dispatchEvent(event);
+          try {
+            event = document.createEvent("KeyboardEvent");
+            event.initKeyboardEvent("keypress", true, true, "Shift", 0, "");
+          } catch (ex) {
+            event = document.createEvent("Events");
+            event.initEvent("keypress", true, true);
+            event.view = document.defaultView;
+            event.altKey = false;
+            event.ctrlKey = false;
+            event.shiftKey = false;
+            event.metaKey = false;
+            event.keyCode = 65;
+            event.charCode = 65;
+          }
 
+          //fire the event
+          textbox.dispatchEvent(event);
         });
-
-    })();
+      })();
     </script>
-</body>
+  </body>
 </html>

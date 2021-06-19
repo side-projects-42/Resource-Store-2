@@ -1,15 +1,15 @@
 <html>
-<head>
+  <head>
     <title>DOM Event Object Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <a href="http://www.nczonline.net/" id="myLink">Click Me</a>
     <p>This link will not navigate when clicked.</p>
     <script type="text/javascript">
-        var link = document.getElementById("myLink");
-        link.onclick = function(event){
-            event.preventDefault();
-        };    
+      var link = document.getElementById("myLink");
+      link.onclick = function (event) {
+        event.preventDefault();
+      };
     </script>
-</body>
+  </body>
 </html>

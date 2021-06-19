@@ -1,26 +1,25 @@
 <html>
-<head>
+  <head>
     <title>Getter/Setter Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        var person = {
-            _name: null,
-        
-            get name(){
-                return this._name;
-            },
-        
-            set name(value){
-                if (typeof value == "string"){
-                    this._name = value;
-                }
-            }
-        };
-        
-        person.name = "Nicholas";
-        alert(person.name);    //"Nicholas"
+      var person = {
+        _name: null,
 
+        get name() {
+          return this._name;
+        },
+
+        set name(value) {
+          if (typeof value == "string") {
+            this._name = value;
+          }
+        },
+      };
+
+      person.name = "Nicholas";
+      alert(person.name); //"Nicholas"
     </script>
-</body>
+  </body>
 </html>

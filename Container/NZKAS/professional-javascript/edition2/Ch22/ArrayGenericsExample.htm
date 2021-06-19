@@ -1,19 +1,17 @@
 <html>
-<head>
+  <head>
     <title>Array Generics Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <p>This is known to work only in Firefox 1.5+.</p>
     <script>
-        
-        function sortArgs(){
-            var args = Array.slice(arguments);
-            args.sort();
-            return args;        
-        }
-        
-        alert(sortArgs(5,2,9,3));
-        
+      function sortArgs() {
+        var args = Array.slice(arguments);
+        args.sort();
+        return args;
+      }
+
+      alert(sortArgs(5, 2, 9, 3));
     </script>
-</body>
+  </body>
 </html>

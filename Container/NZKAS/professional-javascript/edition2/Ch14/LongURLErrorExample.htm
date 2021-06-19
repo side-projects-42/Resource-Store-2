@@ -1,21 +1,21 @@
 <html>
-<head>
+  <head>
     <title>Long URL Error Example (IE-only)</title>
-</head>
-<body>
+  </head>
+  <body>
     <script type="text/javascript">
-        function createLongUrl(url){
-            var s = "?";
-            for (var i=0, len=2500; i < len; i++){
-                s += "a";
-            }
-            
-            return url + s;
+      function createLongUrl(url) {
+        var s = "?";
+        for (var i = 0, len = 2500; i < len; i++) {
+          s += "a";
         }
-       
-        var x = new XMLHttpRequest();
-        x.open("get", createLongUrl("http://www.somedomain.com/"), true);
-        x.send(null);
+
+        return url + s;
+      }
+
+      var x = new XMLHttpRequest();
+      x.open("get", createLongUrl("http://www.somedomain.com/"), true);
+      x.send(null);
     </script>
-</body>
+  </body>
 </html>

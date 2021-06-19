@@ -16,7 +16,6 @@ The directory is resolved based on the current working directory for both the fi
 
     # Run "ant test" when the files in src change
     rebuild -w src ant test
-    
+
     # Automatically check in files in src and docs when they change
     rebuild -w src -w docs git commit -am "Just wanted to check these in"
-    

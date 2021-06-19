@@ -1,17 +1,17 @@
 <html>
-<head>
+  <head>
     <title>Load Event Example</title>
     <script type="text/javascript" src="EventUtil.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <script type="text/javascript">
-        EventUtil.addHandler(window, "load", function(){
-            var image = new Image();
-            EventUtil.addHandler(image, "load", function(event){
-                alert("Image loaded!");
-            });
-            image.src = "smile.gif";            
+      EventUtil.addHandler(window, "load", function () {
+        var image = new Image();
+        EventUtil.addHandler(image, "load", function (event) {
+          alert("Image loaded!");
         });
+        image.src = "smile.gif";
+      });
     </script>
-</body>
+  </body>
 </html>

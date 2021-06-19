@@ -1,28 +1,26 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-    <head>
-        <title>Window Size Example</title>
-    </head>
-    <body>
-        <p>Hello world!</p>
-        <script type="text/javascript">
+  <head>
+    <title>Window Size Example</title>
+  </head>
+  <body>
+    <p>Hello world!</p>
+    <script type="text/javascript">
+      var pageWidth = window.innerWidth,
+        pageHeight = window.innerHeight;
 
-            var pageWidth = window.innerWidth,
-                pageHeight = window.innerHeight;
-                
-            if (typeof pageWidth != "number"){
-                if (document.compatMode == "CSS1Compat"){
-                    pageWidth = document.documentElement.clientWidth;
-                    pageHeight = document.documentElement.clientHeight;
-                } else {
-                    pageWidth = document.body.clientWidth;
-                    pageHeight = document.body.clientHeight;
-                }
-            }
+      if (typeof pageWidth != "number") {
+        if (document.compatMode == "CSS1Compat") {
+          pageWidth = document.documentElement.clientWidth;
+          pageHeight = document.documentElement.clientHeight;
+        } else {
+          pageWidth = document.body.clientWidth;
+          pageHeight = document.body.clientHeight;
+        }
+      }
 
-            alert("Width: " + pageWidth);
-            alert("Height: " + pageHeight);
-        </script>
-    </body>
+      alert("Width: " + pageWidth);
+      alert("Height: " + pageHeight);
+    </script>
+  </body>
 </html>

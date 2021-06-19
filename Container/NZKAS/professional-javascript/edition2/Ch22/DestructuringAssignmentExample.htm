@@ -1,18 +1,17 @@
 <html>
-<head>
+  <head>
     <title>Destructuring Assignment Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <p>This is known to work only in Firefox 2+.</p>
     <script type="application/javascript;version=1.7">
-        
-        var [name, value] = ["color", "red"];
-        alert(name);     //"color"
-        alert(value);    //"red"
-        
-        var [, value2] = ["color", "red"];
-        alert(value2);    //"red"
-        
+
+      var [name, value] = ["color", "red"];
+      alert(name);     //"color"
+      alert(value);    //"red"
+
+      var [, value2] = ["color", "red"];
+      alert(value2);    //"red"
     </script>
-</body>
+  </body>
 </html>

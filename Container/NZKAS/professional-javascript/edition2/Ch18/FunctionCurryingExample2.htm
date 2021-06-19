@@ -1,31 +1,34 @@
 <html>
-<head>
+  <head>
     <title>Function Currying Example</title>
     <script type="text/javascript" src="EventUtil.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <input type="button" id="my-btn" value="Click Me" />
     <script type="text/javascript">
-        function bind(fn, context){
-            var args = Array.prototype.slice.call(arguments, 2);
-            return function(){
-                var innerArgs = Array.prototype.slice.call(arguments);
-                var finalArgs = args.concat(innerArgs);
-                return fn.apply(context, finalArgs);
-            };
-        }
-    
-        var handler = {
-            message: "Event handled",
-        
-            handleClick: function(name, event){
-                alert(this.message + ":" + name + ":" + event.type);
-            }
+      function bind(fn, context) {
+        var args = Array.prototype.slice.call(arguments, 2);
+        return function () {
+          var innerArgs = Array.prototype.slice.call(arguments);
+          var finalArgs = args.concat(innerArgs);
+          return fn.apply(context, finalArgs);
         };
-        
-        var btn = document.getElementById("my-btn");
-        EventUtil.addHandler(btn, "click", bind(handler.handleClick, handler, "my-btn"));
+      }
 
+      var handler = {
+        message: "Event handled",
+
+        handleClick: function (name, event) {
+          alert(this.message + ":" + name + ":" + event.type);
+        },
+      };
+
+      var btn = document.getElementById("my-btn");
+      EventUtil.addHandler(
+        btn,
+        "click",
+        bind(handler.handleClick, handler, "my-btn")
+      );
     </script>
-</body>
+  </body>
 </html>

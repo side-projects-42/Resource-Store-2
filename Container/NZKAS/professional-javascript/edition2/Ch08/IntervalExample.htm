@@ -1,19 +1,16 @@
 <html>
-    <head>
-        <title>Interval Example</title>
-    </head>
-    <body>
-        <script type="text/javascript">
+  <head>
+    <title>Interval Example</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      //avoid!
+      setInterval("alert('Hello world!') ", 10000);
 
-            //avoid!
-            setInterval("alert('Hello world!') ", 10000);
-            
-            //preferred
-            setInterval(function() { 
-                alert("Hello world!"); 
-            }, 10000);            
-
-
-        </script>
-    </body>
+      //preferred
+      setInterval(function () {
+        alert("Hello world!");
+      }, 10000);
+    </script>
+  </body>
 </html>

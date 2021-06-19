@@ -1,16 +1,16 @@
 <html>
-<head>
+  <head>
     <title>Keyup Event Example</title>
     <script type="text/javascript" src="EventUtil.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <input type="text" id="myText" />
     <script type="text/javascript">
-        var textbox = document.getElementById("myText");
-        EventUtil.addHandler(textbox, "keyup", function(event){
-            event = EventUtil.getEvent(event);
-            alert(event.keyCode);     
-        });
+      var textbox = document.getElementById("myText");
+      EventUtil.addHandler(textbox, "keyup", function (event) {
+        event = EventUtil.getEvent(event);
+        alert(event.keyCode);
+      });
     </script>
-</body>
+  </body>
 </html>

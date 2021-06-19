@@ -1,18 +1,21 @@
 <html>
-<head>
+  <head>
     <title>CompareDocumentPosition Example</title>
-</head>
-<body>
-
-    <input type="button" value="Does html contain body?" onclick="getContains()" />
+  </head>
+  <body>
+    <input
+      type="button"
+      value="Does html contain body?"
+      onclick="getContains()"
+    />
 
     <script type="text/javascript">
-        function getContains(){
-            var result = document.documentElement.compareDocumentPosition(document.body);
-            alert(!!(result && 16));
-            
-        }
-
+      function getContains() {
+        var result = document.documentElement.compareDocumentPosition(
+          document.body
+        );
+        alert(!!(result && 16));
+      }
     </script>
-</body>
+  </body>
 </html>

@@ -1,3 +1,1 @@
-function AB(){
-
-}
+function AB() {}

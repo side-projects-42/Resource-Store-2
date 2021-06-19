@@ -1,33 +1,34 @@
 <html>
-<head>
+  <head>
     <title>Textbox Clipboard Example</title>
     <script type="text/javascript" src="EventUtil.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <p>Copy from the first textbox to the second.</p>
-    <form method="post" action="javascript:alert('Form submitted!')" id="myForm">        
-        <div>
-            <label for="txtFirst">Copy from here:</label><br />
-            <input type="text" id="txtFirst" name="first" value="" />
-        </div>
-        <div>
-            <label for="txtSecond">Paste here:</label><br />
-            <input type="text" id="txtSecond" name="second" value="" />
-        </div>
-    </form>     
+    <form
+      method="post"
+      action="javascript:alert('Form submitted!')"
+      id="myForm"
+    >
+      <div>
+        <label for="txtFirst">Copy from here:</label><br />
+        <input type="text" id="txtFirst" name="first" value="" />
+      </div>
+      <div>
+        <label for="txtSecond">Paste here:</label><br />
+        <input type="text" id="txtSecond" name="second" value="" />
+      </div>
+    </form>
     <script type="text/javascript">
-        (function(){
+      (function () {
+        var textbox = document.getElementById("txtFirst");
 
-            var textbox = document.getElementById("txtFirst");
-
-            EventUtil.addHandler(textbox, "copy", function(event){
-                event = EventUtil.getEvent(event);
-                EventUtil.preventDefault(event);
-                EventUtil.setClipboardText(event, "Hello world!");                 
-            });
-            
-        })();
-    
+        EventUtil.addHandler(textbox, "copy", function (event) {
+          event = EventUtil.getEvent(event);
+          EventUtil.preventDefault(event);
+          EventUtil.setClipboardText(event, "Hello world!");
+        });
+      })();
     </script>
-</body>
+  </body>
 </html>

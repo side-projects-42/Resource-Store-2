@@ -1,22 +1,21 @@
 <html>
-<head>
+  <head>
     <title>Internet Explorer Event Handler Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <input type="button" id="myBtn" value="Click Me" />
     <input type="button" id="myRemoveBtn" value="Remove Event Handler" />
     <script type="text/javascript">
-        var btn = document.getElementById("myBtn");
-        var handler = function(){
-            alert("Clicked");
-        };
-        btn.attachEvent("onclick", handler); 
-        
-        var removeBtn = document.getElementById("myRemoveBtn");
-        removeBtn.onclick = function(){
-            btn.detachEvent("onclick", handler); 
-        };
-        
+      var btn = document.getElementById("myBtn");
+      var handler = function () {
+        alert("Clicked");
+      };
+      btn.attachEvent("onclick", handler);
+
+      var removeBtn = document.getElementById("myRemoveBtn");
+      removeBtn.onclick = function () {
+        btn.detachEvent("onclick", handler);
+      };
     </script>
-</body>
+  </body>
 </html>
